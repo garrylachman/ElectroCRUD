@@ -48,6 +48,7 @@
     "start": "electron start-debug.js"
   },
   "dependencies": {
+    "mysql": "^2.10.2",
     "promise": "^7.1.1"
   }
 }

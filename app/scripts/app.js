@@ -15,7 +15,8 @@ angular
     'ngRoute',
     'ngSanitize',
     'ngTouch',
-    'angular-websql'
+    'angular-websql',
+    'oitozero.ngSweetAlert'
   ])
   .config(function ($routeProvider, $locationProvider) {
     $routeProvider

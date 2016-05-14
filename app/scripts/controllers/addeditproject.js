@@ -9,14 +9,30 @@
  */
 angular.module('electroCrudApp')
   .controller('AddeditprojectCtrl', ['$scope', 'breadcrumb', 'projectsModel', '$route', '$routeParams',
-  function ($scope, breadcrumb, projectsModel, $route, $routeParams) {
+                                      'mysql', 'SweetAlert',
+  function ($scope, breadcrumb, projectsModel, $route,
+            $routeParams, mysql, SweetAlert) {
     $scope.editMode = ($route.current.$$route.controllerAs == "editProject");
     $scope.project = {};
     $scope.detailsFormValid = false;
+    $scope.databases = [];
 
     $scope.$watchCollection('project', function(newNames, oldNames) {
       $scope.detailsFormValid = formValidator();
     });
+
+    $scope.detailsFormConnect = function(){
+      if ($scope.detailsFormValid) {
+        getMySQLTables();
+      }
+    };
+
+    $scope.openDatabaseSelect = function(databaseName) {
+      $scope.project.mysql_database = databaseName;
+      $scope.databases.forEach(function(row){
+        row.selected = ($scope.project.mysql_database == row.Database);
+      });
+    };
 
     if ($scope.editMode) {
       var projectId = $routeParams.id;
@@ -51,6 +67,27 @@ angular.module('electroCrudApp')
         isValid = false;
       }
       return isValid;
+    }
+
+    function getMySQLTables() {
+      var connection = mysql.getConnection($scope.project.mysql_host,
+        $scope.project.mysql_port,
+        $scope.project.mysql_user,
+        $scope.project.mysql_password,
+        $scope.project.mysql_database);
+        connection.connect();
+        console.log(connection);
+      mysql.getDatabases(connection)
+        .then(function(results) {
+          results.forEach(function(row){
+            row.selected = ($scope.project.mysql_database == row.Database);
+          });
+          angular.copy(results, $scope.databases);
+          $scope.$apply();
+        })
+        .catch(function(err) {
+          SweetAlert.swal("Error", err, "error");
+        });
     }
 
 

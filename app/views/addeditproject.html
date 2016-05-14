@@ -1,5 +1,6 @@
 <section class="content">
   <div class="row">
+
     <div class="col-sm-12 col-md-7">
       <div class="box box-info">
         <div class="box-header with-border">
@@ -55,7 +56,7 @@
           <!-- /.box-body -->
           <div class="box-footer">
             <button type="submit" class="btn btn-flat bg-navy">Cancel</button>
-            <button ng-disabled="!detailsFormValid" type="submit" class="btn pull-right btn-flat bg-olive">
+            <button ng-click="detailsFormConnect()" ng-disabled="!detailsFormValid" type="submit" class="btn pull-right btn-flat bg-olive">
               <i class="devicon-mysql-plain margin-right-5"></i>Connect
             </button>
           </div>
@@ -63,5 +64,21 @@
         </form>
       </div>
     </div>
+
+    <div class="col-sm-12 col-md-5">
+      <div class="box box-widget widget-user-2">
+        <div class="widget-user-header bg-aqua-active">
+          <h4>Select Database</h4>
+        </div>
+        <div class="box-footer no-padding">
+          <ul class="nav nav-stacked">
+            <li ng-repeat="db in databases" ng-class="{'active':db.selected}" ng-click="openDatabaseSelect(db.Database)">
+              <a>{{db.Database}}</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
   </div>
-</div>
+</section>
