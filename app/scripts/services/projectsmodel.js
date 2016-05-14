@@ -27,6 +27,12 @@ angular.module('electroCrudApp')
           mysql_password: mysql_password,
           mysql_db: mysql_db
         });
+      },
+      update: function(id, data) {
+        delete data.id;
+        return db.update(table, data, {
+          id: id
+        });
       }
     };
   }]);

@@ -9,9 +9,9 @@
  */
 angular.module('electroCrudApp')
   .controller('AddeditprojectCtrl', ['$scope', 'breadcrumb', 'projectsModel', '$route', '$routeParams',
-                                      'mysql', 'SweetAlert',
+                                      'mysql', 'SweetAlert', '$location',
   function ($scope, breadcrumb, projectsModel, $route,
-            $routeParams, mysql, SweetAlert) {
+            $routeParams, mysql, SweetAlert, $location) {
     $scope.editMode = ($route.current.$$route.controllerAs == "editProject");
     $scope.project = {};
     $scope.detailsFormValid = false;
@@ -21,6 +21,10 @@ angular.module('electroCrudApp')
       $scope.detailsFormValid = formValidator();
     });
 
+    $scope.onCancelBtn = function() {
+      $location.path("/projects");
+    };
+
     $scope.detailsFormConnect = function(){
       if ($scope.detailsFormValid) {
         getMySQLTables();
@@ -28,10 +32,11 @@ angular.module('electroCrudApp')
     };
 
     $scope.openDatabaseSelect = function(databaseName) {
-      $scope.project.mysql_database = databaseName;
+      $scope.project.mysql_db = databaseName;
       $scope.databases.forEach(function(row){
-        row.selected = ($scope.project.mysql_database == row.Database);
+        row.selected = ($scope.project.mysql_db == row.Database);
       });
+      commitChanges();
     };
 
     if ($scope.editMode) {
@@ -46,6 +51,7 @@ angular.module('electroCrudApp')
     function initEdit(data) {
       breadcrumb.append(data.name, "/#/projects/edit/"+data.id);
       $scope.project = data;
+      getMySQLTables();
     }
 
     function formValidator() {
@@ -74,13 +80,13 @@ angular.module('electroCrudApp')
         $scope.project.mysql_port,
         $scope.project.mysql_user,
         $scope.project.mysql_password,
-        $scope.project.mysql_database);
+        $scope.project.mysql_db);
         connection.connect();
-        console.log(connection);
+
       mysql.getDatabases(connection)
         .then(function(results) {
           results.forEach(function(row){
-            row.selected = ($scope.project.mysql_database == row.Database);
+            row.selected = ($scope.project.mysql_db == row.Database);
           });
           angular.copy(results, $scope.databases);
           $scope.$apply();
@@ -88,6 +94,17 @@ angular.module('electroCrudApp')
         .catch(function(err) {
           SweetAlert.swal("Error", err, "error");
         });
+    }
+
+    function commitChanges() {
+      projectsModel.update(projectId, $scope.project)
+        .then(function(result){
+          SweetAlert.swal("Success", "Project saving completed.", "success");
+          $location.path("/projects");
+        })
+        .catch(function(err){
+          SweetAlert.swal("Error", err, "error");
+        })
     }
 
 
