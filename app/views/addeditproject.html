@@ -1,0 +1,67 @@
+<section class="content">
+  <div class="row">
+    <div class="col-sm-12 col-md-7">
+      <div class="box box-info">
+        <div class="box-header with-border">
+          <h3 class="box-title">Project details</h3>
+        </div>
+        <!-- /.box-header -->
+        <!-- form start -->
+        <form class="form-horizontal">
+          <div class="box-body">
+
+            <div class="form-group margin-bottom-0">
+              <label for="inputName" class="col-sm-2 control-label">Name</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="inputName" autocomplete="off" ng-model="project.name">
+              </div>
+            </div>
+
+            <div class="row margin-bottom-0 text-center">
+              <div class="col-xs-12">
+                <i class="devicon-mysql-plain-wordmark colored text-center font-size-6-rem"></i>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="inputHost" class="col-sm-2 control-label">Host</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="inputHost" autocomplete="off" ng-model="project.mysql_host">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="inputPort" class="col-sm-2 control-label">Port</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="inputPort" autocomplete="off" value="3306" ng-model="project.mysql_port">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="inputUser" class="col-sm-2 control-label">User</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="inputUser" autocomplete="off" ng-model="project.mysql_user">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="inputPassword" class="col-sm-2 control-label">Password</label>
+              <div class="col-sm-10">
+                <input type="password" class="form-control" id="inputPassword" autocomplete="off" ng-model="project.mysql_password">
+              </div>
+            </div>
+
+          </div>
+          <!-- /.box-body -->
+          <div class="box-footer">
+            <button type="submit" class="btn btn-flat bg-navy">Cancel</button>
+            <button ng-disabled="!detailsFormValid" type="submit" class="btn pull-right btn-flat bg-olive">
+              <i class="devicon-mysql-plain margin-right-5"></i>Connect
+            </button>
+          </div>
+          <!-- /.box-footer -->
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,46 @@
+<section class="content">
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="box">
+        <div class="box-header">
+          <h3 class="box-title">Projects</h3>
+
+          <div class="box-tools">
+            <a href="#/projects/add" class="btn btn-sm pull-left btn-flat bg-purple margin-right-10" data-toggle="tooltip" title="Add new project" ng-click="newProject()"><b>New Project</b></a>
+            <div class="input-group input-group-sm pull-right" style="width: 150px;">
+              <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
+
+              <div class="input-group-btn">
+                <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body table-responsive no-padding">
+          <table class="table table-hover">
+            <tbody><tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Hostname</th>
+              <th>Database</th>
+              <th></th>
+              <th></th>
+            </tr>
+            <tr ng-repeat="project in projects">
+              <td>{{project.id}}</td>
+              <td>{{project.name}}</td>
+              <td>{{project.mysql_host}}</td>
+              <td>{{project.mysql_db}}</td>
+              <td><button type="button" class="btn  btn-xs bg-olive btn-flat" data-toggle="tooltip" title="Login"><i class="fa fa-sign-in"></i></button></td>
+              <td><button ng-click="editProject(project.id)" type="button" class="btn  btn-xs bg-maroon btn-flat" data-toggle="tooltip" title="Edit"><i class="fa fa-pencil-square-o"></i></button></td>
+            </tr>
+          </tbody></table>
+        </div>
+        <!-- /.box-body -->
+      </div>
+      <!-- /.box -->
+    </div>
+
+  </div>
+</section>
