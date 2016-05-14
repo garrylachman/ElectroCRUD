@@ -50,5 +50,35 @@ angular.module('electroCrudApp')
       }
     });
 
+    db.createTable('views', {
+      "id":{
+        "type": "INTEGER",
+        "null": "NOT NULL",
+        "primary": true,
+        "auto_increment": true
+      },
+      "project_id": {
+        "type": "INTEGER",
+        "null": "NOT NULL"
+      },
+      "created":{
+        "type": "TIMESTAMP",
+        "null": "NOT NULL",
+        "default": "CURRENT_TIMESTAMP"
+      },
+      "view_type": {
+        "type": "INTEGER",
+        "null": "NOT NULL"
+      },
+      "name":{
+        "type": "TEXT",
+        "null": "NOT NULL"
+      },
+      "schema": {
+        "type": "TEXT",
+        "null": "NOT NULL"
+      }
+    });
+
     return db;
   }]);;
