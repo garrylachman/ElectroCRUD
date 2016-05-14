@@ -437,7 +437,7 @@ module.exports = function (grunt) {
         }, {
           expand: true,
           cwd: '.',
-          src: 'node_modules/**',
+          src: 'node_modules/{mysql,promise,asap,bignumber.js}/**',
           dest: '<%= yeoman.dist %>'
         }]
       },
