@@ -8,8 +8,8 @@
  * Controller of the electroCrudApp
  */
 angular.module('electroCrudApp')
-  .controller('ProjectsCtrl', ['$scope', 'breadcrumb', 'projectsModel', '$location',
-  function ($scope, breadcrumb, projectsModel, $location) {
+  .controller('ProjectsCtrl', ['$scope', 'breadcrumb', 'projectsModel', '$location', 'session',
+  function ($scope, breadcrumb, projectsModel, $location, session) {
     breadcrumb.set("Projects", "/#/projects");
     $scope.projects = [];
 
@@ -23,6 +23,10 @@ angular.module('electroCrudApp')
 
     $scope.editProject = function(id) {
       $location.path("/projects/edit/"+id);
-    }
+    };
+
+    $scope.openProject = function(projectId) {
+      session.openProject(projectId);
+    };
 
   }]);

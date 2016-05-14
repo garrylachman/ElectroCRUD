@@ -110,6 +110,23 @@
                   <span>{{item.text}}</span>
               </a>
             </li>
+
+            <li class="header">Views</li>
+            <li class="">
+              <div class="input-group input-group-sm sidebar-form bg-sidebar-form">
+                <input type="text" class="form-control" placeholder="View name" ng-model="newViewName">
+                    <span class="input-group-btn">
+                      <button ng-click="addNewView(newViewName)" type="button" class="btn btn-info btn-flat">Add</button>
+                    </span>
+              </div>
+            </li>
+            <li class="" ng-repeat="item in viewItems">
+              <a href="#" ng-click="onMenuClick(item.id)">
+                <i class="fa fa-database"></i>
+                  <span>{{item.name}}</span>
+              </a>
+            </li>
+
           </ul>
         </section>
         <!-- /.sidebar -->

@@ -32,7 +32,7 @@
               <td>{{project.name}}</td>
               <td>{{project.mysql_host}}</td>
               <td>{{project.mysql_db}}</td>
-              <td><button type="button" class="btn  btn-xs bg-olive btn-flat" data-toggle="tooltip" title="Login"><i class="fa fa-sign-in"></i></button></td>
+              <td><button ng-click="openProject(project.id)" type="button" class="btn  btn-xs bg-olive btn-flat" data-toggle="tooltip" title="Login"><i class="fa fa-sign-in"></i></button></td>
               <td><button ng-click="editProject(project.id)" type="button" class="btn  btn-xs bg-maroon btn-flat" data-toggle="tooltip" title="Edit"><i class="fa fa-pencil-square-o"></i></button></td>
             </tr>
           </tbody></table>

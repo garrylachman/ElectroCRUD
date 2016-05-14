@@ -13,7 +13,7 @@ angular.module('electroCrudApp')
 
     return {
       getList: function(project_id) {
-        return ddb.select(table, { project_id: project_id });
+        return db.select(table, { project_id: project_id });
       },
       getById: function(id) {
         return db.select(table, { id: id });
