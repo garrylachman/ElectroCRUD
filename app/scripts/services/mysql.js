@@ -1,5 +1,6 @@
 'use strict';
 var mysql  = require('mysql');
+var utils = require('util');
 
 /**
  * @ngdoc service
@@ -28,6 +29,25 @@ angular.module('electroCrudApp')
             resolve(rows);
           });
         });
+      },
+      getTables: function(connection) {
+        return new Promise(function(resolve, reject) {
+          connection.query('SHOW TABLES', function(err, rows, fields) {
+            if (err) reject(err);
+            resolve(rows);
+          });
+        });
+      },
+      getTableDesc: function(connection, table) {
+        return new Promise(function(resolve, reject) {
+          connection.query(util.format('DESC %s', table), function(err, rows, fields) {
+            if (err) reject(err);
+            resolve(rows);
+          });
+        });
+      },
+      closeConnection: function(connection) {
+        connection.end();
       }
     };
   });

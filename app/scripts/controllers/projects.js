@@ -14,10 +14,7 @@ angular.module('electroCrudApp')
     $scope.projects = [];
 
     function reload() {
-      console.log("ProjectsCtrl->reload");
       projectsModel.getList().then(function(results) {
-        console.log(results.rows);
-        //$scope.projects = results.rows;
         angular.copy(results.rows, $scope.projects);
       });
     }
