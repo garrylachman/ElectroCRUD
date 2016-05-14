@@ -1,0 +1,8 @@
+{
+  "main": "index.js",
+  "name": "electrocrud",
+  "private": true,
+  "engines": {
+    "node": ">=0.10.0"
+  }
+}

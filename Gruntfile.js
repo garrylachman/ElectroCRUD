@@ -415,7 +415,9 @@ module.exports = function (grunt) {
             '*.{ico,png,txt}',
             '*.html',
             'images/{,*/}*.{webp}',
-            'styles/fonts/{,*/}*.*'
+            'styles/fonts/{,*/}*.*',
+            'package.json',
+            'index.js'
           ]
         }, {
           expand: true,
@@ -432,6 +434,11 @@ module.exports = function (grunt) {
           cwd: '.',
           src: 'bower_components/bootstrap-sass-official/assets/fonts/bootstrap/*',
           dest: '.tmp'
+        }, {
+          expand: true,
+          cwd: '.',
+          src: 'node_modules/**',
+          dest: '<%= yeoman.dist %>'
         }]
       },
       styles: {
@@ -470,11 +477,13 @@ module.exports = function (grunt) {
         osxBuild: {
             options: {
                 name: 'ElectoCRUD',
-                dir: 'app',
+                dir: 'dist',
                 out: 'appDist',
-                version: '0.25.3',
+                version: '1.0.1',
                 platform: 'darwin',
-                arch: 'x64'
+                arch: 'x64',
+                overwrite: true,
+                asar: false
             }
         }
     }

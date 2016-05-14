@@ -1,10 +1,10 @@
 'use strict';
-var electron = require('electron');
-var app = electron.app;
+const electron = require('electron');
+const app = electron.app;
 
 //require('electron-debugger')();
 
-var mainWindow;
+let mainWindow;
 function onClosed() {
         // dereference the window
         // for multiple windows store them in an array
@@ -12,31 +12,31 @@ function onClosed() {
 }
 
 function createMainWindow() {
-        var win = new electron.BrowserWindow({
+        const win = new electron.BrowserWindow({
                 width: 800,
                 height: 600,
                 minWidth: 800
         });
 
-        win.loadURL('file://'+__dirname+'/index.html');
+        win.loadURL('file://'+__dirname+'/app/index.html');
         //win.loadURL('about:blank');
         win.on('closed', onClosed);
 
         return win;
 }
 
-app.on('window-all-closed', function() {
+app.on('window-all-closed', () => {
         if (process.platform !== 'darwin') {
                 app.quit();
         }
 });
 
-app.on('activate', function() {
+app.on('activate', () => {
         if (!mainWindow) {
                 mainWindow = createMainWindow();
         }
 });
 
-app.on('ready', function() {
+app.on('ready', () => {
         mainWindow = createMainWindow();
 });
