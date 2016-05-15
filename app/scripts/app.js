@@ -16,9 +16,10 @@ angular
     'ngSanitize',
     'ngTouch',
     'angular-websql',
-    'oitozero.ngSweetAlert'
+    'oitozero.ngSweetAlert',
+    'ui.select'
   ])
-  .config(function ($routeProvider, $locationProvider) {
+  .config(function ($routeProvider, $locationProvider, uiSelectConfig) {
     $routeProvider
       .when('/', {
         templateUrl: 'views/testView.html',
@@ -50,6 +51,10 @@ angular
       .otherwise({
         redirectTo: '/'
       });
+
+      uiSelectConfig.theme = 'bootstrap';
+      uiSelectConfig.resetSearchInput = true;
+      uiSelectConfig.appendToBody = true;
 
     //$locationProvider.html5Mode(false);
     //$locationProvider.hashPrefix('!');

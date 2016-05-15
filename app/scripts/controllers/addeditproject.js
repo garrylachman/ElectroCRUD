@@ -27,7 +27,7 @@ angular.module('electroCrudApp')
 
     $scope.detailsFormConnect = function(){
       if ($scope.detailsFormValid) {
-        getMySQLTables();
+        getMySQLDatabases();
       }
     };
 
@@ -51,7 +51,7 @@ angular.module('electroCrudApp')
     function initEdit(data) {
       breadcrumb.append(data.name, "/#/projects/edit/"+data.id);
       $scope.project = data;
-      getMySQLTables();
+      getMySQLDatabases();
     }
 
     function formValidator() {
@@ -75,7 +75,7 @@ angular.module('electroCrudApp')
       return isValid;
     }
 
-    function getMySQLTables() {
+    function getMySQLDatabases() {
       var connection = mysql.getConnection($scope.project.mysql_host,
         $scope.project.mysql_port,
         $scope.project.mysql_user,
@@ -90,9 +90,11 @@ angular.module('electroCrudApp')
           });
           angular.copy(results, $scope.databases);
           $scope.$apply();
+          mysql.closeConnection(connection);
         })
         .catch(function(err) {
           SweetAlert.swal("Error", err, "error");
+          mysql.closeConnection(connection);
         });
     }
 

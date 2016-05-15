@@ -28,6 +28,9 @@ angular.module('electroCrudApp')
       getProjectId: function(){
         return currentProject.id;
       },
+      getProject: function(){
+        return currentProject;
+      },
       projectViews: currentViews
     }
   }]);

@@ -1,6 +1,6 @@
 'use strict';
 var mysql  = require('mysql');
-var utils = require('util');
+var util = require('util');
 
 /**
  * @ngdoc service
