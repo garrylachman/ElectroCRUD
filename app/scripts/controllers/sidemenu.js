@@ -35,5 +35,11 @@ angular.module('electroCrudApp')
       }, 1);
     };
 
+    $scope.onViewClick = function(id) {
+      $timeout(function(){
+        $location.path("/view/" + id);
+      }, 1);
+    };
+
 
   }]);

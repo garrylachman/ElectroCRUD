@@ -39,6 +39,14 @@ angular
         controller: 'AddeditprojectCtrl',
         controllerAs: 'editProject'
       })
+      .when('/view/:id', {
+        templateUrl: 'views/view.html',
+        controller: 'ViewCtrl'
+      })
+      .when('/view/:id/setup', {
+        templateUrl: 'views/setupview.html',
+        controller: 'SetupviewCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });
