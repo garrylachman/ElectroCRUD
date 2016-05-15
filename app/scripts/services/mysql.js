@@ -14,13 +14,17 @@ angular.module('electroCrudApp')
 
     return {
       getConnection: function(host, port, user, password, database) {
-        return mysql.createConnection({
+        var connectionProps = {
           host: host,
           port: port,
           user: user,
-          password: password,
-          database: database
-        });
+          password: password
+        };
+        if (database) {
+          connectionProps.database = database;
+        }
+        console.log(connectionProps);
+        return mysql.createConnection(connectionProps);
       },
       getDatabases: function(connection) {
         return new Promise(function(resolve, reject) {

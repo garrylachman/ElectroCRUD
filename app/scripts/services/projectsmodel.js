@@ -19,6 +19,8 @@ angular.module('electroCrudApp')
         return db.select(table, { id: id });
       },
       add: function(name, mysql_host, mysql_port, mysql_user, mysql_password, mysql_db) {
+        mysql_password = !mysql_password ? "" : mysql_password;
+        mysql_db = !mysql_db ? "" : mysql_db;
         return db.insert(table, {
           name: name,
           mysql_host: mysql_host,
@@ -30,6 +32,8 @@ angular.module('electroCrudApp')
       },
       update: function(id, data) {
         delete data.id;
+        data.mysql_password = !data.mysql_password ? "" : data.mysql_password;
+        data.mysql_db = !data.mysql_db ? "" : data.mysql_db;
         return db.update(table, data, {
           id: id
         });

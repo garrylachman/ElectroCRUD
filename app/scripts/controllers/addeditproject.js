@@ -16,6 +16,7 @@ angular.module('electroCrudApp')
     $scope.project = {};
     $scope.detailsFormValid = false;
     $scope.databases = [];
+    $scope.projectId = undefined;
 
     $scope.$watchCollection('project', function(newNames, oldNames) {
       $scope.detailsFormValid = formValidator();
@@ -39,9 +40,13 @@ angular.module('electroCrudApp')
       commitChanges();
     };
 
+    $scope.onSaveBtn = function() {
+      commitChanges();
+    };
+
     if ($scope.editMode) {
-      var projectId = $routeParams.id;
-      var data = projectsModel.getById(projectId).then(function(result){
+      $scope.projectId = $routeParams.id;
+      var data = projectsModel.getById($scope.projectId).then(function(result){
         initEdit(result.rows[0])
       });
     } else {
@@ -99,14 +104,33 @@ angular.module('electroCrudApp')
     }
 
     function commitChanges() {
-      projectsModel.update(projectId, $scope.project)
-        .then(function(result){
-          SweetAlert.swal("Success", "Project saving completed.", "success");
-          $location.path("/projects");
-        })
-        .catch(function(err){
-          SweetAlert.swal("Error", err, "error");
-        })
+      if ($scope.editMode) {
+        projectsModel.update($scope.projectId, $scope.project)
+          .then(function(result){
+            SweetAlert.swal("Success", "Project saving completed.", "success");
+            $location.path("/projects");
+          })
+          .catch(function(err){
+            SweetAlert.swal("Error", err, "error");
+          });
+      } else {
+        projectsModel.add($scope.project.name, $scope.project.mysql_host,
+                          $scope.project.mysql_port, $scope.project.mysql_user,
+                          $scope.project.mysql_password, $scope.project.mysql_db)
+          .then(function(result){
+            $scope.editMode = true;
+            $scope.projectId = $scope.project.id = result.insertId;
+            if (!$scope.project.mysql_db) {
+              getMySQLDatabases();
+            } else {
+              SweetAlert.swal("Success", "Project saving completed.", "success");
+              $location.path("/projects");
+            }
+          })
+          .catch(function(err){
+            SweetAlert.swal("Error", err, "error");
+          });
+      }
     }
 
 
