@@ -18,27 +18,32 @@ angular.module('electroCrudApp')
       return {
         setTableName: function(name) {
           tableName = name;
-          console.log(this.toJSON());
+        },
+        getTableName: function(){
+          return tableName;
         },
         setColumns: function(columns) {
           angular.copy(columns, tableColumns);
-          console.log(this.toJSON());
+        },
+        getColumns: function(){
+          return tableColumns;
         },
         addActiveColumn: function(name) {
           activeColumns.push(name);
-          console.log(this.toJSON());
         },
         setActiveColumns: function(columns) {
           angular.copy(columns, activeColumns);
-          console.log(this.toJSON());
+        },
+        getActiveColumns: function(){
+          return activeColumns;
         },
         fromJSON: function(json) {
           tableName = json.table;
           tableColumns = json.columns;
-          activeColumns = json.activeColumns
+          activeColumns = json.active;
         },
         fromJSONString: function(jsonStr) {
-          return fromJSON(this.JSON.parse(jsonStr));
+          return this.fromJSON(JSON.parse(jsonStr));
         },
         toJSON: function(){
           return {

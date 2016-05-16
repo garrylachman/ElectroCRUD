@@ -31,13 +31,20 @@ angular.module('electroCrudApp')
         $scope.schemaBuilder.setActiveColumns(getActiveColumns());
         console.log($scope.schemaBuilder.toJSON());
         console.log($scope.schemaBuilder.toJSONString());
+        viewsModel.update(viewId, {
+          schema: $scope.schemaBuilder.toJSONString()
+        });
       }
 
       function reload() {
         viewsModel.getById(viewId).then(function(results) {
           angular.copy(results.rows[0], $scope.viewData);
-          if ($scope.viewData.schema && schemaHelper.validateSchema($scope.viewData.schema)) {
+          console.log($scope.viewData);
+          if ($scope.viewData.schema && schemaHelper.validateSchema(JSON.parse($scope.viewData.schema))) {
             $scope.schemaBuilder = schemaHelper.loadBuilder($scope.viewData.schema);
+            $scope.table = $scope.schemaBuilder.getTableName();
+            $scope.selectedTable = { value: { name: $scope.table } };
+            getMySQLColumns();
           } else {
             $scope.schemaBuilder = schemaHelper.newBuilder();
           }
@@ -49,6 +56,19 @@ angular.module('electroCrudApp')
       function getActiveColumns() {
         return $scope.columns.filter(function(row){
           return row.selected == true;
+        });
+      }
+
+      function setActiveColumns() {
+        if ( ! $scope.schemaBuilder || ! $scope.schemaBuilder.getActiveColumns())
+        {
+          return;
+        }
+        var ac = $scope.schemaBuilder.getActiveColumns().map(function(row){
+          return row.Field;
+        });
+        $scope.columns.forEach(function(col){
+          col.selected = (ac.indexOf(col.Field) > -1);
         });
       }
 
@@ -90,7 +110,8 @@ angular.module('electroCrudApp')
             $scope.$apply();
 
             // we can set the selected checkboxes only after list render
-            $scope.columns[0].selected = true;
+            //$scope.columns[0].selected = true;
+            setActiveColumns();
             // run apply for immediate render of the selected checkboxes
             $scope.$apply();
             $scope.schemaBuilder.setColumns($scope.columns);
