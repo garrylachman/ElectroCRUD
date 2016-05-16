@@ -9,8 +9,8 @@
  */
 angular.module('electroCrudApp')
   .controller('SetupviewCtrl',
-    ['$scope','session', 'viewsModel', '$location', '$routeParams', 'breadcrumb', 'mysql', 'SweetAlert',
-    function ($scope, session, viewsModel, $location, $routeParams, breadcrumb, mysql, SweetAlert) {
+    ['$scope','session', 'viewsModel', '$location', '$routeParams', 'breadcrumb', 'mysql', 'SweetAlert','schemaHelper',
+    function ($scope, session, viewsModel, $location, $routeParams, breadcrumb, mysql, SweetAlert, schemaHelper) {
 
       var viewId = $routeParams.id;
       $scope.project = session.getProject();
@@ -19,17 +19,36 @@ angular.module('electroCrudApp')
       $scope.columns = [];
       $scope.selectedTable = undefined;
       $scope.table = undefined;
+      $scope.schemaBuilder = undefined;
 
       $scope.onTablesSelected = function(item) {
         $scope.table = item.name;
+        $scope.schemaBuilder.setTableName($scope.table);
         getMySQLColumns();
       };
+
+      $scope.onSaveBtn = function() {
+        $scope.schemaBuilder.setActiveColumns(getActiveColumns());
+        console.log($scope.schemaBuilder.toJSON());
+        console.log($scope.schemaBuilder.toJSONString());
+      }
 
       function reload() {
         viewsModel.getById(viewId).then(function(results) {
           angular.copy(results.rows[0], $scope.viewData);
+          if ($scope.viewData.schema && schemaHelper.validateSchema($scope.viewData.schema)) {
+            $scope.schemaBuilder = schemaHelper.loadBuilder($scope.viewData.schema);
+          } else {
+            $scope.schemaBuilder = schemaHelper.newBuilder();
+          }
           breadcrumb.append("Configure", "/#/view/"+$scope.viewId + "setup");
           getMySQLTables();
+        });
+      }
+
+      function getActiveColumns() {
+        return $scope.columns.filter(function(row){
+          return row.selected == true;
         });
       }
 
@@ -69,6 +88,12 @@ angular.module('electroCrudApp')
           .then(function(results) {
             angular.copy(results, $scope.columns);
             $scope.$apply();
+
+            // we can set the selected checkboxes only after list render
+            $scope.columns[0].selected = true;
+            // run apply for immediate render of the selected checkboxes
+            $scope.$apply();
+            $scope.schemaBuilder.setColumns($scope.columns);
             mysql.closeConnection(connection);
           })
           .catch(function(err) {

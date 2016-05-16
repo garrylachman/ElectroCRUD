@@ -38,11 +38,11 @@
               <tr ng-repeat="col in columns">
                 <td><i-check ng-model="col.selected" class="icheckbox_flat-blue"></i-check></td>
                 <td>{{col.Field}}</td>
-                <td>{{project.Type}}</td>
-                <td>{{project.Null}}</td>
+                <td>{{col.Type}}</td>
+                <td>{{col.Null}}</td>
                 <td>{{col.Key}}</td>
-                <td>{{project.Default}}</td>
-                <td>{{project.Extra}}</td>
+                <td>{{col.Default}}</td>
+                <td>{{col.Extra}}</td>
               </tr>
             </tbody></table>
 
@@ -51,8 +51,8 @@
           <!-- /.box-body -->
           <div class="box-footer">
             <button type="submit" class="btn btn-flat bg-navy">Cancel</button>
-            <button type="submit" class="btn pull-right btn-flat bg-olive">
-              <i class="devicon-mysql-plain margin-right-5"></i>Save
+            <button ng-click="onSaveBtn()" type="submit" class="btn pull-right btn-flat bg-olive">
+              <i class="fa fa-paper-plane margin-right-5"></i>Save
             </button>
           </div>
           <!-- /.box-footer -->
