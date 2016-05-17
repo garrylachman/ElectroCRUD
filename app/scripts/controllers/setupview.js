@@ -20,10 +20,22 @@ angular.module('electroCrudApp')
       $scope.selectedTable = undefined;
       $scope.table = undefined;
       $scope.schemaBuilder = undefined;
+      $scope.term = {
+        one: "",
+        many: ""
+      };
+      $scope.permissions = {
+        c: true,
+        r: true,
+        u: true,
+        d: true
+      };
 
       $scope.onTablesSelected = function(item) {
         $scope.table = item.name;
         $scope.schemaBuilder.setTableName($scope.table);
+        $scope.term.one = $scope.table;
+        $scope.term.many = $scope.table + "s";
         getMySQLColumns();
       };
 
@@ -43,6 +55,8 @@ angular.module('electroCrudApp')
           if ($scope.viewData.schema && schemaHelper.validateSchema(JSON.parse($scope.viewData.schema))) {
             $scope.schemaBuilder = schemaHelper.loadBuilder($scope.viewData.schema);
             $scope.table = $scope.schemaBuilder.getTableName();
+            $scope.term.one = $scope.table;
+            $scope.term.many = $scope.table + "s";
             $scope.selectedTable = { value: { name: $scope.table } };
             getMySQLColumns();
           } else {
@@ -122,8 +136,6 @@ angular.module('electroCrudApp')
             mysql.closeConnection(connection);
           });
       }
-
-
 
       reload();
 

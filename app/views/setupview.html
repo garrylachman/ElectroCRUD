@@ -1,6 +1,7 @@
 <section class="content">
-  <div class="row">
 
+  <!-- Data Source -->
+  <div class="row">
     <div class="col-xs-12">
       <div class="box box-info">
         <div class="box-header with-border">
@@ -46,8 +47,84 @@
               </tr>
             </tbody></table>
 
+          </div>
+        
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- /.Data Source -->
+
+
+  <!-- Terminology -->
+  <div class="row">
+    <div class="col-xs-12 col-md-6">
+      <div class="box box-info">
+        <div class="box-header with-border">
+          <h3 class="box-title">Terminology</h3>
+        </div>
+        <!-- /.box-header -->
+        <!-- form start -->
+        <form class="form-horizontal">
+          <div class="box-body">
+
+            <p class="input-group-sm">
+              Add new <input ng-model="term.one" type="text" class="form-control setupview-term-inline-input"> .
+            </p>
+
+            <p>
+              List of <input ng-model="term.many" type="text" class="form-control setupview-term-inline-input"> .
+            </p>
 
           </div>
+
+        </form>
+      </div>
+    </div>
+  <!-- /.Terminology -->
+
+
+  <!-- Permissions -->
+    <div class="col-xs-12 col-md-6">
+      <div class="box box-info">
+        <div class="box-header with-border">
+          <h3 class="box-title">Permissions</h3>
+        </div>
+        <!-- /.box-header -->
+        <!-- form start -->
+        <form class="form-horizontal">
+          <div class="box-body">
+
+            <div class="row margin-top-10 margin-bottom-20">
+              <div class="col-sm-6 col-xs-12">
+                <i-check ng-model="permissions.c" class="icheckbox_flat-blue"></i-check> Create
+              </div>
+              <div class="col-sm-6 col-xs-12">
+                <i-check ng-model="permissions.r" class="icheckbox_flat-blue"></i-check> Read
+              </div>
+            </div>
+            <div class="row margin-top-15 margin-bottom-10">
+              <div class="col-sm-6 col-xs-12">
+                <i-check ng-model="permissions.u" class="icheckbox_flat-blue"></i-check> Update
+              </div>
+              <div class="col-sm-6 col-xs-12">
+                <i-check ng-model="permissions.d" class="icheckbox_flat-blue"></i-check> Delete
+              </div>
+            </div>
+
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- /.Permissions -->
+
+
+  <!-- Footer -->
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="box box-info">
           <!-- /.box-body -->
           <div class="box-footer">
             <button type="submit" class="btn btn-flat bg-navy">Cancel</button>
@@ -59,8 +136,6 @@
         </form>
       </div>
     </div>
+  <!-- /.Fotter -->
 
-
-
-  </div>
 </section>

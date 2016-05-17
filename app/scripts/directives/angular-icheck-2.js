@@ -20,6 +20,7 @@ angular.module('electroCrudApp')
                     box.toggleClass("checked");
                     ctrl.$setViewValue(box.hasClass("checked"));
                 });
+
                 ctrl.$render = function () {
                     if (ctrl.$viewValue) {
                         box.addClass("checked");
@@ -32,7 +33,7 @@ angular.module('electroCrudApp')
                 ctrl.$isEmpty = function(value) {
                     return value === false;
                 };
-                ctrl.$setViewValue(box.hasClass("checked"));
+                //ctrl.$setViewValue(box.hasClass("checked"));
                 ctrl.$validate();
             }
         }
