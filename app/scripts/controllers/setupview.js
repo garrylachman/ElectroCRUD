@@ -41,6 +41,8 @@ angular.module('electroCrudApp')
 
       $scope.onSaveBtn = function() {
         $scope.schemaBuilder.setActiveColumns(getActiveColumns());
+        $scope.schemaBuilder.setTerm($scope.term);
+        $scope.schemaBuilder.setPermissions($scope.permissions);
         console.log($scope.schemaBuilder.toJSON());
         console.log($scope.schemaBuilder.toJSONString());
         viewsModel.update(viewId, {
@@ -55,8 +57,8 @@ angular.module('electroCrudApp')
           if ($scope.viewData.schema && schemaHelper.validateSchema(JSON.parse($scope.viewData.schema))) {
             $scope.schemaBuilder = schemaHelper.loadBuilder($scope.viewData.schema);
             $scope.table = $scope.schemaBuilder.getTableName();
-            $scope.term.one = $scope.table;
-            $scope.term.many = $scope.table + "s";
+            angular.copy($scope.schemaBuilder.getTerm(), $scope.term);
+            angular.copy($scope.schemaBuilder.getPermissions(), $scope.permissions);
             $scope.selectedTable = { value: { name: $scope.table } };
             getMySQLColumns();
           } else {

@@ -13,7 +13,9 @@ angular.module('electroCrudApp')
     function builder() {
       var tableName = undefined,
           tableColumns = [],
-          activeColumns = []
+          activeColumns = [],
+          term = { one: "", many: "" },
+          permissions = { c:true, r: true, u: true, d: true };
 
       return {
         setTableName: function(name) {
@@ -37,10 +39,32 @@ angular.module('electroCrudApp')
         getActiveColumns: function(){
           return activeColumns;
         },
+        setTerm: function(_term) {
+          angular.copy(_term, term);
+        },
+        getTerm: function() {
+          return term;
+        },
+        setPermissions: function(_permissions) {
+          angular.copy(_permissions, permissions);
+        },
+        getPermissions: function() {
+          return permissions;
+        },
         fromJSON: function(json) {
           tableName = json.table;
-          tableColumns = json.columns;
-          activeColumns = json.active;
+          if (json.columns) {
+            tableColumns = json.columns;
+          }
+          if (json.active) {
+            activeColumns = json.active;
+          }
+          if (json.term) {
+            term = json.term;
+          }
+          if (json.permissions) {
+            permissions = json.permissions;
+          }
         },
         fromJSONString: function(jsonStr) {
           return this.fromJSON(JSON.parse(jsonStr));
@@ -49,7 +73,9 @@ angular.module('electroCrudApp')
           return {
             table: tableName,
             columns: tableColumns,
-            active: activeColumns
+            active: activeColumns,
+            term: term,
+            permissions: permissions
           };
         },
         toJSONString: function() {
@@ -76,8 +102,7 @@ angular.module('electroCrudApp')
       },
       validateSchema: function(schema) {
         return (schema.table &&
-                schema.columns &&
-                schema.active);
+                schema.columns);
       }
     }
 
