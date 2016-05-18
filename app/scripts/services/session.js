@@ -15,9 +15,16 @@ angular.module('electroCrudApp')
     return {
       openProject: function(id) {
         var _this = this;
-        projectsModel.getById(id).then(function(result){
-          currentProject = result.rows[0];
-          _this.loadViews();
+        return new Promise(function(resolve, reject) {
+          projectsModel.getById(id)
+            .then(function(result){
+              currentProject = result.rows[0];
+              _this.loadViews();
+              resolve();
+            })
+            .catch(function(err){
+              reject(err);
+            });
         });
       },
       loadViews: function() {

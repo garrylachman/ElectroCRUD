@@ -8,8 +8,8 @@
  * Controller of the electroCrudApp
  */
 angular.module('electroCrudApp')
-  .controller('ProjectsCtrl', ['$scope', 'breadcrumb', 'projectsModel', '$location', 'session',
-  function ($scope, breadcrumb, projectsModel, $location, session) {
+  .controller('ProjectsCtrl', ['$scope', 'breadcrumb', 'projectsModel', '$location', 'session', 'SweetAlert',
+  function ($scope, breadcrumb, projectsModel, $location, session, SweetAlert) {
     breadcrumb.set("Projects", "/#/projects");
     $scope.projects = [];
 
@@ -26,7 +26,13 @@ angular.module('electroCrudApp')
     };
 
     $scope.openProject = function(projectId) {
-      session.openProject(projectId);
+      session.openProject(projectId)
+        .then(function(){
+          SweetAlert.swal("Success", "Login Success.", "success");
+        })
+        .catch(function(err){
+          SweetAlert.swal("Error", err, "error");
+        });
     };
 
   }]);
