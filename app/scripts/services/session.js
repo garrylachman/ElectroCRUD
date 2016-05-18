@@ -9,7 +9,7 @@
  */
 angular.module('electroCrudApp')
   .service('session', ['projectsModel', 'viewsModel', function (projectsModel, viewsModel) {
-    var currentProject = {};
+    var currentProject = undefined;
     var currentViews = [];
 
     return {

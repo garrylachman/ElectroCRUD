@@ -23,9 +23,7 @@ angular
   .config(function ($routeProvider, $locationProvider, uiSelectConfig) {
     $routeProvider
       .when('/', {
-        templateUrl: 'views/testView.html',
-        controller: 'MainCtrl',
-        controllerAs: 'main'
+        redirectTo: '/projects'
       })
       .when('/projects', {
         templateUrl: 'views/projects.html',
