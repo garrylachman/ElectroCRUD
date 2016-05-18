@@ -31,19 +31,24 @@
                 <tbody>
                   <tr>
                     <th ng-repeat="col in tableData.columns">{{col}}</th>
+                    <th></th>
                   </tr>
                 <tr ng-repeat="row in tableData.rows">
                   <td ng-repeat="td in row">{{td}}</td>
+                  <td>
+                    <button ng-click="updateRow(row)" type="button" class="btn btn-xs bg-green btn-flat" data-toggle="tooltip" title="Edit {{term.one}}"><i class="fa fa-pencil"></i></button>
+                    <button ng-click="deleteRow(row)" type="button" class="btn btn-xs bg-red btn-flat" data-toggle="tooltip" title="Delete {{term.one}}"><i class="fa fa-trash"></i></button>
+                  </td>
                 </tr>
                 </tbody>
               </table>
             </div>
           </div>
           <div class="row">
-            <div class="col-sm-5">
+            <div class="col-sm-5 col-xs-12">
               <div class="margin-top-10">Showing {{currentPage}} to {{(tableData.count/rowsPerPage) | roundUp}} of {{tableData.count}} entries</div>
             </div>
-            <div class="col-sm-7">
+            <div class="col-sm-7 col-xs-12">
               <div class="pull-right no-margin no-padding table-pagination-wraper">
                 <uib-pagination class="pagination-sm" max-size="5" total-items="tableData.count" ng-model="currentPage" ng-change="pageChanged()"></uib-pagination>
               </div>

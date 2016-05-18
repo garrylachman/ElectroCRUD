@@ -37,7 +37,7 @@
                 <th>Extra</th>
               </tr>
               <tr ng-repeat="col in columns">
-                <td><i-check ng-model="col.selected" class="icheckbox_flat-blue"></i-check></td>
+                <td><i-check force-selected="col.Key=='PRI'" ng-model="col.selected" class="icheckbox_flat-blue"></i-check></td>
                 <td>{{col.Field}}</td>
                 <td>{{col.Type}}</td>
                 <td>{{col.Null}}</td>
@@ -48,7 +48,7 @@
             </tbody></table>
 
           </div>
-        
+
         </form>
       </div>
     </div>

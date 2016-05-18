@@ -48,6 +48,7 @@ angular.module('electroCrudApp')
         viewsModel.update(viewId, {
           schema: $scope.schemaBuilder.toJSONString()
         });
+        $location.path("/view/"+viewId);
       }
 
       function reload() {
