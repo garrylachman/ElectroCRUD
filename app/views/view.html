@@ -1,4 +1,4 @@
-<div class="jumbotron" ng-show="viewData.schema=='{}'">
+<div class="jumbotron" ng-show="isViewEmpty">
   <div class="container">
     <h1>Empty View</h1>
     <p>You must configure your view.</p>
@@ -6,8 +6,53 @@
   </div>
 </div>
 
-<section class="content">
+<section class="content" ng-show="!isViewEmpty">
+  <!--<div class="row">
+    <div class="col-xs-12">
+      <a class="btn btn-primary btn-lg" href="#/view/{{viewData.id}}/setup" role="button">Configure</a>
+    </div>
+  </div>-->
+
   <div class="row">
-    <a class="btn btn-primary btn-lg" href="#/view/{{viewData.id}}/setup" role="button">Configure</a>
+    <div class="col-xs-12">
+      <div class="box">
+        <div class="box-header">
+          <h3 class="box-title">{{term.many}}</h3>
+          <div class="box-tools">
+            <a class="btn btn-sm pull-left btn-flat bg-green margin-right-10" href="#/view/{{viewData.id}}/setup" role="button">Add {{term.one}}</a>
+            <a class="btn btn-sm pull-right btn-flat bg-purple" href="#/view/{{viewData.id}}/setup" role="button">Configure</a>
+          </div>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body table-responsive">
+          <div class="row">
+            <div class="col-xs-12">
+              <table class="table table-hover table-bordered">
+                <tbody>
+                  <tr>
+                    <th ng-repeat="col in tableData.columns">{{col}}</th>
+                  </tr>
+                <tr ng-repeat="row in tableData.rows">
+                  <td ng-repeat="td in row">{{td}}</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-5">
+              <div class="margin-top-10">Showing {{currentPage}} to {{(tableData.count/rowsPerPage) | roundUp}} of {{tableData.count}} entries</div>
+            </div>
+            <div class="col-sm-7">
+              <div class="pull-right no-margin no-padding table-pagination-wraper">
+                <uib-pagination class="pagination-sm" max-size="5" total-items="tableData.count" ng-model="currentPage" ng-change="pageChanged()"></uib-pagination>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /.box-body -->
+      </div>
+      <!-- /.box -->
+    </div>
   </div>
 </section>

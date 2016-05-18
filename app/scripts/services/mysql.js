@@ -50,6 +50,23 @@ angular.module('electroCrudApp')
           });
         });
       },
+      getTableCount: function(connection, table) {
+        return new Promise(function(resolve, reject) {
+          connection.query(util.format('SELECT COUNT(*) as count FROM %s', table), function(err, rows, fields) {
+            if (err) reject(err);
+            resolve(rows[0].count);
+          });
+        });
+      },
+      getTableData: function(connection, table, columns, limitFrom, limitCount) {
+        var columnsStr = columns.join(",");
+        return new Promise(function(resolve, reject) {
+          connection.query(util.format('SELECT %s FROM %s LIMIT %d, %d', columnsStr, table, limitFrom, limitCount), function(err, rows, fields) {
+            if (err) reject(err);
+            resolve(rows);
+          });
+        });
+      },
       closeConnection: function(connection) {
         connection.end();
       }

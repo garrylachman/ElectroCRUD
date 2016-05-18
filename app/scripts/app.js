@@ -17,7 +17,8 @@ angular
     'ngTouch',
     'angular-websql',
     'oitozero.ngSweetAlert',
-    'ui.select'
+    'ui.select',
+    'ui.bootstrap'
   ])
   .config(function ($routeProvider, $locationProvider, uiSelectConfig) {
     $routeProvider

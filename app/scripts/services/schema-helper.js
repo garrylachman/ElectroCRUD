@@ -39,6 +39,11 @@ angular.module('electroCrudApp')
         getActiveColumns: function(){
           return activeColumns;
         },
+        getActiveColumnsList: function(){
+          return this.getActiveColumns().map(function(item){
+            return item.Field;
+          });
+        },
         setTerm: function(_term) {
           angular.copy(_term, term);
         },
