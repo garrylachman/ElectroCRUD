@@ -30,9 +30,11 @@ angular.module('electroCrudApp')
         u: true,
         d: true
       };
+      $scope.primaryKeyWarning = false;
 
       $scope.onTablesSelected = function(item) {
         $scope.table = item.name;
+        $scope.schemaBuilder.reset();
         $scope.schemaBuilder.setTableName($scope.table);
         $scope.term.one = $scope.table;
         $scope.term.many = $scope.table + "s";
@@ -40,6 +42,11 @@ angular.module('electroCrudApp')
       };
 
       $scope.onSaveBtn = function() {
+        if ( ! $scope.schemaBuilder.getPrimaryKey()) {
+          // no primary key no - update, delete
+          $scope.permissions.u = false;
+          $scope.permissions.d = false;
+        }
         $scope.schemaBuilder.setActiveColumns(getActiveColumns());
         $scope.schemaBuilder.setTerm($scope.term);
         $scope.schemaBuilder.setPermissions($scope.permissions);
@@ -132,6 +139,12 @@ angular.module('electroCrudApp')
             // run apply for immediate render of the selected checkboxes
             $scope.$apply();
             $scope.schemaBuilder.setColumns($scope.columns);
+            $scope.columns.forEach(function(col){
+              if (col.Key == "PRI") {
+                $scope.schemaBuilder.setPrimaryKey(col.Field);
+              }
+            });
+            $scope.primaryKeyWarning = ( ! $scope.schemaBuilder.getPrimaryKey());
             mysql.closeConnection(connection);
           })
           .catch(function(err) {

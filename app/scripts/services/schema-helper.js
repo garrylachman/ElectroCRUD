@@ -15,7 +15,8 @@ angular.module('electroCrudApp')
           tableColumns = [],
           activeColumns = [],
           term = { one: "", many: "" },
-          permissions = { c:true, r: true, u: true, d: true };
+          permissions = { c:true, r: true, u: true, d: true },
+          primaryKey = undefined;
 
       return {
         setTableName: function(name) {
@@ -23,6 +24,12 @@ angular.module('electroCrudApp')
         },
         getTableName: function(){
           return tableName;
+        },
+        setPrimaryKey: function(name) {
+          primaryKey = name;
+        },
+        getPrimaryKey: function(){
+          return primaryKey;
         },
         setColumns: function(columns) {
           angular.copy(columns, tableColumns);
@@ -70,6 +77,9 @@ angular.module('electroCrudApp')
           if (json.permissions) {
             permissions = json.permissions;
           }
+          if (json.primaryKey) {
+            primaryKey = json.primaryKey;
+          }
         },
         fromJSONString: function(jsonStr) {
           return this.fromJSON(JSON.parse(jsonStr));
@@ -80,11 +90,20 @@ angular.module('electroCrudApp')
             columns: tableColumns,
             active: activeColumns,
             term: term,
-            permissions: permissions
+            permissions: permissions,
+            primaryKey: primaryKey
           };
         },
         toJSONString: function() {
           return JSON.stringify(this.toJSON());
+        },
+        reset: function(){
+          tableName = undefined;
+          tableColumns = [];
+          activeColumns = [];
+          term = { one: "", many: "" };
+          permissions = { c:true, r: true, u: true, d: true };
+          primaryKey = undefined;
         }
       }
     };

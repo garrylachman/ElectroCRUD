@@ -21,6 +21,8 @@ angular.module('electroCrudApp')
       $scope.project = undefined;
       $scope.dataHelper = undefined;
       $scope.term = undefined;
+      $scope.permissions = {
+      };
       $scope.tableData = {
         count: 0,
         columns: [],
@@ -69,6 +71,7 @@ angular.module('electroCrudApp')
 
       function loadTable() {
         $scope.term = $scope.schemaBuilder.getTerm();
+        $scope.permissions = $scope.schemaBuilder.getPermissions();
         $scope.dataHelper = dataHelper.init(getConnection(), $scope.schemaBuilder);
         $scope.dataHelper.read.getResults(($scope.currentPage-1)*$scope.rowsPerPage, $scope.rowsPerPage).then(function(results){
           $scope.tableData = results;
