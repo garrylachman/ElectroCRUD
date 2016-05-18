@@ -28,7 +28,7 @@ angular.module('electroCrudApp')
       };
 
       $scope.pageChanged = function(page){
-        console.log("pageChanged");
+        loadTable();
       };
 
       function reload() {
@@ -37,7 +37,7 @@ angular.module('electroCrudApp')
 
           projectsModel.getById($scope.viewData.project_id).then(function(projectResults) {
             $scope.project = projectResults.rows[0];
-            initTable();
+            loadTable();
           });
 
           try {
@@ -67,10 +67,10 @@ angular.module('electroCrudApp')
         return connection;
       }
 
-      function initTable() {
+      function loadTable() {
         $scope.term = $scope.schemaBuilder.getTerm();
         $scope.dataHelper = dataHelper.init(getConnection(), $scope.schemaBuilder);
-        $scope.dataHelper.read.getResults(0, 10).then(function(results){
+        $scope.dataHelper.read.getResults(($scope.currentPage-1)*$scope.rowsPerPage, $scope.rowsPerPage).then(function(results){
           $scope.tableData = results;
           $scope.$apply();
           console.log(results);
