@@ -50,7 +50,7 @@ angular.module('electroCrudApp')
         initEdit(result.rows[0])
       });
     } else {
-      breadcrumb.append("New Project", "/#/projects/new");
+      breadcrumb.append("New Project", "#/projects/new");
     }
 
     function initEdit(data) {

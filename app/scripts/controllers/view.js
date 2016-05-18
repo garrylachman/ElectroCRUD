@@ -46,7 +46,7 @@ angular.module('electroCrudApp')
             $scope.schemaBuilder = schemaHelper.loadBuilder($scope.viewData.schema);
           } catch (er) {}
           $scope.isViewEmpty = isViewEmpty();
-          breadcrumb.set($scope.viewData.name, "/#/view/"+$scope.viewId);
+          breadcrumb.set($scope.viewData.name, "#/view/"+viewId);
         });
       }
 

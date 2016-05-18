@@ -72,7 +72,7 @@ angular.module('electroCrudApp')
           } else {
             $scope.schemaBuilder = schemaHelper.newBuilder();
           }
-          breadcrumb.append("Configure", "/#/view/"+$scope.viewId + "setup");
+          breadcrumb.append("Configure", "#/view/"+viewId + "setup");
           getMySQLTables();
         });
       }

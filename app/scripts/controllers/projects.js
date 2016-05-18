@@ -10,7 +10,7 @@
 angular.module('electroCrudApp')
   .controller('ProjectsCtrl', ['$scope', 'breadcrumb', 'projectsModel', '$location', 'session', 'SweetAlert',
   function ($scope, breadcrumb, projectsModel, $location, session, SweetAlert) {
-    breadcrumb.set("Projects", "/#/projects");
+    breadcrumb.set("Projects", "#/projects");
     $scope.projects = [];
 
     function reload() {
