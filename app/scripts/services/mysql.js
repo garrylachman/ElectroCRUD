@@ -67,6 +67,14 @@ angular.module('electroCrudApp')
           });
         });
       },
+      insertData: function(connection, table, data) {
+        return new Promise(function(resolve, reject) {
+          connection.query('INSERT INTO '+table+' SET ?', data, function(err, rows, fields) {
+            if (err) reject(err);
+            resolve(rows);
+          });
+        });
+      },
       closeConnection: function(connection) {
         connection.end();
       }
