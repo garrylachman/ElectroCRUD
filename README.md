@@ -7,11 +7,11 @@ No Coding, just select database and create views.
 ## Download Binaries
 [Mac OSX, ver. 0.0.3 (Pre-release)](https://github.com/garrylachman/ElectroCRUD/raw/master/dist_binaries/ElectoCRUD-darwin-x64.zip)
 
-[Linux 32Bit, ver. 0.0.3 (Pre-release)](https://github.com/garrylachman/ElectroCRUD/raw/master/dist_binaries/ElectoCRUD-linux-ai32.zip)
+[Linux 32Bit, ver. 0.0.3 (Pre-release)](https://github.com/garrylachman/ElectroCRUD/raw/master/dist_binaries/ElectoCRUD-linux-ia32.zip)
 
 [Linux 64Bit, ver. 0.0.3 (Pre-release)](https://github.com/garrylachman/ElectroCRUD/raw/master/dist_binaries/ElectoCRUD-linux-x64.zip)
 
-[Windows 32Bit, ver. 0.0.3 (Pre-release)](https://github.com/garrylachman/ElectroCRUD/raw/master/dist_binaries/ElectoCRUD-win32-ai32.zip)
+[Windows 32Bit, ver. 0.0.3 (Pre-release)](https://github.com/garrylachman/ElectroCRUD/raw/master/dist_binaries/ElectoCRUD-win32-ia32.zip)
 
 [Windows 64Bit, ver. 0.0.3 (Pre-release)](https://github.com/garrylachman/ElectroCRUD/raw/master/dist_binaries/ElectoCRUD-win32-x64.zip)
 
