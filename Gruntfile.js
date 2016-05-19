@@ -490,6 +490,18 @@ module.exports = function (grunt) {
                 overwrite: true,
                 asar: false
             }
+        },
+        ia32: {
+            options: {
+                name: 'ElectoCRUD',
+                dir: 'dist',
+                out: 'appDist',
+                version: '1.0.1',
+                platform: 'win32',
+                arch: 'ia32',
+                overwrite: true,
+                asar: false
+            }
         }
     }
   });
