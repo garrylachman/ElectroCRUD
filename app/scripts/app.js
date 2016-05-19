@@ -47,6 +47,16 @@ angular
         templateUrl: 'views/setupview.html',
         controller: 'SetupviewCtrl'
       })
+      .when('/view/:id/create', {
+        templateUrl: 'views/view-add-edit.html',
+        controller: 'ViewAddEditCtrl',
+        controllerAs: 'createView'
+      })
+      .when('/view/:id/update/:key', {
+        templateUrl: 'views/view-add-edit.html',
+        controller: 'ViewAddEditCtrl',
+        controllerAs: 'updateView'
+      })
       .otherwise({
         redirectTo: '/'
       });

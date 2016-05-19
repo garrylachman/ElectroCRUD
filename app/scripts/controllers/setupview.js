@@ -142,6 +142,7 @@ angular.module('electroCrudApp')
             $scope.columns.forEach(function(col){
               if (col.Key == "PRI") {
                 $scope.schemaBuilder.setPrimaryKey(col.Field);
+                col.selected = true;
               }
             });
             $scope.primaryKeyWarning = ( ! $scope.schemaBuilder.getPrimaryKey());

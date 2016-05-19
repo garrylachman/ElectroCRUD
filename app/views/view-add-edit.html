@@ -1,0 +1,73 @@
+<section class="content">
+
+  <!-- Form -->
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="box box-info">
+        <div class="box-header with-border">
+          <h3 class="box-title">Create {{term.one}}</h3>
+        </div>
+        <!-- /.box-header -->
+        <!-- form start -->
+        <form class="form-horizontal">
+          <div class="box-body">
+
+            <div class="row">
+
+              <div class="col-xs-12" ng-repeat="col in columns">
+                <div class="form-group" data-toggle="tooltip" title="{{col.Type}}">
+                  <label for="input{{col.Field}}" class="col-sm-2 control-label">{{col.Field}}</label>
+                  <div class="col-sm-10">
+                    <div ng-switch="col.Type">
+                      <div ng-switch-when="longtext">
+                        <textarea class="form-control" id="input{{col.Field}}" ng-model="userInput[col.Field]">{{col.Default}}</textarea>
+                      </div>
+                      <div ng-switch-when="longblob">
+                        <textarea class="form-control" id="input{{col.Field}}" ng-model="userInput[col.Field]">{{col.Default}}</textarea>
+                      </div>
+                      <div ng-switch-when="mediumtext">
+                        <textarea class="form-control" id="input{{col.Field}}" ng-model="userInput[col.Field]">{{col.Default}}</textarea>
+                      </div>
+                      <div ng-switch-when="datetime">
+                        <input type="datetime-local" class="form-control" id="input{{col.Field}}" autocomplete="off" ng-model="userInput[col.Field]">
+                      </div>
+                      <div ng-switch-when="timestamp">
+                        <input type="datetime-local" class="form-control" id="input{{col.Field}}" autocomplete="off" ng-model="userInput[col.Field]">
+                      </div>
+                      <div ng-switch-default>
+                        <input type="text" class="form-control" id="input{{col.Field}}" autocomplete="off" ng-model="userInput[col.Field]">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- /.Form -->
+
+
+  <!-- Footer -->
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="box box-info">
+          <!-- /.box-body -->
+          <div class="box-footer">
+            <button type="submit" class="btn btn-flat bg-navy">Cancel</button>
+            <button ng-click="onSaveBtn()" type="submit" class="btn pull-right btn-flat bg-olive">
+              <i class="fa fa-paper-plane margin-right-5"></i>Save
+            </button>
+          </div>
+          <!-- /.box-footer -->
+        </form>
+      </div>
+    </div>
+  <!-- /.Fotter -->
+
+</section>
