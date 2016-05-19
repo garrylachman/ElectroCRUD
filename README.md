@@ -6,7 +6,9 @@ version 0.15.1.
 MySQL CRUD application built on [Electron](http://electron.atom.io/).
 
 ## Download Binaries
-
+[Mac OSX, ver. 0.0.1 (pre-alpha)](https://github.com/garrylachman/ElectroCRUD/raw/master/dist_binaries/0.0.1/ElectoCRUD-darwin-x64.zip)
+[Linux 64Bit, ver. 0.0.1 (pre-alpha)](https://github.com/garrylachman/ElectroCRUD/raw/master/dist_binaries/0.0.1/ElectoCRUD-linux-x64.zip)
+[Windows 64Bit, ver. 0.0.1 (pre-alpha)](https://github.com/garrylachman/ElectroCRUD/raw/master/dist_binaries/0.0.1/ElectoCRUD-win32-x64.zip)
 
 ## Screenshots
 ![Screenshot](http://i.imgur.com/mrFLg5e.png)
