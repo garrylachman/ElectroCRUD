@@ -5,6 +5,13 @@ version 0.15.1.
 
 MySQL CRUD application built on [Electron](http://electron.atom.io/).
 
+## Download Binaries
+
+
+## Screenshots
+![Screenshot](http://i.imgur.com/mrFLg5e.png)
+![Screenshot](http://i.imgur.com/A51zLRv.png)
+
 ## Install dependencies
 
 Run `npm install` & `bower install`.
