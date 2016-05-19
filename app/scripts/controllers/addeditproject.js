@@ -81,7 +81,12 @@ angular.module('electroCrudApp')
     }
 
     function getMySQLDatabases() {
-      var connection = session.getConnection();
+      var connection = mysql.getConnection($scope.project.mysql_host,
+        $scope.project.mysql_port,
+        $scope.project.mysql_user,
+        $scope.project.mysql_password,
+        $scope.project.mysql_db);
+        connection.connect();
       mysql.getDatabases(connection)
         .then(function(results) {
           results.forEach(function(row){
@@ -89,9 +94,11 @@ angular.module('electroCrudApp')
           });
           angular.copy(results, $scope.databases);
           $scope.$apply();
+          mysql.closeConnection(connection);
         })
         .catch(function(err) {
           SweetAlert.swal("Error", err, "error");
+          mysql.closeConnection(connection);
         });
     }
 

@@ -437,8 +437,13 @@ module.exports = function (grunt) {
         }, {
           expand: true,
           cwd: '.',
-          src: 'node_modules/{mysql,promise,asap,bignumber.js}/**',
+          src: 'node_modules/{mysql,promise,asap,bignumber.js,readable-stream,isarray,core-util-is,inherits,string_decoder}/**',
           dest: '<%= yeoman.dist %>'
+        }, {
+          expand: true,
+          cwd: 'bower_components/AdminLTE/plugins/iCheck/flat',
+          src: '*.png',
+          dest: '<%= yeoman.dist %>/styles/'
         }]
       },
       styles: {
@@ -480,7 +485,7 @@ module.exports = function (grunt) {
                 dir: 'dist',
                 out: 'appDist',
                 version: '1.0.1',
-                platform: 'darwin',
+                platform: 'all',
                 arch: 'x64',
                 overwrite: true,
                 asar: false
