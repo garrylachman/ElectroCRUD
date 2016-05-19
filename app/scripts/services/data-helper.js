@@ -96,6 +96,20 @@ angular.module('electroCrudApp')
       if ( ! schemaBuilder.getPermissions().d) {
         return new Error("No Permissions");
       }
+
+      return {
+        delete: function(data) {
+          return new Promise(function(resolve, reject) {
+            mysql.deleteData(connection, schemaBuilder.getTableName(), data)
+              .then(function(){
+                resolve();
+              })
+              .catch(function(err){
+                reject(err);
+              });
+          });
+        }
+      };
     };
 
     return {

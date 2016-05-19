@@ -1,5 +1,6 @@
 'use strict';
 const electron = require('electron');
+const path = require('path');
 const app = electron.app;
 
 //require('electron-debugger')();
@@ -15,7 +16,8 @@ function createMainWindow() {
         const win = new electron.BrowserWindow({
                 width: 800,
                 height: 600,
-                minWidth: 800
+                minWidth: 800,
+                icon: path.join(__dirname, 'app/images/icons/512.ico')
         });
 
         win.loadURL('file://'+__dirname+'/app/index.html');

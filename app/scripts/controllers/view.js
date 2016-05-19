@@ -9,8 +9,8 @@
  */
 angular.module('electroCrudApp')
   .controller('ViewCtrl',
-    ['$scope','session', 'viewsModel', '$location', '$routeParams', 'breadcrumb', 'schemaHelper', 'projectsModel', 'dataHelper', 'mysql',
-    function ($scope, session, viewsModel, $location, $routeParams, breadcrumb, schemaHelper, projectsModel, dataHelper, mysql) {
+    ['$scope','session', 'viewsModel', '$location', '$routeParams', 'breadcrumb', 'schemaHelper', 'projectsModel', 'dataHelper', 'mysql', 'SweetAlert',
+    function ($scope, session, viewsModel, $location, $routeParams, breadcrumb, schemaHelper, projectsModel, dataHelper, mysql, SweetAlert) {
 
       var viewId = $routeParams.id;
       $scope.rowsPerPage = 10;
@@ -77,7 +77,35 @@ angular.module('electroCrudApp')
       $scope.updateRow = function(row) {
         var rowId = row[$scope.schemaBuilder.getPrimaryKey()];
         $location.path("/view/"+viewId+"/update/"+rowId)
-      }
+      };
+
+      $scope.deleteRow = function(row) {
+        var obj = {};
+        obj[$scope.schemaBuilder.getPrimaryKey()] = row[$scope.schemaBuilder.getPrimaryKey()];
+        console.log(obj);
+        SweetAlert.swal({
+          title: "Are you sure?",
+          text: "Your will not be able to recover this "+$scope.term.one,
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#DD6B55",confirmButtonText: "Yes, delete it!",
+          cancelButtonText: "No, cancel!",
+          closeOnConfirm: false,
+          closeOnCancel: false },
+          function(isConfirm){
+             if (isConfirm) {
+              $scope.dataHelper = dataHelper.init(getConnection(), $scope.schemaBuilder);
+              $scope.dataHelper.delete.delete(obj)
+                .then(function(){
+                  SweetAlert.swal("Deleted!", "Your "+$scope.term.one+" file has been deleted.", "success");
+                  loadTable();
+                })
+                .catch(function(err){
+                  SweetAlert.swal("Error", err, "error");
+                });
+             }
+          });
+      };
 
       reload();
 

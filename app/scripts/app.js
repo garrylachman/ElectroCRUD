@@ -64,7 +64,4 @@ angular
       uiSelectConfig.theme = 'bootstrap';
       uiSelectConfig.resetSearchInput = true;
       uiSelectConfig.appendToBody = true;
-
-    //$locationProvider.html5Mode(false);
-    //$locationProvider.hashPrefix('!');
   });

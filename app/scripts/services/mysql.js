@@ -92,6 +92,14 @@ angular.module('electroCrudApp')
           });
         });
       },
+      deleteData: function(connection, table, data) {
+        return new Promise(function(resolve, reject) {
+          connection.query('DELETE FROM '+table+' WHERE ?', data, function(err, rows, fields) {
+            if (err) reject(err);
+            resolve();
+          });
+        });
+      },
       closeConnection: function(connection) {
         connection.end();
       }

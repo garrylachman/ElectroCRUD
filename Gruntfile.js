@@ -14,6 +14,7 @@ module.exports = function (grunt) {
 
   require('load-grunt-tasks')(grunt);
 
+
   // Automatically load required Grunt tasks
   require('jit-grunt')(grunt, {
     useminPrepare: 'grunt-usemin',
@@ -26,6 +27,8 @@ module.exports = function (grunt) {
     app: require('./bower.json').appPath || 'app',
     dist: 'dist'
   };
+
+  var pkg = require("./package.json");
 
   // Define the configuration for all the tasks
   grunt.initConfig({
@@ -479,32 +482,71 @@ module.exports = function (grunt) {
 
     // Electron
     electron: {
-        osxBuild: {
-            options: {
-                name: 'ElectoCRUD',
-                dir: 'dist',
-                out: 'appDist',
-                version: '1.0.1',
-                platform: 'all',
-                arch: 'x64',
-                overwrite: true,
-                asar: false
-            }
-        },
-        ia32: {
-            options: {
-                name: 'ElectoCRUD',
-                dir: 'dist',
-                out: 'appDist',
-                version: '1.0.1',
-                platform: 'win32',
-                arch: 'ia32',
-                overwrite: true,
-                asar: false
-            }
+      win: {
+        options: {
+            name: 'ElectoCRUD',
+            dir: 'dist',
+            out: 'appDist',
+            version: '1.1.0',
+            platform: 'win32',
+            arch: 'all',
+            overwrite: true,
+            asar: false,
+            'app-version': pkg.version,
+            'build-version': pkg.version,
+            icon: 'app/images/icons/512.ico'
         }
+      },
+      darwin: {
+        options: {
+            name: 'ElectoCRUD',
+            dir: 'dist',
+            out: 'appDist',
+            version: '1.1.0',
+            platform: 'darwin',
+            arch: 'all',
+            overwrite: true,
+            asar: false,
+            'app-version': pkg.version,
+            'build-version': pkg.version,
+            icon: 'app/images/icons/512.icns'
+        }
+      },
+      linux: {
+        options: {
+            name: 'ElectoCRUD',
+            dir: 'dist',
+            out: 'appDist',
+            version: '1.1.0',
+            platform: 'linux',
+            arch: 'all',
+            overwrite: true,
+            asar: false,
+            'app-version': pkg.version,
+            'build-version': pkg.version,
+            icon: 'app/images/icons/512.png'
+        }
+      }
+    },
+    bump: {
+      options: {
+        files: ['package.json', 'app/package.json', 'bower.json'],
+        commit: false,
+        createTag: false,
+        push: false
+      }
+    },
+    exec: {
+      copyLinux32Dist: 'cp -Rf appDist/ElectoCRUD-linux-ia32 dist_binaries/ && cd dist_binaries && zip --symlinks -r ElectoCRUD-linux-ia32.zip ElectoCRUD-linux-ia32 && rm -Rf ElectoCRUD-linux-ia32',
+      copyLinux64Dist: 'cp -Rf appDist/ElectoCRUD-linux-x64 dist_binaries/ && cd dist_binaries && zip --symlinks -r ElectoCRUD-linux-x64.zip ElectoCRUD-linux-x64 && rm -Rf ElectoCRUD-linux-x64',
+      copyWin32Dist: 'cp -Rf appDist/ElectoCRUD-win32-ia32 dist_binaries/ && cd dist_binaries && zip --symlinks -r ElectoCRUD-win32-ia32.zip ElectoCRUD-win32-ia32 && rm -Rf ElectoCRUD-win32-ia32',
+      copyWin64Dist: 'cp -Rf appDist/ElectoCRUD-win32-x64 dist_binaries/ && cd dist_binaries && zip --symlinks -r ElectoCRUD-win32-x64.zip ElectoCRUD-win32-x64 && rm -Rf ElectoCRUD-win32-x64',
+      copyDarwinDist: 'cp -Rf appDist/ElectoCRUD-darwin-x64/ElectoCRUD.app dist_binaries/ElectoCRUD-darwin-x64.app && cd dist_binaries && zip --symlinks -r ElectoCRUD-darwin-x64.zip ElectoCRUD-darwin-x64.app && rm -Rf ElectoCRUD-darwin-x64.app'
     }
   });
+
+  grunt.loadNpmTasks('grunt-exec');
+  grunt.loadNpmTasks('grunt-bump');
 
 
   grunt.registerTask('serve', 'Compile then start a connect web server', function (target) {
@@ -561,5 +603,5 @@ module.exports = function (grunt) {
     'build'
   ]);
 
-  grunt.registerTask('buildElectron', ['electron']);
+  grunt.registerTask('buildElectron', ['electron', 'exec:copyLinux32Dist', 'exec:copyLinux64Dist','exec:copyWin32Dist','exec:copyWin64Dist', 'exec:copyDarwinDist']);
 };

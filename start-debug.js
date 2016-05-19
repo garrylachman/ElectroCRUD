@@ -2,6 +2,7 @@
 const electron = require('electron');
 const app = electron.app;
 const fs = require('fs');
+const path = require('path');
 const Promise = require('promise');
 
 //require('electron-debugger')();
@@ -43,7 +44,8 @@ function createTempHtml() {
 function createMainWindow() {
   const win = new electron.BrowserWindow({
     width: 800,
-    height: 600
+    height: 600,
+    icon: path.join(__dirname, 'app/images/icons/512.ico')
   });
 
   let tempHtmlFile = createTempHtml();

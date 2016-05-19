@@ -26,3 +26,7 @@ Run `grunt build` for building and `npm start` for start in debug mode.
 ## Build distribution
 
 Run `grunt buildElectron`.
+
+## Credits
+
+Icon made by [Madebyoliver](http://www.flaticon.com/authors/madebyoliver) licensed by CC 3.0
