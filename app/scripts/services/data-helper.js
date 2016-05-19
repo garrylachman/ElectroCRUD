@@ -14,6 +14,20 @@ angular.module('electroCrudApp')
       if ( ! schemaBuilder.getPermissions().c) {
         return new Error("No Permissions");
       }
+
+      return {
+        create: function(data) {
+          return new Promise(function(resolve, reject) {
+            mysql.insertData(connection, schemaBuilder.getTableName(), data)
+              .then(function(){
+                resolve();
+              })
+              .catch(function(err){
+                reject(err);
+              });
+          });
+        }
+      };
     };
 
     function dh_read(connection, schemaBuilder) {
@@ -22,6 +36,15 @@ angular.module('electroCrudApp')
       }
 
       return {
+        getRow: function(where){
+          return new Promise(function(resolve, reject) {
+
+            mysql.getTableRowData(connection, schemaBuilder.getTableName(),
+                                schemaBuilder.getActiveColumnsList(), where).then(function(results){
+              resolve(results);
+            });
+          });
+        },
         getResults: function(limitFrom, limitCount) {
           var count,
               rows;
@@ -49,6 +72,24 @@ angular.module('electroCrudApp')
       if ( ! schemaBuilder.getPermissions().u) {
         return new Error("No Permissions");
       }
+
+      return {
+        update: function(data) {
+          return new Promise(function(resolve, reject) {
+            try {
+              // remove primary key while update
+              delete data[schemaBuilder.getPrimaryKey()];
+            } catch(er) {}
+            mysql.updateData(connection, schemaBuilder.getTableName(), data)
+              .then(function(){
+                resolve();
+              })
+              .catch(function(err){
+                reject(err);
+              });
+          });
+        }
+      };
     };
 
     function dh_delete(connection, schemaBuilder) {

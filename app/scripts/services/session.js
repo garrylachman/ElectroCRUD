@@ -8,9 +8,10 @@
  * Service in the electroCrudApp.
  */
 angular.module('electroCrudApp')
-  .service('session', ['projectsModel', 'viewsModel', function (projectsModel, viewsModel) {
+  .service('session', ['projectsModel', 'viewsModel', 'mysql', function (projectsModel, viewsModel, mysql) {
     var currentProject = undefined;
     var currentViews = [];
+    var dbConnection = undefined;
 
     return {
       openProject: function(id) {
@@ -19,6 +20,12 @@ angular.module('electroCrudApp')
           projectsModel.getById(id)
             .then(function(result){
               currentProject = result.rows[0];
+              dbConnection = mysql.getConnection(currentProject.mysql_host,
+                currentProject.mysql_port,
+                currentProject.mysql_user,
+                currentProject.mysql_password,
+                currentProject.mysql_db);
+              dbConnection.connect();
               _this.loadViews();
               resolve();
             })
@@ -37,6 +44,12 @@ angular.module('electroCrudApp')
       },
       getProject: function(){
         return currentProject;
+      },
+      setConnection: function(connection) {
+        dbConnection = connection;
+      },
+      getConnection: function(){
+        return dbConnection;
       },
       projectViews: currentViews
     }

@@ -59,14 +59,7 @@ angular.module('electroCrudApp')
       }
 
       function getConnection() {
-        console.log($scope.project);
-        var connection = mysql.getConnection($scope.project.mysql_host,
-          $scope.project.mysql_port,
-          $scope.project.mysql_user,
-          $scope.project.mysql_password,
-          $scope.project.mysql_db);
-        connection.connect();
-        return connection;
+        return session.getConnection();
       }
 
       function loadTable() {
@@ -79,6 +72,11 @@ angular.module('electroCrudApp')
           console.log(results);
         });
 
+      }
+
+      $scope.updateRow = function(row) {
+        var rowId = row[$scope.schemaBuilder.getPrimaryKey()];
+        $location.path("/view/"+viewId+"/update/"+rowId)
       }
 
       reload();

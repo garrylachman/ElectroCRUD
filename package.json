@@ -1,5 +1,6 @@
 {
   "main": "app/index.js",
+  "version": "0.0.1",
   "name": "electrocrud",
   "private": true,
   "devDependencies": {

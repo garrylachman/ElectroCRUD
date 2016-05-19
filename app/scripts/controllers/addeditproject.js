@@ -9,9 +9,9 @@
  */
 angular.module('electroCrudApp')
   .controller('AddeditprojectCtrl', ['$scope', 'breadcrumb', 'projectsModel', '$route', '$routeParams',
-                                      'mysql', 'SweetAlert', '$location',
+                                      'mysql', 'SweetAlert', '$location', 'session',
   function ($scope, breadcrumb, projectsModel, $route,
-            $routeParams, mysql, SweetAlert, $location) {
+            $routeParams, mysql, SweetAlert, $location, session) {
     $scope.editMode = ($route.current.$$route.controllerAs == "editProject");
     $scope.project = {};
     $scope.detailsFormValid = false;
@@ -81,13 +81,7 @@ angular.module('electroCrudApp')
     }
 
     function getMySQLDatabases() {
-      var connection = mysql.getConnection($scope.project.mysql_host,
-        $scope.project.mysql_port,
-        $scope.project.mysql_user,
-        $scope.project.mysql_password,
-        $scope.project.mysql_db);
-        connection.connect();
-
+      var connection = session.getConnection();
       mysql.getDatabases(connection)
         .then(function(results) {
           results.forEach(function(row){
@@ -95,11 +89,9 @@ angular.module('electroCrudApp')
           });
           angular.copy(results, $scope.databases);
           $scope.$apply();
-          mysql.closeConnection(connection);
         })
         .catch(function(err) {
           SweetAlert.swal("Error", err, "error");
-          mysql.closeConnection(connection);
         });
     }
 

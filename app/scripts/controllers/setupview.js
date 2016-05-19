@@ -97,12 +97,7 @@ angular.module('electroCrudApp')
       }
 
       function getMySQLTables() {
-        var connection = mysql.getConnection($scope.project.mysql_host,
-          $scope.project.mysql_port,
-          $scope.project.mysql_user,
-          $scope.project.mysql_password,
-          $scope.project.mysql_db);
-          connection.connect();
+        var connection = session.getConnection();
 
         mysql.getTables(connection)
           .then(function(results) {
@@ -110,23 +105,15 @@ angular.module('electroCrudApp')
               return {name: a[Object.keys(a)[0]]};
             });
             angular.copy(results, $scope.tables);
-            //$scope.selectedTable = { value: $scope.tables[0] };
             $scope.$apply();
-            mysql.closeConnection(connection);
           })
           .catch(function(err) {
             SweetAlert.swal("Error", err, "error");
-            mysql.closeConnection(connection);
           });
       }
 
       function getMySQLColumns() {
-        var connection = mysql.getConnection($scope.project.mysql_host,
-          $scope.project.mysql_port,
-          $scope.project.mysql_user,
-          $scope.project.mysql_password,
-          $scope.project.mysql_db);
-          connection.connect();
+        var connection = session.getConnection();;
 
         mysql.getTableDesc(connection, $scope.table)
           .then(function(results) {
@@ -146,11 +133,9 @@ angular.module('electroCrudApp')
               }
             });
             $scope.primaryKeyWarning = ( ! $scope.schemaBuilder.getPrimaryKey());
-            mysql.closeConnection(connection);
           })
           .catch(function(err) {
             SweetAlert.swal("Error", err, "error");
-            mysql.closeConnection(connection);
           });
       }
 
