@@ -58,10 +58,11 @@ angular.module('electroCrudApp')
           });
         });
       },
-      getTableData: function(connection, table, columns, limitFrom, limitCount) {
-        var columnsStr = columns.join(",");
+      getTableData: function(connection, table, columns, limitFrom, limitCount, sortBy, sortDir) {
+        sortBy = !sortBy ? 1 : sortBy;
+        sortDir = !sortDir ? "ASC" : sortDir;
         return new Promise(function(resolve, reject) {
-          connection.query(util.format('SELECT %s FROM %s LIMIT %d, %d', columnsStr, table, limitFrom, limitCount), function(err, rows, fields) {
+          connection.query('SELECT ?? FROM ?? ORDER BY ?? '+sortDir+' LIMIT '+limitFrom+', '+limitCount, [columns, table, sortBy], function(err, rows, fields) {
             if (err) reject(err);
             resolve(rows);
           });

@@ -19,6 +19,7 @@ angular.module('electroCrudApp')
     $scope.columns = [];
     $scope.userInput = {};
     $scope.dataHelper = undefined;
+    $scope.boxTitle = "Create";
 
     function load() {
       viewsModel.getById(viewId).then(function(results) {
@@ -32,6 +33,7 @@ angular.module('electroCrudApp')
             $scope.term = $scope.schemaBuilder.getTerm();
             $scope.columns = $scope.schemaBuilder.getColumns();
             if ($scope.editMode){
+              $scope.boxTitle = "Update";
               breadcrumb.append("Update", "#/view/"+viewId+"/update");
               loadEditMode();
             } else {

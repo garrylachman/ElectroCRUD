@@ -45,7 +45,7 @@ angular.module('electroCrudApp')
             });
           });
         },
-        getResults: function(limitFrom, limitCount) {
+        getResults: function(limitFrom, limitCount, sortBy, sortDir) {
           var count,
               rows;
           return new Promise(function(resolve, reject) {
@@ -53,7 +53,8 @@ angular.module('electroCrudApp')
               count = countResults;
 
               mysql.getTableData(connection, schemaBuilder.getTableName(),
-                                  schemaBuilder.getActiveColumnsList(), limitFrom, limitCount).then(function(results){
+                                  schemaBuilder.getActiveColumnsList(), limitFrom, limitCount,
+                                  sortBy, sortDir).then(function(results){
                 resolve({
                   count: count,
                   columns: schemaBuilder.getActiveColumnsList(),

@@ -28,6 +28,8 @@ angular.module('electroCrudApp')
         columns: [],
         rows: []
       };
+      $scope.sortingColumn;
+      $scope.sortingDir = "ASC";
 
       $scope.pageChanged = function(page){
         loadTable();
@@ -44,6 +46,7 @@ angular.module('electroCrudApp')
 
           try {
             $scope.schemaBuilder = schemaHelper.loadBuilder($scope.viewData.schema);
+            $scope.sortingColumn = $scope.schemaBuilder.getActiveColumnsList()[0];
           } catch (er) {}
           $scope.isViewEmpty = isViewEmpty();
           breadcrumb.set($scope.viewData.name, "#/view/"+viewId);
@@ -66,17 +69,25 @@ angular.module('electroCrudApp')
         $scope.term = $scope.schemaBuilder.getTerm();
         $scope.permissions = $scope.schemaBuilder.getPermissions();
         $scope.dataHelper = dataHelper.init(getConnection(), $scope.schemaBuilder);
-        $scope.dataHelper.read.getResults(($scope.currentPage-1)*$scope.rowsPerPage, $scope.rowsPerPage).then(function(results){
-          $scope.tableData = results;
-          $scope.$apply();
-          console.log(results);
-        });
+        $scope.dataHelper.read.getResults(($scope.currentPage-1)*$scope.rowsPerPage,
+                                          $scope.rowsPerPage, $scope.sortingColumn,
+                                          $scope.sortingDir)
+          .then(function(results){
+            $scope.tableData = results;
+            $scope.$apply();
+          });
 
       }
 
       $scope.updateRow = function(row) {
         var rowId = row[$scope.schemaBuilder.getPrimaryKey()];
         $location.path("/view/"+viewId+"/update/"+rowId)
+      };
+
+      $scope.doSorting = function(col) {
+        $scope.sortingColumn = col;
+        $scope.sortingDir = $scope.sortingDir == "ASC" ? "DESC" : "ASC";
+        loadTable();
       };
 
       $scope.deleteRow = function(row) {

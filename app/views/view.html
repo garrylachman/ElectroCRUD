@@ -27,12 +27,14 @@
         <div class="box-body table-responsive">
           <div class="row">
             <div class="col-xs-12">
-              <table class="table table-hover table-bordered">
-                <tbody>
+              <table class="table table-hover table-bordered dataTable">
+                <thead>
                   <tr>
-                    <th ng-repeat="col in tableData.columns">{{col}}</th>
+                    <th ng-class="{'sorting': col!=sortingColumn, 'sorting_desc': (col==sortingColumn && sortingDir=='DESC'), 'sorting_asc': (col==sortingColumn && sortingDir=='ASC')}" ng-repeat="col in tableData.columns" ng-click="doSorting(col)">{{col}}</th>
                     <th></th>
                   </tr>
+                </thead>
+                <tbody>
                 <tr ng-repeat="row in tableData.rows">
                   <td ng-repeat="td in row">{{td}}</td>
                   <td>
