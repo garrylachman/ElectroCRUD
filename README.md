@@ -1,9 +1,7 @@
 # ElectroCRUD
 
-This project is generated with [yo angular generator](https://github.com/yeoman/generator-angular)
-version 0.15.1.
-
 MySQL CRUD application built on [Electron](http://electron.atom.io/).
+No Coding, just select database and create views.
 
 ## Download Binaries
 [Mac OSX, ver. 0.0.1 (pre-alpha)](https://github.com/garrylachman/ElectroCRUD/raw/master/dist_binaries/0.0.1/ElectoCRUD-darwin-x64.zip)
