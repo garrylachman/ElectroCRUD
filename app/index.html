@@ -27,6 +27,7 @@
     <link rel="stylesheet" href="bower_components/AdminLTE/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css" />
     <link rel="stylesheet" href="bower_components/AdminLTE/plugins/datatables/dataTables.bootstrap.css" />
     <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/AdminLTE/dist/css/AdminLTE.css" />
     <link rel="stylesheet" href="bower_components/sweetalert/dist/sweetalert.css" />
     <link rel="stylesheet" href="bower_components/angular-ui-select/dist/select.css" />
     <!-- endbower -->
@@ -79,11 +80,12 @@
                     </span>
               </div>
             </li>
-            <li class="" ng-repeat="item in viewItems">
+            <li class="" ng-repeat="item in viewItems" ng-mouseover="showDelete=true" ng-mouseleave="showDelete=false" ng-init="showDelete=false">
               <a href="#" ng-click="onViewClick(item.id)">
                 <i class="fa fa-database"></i>
                   <span>{{item.name}}</span>
               </a>
+              <span ng-click="deleteView(item.id)" ng-show="showDelete" data-toggle="tooltip" class="deleteViewBtn btn fa fa-remove text-red pull-right" data-original-title="Delete"></span>
             </li>
 
           </ul>
@@ -138,8 +140,8 @@
 
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
-    <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap.js"></script>
     <script src="bower_components/angular-animate/angular-animate.js"></script>
     <script src="bower_components/angular-cookies/angular-cookies.js"></script>

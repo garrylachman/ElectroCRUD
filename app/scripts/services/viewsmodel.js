@@ -31,6 +31,11 @@ angular.module('electroCrudApp')
         return db.update(table, data, {
           id: id
         });
+      },
+      delete: function(id) {
+        return db.del(table, {
+          id: id
+        });
       }
     };
   }]);

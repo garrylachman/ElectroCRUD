@@ -18,7 +18,6 @@ angular.module('electroCrudApp')
 
     $scope.newViewName = "";
     $scope.addNewView = function(viewName) {
-      console.log(session.getProject());
       if ( ! session.getProject())
       {
         SweetAlert.swal("Error", "Open a project first.", "error");
@@ -44,6 +43,13 @@ angular.module('electroCrudApp')
       $timeout(function(){
         $location.path("/view/" + id);
       }, 1);
+    };
+
+    $scope.deleteView = function(id) {
+      viewsModel.delete(id)
+        .then(function(){
+          session.loadViews();
+        });
     };
 
 
