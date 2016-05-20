@@ -12,7 +12,15 @@
               <div class="form-group">
                 <label for="inputTitle" class="col-sm-2 control-label">SQL</label>
                 <div class="col-sm-10" id='inputTitle'>
-                  <span class="staticQuery-modal">SELECT (</span>
+                  <span class="staticQuery-modal">SELECT </span>
+                  <select class="form-control functionSelect-modal" ng-model="selectedFunction" ng-change="onFunctionSelected(this)">
+                    <option value="COUNT">COUNT</option>
+                    <option value="SUM">SUM</option>
+                    <option value="AVG">AVG</option>
+                    <option value="MAX">MAX</option>
+                    <option value="MIN">MIN</option>
+                  </select>
+                  <span class="staticQuery-modal"> (</span>
                   <i-check ng-model="isDistinct" class="icheckbox_flat-blue"></i-check> Distinct
                   <select class="form-control tablesSelect-modal" ng-model="selectedColumn" ng-change="onColumnSelected(this)">
                     <option ng-repeat="col in columns" value="{{col.value}}">{{col.name}}</option>

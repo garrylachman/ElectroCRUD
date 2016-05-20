@@ -8,11 +8,16 @@
  * Controller of the electroCrudApp
  */
 angular.module('electroCrudApp')
-  .controller('ViewAddEditCtrl', ['$scope','SweetAlert', 'viewsModel', '$location', '$routeParams', 'breadcrumb', 'schemaHelper', 'projectsModel', 'dataHelper', 'mysql', '$route', 'session',
-  function ($scope, SweetAlert, viewsModel, $location, $routeParams, breadcrumb, schemaHelper, projectsModel, dataHelper, mysql, $route, session) {
+  .controller('ViewAddEditCtrl', ['$scope','SweetAlert', 'viewsModel', '$location', '$routeParams',
+    'breadcrumb', 'schemaHelper', 'projectsModel', 'dataHelper', 'mysql',
+    '$route', 'session', 'ngProgressFactory',
+  function ($scope, SweetAlert, viewsModel, $location, $routeParams,
+      breadcrumb, schemaHelper, projectsModel, dataHelper, mysql,
+      $route, session, ngProgressFactory) {
     $scope.editMode = ($route.current.$$route.controllerAs == "updateView");
 
     var viewId = $routeParams.id;
+    $scope.progressbar = ngProgressFactory.createInstance();
     $scope.viewData = {};
     $scope.schemaBuilder = undefined;
     $scope.term = undefined;
@@ -46,6 +51,7 @@ angular.module('electroCrudApp')
     }
 
     function loadEditMode() {
+      $scope.progressbar.start();
       var primaryKey = $scope.schemaBuilder.getPrimaryKey();
       var obj = {};
       obj[primaryKey] = $routeParams.key;
@@ -53,12 +59,14 @@ angular.module('electroCrudApp')
       $scope.dataHelper = dataHelper.init(getConnection(), $scope.schemaBuilder);
       $scope.dataHelper.read.getRow(obj)
         .then(function(results){
+          $scope.progressbar.complete();
           Object.keys(results[0]).forEach(function(key){
             $scope.userInput[key] = results[0][key];
           });
           $scope.$apply();
         })
         .catch(function(err){
+          $scope.progressbar.complete();
           SweetAlert.swal("Error", err, "error");
         });
     }

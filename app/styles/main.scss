@@ -145,6 +145,11 @@ body {
   display: inline-block;
 }
 
+.functionSelect-modal {
+  width: 100px;
+  display: inline-block;
+}
+
 .staticQuery-modal {
   font-size: 18px;
   vertical-align: middle;
@@ -164,7 +169,7 @@ body {
 }
 
 .icons-scroll-modal .btn-icon-modal:first-child {
-  margin-left: 1px;
+  margin-left: -1px;
 }
 
 .icons-scroll-modal .btn-icon-modal:first-child,

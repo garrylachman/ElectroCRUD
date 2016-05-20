@@ -21,7 +21,8 @@ angular.module('electroCrudApp')
         icon = "fa-bookmark-o",
         bg = "bg-aqua",
         widgetValue = "#",
-        mysqlConnection = undefined;
+        mysqlConnection = undefined,
+        params = {};
 
       return {
         create: function() {
@@ -36,6 +37,9 @@ angular.module('electroCrudApp')
               .then(function(result){
                 widgetValue = result[0].count;
                 resolve();
+              })
+              .catch(function(err) {
+                reject(err);
               });
           });
         },
@@ -44,6 +48,12 @@ angular.module('electroCrudApp')
         },
         getType: function() {
           return widgetType;
+        },
+        setParams: function(wParams) {
+          params = wParams;
+        },
+        getParams: function() {
+          return params;
         },
         setSql: function(wSql) {
           sql = wSql;
@@ -78,6 +88,9 @@ angular.module('electroCrudApp')
           title = json.title;
           icon = json.icon;
           bg = json.bg;
+          if (json.params) {
+            params = json.params;
+          }
         },
         fromJSONString: function(jsonStr) {
           return this.fromJSON(JSON.parse(jsonStr));
@@ -88,7 +101,8 @@ angular.module('electroCrudApp')
             sql: sql,
             title: title,
             icon: icon,
-            bg: bg
+            bg: bg,
+            params: params
           };
         },
         toJSONString: function() {

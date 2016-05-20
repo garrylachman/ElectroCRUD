@@ -1,4 +1,5 @@
 'use strict';
+var util = require('util');
 
 /**
  * @ngdoc function
@@ -11,12 +12,13 @@ angular.module('electroCrudApp')
   .controller('ViewCtrl',
     ['$scope','session', 'viewsModel', '$location', '$routeParams', 'breadcrumb',
       'schemaHelper', 'projectsModel', 'dataHelper', 'mysql', 'SweetAlert', 'widgetHelper',
-      '$uibModal',
+      '$uibModal', 'ngProgressFactory',
     function ($scope, session, viewsModel, $location, $routeParams, breadcrumb,
       schemaHelper, projectsModel, dataHelper, mysql, SweetAlert, widgetHelper,
-      $uibModal) {
+      $uibModal, ngProgressFactory) {
 
       var viewId = $routeParams.id;
+      $scope.progressbar = ngProgressFactory.createInstance();
       $scope.rowsPerPage = 10;
       $scope.currentPage = 1;
       $scope.viewData = {};
@@ -42,6 +44,7 @@ angular.module('electroCrudApp')
           animation: true,
           templateUrl: 'myModalContent.html',
           controller: 'ModalWidgetSettingsInstanceCtrl',
+          size: 'lg',
           resolve: {
             columns: function(){ return $scope.schemaBuilder.getActiveColumnsList() },
             table: function(){ return $scope.schemaBuilder.getTableName() },
@@ -58,9 +61,12 @@ angular.module('electroCrudApp')
           viewsModel.update(viewId, {
             schema: $scope.schemaBuilder.toJSONString()
           });
-          widget.loadFromDB().then(function(){
-            $scope.$apply();
-          });
+          widget.loadFromDB()
+            .then(function(){
+              $scope.$apply();
+            })
+            .catch(function(err){
+            });
         });
 
 
@@ -95,9 +101,12 @@ angular.module('electroCrudApp')
         $scope.widgets.loadWidgets($scope.schemaBuilder.getWidgetsJson());
         $scope.widgets.getWidgets().forEach(function(widget){
           widget.setConnection(getConnection());
-          widget.loadFromDB().then(function(){
-            $scope.$apply();
-          });
+          widget.loadFromDB()
+            .then(function(){
+              $scope.$apply();
+            })
+            .catch(function(err){
+            });
         });
       }
 
@@ -114,6 +123,7 @@ angular.module('electroCrudApp')
       }
 
       function loadTable() {
+        $scope.progressbar.start();
         $scope.term = $scope.schemaBuilder.getTerm();
         $scope.permissions = $scope.schemaBuilder.getPermissions();
         $scope.dataHelper = dataHelper.init(getConnection(), $scope.schemaBuilder);
@@ -121,8 +131,12 @@ angular.module('electroCrudApp')
                                           $scope.rowsPerPage, $scope.sortingColumn,
                                           $scope.sortingDir)
           .then(function(results){
+            $scope.progressbar.complete();
             $scope.tableData = results;
             $scope.$apply();
+          })
+          .catch(function(){
+            $scope.progressbar.complete();
           });
 
       }
@@ -172,11 +186,15 @@ angular.module('electroCrudApp')
         widget.setConnection(getConnection());
         widget.setTitle("Widget 1");
         widget.setSql("select count(*) as count from "+$scope.schemaBuilder.getTableName());
-        widget.loadFromDB().then(function(){
-          $scope.$apply();
-        });
+        widget.loadFromDB()
+          .then(function(){
+            $scope.$apply();
+          })
+          .catch(function(err){
+          });
 
         saveSchema();
+        $scope.openWidgetSettings(widget);
       };
 
       function saveSchema() {
@@ -195,7 +213,9 @@ angular.module('electroCrudApp')
   angular.module('electroCrudApp').controller('ModalWidgetSettingsInstanceCtrl',
     function ($scope, $uibModalInstance, columns, table, widget) {
 
-      $scope.selectedColumn = getColumnFromSql(widget.getSql());
+      $scope.params = widget.getParams();
+      console.log($scope.params);
+      $scope.selectedColumn = $scope.params.column;
       $scope.columns = columns.map(function(column){
         return {
           name: column,
@@ -209,9 +229,8 @@ angular.module('electroCrudApp')
         'bg-red', 'bg-green', 'bg-yellow'];
       $scope.selectedBackground = widget.getBg();
       $scope.selectedIcon = widget.getIcon();
-      $scope.isDistinct = widget.getSql().indexOf("DISTINCT") > -1;
-
-
+      $scope.isDistinct = $scope.params.distinct;
+      $scope.selectedFunction = $scope.params.function;
 
       $scope.onIconSelected = function($item) {
         $scope.selectedIcon = $item;
@@ -219,8 +238,6 @@ angular.module('electroCrudApp')
       }
 
       $scope.onColumnSelected = function($item) {
-        console.log($item);
-        console.log($scope.selectedColumn);
       };
 
       $scope.onBackgroundSelectd = function(color) {
@@ -230,7 +247,20 @@ angular.module('electroCrudApp')
 
       $scope.ok = function () {
         var distinctSql = $scope.isDistinct ? "DISTINCT" : "";
-        var sql = 'SELECT COUNT('+distinctSql+' '+$scope.selectedColumn+') as count FROM ' + $scope.table;
+
+        $scope.params.distinct = distinctSql;
+        $scope.params.column = $scope.selectedColumn;
+        $scope.params.table = $scope.table;
+        $scope.params.function = $scope.selectedFunction;
+
+        var sql = util.format('SELECT %s(%s %s) as count from %s',
+          $scope.params.function,
+          $scope.params.distinct,
+          $scope.params.column,
+          $scope.table
+        );
+
+        widget.setParams($scope.params);
         widget.setSql(sql);
         widget.setTitle($scope.inputTitle);
         $uibModalInstance.close();

@@ -28,6 +28,7 @@ angular.module('electroCrudApp')
       },
       getDatabases: function(connection) {
         return new Promise(function(resolve, reject) {
+          if (!connection) reject();
           connection.query('SHOW DATABASES', function(err, rows, fields) {
             if (err) reject(err);
             resolve(rows);
@@ -36,6 +37,7 @@ angular.module('electroCrudApp')
       },
       getTables: function(connection) {
         return new Promise(function(resolve, reject) {
+          if (!connection) reject();
           connection.query('SHOW TABLES', function(err, rows, fields) {
             if (err) reject(err);
             resolve(rows);
@@ -44,6 +46,7 @@ angular.module('electroCrudApp')
       },
       getTableDesc: function(connection, table) {
         return new Promise(function(resolve, reject) {
+          if (!connection) reject();
           connection.query(util.format('DESC %s', table), function(err, rows, fields) {
             if (err) reject(err);
             resolve(rows);
@@ -52,6 +55,7 @@ angular.module('electroCrudApp')
       },
       getTableCount: function(connection, table) {
         return new Promise(function(resolve, reject) {
+          if (!connection) reject();
           connection.query(util.format('SELECT COUNT(*) as count FROM %s', table), function(err, rows, fields) {
             if (err) reject(err);
             resolve(rows[0].count);
@@ -62,6 +66,7 @@ angular.module('electroCrudApp')
         sortBy = !sortBy ? 1 : sortBy;
         sortDir = !sortDir ? "ASC" : sortDir;
         return new Promise(function(resolve, reject) {
+          if (!connection) reject();
           connection.query('SELECT ?? FROM ?? ORDER BY ?? '+sortDir+' LIMIT '+limitFrom+', '+limitCount, [columns, table, sortBy], function(err, rows, fields) {
             if (err) reject(err);
             resolve(rows);
@@ -70,6 +75,7 @@ angular.module('electroCrudApp')
       },
       getQuery: function(connection, sql) {
         return new Promise(function(resolve, reject) {
+          if (!connection) reject();
           connection.query(sql, function(err, rows, fields) {
             if (err) reject(err);
             resolve(rows);
@@ -79,6 +85,7 @@ angular.module('electroCrudApp')
       getTableRowData: function(connection, table, columns, where) {
         var columnsStr = columns.join(",");
         return new Promise(function(resolve, reject) {
+          if (!connection) reject();
           connection.query(util.format('SELECT %s FROM %s WHERE ?', columnsStr, table), where,function(err, rows, fields) {
             if (err) reject(err);
             resolve(rows);
@@ -87,6 +94,7 @@ angular.module('electroCrudApp')
       },
       insertData: function(connection, table, data) {
         return new Promise(function(resolve, reject) {
+          if (!connection) reject();
           connection.query('INSERT INTO '+table+' SET ?', data, function(err, rows, fields) {
             if (err) reject(err);
             resolve(rows);
@@ -95,6 +103,7 @@ angular.module('electroCrudApp')
       },
       updateData: function(connection, table, data) {
         return new Promise(function(resolve, reject) {
+          if (!connection) reject();
           connection.query('UPDATE IGNORE '+table+' SET ?', data, function(err, rows, fields) {
             if (err) reject(err);
             resolve(rows);
@@ -103,6 +112,7 @@ angular.module('electroCrudApp')
       },
       deleteData: function(connection, table, data) {
         return new Promise(function(resolve, reject) {
+          if (!connection) reject();
           connection.query('DELETE FROM '+table+' WHERE ?', data, function(err, rows, fields) {
             if (err) reject(err);
             resolve();

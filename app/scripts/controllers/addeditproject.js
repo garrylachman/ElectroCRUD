@@ -9,14 +9,15 @@
  */
 angular.module('electroCrudApp')
   .controller('AddeditprojectCtrl', ['$scope', 'breadcrumb', 'projectsModel', '$route', '$routeParams',
-                                      'mysql', 'SweetAlert', '$location', 'session',
-  function ($scope, breadcrumb, projectsModel, $route,
-            $routeParams, mysql, SweetAlert, $location, session) {
+    'mysql', 'SweetAlert', '$location', 'session', 'ngProgressFactory',
+  function ($scope, breadcrumb, projectsModel, $route, $routeParams,
+      mysql, SweetAlert, $location, session, ngProgressFactory) {
     $scope.editMode = ($route.current.$$route.controllerAs == "editProject");
     $scope.project = {};
     $scope.detailsFormValid = false;
     $scope.databases = [];
     $scope.projectId = undefined;
+    $scope.progressbar = ngProgressFactory.createInstance();
 
     $scope.$watchCollection('project', function(newNames, oldNames) {
       $scope.detailsFormValid = formValidator();
@@ -81,6 +82,7 @@ angular.module('electroCrudApp')
     }
 
     function getMySQLDatabases() {
+      $scope.progressbar.start();
       var connection = mysql.getConnection($scope.project.mysql_host,
         $scope.project.mysql_port,
         $scope.project.mysql_user,
@@ -89,6 +91,7 @@ angular.module('electroCrudApp')
         connection.connect();
       mysql.getDatabases(connection)
         .then(function(results) {
+          $scope.progressbar.complete();
           results.forEach(function(row){
             row.selected = ($scope.project.mysql_db == row.Database);
           });
@@ -97,6 +100,7 @@ angular.module('electroCrudApp')
           mysql.closeConnection(connection);
         })
         .catch(function(err) {
+          $scope.progressbar.complete();
           SweetAlert.swal("Error", err, "error");
           mysql.closeConnection(connection);
         });

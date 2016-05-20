@@ -40,9 +40,13 @@ angular.module('electroCrudApp')
           return new Promise(function(resolve, reject) {
 
             mysql.getTableRowData(connection, schemaBuilder.getTableName(),
-                                schemaBuilder.getActiveColumnsList(), where).then(function(results){
-              resolve(results);
-            });
+                                schemaBuilder.getActiveColumnsList(), where)
+              .then(function(results){
+                resolve(results);
+              })
+              .catch(function(err){
+                reject(err);
+              });
           });
         },
         getResults: function(limitFrom, limitCount, sortBy, sortDir) {
@@ -60,8 +64,14 @@ angular.module('electroCrudApp')
                   columns: schemaBuilder.getActiveColumnsList(),
                   rows: results
                 });
+              })
+              .catch(function(err){
+                reject(err);
               });
 
+            })
+            .catch(function(err){
+              reject(err);
             });
           });
         }

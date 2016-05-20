@@ -18,7 +18,8 @@ angular
     'angular-websql',
     'oitozero.ngSweetAlert',
     'ui.select',
-    'ui.bootstrap'
+    'ui.bootstrap',
+    'ngProgress'
   ])
   .config(function ($routeProvider, $locationProvider, uiSelectConfig) {
     $routeProvider
