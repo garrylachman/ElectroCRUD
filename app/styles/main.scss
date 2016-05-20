@@ -3,6 +3,16 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 @import "bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
 // endbower
 
+::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 7px;
+}
+::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: rgba(0,0,0,.5);
+    -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
+}
+
 .browsehappy {
   margin: 0.2em 0;
   background: #ccc;
@@ -116,4 +126,48 @@ body {
 
 .table-pagination-wraper .pagination {
   margin: 2px 0;
+}
+
+.counterWidget {
+  cursor: pointer;
+}
+
+.counterWidget:hover {
+  opacity: 0.7;
+}
+
+.box-body.table-responsive {
+  overflow: hidden;
+}
+
+.tablesSelect-modal {
+  width: 150px;
+  display: inline-block;
+}
+
+.staticQuery-modal {
+  font-size: 18px;
+  vertical-align: middle;
+  opacity: 0.50;
+  font-weight: bold;
+}
+
+.btn-icon-modal {
+  width: 35px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+}
+
+.icons-scroll-modal {
+  height: 100px;
+  overflow-y: scroll;
+}
+
+.icons-scroll-modal .btn-icon-modal:first-child {
+  margin-left: 1px;
+}
+
+.icons-scroll-modal .btn-icon-modal:first-child,
+.icons-scroll-modal .btn-icon-modal:last-child {
+  border-radius: 0;
 }
