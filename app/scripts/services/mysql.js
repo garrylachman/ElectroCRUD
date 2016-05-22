@@ -53,21 +53,23 @@ angular.module('electroCrudApp')
           });
         });
       },
-      getTableCount: function(connection, table) {
+      getTableCount: function(connection, table, whereStr) {
+        var whereSql = whereStr ? util.format('WHERE %s', whereStr) : '';
         return new Promise(function(resolve, reject) {
           if (!connection) reject();
-          connection.query(util.format('SELECT COUNT(*) as count FROM %s', table), function(err, rows, fields) {
+          connection.query(util.format('SELECT COUNT(*) as count FROM %s %s', table, whereSql), function(err, rows, fields) {
             if (err) reject(err);
             resolve(rows[0].count);
           });
         });
       },
-      getTableData: function(connection, table, columns, limitFrom, limitCount, sortBy, sortDir) {
+      getTableData: function(connection, table, columns, limitFrom, limitCount, sortBy, sortDir, whereStr) {
         sortBy = !sortBy ? 1 : sortBy;
         sortDir = !sortDir ? "ASC" : sortDir;
+        whereStr = whereStr ? util.format('WHERE %s', whereStr) : '';
         return new Promise(function(resolve, reject) {
           if (!connection) reject();
-          connection.query('SELECT ?? FROM ?? ORDER BY ?? '+sortDir+' LIMIT '+limitFrom+', '+limitCount, [columns, table, sortBy], function(err, rows, fields) {
+          connection.query('SELECT ?? FROM ?? '+whereStr+' ORDER BY ?? '+sortDir+' LIMIT '+limitFrom+', '+limitCount, [columns, table, sortBy], function(err, rows, fields) {
             if (err) reject(err);
             resolve(rows);
           });

@@ -49,16 +49,22 @@ angular.module('electroCrudApp')
               });
           });
         },
-        getResults: function(limitFrom, limitCount, sortBy, sortDir) {
+        getSearchResults: function(searchFields, searchText, limitFrom, limitCount, sortBy, sortDir){
+          var where = searchFields.map(function(item){
+            return item + ' LIKE \'%' + searchText + '%\'';
+          });
+          var whereStr = where.join(' OR ');
+          return this.getResults(limitFrom, limitCount, sortBy, sortDir, whereStr);
+        },
+        getResults: function(limitFrom, limitCount, sortBy, sortDir, whereStr) {
           var count,
               rows;
           return new Promise(function(resolve, reject) {
-            mysql.getTableCount(connection, schemaBuilder.getTableName()).then(function(countResults){
+            mysql.getTableCount(connection, schemaBuilder.getTableName(), whereStr).then(function(countResults){
               count = countResults;
-
               mysql.getTableData(connection, schemaBuilder.getTableName(),
                                   schemaBuilder.getActiveColumnsList(), limitFrom, limitCount,
-                                  sortBy, sortDir).then(function(results){
+                                  sortBy, sortDir, whereStr).then(function(results){
                 resolve({
                   count: count,
                   columns: schemaBuilder.getActiveColumnsList(),

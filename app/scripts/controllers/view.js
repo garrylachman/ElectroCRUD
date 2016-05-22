@@ -37,6 +37,7 @@ angular.module('electroCrudApp')
       $scope.sortingColumn;
       $scope.sortingDir = "ASC";
       $scope.widgets = [];
+      $scope.isSearchMode = false;
 
       // modal
       $scope.openWidgetSettings = function (widget) {
@@ -123,6 +124,9 @@ angular.module('electroCrudApp')
       }
 
       function loadTable() {
+        if ($scope.isSearchMode) {
+          return loadSearchTable();
+        }
         $scope.progressbar.start();
         $scope.term = $scope.schemaBuilder.getTerm();
         $scope.permissions = $scope.schemaBuilder.getPermissions();
@@ -131,6 +135,26 @@ angular.module('electroCrudApp')
                                           $scope.rowsPerPage, $scope.sortingColumn,
                                           $scope.sortingDir)
           .then(function(results){
+            $scope.progressbar.complete();
+            $scope.tableData = results;
+            $scope.$apply();
+          })
+          .catch(function(){
+            $scope.progressbar.complete();
+          });
+      }
+
+      function loadSearchTable() {
+        $scope.progressbar.start();
+        $scope.term = $scope.schemaBuilder.getTerm();
+        $scope.permissions = $scope.schemaBuilder.getPermissions();
+        $scope.dataHelper = dataHelper.init(getConnection(), $scope.schemaBuilder);
+        $scope.dataHelper.read.getSearchResults($scope.schemaBuilder.getActiveColumnsList(), $scope.searchText,
+          ($scope.currentPage-1)*$scope.rowsPerPage,
+          $scope.rowsPerPage, $scope.sortingColumn,
+          $scope.sortingDir)
+          .then(function(results){
+            console.log(results);
             $scope.progressbar.complete();
             $scope.tableData = results;
             $scope.$apply();
@@ -195,6 +219,17 @@ angular.module('electroCrudApp')
 
         saveSchema();
         $scope.openWidgetSettings(widget);
+      };
+
+      $scope.search = function(){
+        $scope.isSearchMode = true;
+        loadSearchTable();
+      };
+
+      $scope.clearSearch = function(){
+        $scope.isSearchMode = false;
+        $scope.searchText = "";
+        loadTable();
       };
 
       function saveSchema() {
