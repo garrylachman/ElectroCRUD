@@ -4,7 +4,7 @@ MySQL CRUD application built on [Electron](http://electron.atom.io/).
 
 No Coding, just select database and create views.
 
-## Download Binaries [![GitHub version](https://badge.fury.io/gh/garrylachman%2FelectroCrud.svg)]
+## Download Binaries ![GitHub version](https://badge.fury.io/gh/garrylachman%2FelectroCrud.svg)
 
 [Mac OSX  (Pre-release)](https://github.com/garrylachman/ElectroCRUD/raw/master/dist_binaries/ElectoCRUD-darwin-x64.zip) [![GitHub version](https://badge.fury.io/gh/garrylachman%2FelectroCrud.svg)](https://badge.fury.io/gh/garrylachman%2FelectroCrud)
 
