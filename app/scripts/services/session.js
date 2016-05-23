@@ -9,7 +9,7 @@
  */
 angular.module('electroCrudApp')
   .service('session', ['projectsModel', 'viewsModel', 'mysql', function (projectsModel, viewsModel, mysql) {
-    var currentProject = undefined;
+    var currentProject = {};
     var currentViews = [];
     var dbConnection = undefined;
 
@@ -19,7 +19,8 @@ angular.module('electroCrudApp')
         return new Promise(function(resolve, reject) {
           projectsModel.getById(id)
             .then(function(result){
-              currentProject = result.rows[0];
+              //currentProject = result.rows[0];
+              angular.copy(result.rows[0], currentProject);
               dbConnection = mysql.getConnection(currentProject.mysql_host,
                 currentProject.mysql_port,
                 currentProject.mysql_user,
@@ -51,6 +52,7 @@ angular.module('electroCrudApp')
       getConnection: function(){
         return dbConnection;
       },
-      projectViews: currentViews
+      projectViews: currentViews,
+      activeProject: currentProject
     }
   }]);

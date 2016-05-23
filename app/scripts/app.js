@@ -58,6 +58,10 @@ angular
         controller: 'ViewAddEditCtrl',
         controllerAs: 'updateView'
       })
+      .when('/processList', {
+        templateUrl: 'views/process-list.html',
+        controller: 'ProcessListCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });

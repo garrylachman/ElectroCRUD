@@ -13,9 +13,10 @@ function onClosed() {
 }
 
 function createMainWindow() {
+        const {width, height} = electron.screen.getPrimaryDisplay().workAreaSize;
         const win = new electron.BrowserWindow({
-                width: 800,
-                height: 600,
+                width: width,
+                height: height,
                 minWidth: 800,
                 icon: path.join(__dirname, 'app/images/icons/512.ico')
         });

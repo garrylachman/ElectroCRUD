@@ -183,3 +183,7 @@ body {
 .flex {
   display: inline-flex;
 }
+
+.sidebar-menu > li.disabled {
+  opacity: 0.1;
+}

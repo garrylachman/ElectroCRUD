@@ -10,11 +10,18 @@
 angular.module('electroCrudApp')
   .controller('SidemenuCtrl', ['$scope', 'breadcrumb', '$location', '$timeout', 'viewsModel', 'SweetAlert', 'session',
   function($scope, breadcrumb, $location, $timeout, viewsModel, SweetAlert, session) {
-    $scope.menuItems = [
-      { text: 'Projects', class: 'fa fa-briefcase ', name: 'projects'}
-    ];
 
     $scope.viewItems = session.projectViews;
+    $scope.activeProject = session.activeProject;
+
+    $scope.menuItems = [
+      { text: 'Projects', class: 'fa fa-briefcase ', name: 'projects', disabled: false},
+      { text: 'Process List Monitor', class: 'fa fa-heart ', name: 'processList', disabled: ($scope.activeProject.id == undefined)}
+    ];
+
+    $scope.$watchCollection('activeProject', function(newVal, oldVal){
+      $scope.menuItems[1].disabled = (newVal.id == undefined);
+    });
 
     $scope.newViewName = "";
     $scope.addNewView = function(viewName) {
@@ -33,9 +40,13 @@ angular.module('electroCrudApp')
         });
     };
 
-    $scope.onMenuClick = function(name) {
+    $scope.onMenuClick = function(item) {
+      if (item.disabled)
+      {
+        return;
+      }
       $timeout(function(){
-        $location.path("/" + name);
+        $location.path("/" + item.name);
       }, 1);
     };
 

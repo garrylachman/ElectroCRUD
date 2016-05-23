@@ -41,10 +41,10 @@ function createTempHtml() {
   });
 }
 
-function createMainWindow() {
+function createMainWindow(width, height) {
   const win = new electron.BrowserWindow({
-    width: 800,
-    height: 600,
+    width: width,
+    height: height,
     icon: path.join(__dirname, 'app/images/icons/512.ico')
   });
 
@@ -66,11 +66,12 @@ app.on('window-all-closed', () => {
 });
 
 app.on('activate', () => {
-  if (!mainWindow) {
+  /*if (!mainWindow) {
     mainWindow = createMainWindow();
-  }
+  }*/
 });
 
 app.on('ready', () => {
-  mainWindow = createMainWindow();
+  const {width, height} = electron.screen.getPrimaryDisplay().workAreaSize;
+  mainWindow = createMainWindow(width, height);
 });

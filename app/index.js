@@ -5,36 +5,38 @@ const {app, dialog, shell, Menu, BrowserWindow} = require('electron')
 
 var mainWindow;
 function onClosed() {
-        // dereference the window
-        // for multiple windows store them in an array
-        mainWindow = null;
+  // dereference the window
+  // for multiple windows store them in an array
+  mainWindow = null;
 }
 
 function createMainWindow() {
-        var win = new BrowserWindow({
-                width: 800,
-                height: 600,
-                minWidth: 800
-        });
+  const {width, height} = require('electron').screen.getPrimaryDisplay().workAreaSize;
+  var win = new BrowserWindow({
+          width: width,
+          height: height,
+          minWidth: 800,
+          title: "ElectroCRUD"
+  });
 
-        win.loadURL('file://'+__dirname+'/index.html');
-        //win.loadURL('about:blank');
-        win.on('closed', onClosed);
+  win.loadURL('file://'+__dirname+'/index.html');
+  //win.loadURL('about:blank');
+  win.on('closed', onClosed);
 
-        return win;
+  return win;
 }
 
 app.on('window-all-closed', function() {
-        if (process.platform !== 'darwin') {
-                app.quit();
-        }
+  if (process.platform !== 'darwin') {
+    app.quit();
+  }
 });
 
-app.on('activate', function() {
-        if (!mainWindow) {
+/*app.on('activate', function() {
+          if (!mainWindow) {
                 mainWindow = createMainWindow();
         }
-});
+});*/
 
 app.once('ready', () => {
     if (!mainWindow) {
@@ -147,7 +149,7 @@ app.once('ready', () => {
       label: 'Electron',
       submenu: [
         {
-          label: 'About Electron',
+          label: 'About ElectroCRUD',
           role: 'about'
         },
         {

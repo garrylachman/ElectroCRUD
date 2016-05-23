@@ -65,8 +65,8 @@
         <section class="sidebar">
           <!-- sidebar menu: : style can be found in sidebar.less -->
           <ul class="sidebar-menu" ng-controller="SidemenuCtrl">
-            <li class="" ng-repeat="item in menuItems">
-              <a href="#" ng-click="onMenuClick(item.name)">
+            <li ng-class="{'disabled': item.disabled}" ng-repeat="item in menuItems">
+              <a href="#" ng-click="onMenuClick(item)">
                 <i class="{{item.class}}"></i>
                   <span>{{item.text}}</span>
               </a>
@@ -103,7 +103,7 @@
             {{pageTitle}}
           </h1>
           <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li><a href="#/"><i class="fa fa-dashboard"></i> Home</a></li>
             <li ng-repeat="item in items"><a href="{{item.href}}">{{item.title}}</a></li>
           </ol>
         </section>
@@ -197,6 +197,7 @@
     <script src="scripts/controllers/view-add-edit.js"></script>
     <script src="scripts/services/widget-helper.js"></script>
     <script src="scripts/directives/ng-enter.js"></script>
+    <script src="scripts/controllers/process-list.js"></script>
     <!-- endbuild -->
 </body>
 </html>
