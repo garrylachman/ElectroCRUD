@@ -5,15 +5,16 @@ MySQL CRUD application built on [Electron](http://electron.atom.io/).
 No Coding, just select database and create views.
 
 ## Download Binaries
-[Mac OSX, ver. 0.2.0 (Pre-release)](https://github.com/garrylachman/ElectroCRUD/raw/master/dist_binaries/ElectoCRUD-darwin-x64.zip)
+[![GitHub version](https://badge.fury.io/gh/garrylachman%2FelectroCrud.svg)](https://badge.fury.io/gh/garrylachman%2FelectroCrud)
+[Mac OSX  (Pre-release)](https://github.com/garrylachman/ElectroCRUD/raw/master/dist_binaries/ElectoCRUD-darwin-x64.zip)
 
-[Linux 32Bit, ver. 0.2.0 (Pre-release)](https://github.com/garrylachman/ElectroCRUD/raw/master/dist_binaries/ElectoCRUD-linux-ia32.zip)
+[Linux 32Bit  (Pre-release)](https://github.com/garrylachman/ElectroCRUD/raw/master/dist_binaries/ElectoCRUD-linux-ia32.zip)
 
-[Linux 64Bit, ver. 0.2.0 (Pre-release)](https://github.com/garrylachman/ElectroCRUD/raw/master/dist_binaries/ElectoCRUD-linux-x64.zip)
+[Linux 64Bit  (Pre-release)](https://github.com/garrylachman/ElectroCRUD/raw/master/dist_binaries/ElectoCRUD-linux-x64.zip)
 
-[Windows 32Bit, ver. 0.2.0 (Pre-release)](https://github.com/garrylachman/ElectroCRUD/raw/master/dist_binaries/ElectoCRUD-win32-ia32.zip)
+[Windows 32Bit  (Pre-release)](https://github.com/garrylachman/ElectroCRUD/raw/master/dist_binaries/ElectoCRUD-win32-ia32.zip)
 
-[Windows 64Bit, ver. 0.2.0 (Pre-release)](https://github.com/garrylachman/ElectroCRUD/raw/master/dist_binaries/ElectoCRUD-win32-x64.zip)
+[Windows 64Bit  (Pre-release)](https://github.com/garrylachman/ElectroCRUD/raw/master/dist_binaries/ElectoCRUD-win32-x64.zip)
 
 ## Screenshots
 ![Screenshot](http://i.imgur.com/cGVXegb.png)
@@ -41,3 +42,5 @@ Run `grunt buildElectron`.
 * [AdminLTE](https://almsaeedstudio.com/)
 * [node-mysql](https://github.com/felixge/node-mysql)
 * [font awesome](http://fontawesome.io)
+
+Sponsored By [P2P Proxies Network](https://rev.proxies.online)

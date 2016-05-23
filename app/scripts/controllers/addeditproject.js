@@ -13,7 +13,9 @@ angular.module('electroCrudApp')
   function ($scope, breadcrumb, projectsModel, $route, $routeParams,
       mysql, SweetAlert, $location, session, ngProgressFactory) {
     $scope.editMode = ($route.current.$$route.controllerAs == "editProject");
-    $scope.project = {};
+    $scope.project = {
+      'mysql_port': 3306
+    };
     $scope.detailsFormValid = false;
     $scope.databases = [];
     $scope.projectId = undefined;
