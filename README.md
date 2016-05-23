@@ -17,9 +17,12 @@ No Coding, just select database and create views.
 [Windows 64Bit  (Pre-release)](https://github.com/garrylachman/ElectroCRUD/raw/master/dist_binaries/ElectoCRUD-win32-x64.zip)
 
 ## Screenshots
-![Screenshot](http://i.imgur.com/cGVXegb.png)
-![Screenshot](http://i.imgur.com/mrFLg5e.png)
-![Screenshot](http://i.imgur.com/A51zLRv.png)
+<img src="http://i.imgur.com/TetjYVu.png" width="50%" style="float: left;" />
+<img src="http://i.imgur.com/E1BS1tL.png" width="50%" style="float: left;" />
+<img src="http://i.imgur.com/yc2L992.png" width="50%" style="float: left;" />
+<img src="http://i.imgur.com/twgRdOr.png" width="50%" style="float: left;" />
+<img src="http://i.imgur.com/A51zLRv.png" width="50%" style="float: left;" />
+
 
 ## Install dependencies
 
