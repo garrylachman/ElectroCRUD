@@ -6,15 +6,15 @@ No Coding, just select database and create views.
 
 ## Download Binaries [![GitHub tag](https://img.shields.io/github/tag/garrylachman/ElectroCRUD.svg?maxAge=2592000)]()
 
-[Mac OSX  (Pre-release)](https://github.com/garrylachman/ElectroCRUD/raw/master/dist_binaries/ElectoCRUD-darwin-x64.zip)
+[Mac OSX  (Pre-release)](https://github.com/garrylachman/ElectroCRUD/releases/download/0.3.0/ElectoCRUD-darwin-x64.zip)
 
-[Linux 32Bit  (Pre-release)](https://github.com/garrylachman/ElectroCRUD/raw/master/dist_binaries/ElectoCRUD-linux-ia32.zip)
+[Linux 32Bit  (Pre-release)](https://github.com/garrylachman/ElectroCRUD/releases/download/0.3.0/ElectoCRUD-linux-ia32.zip)
 
-[Linux 64Bit  (Pre-release)](https://github.com/garrylachman/ElectroCRUD/raw/master/dist_binaries/ElectoCRUD-linux-x64.zip)
+[Linux 64Bit  (Pre-release)](https://github.com/garrylachman/ElectroCRUD/releases/download/0.3.0/ElectoCRUD-linux-x64.zip)
 
-[Windows 32Bit  (Pre-release)](https://github.com/garrylachman/ElectroCRUD/raw/master/dist_binaries/ElectoCRUD-win32-ia32.zip)
+[Windows 32Bit  (Pre-release)](https://github.com/garrylachman/ElectroCRUD/releases/download/0.3.0/ElectoCRUD-win32-ia32.zip)
 
-[Windows 64Bit  (Pre-release)](https://github.com/garrylachman/ElectroCRUD/raw/master/dist_binaries/ElectoCRUD-win32-x64.zip)
+[Windows 64Bit  (Pre-release)](https://github.com/garrylachman/ElectroCRUD/releases/download/0.3.0/ElectoCRUD-win32-x64.zip)
 
 ## Screenshots
 |   |  |
