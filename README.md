@@ -4,7 +4,7 @@ MySQL CRUD application built on [Electron](http://electron.atom.io/).
 
 No Coding, just select database and create views.
 
-## Download Binaries [![GitHub tag](https://img.shields.io/github/tag/garrylachman/ElectroCRUD.svg?maxAge=2592000)]()
+## Download Binaries [![GitHub tag](https://img.shields.io/github/tag/garrylachman/ElectroCRUD.svg?maxAge=2592000&style=flat-square)]()
 
 [Mac OSX  (Pre-release)](https://github.com/garrylachman/ElectroCRUD/releases/download/0.3.0/ElectoCRUD-darwin-x64.zip)
 
@@ -46,4 +46,4 @@ Run `grunt buildElectron`.
 
 Sponsored By [P2P Proxies Network](https://rev.proxies.online)
 
-[![GitHub Downloads](https://img.shields.io/github/downloads/garrylachman/ElectroCRUD/total.svg?maxAge=2592000)]()
+[![GitHub Downloads](https://img.shields.io/github/downloads/garrylachman/ElectroCRUD/total.svg?maxAge=2592000&style=flat-square)]()
