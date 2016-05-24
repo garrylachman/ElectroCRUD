@@ -46,4 +46,4 @@ Run `grunt buildElectron`.
 
 Sponsored By [P2P Proxies Network](https://rev.proxies.online)
 
-[![GitHub Downloads](https://img.shields.io/github/downloads/garrylachman/ElectroCRUD/total.svg?maxAge=2592000&style=flat-square)]()
+[![GitHub Downloads](https://img.shields.io/github/downloads/garrylachman/ElectroCRUD/total.svg?maxAge=180&style=flat-square)]()
