@@ -14,7 +14,8 @@ angular.module('electroCrudApp')
       mysql, SweetAlert, $location, session, ngProgressFactory) {
     $scope.editMode = ($route.current.$$route.controllerAs == "editProject");
     $scope.project = {
-      'mysql_port': 3306
+      'mysql_port': 3306,
+      'connection_type': 'direct'
     };
     $scope.detailsFormValid = false;
     $scope.databases = [];
@@ -23,6 +24,11 @@ angular.module('electroCrudApp')
 
     $scope.$watchCollection('project', function(newNames, oldNames) {
       $scope.detailsFormValid = formValidator();
+    });
+    $scope.$watch('project.connection_type', function(newVal, oldVal){
+      if (newVal == "ssh") {
+        $scope.project.mysql_host = "127.0.0.1";
+      }
     });
 
     $scope.onCancelBtn = function() {
@@ -85,26 +91,29 @@ angular.module('electroCrudApp')
 
     function getMySQLDatabases() {
       $scope.progressbar.start();
-      var connection = mysql.getConnection($scope.project.mysql_host,
-        $scope.project.mysql_port,
-        $scope.project.mysql_user,
-        $scope.project.mysql_password,
-        $scope.project.mysql_db);
-        connection.connect();
-      mysql.getDatabases(connection)
-        .then(function(results) {
-          $scope.progressbar.complete();
-          results.forEach(function(row){
-            row.selected = ($scope.project.mysql_db == row.Database);
-          });
-          angular.copy(results, $scope.databases);
-          $scope.$apply();
-          mysql.closeConnection(connection);
+
+      mysql.getConnection($scope.project)
+        .then(function(connection){
+          connection.connect();
+          mysql.getDatabases(connection)
+            .then(function(results) {
+              $scope.progressbar.complete();
+              results.forEach(function(row){
+                row.selected = ($scope.project.mysql_db == row.Database);
+              });
+              angular.copy(results, $scope.databases);
+              $scope.$apply();
+              mysql.closeConnection(connection);
+            })
+            .catch(function(err) {
+              $scope.progressbar.complete();
+              SweetAlert.swal("Error", err, "error");
+              mysql.closeConnection(connection);
+            });
         })
-        .catch(function(err) {
+        .catch(function(err){
           $scope.progressbar.complete();
-          SweetAlert.swal("Error", err, "error");
-          mysql.closeConnection(connection);
+          SweetAlert.swal("Error", "", "error");
         });
     }
 
@@ -121,7 +130,9 @@ angular.module('electroCrudApp')
       } else {
         projectsModel.add($scope.project.name, $scope.project.mysql_host,
                           $scope.project.mysql_port, $scope.project.mysql_user,
-                          $scope.project.mysql_password, $scope.project.mysql_db)
+                          $scope.project.mysql_password, $scope.project.mysql_db,
+                          $scope.project.connection_type, $scope.project.ssh_host,
+                          $scope.project.ssh_user, $scope.project.ssh_password)
           .then(function(result){
             $scope.editMode = true;
             $scope.projectId = $scope.project.id = result.insertId;

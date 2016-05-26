@@ -1,10 +1,10 @@
 {
   "main": "app/index.js",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "name": "electrocrud",
   "private": false,
   "description": "MySQL CRUD build on Electron",
-  "license" : "GPL-3.0",
+  "license": "GPL-3.0",
   "author": "Garry Lachman <garry@lachman.co>",
   "repository": {
     "type": "git",
@@ -70,6 +70,7 @@
   "dependencies": {
     "electron-debug": "^1.0.0",
     "mysql": "^2.10.2",
-    "promise": "^7.1.1"
+    "promise": "^7.1.1",
+    "tunnel-ssh": "^3.2.1-beta"
   }
 }

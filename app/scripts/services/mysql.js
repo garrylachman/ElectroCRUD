@@ -1,6 +1,7 @@
 'use strict';
 var mysql  = require('mysql');
 var util = require('util');
+var tunnel = require('tunnel-ssh').tunnel;
 
 /**
  * @ngdoc service
@@ -13,7 +14,47 @@ angular.module('electroCrudApp')
   .service('mysql', function () {
 
     return {
-      getConnection: function(host, port, user, password, database) {
+      getConnection: function(info) {
+        var _this = this;
+        if (info.connection_type == "direct") {
+          return new Promise(function(resolve, reject) {
+              resolve(_this.getDirectConnection(info.mysql_host, info.mysql_port,
+                info.mysql_user, info.mysql_password, info.mysql_db));
+          });
+        } else if (info.connection_type == "ssh") {
+          return _this.getTunnelConnection(info.ssh_host, info.mysql_port,
+            info.ssh_user, info.ssh_password,
+            info.mysql_host, info.mysql_port,
+            info.mysql_user, info.mysql_password,
+            info.mysql_db)
+        } else {
+          return new Promise(function(resolve, reject) {
+            reject();
+          });
+        }
+      },
+      getTunnelConnection: function(ssh_host, ssh_port, ssh_username, ssh_password,
+        mysql_host, mysql_port, mysql_user, mysql_password, mysql_database) {
+        var _this = this;
+        return new Promise(function(resolve, reject) {
+          var tunnelPort = Math.round(Math.random()*10000);
+          var config = {
+            host: ssh_host,
+            srcPort: tunnelPort,
+            dstPort: ssh_port,
+            username: ssh_username,
+            password: ssh_password
+          };
+          var server = tunnel(config)
+            .then(function (result) {
+              resolve(_this.getDirectConnection(mysql_host, tunnelPort, mysql_user, mysql_password, mysql_database));
+            })
+            .catch(function (err) {
+              reject(err);
+            })
+        });
+      },
+      getDirectConnection: function(host, port, user, password, database) {
         var connectionProps = {
           host: host,
           port: port,

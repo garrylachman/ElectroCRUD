@@ -440,7 +440,7 @@ module.exports = function (grunt) {
         }, {
           expand: true,
           cwd: '.',
-          src: 'node_modules/{mysql,promise,asap,bignumber.js,readable-stream,isarray,core-util-is,inherits,string_decoder}/**',
+          src: 'node_modules/{strip-json-comments,deep-extend,debug,ms,rc,ini,tunnel-ssh,ssh2,ssh2-streams,streamsearch,mysql,promise,asap,bignumber.js,readable-stream,isarray,core-util-is,inherits,string_decoder}/**',
           dest: '<%= yeoman.dist %>'
         }, {
           expand: true,

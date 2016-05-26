@@ -21,14 +21,18 @@ angular.module('electroCrudApp')
             .then(function(result){
               //currentProject = result.rows[0];
               angular.copy(result.rows[0], currentProject);
-              dbConnection = mysql.getConnection(currentProject.mysql_host,
-                currentProject.mysql_port,
-                currentProject.mysql_user,
-                currentProject.mysql_password,
-                currentProject.mysql_db);
-              dbConnection.connect();
-              _this.loadViews();
-              resolve();
+              mysql.getConnection(currentProject)
+                .then(function(connection){
+                  dbConnection = connection;
+                  dbConnection.connect(function(err){
+                    if (err) reject(err);
+                    _this.loadViews();
+                    resolve();
+                  });
+                })
+                .catch(function(err){
+                  reject();
+                });
             })
             .catch(function(err){
               reject(err);
@@ -36,9 +40,10 @@ angular.module('electroCrudApp')
         });
       },
       loadViews: function() {
-        viewsModel.getList(currentProject.id).then(function(result){
-          angular.copy(result.rows, currentViews);
-        });
+        viewsModel.getList(currentProject.id)
+          .then(function(result){
+            angular.copy(result.rows, currentViews);
+          });
       },
       getProjectId: function(){
         return currentProject.id;

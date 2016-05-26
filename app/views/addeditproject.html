@@ -12,8 +12,8 @@
           <div class="box-body">
 
             <div class="form-group margin-bottom-0">
-              <label for="inputName" class="col-sm-2 control-label">Name</label>
-              <div class="col-sm-10">
+              <label for="inputName" class="col-sm-3 control-label">Name</label>
+              <div class="col-sm-9">
                 <input type="text" class="form-control" id="inputName" autocomplete="off" ng-model="project.name">
               </div>
             </div>
@@ -25,29 +25,62 @@
             </div>
 
             <div class="form-group">
-              <label for="inputHost" class="col-sm-2 control-label">Host</label>
-              <div class="col-sm-10">
-                <input type="text" class="form-control" id="inputHost" autocomplete="off" ng-model="project.mysql_host">
+              <label for="inputType" class="col-sm-3 control-label">Connection type</label>
+              <div class="col-sm-9">
+                <select class="form-control" id="inputType" ng-model="project.connection_type">
+                  <option value="direct">Direct</option>
+                  <option value="ssh">SSH Tunnel</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- ssh tunnel -->
+            <div class="form-group" ng-show="project.connection_type=='ssh'">
+              <label for="inputSshHost" class="col-sm-3 control-label">SSH Host</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" id="inputSshHost" autocomplete="off" ng-model="project.ssh_host">
+              </div>
+            </div>
+
+            <div class="form-group" ng-show="project.connection_type=='ssh'">
+              <label for="inputSshUser" class="col-sm-3 control-label">SSH User</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" id="inputSshUser" autocomplete="off" ng-model="project.ssh_user">
+              </div>
+            </div>
+
+            <div class="form-group" ng-show="project.connection_type=='ssh'">
+              <label for="inputSshPassword" class="col-sm-3 control-label">SSH Password</label>
+              <div class="col-sm-9">
+                <input type="password" class="form-control" id="inputSshPassword" autocomplete="off" ng-model="project.ssh_password">
+              </div>
+            </div>
+            <!-- ./ ssh tunnel -->
+
+            <div class="form-group">
+              <label for="inputHost" class="col-sm-3 control-label" >MySQL Host</label>
+              <div class="col-sm-9">
+                <input ng-disabled="project.connection_type=='ssh'" type="text" class="form-control" id="inputHost" autocomplete="off" ng-model="project.mysql_host">
               </div>
             </div>
 
             <div class="form-group">
-              <label for="inputPort" class="col-sm-2 control-label">Port</label>
-              <div class="col-sm-10">
+              <label for="inputPort" class="col-sm-3 control-label">MySQL Port</label>
+              <div class="col-sm-9">
                 <input type="text" class="form-control" id="inputPort" autocomplete="off" value="3306" ng-model="project.mysql_port">
               </div>
             </div>
 
             <div class="form-group">
-              <label for="inputUser" class="col-sm-2 control-label">User</label>
-              <div class="col-sm-10">
+              <label for="inputUser" class="col-sm-3 control-label">MySQL User</label>
+              <div class="col-sm-9">
                 <input type="text" class="form-control" id="inputUser" autocomplete="off" ng-model="project.mysql_user">
               </div>
             </div>
 
             <div class="form-group">
-              <label for="inputPassword" class="col-sm-2 control-label">Password</label>
-              <div class="col-sm-10">
+              <label for="inputPassword" class="col-sm-3 control-label">MySQL Password</label>
+              <div class="col-sm-9">
                 <input type="password" class="form-control" id="inputPassword" autocomplete="off" ng-model="project.mysql_password">
               </div>
             </div>
