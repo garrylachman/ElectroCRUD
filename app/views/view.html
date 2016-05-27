@@ -1,3 +1,115 @@
+<!-- /view filters modal -->
+<script type="text/ng-template" id="viewFiltersModalContent.html">
+    <div class="modal-header">
+        <h3 class="modal-title">Custom Filter Settings</h3>
+    </div>
+    <div class="modal-body">
+
+        <form class="form-horizontal">
+          <div class="row">
+
+            <div class="col-xs-12" ng-show="params.length > 0">
+              <div class="form-group">
+
+                <div class="col-sm-12">
+                <div class="col-sm-10 col-sm-offset-2 flex" id='inputWhere' ng-repeat="param in params">
+
+                  <!-- where column name -->
+                  <select class="form-control tablesSelect-modal margin-right-20" ng-model="param.column">
+                    <option ng-repeat="col in columns" value="{{col.value}}">{{col.name}}</option>
+                  </select>
+                  <!-- ./ where column name -->
+
+                  <!-- where column operator -->
+                  <select class="form-control functionSelect-modal margin-right-20" ng-model="param.operator">
+                    <option value="=">=</option>
+                    <option value="!=">!=</option>
+                    <option value=">">></option>
+                    <option value=">=">>=</option>
+                    <option value="<"><</option>
+                    <option value="<="><=</option>
+                  </select>
+                  <!-- ./ where column operator -->
+
+                  <!-- ./ where column operator -->
+                  <input type="text" class="form-control margin-right-20" ng-model="param.value">
+                  <!-- ./ where column operator -->
+
+                  <!-- where param condition -->
+                  <select class="form-control functionSelect-modal" ng-model="param.condition">
+                    <option value="AND">AND</option>
+                    <option value="OR">OR</option>
+                  </select>
+                  <!-- ./ where param condition -->
+
+                </div>
+              </div>
+
+
+              </div>
+            </div>
+
+            <div class="col-xs-12">
+              <div class="form-group">
+                <div class="col-sm-12">
+                <div class="col-sm-12 text-right">
+                  <button ng-click="addClause()" class="btn btn-flat btn-sm">Add Clause</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-xs-12">
+              <div class="form-group">
+                <label for="inputTitle" class="col-sm-2 control-label">Title</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" id="inputTitle" ng-model="inputTitle">
+                </div>
+              </div>
+            </div>
+
+            <div class="col-xs-12">
+              <div class="form-group">
+                <label for="inputSubTitle" class="col-sm-2 control-label">Title</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" id="inputSubTitle" ng-model="inputSubTitle">
+                </div>
+              </div>
+            </div>
+
+            <div class="col-xs-12">
+              <div class="form-group">
+                <label for="inputTitle" class="col-sm-2 control-label">Background</label>
+                <div class="col-sm-10">
+                  <div class="btn-group">
+                    <button ng-repeat="color in colors" type="button" ng-class="{'active':selectedBackground==color}" ng-click="onBackgroundSelectd(color)" class="btn {{color}} margin-right-10">░</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-xs-12">
+              <div class="form-group">
+                <label for="inputTitle" class="col-sm-2 control-label">Icon</label>
+                <div class="col-sm-10">
+                  <div class="btn-group icons-scroll-modal">
+                    <button ng-repeat="icon in icons" type="button" ng-class="{'active':selectedIcon==icon}" ng-click="onIconSelected(icon)" class="btn-icon-modal btn btn-sm"><i class="fa {{icon}}"></i></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+      </form>
+
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-danger pull-left" type="button" ng-click="delete()">Delete</button>
+        <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+        <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+    </div>
+</script>
+<!-- /view filters settings modal -->
+
 <!-- /widget settings modal -->
 <script type="text/ng-template" id="myModalContent.html">
     <div class="modal-header">
@@ -60,9 +172,6 @@
                 </div>
               </div>
             </div>
-
-
-
 
           </div>
       </form>

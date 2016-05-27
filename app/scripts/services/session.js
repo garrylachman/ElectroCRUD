@@ -11,6 +11,7 @@ angular.module('electroCrudApp')
   .service('session', ['projectsModel', 'viewsModel', 'mysql', function (projectsModel, viewsModel, mysql) {
     var currentProject = {};
     var currentViews = [];
+    var currentViewFilters = [];
     var dbConnection = undefined;
 
     return {
@@ -45,6 +46,9 @@ angular.module('electroCrudApp')
             angular.copy(result.rows, currentViews);
           });
       },
+      setViewFilters: function(_filters){
+        angular.copy(_filters, currentViewFilters);
+      },
       getProjectId: function(){
         return currentProject.id;
       },
@@ -58,6 +62,7 @@ angular.module('electroCrudApp')
         return dbConnection;
       },
       projectViews: currentViews,
-      activeProject: currentProject
+      activeProject: currentProject,
+      activeViewFilters: currentViewFilters
     }
   }]);

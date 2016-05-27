@@ -187,3 +187,22 @@ body {
 .sidebar-menu > li.disabled {
   opacity: 0.1;
 }
+
+.side-menubar-filter-edit {
+  right: 10px;
+  -webkit-animation-duration: 250ms;
+  -webkit-animation-delay: 0ms;
+}
+
+.control-sidebar-menu li.active {
+  background-color: #181f23;
+}
+
+.control-sidebar-menu .menu-info {
+  overflow-x: hidden;
+  white-space: nowrap;
+}
+
+.pointer {
+  cursor: pointer;
+}

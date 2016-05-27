@@ -440,7 +440,7 @@ module.exports = function (grunt) {
         }, {
           expand: true,
           cwd: '.',
-          src: 'node_modules/{strip-json-comments,deep-extend,debug,ms,rc,ini,tunnel-ssh,ssh2,ssh2-streams,streamsearch,mysql,promise,asap,bignumber.js,readable-stream,isarray,core-util-is,inherits,string_decoder}/**',
+          src: 'node_modules/{setter-method,strip-json-comments,deep-extend,debug,ms,rc,ini,tunnel-ssh,ssh2,ssh2-streams,streamsearch,mysql,promise,asap,bignumber.js,readable-stream,isarray,core-util-is,inherits,string_decoder}/**',
           dest: '<%= yeoman.dist %>'
         }, {
           expand: true,
@@ -487,7 +487,7 @@ module.exports = function (grunt) {
             name: 'ElectoCRUD',
             dir: 'dist',
             out: 'appDist',
-            version: '1.1.1',
+            version: '1.2.0',
             platform: 'win32',
             arch: 'all',
             overwrite: true,
@@ -502,7 +502,7 @@ module.exports = function (grunt) {
             name: 'ElectoCRUD',
             dir: 'dist',
             out: 'appDist',
-            version: '1.1.1',
+            version: '1.2.0',
             platform: 'darwin',
             arch: 'all',
             overwrite: true,
@@ -517,7 +517,7 @@ module.exports = function (grunt) {
             name: 'ElectoCRUD',
             dir: 'dist',
             out: 'appDist',
-            version: '1.1.1',
+            version: '1.2.0',
             platform: 'linux',
             arch: 'all',
             overwrite: true,

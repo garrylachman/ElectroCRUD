@@ -6,20 +6,20 @@ No Coding, just select database and create views.
 
 ## Download Binaries [![GitHub tag](https://img.shields.io/github/tag/garrylachman/ElectroCRUD.svg?maxAge=180&style=flat-square)]()
 
-[Mac OSX  (Pre-release)](https://github.com/garrylachman/ElectroCRUD/releases/download/0.4.0/ElectoCRUD-darwin-x64.zip)
+[Mac OSX  (Pre-release)](https://github.com/garrylachman/ElectroCRUD/releases/download/0.5.0/ElectoCRUD-darwin-x64.zip)
 
-[Linux 32Bit  (Pre-release)](https://github.com/garrylachman/ElectroCRUD/releases/download/0.4.0/ElectoCRUD-linux-ia32.zip)
+[Linux 32Bit  (Pre-release)](https://github.com/garrylachman/ElectroCRUD/releases/download/0.5.0/ElectoCRUD-linux-ia32.zip)
 
-[Linux 64Bit  (Pre-release)](https://github.com/garrylachman/ElectroCRUD/releases/download/0.4.0/ElectoCRUD-linux-x64.zip)
+[Linux 64Bit  (Pre-release)](https://github.com/garrylachman/ElectroCRUD/releases/download/0.5.0/ElectoCRUD-linux-x64.zip)
 
-[Windows 32Bit  (Pre-release)](https://github.com/garrylachman/ElectroCRUD/releases/download/0.4.0/ElectoCRUD-win32-ia32.zip)
+[Windows 32Bit  (Pre-release)](https://github.com/garrylachman/ElectroCRUD/releases/download/0.5.0/ElectoCRUD-win32-ia32.zip)
 
-[Windows 64Bit  (Pre-release)](https://github.com/garrylachman/ElectroCRUD/releases/download/0.4.0/ElectoCRUD-win32-x64.zip)
+[Windows 64Bit  (Pre-release)](https://github.com/garrylachman/ElectroCRUD/releases/download/0.5.0/ElectoCRUD-win32-x64.zip)
 
 ## Screenshots
 |   |  |
 | ------------- | ------------- |
-| <img src="http://i.imgur.com/TetjYVu.png" style="float: left;" /> <img src="http://i.imgur.com/yc2L992.png" style="float: left;" /> <img src="http://i.imgur.com/A51zLRv.png"  style="float: left;" /> | <img src="http://i.imgur.com/E1BS1tL.png"  style="float: left;" /> <img src="http://i.imgur.com/twgRdOr.png"  style="float: left;" /> <img src="http://i.imgur.com/DjznKTD.png"  style="float: left;" /> |
+| <img src="http://i.imgur.com/fLb3CdC.png" style="float: left;" /> <img src="http://i.imgur.com/TetjYVu.png" style="float: left;" /> <img src="http://i.imgur.com/yc2L992.png" style="float: left;" /> <img src="http://i.imgur.com/A51zLRv.png"  style="float: left;" /> | <img src="http://i.imgur.com/UEjZSa5.png"  style="float: left;" /> <img src="http://i.imgur.com/E1BS1tL.png"  style="float: left;" /> <img src="http://i.imgur.com/twgRdOr.png"  style="float: left;" /> <img src="http://i.imgur.com/DjznKTD.png"  style="float: left;" /> |
 
 
 ## Install dependencies

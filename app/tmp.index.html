@@ -31,6 +31,7 @@
     <link rel="stylesheet" href="../bower_components/sweetalert/dist/sweetalert.css" />
     <link rel="stylesheet" href="../bower_components/angular-ui-select/dist/select.css" />
     <link rel="stylesheet" href="../bower_components/ngprogress/ngProgress.css" />
+    <link rel="stylesheet" href="../bower_components/animate.css/animate.css" />
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -38,7 +39,7 @@
     <body ng-app="electroCrudApp" class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper">
 
-      <header class="main-header">
+      <header class="main-header" ng-controller="MainHeaderCtrl">
         <!-- Logo -->
         <a href="index2.html" class="logo">
           <!-- mini logo for sidebar mini 50x50 pixels -->
@@ -55,7 +56,10 @@
 
           <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
-                </ul>
+              <li>
+                <a ng-click="toggleControlSidebar()" title="Custom Filters"><i class="fa fa-filter"></i></a>
+              </li>
+            </ul>
           </div>
         </nav>
       </header>
@@ -118,9 +122,47 @@
       </footer>
 
 
-      <!-- Add the sidebar's background. This div must be placed
-           immediately after the control sidebar -->
-      <div class="control-sidebar-bg"></div>
+
+
+
+<!-- Control Sidebar -->
+ <aside class="control-sidebar control-sidebar-dark" ng-controller="RightSideBarCtrl">
+
+   <!-- Tab panes -->
+   <div class="tab-content">
+     <!-- Home tab content -->
+     <div class="tab-pane active" id="control-sidebar-home-tab">
+       <h3 class="control-sidebar-heading">Custom Filters <small ng-click="addFilter()" class="fa fa-plus margin-left-10"></small></h3>
+       <ul class="control-sidebar-menu">
+         <li ng-repeat="filter in viewFilters" ng-class="{'active': filter.selected}" class="pointer">
+           <a ng-click="selectFilter(filter.name)" ng-mouseover="showEdit=true" ng-mouseleave="showEdit=false" ng-init="showEdit=false">
+             <i class="menu-icon fa {{filter.icon}} {{filter.bgColor}}"></i>
+             <button ng-click="editFilter(filter); $event.stopPropagation();" ng-show="showEdit" class="btn btn-flat pull-right bg-olive side-menubar-filter-edit animated rubberBand margin-left-10">Edit</button>
+             <button ng-click="resetFilter(); $event.stopPropagation();" ng-show="filter.selected" class="btn btn-flat pull-right bg-light-blue side-menubar-filter-edit animated rubberBand">Unselect</button>
+             <div class="menu-info">
+               <h4 class="control-sidebar-subheading">{{filter.title}}</h4>
+               <p>{{filter.subTitle}}</p>
+             </div>
+           </a>
+         </li>
+       </ul>
+       <!-- /.control-sidebar-menu -->
+
+     <!-- /.control-sidebar-menu -->
+
+     </div>
+     <!-- /.tab-pane -->
+   </div>
+ </aside>
+ <!-- /.control-sidebar -->
+ <!-- Add the sidebar's background. This div must be placed
+      immediately after the control sidebar -->
+ <div class="control-sidebar-bg"></div>
+
+
+
+
+
     </div>
     <!-- ./wrapper -->
 
@@ -198,6 +240,9 @@
     <script src="scripts/services/widget-helper.js"></script>
     <script src="scripts/directives/ng-enter.js"></script>
     <script src="scripts/controllers/process-list.js"></script>
+    <script src="scripts/controllers/right-side-bar.js"></script>
+    <script src="scripts/controllers/main-header.js"></script>
+    <script src="scripts/services/view-filter-helper.js"></script>
     <!-- endbuild -->
 </body>
 </html>

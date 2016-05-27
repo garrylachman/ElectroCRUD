@@ -1,6 +1,6 @@
 {
   "main": "app/index.js",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "name": "electrocrud",
   "private": false,
   "description": "MySQL CRUD build on Electron",
@@ -36,7 +36,7 @@
     "grunt-contrib-htmlmin": "^1.4.0",
     "grunt-contrib-imagemin": "^1.0.0",
     "grunt-contrib-jshint": "^0.11.0",
-    "grunt-contrib-uglify": "^1.0.1",
+    "grunt-contrib-uglify": "https://github.com/SoftwearDevelopment/grunt-contrib-uglify.git#harmony",
     "grunt-contrib-watch": "^1.0.0",
     "grunt-electron": "^4.0.0",
     "grunt-exec": "^0.4.7",
@@ -71,6 +71,7 @@
     "electron-debug": "^1.0.0",
     "mysql": "^2.10.2",
     "promise": "^7.1.1",
+    "setter-method": "^0.1.0",
     "tunnel-ssh": "^3.2.1-beta"
   }
 }
