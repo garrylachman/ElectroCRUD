@@ -6,15 +6,15 @@ No Coding, just select database and create views.
 
 ## Download Binaries [![GitHub tag](https://img.shields.io/github/tag/garrylachman/ElectroCRUD.svg?maxAge=180&style=flat-square)]()
 
-[Mac OSX  (Pre-release)](https://github.com/garrylachman/ElectroCRUD/releases/download/0.5.0/ElectoCRUD-darwin-x64.zip)
+[Mac OSX  (Pre-release)](https://github.com/garrylachman/ElectroCRUD/releases/download/0.6.0/ElectoCRUD-darwin-x64.zip)
 
-[Linux 32Bit  (Pre-release)](https://github.com/garrylachman/ElectroCRUD/releases/download/0.5.0/ElectoCRUD-linux-ia32.zip)
+[Linux 32Bit  (Pre-release)](https://github.com/garrylachman/ElectroCRUD/releases/download/0.6.0/ElectoCRUD-linux-ia32.zip)
 
-[Linux 64Bit  (Pre-release)](https://github.com/garrylachman/ElectroCRUD/releases/download/0.5.0/ElectoCRUD-linux-x64.zip)
+[Linux 64Bit  (Pre-release)](https://github.com/garrylachman/ElectroCRUD/releases/download/0.6.0/ElectoCRUD-linux-x64.zip)
 
-[Windows 32Bit  (Pre-release)](https://github.com/garrylachman/ElectroCRUD/releases/download/0.5.0/ElectoCRUD-win32-ia32.zip)
+[Windows 32Bit  (Pre-release)](https://github.com/garrylachman/ElectroCRUD/releases/download/0.6.0/ElectoCRUD-win32-ia32.zip)
 
-[Windows 64Bit  (Pre-release)](https://github.com/garrylachman/ElectroCRUD/releases/download/0.5.0/ElectoCRUD-win32-x64.zip)
+[Windows 64Bit  (Pre-release)](https://github.com/garrylachman/ElectroCRUD/releases/download/0.6.0/ElectoCRUD-win32-x64.zip)
 
 ## Screenshots
 |   |  |
@@ -44,6 +44,7 @@ Run `grunt buildElectron`.
 * [node-mysql](https://github.com/felixge/node-mysql)
 * [font awesome](http://fontawesome.io)
 * [tunnel-ssh](https://github.com/Finanzchef24-GmbH/tunnel-ssh)
+* [loadash](https://lodash.com/)
 
 Sponsored By [P2P Proxies Network](https://rev.proxies.online)
 
