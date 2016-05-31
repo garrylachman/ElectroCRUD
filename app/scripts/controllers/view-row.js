@@ -29,6 +29,7 @@ angular.module('electroCrudApp')
         $scope.project = undefined;
         $scope.dataHelper = undefined;
         $scope.term = undefined;
+        $scope.tables = [];
 
 
         load();
@@ -50,11 +51,55 @@ angular.module('electroCrudApp')
               breadcrumb.append($scope.term.one + " " + key, "#/view/"+viewId+"/row/" + key);
 
               loadRowData();
+
             } catch (er) {
               console.log(er);
             }
           });
         }
+
+        function loadTables(){
+          var hasViews = $scope.schemaBuilder.getHasViewJson();
+          hasViews.forEach(function(_view){
+            loadTableData(_view.viewId, _view.localColumn, _view.remoteColumn);
+          });
+        }
+
+        function loadTableData(viewId, localColumn, remoteColumn) {
+            var whereStr = util.format("%s='%s'", remoteColumn, $scope.rowData[localColumn]);
+            viewsModel.getById(viewId).then(function(results) {
+              var _viewData = results.rows[0];
+              _viewData.whereStr = whereStr;
+              _viewData.currentPage = 1;
+              _viewData.rowsPerPage = 5;
+              _viewData.schemaBuilder = schemaHelper.loadBuilder(_viewData.schema);
+              _viewData.sortBy = _viewData.schemaBuilder.getActiveColumnsList()[0];
+              _viewData.dataHelper = dataHelper.init(session.getConnection(), _viewData.schemaBuilder);
+              $scope.tables.push(_viewData);
+              loadPageTableData(_viewData);
+            });
+        }
+
+        function loadPageTableData(_viewData) {
+          _viewData.dataHelper.read.getResults((_viewData.currentPage-1)*_viewData.rowsPerPage,
+            _viewData.rowsPerPage,
+            _viewData.sortBy,
+            "ASC",
+            _viewData.whereStr)
+            .then(function(results){
+              _viewData.results = results;
+              $scope.progressbar.complete();
+              $scope.$apply();
+            })
+            .catch(function(err){
+              console.log(err);
+              $scope.progressbar.complete();
+            });
+        }
+
+        $scope.pageTableChanged = function(_viewData) {
+          loadPageTableData(_viewData);
+        };
 
         function loadRowData() {
           var where = {};
@@ -69,6 +114,7 @@ angular.module('electroCrudApp')
                 return {key: k, value: v};
               }), 2);
               $scope.$apply();
+              loadTables();
             })
             .catch(function(err){
               console.log(err);

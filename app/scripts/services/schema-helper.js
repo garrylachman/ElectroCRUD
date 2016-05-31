@@ -17,8 +17,10 @@ angular.module('electroCrudApp')
           term = { one: "", many: "" },
           permissions = { c:true, r: true, u: true, d: true },
           primaryKey = undefined,
-          widgetsJson = "[]",
-          filtersJson = "[]";
+          widgetsJson = [],
+          filtersJson = [],
+          hasViewsJson = [];
+
 
       return {
         setTableName: function(name) {
@@ -77,6 +79,12 @@ angular.module('electroCrudApp')
         getFiltersJson: function() {
           return filtersJson;
         },
+        setHasViewJson: function(_hasViewsJson){
+          hasViewsJson = _hasViewsJson;
+        },
+        getHasViewJson: function(){
+          return hasViewsJson;
+        },
         fromJSON: function(json) {
           tableName = json.table;
           if (json.columns) {
@@ -100,6 +108,9 @@ angular.module('electroCrudApp')
           if (json.filters) {
             filtersJson = json.filters;
           }
+          if (json.hasViews) {
+            hasViewsJson = json.hasViews;
+          }
         },
         fromJSONString: function(jsonStr) {
           return this.fromJSON(JSON.parse(jsonStr));
@@ -113,7 +124,8 @@ angular.module('electroCrudApp')
             permissions: permissions,
             primaryKey: primaryKey,
             widgets: widgetsJson,
-            filters: filtersJson
+            filters: filtersJson,
+            hasViews: hasViewsJson
           };
         },
         toJSONString: function() {
@@ -126,6 +138,7 @@ angular.module('electroCrudApp')
           term = { one: "", many: "" };
           permissions = { c:true, r: true, u: true, d: true };
           primaryKey = undefined;
+          hasViewsJson = [];
         }
       }
     };
@@ -145,6 +158,13 @@ angular.module('electroCrudApp')
           break;
         }
         return b;
+      },
+      newHasView(viewId, localColumn, remoteColumn) {
+        return {
+          viewId: viewId,
+          localColumn: localColumn,
+          remoteColumn: remoteColumn
+        }
       },
       validateSchema: function(schema) {
         return (schema.table &&

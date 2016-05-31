@@ -58,14 +58,14 @@
   <div class="row" ng-show="primaryKeyWarning">
     <div class="col-xs-12">
       <div class="callout callout-warning">
-        <p>Primary key is required for Update &amp; Delete !!!</p>
+        <p>Primary key is required for Update, Delete & Relational views!!!</p>
       </div>
     </div>
   </div>
 
   <!-- Terminology -->
   <div class="row">
-    <div class="col-xs-12 col-md-6">
+    <div class="col-xs-12 col-sm-6">
       <div class="box box-info">
         <div class="box-header with-border">
           <h3 class="box-title">Terminology</h3>
@@ -92,7 +92,7 @@
 
 
   <!-- Permissions -->
-    <div class="col-xs-12 col-md-6">
+    <div class="col-xs-12 col-sm-6">
       <div class="box box-info">
         <div class="box-header with-border">
           <h3 class="box-title">Permissions</h3>
@@ -125,7 +125,46 @@
       </div>
     </div>
   </div>
+
   <!-- /.Permissions -->
+
+  <div class="row" ng-hide="primaryKeyWarning">
+    <div class="col-xs-12">
+      <h3>
+        View Relations <small ng-click="addHasView()" class="btn btn-flat bg-green btn-xs">Add Has View</small>
+      </h3>
+    </div>
+
+    <!-- hasViews -->
+    <div class="col-xs-12" ng-repeat="hv in hasViews">
+      <div class="box">
+        <div class="box-body">
+          <div class="row">
+            <div class="col-sm-4">
+              <select class="form-control" ng-change="hasViewOnChange(hv)" ng-model="hv.viewId">
+                <option value="-1" disabled selected>View</option>
+                <option ng-repeat="view in allViews" value="{{view.value}}">{{view.name}}</option>
+              </select>
+            </div>
+            <div class="col-sm-4">
+              <select class="form-control" ng-model="hv.localColumn">
+                <option value="-1" disabled selected>Local Column</option>
+                <option ng-repeat="col in columns" value="{{col.Field}}">{{col.Field}}</option>
+              </select>
+            </div>
+            <div class="col-sm-4">
+              <select class="form-control" ng-model="hv.remoteColumn">
+                <option value="-1" disabled selected>Remote Column</option>
+                <option ng-repeat="col in remoteColumns" value="{{col.Field}}">{{col.Field}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /.hasViews -->
+
+  </div>
 
 
   <!-- Footer -->

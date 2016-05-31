@@ -31,6 +31,23 @@ angular.module('electroCrudApp')
         d: true
       };
       $scope.primaryKeyWarning = false;
+      $scope.hasViews = [];
+      $scope.allViews = [];
+      $scope.remoteColumns = [];
+
+      $scope.addHasView = function(){
+        $scope.hasViews.push(schemaHelper.newHasView('-1', '-1', '-1'));
+      };
+
+      $scope.hasViewOnChange = function(item) {
+        viewsModel.getById(item.viewId).then(function(results) {
+          var _view = results.rows[0];
+          if (_view.schema && schemaHelper.validateSchema(JSON.parse(_view.schema))) {
+            var _viewSchemaBuilder = schemaHelper.loadBuilder(_view.schema);
+            $scope.remoteColumns = _viewSchemaBuilder.getActiveColumns();
+          }
+        });
+      };
 
       $scope.onTablesSelected = function(item) {
         $scope.table = item.name;
@@ -50,6 +67,7 @@ angular.module('electroCrudApp')
         $scope.schemaBuilder.setActiveColumns(getActiveColumns());
         $scope.schemaBuilder.setTerm($scope.term);
         $scope.schemaBuilder.setPermissions($scope.permissions);
+        $scope.schemaBuilder.setHasViewJson($scope.hasViews);
         console.log($scope.schemaBuilder.toJSON());
         console.log($scope.schemaBuilder.toJSONString());
         viewsModel.update(viewId, {
@@ -61,6 +79,7 @@ angular.module('electroCrudApp')
       function reload() {
         viewsModel.getById(viewId).then(function(results) {
           angular.copy(results.rows[0], $scope.viewData);
+
           console.log($scope.viewData);
           if ($scope.viewData.schema && schemaHelper.validateSchema(JSON.parse($scope.viewData.schema))) {
             $scope.schemaBuilder = schemaHelper.loadBuilder($scope.viewData.schema);
@@ -74,7 +93,29 @@ angular.module('electroCrudApp')
           }
           breadcrumb.append("Configure", "#/view/"+viewId + "setup");
           getMySQLTables();
+          loadHasViews();
         });
+      }
+
+      function loadHasViews() {
+        // Load all views in the project
+        $scope.allViews = [];
+        viewsModel.getList($scope.viewData.project_id).then(function(results) {
+          for (var i in results.rows) {
+            if (results.rows.hasOwnProperty(i) && results.rows[i].id != viewId) {
+              $scope.allViews.push({
+                name: results.rows[i].name,
+                value: results.rows[i].id
+              });
+            }
+          }
+        });
+
+        // In edit mode set results
+        $scope.hasViews = $scope.schemaBuilder.getHasViewJson();
+        for (var _view of $scope.hasViews) {
+          $scope.hasViewOnChange(_view);
+        }
       }
 
       function getActiveColumns() {
