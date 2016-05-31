@@ -1,0 +1,30 @@
+<section class="content">
+
+  <!-- Form -->
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="box box-info">
+        <div class="box-header with-border">
+          <h3 class="box-title">{{term.one}} {{rowKey}}</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+
+          <div class="row">
+
+            <div class="col-xs-12 col-md-6" ng-repeat="column in rowDataColumns">
+              <div class="col-xs-12" ng-repeat="row in column">
+                <div class="col-xs-12 col-sm-4 text-muted"><strong>{{row.key}}</strong></div>
+                <div class="col-xs-12 col-sm-8">{{row.value}}</div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /.Form -->
+
+</section>

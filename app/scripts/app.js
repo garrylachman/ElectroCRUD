@@ -58,6 +58,10 @@ angular
         controller: 'ViewAddEditCtrl',
         controllerAs: 'updateView'
       })
+      .when('/view/:id/row/:key', {
+        templateUrl: 'views/view-row.html',
+        controller: 'ViewRowCtrl'
+      })
       .when('/processList', {
         templateUrl: 'views/process-list.html',
         controller: 'ProcessListCtrl'

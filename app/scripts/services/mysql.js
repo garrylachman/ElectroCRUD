@@ -126,10 +126,10 @@ angular.module('electroCrudApp')
         });
       },
       getTableRowData: function(connection, table, columns, where) {
-        var columnsStr = columns.join(",");
+        console.log(where);
         return new Promise(function(resolve, reject) {
           if (!connection) reject();
-          connection.query(util.format('SELECT %s FROM %s WHERE ?', columnsStr, table), where,function(err, rows, fields) {
+          connection.query('SELECT ?? FROM '+table+' WHERE ?', [columns, where],function(err, rows, fields) {
             if (err) reject(err);
             resolve(rows);
           });

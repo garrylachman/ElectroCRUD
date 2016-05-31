@@ -268,7 +268,14 @@
                 </thead>
                 <tbody>
                 <tr ng-repeat="row in tableData.rows">
-                  <td ng-repeat="td in row">{{td}}</td>
+                  <td ng-repeat="(tdKey, tdVal) in row">
+                    <div ng-if="primaryKey == tdKey">
+                      <a href="#/view/{{viewId}}/row/{{tdVal}}">{{tdVal}}</a>
+                    </div>
+                    <div ng-if="primaryKey != tdKey">
+                      {{tdVal}}
+                    </div>
+                  </td>
                   <td>
                     <button ng-show="permissions.u" ng-click="updateRow(row)" type="button" class="btn btn-xs bg-green btn-flat" data-toggle="tooltip" title="Edit {{term.one}}"><i class="fa fa-pencil"></i></button>
                     <button ng-show="permissions.d" ng-click="deleteRow(row)" type="button" class="btn btn-xs bg-red btn-flat" data-toggle="tooltip" title="Delete {{term.one}}"><i class="fa fa-trash"></i></button>

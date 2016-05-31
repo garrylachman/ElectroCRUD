@@ -18,6 +18,7 @@ angular.module('electroCrudApp')
       $uibModal, ngProgressFactory, viewFilterHelper, $rootScope) {
 
       var viewId = $routeParams.id;
+      $scope.viewId = $routeParams.id;
       $scope.progressbar = ngProgressFactory.createInstance();
       $scope.rowsPerPage = 10;
       $scope.currentPage = 1;
@@ -40,6 +41,7 @@ angular.module('electroCrudApp')
       $scope.viewFilters = [];
       $scope.isSearchMode = false;
       $scope.selectedFilter = undefined;
+      $scope.primaryKey = undefined;
 
       var scope = $scope;
 
@@ -151,6 +153,7 @@ angular.module('electroCrudApp')
           try {
             $scope.schemaBuilder = schemaHelper.loadBuilder($scope.viewData.schema);
             $scope.sortingColumn = $scope.schemaBuilder.getActiveColumnsList()[0];
+            $scope.primaryKey = $scope.schemaBuilder.getPrimaryKey();
             loadWidgets();
             loadFilters();
           } catch (er) {

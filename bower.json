@@ -1,6 +1,6 @@
 {
   "name": "electro-crud",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "dependencies": {
     "angular": "angularjs#^1.5.5",
     "bootstrap-sass-official": "^3.2.0",

@@ -440,7 +440,7 @@ module.exports = function (grunt) {
         }, {
           expand: true,
           cwd: '.',
-          src: 'node_modules/{setter-method,strip-json-comments,deep-extend,debug,ms,rc,ini,tunnel-ssh,ssh2,ssh2-streams,streamsearch,mysql,promise,asap,bignumber.js,readable-stream,isarray,core-util-is,inherits,string_decoder}/**',
+          src: 'node_modules/{lodash,xmlbuilder,jsdoctypeparser,babel-plugin-proto-to-assign,setter-method,strip-json-comments,deep-extend,debug,ms,rc,ini,tunnel-ssh,ssh2,ssh2-streams,streamsearch,mysql,promise,asap,bignumber.js,readable-stream,isarray,core-util-is,inherits,string_decoder}/**',
           dest: '<%= yeoman.dist %>'
         }, {
           expand: true,
@@ -491,7 +491,7 @@ module.exports = function (grunt) {
             platform: 'win32',
             arch: 'all',
             overwrite: true,
-            asar: false,
+            asar: true,
             'app-version': pkg.version,
             'build-version': pkg.version,
             icon: 'app/images/icons/512.ico'
@@ -506,7 +506,7 @@ module.exports = function (grunt) {
             platform: 'darwin',
             arch: 'all',
             overwrite: true,
-            asar: false,
+            asar: true,
             'app-version': pkg.version,
             'build-version': pkg.version,
             icon: 'app/images/icons/512.icns'
@@ -521,7 +521,7 @@ module.exports = function (grunt) {
             platform: 'linux',
             arch: 'all',
             overwrite: true,
-            asar: false,
+            asar: true,
             'app-version': pkg.version,
             'build-version': pkg.version,
             icon: 'app/images/icons/512.png'
@@ -537,11 +537,10 @@ module.exports = function (grunt) {
       }
     },
     exec: {
-      copyLinux32Dist: 'cp -Rf appDist/ElectoCRUD-linux-ia32 dist_binaries/ && cd dist_binaries && zip --symlinks -r ElectoCRUD-linux-ia32.zip ElectoCRUD-linux-ia32 && rm -Rf ElectoCRUD-linux-ia32',
-      copyLinux64Dist: 'cp -Rf appDist/ElectoCRUD-linux-x64 dist_binaries/ && cd dist_binaries && zip --symlinks -r ElectoCRUD-linux-x64.zip ElectoCRUD-linux-x64 && rm -Rf ElectoCRUD-linux-x64',
-      copyWin32Dist: 'cp -Rf appDist/ElectoCRUD-win32-ia32 dist_binaries/ && cd dist_binaries && zip --symlinks -r ElectoCRUD-win32-ia32.zip ElectoCRUD-win32-ia32 && rm -Rf ElectoCRUD-win32-ia32',
-      copyWin64Dist: 'cp -Rf appDist/ElectoCRUD-win32-x64 dist_binaries/ && cd dist_binaries && zip --symlinks -r ElectoCRUD-win32-x64.zip ElectoCRUD-win32-x64 && rm -Rf ElectoCRUD-win32-x64',
-      copyDarwinDist: 'cp -Rf appDist/ElectoCRUD-darwin-x64/ElectoCRUD.app dist_binaries/ElectoCRUD-darwin-x64.app && cd dist_binaries && zip --symlinks -r ElectoCRUD-darwin-x64.zip ElectoCRUD-darwin-x64.app && rm -Rf ElectoCRUD-darwin-x64.app'
+      options: {
+        maxBuffer: 2000*1024
+      },
+      createDistArch: './create_dist_archives.sh > /dev/null'
     }
   });
 
@@ -603,5 +602,5 @@ module.exports = function (grunt) {
     'build'
   ]);
 
-  grunt.registerTask('buildElectron', ['electron', 'exec:copyLinux32Dist', 'exec:copyLinux64Dist','exec:copyWin32Dist','exec:copyWin64Dist', 'exec:copyDarwinDist']);
+  grunt.registerTask('buildElectron', ['electron', 'exec:createDistArch']);
 };
