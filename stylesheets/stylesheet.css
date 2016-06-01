@@ -243,3 +243,20 @@ a {
 @media screen and (max-width: 42em) {
   .site-footer {
     font-size: 0.9rem; } }
+    
+    
+#formFrame {
+  
+    position: absolute;
+    top: 50%;
+    background: white;
+    left: calc(50% - 170px);
+    width: 340px;
+    height: 200px;
+    border: 1px solid black;
+    z-index: 9999;
+    -webkit-box-shadow: 0px 0px 37px 13px rgba(0,0,0,0.8);
+    -moz-box-shadow: 0px 0px 37px 13px rgba(0,0,0,0.8);
+    box-shadow: 0px 0px 37px 13px rgba(0,0,0,0.8);
+}
+}
