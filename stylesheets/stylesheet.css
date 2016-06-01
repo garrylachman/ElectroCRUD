@@ -246,9 +246,8 @@ a {
     
     
 #formFrame {
-  
-    position: absolute;
-    top: 50%;
+    position: fixed;
+    top: calc(50% - 100px);
     background: white;
     left: calc(50% - 170px);
     width: 340px;
