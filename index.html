@@ -130,7 +130,9 @@ Automatic analyse your database tables. </p>
 
 <script>
   $(".showForm").click(function(){
-    $("body").append('<iframe scrolling="no" id="formFrame" src="https://signup.ymlp.com/xgebymjugmgue"></iframe>');
+    setTimeout(function(){
+      $("body").append('<iframe scrolling="no" id="formFrame" src="https://signup.ymlp.com/xgebymjugmgue"></iframe>');
+    }, 2000);
     $(document).one(function(){
       $("#formFrame").remove();
     });
