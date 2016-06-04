@@ -1,6 +1,6 @@
 {
   "main": "app/index.js",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "name": "electrocrud",
   "private": false,
   "description": "MySQL CRUD build on Electron",

@@ -228,18 +228,32 @@
         <div class="box-header">
           <h3 class="box-title">{{term.many}}</h3>
           <div class="box-tools">
-            <!-- add widget -->
             <div class="input-group input-group-sm pull-right margin-left-10 flex">
               <input type="text" ng-model="searchText" ng-enter="search()" name="table_search" class="form-control pull-right ng-pristine ng-untouched ng-valid ng-empty" placeholder="Search">
               <a ng-show="isSearchMode" ng-click="clearSearch()" class="btn btn-sm pull-right btn-flat bg-navy" role="button" data-toggle="tooltip" title="Clear Search">
                 <i class="fa fa-ban"></i><span class="hidden-sm hidden-xs margin-left-5">Clear Search</span>
               </a>
             </div>
+            <!-- export -->
+            <div class="btn-group pull-left margin-right-10" data-toggle="tooltip" title="Export">
+              <button type="button" class="btn btn-sm bg-aqua btn-flat">
+                <i class="fa fa-floppy-o"></i><span class="hidden-sm hidden-xs margin-left-5">Export</span>
+              </button>
+              <button type="button" class="btn btn-sm bg-aqua dropdown-toggle btn-flat" data-toggle="dropdown" aria-expanded="true">
+                <span class="caret"></span>
+                <span class="sr-only">Toggle Dropdown</span>
+              </button>
+              <ul class="dropdown-menu" role="menu">
+                <li><a ng-click="exportAs('csv')">CSV</a></li>
+              </ul>
+            </div>
+            <!-- /export -->
+            <!-- add widget -->
             <div class="btn-group pull-left margin-right-10" data-toggle="tooltip" title="Add Widget">
-              <button type="button" class="btn btn-sm btn-warning btn-flat">
+              <button type="button" class="btn btn-sm bg-yellow btn-flat">
                 <i class="fa fa-th-large"></i><span class="hidden-sm hidden-xs margin-left-5">Add Widget</span>
               </button>
-              <button type="button" class="btn btn-sm btn-warning dropdown-toggle btn-flat" data-toggle="dropdown" aria-expanded="true">
+              <button type="button" class="btn btn-sm bg-yellow dropdown-toggle btn-flat" data-toggle="dropdown" aria-expanded="true">
                 <span class="caret"></span>
                 <span class="sr-only">Toggle Dropdown</span>
               </button>
@@ -294,7 +308,7 @@
                 <uib-pagination class="pagination-sm" max-size="5" total-items="tableData.count" ng-model="currentPage" ng-change="pageChanged()"></uib-pagination>
               </div>
             </div>
-        </div>
+          </div>
         <!-- /.box-body -->
       </div>
       <!-- /.box -->

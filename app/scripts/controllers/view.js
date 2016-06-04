@@ -12,10 +12,10 @@ angular.module('electroCrudApp')
   .controller('ViewCtrl',
     ['$scope','session', 'viewsModel', '$location', '$routeParams', 'breadcrumb',
       'schemaHelper', 'projectsModel', 'dataHelper', 'mysql', 'SweetAlert', 'widgetHelper',
-      '$uibModal', 'ngProgressFactory', 'viewFilterHelper', '$rootScope',
+      '$uibModal', 'ngProgressFactory', 'viewFilterHelper', '$rootScope', 'exporter',
     function ($scope, session, viewsModel, $location, $routeParams, breadcrumb,
       schemaHelper, projectsModel, dataHelper, mysql, SweetAlert, widgetHelper,
-      $uibModal, ngProgressFactory, viewFilterHelper, $rootScope) {
+      $uibModal, ngProgressFactory, viewFilterHelper, $rootScope, exporter) {
 
       var viewId = $routeParams.id;
       $scope.viewId = $routeParams.id;
@@ -282,6 +282,27 @@ angular.module('electroCrudApp')
                   SweetAlert.swal("Error", err, "error");
                 });
              }
+          });
+      };
+
+      $scope.exportAs = function(format) {
+        $scope.progressbar.start();
+        var whereStr = "";
+        if ($scope.selectedFilter)  {
+          whereStr = $scope.selectedFilter.getWhereSql();
+        }
+        $scope.dataHelper.read.getResults(0, 9999999999, $scope.sortingColumn,
+                                          $scope.sortingDir, whereStr)
+          .then(function(results){
+            $scope.progressbar.complete();
+            switch (format) {
+              case "csv":
+                exporter.exportAsFile(exporter.types.CSV, results.rows, results.columns);
+              break;
+            }
+          })
+          .catch(function(){
+            $scope.progressbar.complete();
           });
       };
 
