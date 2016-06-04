@@ -14,7 +14,14 @@ angular.module('electroCrudApp')
   .service('exporter', function () {
 
     var exportTypes = {
-      CSV: 'csv'
+      CSV: 'csv',
+      XLSX: 'xlsx'
+    };
+
+    function Workbook() {
+      if(!(this instanceof Workbook)) return new Workbook();
+      this.SheetNames = [];
+      this.Sheets = {};
     };
 
     function processCSVRow(row, fileName) {
@@ -35,7 +42,9 @@ angular.module('electroCrudApp')
       types: exportTypes,
       exportAsFile: function(exportType, rows, columns){
         var options = {
-          filters: [{name: 'CSV', extensions: ['csv']}],
+          filters: [
+            {name: 'CSV', extensions: ['csv']}
+          ],
         };
         dialog.showSaveDialog(options, function (filePath) {
           switch(exportType) {

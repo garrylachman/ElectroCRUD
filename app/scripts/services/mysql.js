@@ -88,7 +88,7 @@ angular.module('electroCrudApp')
       getTableDesc: function(connection, table) {
         return new Promise(function(resolve, reject) {
           if (!connection) reject();
-          connection.query(util.format('DESC `%s`', table), function(err, rows, fields) {
+          connection.query('DESC ??', [table], function(err, rows, fields) {
             if (err) reject(err);
             resolve(rows);
           });
@@ -98,7 +98,7 @@ angular.module('electroCrudApp')
         var whereSql = whereStr ? util.format('WHERE %s', whereStr) : '';
         return new Promise(function(resolve, reject) {
           if (!connection) reject();
-          connection.query(util.format('SELECT COUNT(*) as count FROM `%s` %s', table, whereSql), function(err, rows, fields) {
+          connection.query(util.format('SELECT COUNT(*) as count FROM %s %s', table, whereSql), function(err, rows, fields) {
             if (err) reject(err);
             resolve(rows[0].count);
           });
@@ -110,7 +110,7 @@ angular.module('electroCrudApp')
         whereStr = whereStr ? util.format('WHERE %s', whereStr) : '';
         return new Promise(function(resolve, reject) {
           if (!connection) reject();
-          connection.query('SELECT ?? FROM `??` '+whereStr+' ORDER BY ?? '+sortDir+' LIMIT '+limitFrom+', '+limitCount, [columns, table, sortBy], function(err, rows, fields) {
+          connection.query('SELECT ?? FROM ?? '+whereStr+' ORDER BY ?? '+sortDir+' LIMIT '+limitFrom+', '+limitCount, [columns, table, sortBy], function(err, rows, fields) {
             if (err) reject(err);
             resolve(rows);
           });
@@ -129,7 +129,7 @@ angular.module('electroCrudApp')
         console.log(where);
         return new Promise(function(resolve, reject) {
           if (!connection) reject();
-          connection.query('SELECT ?? FROM `'+table+'` WHERE ?', [columns, where],function(err, rows, fields) {
+          connection.query('SELECT ?? FROM ? WHERE ?', [table, columns, where],function(err, rows, fields) {
             if (err) reject(err);
             resolve(rows);
           });
@@ -147,7 +147,7 @@ angular.module('electroCrudApp')
       updateData: function(connection, table, data) {
         return new Promise(function(resolve, reject) {
           if (!connection) reject();
-          connection.query('UPDATE IGNORE `'+table+'` SET ?', data, function(err, rows, fields) {
+          connection.query('UPDATE IGNORE ?? SET ?',[table, data], function(err, rows, fields) {
             if (err) reject(err);
             resolve(rows);
           });
@@ -156,7 +156,7 @@ angular.module('electroCrudApp')
       deleteData: function(connection, table, data) {
         return new Promise(function(resolve, reject) {
           if (!connection) reject();
-          connection.query('DELETE FROM `'+table+'` WHERE ?', data, function(err, rows, fields) {
+          connection.query('DELETE FROM ?? WHERE ?', [table, data], function(err, rows, fields) {
             if (err) reject(err);
             resolve();
           });
