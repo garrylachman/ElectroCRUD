@@ -129,7 +129,7 @@ angular.module('electroCrudApp')
         console.log(where);
         return new Promise(function(resolve, reject) {
           if (!connection) reject();
-          connection.query('SELECT ?? FROM ? WHERE ?', [table, columns, where],function(err, rows, fields) {
+          connection.query('SELECT ?? FROM ?? WHERE ?', [columns,table, where],function(err, rows, fields) {
             if (err) reject(err);
             resolve(rows);
           });
@@ -138,7 +138,7 @@ angular.module('electroCrudApp')
       insertData: function(connection, table, data) {
         return new Promise(function(resolve, reject) {
           if (!connection) reject();
-          connection.query('INSERT INTO `'+table+'` SET ?', data, function(err, rows, fields) {
+          connection.query('INSERT INTO ?? SET ?', [table, data], function(err, rows, fields) {
             if (err) reject(err);
             resolve(rows);
           });
