@@ -57,6 +57,9 @@
           <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
               <li>
+                <a ng-show="isUpdateAvailable" ng-click="updateClick()" class="newUpdate"><i class="fa fa-star"></i> Update available</a>
+              </li>
+              <li>
                 <a ng-click="toggleControlSidebar()" title="Custom Filters"><i class="fa fa-filter"></i></a>
               </li>
             </ul>

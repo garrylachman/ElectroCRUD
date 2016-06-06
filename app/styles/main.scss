@@ -206,3 +206,9 @@ body {
 .pointer {
   cursor: pointer;
 }
+
+.newUpdate {
+  animation: blinker 1.7s cubic-bezier(.5, 0, 1, 1) infinite alternate;
+  cursor: pointer;;
+}
+@keyframes blinker { to { opacity: 0; } }

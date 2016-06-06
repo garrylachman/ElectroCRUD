@@ -440,7 +440,7 @@ module.exports = function (grunt) {
         }, {
           expand: true,
           cwd: '.',
-          src: 'node_modules/{lodash,xmlbuilder,jsdoctypeparser,babel-plugin-proto-to-assign,setter-method,strip-json-comments,deep-extend,debug,ms,rc,ini,tunnel-ssh,ssh2,ssh2-streams,streamsearch,mysql,promise,asap,bignumber.js,readable-stream,isarray,core-util-is,inherits,string_decoder}/**',
+          src: 'node_modules/{github-update-checker,lodash,xmlbuilder,jsdoctypeparser,babel-plugin-proto-to-assign,setter-method,strip-json-comments,deep-extend,debug,ms,rc,ini,tunnel-ssh,ssh2,ssh2-streams,streamsearch,mysql,promise,asap,bignumber.js,readable-stream,isarray,core-util-is,inherits,string_decoder}/**',
           dest: '<%= yeoman.dist %>'
         }, {
           expand: true,
@@ -491,7 +491,7 @@ module.exports = function (grunt) {
             platform: 'win32',
             arch: 'all',
             overwrite: true,
-            asar: true,
+            asar: false,
             'app-version': pkg.version,
             'build-version': pkg.version,
             icon: 'app/images/icons/512.ico'
@@ -506,7 +506,7 @@ module.exports = function (grunt) {
             platform: 'darwin',
             arch: 'all',
             overwrite: true,
-            asar: true,
+            asar: false,
             'app-version': pkg.version,
             'build-version': pkg.version,
             icon: 'app/images/icons/512.icns'
@@ -521,7 +521,7 @@ module.exports = function (grunt) {
             platform: 'linux',
             arch: 'all',
             overwrite: true,
-            asar: true,
+            asar: false,
             'app-version': pkg.version,
             'build-version': pkg.version,
             icon: 'app/images/icons/512.png'

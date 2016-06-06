@@ -1,6 +1,6 @@
 {
   "main": "app/index.js",
-  "version": "0.8.3",
+  "version": "0.8.4",
   "name": "electrocrud",
   "private": false,
   "description": "MySQL CRUD build on Electron",
@@ -8,7 +8,7 @@
   "author": "Garry Lachman <garry@lachman.co>",
   "repository": {
     "type": "git",
-    "url": "https://github.com/garrylachman/ElectroCRUD"
+    "url": "https://github.com/garrylachman/ElectroCRUD.git"
   },
   "bugs": {
     "url": "https://github.com/garrylachman/ElectroCRUD/issues"
@@ -69,6 +69,7 @@
   },
   "dependencies": {
     "electron-debug": "^1.0.0",
+    "github-update-checker": "https://github.com/garrylachman/github-update-checker.git",
     "lodash": "^4.13.1",
     "mysql": "^2.10.2",
     "promise": "^7.1.1",
