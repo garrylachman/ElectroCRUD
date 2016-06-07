@@ -49,6 +49,3 @@ Run `grunt buildElectron`.
 Sponsored By [P2P Proxies Network](https://rev.proxies.online)
 
 [![GitHub Downloads](https://img.shields.io/github/downloads/garrylachman/ElectroCRUD/total.svg?maxAge=180&style=flat-square)]()
-
-
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/garrylachman/electrocrud/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
