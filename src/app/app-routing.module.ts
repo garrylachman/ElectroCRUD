@@ -6,6 +6,10 @@ const routes: Routes = [
     {
         path: '',
         component: HomeComponent
+    },
+    {
+        path: 'accounts',
+        loadChildren: './accounts/accounts.module#AccountsModule'
     }
 ];
 

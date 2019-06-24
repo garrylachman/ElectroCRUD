@@ -38,19 +38,9 @@
     "version": "conventional-changelog -i CHANGELOG.md -s -r 0 && git add CHANGELOG.md"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "0.800.0",
-    "@angular/cli": "8.0.1",
-    "@angular/common": "8.0.0",
-    "@angular/compiler": "8.0.0",
-    "@angular/compiler-cli": "8.0.0",
-    "@angular/core": "8.0.0",
-    "@angular/forms": "8.0.0",
-    "@angular/language-service": "8.0.0",
-    "@angular/platform-browser": "8.0.0",
-    "@angular/platform-browser-dynamic": "8.0.0",
-    "@angular/router": "8.0.0",
     "@ngx-translate/core": "11.0.1",
     "@ngx-translate/http-loader": "4.0.0",
+    "@schematics/angular": "8.0.0",
     "@types/jasmine": "2.8.7",
     "@types/jasminewd2": "2.0.3",
     "@types/mocha": "5.2.6",
@@ -82,5 +72,25 @@
   },
   "engines": {
     "node": ">=10.9.0"
+  },
+  "dependencies": {
+    "@angular-devkit/build-angular": "0.800.0",
+    "@angular-devkit/schematics": "^8.0.3",
+    "@angular/animations": "8.0.0",
+    "@angular/cdk": "^8.0.0",
+    "@angular/cli": "8.0.1",
+    "@angular/common": "8.0.0",
+    "@angular/compiler": "8.0.0",
+    "@angular/compiler-cli": "8.0.0",
+    "@angular/core": "8.0.0",
+    "@angular/forms": "8.0.0",
+    "@angular/language-service": "8.0.0",
+    "@angular/platform-browser": "8.0.0",
+    "@angular/platform-browser-dynamic": "8.0.0",
+    "@angular/router": "8.0.0",
+    "@nebular/eva-icons": "^4.0.0-rc.8",
+    "@nebular/theme": "^4.1.0",
+    "@swimlane/ngx-datatable": "^15.0.2",
+    "eva-icons": "^1.1.1"
   }
 }

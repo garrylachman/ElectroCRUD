@@ -18,17 +18,40 @@ import { WebviewDirective } from './directives/webview.directive';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NbThemeModule } from '@nebular/theme';
+import { NbEvaIconsModule } from '@nebular/eva-icons';
+import { 
+  NbSidebarModule,
+  NbLayoutModule, 
+  NbButtonModule, 
+  NbActionsModule,
+  NbSearchModule,
+  NbMenuService,
+  NbIconModule,
+  NbMenuModule,
+  NbTooltipModule,
+  NbCardModule,
+  NbDialogService,
+  NbDialogModule
+} from '@nebular/theme';
+import { ConfirmDeleteComponent } from './components/dialogs/confirm-delete/confirm-delete.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
+
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    WebviewDirective
+    WebviewDirective,
+    ConfirmDeleteComponent,
+  ],
+  exports: [
+    ConfirmDeleteComponent,
   ],
   imports: [
     BrowserModule,
@@ -41,9 +64,23 @@ export function HttpLoaderFactory(http: HttpClient) {
         useFactory: (HttpLoaderFactory),
         deps: [HttpClient]
       }
-    })
+    }),
+    BrowserAnimationsModule,
+    NbThemeModule.forRoot({ name: 'default' }),
+    NbLayoutModule,
+    NbEvaIconsModule,
+    NbSidebarModule.forRoot(), // NbSidebarModule.forRoot(), //if this is your app.module
+    NbButtonModule,
+    NbActionsModule,
+    NbSearchModule,
+    NbIconModule,
+    NbMenuModule.forRoot(),
+    NbTooltipModule,
+    NbCardModule,
+    NbDialogModule.forRoot(),
   ],
-  providers: [ElectronService],
+  providers: [ElectronService, NbMenuService, NbDialogService],
+  entryComponents: [ConfirmDeleteComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

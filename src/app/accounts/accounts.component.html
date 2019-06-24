@@ -1,0 +1,48 @@
+<nb-card>
+    <nb-card-header><h1 class="page-header h4">Accounts</h1></nb-card-header>
+</nb-card>
+
+<nb-card>
+    <nb-card-header>
+        <input nbInput shape="semi-round" 
+            type="text"
+            style="padding:8px;margin:15px auto;width:30%;"
+            placeholder="Type to filter the name column..."
+            (keyup)="updateFilter($event)"
+          />
+    </nb-card-header>
+    <nb-card-body>
+        <ngx-datatable #table 
+            class="bootstrap" 
+            [rows]="rows"
+            [loadingIndicator]="loadingIndicator"
+            [columns]="columns"
+            [columnMode]="'force'"
+            [headerHeight]="30"
+            [footerHeight]="30"
+            [rowHeight]="'auto'"
+            [reorderable]="reorderable"
+            [limit]="10"
+        >
+    </ngx-datatable>
+    <ng-template #dateTpl let-row="row">
+        {{row.date | date}}
+    </ng-template>
+    <ng-template #actionsTpl let-row="row">
+        <button 
+            nbButton status="success" ghost size="tiny" (click)="edit(row)" 
+            nbTooltip="Edit" nbTooltipPlacement="top" nbTooltipStatus="success"
+        >
+            <nb-icon icon="edit"></nb-icon>
+        </button>
+        <button 
+            nbButton status="danger" ghost size="tiny" (click)="delete(row)" 
+            nbTooltip="Delete" nbTooltipPlacement="top" nbTooltipStatus="danger"
+        >
+            <nb-icon icon="trash-2"></nb-icon>
+        </button>
+    </ng-template>
+        
+    </nb-card-body>
+    <nb-card-footer>By Wikipedia</nb-card-footer>
+</nb-card>
