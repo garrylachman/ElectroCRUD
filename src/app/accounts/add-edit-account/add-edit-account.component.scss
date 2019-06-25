@@ -1,0 +1,34 @@
+nb-card {
+    width: 45rem;
+    margin: auto;
+}
+
+button, input {
+    margin-right: 1rem;
+}
+
+.input-group {
+    margin-bottom: 1rem;
+}
+
+.lorem {
+    font-size: 0.8rem;
+}
+
+h4 {
+    margin: 0.5rem 0rem;
+}
+
+.portInput {
+    width: 6rem;
+}
+
+nb-card-footer {
+    flex-direction: row-reverse;
+    display: flex;
+}
+
+::ng-deep
+nb-stepper.horizontal .header .step {
+    width: auto !important;
+}

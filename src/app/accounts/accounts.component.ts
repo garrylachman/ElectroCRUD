@@ -2,6 +2,7 @@ import { Component, OnInit, Input, ViewChild, TemplateRef } from '@angular/core'
 import { NbSortDirection, NbDialogService  } from '@nebular/theme';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
 import { ConfirmDeleteComponent} from '../components/dialogs/confirm-delete/confirm-delete.component';
+import { AddEditAccountComponent } from './add-edit-account/add-edit-account.component';
 
 @Component({
   selector: 'app-accounts',
@@ -66,6 +67,7 @@ export class AccountsComponent implements OnInit {
 
   edit(row) {
     console.log(row);
+    this.dialogService.open(AddEditAccountComponent, { hasBackdrop: true }).onClose.subscribe(res => console.log(res));;
   }
 
   delete(row) {

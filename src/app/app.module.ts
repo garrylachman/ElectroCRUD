@@ -37,6 +37,8 @@ import {
 } from '@nebular/theme';
 import { ConfirmDeleteComponent } from './components/dialogs/confirm-delete/confirm-delete.component';
 
+import { NgxMaskModule } from 'ngx-mask';
+
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -78,6 +80,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     NbTooltipModule,
     NbCardModule,
     NbDialogModule.forRoot(),
+    NgxMaskModule.forRoot(),
   ],
   providers: [ElectronService, NbMenuService, NbDialogService],
   entryComponents: [ConfirmDeleteComponent],
