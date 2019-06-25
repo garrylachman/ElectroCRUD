@@ -2,6 +2,37 @@ import { app, BrowserWindow, screen } from 'electron';
 import * as path from 'path';
 import * as url from 'url';
 
+import { AccountsStore } from './src/shared/store/accounts-store';
+import { Account } from './src/shared/interfaces/accounts.interface';
+
+const ass = new AccountsStore();
+console.log(ass.all());
+let acc:Account = {
+  "id": 1,
+  "name": "account1",
+  "creation_date": "2019-06-25T16:59:19.522Z",
+  "modify_date": "2019-06-25T16:59:19.522Z",
+  "ssh": {
+    "enabled": true,
+    "hostname": "garry.com",
+    "port": 123,
+    "username": "root",
+    "password": "123"
+  },
+  "server": {
+    "server_type": 1,
+    "hostname": "127.0.0.1",
+    "port": 3306,
+    "username": "root",
+    "password": "123",
+    "database": "db1"
+  }
+};
+ass.add(acc);
+console.log(ass.all());
+
+
+
 let win, serve;
 const args = process.argv.slice(1);
 serve = args.some(val => val === '--serve');

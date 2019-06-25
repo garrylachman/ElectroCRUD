@@ -91,6 +91,8 @@
     "@nebular/eva-icons": "^4.0.0-rc.8",
     "@nebular/theme": "^4.1.0",
     "@swimlane/ngx-datatable": "^15.0.2",
+    "electron-better-ipc": "^0.3.0",
+    "electron-store": "^4.0.0",
     "eva-icons": "^1.1.1",
     "ng-typed": "^1.2.0",
     "ngx-mask": "^8.0.0"
