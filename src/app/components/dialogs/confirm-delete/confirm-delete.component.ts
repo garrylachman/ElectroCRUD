@@ -9,7 +9,7 @@ import { NbDialogRef } from '@nebular/theme';
 export class ConfirmDeleteComponent implements OnInit {
 
   constructor(
-    protected ref: NbDialogRef<any>
+    public ref: NbDialogRef<any>
   ) { 
   }
 

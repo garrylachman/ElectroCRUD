@@ -3,6 +3,7 @@ import { NbSortDirection, NbDialogService  } from '@nebular/theme';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
 import { ConfirmDeleteComponent} from '../components/dialogs/confirm-delete/confirm-delete.component';
 import { AddEditAccountComponent } from './add-edit-account/add-edit-account.component';
+import { AccountsService, ServerType } from '../services/store/accounts.service';
 
 @Component({
   selector: 'app-accounts',
@@ -15,29 +16,18 @@ export class AccountsComponent implements OnInit {
   reorderable: boolean = true;
 
   @ViewChild(DatatableComponent, { static: false }) table: DatatableComponent;
-  @ViewChild('dateTpl', { static: true }) dateTpl: TemplateRef<any>;
+  @ViewChild('mDateTpl', { static: true }) mDateTpl: TemplateRef<any>;
+  @ViewChild('cDateTpl', { static: true }) cDateTpl: TemplateRef<any>;
   @ViewChild('actionsTpl', { static: true }) actionsTpl: TemplateRef<any>;
 
-  rows = [
-    { id: 1,  name: 'MyDB 1', server: 'MySQL', date: new Date() },
-    { id: 2, name: 'MyDB 2', server: 'MySQL', date: new Date() },
-    { id: 3, name: 'MyDB 3', server: 'MySQL', date: new Date() },
-    { id: 4, name: 'MyDB 1', server: 'MySQL', date: new Date() },
-    { id: 5, name: 'MyDB 2', server: 'MySQL', date: new Date() },
-    { id: 6, name: 'MyDB 3', server: 'MySQL', date: new Date() },
-    { id: 7, name: 'MyDB 1', server: 'MySQL', date: new Date() },
-    { id: 8, name: 'MyDB 2', server: 'MySQL', date: new Date() },
-    { id: 9, name: 'MyDB 3', server: 'MySQL', date: new Date() },
-    { id: 10, name: 'MyDB 1', server: 'MySQL', date: new Date() },
-    { id: 11, name: 'MyDB 2', server: 'MySQL', date: new Date() },
-    { id: 12, name: 'MyDB 3', server: 'MySQL', date: new Date() }
-  ];
+  rows = [];
   temp = [];
 
   columns = [];
 
   constructor(
-    private dialogService: NbDialogService
+    private dialogService: NbDialogService,
+    private accountsService: AccountsService
   ) {
     this.temp = [...this.rows];
   }
@@ -46,9 +36,26 @@ export class AccountsComponent implements OnInit {
     this.columns = [
       { prop: 'name' },
       { name: 'Server' },
-      { name: 'Date', cellTemplate: this.dateTpl },
+      { name: 'Created', cellTemplate: this.mDateTpl },
+      { name: 'Modified', cellTemplate: this.mDateTpl },
       { cellTemplate: this.actionsTpl }
     ];
+    this.loadFromStore();
+  }
+
+  loadFromStore() {
+    this.rows = this.accountsService
+      .all()
+      .map((row) => {
+        return {
+          id: row.id,
+          name: row.name,
+          server: ServerType[`${row.server.server_type}`],
+          created: new Date(row.creation_date),
+          modified: new Date(row.modify_date)
+        }
+      })
+    this.temp = [...this.rows];
   }
 
   updateFilter(event) {
@@ -67,7 +74,16 @@ export class AccountsComponent implements OnInit {
 
   edit(row) {
     console.log(row);
-    this.dialogService.open(AddEditAccountComponent, { hasBackdrop: true }).onClose.subscribe(res => console.log(res));;
+    let account = this.accountsService.get(row.id);
+    console.log("account: ", account);
+    this.dialogService
+      .open<any>(AddEditAccountComponent, { 
+        hasBackdrop: true,
+        context: {
+          account: account
+        }
+      })
+      .onClose.subscribe(res => console.log(res));;
   }
 
   delete(row) {

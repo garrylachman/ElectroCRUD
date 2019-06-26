@@ -39,6 +39,8 @@ import { ConfirmDeleteComponent } from './components/dialogs/confirm-delete/conf
 
 import { NgxMaskModule } from 'ngx-mask';
 
+import { AccountsService } from './services/store/accounts.service';
+
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -82,7 +84,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     NbDialogModule.forRoot(),
     NgxMaskModule.forRoot(),
   ],
-  providers: [ElectronService, NbMenuService, NbDialogService],
+  providers: [ElectronService, NbMenuService, NbDialogService, AccountsService],
   entryComponents: [ConfirmDeleteComponent],
   bootstrap: [AppComponent]
 })

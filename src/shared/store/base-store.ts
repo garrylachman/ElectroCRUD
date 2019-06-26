@@ -2,13 +2,24 @@ import * as ElectronStore from  'electron-store';
 
 export class BaseStore {
 
-    protected store:ElectronStore<any>;
+    protected store: ElectronStore<any>;
 
-    constructor(name:string, schema:any) {
+    constructor(protected name:string) {
         this.store = new ElectronStore({
-            name: name,
-            schema: schema
+            name: name
         });
+    }
+
+    protected _all<T>(): T[] {
+        return this.store.get(this.name, []) as T[];
+    }
+
+    protected lastId<T>(): number {
+        let lastElem:any = this._all<T[]>().pop();
+        if (lastElem) {
+            return lastElem.id;
+        }
+        return 1;
     }
 
 };

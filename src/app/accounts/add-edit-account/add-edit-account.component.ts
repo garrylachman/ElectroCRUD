@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NbDialogRef } from '@nebular/theme';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Account } from '../../../shared/interfaces/accounts.interface';
 
 @Component({
   selector: 'app-add-edit-account',
@@ -9,7 +10,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class AddEditAccountComponent implements OnInit {
 
-  title: string;
+  title: string = "Add new account";
+  accountId: number;
+  editAccount: Account;
 
   isSaveEnabled: boolean = false;
 
@@ -23,32 +26,42 @@ export class AddEditAccountComponent implements OnInit {
   ]
 
   constructor(
-    protected ref: NbDialogRef<any>,
+    public ref: NbDialogRef<any>,
     private fb: FormBuilder
   ) { 
-    this.title = "Add new account";
+
+  }
+
+  get isEdit(): boolean {
+    return this.accountId > 0;
   }
 
   ngOnInit() {
+    console.log(this.ref);
+    if (this.ref.componentRef.instance.account) {
+      this.editAccount = this.ref.componentRef.instance.account;
+      this.accountId = this.editAccount.id;
+    }
+
     this.basicDetailsForm = this.fb.group({
-      accountNameCtrl: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
-      databaseServerCtrl: ['', Validators.required],
+      accountNameCtrl: [this.editAccount.name, Validators.compose([Validators.required, Validators.minLength(3)])],
+      databaseServerCtrl: [String(this.editAccount.server.server_type), Validators.required],
     });
     
     this.tunnelDetailsForm = this.fb.group({
-      isTunnelEnabledCtrl: [false, Validators.required],
-      sshHostCtrl: ['', Validators.required],
-      sshPortCtrl: ['', Validators.required],
-      sshUsernameCtrl: ['', Validators.required],
-      sshPasswordCtrl: ['', Validators.required],
+      isTunnelEnabledCtrl: [this.editAccount.ssh.enabled, Validators.required],
+      sshHostCtrl: [this.editAccount.ssh.hostname, Validators.required],
+      sshPortCtrl: [this.editAccount.ssh.port, Validators.required],
+      sshUsernameCtrl: [this.editAccount.ssh.username, Validators.required],
+      sshPasswordCtrl: [this.editAccount.ssh.password, Validators.required],
     });
 
     this.databaseDetailsForm = this.fb.group({
-      dbHostCtrl: ['', Validators.required],
-      dbPortCtrl: ['', Validators.required],
-      dbUsernameCtrl: ['', Validators.required],
-      dbPasswordCtrl: ['', Validators.nullValidator],
-      dbDbCtrl: ['', Validators.required],
+      dbHostCtrl: [this.editAccount.server.hostname, Validators.required],
+      dbPortCtrl: [this.editAccount.server.port, Validators.required],
+      dbUsernameCtrl: [this.editAccount.server.username, Validators.required],
+      dbPasswordCtrl: [this.editAccount.server.password, Validators.nullValidator],
+      dbDbCtrl: [this.editAccount.server.database, Validators.required],
     });
 
     this.tunnelDetailsForm.controls.isTunnelEnabledCtrl.valueChanges.subscribe((newVal) => {
@@ -63,6 +76,10 @@ export class AddEditAccountComponent implements OnInit {
     });
 
     this.tunnelDetailsForm.controls.isTunnelEnabledCtrl.updateValueAndValidity();
+
+    if (this.isEdit) {
+      this.title = `Edit Account: ${this.basicDetailsForm.controls['accountNameCtrl'].value}`;
+    }
   }
 
   onBasicDetailsSubmit() {

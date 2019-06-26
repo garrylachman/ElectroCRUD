@@ -44,7 +44,7 @@
     "@types/jasmine": "2.8.7",
     "@types/jasminewd2": "2.0.3",
     "@types/mocha": "5.2.6",
-    "@types/node": "8.9.4",
+    "@types/node": "^12.0.10",
     "chai": "4.2.0",
     "codelyzer": "5.0.1",
     "conventional-changelog-cli": "2.0.11",
@@ -94,7 +94,6 @@
     "electron-better-ipc": "^0.3.0",
     "electron-store": "^4.0.0",
     "eva-icons": "^1.1.1",
-    "ng-typed": "^1.2.0",
     "ngx-mask": "^8.0.0"
   }
 }
