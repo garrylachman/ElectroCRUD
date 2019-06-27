@@ -126,11 +126,8 @@ export class AddEditAccountComponent implements OnInit {
   }
 
   async testConnection() {
-    console.log("testConnection")
     const res:IIPCCheckConnectionResponseMessage = await this.accountsIPCService.checkConnection(this.formAsAccount());
-    console.log("res", res);
     this.isSaveEnabled = res.ssh.valid;
-    console.log("testConnection res: ", res);
   }
   
   save() {

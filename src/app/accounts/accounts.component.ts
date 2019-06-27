@@ -73,9 +73,7 @@ export class AccountsComponent implements OnInit {
   }
 
   edit(row) {
-    console.log(row);
     let account = this.accountsService.get(row.id);
-    console.log("account: ", account);
     this.dialogService
       .open<any>(AddEditAccountComponent, { 
         hasBackdrop: true,
@@ -97,12 +95,12 @@ export class AccountsComponent implements OnInit {
   }
 
   delete(row) {
-    console.log(row);
     this.dialogService
       .open(ConfirmDeleteComponent, { hasBackdrop: true })
       .onClose
       .subscribe((res) => {
- 
+        this.accountsService.delete(row.id);
+        this.loadFromStore();
       });
   }
 
