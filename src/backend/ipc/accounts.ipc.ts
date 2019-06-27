@@ -1,7 +1,7 @@
 import { 
-    CHANNEL_CHECK_CONNECTION, 
-    CheckConnectionRequestMessage, 
-    CheckConnectionResponseMessage 
+    IPC_CHANNEL_CHECK_CONNECTION, 
+    IPCCheckConnectionRequestMessage, 
+    IPCCheckConnectionResponseMessage 
 } from '../../shared/ipc/accounts.ipc';
 
 import { ipcMain } from 'electron-better-ipc';
@@ -12,15 +12,13 @@ export class AccountsIPC {
     constructor() {}
     
     public listen() {
-        ipcMain.answerRenderer(CHANNEL_CHECK_CONNECTION, this.checkConnection);
+        ipcMain.answerRenderer(IPC_CHANNEL_CHECK_CONNECTION, this.checkConnection);
     }
 
     public async checkConnection(req: JsonValue): Promise<JsonValue> {
-        let reqMessage: CheckConnectionRequestMessage = {
-            server: req['server'],
-            ssh: req['ssh']
-        };
-        let resMessage: CheckConnectionResponseMessage = {
+        let reqMessage: IPCCheckConnectionRequestMessage = new IPCCheckConnectionRequestMessage(req);
+
+        let resMessage: IPCCheckConnectionResponseMessage = new IPCCheckConnectionResponseMessage({
             server: {
                 valid: true
             },
@@ -28,8 +26,9 @@ export class AccountsIPC {
                 valid: false,
                 error: 'no ssh'
             }
-        }
-        return Promise.resolve(resMessage as any);
+        });
+        
+        return Promise.resolve(resMessage.toJsonValue());
     }
 
 }

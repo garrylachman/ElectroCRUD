@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { NbDialogRef } from '@nebular/theme';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Account } from '../../../shared/interfaces/accounts.interface';
+import { IIPCCheckConnectionResponseMessage } from '../../../shared/ipc/accounts.ipc';
+import { AccountsIPCService } from '../../services/ipc/accounts.service';
 
 @Component({
   selector: 'app-add-edit-account',
@@ -27,7 +29,8 @@ export class AddEditAccountComponent implements OnInit {
 
   constructor(
     public ref: NbDialogRef<any>,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private accountsIPCService: AccountsIPCService
   ) { 
 
   }
@@ -92,6 +95,39 @@ export class AddEditAccountComponent implements OnInit {
 
   onDatabaseDetailsSubmit() {
     this.databaseDetailsForm.markAsDirty();
+  }
+
+  formAsAccount(): Account {
+    const fromBasicForm = (ctrl: string) => this.basicDetailsForm.controls[ctrl].value;
+    const fromTunnelForm = (ctrl: string) => this.tunnelDetailsForm.controls[ctrl].value;
+    const fromDBForm = (ctrl: string) => this.databaseDetailsForm.controls[ctrl].value;
+
+    return {
+      name: fromBasicForm('accountNameCtrl'),
+      creation_date: this.editAccount.creation_date || new Date().toISOString(),
+      modify_date: this.editAccount.modify_date || new Date().toISOString(),
+      server: {
+        server_type: fromBasicForm('databaseServerCtrl'),
+        hostname: fromDBForm('dbHostCtrl'),
+        port: fromDBForm('dbPortCtrl'),
+        username: fromDBForm('dbUsernameCtrl'),
+        password: fromDBForm('dbPasswordCtrl'),
+        database: fromDBForm('dbDbCtrl')
+      },
+      ssh: {
+        enabled: fromTunnelForm('isTunnelEnabledCtrl'),
+        hostname: fromTunnelForm('sshHostCtrl'),
+        port: fromTunnelForm('sshPortCtrl'),
+        username: fromTunnelForm('sshUsernameCtrl'),
+        password: fromTunnelForm('sshPasswordCtrl')
+      }
+    }
+  }
+
+  async testConnection() {
+    console.log("testConnection")
+    const res:IIPCCheckConnectionResponseMessage = await this.accountsIPCService.checkConnection(this.formAsAccount());
+    console.log("testConnection res: ", res);
   }
   
   save() {
