@@ -11,6 +11,7 @@ export interface IIPCCheckConnectionRequestMessage {
 export interface IIPCCheckConnectionResponsePartial {
     valid: boolean;
     error?: string;
+    port?: number;
 }
 
 export interface IIPCCheckConnectionResponseMessage {
@@ -19,7 +20,12 @@ export interface IIPCCheckConnectionResponseMessage {
 }
 
 export class IPCCheckConnectionResponseMessage extends IPCBaseMessage<IIPCCheckConnectionResponseMessage> {
-
+    public set sshValid(valid: boolean) {
+        this.message.ssh.valid = valid;
+    }
+    public set sshError(error: string) {
+        this.message.ssh.error = error;
+    }
 }
 
 export class IPCCheckConnectionRequestMessage extends IPCBaseMessage<IIPCCheckConnectionRequestMessage> {

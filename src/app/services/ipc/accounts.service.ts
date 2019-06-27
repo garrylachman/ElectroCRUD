@@ -12,7 +12,7 @@ import { Account } from '../../../shared/interfaces/accounts.interface';
   providedIn: 'root'
 })
 export class AccountsIPCService {
-
+  
   constructor() { }
 
   public async checkConnection(account: Account): Promise<IIPCCheckConnectionResponseMessage> {
@@ -21,6 +21,7 @@ export class AccountsIPCService {
       ssh: account.ssh
     });
     const rawRes:any = await ipcRenderer.callMain(IPC_CHANNEL_CHECK_CONNECTION, req.toJsonValue());
+    console.log("rawRes", rawRes);
     return new IPCCheckConnectionResponseMessage(rawRes).toMessage()
   }
 

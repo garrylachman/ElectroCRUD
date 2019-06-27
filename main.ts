@@ -82,3 +82,7 @@ try {
   // Catch Error
   // throw e;
 }
+
+process.on("uncaughtException", (err) => {
+  console.log("err", err);
+});

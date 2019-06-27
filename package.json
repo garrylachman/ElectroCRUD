@@ -91,10 +91,13 @@
     "@nebular/eva-icons": "^4.0.0-rc.8",
     "@nebular/theme": "^4.1.0",
     "@swimlane/ngx-datatable": "^15.0.2",
+    "@types/tunnel-ssh": "^4.1.0",
     "electron-better-ipc": "https://github.com/garrylachman/electron-better-ipc",
     "electron-store": "^4.0.0",
     "eva-icons": "^1.1.1",
+    "get-port": "^5.0.0",
     "ngx-mask": "^8.0.0",
+    "tunnel-ssh": "^4.1.4",
     "type-fest": "^0.5.2"
   }
 }

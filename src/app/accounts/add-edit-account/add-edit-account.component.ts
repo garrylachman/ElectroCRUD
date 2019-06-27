@@ -103,6 +103,7 @@ export class AddEditAccountComponent implements OnInit {
     const fromDBForm = (ctrl: string) => this.databaseDetailsForm.controls[ctrl].value;
 
     return {
+      id: this.editAccount.id || null,
       name: fromBasicForm('accountNameCtrl'),
       creation_date: this.editAccount.creation_date || new Date().toISOString(),
       modify_date: this.editAccount.modify_date || new Date().toISOString(),
@@ -127,10 +128,12 @@ export class AddEditAccountComponent implements OnInit {
   async testConnection() {
     console.log("testConnection")
     const res:IIPCCheckConnectionResponseMessage = await this.accountsIPCService.checkConnection(this.formAsAccount());
+    console.log("res", res);
+    this.isSaveEnabled = res.ssh.valid;
     console.log("testConnection res: ", res);
   }
   
   save() {
-
+    this.ref.close(this.formAsAccount());
   }
 }

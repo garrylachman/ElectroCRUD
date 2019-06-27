@@ -83,12 +83,27 @@ export class AccountsComponent implements OnInit {
           account: account
         }
       })
-      .onClose.subscribe(res => console.log(res));;
+      .onClose
+      .subscribe((res) => {
+        if (res) {
+          if (!(res as Account).id) {
+            this.accountsService.add(res);
+          } else {
+            this.accountsService.update(res);
+          }
+          this.loadFromStore();
+        }
+      });
   }
 
   delete(row) {
     console.log(row);
-    this.dialogService.open(ConfirmDeleteComponent, { hasBackdrop: true }).onClose.subscribe(res => console.log(res));;
+    this.dialogService
+      .open(ConfirmDeleteComponent, { hasBackdrop: true })
+      .onClose
+      .subscribe((res) => {
+ 
+      });
   }
 
 }
