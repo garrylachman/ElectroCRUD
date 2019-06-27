@@ -1,3 +1,4 @@
+# Version 2.0 is on the way. Full refactor. 06/2019
 # ElectroCRUD
 
 MySQL CRUD application built on [Electron](http://electron.atom.io/).
