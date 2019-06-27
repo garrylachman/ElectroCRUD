@@ -10,7 +10,8 @@
 
 ::ng-deep
 .datatable-body button {
-  padding: 0rem 0.75rem !important;
+  padding: 0.5rem 0.75rem !important;
+  margin-right: 0.8rem;
 }
 
 ::ng-deep
@@ -44,4 +45,9 @@
 .ngx-datatable.bootstrap .datatable-footer .datatable-pager ul li:not(.disabled):hover a {
   background-color: #598bff !important;
   color: #ffffff;
+}
+
+::ng-deep
+.ngx-datatable.bootstrap .datatable-body .datatable-body-row .datatable-body-cell {
+  margin: auto;
 }

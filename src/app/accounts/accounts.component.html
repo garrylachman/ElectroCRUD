@@ -33,16 +33,23 @@
     </ng-template>
     <ng-template #actionsTpl let-row="row">
         <button 
-            nbButton status="success" ghost size="tiny" (click)="edit(row)" 
+            nbButton status="success" hero size="medium" (click)="edit(row)" 
             nbTooltip="Edit" nbTooltipPlacement="top" nbTooltipStatus="success"
         >
             <nb-icon icon="edit"></nb-icon>
         </button>
         <button 
-            nbButton status="danger" ghost size="tiny" (click)="delete(row)" 
+            nbButton status="danger" hero size="medium" (click)="delete(row)" 
             nbTooltip="Delete" nbTooltipPlacement="top" nbTooltipStatus="danger"
         >
             <nb-icon icon="trash-2"></nb-icon>
+        </button>
+        <button 
+            nbButton status="info" hero size="medium" (click)="delete(row)" 
+            nbTooltip="Login & Use Account" nbTooltipPlacement="top" nbTooltipStatus="info"
+        >
+            <nb-icon icon="monitor"></nb-icon>
+            Use
         </button>
     </ng-template>
         
