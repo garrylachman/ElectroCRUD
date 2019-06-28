@@ -17,6 +17,7 @@ export class AddEditAccountComponent implements OnInit {
   editAccount: Account;
 
   isSaveEnabled: boolean = false;
+  public testLog: [string, string][];
 
   basicDetailsForm: FormGroup;
   tunnelDetailsForm: FormGroup;
@@ -32,7 +33,7 @@ export class AddEditAccountComponent implements OnInit {
     private fb: FormBuilder,
     private accountsIPCService: AccountsIPCService
   ) { 
-
+    this.testLog = [];
   }
 
   get isEdit(): boolean {
@@ -126,8 +127,21 @@ export class AddEditAccountComponent implements OnInit {
   }
 
   async testConnection() {
+    this.testLog = [];
     const res:IIPCCheckConnectionResponseMessage = await this.accountsIPCService.checkConnection(this.formAsAccount());
-    this.isSaveEnabled = res.ssh.valid;
+    this.isSaveEnabled = (this.formAsAccount().ssh.enabled) ? (res.ssh.valid && res.server.valid) : res.server.valid;
+    if (this.formAsAccount().ssh.enabled) {
+      if (res.ssh.valid) {
+        this.testLog.push([`success`, `[OK] SSH`])
+      } else {
+        this.testLog.push([`danger`, `[FAIL] SSH, error: ${res.ssh.error}`]);
+      }
+      if (res.server.valid) {
+        this.testLog.push([`success`, `[OK] DATABASE`])
+      } else {
+        this.testLog.push([`danger`, `[FAIL] DATABASE,  error: ${res.server.error}`]);
+      }
+    }
   }
   
   save() {

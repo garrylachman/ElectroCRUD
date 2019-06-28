@@ -116,7 +116,9 @@
           <div class="input-group">
             <button nbButton status="primary" hero size="giant" (click)="testConnection()"><nb-icon icon="wifi"></nb-icon>Start Test</button>
           </div>
-
+          <div>
+            <nb-alert *ngFor="let tLog of testLog" status="{{tLog[0]}}">{{tLog[1]}}</nb-alert>
+          </div>
           <button nbButton hero nbStepperPrevious>prev</button>
         </nb-step>
       </nb-stepper>

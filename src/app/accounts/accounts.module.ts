@@ -12,7 +12,8 @@ import {
   NbDialogModule, 
   NbStepperModule,
   NbSelectModule,
-  NbCheckboxModule
+  NbCheckboxModule,
+  NbAlertModule
 } from '@nebular/theme';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { AddEditAccountComponent } from './add-edit-account/add-edit-account.component';
@@ -37,6 +38,7 @@ import { NgxMaskModule } from 'ngx-mask';
     NbSelectModule,
     NbCheckboxModule,
     NgxMaskModule.forChild(),
+    NbAlertModule,
   ],
   entryComponents: [AccountsComponent, AddEditAccountComponent]
 })

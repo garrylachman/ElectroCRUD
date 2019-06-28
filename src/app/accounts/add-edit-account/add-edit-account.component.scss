@@ -32,3 +32,11 @@ nb-card-footer {
 nb-stepper.horizontal .header .step {
     width: auto !important;
 }
+
+::ng-deep
+.nb-theme-default nb-alert {
+    line-height: 0.5rem;
+    margin-bottom: 0.5rem;
+    padding: 1rem;
+    font-size: 0.8rem;
+}
