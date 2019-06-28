@@ -7,6 +7,7 @@ import {
 import { ipcMain } from 'electron-better-ipc';
 import { JsonValue } from 'type-fest';
 import { TunnelService } from '../services/tunnel.service';
+import { DatabaseService, serverTypeIdAsEnum } from '../services/db.service';
 
 export class AccountsIPC {
 
@@ -37,6 +38,17 @@ export class AccountsIPC {
             reqMessage.toMessage().server.hostname,
             reqMessage.toMessage().server.port
         );
+
+        console.log("reqMessage.toMessage().server.server_type", reqMessage.toMessage().server.server_type, serverTypeIdAsEnum(reqMessage.toMessage().server.server_type));
+        DatabaseService.getInstance().connect(
+            serverTypeIdAsEnum(reqMessage.toMessage().server.server_type),
+            reqMessage.toMessage().server.hostname,
+            reqMessage.toMessage().server.port,
+            reqMessage.toMessage().server.username,
+            reqMessage.toMessage().server.password,
+            reqMessage.toMessage().server.database
+        )
+        //console.log("connection", DatabaseService.getInstance().connection)
 
         let resMessage: IPCCheckConnectionResponseMessage = new IPCCheckConnectionResponseMessage({
             server: {

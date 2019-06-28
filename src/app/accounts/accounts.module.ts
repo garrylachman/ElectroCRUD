@@ -17,7 +17,7 @@ import {
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { AddEditAccountComponent } from './add-edit-account/add-edit-account.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {NgxMaskModule} from 'ngx-mask';
+import { NgxMaskModule } from 'ngx-mask';
 
 @NgModule({
   declarations: [AccountsComponent, AddEditAccountComponent],
