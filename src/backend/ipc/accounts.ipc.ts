@@ -21,51 +21,73 @@ export class AccountsIPC {
 
     public async checkConnection(req: JsonValue): Promise<JsonValue> {
         let reqMessage: IPCCheckConnectionRequestMessage = new IPCCheckConnectionRequestMessage(req);
+
+        let isDatabaseValid: boolean | Error;
+        let databaseError: string;
+        let isTunnelValid: boolean;
+        let tunnelError: string;
+
+        let databaseHostname: string = reqMessage.toMessage().server.hostname;
+        let databasePort: number = reqMessage.toMessage().server.port;
         
-        try {
-            if (this.tunnel != null) {
-                this.tunnel.close();
+        if (reqMessage.toMessage().ssh.enabled) {
+            try {
+                if (this.tunnel != null) {
+                    this.tunnel.close();
+                }
+            } catch(error) {
+                console.log("close error: ", error)
             }
-        } catch(error) {
-            console.log("close error: ", error)
+
+            this.tunnel = new TunnelService(
+                reqMessage.toMessage().ssh.hostname,
+                reqMessage.toMessage().ssh.username,
+                reqMessage.toMessage().ssh.password,
+                reqMessage.toMessage().ssh.port,
+                reqMessage.toMessage().server.hostname,
+                reqMessage.toMessage().server.port
+            );
+
+            databaseHostname = reqMessage.toMessage().ssh.hostname;
+            databasePort = reqMessage.toMessage().ssh.port;
+
+            try {
+                let tunnelRes:any = await this.tunnel.start();
+                this.tunnel.close();
+                isTunnelValid = true;
+            } catch (error) {
+                isTunnelValid = false;
+                tunnelError = error.toString();
+            }
         }
 
-        this.tunnel = new TunnelService(
-            reqMessage.toMessage().ssh.hostname,
-            reqMessage.toMessage().ssh.username,
-            reqMessage.toMessage().ssh.password,
-            reqMessage.toMessage().ssh.port,
-            reqMessage.toMessage().server.hostname,
-            reqMessage.toMessage().server.port
-        );
-
-        console.log("reqMessage.toMessage().server.server_type", reqMessage.toMessage().server.server_type, serverTypeIdAsEnum(reqMessage.toMessage().server.server_type));
-        DatabaseService.getInstance().connect(
+        await DatabaseService.getInstance().connect(
             serverTypeIdAsEnum(reqMessage.toMessage().server.server_type),
             reqMessage.toMessage().server.hostname,
             reqMessage.toMessage().server.port,
             reqMessage.toMessage().server.username,
             reqMessage.toMessage().server.password,
             reqMessage.toMessage().server.database
-        )
-        //console.log("connection", DatabaseService.getInstance().connection)
+        );
+
+        isDatabaseValid = await DatabaseService.getInstance().heartbeat();
+        if (isDatabaseValid instanceof Error) {
+            databaseError = isDatabaseValid.message;
+            isDatabaseValid = false;
+        }
+        await DatabaseService.getInstance().disconnect();
 
         let resMessage: IPCCheckConnectionResponseMessage = new IPCCheckConnectionResponseMessage({
             server: {
-                valid: true
+                valid: isDatabaseValid,
+                error: databaseError 
             },
             ssh: {
-                valid: false
+                valid: isTunnelValid,
+                error: tunnelError
             }
         });
-
-        try {
-            let tunnelRes:any = await this.tunnel.start();
-            resMessage.sshValid = true;
-        } catch (error) {
-            resMessage.sshValid = false;
-            resMessage.sshError = error.toString();
-        }
+        
         console.log("resMessage", resMessage.toMessage());
         return Promise.resolve(resMessage.toJsonValue());
     }

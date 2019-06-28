@@ -15,6 +15,13 @@ export const serverTypeIdAsEnum = (id: number) => {
     return null;
 }
 
+export const HeartBeatQueries = {
+    [ServerType.OracleDB]: 'select 1 from DUAL',
+    [ServerType.MySQL]: 'SELECT 1',
+    [ServerType.PostgreSQL]: 'SELECT 1',
+    [ServerType.MSSQL]: 'SELECT 1'
+}
+
 export class DatabaseService {
     private static instance: DatabaseService;
     private _connection:Knex;
@@ -35,10 +42,9 @@ export class DatabaseService {
         user: string,
         password: string,
         database: string,
-    ) {
-        if (this._connection) {
-            await this._connection.destroy();
-        }
+    ): Promise<boolean | Error> {
+        await this.disconnect();
+
         let config:Knex.Config = {
             client: client,
             connection: {
@@ -49,9 +55,12 @@ export class DatabaseService {
                 database: database
             }
         };
-        console.log("config", config);
-        this._connection = Knex(config);
-        console.log("validate", this.connection.client.pool.validate(this.connection.connection()));
+        try {
+            this._connection = Knex(config);
+        } catch(error) {
+            return error;
+        }
+        return true;
     }
 
     public async disconnect() {
@@ -62,5 +71,31 @@ export class DatabaseService {
 
     public get connection():Knex {
         return this._connection;
+    }
+
+    private get activeClient(): string {
+        try {
+            return this.connection.client.config.client;
+        } catch(error) {
+            console.log("activeClient: ", error);
+            return null;
+        }
+        return null;
+    }
+
+    public async heartbeat():Promise<boolean | Error> {
+        if (!this.connection || !this.activeClient) {
+            console.log("no connection or active client");
+            return null
+        };
+
+        let heartbeatQuery = HeartBeatQueries[this.activeClient];
+
+        try {
+            let res = await this.connection.raw(heartbeatQuery);
+            return true;
+        } catch(error) {
+            return error;
+        }
     }
 }
