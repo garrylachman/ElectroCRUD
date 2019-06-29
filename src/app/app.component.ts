@@ -8,6 +8,9 @@ import {
   NbSearchService, 
   NbMenuItem 
 } from '@nebular/theme';
+import { IAccount } from '../shared/interfaces/accounts.interface';
+import { SessionService } from './services/session.service';
+import { IView } from '../shared/interfaces/views.interface';
 
 
 @Component({
@@ -16,31 +19,25 @@ import {
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+  account:IAccount;
+
   userMenu = [{ title: 'Profile' }, { title: 'Log out' }];
-  items: NbMenuItem[] = [
+  defaultItems: NbMenuItem[] = [
     {
       title: 'Views',
       group: true,
       icon: 'folder-outline'
-    },
-    {
-      title: 'Table 1',
-      link: '/',
-      icon: 'layers-outline'
-    },
-    {
-      title: 'Table 2',
-      link: 'dashboard',
-      icon: 'layers-outline'
     }
    ];
+  items:NbMenuItem[] = [...this.defaultItems];
 
   constructor(
     public electronService: ElectronService,
     private translate: TranslateService,
     private sidebarService: NbSidebarService,
     private menuService: NbMenuService,
-    private searchService: NbSearchService) {
+    private searchService: NbSearchService,
+    private sessionService: SessionService) {
 
     translate.setDefaultLang('en');
     console.log('AppConfig', AppConfig);
@@ -52,5 +49,23 @@ export class AppComponent {
     } else {
       console.log('Mode web');
     }
+
+    this.sessionService.changes.subscribe({
+      next: (v:IAccount) => {
+        this.account = v;
+      }
+    })
+  }
+
+  reload() {
+    let views:IView[] = this.sessionService.activeAccountViewsFromStore;
+
+    this.items = [...this.defaultItems];
+    views.forEach((view:IView) => {
+      this.items.push({
+        title: view.name,
+        icon: 'layers-outline'
+      })
+    })
   }
 }

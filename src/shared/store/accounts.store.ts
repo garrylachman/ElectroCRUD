@@ -1,5 +1,5 @@
-import { BaseStore } from './base-store';
-import { Account } from '../interfaces/accounts.interface';
+import { BaseStore } from './base.store';
+import { IAccount } from '../interfaces/accounts.interface';
 
 const CONST_NAME = "accounts";
 
@@ -9,12 +9,12 @@ export class AccountsStore extends BaseStore {
         super(CONST_NAME);
     }
 
-    public all(): Account[] {
-        return this._all<Account>();
+    public all(): IAccount[] {
+        return this._all<IAccount>();
     }
 
-    public get(id: number): Account {
-        let accounts: Account[] = this.all();
+    public get(id: number): IAccount {
+        let accounts: IAccount[] = this.all();
         for (let i=0; i <= accounts.length; i++) {
             if (accounts[i].id == id)   {
                 return accounts[i];
@@ -22,15 +22,15 @@ export class AccountsStore extends BaseStore {
         }
     }
 
-    public add(data: Account): void {
-        data.id = this.lastId<Account>();
+    public add(data: IAccount): void {
+        data.id = this.lastId<IAccount>();
         ++data.id; // increment the last id
         let accounts = this.all();
         accounts.push(data);
         this.store.set(CONST_NAME, accounts);
     }
 
-    public update(data: Account): void {
+    public update(data: IAccount): void {
         if (!data.id) {
             throw new Error('Account ID missing');
         }
@@ -40,7 +40,7 @@ export class AccountsStore extends BaseStore {
 
         let accounts = this
             .all()
-            .map((account:Account) => {
+            .map((account:IAccount) => {
                 if (account.id == data.id) {
                     return data;
                 }
@@ -52,7 +52,7 @@ export class AccountsStore extends BaseStore {
     public delete(id: number): void {
         let accounts = this
             .all()
-            .filter((account:Account) => account.id != id);
+            .filter((account:IAccount) => account.id != id);
         this.store.set(CONST_NAME, accounts);
     }
 }

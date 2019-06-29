@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NbDialogRef } from '@nebular/theme';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Account } from '../../../shared/interfaces/accounts.interface';
+import { IAccount } from '../../../shared/interfaces/accounts.interface';
 import { IIPCCheckConnectionResponseMessage } from '../../../shared/ipc/accounts.ipc';
 import { AccountsIPCService } from '../../services/ipc/accounts.service';
 
@@ -14,7 +14,7 @@ export class AddEditAccountComponent implements OnInit {
 
   title: string = "Add new account";
   accountId: number;
-  editAccount: Account;
+  editAccount: IAccount;
 
   isSaveEnabled: boolean = false;
   public testLog: [string, string][];
@@ -98,7 +98,7 @@ export class AddEditAccountComponent implements OnInit {
     this.databaseDetailsForm.markAsDirty();
   }
 
-  formAsAccount(): Account {
+  formAsAccount(): IAccount {
     const fromBasicForm = (ctrl: string) => this.basicDetailsForm.controls[ctrl].value;
     const fromTunnelForm = (ctrl: string) => this.tunnelDetailsForm.controls[ctrl].value;
     const fromDBForm = (ctrl: string) => this.databaseDetailsForm.controls[ctrl].value;

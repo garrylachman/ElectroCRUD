@@ -1,11 +1,12 @@
 import { Component, OnInit, Input, ViewChild, TemplateRef } from '@angular/core';
-import { NbSortDirection, NbDialogService  } from '@nebular/theme';
+import { NbSortDirection, NbDialogService, NbToastrService  } from '@nebular/theme';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
 import { ConfirmDeleteComponent} from '../components/dialogs/confirm-delete/confirm-delete.component';
 import { AddEditAccountComponent } from './add-edit-account/add-edit-account.component';
 import { AccountsService, ServerType } from '../services/store/accounts.service';
-import { Account } from '../../shared/interfaces/accounts.interface';
+import { IAccount } from '../../shared/interfaces/accounts.interface';
 import { SessionService } from '../services/session.service';
+import { IIPCConnectResponseMessage } from '../../shared/ipc/accounts.ipc';
 
 @Component({
   selector: 'app-accounts',
@@ -14,6 +15,7 @@ import { SessionService } from '../services/session.service';
 })
 export class AccountsComponent implements OnInit {
 
+  isLoading: boolean = false;
   loadingIndicator: boolean = true;
   reorderable: boolean = true;
 
@@ -30,7 +32,8 @@ export class AccountsComponent implements OnInit {
   constructor(
     private dialogService: NbDialogService,
     private accountsService: AccountsService,
-    private sessionService: SessionService
+    private sessionService: SessionService,
+    private toastrService: NbToastrService
   ) {
     this.temp = [...this.rows];
   }
@@ -76,7 +79,7 @@ export class AccountsComponent implements OnInit {
   }
 
   edit(row) {
-    let account:Account;
+    let account:IAccount;
     if (row && row.id)  {
       account = this.accountsService.get(row.id);
     }
@@ -90,7 +93,7 @@ export class AccountsComponent implements OnInit {
       .onClose
       .subscribe((res) => {
         if (res) {
-          if (!(res as Account).id) {
+          if (!(res as IAccount).id) {
             this.accountsService.add(res);
           } else {
             this.accountsService.update(res);
@@ -110,8 +113,17 @@ export class AccountsComponent implements OnInit {
       });
   }
 
-  use(row) {
-    this.sessionService.activeAccount = row;
+  async use(row) {
+    this.isLoading = true;
+    let account:IAccount = this.accountsService.get(row.id);
+    let res:IIPCConnectResponseMessage = await this.sessionService.setActiveAccount(account);
+    console.log("connect response: ", row);
+    this.isLoading = false;
+    if (!res.valid) {
+      this.toastrService.show(status, res.error, { status: "danger" });
+    } else {
+      this.toastrService.show(status, `Connected to ${account.name}.`, { status: "success" });
+    }
   }
 
 }

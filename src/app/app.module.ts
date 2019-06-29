@@ -33,7 +33,8 @@ import {
   NbTooltipModule,
   NbCardModule,
   NbDialogService,
-  NbDialogModule
+  NbDialogModule,
+  NbToastrModule
 } from '@nebular/theme';
 import { ConfirmDeleteComponent } from './components/dialogs/confirm-delete/confirm-delete.component';
 
@@ -83,6 +84,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     NbCardModule,
     NbDialogModule.forRoot(),
     NgxMaskModule.forRoot(),
+    NbToastrModule.forRoot(),
   ],
   providers: [ElectronService, NbMenuService, NbDialogService, AccountsService],
   entryComponents: [ConfirmDeleteComponent],

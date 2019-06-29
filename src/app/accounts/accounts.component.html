@@ -2,7 +2,7 @@
     <nb-card-header><h1 class="page-header h4">Accounts</h1></nb-card-header>
 </nb-card>
 
-<nb-card>
+<nb-card [nbSpinner]="isLoading" nbSpinnerSize="giant" nbSpinnerStatus="primary">
     <nb-card-header>
         <input nbInput shape="semi-round" 
             type="text"
@@ -51,7 +51,7 @@
             <nb-icon icon="trash-2"></nb-icon>
         </button>
         <button 
-            nbButton status="info" hero size="medium" (click)="use(row)" 
+            nbButton status="info" hero size="medium" (click)="use(row, this)" 
             nbTooltip="Login & Use Account" nbTooltipPlacement="top" nbTooltipStatus="info"
         >
             <nb-icon icon="monitor"></nb-icon>

@@ -1,12 +1,13 @@
-import { AccountServer, AccountSSH } from '../interfaces/accounts.interface';
+import { IAccountServer, IAccountSSH } from '../interfaces/accounts.interface';
 import { IPCBaseMessage } from './base.ipc'
 
+// Check Connection
 export const IPC_CHANNEL_CHECK_CONNECTION: string = "channel_check_connection";
 
 export interface IIPCCheckConnectionRequestMessage {
-    server: AccountServer;
-    ssh: AccountSSH;
-};
+    server: IAccountServer;
+    ssh: IAccountSSH;
+}
 
 export interface IIPCCheckConnectionResponsePartial {
     valid: boolean;
@@ -20,14 +21,30 @@ export interface IIPCCheckConnectionResponseMessage {
 }
 
 export class IPCCheckConnectionResponseMessage extends IPCBaseMessage<IIPCCheckConnectionResponseMessage> {
-    public set sshValid(valid: boolean) {
-        this.message.ssh.valid = valid;
-    }
-    public set sshError(error: string) {
-        this.message.ssh.error = error;
-    }
+
 }
 
 export class IPCCheckConnectionRequestMessage extends IPCBaseMessage<IIPCCheckConnectionRequestMessage> {
+
+}
+
+// Connect
+export const IPC_CHANNEL_CONNECT: string = "channel_connect";
+
+export interface IIPCConnectRequestMessage {
+    server: IAccountServer;
+    ssh: IAccountSSH;
+}
+
+export interface IIPCConnectResponseMessage {
+    valid: boolean;
+    error?: string;
+}
+
+export class IPCConnectResponseMessage extends IPCBaseMessage<IIPCConnectResponseMessage> {
+
+}
+
+export class IPCConnectRequestMessage extends IPCBaseMessage<IIPCConnectRequestMessage> {
 
 }

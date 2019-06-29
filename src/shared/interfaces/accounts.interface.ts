@@ -1,13 +1,13 @@
-export interface Account {
+export interface IAccount {
     id?: number;
     name: string;
     creation_date: string;
     modify_date: string;
-    ssh: AccountSSH;
-    server: AccountServer;
+    ssh: IAccountSSH;
+    server: IAccountServer;
 }
 
-export interface AccountSSH {
+export interface IAccountSSH {
     enabled: boolean;
     hostname?: string;
     port?: number;
@@ -15,7 +15,7 @@ export interface AccountSSH {
     password?: string;
 }
 
-export interface AccountServer {
+export interface IAccountServer {
     server_type: number;
     hostname: string;
     port: number;

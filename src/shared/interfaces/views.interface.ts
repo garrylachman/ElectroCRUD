@@ -6,6 +6,8 @@ export interface IView {
     columns: IViewColumn[];
     terms: IViewTerms;
     permissions: IViewPermissions;
+    creation_date: string;
+    modify_date: string;
 }
 
 export interface IViewColumn {
