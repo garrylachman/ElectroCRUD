@@ -7,6 +7,8 @@ import {
   NbSpinnerService
 } from '@nebular/theme';
 import { NgModel } from '@angular/forms';
+import { ViewsIPCService } from '../../services/ipc/views.ipc.service';
+import { IPCListOfTablesResponseMessage, IIPCListOfTablesResponseMessage } from '../../../shared/ipc/views.ipc';
 
 @Component({
   selector: 'app-configure',
@@ -18,16 +20,21 @@ export class ConfigureComponent implements OnInit {
   view: IView;
   isLoading: boolean = false;
   title: string;
+
+  // tables
   selectedTableModel:NgModel;
+  tables: string[];
+
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private sessionsService: SessionService,
-    private viewsService: ViewsService
+    private viewsService: ViewsService,
+    private viewsIPCService: ViewsIPCService
   ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     if (this.route.snapshot.paramMap.has('id')) {
       // has id, we are in edit mode
       this.view = this.viewsService.get(
@@ -38,14 +45,24 @@ export class ConfigureComponent implements OnInit {
       // no id, we are in add mode
       this.title = "Add New View";
     }
+    await this.loadTablesList();
   }
 
-  selectedChange() {
+  public selectedChange() {
     console.log(this.selectedTableModel)
   }
 
   public get isEdit(): boolean {
     return this.view && this.view.id > 0;
+  }
+
+  public async loadTablesList() {
+    console.log("loadTablesList");
+    let res:IIPCListOfTablesResponseMessage =  await this.viewsIPCService.listOfTables(this.sessionsService.activeAccount);
+    console.log("loadTablesList: ", res);
+    if (res.valid) {
+      this.tables = res.tables;
+    }
   }
 
 }
