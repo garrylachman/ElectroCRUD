@@ -5,6 +5,7 @@ import { ConfirmDeleteComponent} from '../components/dialogs/confirm-delete/conf
 import { AddEditAccountComponent } from './add-edit-account/add-edit-account.component';
 import { AccountsService, ServerType } from '../services/store/accounts.service';
 import { Account } from '../../shared/interfaces/accounts.interface';
+import { SessionService } from '../services/session.service';
 
 @Component({
   selector: 'app-accounts',
@@ -28,7 +29,8 @@ export class AccountsComponent implements OnInit {
 
   constructor(
     private dialogService: NbDialogService,
-    private accountsService: AccountsService
+    private accountsService: AccountsService,
+    private sessionService: SessionService
   ) {
     this.temp = [...this.rows];
   }
@@ -106,6 +108,10 @@ export class AccountsComponent implements OnInit {
         this.accountsService.delete(row.id);
         this.loadFromStore();
       });
+  }
+
+  use(row) {
+    this.sessionService.activeAccount = row;
   }
 
 }
