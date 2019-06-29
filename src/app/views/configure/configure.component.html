@@ -1,0 +1,21 @@
+<nb-card>
+    <nb-card-header><h1 class="page-header h4">{{title}}</h1></nb-card-header>
+</nb-card>
+
+<nb-card [nbSpinner]="isLoading" nbSpinnerSize="giant" nbSpinnerStatus="primary">
+    <nb-card-header>
+      <nb-select placeholder="Select Table" [(ngModel)]="selectedTableModel" (ngModelChange)="selectedChange()">
+        <nb-option value="">Option empty</nb-option>
+        <nb-option value="0">Option 0</nb-option>
+        <nb-option value="1">Option 1</nb-option>
+        <nb-option value="2">Option 2</nb-option>
+        <nb-option value="3">Option 3</nb-option>
+        <nb-option value="4">Option 4</nb-option>
+      </nb-select>
+    </nb-card-header>
+    <nb-card-body>
+        
+        
+    </nb-card-body>
+    <nb-card-footer></nb-card-footer>
+</nb-card>

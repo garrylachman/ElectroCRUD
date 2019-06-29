@@ -84,7 +84,6 @@ export class AccountsIPC {
             }
         }
         
-
         let resMessage: IPCConnectResponseMessage = new IPCConnectResponseMessage({
             valid: Boolean(isDatabaseValid),
             error: String(`${tunnelError||''} ${databaseError||''}`)

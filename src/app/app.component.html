@@ -18,8 +18,10 @@
     <nb-menu [items]="items"></nb-menu>
     <div class="control-panel">
       <button 
+        *ngIf="account" 
         nbButton hero status="success" size="tiny"
         nbTooltip="Add a new view" nbTooltipPlacement="top" nbTooltipStatus="success" 
+        [routerLink]="['/views/add']"
       ><nb-icon icon="plus-outline"></nb-icon>Add</button>
     </div>
   </nb-sidebar>
