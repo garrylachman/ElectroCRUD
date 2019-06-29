@@ -48,24 +48,24 @@ export class AddEditAccountComponent implements OnInit {
     }
 
     this.basicDetailsForm = this.fb.group({
-      accountNameCtrl: [this.editAccount.name, Validators.compose([Validators.required, Validators.minLength(3)])],
-      databaseServerCtrl: [String(this.editAccount.server.server_type), Validators.required],
+      accountNameCtrl: [this.editAccount ? this.editAccount.name : null, Validators.compose([Validators.required, Validators.minLength(3)])],
+      databaseServerCtrl: [this.editAccount ? String(this.editAccount.server.server_type) : null, Validators.required],
     });
     
     this.tunnelDetailsForm = this.fb.group({
-      isTunnelEnabledCtrl: [this.editAccount.ssh.enabled, Validators.required],
-      sshHostCtrl: [this.editAccount.ssh.hostname, Validators.required],
-      sshPortCtrl: [this.editAccount.ssh.port, Validators.required],
-      sshUsernameCtrl: [this.editAccount.ssh.username, Validators.required],
-      sshPasswordCtrl: [this.editAccount.ssh.password, Validators.required],
+      isTunnelEnabledCtrl: [this.editAccount ? this.editAccount.ssh.enabled : false, Validators.required],
+      sshHostCtrl: [this.editAccount ? this.editAccount.ssh.hostname : null, Validators.required],
+      sshPortCtrl: [this.editAccount ? this.editAccount.ssh.port : null, Validators.required],
+      sshUsernameCtrl: [this.editAccount ? this.editAccount.ssh.username : null, Validators.required],
+      sshPasswordCtrl: [this.editAccount ? this.editAccount.ssh.password : null, Validators.required],
     });
 
     this.databaseDetailsForm = this.fb.group({
-      dbHostCtrl: [this.editAccount.server.hostname, Validators.required],
-      dbPortCtrl: [this.editAccount.server.port, Validators.required],
-      dbUsernameCtrl: [this.editAccount.server.username, Validators.required],
-      dbPasswordCtrl: [this.editAccount.server.password, Validators.nullValidator],
-      dbDbCtrl: [this.editAccount.server.database, Validators.required],
+      dbHostCtrl: [this.editAccount ? this.editAccount.server.hostname : null, Validators.required],
+      dbPortCtrl: [this.editAccount ? this.editAccount.server.port : null, Validators.required],
+      dbUsernameCtrl: [this.editAccount ? this.editAccount.server.username : null, Validators.required],
+      dbPasswordCtrl: [this.editAccount ? this.editAccount.server.password : null, Validators.nullValidator],
+      dbDbCtrl: [this.editAccount ? this.editAccount.server.database : null, Validators.required],
     });
 
     this.tunnelDetailsForm.controls.isTunnelEnabledCtrl.valueChanges.subscribe((newVal) => {
@@ -104,10 +104,10 @@ export class AddEditAccountComponent implements OnInit {
     const fromDBForm = (ctrl: string) => this.databaseDetailsForm.controls[ctrl].value;
 
     return {
-      id: this.editAccount.id || null,
+      id: this.editAccount ? this.editAccount.id : null,
       name: fromBasicForm('accountNameCtrl'),
-      creation_date: this.editAccount.creation_date || new Date().toISOString(),
-      modify_date: this.editAccount.modify_date || new Date().toISOString(),
+      creation_date: this.editAccount ? this.editAccount.creation_date : new Date().toISOString(),
+      modify_date: this.editAccount ? this.editAccount.modify_date : new Date().toISOString(),
       server: {
         server_type: fromBasicForm('databaseServerCtrl'),
         hostname: fromDBForm('dbHostCtrl'),

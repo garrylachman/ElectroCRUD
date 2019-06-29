@@ -4,6 +4,7 @@ import { DatatableComponent } from '@swimlane/ngx-datatable';
 import { ConfirmDeleteComponent} from '../components/dialogs/confirm-delete/confirm-delete.component';
 import { AddEditAccountComponent } from './add-edit-account/add-edit-account.component';
 import { AccountsService, ServerType } from '../services/store/accounts.service';
+import { Account } from '../../shared/interfaces/accounts.interface';
 
 @Component({
   selector: 'app-accounts',
@@ -73,7 +74,10 @@ export class AccountsComponent implements OnInit {
   }
 
   edit(row) {
-    let account = this.accountsService.get(row.id);
+    let account:Account;
+    if (row && row.id)  {
+      account = this.accountsService.get(row.id);
+    }
     this.dialogService
       .open<any>(AddEditAccountComponent, { 
         hasBackdrop: true,

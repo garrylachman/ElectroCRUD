@@ -51,3 +51,14 @@
 .ngx-datatable.bootstrap .datatable-body .datatable-body-row .datatable-body-cell {
   margin: auto;
 }
+
+nb-card-header input {
+  margin: 1rem auto;
+  padding:8px;
+  width:30%;
+}
+
+nb-card-header button {
+  margin: 1rem auto;
+  float: right;
+}

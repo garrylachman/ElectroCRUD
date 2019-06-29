@@ -40,3 +40,12 @@ nb-stepper.horizontal .header .step {
     padding: 1rem;
     font-size: 0.8rem;
 }
+
+#testLogsCard {
+    width: auto;
+    margin: 1rem auto;
+}
+
+#testLogsCard nb-card-body {
+    padding-bottom: 0.5rem;
+}

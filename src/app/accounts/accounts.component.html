@@ -6,10 +6,16 @@
     <nb-card-header>
         <input nbInput shape="semi-round" 
             type="text"
-            style="padding:8px;margin:15px auto;width:30%;"
             placeholder="Type to filter the name column..."
             (keyup)="updateFilter($event)"
           />
+        <button 
+            nbButton status="primary" hero size="small" (click)="edit(null)" 
+            nbTooltip="Add new account" nbTooltipPlacement="top" nbTooltipStatus="primary"
+        >
+            <nb-icon icon="plus"></nb-icon>
+            Add
+        </button>
     </nb-card-header>
     <nb-card-body>
         <ngx-datatable #table 
