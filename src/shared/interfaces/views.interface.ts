@@ -2,20 +2,20 @@ export interface IView {
     id?: number;
     account: number;
     name: string;
-    table: string;
-    columns: IViewColumn[];
-    terms: IViewTerms;
-    permissions: IViewPermissions;
+    table?: string;
+    columns?: IViewColumn[];
+    terms?: IViewTerms;
+    permissions?: IViewPermissions;
     creation_date: string;
-    modify_date: string;
+    modify_date?: string;
 }
 
 export interface IViewColumn {
     enabled: boolean;
     searchable: boolean;
     name: string;
-    type: IViewColumnType;
-    isNull?: boolean;
+    type: IViewColumnType | string;
+    nullable?: boolean;
     default?: any;
     key?: string;
     extra?: string;

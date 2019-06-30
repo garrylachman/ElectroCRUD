@@ -5,17 +5,22 @@
 <nb-card [nbSpinner]="isLoading" nbSpinnerSize="giant" nbSpinnerStatus="primary">
     <nb-card-header>
       <nb-select placeholder="Select Table" [(ngModel)]="selectedTableModel" (ngModelChange)="selectedChange()">
-        <nb-option value="">Option empty</nb-option>
-        <nb-option value="0">Option 0</nb-option>
-        <nb-option value="1">Option 1</nb-option>
-        <nb-option value="2">Option 2</nb-option>
-        <nb-option value="3">Option 3</nb-option>
-        <nb-option value="4">Option 4</nb-option>
+        <nb-option *ngFor="let tbl of tables" value="{{tbl}}">{{tbl}}</nb-option>
       </nb-select>
     </nb-card-header>
     <nb-card-body>
-        
-        
+      <ngx-datatable #table 
+            class="bootstrap" 
+            [rows]="rows"
+            [loadingIndicator]="loadingIndicator"
+            [columns]="columns"
+            [columnMode]="'force'"
+            [headerHeight]="30"
+            [footerHeight]="30"
+            [rowHeight]="'auto'"
+            [reorderable]="reorderable"
+            [limit]="10"
+        ></ngx-datatable>
     </nb-card-body>
     <nb-card-footer></nb-card-footer>
 </nb-card>

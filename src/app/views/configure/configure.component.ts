@@ -1,14 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SessionService } from '../../services/session.service';
-import { IView } from '../../../shared/interfaces/views.interface';
+import { IView, IViewColumn } from '../../../shared/interfaces/views.interface';
 import { ViewsService } from '../../services/store/views.service';
 import {
   NbSpinnerService
 } from '@nebular/theme';
 import { NgModel } from '@angular/forms';
 import { ViewsIPCService } from '../../services/ipc/views.ipc.service';
-import { IPCListOfTablesResponseMessage, IIPCListOfTablesResponseMessage } from '../../../shared/ipc/views.ipc';
+import { IPCListOfTablesResponseMessage, IIPCListOfTablesResponseMessage, IIPCTableInfoResponseMessage, IIPCTableInfoColumn } from '../../../shared/ipc/views.ipc';
+import { DatatableComponent } from '@swimlane/ngx-datatable';
 
 @Component({
   selector: 'app-configure',
@@ -17,6 +18,8 @@ import { IPCListOfTablesResponseMessage, IIPCListOfTablesResponseMessage } from 
 })
 export class ConfigureComponent implements OnInit {
 
+  @ViewChild(DatatableComponent, { static: false }) table: DatatableComponent;
+
   view: IView;
   isLoading: boolean = false;
   title: string;
@@ -24,6 +27,20 @@ export class ConfigureComponent implements OnInit {
   // tables
   selectedTableModel:NgModel;
   tables: string[];
+
+  rows = [];
+  temp = [];
+
+  columns = [
+    { prop: 'name' },
+    { name: 'Enabled' },
+    { name: 'Searchable' },
+    { name: 'Type' },
+    { name: 'Nullable' },
+    { name: 'Default' },
+    { name: 'Key' },
+    { name: 'Extra' }
+  ];
 
 
   constructor(
@@ -44,12 +61,28 @@ export class ConfigureComponent implements OnInit {
     } else {
       // no id, we are in add mode
       this.title = "Add New View";
+      this.view = {
+        name: '',
+        creation_date: new Date().toISOString(),
+        account: this.sessionsService.activeAccount.id
+      };
     }
     await this.loadTablesList();
   }
 
-  public selectedChange() {
+  public async selectedChange() {
     console.log(this.selectedTableModel)
+    this.view.table = String(this.selectedTableModel);
+    let resColumns:IIPCTableInfoResponseMessage = await this.viewsIPCService.tableInfo(String(this.selectedTableModel));
+    this.view.columns = resColumns.columns.map((col:IIPCTableInfoColumn) => {
+      return {
+        ...col,
+        searchable: true,
+        enabled: true,
+        nullable: Boolean(col.nullable)
+      } as IViewColumn
+    })
+    this.rows = this.view.columns;
   }
 
   public get isEdit(): boolean {
@@ -58,11 +91,13 @@ export class ConfigureComponent implements OnInit {
 
   public async loadTablesList() {
     console.log("loadTablesList");
-    let res:IIPCListOfTablesResponseMessage =  await this.viewsIPCService.listOfTables(this.sessionsService.activeAccount);
+    let res:IIPCListOfTablesResponseMessage = await this.viewsIPCService.listOfTables();
     console.log("loadTablesList: ", res);
     if (res.valid) {
       this.tables = res.tables;
     }
   }
+
+
 
 }

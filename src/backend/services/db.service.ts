@@ -30,6 +30,27 @@ export const ListTablesQueries = {
     [ServerType.MSSQL]: 'SELECT table_name FROM information_schema.tables WHERE table_schema = \'public\' AND table_catalog = ?'
 }
 
+export const GetPrimaryKeyQueries = {
+    ...ListTablesQueries,
+    [ServerType.MySQL]: `
+    SELECT 
+        COLUMN_NAME as 'name',
+        COLUMN_DEFAULT as 'default',
+        IF(STRCMP(IS_NULLABLE, 'true') = 0, true, false) as 'nullable',
+        DATA_TYPE as 'type',
+        IFNULL(CHARACTER_MAXIMUM_LENGTH, 0)+IFNULL(NUMERIC_PRECISION, 0) as 'length',
+        COLUMN_KEY as 'key',
+        EXTRA as 'extra' 
+    FROM information_schema.columns WHERE table_schema = ? and table_name = ?
+    `,
+    [ServerType.PostgreSQL]: `SELECT
+    c.column_name, c.data_type
+    FROM
+    JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_name)
+    JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name
+    where constraint_type = 'PRIMARY KEY' and tc.table_name = ?;`
+}
+
 export class DatabaseService {
     private static instance: DatabaseService;
     private _connection:Knex;
@@ -117,4 +138,27 @@ export class DatabaseService {
             return error;
         }
     }
+
+    public async tableInfo(tableName: string) {
+        let tableInfoQuery = GetPrimaryKeyQueries[this.activeClient];
+        let bindings: string[] = [ this.connection.client.database(), tableName ];
+        let findResult = ((result: any) => result[0]) as ((result: any) => string | undefined);
+    
+        try {
+            let res = await this.connection.raw(tableInfoQuery, bindings);
+            return findResult(res);
+        } catch(error) {
+            return error;
+        }
+    }
+
+    public async tableInfo1(table: string): Promise<Knex.ColumnInfo | Error> {
+        try {
+            let res = await this.connection.table(table).columnInfo();
+            return res;
+        } catch(error) {
+            return error;
+        }
+    } 
+
 }
