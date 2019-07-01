@@ -3,24 +3,90 @@
 </nb-card>
 
 <nb-card [nbSpinner]="isLoading" nbSpinnerSize="giant" nbSpinnerStatus="primary">
-    <nb-card-header>
-      <nb-select placeholder="Select Table" [(ngModel)]="selectedTableModel" (ngModelChange)="selectedChange()">
+    <nb-card-header [formGroup]="viewHeaderForm">
+      <nb-select placeholder="Select Table" formControlName="viewtTableCtrl" (onChange)="selectedChange()">
         <nb-option *ngFor="let tbl of tables" value="{{tbl}}">{{tbl}}</nb-option>
       </nb-select>
+      <input nbInput type="text" placeholder="View name" class="form-control" formControlName="viewtNameCtrl"
+        [status]="viewHeaderForm.controls['viewtNameCtrl'].invalid && (viewHeaderForm.dirty || viewHeaderForm.touched) ? 'danger': 'success'">
     </nb-card-header>
     <nb-card-body>
       <ngx-datatable #table 
             class="bootstrap" 
             [rows]="rows"
             [loadingIndicator]="loadingIndicator"
-            [columns]="columns"
             [columnMode]="'force'"
             [headerHeight]="30"
             [footerHeight]="30"
             [rowHeight]="'auto'"
             [reorderable]="reorderable"
             [limit]="10"
-        ></ngx-datatable>
+        >
+        <ngx-datatable-column name="Name"></ngx-datatable-column>
+        <ngx-datatable-column name="Enabled" [sortable]="false" [canAutoResize]="false" [draggable]="false" [resizeable]="false">
+          <ng-template ngx-datatable-cell-template let-value="value" let-row="row" let-onCheckboxChangeFn="onCheckboxChangeFn">
+            <nb-checkbox [checked]=value (checkedChange)="row.enabled=$event"></nb-checkbox>
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Searchable" [sortable]="false" [canAutoResize]="false" [draggable]="false" [resizeable]="false">
+            <ng-template ngx-datatable-cell-template let-value="value" let-row="row" let-onCheckboxChangeFn="onCheckboxChangeFn">
+              <nb-checkbox [checked]=value (checkedChange)="row.searchable=$event"></nb-checkbox>
+            </ng-template>
+          </ngx-datatable-column>
+        <ngx-datatable-column name="Type"></ngx-datatable-column>
+        <ngx-datatable-column name="Nullable"></ngx-datatable-column>
+        <ngx-datatable-column name="Default"></ngx-datatable-column>
+        <ngx-datatable-column name="Key"></ngx-datatable-column>
+        <ngx-datatable-column name="Extra"></ngx-datatable-column>
+      </ngx-datatable>
     </nb-card-body>
-    <nb-card-footer></nb-card-footer>
+</nb-card>
+
+<div class="row">
+  <div class="col-md-4">
+    <nb-card>
+      <nb-card-header>Terminology</nb-card-header>
+      <nb-card-body [formGroup]="termForm">
+        <p class="margin-top-0rem">
+          <sub>The plural & singular terminology of data. Ex. Create "user"; Show "users";</sub>
+        </p>
+        <div class="input-group">
+          <input 
+            nbInput type="text" fullWidth placeholder="One item" class="form-control margin-bottom-1rem" formControlName="termOneCtrl"
+            [status]="termForm.controls['termOneCtrl'].invalid && (termForm.dirty || termForm.touched) ? 'danger': 'success'">
+        </div>
+        <div class="input-group">
+          <input 
+            nbInput type="text" fullWidth placeholder="Many items" class="form-control" formControlName="termManyCtrl"
+            [status]="termForm.controls['termManyCtrl'].invalid && (termForm.dirty || termForm.touched) ? 'danger': 'success'">
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </div>
+
+  <div class="col-md-8">
+    <nb-card>
+      <nb-card-header>Permissions</nb-card-header>
+        <nb-card-body id="permissions-card">
+            <p class="margin-top-0rem">
+              <sub>Please select the view permissions; you can always edit the permissions later.</sub>
+            </p>
+          <div class="row">
+            <div class="col-lg-6 margin-bottom-0_5rem"><nb-checkbox [(ngModel)]="view.permissions.create">Create</nb-checkbox></div>
+            <div class="col-lg-6 margin-bottom-0_5rem"><nb-checkbox [(ngModel)]="view.permissions.read" disabled>Read</nb-checkbox></div>
+            <div class="col-lg-6"><nb-checkbox [(ngModel)]="view.permissions.update">Update</nb-checkbox></div>
+            <div class="col-lg-6"><nb-checkbox [(ngModel)]="view.permissions.delete">Delete</nb-checkbox></div>
+          </div>
+        </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+
+<nb-card>
+  <nb-card-header id="footer">
+    <button nbButton hero status="success" size="medium" (click)="save()" [disabled]="!isSaveEnabled">
+      <nb-icon icon="plus"></nb-icon>
+      Save
+    </button>
+  </nb-card-header>
 </nb-card>

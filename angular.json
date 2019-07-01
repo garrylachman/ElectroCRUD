@@ -25,7 +25,8 @@
               "src/favicon.512x512.png"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "node_modules/bootstrap/scss/bootstrap-grid.scss"
             ],
             "scripts": []
           },

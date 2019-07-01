@@ -18,7 +18,7 @@ import {
   NbActionsModule,
   NbSpinnerModule
 } from '@nebular/theme';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 
@@ -39,6 +39,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
     NbSpinnerModule,
     FormsModule,
     NgxDatatableModule,
+    ReactiveFormsModule,
   ],
   entryComponents: [ViewComponent, ConfigureComponent, EmptyComponent]
 })
