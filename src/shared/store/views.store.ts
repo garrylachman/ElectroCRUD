@@ -27,6 +27,7 @@ export class ViewsStore extends BaseStore {
 
     public add(data: IView): void {
         data.id = this.lastId<IView>();
+        data.modify_date = new Date().toISOString();
         ++data.id; // increment the last id
         let views = this._all();
         views.push(data);

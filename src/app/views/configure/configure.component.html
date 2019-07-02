@@ -3,12 +3,14 @@
 </nb-card>
 
 <nb-card [nbSpinner]="isLoading" nbSpinnerSize="giant" nbSpinnerStatus="primary">
-    <nb-card-header [formGroup]="viewHeaderForm">
-      <nb-select placeholder="Select Table" formControlName="viewtTableCtrl" (onChange)="selectedChange()">
-        <nb-option *ngFor="let tbl of tables" value="{{tbl}}">{{tbl}}</nb-option>
-      </nb-select>
-      <input nbInput type="text" placeholder="View name" class="form-control" formControlName="viewtNameCtrl"
-        [status]="viewHeaderForm.controls['viewtNameCtrl'].invalid && (viewHeaderForm.dirty || viewHeaderForm.touched) ? 'danger': 'success'">
+    <nb-card-header>
+      <div [formGroup]="viewHeaderForm">
+        <nb-select placeholder="Select Table" formControlName="viewtTableCtrl" (onChange)="selectedChange()">
+          <nb-option *ngFor="let tbl of tables" value="{{tbl}}">{{tbl}}</nb-option>
+        </nb-select>
+        <input nbInput type="text" placeholder="View name" class="form-control" formControlName="viewtNameCtrl"
+          [status]="viewHeaderForm.controls['viewtNameCtrl'].invalid && (viewHeaderForm.dirty || viewHeaderForm.touched) ? 'danger': 'success'">
+      </div>
     </nb-card-header>
     <nb-card-body>
       <ngx-datatable #table 
@@ -46,19 +48,21 @@
   <div class="col-md-4">
     <nb-card>
       <nb-card-header>Terminology</nb-card-header>
-      <nb-card-body [formGroup]="termForm">
+      <nb-card-body>
         <p class="margin-top-0rem">
           <sub>The plural & singular terminology of data. Ex. Create "user"; Show "users";</sub>
         </p>
-        <div class="input-group">
-          <input 
-            nbInput type="text" fullWidth placeholder="One item" class="form-control margin-bottom-1rem" formControlName="termOneCtrl"
-            [status]="termForm.controls['termOneCtrl'].invalid && (termForm.dirty || termForm.touched) ? 'danger': 'success'">
-        </div>
-        <div class="input-group">
-          <input 
-            nbInput type="text" fullWidth placeholder="Many items" class="form-control" formControlName="termManyCtrl"
-            [status]="termForm.controls['termManyCtrl'].invalid && (termForm.dirty || termForm.touched) ? 'danger': 'success'">
+        <div [formGroup]="termForm">
+          <div class="input-group">
+              <input 
+                nbInput type="text" fullWidth placeholder="One item" class="form-control margin-bottom-1rem" formControlName="termOneCtrl"
+                [status]="termForm.controls['termOneCtrl'].invalid && (termForm.dirty || termForm.touched) ? 'danger': 'success'">
+            </div>
+            <div class="input-group">
+              <input 
+                nbInput type="text" fullWidth placeholder="Many items" class="form-control" formControlName="termManyCtrl"
+                [status]="termForm.controls['termManyCtrl'].invalid && (termForm.dirty || termForm.touched) ? 'danger': 'success'">
+            </div>
         </div>
       </nb-card-body>
     </nb-card>

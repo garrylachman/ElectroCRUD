@@ -33,4 +33,8 @@ export class ViewsService {
   public delete(id: number): void {
     this.store.delete(id);
   }
+
+  public lastId(): number {
+    return this.store.lastId<IView>();
+  }
 }

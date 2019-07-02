@@ -5,7 +5,7 @@ import { ViewsService } from './store/views.service';
 import { IView } from '../../shared/interfaces/views.interface';
 import { AccountsIPCService } from './ipc/accounts.service';
 import { IIPCConnectResponseMessage } from '../../shared/ipc/accounts.ipc';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 
 
 @Injectable({
@@ -15,6 +15,7 @@ export class SessionService {
 
   private _activeAccount:IAccount;
   public changes:BehaviorSubject<IAccount> = new BehaviorSubject(this._activeAccount);
+  public viewsChanges: Subject<any> = new Subject();
 
   constructor(
     private accountsStore: AccountsService,
@@ -47,5 +48,9 @@ export class SessionService {
       return null;
     }
     return this.viewsStore.all(this.activeAccount);
+  }
+
+  public reloadViews(): void {
+    this.viewsChanges.next();
   }
 }

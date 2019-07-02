@@ -14,7 +14,7 @@ export class BaseStore {
         return this.store.get(this.name, []) as T[];
     }
 
-    protected lastId<T>(): number {
+    public lastId<T>(): number {
         let lastElem:any = this._all<T[]>().pop();
         if (lastElem) {
             return lastElem.id;

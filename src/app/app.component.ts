@@ -53,8 +53,13 @@ export class AppComponent {
     this.sessionService.changes.subscribe({
       next: (v:IAccount) => {
         this.account = v;
+        if (v)  {
+          this.reload();
+        }
       }
     })
+
+    this.sessionService.viewsChanges.subscribe(() => this.reload());
   }
 
   reload() {
@@ -62,6 +67,7 @@ export class AppComponent {
 
     this.items = [...this.defaultItems];
     views.forEach((view:IView) => {
+      console.log(view);
       this.items.push({
         title: view.name,
         icon: 'layers-outline'

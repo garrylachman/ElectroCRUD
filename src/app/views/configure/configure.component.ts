@@ -4,7 +4,7 @@ import { SessionService } from '../../services/session.service';
 import { IView, IViewColumn } from '../../../shared/interfaces/views.interface';
 import { ViewsService } from '../../services/store/views.service';
 import {
-  NbSpinnerService
+  NbSpinnerService, NbToastrService
 } from '@nebular/theme';
 import { NgModel, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ViewsIPCService } from '../../services/ipc/views.ipc.service';
@@ -42,7 +42,8 @@ export class ConfigureComponent implements OnInit {
     private sessionsService: SessionService,
     private viewsService: ViewsService,
     private viewsIPCService: ViewsIPCService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private toastrService: NbToastrService
   ) { }
 
   async ngOnInit() {
@@ -130,7 +131,25 @@ export class ConfigureComponent implements OnInit {
   }
 
   save() {
+    if (this.viewHeaderForm.valid && this.termForm.valid) {
+      this.view.name = this.viewHeaderForm.value.viewtNameCtrl;
+      this.view.terms.one = this.termForm.value.termOneCtrl;
+      this.view.terms.many = this.termForm.value.termManyCtrl;
 
+      let insertedId:number;
+
+      if (this.view.id) {
+        this.viewsService.update(this.view);
+        insertedId = this.view.id;
+      } else {
+        this.viewsService.add(this.view);
+        insertedId = this.viewsService.lastId();
+      }
+      this.sessionsService.reloadViews();
+      this.router.navigate(['views', insertedId, 'view']);
+    } else {
+      this.toastrService.danger("Some details are missing or invalid, please check again.")
+    }
   }
 
 }
