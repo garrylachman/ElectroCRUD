@@ -42,3 +42,30 @@ export interface IIPCTableInfoResponseMessage {
 export class IPCTableInfoResponseMessage extends IPCBaseMessage<IIPCTableInfoResponseMessage> { }
 
 export class IPCTableInfoRequestMessage extends IPCBaseMessage<IIPCTableInfoRequestMessage> { }
+
+// Table data
+export const IPC_CHANNEL_READ_DATA: string = "channel_read_data";
+
+export interface IIPCReadDataRequestMessage {
+    table: string;
+    limit: IIPCReadDataLimit;
+    columns: string[]
+}
+
+export interface IIPCReadDataLimit {
+    limit: number;
+    offset: number;
+}
+
+export interface IIPCReadDataResponseMessage {
+    valid: boolean;
+    error?: string;
+    data?: {
+        [key: string]: any
+    }[],
+    count?: number;
+}
+
+export class IPCReadDataResponseMessage extends IPCBaseMessage<IIPCReadDataResponseMessage> { }
+
+export class IPCReadDataRequestMessage extends IPCBaseMessage<IIPCReadDataRequestMessage> { }

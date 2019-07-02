@@ -70,7 +70,8 @@ export class AppComponent {
       console.log(view);
       this.items.push({
         title: view.name,
-        icon: 'layers-outline'
+        icon: 'layers-outline',
+        link: `/views/${view.id}/view`
       })
     })
   }

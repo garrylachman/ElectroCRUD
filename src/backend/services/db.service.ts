@@ -152,9 +152,9 @@ export class DatabaseService {
         }
     }
 
-    public async tableInfo1(table: string): Promise<Knex.ColumnInfo | Error> {
+    public async readData(table: string, columns: string[], limit: number, offset:number): Promise<any | Error> {
         try {
-            let res = await this.connection.table(table).columnInfo();
+            let res = await this.connection.table(table).columns(...columns).limit(limit).offset(offset);
             return res;
         } catch(error) {
             return error;

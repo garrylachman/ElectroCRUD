@@ -1,3 +1,24 @@
-<p>
-  view works!
-</p>
+<nb-card>
+    <nb-card-header><h1 class="page-header h4">{{title}}</h1></nb-card-header>
+</nb-card>
+
+<nb-card [nbSpinner]="isLoading" nbSpinnerSize="giant" nbSpinnerStatus="primary">
+  <nb-card-header>
+
+  </nb-card-header>
+  <nb-card-body>
+    <ngx-datatable #table 
+      class="bootstrap" 
+      [rows]="rows"
+      [columns]="columns" 
+      [loadingIndicator]="loadingIndicator"
+      [columnMode]="'force'"
+      [headerHeight]="30"
+      [footerHeight]="30"
+      [rowHeight]="'auto'"
+      [reorderable]="reorderable"
+      [limit]="10"
+      >
+    </ngx-datatable>
+  </nb-card-body>
+</nb-card>
