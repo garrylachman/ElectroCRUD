@@ -154,8 +154,14 @@ export class DatabaseService {
 
     public async readData(table: string, columns: string[], limit: number, offset:number): Promise<any | Error> {
         try {
-            let res = await this.connection.table(table).columns(...columns).limit(limit).offset(offset);
-            return res;
+            let countRes = await this.connection.count().from(table);
+            console.log("countRes: ", countRes);
+            let res = await this.connection.select(...columns).from(table).limit(limit).offset(offset);
+            console.log(res);
+            return {
+                data: res,
+                count: countRes[0]['count(*)']
+            };
         } catch(error) {
             return error;
         }

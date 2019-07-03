@@ -4,7 +4,13 @@
 
 <nb-card [nbSpinner]="isLoading" nbSpinnerSize="giant" nbSpinnerStatus="primary">
   <nb-card-header>
-
+      <button 
+      nbButton status="primary" hero size="small" [routerLink]="['/views', view.id, 'configure']" 
+      nbTooltip="Edit view" nbTooltipPlacement="top" nbTooltipStatus="primary"
+      >
+        <nb-icon icon="plus"></nb-icon>
+        Edit
+      </button>
   </nb-card-header>
   <nb-card-body>
     <ngx-datatable #table 
@@ -17,7 +23,11 @@
       [footerHeight]="30"
       [rowHeight]="'auto'"
       [reorderable]="reorderable"
-      [limit]="10"
+      [externalPaging]="true"
+      [count]="totalElements"
+      [offset]="offset"
+      [limit]="limit"
+      (page)='setPage($event)'
       >
     </ngx-datatable>
   </nb-card-body>

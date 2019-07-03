@@ -3,10 +3,16 @@ import {
   IPCListOfTablesRequestMessage,
   IPCListOfTablesResponseMessage,
   IPC_CHANNEL_LIST_OF_TABLES,
+
   IIPCListOfTablesResponseMessage,
   IIPCTableInfoResponseMessage,
   IPCTableInfoRequestMessage,
-  IPC_CHANNEL_TABLE_INFO
+
+  IPC_CHANNEL_TABLE_INFO,
+  IIPCReadDataResponseMessage,
+  IPCReadDataRequestMessage,
+  IPC_CHANNEL_READ_DATA,
+  IPCReadDataResponseMessage,
 } from '../../../shared/ipc/views.ipc';
 import { ipcRenderer } from 'electron-better-ipc';
 import { IAccount } from '../../../shared/interfaces/accounts.interface';
@@ -34,6 +40,21 @@ export class ViewsIPCService {
     const rawRes:any = await ipcRenderer.callMain(IPC_CHANNEL_TABLE_INFO, req.toJsonValue());
     console.log("rawRes", rawRes);
     return new IPCListOfTablesResponseMessage(rawRes).toMessage()
+  }
+
+  public async readData(table: string, columns: string[], limit: number, offset: number): Promise<IIPCReadDataResponseMessage> {
+    const req: IPCReadDataRequestMessage = new IPCReadDataRequestMessage({
+      table: table,
+      columns: columns,
+      limit: {
+        limit: limit,
+        offset: offset
+      }
+    });
+    console.log("req", req);
+    const rawRes:any = await ipcRenderer.callMain(IPC_CHANNEL_READ_DATA, req.toJsonValue());
+    console.log("rawRes", rawRes);
+    return new IPCReadDataResponseMessage(rawRes).toMessage()
   }
 
 }

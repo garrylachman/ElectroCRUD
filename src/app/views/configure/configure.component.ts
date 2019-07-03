@@ -69,7 +69,8 @@ export class ConfigureComponent implements OnInit {
           read: true,
           update: true,
           delete: true
-        }
+        },
+        columns: []
       };
     }
 
@@ -91,22 +92,28 @@ export class ConfigureComponent implements OnInit {
 
   public async selectedChange(newTable) {
     console.log(newTable)
+    let isSameTable = (this.view.table == String(newTable));
     this.view.table = String(newTable);
     let resColumns:IIPCTableInfoResponseMessage = await this.viewsIPCService.tableInfo(String(newTable));
 
-    this.view.terms = {
-      one: newTable,
-      many: `${newTable}s`
-    };
+    if (!isSameTable) {
+      this.view.terms = {
+        one: newTable,
+        many: `${newTable}s`
+      };
+    }
 
-    this.view.columns = resColumns.columns.map((col:IIPCTableInfoColumn) => {
+    let columnsFromDB = resColumns.columns.map((col:IIPCTableInfoColumn) => {
+      let localCol = this.view.columns.filter(fCol => fCol.name == col.name);
       return {
         ...col,
         searchable: true,
         enabled: true,
         nullable: Boolean(col.nullable),
+        ...localCol[0] || {}
       } as IViewColumn
-    })
+    });
+    this.view.columns = [...columnsFromDB];
 
     this.rows = this.view.columns;
     this.termForm.controls.termOneCtrl.setValue(this.view.terms.one);
@@ -124,6 +131,9 @@ export class ConfigureComponent implements OnInit {
     if (res.valid) {
       this.tables = res.tables;
     }
+    if (this.view.table) {
+      this.viewHeaderForm.controls.viewtTableCtrl.setValue(this.view.table);
+    }
   }
 
   checkForm() {
@@ -135,6 +145,7 @@ export class ConfigureComponent implements OnInit {
       this.view.name = this.viewHeaderForm.value.viewtNameCtrl;
       this.view.terms.one = this.termForm.value.termOneCtrl;
       this.view.terms.many = this.termForm.value.termManyCtrl;
+      this.view.columns = [...this.rows] as IViewColumn[];
 
       let insertedId:number;
 

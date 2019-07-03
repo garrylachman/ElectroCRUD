@@ -22,6 +22,10 @@ export class ViewComponent implements OnInit {
   rows = [];
   columns = [];
 
+  totalElements:number = 0;
+  offset: number = 0;
+  limit: number = 10;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -30,7 +34,14 @@ export class ViewComponent implements OnInit {
     private viewsIPCService: ViewsIPCService
   ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
+    this.route.params.subscribe((params) => {
+      this.loadView();
+    })
+    
+  }
+
+  async loadView() {
     if (this.route.snapshot.paramMap.has('id')) {
       // has id, we are in edit mode
       this.view = this.viewsService.get(
@@ -38,6 +49,30 @@ export class ViewComponent implements OnInit {
       );
       this.title = this.view.name;
     }
+    await this.reload();
+  }
+
+  async reload() {
+    let data = await this.viewsIPCService.readData(this.view.table, this.view.columns.filter(col => col.enabled).map(col => col.name), this.limit, this.offset);
+    this.totalElements = data.count;
+    let columns = data.data.length > 0 ? Object.keys([...data.data].shift()).map(val => ({ name: val, prop: val })) : [];
+    console.log("columns", columns)
+    this.columns = [...columns];
+    this.rows = [...data.data];
+    console.log("rows", this.rows)
+    console.log(data);
+  }
+
+  async pageReload() {
+    
+  }
+
+  async setPage(pageInfo){
+    console.log("pageInfo:", pageInfo);
+    this.offset = pageInfo.offset;
+    let sqlOffset = this.offset * pageInfo.pageSize;
+    let data = await this.viewsIPCService.readData(this.view.table, this.view.columns.map(col => col.name), this.limit, sqlOffset);
+    this.rows = [...data.data];
   }
 
 }

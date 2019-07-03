@@ -91,6 +91,7 @@ export class ViewsIPC {
             reqMessage.toMessage().limit.limit,
             reqMessage.toMessage().limit.offset
             )
+        console.log(res);
         if (res instanceof Error) {
             dbError = res.toString();
             isValid = false;
@@ -102,7 +103,8 @@ export class ViewsIPC {
         let resMessage: IPCReadDataResponseMessage = new IPCReadDataResponseMessage({
             valid: isValid,
             error: dbError,
-            columns: dbRes
+            data: dbRes.data,
+            count: dbRes.count
         });
         
         console.log("resMessage", resMessage.toMessage());
