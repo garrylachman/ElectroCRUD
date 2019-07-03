@@ -4,6 +4,12 @@
 
 <nb-card [nbSpinner]="isLoading" nbSpinnerSize="giant" nbSpinnerStatus="primary">
   <nb-card-header>
+      <nb-select placeholder="# of Results / Page" [(ngModel)]="limitModel" (selectedChange)="selectLimit($event)" [selected]="10">
+        <nb-option value=10>10 Per Page</nb-option>
+        <nb-option value=25>25 Per Page</nb-option>
+        <nb-option value=50>50 Per Page</nb-option>
+        <nb-option value=100>100 Per Page</nb-option>
+      </nb-select>
       <button 
       nbButton status="primary" hero size="small" [routerLink]="['/views', view.id, 'configure']" 
       nbTooltip="Edit view" nbTooltipPlacement="top" nbTooltipStatus="primary"

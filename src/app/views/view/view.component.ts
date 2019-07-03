@@ -5,6 +5,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SessionService } from '../../services/session.service';
 import { ViewsService } from '../../services/store/views.service';
 import { ViewsIPCService } from '../../services/ipc/views.ipc.service';
+import { NgModel } from '@angular/forms';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-view',
@@ -38,7 +40,19 @@ export class ViewComponent implements OnInit {
     this.route.params.subscribe((params) => {
       this.loadView();
     })
-    
+    /*this.limitModel.valueChanges.subscribe((value) => {
+      console.log("value", value);
+    })*/
+  }
+
+  selectLimit(value) {
+    this.limit = value;
+    this.offset = 0;
+    this.setPage({
+      offset: this.offset,
+      limit: this.limit,
+      pageSize: this.limit
+    })
   }
 
   async loadView() {
