@@ -16,3 +16,12 @@ $nb-themes: nb-register-theme((
   // color-primary-900: #091c7a,
 
 ), default, default);
+
+
+.float-right {
+  float: right
+}
+
+.nb-theme-default .nb-theme-default [nbButton] nb-nb-icon {
+  font-size: 1rem;
+}

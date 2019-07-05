@@ -152,11 +152,23 @@ export class DatabaseService {
         }
     }
 
-    public async readData(table: string, columns: string[], limit: number, offset:number): Promise<any | Error> {
+    public async readData(table: string, columns: string[], limit: number, offset:number, searchColumns?: string[], searchText?: string): Promise<any | Error> {
         try {
             let countRes = await this.connection.count().from(table);
             console.log("countRes: ", countRes);
-            let res = await this.connection.select(...columns).from(table).limit(limit).offset(offset);
+            let q = this.connection.select(...columns).from(table);
+            if (searchColumns && searchText) {
+                searchColumns.forEach((sCol: string, idx: number) => {
+                    if (idx ==0)    {
+                        q  = q.where(sCol, 'like', `%${searchText}%`);
+                    } else {
+                        q = q.orWhere(sCol, 'like', `%${searchText}%`);
+                    }
+                });
+            }
+            let res = await q.limit(limit).offset(offset)
+
+            //let res = await this.connection.select(...columns).from(table).limit(limit).offset(offset);
             console.log(res);
             return {
                 data: res,

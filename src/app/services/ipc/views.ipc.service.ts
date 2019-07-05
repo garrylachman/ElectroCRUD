@@ -42,13 +42,17 @@ export class ViewsIPCService {
     return new IPCListOfTablesResponseMessage(rawRes).toMessage()
   }
 
-  public async readData(table: string, columns: string[], limit: number, offset: number): Promise<IIPCReadDataResponseMessage> {
+  public async readData(table: string, columns: string[], limit: number, offset: number, searchColumns?: string[], searchText?: string): Promise<IIPCReadDataResponseMessage> {
     const req: IPCReadDataRequestMessage = new IPCReadDataRequestMessage({
       table: table,
       columns: columns,
       limit: {
         limit: limit,
         offset: offset
+      },
+      search: {
+        columns: searchColumns,
+        text: searchText
       }
     });
     console.log("req", req);

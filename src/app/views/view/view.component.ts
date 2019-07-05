@@ -28,6 +28,8 @@ export class ViewComponent implements OnInit {
   offset: number = 0;
   limit: number = 10;
 
+  searchInputModel: NgModel;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -40,9 +42,14 @@ export class ViewComponent implements OnInit {
     this.route.params.subscribe((params) => {
       this.loadView();
     })
-    /*this.limitModel.valueChanges.subscribe((value) => {
-      console.log("value", value);
-    })*/
+  }
+
+  clearSearch() {
+    // reset search box input
+    this.searchInputModel = '' as any;
+
+    // fast way to reload results
+    this.selectLimit(this.limit);
   }
 
   selectLimit(value) {
@@ -53,6 +60,16 @@ export class ViewComponent implements OnInit {
       limit: this.limit,
       pageSize: this.limit
     })
+  }
+
+  get primaryKeyColumn(): string {
+    let pri:string = null;
+    this.view.columns.forEach(col => {
+      if (col.key == "PRI") {
+        pri = col.name;
+      }
+    })
+    return pri;
   }
 
   async loadView() {
@@ -85,8 +102,27 @@ export class ViewComponent implements OnInit {
     console.log("pageInfo:", pageInfo);
     this.offset = pageInfo.offset;
     let sqlOffset = this.offset * pageInfo.pageSize;
-    let data = await this.viewsIPCService.readData(this.view.table, this.view.columns.map(col => col.name), this.limit, sqlOffset);
+    let data = await this.viewsIPCService
+      .readData(
+        this.view.table, 
+        this.view.columns.map(col => col.name), 
+        this.limit, 
+        sqlOffset,
+        this.view.columns.filter(col => col.searchable).map(col => col.name),
+        String(this.searchInputModel).length > 1 ? String(this.searchInputModel)  : null
+      );
     this.rows = [...data.data];
+  }
+
+  doSearch(event) {
+    // if no search input, the user clear the text, reload the result to reset
+    if (String(this.searchInputModel).length == 0) return this.selectLimit(this.limit)
+
+    // validate min. of 2 chars
+    if (String(this.searchInputModel).length < 2) return;
+
+    // fast way to reload the table
+    this.selectLimit(this.limit);
   }
 
 }

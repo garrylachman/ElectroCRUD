@@ -49,12 +49,18 @@ export const IPC_CHANNEL_READ_DATA: string = "channel_read_data";
 export interface IIPCReadDataRequestMessage {
     table: string;
     limit: IIPCReadDataLimit;
-    columns: string[]
+    columns: string[];
+    search?: IIPCReadDataSearch
 }
 
 export interface IIPCReadDataLimit {
     limit: number;
     offset: number;
+}
+
+export interface IIPCReadDataSearch {
+    columns: string[],
+    text: string
 }
 
 export interface IIPCReadDataResponseMessage {
