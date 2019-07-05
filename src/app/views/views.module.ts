@@ -16,14 +16,19 @@ import {
   NbCheckboxModule,
   NbAlertModule,
   NbActionsModule,
-  NbSpinnerModule
+  NbSpinnerModule,
+  NbContextMenuModule
 } from '@nebular/theme';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { ViewEditComponent } from './view/edit/edit.component';
+import { ViewAddComponent } from './view/add/add.component';
+import { ViewViewComponent } from './view/view/view.component';
+
 
 
 @NgModule({
-  declarations: [ViewComponent, ConfigureComponent, EmptyComponent],
+  declarations: [ViewComponent, ConfigureComponent, EmptyComponent, ViewEditComponent, ViewAddComponent, ViewViewComponent],
   imports: [
     CommonModule,
     ViewsRoutingModule,
@@ -40,7 +45,8 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
     FormsModule,
     NgxDatatableModule,
     ReactiveFormsModule,
+    NbContextMenuModule,
   ],
-  entryComponents: [ViewComponent, ConfigureComponent, EmptyComponent]
+  entryComponents: [ViewComponent, ConfigureComponent, EmptyComponent, ViewEditComponent, ViewAddComponent, ViewViewComponent]
 })
 export class ViewsModule { }
