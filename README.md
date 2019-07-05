@@ -1,4 +1,11 @@
 # Version 2.0 is on the way. Full refactor. 06/2019
+Version 2.0 in is development, please check [dev-2 branch](https://github.com/garrylachman/ElectroCRUD/tree/dev-v2).
+The new version is a new project that built from scratch.
+
+
+Version 1.x is deprecated and not supprted & developed.
+
+
 # ElectroCRUD
 
 MySQL CRUD application built on [Electron](http://electron.atom.io/).
