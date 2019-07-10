@@ -32,16 +32,7 @@ export class ViewViewComponent implements OnInit, OnDestroy {
 
   searchInputModel: NgModel;
 
-  menuItems:any = [
-    {
-      title: 'Edit',
-      icon: 'edit-2'
-    },
-    {
-      title: 'Delete',
-      icon: 'trash-2'
-    }
-  ]
+  menuItems:any = []
 
   menuServiceObserver:Subscription;
   routeObserver:Subscription;
@@ -129,6 +120,18 @@ export class ViewViewComponent implements OnInit, OnDestroy {
       );
       this.title = this.view.name;
     }
+    this.menuItems = [
+      {
+        title: 'Edit',
+        icon: 'edit-2',
+        hidden: !this.view.permissions.update
+      },
+      {
+        title: 'Delete',
+        icon: 'trash-2',
+        hidden: !this.view.permissions.delete
+      }
+    ]
     await this.reload();
   }
 
