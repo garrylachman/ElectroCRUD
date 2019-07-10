@@ -39,8 +39,15 @@
     </ng-template>
     <ng-template #actionsTpl let-row="row">
         <button 
-            nbButton status="success" hero size="medium" (click)="edit(row)" 
-            nbTooltip="Edit" nbTooltipPlacement="top" nbTooltipStatus="success"
+            nbButton status="primary" hero size="medium" (click)="use(row, this)" 
+            nbTooltip="Login & Use Account" nbTooltipPlacement="top" nbTooltipStatus="primary"
+        >
+            <nb-icon icon="monitor"></nb-icon>
+            Use
+        </button>
+        <button 
+            nbButton status="primary" hero size="medium" (click)="edit(row)" 
+            nbTooltip="Edit" nbTooltipPlacement="top" nbTooltipStatus="primary"
         >
             <nb-icon icon="edit"></nb-icon>
         </button>
@@ -50,13 +57,7 @@
         >
             <nb-icon icon="trash-2"></nb-icon>
         </button>
-        <button 
-            nbButton status="info" hero size="medium" (click)="use(row, this)" 
-            nbTooltip="Login & Use Account" nbTooltipPlacement="top" nbTooltipStatus="info"
-        >
-            <nb-icon icon="monitor"></nb-icon>
-            Use
-        </button>
+        
     </ng-template>
         
     </nb-card-body>

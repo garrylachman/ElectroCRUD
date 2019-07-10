@@ -15,17 +15,6 @@
 }
 
 ::ng-deep
-.ngx-datatable.bootstrap .datatable-body .datatable-body-row.datatable-row-even {
-  background-color: #ffffff;
-}
-
-::ng-deep
-.ngx-datatable.bootstrap .datatable-footer {
-  background: #ffffff;
-
-}
-
-::ng-deep
 .ngx-datatable.bootstrap .datatable-footer .datatable-pager a {
   color: #598bff
 }
@@ -50,6 +39,11 @@
 ::ng-deep
 .ngx-datatable.bootstrap .datatable-body .datatable-body-row .datatable-body-cell {
   margin: auto;
+}
+
+::ng-deep
+.ngx-datatable.bootstrap .datatable-footer {
+  background: transparent;
 }
 
 nb-card-header input {
