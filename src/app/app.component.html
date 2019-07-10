@@ -4,11 +4,11 @@
       <nb-actions size="medium">
         <nb-action 
           class="control-item" icon="briefcase-outline" title="Accounts" 
-          nbTooltip="Accounts list" nbTooltipPlacement="bottom" nbTooltipStatus="success" [routerLink]="['/accounts']" 
+          nbTooltip="Accounts list" nbTooltipPlacement="bottom" nbTooltipStatus="primary" [routerLink]="['/accounts']" 
         ></nb-action>
         <nb-action 
           class="control-item" icon="settings-2-outline"  title="Settings" 
-          nbTooltip="Settings" nbTooltipPlacement="bottom" nbTooltipStatus="success"
+          nbTooltip="Settings" nbTooltipPlacement="bottom" nbTooltipStatus="primary"
         ></nb-action>
       </nb-actions>
   </nb-layout-header>
@@ -19,8 +19,8 @@
     <div class="control-panel">
       <button 
         *ngIf="account" 
-        nbButton hero status="success" size="tiny"
-        nbTooltip="Add a new view" nbTooltipPlacement="top" nbTooltipStatus="success" 
+        nbButton hero status="primary" size="tiny"
+        nbTooltip="Add a new view" nbTooltipPlacement="top" nbTooltipStatus="primary" 
         [routerLink]="['/views/add']"
       ><nb-icon icon="plus-outline"></nb-icon>Add</button>
     </div>
