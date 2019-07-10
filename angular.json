@@ -26,7 +26,7 @@
             ],
             "styles": [
               "node_modules/bootstrap/scss/bootstrap-grid.scss",
-              "node_modules/bootstrap/scss/bootstrap.scss",
+              "node_modules/bootstrap/scss/bootstrap-reboot.scss",
               "src/styles.scss",
               "node_modules/@nebular/theme/styles/prebuilt/default.css"
             ],
