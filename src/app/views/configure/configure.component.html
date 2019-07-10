@@ -70,14 +70,15 @@
     <nb-card>
       <nb-card-header>Permissions</nb-card-header>
         <nb-card-body id="permissions-card">
+            <nb-alert *ngIf="!this.isHavePrimaryKey" accent="danger">Primary Key is missing. Update & Delete operations are disabled.</nb-alert>
             <p class="margin-top-0rem">
               <sub>Please select the view permissions; you can always edit the permissions later.</sub>
             </p>
           <div class="row">
             <div class="col-lg-6 margin-bottom-0_5rem"><nb-checkbox [(ngModel)]="view.permissions.create">Create</nb-checkbox></div>
             <div class="col-lg-6 margin-bottom-0_5rem"><nb-checkbox [(ngModel)]="view.permissions.read" disabled>Read</nb-checkbox></div>
-            <div class="col-lg-6"><nb-checkbox [(ngModel)]="view.permissions.update">Update</nb-checkbox></div>
-            <div class="col-lg-6"><nb-checkbox [(ngModel)]="view.permissions.delete">Delete</nb-checkbox></div>
+            <div class="col-lg-6"><nb-checkbox disabled="{{!this.isHavePrimaryKey}}" [(ngModel)]="view.permissions.update">Update</nb-checkbox></div>
+            <div class="col-lg-6"><nb-checkbox disabled="{{!this.isHavePrimaryKey}}" [(ngModel)]="view.permissions.delete">Delete</nb-checkbox></div>
           </div>
         </nb-card-body>
     </nb-card>

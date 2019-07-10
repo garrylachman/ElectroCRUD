@@ -35,6 +35,7 @@ export class ConfigureComponent implements OnInit {
   termForm: FormGroup;
 
   isSaveEnabled:boolean = false;
+  isHavePrimaryKey: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -118,6 +119,17 @@ export class ConfigureComponent implements OnInit {
     this.rows = this.view.columns;
     this.termForm.controls.termOneCtrl.setValue(this.view.terms.one);
     this.termForm.controls.termManyCtrl.setValue(this.view.terms.many);
+    this.isHavePrimaryKey = this.isContainsPrimaryKey;
+    this.view.permissions.delete = this.isHavePrimaryKey;
+    this.view.permissions.update = this.isHavePrimaryKey;
+  }
+
+  private get isContainsPrimaryKey(): boolean {
+    let isPK: boolean = false;
+    this.rows.forEach((col: IViewColumn) => {
+      if (col.key == "PRI") isPK = true;
+    })
+    return isPK;
   }
 
   public get isEdit(): boolean {
