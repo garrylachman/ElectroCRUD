@@ -91,7 +91,8 @@ export class ViewsIPC {
             reqMessage.toMessage().limit.limit,
             reqMessage.toMessage().limit.offset,
             reqMessage.toMessage().search.columns,
-            reqMessage.toMessage().search.text
+            reqMessage.toMessage().search.text,
+            reqMessage.toMessage().where
             )
         console.log(res);
         if (res instanceof Error) {

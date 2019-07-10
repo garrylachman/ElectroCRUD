@@ -152,7 +152,21 @@ export class DatabaseService {
         }
     }
 
-    public async readData(table: string, columns: string[], limit: number, offset:number, searchColumns?: string[], searchText?: string): Promise<any | Error> {
+    public async readData(
+        table: string, 
+        columns: string[], 
+        limit: number, 
+        offset:number, 
+        searchColumns?: string[], 
+        searchText?: string,
+        where?: { 
+            column: string, 
+            opr: string, 
+            value: string,
+            or: boolean
+        }[]
+    ): Promise<any | Error> {
+        console.log("where", where);
         try {
             let countRes = await this.connection.count().from(table);
             console.log("countRes: ", countRes);
@@ -166,9 +180,19 @@ export class DatabaseService {
                     }
                 });
             }
-            let res = await q.limit(limit).offset(offset)
+            if (where) {
+                where.forEach((col, idx:number) => {
+                    if (idx == 0) {
+                        q = q.where(col.column, col.opr, col.value);
+                    } else {
+                        let whereFunc = col.or ? "orWhere" : "andWhere";
+                        q = q[whereFunc](col.column, col.opr, col.value);
+                    }
+                })
+            }
+            console.log("raw query: ", q.toQuery())
+            let res = await q.limit(limit).offset(offset);
 
-            //let res = await this.connection.select(...columns).from(table).limit(limit).offset(offset);
             console.log(res);
             return {
                 data: res,

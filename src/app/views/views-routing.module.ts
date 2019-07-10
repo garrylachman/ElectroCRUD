@@ -29,10 +29,10 @@ const routes: Routes = [
       },
       {
         path: 'view',
-        component: ViewViewComponent,
+        component: ViewViewComponent
       },
       {
-        path: 'edit',
+        path: 'edit/:pk/:pkValue',
         component: ViewEditComponent
       },
       {

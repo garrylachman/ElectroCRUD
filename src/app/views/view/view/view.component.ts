@@ -80,6 +80,13 @@ export class ViewViewComponent implements OnInit, OnDestroy {
   
   editRow(row) {
     console.log("edit", row)
+    let pk: string = this.primaryKeyColumn;
+    if (!pk) {
+      // toast no OK
+      return;
+    }
+    let pkValue = row[pk];
+    this.router.navigate(['/views', this.view.id, 'view', 'edit', pk, pkValue])
   }
 
   deleteRow(row) {

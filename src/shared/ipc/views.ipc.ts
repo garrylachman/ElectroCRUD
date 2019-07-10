@@ -50,7 +50,8 @@ export interface IIPCReadDataRequestMessage {
     table: string;
     limit: IIPCReadDataLimit;
     columns: string[];
-    search?: IIPCReadDataSearch
+    search?: IIPCReadDataSearch;
+    where?: IIPCReadDataWhere[]
 }
 
 export interface IIPCReadDataLimit {
@@ -61,6 +62,24 @@ export interface IIPCReadDataLimit {
 export interface IIPCReadDataSearch {
     columns: string[],
     text: string
+}
+
+export interface IIPCReadDataSearch {
+    columns: string[],
+    text: string
+}
+
+export interface IIPCReadDataWhere {
+    column: string;
+    opr: IIPCReadDataWhereOpr;
+    value: any;
+    or: boolean;
+}
+
+export enum IIPCReadDataWhereOpr {
+    EQ = "=",
+    GT = ">",
+    LT = "<"
 }
 
 export interface IIPCReadDataResponseMessage {

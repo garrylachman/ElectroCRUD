@@ -1,0 +1,12 @@
+<p>
+  <label class="input-group">{{ to.label }}</label>
+  <input 
+    nbInput 
+    [placeholder]="to.placeholder" 
+    class="input-group" 
+    [nbDatepicker]="formpicker" 
+    [formControl]="formControl" 
+    [status]="showError ? 'danger': 'success'" 
+  />
+  <nb-datepicker #formpicker></nb-datepicker>
+</p>

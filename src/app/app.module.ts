@@ -2,7 +2,7 @@ import 'reflect-metadata';
 import '../polyfills';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 
@@ -19,7 +19,7 @@ import { WebviewDirective } from './directives/webview.directive';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NbThemeModule } from '@nebular/theme';
+import { NbThemeModule, NbDatepickerModule, NbDatepickerDirective } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { 
   NbSidebarModule,
@@ -39,6 +39,8 @@ import {
 import { ConfirmDeleteComponent } from './components/dialogs/confirm-delete/confirm-delete.component';
 
 import { NgxMaskModule } from 'ngx-mask';
+import { FormlyModule } from '@ngx-formly/core';
+import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
 
 import { AccountsService } from './services/store/accounts.service';
 
@@ -85,8 +87,12 @@ export function HttpLoaderFactory(http: HttpClient) {
     NbDialogModule.forRoot(),
     NgxMaskModule.forRoot(),
     NbToastrModule.forRoot(),
+    ReactiveFormsModule,
+    FormlyModule.forRoot(),
+    NbDatepickerModule.forRoot(),
+    FormlyBootstrapModule,
   ],
-  providers: [ElectronService, NbMenuService, NbDialogService, AccountsService],
+  providers: [ElectronService, NbMenuService, NbDialogService, AccountsService, NbDatepickerDirective],
   entryComponents: [ConfirmDeleteComponent],
   bootstrap: [AppComponent]
 })

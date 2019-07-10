@@ -13,6 +13,7 @@ import {
   IPCReadDataRequestMessage,
   IPC_CHANNEL_READ_DATA,
   IPCReadDataResponseMessage,
+  IIPCReadDataWhere,
 } from '../../../shared/ipc/views.ipc';
 import { ipcRenderer } from 'electron-better-ipc';
 import { IAccount } from '../../../shared/interfaces/accounts.interface';
@@ -42,7 +43,15 @@ export class ViewsIPCService {
     return new IPCListOfTablesResponseMessage(rawRes).toMessage()
   }
 
-  public async readData(table: string, columns: string[], limit: number, offset: number, searchColumns?: string[], searchText?: string): Promise<IIPCReadDataResponseMessage> {
+  public async readData(
+      table: string, 
+      columns: string[], 
+      limit: number, 
+      offset: number, 
+      searchColumns?: string[], 
+      searchText?: string,
+      where?: IIPCReadDataWhere[]
+    ): Promise<IIPCReadDataResponseMessage> {
     const req: IPCReadDataRequestMessage = new IPCReadDataRequestMessage({
       table: table,
       columns: columns,
@@ -53,7 +62,8 @@ export class ViewsIPCService {
       search: {
         columns: searchColumns,
         text: searchText
-      }
+      },
+      where: where
     });
     console.log("req", req);
     const rawRes:any = await ipcRenderer.callMain(IPC_CHANNEL_READ_DATA, req.toJsonValue());
