@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { 
+  IPC_CHANNEL_LIST_OF_TABLES,
   IPCListOfTablesRequestMessage,
   IPCListOfTablesResponseMessage,
-  IPC_CHANNEL_LIST_OF_TABLES,
 
   IIPCListOfTablesResponseMessage,
   IIPCTableInfoResponseMessage,
@@ -14,6 +14,13 @@ import {
   IPC_CHANNEL_READ_DATA,
   IPCReadDataResponseMessage,
   IIPCReadDataWhere,
+
+  IPC_CHANNEL_UPDATE_DATA,
+  IIPCUpdateDataWhere,
+  IIPCUpdateDataUpdate,
+  IIPCUpdateDataResponseMessage,
+  IPCUpdateDataRequestMessage,
+  IPCUpdateDataResponseMessage,
 } from '../../../shared/ipc/views.ipc';
 import { ipcRenderer } from 'electron-better-ipc';
 import { IAccount } from '../../../shared/interfaces/accounts.interface';
@@ -70,5 +77,21 @@ export class ViewsIPCService {
     console.log("rawRes", rawRes);
     return new IPCReadDataResponseMessage(rawRes).toMessage()
   }
+
+  public async updateData(
+    table: string, 
+    update: IIPCUpdateDataUpdate, 
+    where?: IIPCUpdateDataWhere[]
+  ): Promise<IIPCUpdateDataResponseMessage> {
+  const req: IPCUpdateDataRequestMessage = new IPCUpdateDataRequestMessage({
+    table: table,
+    update: update,
+    where: where
+  });
+  console.log("req", req);
+  const rawRes:any = await ipcRenderer.callMain(IPC_CHANNEL_UPDATE_DATA, req.toJsonValue());
+  console.log("rawRes", rawRes);
+  return new IPCUpdateDataResponseMessage(rawRes).toMessage()
+}
 
 }

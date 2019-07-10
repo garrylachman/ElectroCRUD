@@ -4,9 +4,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SessionService } from '../../../services/session.service';
 import { ViewsService } from '../../../services/store/views.service';
 import { ViewsIPCService } from '../../../services/ipc/views.ipc.service';
-import { NbMenuService } from '@nebular/theme';
+import { NbMenuService, NbToastrService } from '@nebular/theme';
 import { Subscription, Subject } from 'rxjs';
-import { IIPCReadDataWhereOpr } from '../../../../shared/ipc/views.ipc';
+import { IIPCReadDataWhereOpr, IIPCUpdateDataWhereOpr, IIPCUpdateDataResponseMessage } from '../../../../shared/ipc/views.ipc';
 import { RowFormComponent } from '../components/row-form/row-form.component'
 
 @Component({
@@ -26,13 +26,18 @@ export class ViewEditComponent implements OnInit, OnDestroy {
   pkValue: any;
   dataObserve: Subject<any> = new Subject();
 
+  formRef: {
+    save: Function
+  }
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private sessionsService: SessionService,
     private viewsService: ViewsService,
     private viewsIPCService: ViewsIPCService,
-    private menuService: NbMenuService
+    private menuService: NbMenuService,
+    private toastService: NbToastrService,
   ) { }
 
   async ngOnInit() {
@@ -40,6 +45,33 @@ export class ViewEditComponent implements OnInit, OnDestroy {
       console.log("params", params);
       this.loadView();
     });
+
+    this.formRef = {
+      save: async (data): Promise<boolean> => {
+        let res:IIPCUpdateDataResponseMessage = await this.viewsIPCService.updateData(
+          this.view.table, 
+          data, 
+          [
+            {
+              column: this.pk,
+              value: this.pkValue,
+              opr: IIPCUpdateDataWhereOpr.EQ,
+              or: false
+            }
+          ]
+        )
+
+        if (res.error) {
+          this.toastService.danger(res.error, 'Error');
+          return false;
+        } else {
+          if (res.valid) {
+            this.toastService.success('Update completed successfully ', 'Success');
+          }
+        }
+        this.router.navigate(['/views',this.view.id,'view','view'])
+      }
+    }
   }
 
   ngOnDestroy() {

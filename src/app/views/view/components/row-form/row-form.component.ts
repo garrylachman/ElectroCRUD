@@ -14,6 +14,9 @@ export class RowFormComponent implements OnInit {
 
   @Input() view:IView;
   @Input() dataObserve: Subject<any>;
+  @Input() ref: {
+    save: Function
+  };
 
   form = new FormGroup({});
   model = { };
@@ -96,11 +99,11 @@ export class RowFormComponent implements OnInit {
       this.tosatService.danger('Validation is not passed! Please check the form again.', 'Validation Error');
       return;
     }
-    console.log("this.form.valid", this.form.valid);
     this.dateColNames.forEach(col => {
-      model[col] = new Date(model[col]).toISOString();
+      model[col] = new Date(model[col]).toJSON().slice(0, 19).replace('T', ' ')
     })
-    console.log(model);
+    
+    this.ref.save(model);
   }
 
 }

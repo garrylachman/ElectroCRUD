@@ -9,7 +9,11 @@ import {
 
     IPC_CHANNEL_READ_DATA,
     IPCReadDataRequestMessage,
-    IPCReadDataResponseMessage
+    IPCReadDataResponseMessage,
+
+    IPC_CHANNEL_UPDATE_DATA,
+    IPCUpdateDataRequestMessage,
+    IPCUpdateDataResponseMessage
 } from '../../shared/ipc/views.ipc';
 
 import { ipcMain } from 'electron-better-ipc';
@@ -24,6 +28,7 @@ export class ViewsIPC {
         ipcMain.answerRenderer(IPC_CHANNEL_LIST_OF_TABLES, (req: JsonValue) => this.listOfTables(req));
         ipcMain.answerRenderer(IPC_CHANNEL_TABLE_INFO, (req: JsonValue) => this.tableInfo(req));
         ipcMain.answerRenderer(IPC_CHANNEL_READ_DATA, (req: JsonValue) => this.readData(req));
+        ipcMain.answerRenderer(IPC_CHANNEL_UPDATE_DATA, (req: JsonValue) => this.updateData(req));
     }
 
     public async listOfTables(req: JsonValue): Promise<JsonValue> {
@@ -108,6 +113,36 @@ export class ViewsIPC {
             error: dbError,
             data: dbRes.data,
             count: dbRes.count
+        });
+        
+        console.log("resMessage", resMessage.toMessage());
+        return Promise.resolve(resMessage.toJsonValue());
+    }
+
+    public async updateData(req: JsonValue): Promise<JsonValue> {
+        let reqMessage: IPCUpdateDataRequestMessage = new IPCUpdateDataRequestMessage(req);
+
+        let isValid: boolean;
+        let dbError: string;
+        let dbRes: any;
+       
+        let res = await DatabaseService.getInstance().updateData(
+            reqMessage.toMessage().table,
+            reqMessage.toMessage().update,
+            reqMessage.toMessage().where
+            )
+        console.log(res);
+        if (res instanceof Error) {
+            dbError = res.toString();
+            isValid = false;
+        } else {
+            isValid = true;
+            dbRes = res;
+        }
+
+        let resMessage: IPCUpdateDataResponseMessage = new IPCUpdateDataResponseMessage({
+            valid: isValid,
+            error: dbError
         });
         
         console.log("resMessage", resMessage.toMessage());
