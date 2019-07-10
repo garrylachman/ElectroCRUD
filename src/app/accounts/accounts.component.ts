@@ -108,8 +108,10 @@ export class AccountsComponent implements OnInit {
       .open(ConfirmDeleteComponent, { hasBackdrop: true })
       .onClose
       .subscribe((res) => {
-        this.accountsService.delete(row.id);
-        this.loadFromStore();
+        if (res)  {
+          this.accountsService.delete(row.id);
+          this.loadFromStore();
+        }
       });
   }
 
