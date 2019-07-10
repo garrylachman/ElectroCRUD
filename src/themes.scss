@@ -1,5 +1,5 @@
 @import '~@nebular/theme/styles/theming';
-@import '~@nebular/theme/styles/themes/default';
+@import '~@nebular/theme/styles/themes/cosmic';
 
 $nb-themes: nb-register-theme((
 
@@ -17,7 +17,7 @@ $nb-themes: nb-register-theme((
 
   text-button-font-weight: 600
 
-), default, default);
+), cosmic, cosmic);
 
 
 .float-right {
@@ -26,4 +26,8 @@ $nb-themes: nb-register-theme((
 
 .nb-theme-default .nb-theme-default [nbButton] nb-nb-icon {
   font-size: 1rem;
+}
+
+.input-group {
+  display: flex;
 }
