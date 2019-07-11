@@ -1,0 +1,33 @@
+nb-select[formcontrolname="viewtTableCtrl"] {
+    margin-right: 1.25rem;
+}
+
+.margin-bottom-1rem {
+    margin-bottom: 1rem;
+}
+
+.margin-top-0rem {
+    margin-top: 0rem;
+}
+
+.margin-bottom-0_5rem
+{
+    margin-bottom: 0.5rem
+}
+
+::ng-deep
+nb-card-body {
+    min-height: 11.4rem;
+}
+
+::ng-deep
+#permissions-card span.custom-checkbox
+{
+    width: 2rem;
+    height: 2rem;
+}
+
+#footer {
+    display: flex;
+    flex-direction: row-reverse;
+}

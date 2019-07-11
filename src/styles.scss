@@ -1,0 +1,17 @@
+@import 'themes';
+
+@import '~@nebular/theme/styles/globals';
+@import '~@swimlane/ngx-datatable/release/index.css';
+@import '~@swimlane/ngx-datatable/release/themes/bootstrap.css';
+@import '~@swimlane/ngx-datatable/release/assets/icons.css';
+
+@include nb-install() {
+  @include nb-theme-global();
+};
+/* You can add global styles to this file, and also import other style files */
+html, body {
+  margin: 0;
+  padding: 0;
+
+  height: 100%;
+}

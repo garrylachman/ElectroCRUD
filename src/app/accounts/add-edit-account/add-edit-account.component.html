@@ -1,0 +1,144 @@
+<nb-card accent="suceess">
+  <nb-card-header>{{title}}</nb-card-header>
+  <nb-card-body>
+    <nb-stepper orientation="horizontal">
+
+        <nb-step [stepControl]="basicDetailsForm" [label]="labelOne">
+          <ng-template #labelOne>Basic</ng-template>
+          <h4>Basic Details</h4>
+          <form [formGroup]="basicDetailsForm" (ngSubmit)="onBasicDetailsSubmit()" class="step-container">
+            <p class="lorem">
+              Let's start with the basic information about your account. The account is represnt a single database.
+            </p>
+            <div class="input-group">
+              <input nbInput type="text" placeholder="Account name" class="form-control" formControlName="accountNameCtrl"
+                  [status]="basicDetailsForm.controls['accountNameCtrl'].invalid && (basicDetailsForm.dirty || basicDetailsForm.touched) ? 'danger': 'success'">
+            </div>
+
+            <div class="input-group">
+            <nb-select 
+              placeholder="Database Server" formControlName="databaseServerCtrl"
+              [status]="basicDetailsForm.controls['databaseServerCtrl'].invalid && (basicDetailsForm.dirty || basicDetailsForm.touched) ? 'danger': 'success'"  
+            >
+              <nb-option *ngFor="let item of databaseServers" value="{{item.value}}">{{item.name}}</nb-option>
+            </nb-select>
+            </div>
+            <button nbButton hero nbStepperNext>next</button>
+          </form>
+        </nb-step>
+
+        <nb-step [stepControl]="tunnelDetailsForm" [label]="labelTwo">
+          <ng-template #labelTwo>Tunnel</ng-template>
+            <h4>SSH Tunnel</h4>
+            <form [formGroup]="tunnelDetailsForm" (ngSubmit)="onTunnelDetailsSubmit()" class="step-container">
+              <p class="lorem">
+                  An SSH tunnel links a port on your local machine to a port on a remote host. When these ports are linked, anything communicated to the local port is passed through SSH to the remote port; likewise, any communication to the remote port is passed back through SSH to the local port. The added benefit of this setup is that the communications between your local machine and the remote host is encrypted by the SSH connection.
+              </p>
+              <div class="input-group">
+                  <nb-checkbox 
+                    status="primary" class="form-control" formControlName="isTunnelEnabledCtrl"
+                    [status]="tunnelDetailsForm.controls['isTunnelEnabledCtrl'].invalid && (tunnelDetailsForm.dirty || tunnelDetailsForm.touched) ? 'danger': 'success'"  
+                  >
+                    Configure SSH Tunnel?
+                  </nb-checkbox>
+              </div>
+
+              <div class="input-group">
+                <input 
+                  nbInput type="text" placeholder="Hostname" class="form-control" formControlName="sshHostCtrl"
+                  [status]="tunnelDetailsForm.controls['sshHostCtrl'].invalid && (tunnelDetailsForm.dirty || tunnelDetailsForm.touched) ? 'danger': 'success'"
+                >
+                <input 
+                  nbInput type="text" placeholder="Port" class="form-control" formControlName="sshPortCtrl" mask="99999" class="portInput" 
+                  [status]="tunnelDetailsForm.controls['sshPortCtrl'].invalid && (tunnelDetailsForm.dirty || tunnelDetailsForm.touched) ? 'danger': 'success'" 
+                >
+              </div>
+              <div class="input-group">
+                <input 
+                  nbInput type="text" placeholder="Username" class="form-control" formControlName="sshUsernameCtrl"
+                  [status]="tunnelDetailsForm.controls['sshUsernameCtrl'].invalid && (tunnelDetailsForm.dirty || tunnelDetailsForm.touched) ? 'danger': 'success'"
+                >
+                <input 
+                  nbInput type="password" placeholder="Password" class="form-control" formControlName="sshPasswordCtrl" 
+                  [status]="tunnelDetailsForm.controls['sshPasswordCtrl'].invalid && (tunnelDetailsForm.dirty || tunnelDetailsForm.touched) ? 'danger': 'success'"
+                >
+              </div>
+              <button nbButton hero nbStepperPrevious>prev</button>
+              <button nbButton hero nbStepperNext>next</button>
+            </form>
+        </nb-step>
+
+        <nb-step [stepControl]="databaseDetailsForm" [label]="labelThree">
+          <ng-template #labelThree>Database</ng-template>
+          <h4>Database</h4>
+          <form [formGroup]="databaseDetailsForm" (ngSubmit)="onDatabaseDetailsSubmit()" class="step-container">
+            <p class="lorem">
+              Let's setup the database connection. If you are using ssh tunnel use the local port on the remote server (avoid the tunnel's port).
+            </p>
+
+            <div class="input-group">
+              <input 
+                nbInput type="text" placeholder="Hostname" class="form-control" formControlName="dbHostCtrl"
+                [status]="databaseDetailsForm.controls['dbHostCtrl'].invalid && (databaseDetailsForm.dirty || databaseDetailsForm.touched) ? 'danger': 'success'"
+              >
+              <input 
+                nbInput type="text" placeholder="Port" class="form-control" formControlName="dbPortCtrl" mask="99999" class="portInput" 
+                [status]="databaseDetailsForm.controls['dbPortCtrl'].invalid && (databaseDetailsForm.dirty || databaseDetailsForm.touched) ? 'danger': 'success'" 
+              >
+            </div>
+            <div class="input-group">
+              <input 
+                nbInput type="text" placeholder="Username" class="form-control" formControlName="dbUsernameCtrl"
+                [status]="databaseDetailsForm.controls['dbUsernameCtrl'].invalid && (databaseDetailsForm.dirty || databaseDetailsForm.touched) ? 'danger': 'success'"
+              >
+              <input 
+                nbInput type="password" placeholder="Password" class="form-control" formControlName="dbPasswordCtrl" 
+                [status]="databaseDetailsForm.controls['dbPasswordCtrl'].invalid && (databaseDetailsForm.dirty || databaseDetailsForm.touched) ? 'danger': 'success'"
+              >
+            </div>
+            <div class="input-group">
+                <input 
+                  nbInput type="text" placeholder="Database" class="form-control" formControlName="dbDbCtrl"
+                  [status]="databaseDetailsForm.controls['dbDbCtrl'].invalid && (databaseDetailsForm.dirty || databaseDetailsForm.touched) ? 'danger': 'success'"
+                >
+              </div>
+            <button nbButton hero nbStepperPrevious>prev</button>
+            <button nbButton hero nbStepperNext>next</button>
+          </form>
+        </nb-step>
+
+        <nb-step [label]="labelFour">
+          <ng-template #labelFour>Connectivity Test</ng-template>
+          <h4>Connectivity Test</h4>
+          <p class="lorem">
+            This is the final step, we have to test the connection to the server. In case of failure you can go back to previus steps and correct the parameters.
+          </p>
+          <div class="input-group">
+            <button 
+              nbButton status="primary" hero size="giant" (click)="testConnection()" *ngIf="!isSaveEnabled"
+            >
+              <nb-icon icon="wifi"></nb-icon>
+              Start Test
+            </button>
+          </div>
+          <nb-card id="testLogsCard" *ngIf="testLog.length>0">
+            <nb-card-header>Connectivity Test Results</nb-card-header>
+            <nb-card-body>
+              <nb-alert *ngFor="let tLog of testLog" status="{{tLog[0]}}">{{tLog[1]}}</nb-alert>
+            </nb-card-body>
+          </nb-card>
+          <button nbButton hero nbStepperPrevious *ngIf="!isSaveEnabled">prev</button>
+        </nb-step>
+      </nb-stepper>
+  </nb-card-body>
+  <nb-card-footer>
+    <button nbButton hero status="danger" size="small" (click)="ref.close(false)">
+      <nb-icon icon="close"></nb-icon>
+      Cancel
+    </button>
+    <button nbButton hero status="success" size="small" (click)="save()" [disabled]="!isSaveEnabled">
+      <nb-icon icon="plus"></nb-icon>
+      Save
+    </button>
+  </nb-card-footer>
+</nb-card>

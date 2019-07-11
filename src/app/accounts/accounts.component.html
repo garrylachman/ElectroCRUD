@@ -1,0 +1,64 @@
+<nb-card>
+    <nb-card-header><h1 class="page-header h4">Accounts</h1></nb-card-header>
+</nb-card>
+
+<nb-card [nbSpinner]="isLoading" nbSpinnerSize="giant" nbSpinnerStatus="primary">
+    <nb-card-header>
+        <input nbInput shape="semi-round" 
+            type="text"
+            placeholder="Type to filter the name column..."
+            (keyup)="updateFilter($event)"
+          />
+        <button 
+            nbButton status="primary" hero size="small" (click)="edit(null)" 
+            nbTooltip="Add new account" nbTooltipPlacement="top" nbTooltipStatus="primary"
+        >
+            <nb-icon icon="plus"></nb-icon>
+            Add
+        </button>
+    </nb-card-header>
+    <nb-card-body>
+        <ngx-datatable #table 
+            class="bootstrap" 
+            [rows]="rows"
+            [loadingIndicator]="loadingIndicator"
+            [columns]="columns"
+            [columnMode]="'force'"
+            [headerHeight]="30"
+            [footerHeight]="30"
+            [rowHeight]="'auto'"
+            [reorderable]="reorderable"
+            [limit]="10"
+        >
+    </ngx-datatable>
+    <ng-template #cDateTpl let-row="row">
+        {{row.created | date}}
+    </ng-template>
+    <ng-template #mDateTpl let-row="row">
+        {{row.modified | date}}
+    </ng-template>
+    <ng-template #actionsTpl let-row="row">
+        <button 
+            nbButton status="primary" hero size="medium" (click)="use(row, this)" 
+            nbTooltip="Login & Use Account" nbTooltipPlacement="top" nbTooltipStatus="primary"
+        >
+            <nb-icon icon="monitor"></nb-icon>
+            Use
+        </button>
+        <button 
+            nbButton status="primary" hero size="medium" (click)="edit(row)" 
+            nbTooltip="Edit" nbTooltipPlacement="top" nbTooltipStatus="primary"
+        >
+            <nb-icon icon="edit"></nb-icon>
+        </button>
+        <button 
+            nbButton status="danger" hero size="medium" (click)="delete(row)" 
+            nbTooltip="Delete" nbTooltipPlacement="top" nbTooltipStatus="danger"
+        >
+            <nb-icon icon="trash-2"></nb-icon>
+        </button>
+        
+    </ng-template>
+        
+    </nb-card-body>
+</nb-card>

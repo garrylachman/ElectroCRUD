@@ -1,0 +1,71 @@
+<nb-card [nbSpinner]="isLoading" nbSpinnerSize="giant" nbSpinnerStatus="primary">
+  <nb-card-header>
+      <input nbInput id="search-input" class="margin-right-1rem" 
+        type="text"
+        placeholder="Type to search..."
+        (keyup)="doSearch($event)" 
+        size="medium"
+        [(ngModel)]="searchInputModel" 
+        status="primary"
+        hero 
+      />
+      <button 
+      nbButton status="warning" outline size="tiny" id="clear-search" *ngIf="showSearchClear" (click)="clearSearch()"
+      nbTooltip="Reset search to regular results" nbTooltipPlacement="top" nbTooltipStatus="warning"
+      >
+        <nb-icon icon="close"></nb-icon>
+        Clear Search
+      </button>
+      <div class="float-right">
+        <nb-select hero status="primary" 
+          class="margin-right-1rem" placeholder="# of Results / Page" 
+          (selectedChange)="selectLimit($event)" [selected]="10" size="medium">
+          <nb-option value=10>10 Per Page</nb-option>
+          <nb-option value=25>25 Per Page</nb-option>
+          <nb-option value=50>50 Per Page</nb-option>
+          <nb-option value=100>100 Per Page</nb-option>
+        </nb-select>
+        <button 
+        nbButton status="primary" hero size="medium" [routerLink]="['/views', view.id, 'configure']" 
+        nbTooltip="View Configurations" nbTooltipPlacement="top" nbTooltipStatus="primary" class="margin-right-1rem"
+        >
+          <nb-icon icon="options-2"></nb-icon>
+          Configurations
+        </button>
+        <button 
+        nbButton status="primary" hero size="medium" [routerLink]="['/views', view.id, 'view', 'add']" 
+        nbTooltip="Add new {{view.terms.one}}" nbTooltipPlacement="top" nbTooltipStatus="primary"
+        >
+          <nb-icon icon="plus"></nb-icon>
+          Add {{view.terms.one}}
+        </button>
+      </div>
+  </nb-card-header>
+  <nb-card-body>
+    <ngx-datatable #table 
+      class="bootstrap" 
+      [rows]="rows"
+      [columns]="columns" 
+      [loadingIndicator]="true"
+      [columnMode]="'force'"
+      [headerHeight]="30"
+      [footerHeight]="30"
+      [rowHeight]="'auto'"
+      [reorderable]="true"
+      [externalPaging]="true"
+      [count]="totalElements"
+      [offset]="offset"
+      [limit]="limit"
+      (page)='setPage($event)'
+      >
+      </ngx-datatable>
+      <ng-template #tableContextMenuTmpl let-row="row">
+        <button 
+          class='tableContextMenuButton' ghost nbButton 
+          (click)="setContextItems(row)" [nbContextMenu]="menuItems" nbContextMenuTrigger="click" 
+          nbContextMenuPlacement="bottom">
+          <nb-icon icon="more-vertical-outline"></nb-icon>
+        </button>
+      </ng-template>
+  </nb-card-body>
+</nb-card>
