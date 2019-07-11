@@ -12,7 +12,7 @@
 }
 
 .margin-right-5rem {
-    margin-right: 5rem;
+    margin-right: 1rem;
 }
 
 ::ng-deep
@@ -28,4 +28,14 @@
 ::ng-deep
 .ngx-datatable.bootstrap .datatable-footer {
   background: transparent;
+}
+
+::ng-deep
+.ngx-datatable.bootstrap .datatable-footer .page-count {
+    padding: 0;
+}
+
+::ng-deep
+.ngx-datatable.bootstrap .datatable-footer .datatable-pager {
+    margin: 0;
 }
