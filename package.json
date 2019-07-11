@@ -1,18 +1,21 @@
 {
-  "name": "angular-electron",
-  "version": "6.0.1",
-  "description": "Angular 8 with Electron (Typescript + SASS + Hot Reload)",
-  "homepage": "https://github.com/maximegris/angular-electron",
+  "name": "electrocrud",
+  "version": "2.0.0",
+  "description": "No coding is required; Create basic CRUD (Create, Read, Update, Delete) for your Database Database in minutes",
+  "homepage": "https://github.com/garrylachman/ElectroCRUD",
   "author": {
-    "name": "Maxime GRIS",
-    "email": "maxime.gris@gmail.com"
+    "name": "Garry Lachman",
+    "email": "garry@lachman.co"
   },
   "keywords": [
-    "angular",
-    "angular 8",
-    "electron",
-    "typescript",
-    "sass"
+    "database",
+    "crud",
+    "mysql",
+    "sql-server",
+    "postgress",
+    "oracle",
+    "sql",
+    "admin"
   ],
   "main": "main.js",
   "private": true,
