@@ -10,7 +10,7 @@
         hero 
       />
       <button 
-      nbButton status="warning" outline size="tiny" id="clear-search" *ngIf="searchInputModel?.length > 1" (click)="clearSearch()"
+      nbButton status="warning" outline size="tiny" id="clear-search" *ngIf="showSearchClear" (click)="clearSearch()"
       nbTooltip="Reset search to regular results" nbTooltipPlacement="top" nbTooltipStatus="warning"
       >
         <nb-icon icon="close"></nb-icon>

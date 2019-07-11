@@ -31,6 +31,7 @@ export class ViewViewComponent implements OnInit, OnDestroy {
   limit: number = 10;
 
   searchInputModel: NgModel;
+  showSearchClear: boolean = false;
 
   menuItems:any = []
 
@@ -87,6 +88,8 @@ export class ViewViewComponent implements OnInit, OnDestroy {
   clearSearch() {
     // reset search box input
     this.searchInputModel = '' as any;
+
+    this.showSearchClear = false;
 
     // fast way to reload results
     this.selectLimit(this.limit);
@@ -167,6 +170,8 @@ export class ViewViewComponent implements OnInit, OnDestroy {
   }
 
   doSearch(event) {
+    this.showSearchClear = String(this.searchInputModel).length >1;
+
     // if no search input, the user clear the text, reload the result to reset
     if (String(this.searchInputModel).length == 0) return this.selectLimit(this.limit)
 

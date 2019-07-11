@@ -5,7 +5,7 @@
 <nb-card [nbSpinner]="isLoading" nbSpinnerSize="giant" nbSpinnerStatus="primary">
     <nb-card-header>
       <div [formGroup]="viewHeaderForm">
-        <nb-select class="float-left" placeholder="Select Table" formControlName="viewtTableCtrl" (onChange)="selectedChange()">
+        <nb-select class="float-left" placeholder="Select Table" formControlName="viewtTableCtrl">
           <nb-option *ngFor="let tbl of tables" value="{{tbl}}">{{tbl}}</nb-option>
         </nb-select>
         <input nbInput type="text" placeholder="View name" class="form-control" formControlName="viewtNameCtrl"
