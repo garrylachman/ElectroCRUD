@@ -21,6 +21,12 @@ import {
   IIPCUpdateDataResponseMessage,
   IPCUpdateDataRequestMessage,
   IPCUpdateDataResponseMessage,
+
+  IPC_CHANNEL_INSERT_DATA,
+  IIPCInsertData,
+  IIPCInsertDataResponseMessage,
+  IPCInsertDataRequestMessage,
+  IPCInsertDataResponseMessage
 } from '../../../shared/ipc/views.ipc';
 import { ipcRenderer } from 'electron-better-ipc';
 import { IAccount } from '../../../shared/interfaces/accounts.interface';
@@ -83,15 +89,29 @@ export class ViewsIPCService {
     update: IIPCUpdateDataUpdate, 
     where?: IIPCUpdateDataWhere[]
   ): Promise<IIPCUpdateDataResponseMessage> {
-  const req: IPCUpdateDataRequestMessage = new IPCUpdateDataRequestMessage({
-    table: table,
-    update: update,
-    where: where
-  });
-  console.log("req", req);
-  const rawRes:any = await ipcRenderer.callMain(IPC_CHANNEL_UPDATE_DATA, req.toJsonValue());
-  console.log("rawRes", rawRes);
-  return new IPCUpdateDataResponseMessage(rawRes).toMessage()
-}
+    const req: IPCUpdateDataRequestMessage = new IPCUpdateDataRequestMessage({
+      table: table,
+      update: update,
+      where: where
+    });
+    console.log("req", req);
+    const rawRes:any = await ipcRenderer.callMain(IPC_CHANNEL_UPDATE_DATA, req.toJsonValue());
+    console.log("rawRes", rawRes);
+    return new IPCUpdateDataResponseMessage(rawRes).toMessage()
+  }
+
+  public async insertData(
+    table: string, 
+    data: IIPCInsertData, 
+  ): Promise<IIPCInsertDataResponseMessage> {
+    const req: IPCInsertDataRequestMessage = new IPCInsertDataRequestMessage({
+      table: table,
+      data: data
+    });
+    console.log("req", req);
+    const rawRes:any = await ipcRenderer.callMain(IPC_CHANNEL_INSERT_DATA, req.toJsonValue());
+    console.log("rawRes", rawRes);
+    return new IPCInsertDataResponseMessage(rawRes).toMessage()
+  }
 
 }

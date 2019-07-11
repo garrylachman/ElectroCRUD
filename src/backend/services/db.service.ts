@@ -238,4 +238,24 @@ export class DatabaseService {
         }
     }
 
+    public async insertData(
+        table: string, 
+        data: {
+            [key:string]: any
+        }
+    ): Promise<boolean | Error> {
+        try {
+            let q = this.connection
+                .table(table);
+
+            q.insert(data);
+            let res = await q;
+
+            console.log(res);
+            return true;
+        } catch(error) {
+            return error;
+        }
+    }
+
 }

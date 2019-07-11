@@ -5,8 +5,8 @@ import { SessionService } from '../../../services/session.service';
 import { ViewsService } from '../../../services/store/views.service';
 import { ViewsIPCService } from '../../../services/ipc/views.ipc.service';
 import { NbMenuService, NbToastrService } from '@nebular/theme';
-import { Subscription, Subject } from 'rxjs';
-import { IIPCReadDataWhereOpr, IIPCUpdateDataWhereOpr, IIPCUpdateDataResponseMessage } from '../../../../shared/ipc/views.ipc';
+import { Subscription } from 'rxjs';
+import { IIPCInsertDataResponseMessage } from '../../../../shared/ipc/views.ipc';
 import { RowFormComponent } from '../components/row-form/row-form.component'
 
 @Component({
@@ -45,21 +45,20 @@ export class ViewAddComponent implements OnInit, OnDestroy {
 
     this.formRef = {
       save: async (data): Promise<boolean> => {
-        return true;
-        // let res:IIPCUpdateDataResponseMessage = await this.viewsIPCService.updateData(
-        //   this.view.table, 
-        //   data
-        // )
+        let res:IIPCInsertDataResponseMessage = await this.viewsIPCService.insertData(
+          this.view.table, 
+          data
+        )
 
-        // if (res.error) {
-        //   this.toastService.danger(res.error, 'Error');
-        //   return false;
-        // } else {
-        //   if (res.valid) {
-        //     this.toastService.success('Insert completed successfully ', 'Success');
-        //   }
-        // }
-        // this.router.navigate(['/views',this.view.id,'view','view'])
+        if (res.error) {
+          this.toastService.danger(res.error, 'Error');
+          return false;
+        } else {
+          if (res.valid) {
+            this.toastService.success('Insert completed successfully ', 'Success');
+          }
+        }
+        this.router.navigate(['/views',this.view.id,'view','view'])
       }
     }
   }
