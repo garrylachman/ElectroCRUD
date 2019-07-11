@@ -18,7 +18,7 @@
       </button>
       <div class="float-right">
         <nb-select hero status="primary" 
-          class="margin-right-5rem" placeholder="# of Results / Page" 
+          class="margin-right-1rem" placeholder="# of Results / Page" 
           (selectedChange)="selectLimit($event)" [selected]="10" size="medium">
           <nb-option value=10>10 Per Page</nb-option>
           <nb-option value=25>25 Per Page</nb-option>
@@ -27,10 +27,17 @@
         </nb-select>
         <button 
         nbButton status="primary" hero size="medium" [routerLink]="['/views', view.id, 'configure']" 
-        nbTooltip="View Configurations" nbTooltipPlacement="top" nbTooltipStatus="primary"
+        nbTooltip="View Configurations" nbTooltipPlacement="top" nbTooltipStatus="primary" class="margin-right-1rem"
         >
           <nb-icon icon="options-2"></nb-icon>
           Configurations
+        </button>
+        <button 
+        nbButton status="primary" hero size="medium" [routerLink]="['/views', view.id, 'view', 'add']" 
+        nbTooltip="Add new {{view.terms.one}}" nbTooltipPlacement="top" nbTooltipStatus="primary"
+        >
+          <nb-icon icon="plus"></nb-icon>
+          Add {{view.terms.one}}
         </button>
       </div>
   </nb-card-header>
