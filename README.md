@@ -1,21 +1,18 @@
-# ElectroCRUD 2 (beta)
+# ElectroCRUD 2 (beta) ![GitHub Release Date](https://img.shields.io/github/release-date/garrylachman/ElectroCRUD.svg?style=for-the-badge)
 
 ElectroCRUD is a simple solution for managing SQL based databases by creating CRUD (Create, Read, Update, Delete) interface without any experience with programming or installing web applications.
 
 
-## Download Binaries [![GitHub tag](https://img.shields.io/github/tag/garrylachman/ElectroCRUD.svg?maxAge=180&style=flat-square)]()
+## Download Binaries ![GitHub release](https://img.shields.io/github/release/garrylachman/ElectroCRUD.svg?style=for-the-badge)
 
-[Mac OSX  (Pre-release)](https://github.com/garrylachman/ElectroCRUD/releases/download/0.8.4/ElectoCRUD-darwin-x64.zip)
+[Mac OSX (Release beta)](https://github.com/garrylachman/ElectroCRUD/releases/download/2.0.0-beta/ElectroCRUD-2.0.0-beta.dmg)
 
-[Linux 32Bit  (Pre-release)](https://github.com/garrylachman/ElectroCRUD/releases/download/0.8.4/ElectoCRUD-linux-ia32.zip)
+[Linux (Release beta)](https://github.com/garrylachman/ElectroCRUD/releases/download/2.0.0-beta/ElectroCRUD.2.0.0-beta.AppImage)
 
-[Linux 64Bit  (Pre-release)](https://github.com/garrylachman/ElectroCRUD/releases/download/0.8.4/ElectoCRUD-linux-x64.zip)
-
-[Windows 32Bit  (Pre-release)](https://github.com/garrylachman/ElectroCRUD/releases/download/0.8.4/ElectoCRUD-win32-ia32.zip)
-
-[Windows 64Bit  (Pre-release)](https://github.com/garrylachman/ElectroCRUD/releases/download/0.8.4/ElectoCRUD-win32-x64.zip)
+[Windows (Release beta)](https://github.com/garrylachman/ElectroCRUD/releases/download/2.0.0-beta/ElectroCRUD.2.0.0-beta.exe)
 
 ## Screenshots
 <img src="https://i.imgur.com/gV1QHYK.png" style="float: left;" /> <img src="https://i.imgur.com/02DoYz1.png" style="float: left;" /> <img src="https://i.imgur.com/CotNi4G.png"  style="float: left;" /> <img src="https://i.imgur.com/9MEQMbL.png"  style="float: left;" /> <img src="https://i.imgur.com/QzlYVJu.png"  style="float: left;" />
 
-[![GitHub Downloads](https://img.shields.io/github/downloads/garrylachman/ElectroCRUD/total.svg?maxAge=180&style=flat-square)]()
+![GitHub All Releases](https://img.shields.io/github/downloads/garrylachman/ElectroCRUD/total.svg?style=for-the-badge)
+![GitHub package.json version](https://img.shields.io/github/package-json/v/garrylachman/ElectroCRUD.svg?style=for-the-badge)
