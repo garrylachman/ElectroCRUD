@@ -49,6 +49,12 @@ export class RowFormComponent implements OnInit {
       }
     });
 
+    if (this.dataObserve) {
+      this.initDataObserve();
+    }
+  }
+
+  private initDataObserve() {
     this.dataObserve.subscribe((val) => {
       let row = val[0];
       let data = Object
