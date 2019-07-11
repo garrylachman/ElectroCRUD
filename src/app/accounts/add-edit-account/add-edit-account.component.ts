@@ -24,8 +24,7 @@ export class AddEditAccountComponent implements OnInit {
   databaseDetailsForm: FormGroup;
 
   databaseServers: any[] = [
-    { name: 'MySQL', value:1 },
-    { name: 'SQL Server', value:2 }
+    { name: 'MySQL', value:1 }
   ]
 
   constructor(
