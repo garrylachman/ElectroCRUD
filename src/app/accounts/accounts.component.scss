@@ -16,7 +16,7 @@
 
 ::ng-deep
 .ngx-datatable.bootstrap .datatable-footer .datatable-pager a {
-  color: #598bff
+  // color: #598bff
 }
 
 ::ng-deep
@@ -26,13 +26,13 @@
 
 ::ng-deep
 .ngx-datatable.bootstrap .datatable-footer .datatable-pager ul li:not(.disabled).active a {
-  background-color: #3366ff !important;
+  background-color: transparent !important;
   color: #ffffff;
 }
 
 ::ng-deep
 .ngx-datatable.bootstrap .datatable-footer .datatable-pager ul li:not(.disabled):hover a {
-  background-color: #598bff !important;
+  background-color: transparent !important;
   color: #ffffff;
 }
 
