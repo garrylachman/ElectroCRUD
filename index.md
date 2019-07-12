@@ -43,13 +43,10 @@ After a few years that the project was inactive, I decided to bring it an alive 
 - [ ] Export / Import of all user accounts.
 
 ### Databases
-Supported:
-* MySQL
-
-Planned:
-* MSSQL
-* PostgreSQL
-* Oracle
+- [x] MySQL/MariaDB
+- [ ] MSSQL
+- [ ] PostgreSQL
+- [ ] Oracle
 
 ## Download Binaries ![GitHub release](https://img.shields.io/github/release/garrylachman/ElectroCRUD.svg?style=for-the-badge)
 We are in early beta !!!
@@ -61,11 +58,11 @@ We are in early beta !!!
 ## Download Sources
 [ElectroCRUD on GitHub](https://github.com/garrylachman/ElectroCRUD)
 
-![](https://i.imgur.com/gV1QHYK.png)
-![](https://i.imgur.com/02DoYz1.png)
-![](https://i.imgur.com/CotNi4G.png)
-![](https://i.imgur.com/9MEQMbL.png)
-![](https://i.imgur.com/QzlYVJu.png)
+## Screenshots
+<img src="https://i.imgur.com/gV1QHYK.png" width="49.5%" style="float:left" /> <img width="49.5%" src="https://i.imgur.com/02DoYz1.png" style="float:left" />
+<img src="https://i.imgur.com/CotNi4G.png" style="float:left" width="49.5%" /> <img width="49.5%" src="https://i.imgur.com/9MEQMbL.png" style="float:left" />
+<img src="https://i.imgur.com/QzlYVJu.png" style="float:left" />
+
 
 ![GitHub All Releases](https://img.shields.io/github/downloads/garrylachman/ElectroCRUD/total.svg?style=for-the-badge) 
 ![GitHub package.json version](https://img.shields.io/github/package-json/v/garrylachman/ElectroCRUD.svg?style=for-the-badge)
