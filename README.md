@@ -66,3 +66,5 @@ We are in early beta !!!
 
 ![GitHub All Releases](https://img.shields.io/github/downloads/garrylachman/ElectroCRUD/total.svg?style=for-the-badge) 
 ![GitHub package.json version](https://img.shields.io/github/package-json/v/garrylachman/ElectroCRUD.svg?style=for-the-badge)
+[![Analytics](https://ga-beacon.appspot.com/UA-77988987-1/welcome-page)](https://github.com/igrigorik/ga-beacon)
+
