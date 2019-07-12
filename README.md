@@ -43,13 +43,10 @@ After a few years that the project was inactive, I decided to bring it an alive 
 - [ ] Export / Import of all user accounts.
 
 ### Databases
-Supported:
-* MySQL
-
-Planned:
-* MSSQL
-* PostgreSQL
-* Oracle
+- [x] MySQL/MariaDB
+- [ ] MSSQL
+- [ ] PostgreSQL
+- [ ] Oracle
 
 ## Download Binaries ![GitHub release](https://img.shields.io/github/release/garrylachman/ElectroCRUD.svg?style=for-the-badge)
 We are in early beta !!!
