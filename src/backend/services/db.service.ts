@@ -258,4 +258,34 @@ export class DatabaseService {
         }
     }
 
+    public async deleteData(
+        table: string, 
+        where?: { 
+            column: string, 
+            opr: string, 
+            value: string,
+            or: boolean
+        }[]
+    ): Promise<boolean | Error> {
+        try {
+            let q = this.connection
+                .table(table);
+            
+            where.forEach((col, idx: number) => {
+                if (idx == 0) {
+                    q = q.where(col.column, col.opr, col.value);
+                } else {
+                    let whereFunc = col.or ? "orWhere" : "andWhere";
+                    q = q[whereFunc](col.column, col.opr, col.value);
+                }
+            });
+
+            let res = await q.delete();
+            console.log(res);
+            return true;
+        } catch(error) {
+            return error;
+        }
+    }
+
 }

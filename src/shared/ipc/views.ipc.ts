@@ -147,3 +147,34 @@ export interface IIPCInsertDataResponseMessage {
 export class IPCInsertDataResponseMessage extends IPCBaseMessage<IIPCInsertDataResponseMessage> { }
 
 export class IPCInsertDataRequestMessage extends IPCBaseMessage<IIPCInsertDataRequestMessage> { }
+
+
+// Table delete data
+export const IPC_CHANNEL_DELETE_DATA: string = "channel_Delete_data";
+
+export interface IIPCDeleteDataRequestMessage {
+    table: string;
+    where?: IIPCDeleteDataWhere[]
+}
+
+export interface IIPCDeleteDataWhere {
+    column: string;
+    opr: IIPCDeleteDataWhereOpr;
+    value: any;
+    or: boolean;
+}
+
+export enum IIPCDeleteDataWhereOpr {
+    EQ = "=",
+    GT = ">",
+    LT = "<"
+}
+
+export interface IIPCDeleteDataResponseMessage {
+    valid: boolean;
+    error?: string;
+}
+
+export class IPCDeleteDataResponseMessage extends IPCBaseMessage<IIPCDeleteDataResponseMessage> { }
+
+export class IPCDeleteDataRequestMessage extends IPCBaseMessage<IIPCDeleteDataRequestMessage> { }

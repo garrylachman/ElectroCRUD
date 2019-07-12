@@ -6,8 +6,10 @@ import { SessionService } from '../../../services/session.service';
 import { ViewsService } from '../../../services/store/views.service';
 import { ViewsIPCService } from '../../../services/ipc/views.ipc.service';
 import { NgModel } from '@angular/forms';
-import { NbMenuService } from '@nebular/theme';
+import { NbMenuService, NbDialogService, NbToastrService } from '@nebular/theme';
 import { Subscription } from 'rxjs';
+import { ConfirmDeleteComponent } from '../../../components/dialogs/confirm-delete/confirm-delete.component';
+import { IIPCDeleteDataWhereOpr, IIPCDeleteDataResponseMessage } from '../../../../shared/ipc/views.ipc';
 
 @Component({
   selector: 'app-view-view',
@@ -44,7 +46,9 @@ export class ViewViewComponent implements OnInit, OnDestroy {
     private sessionsService: SessionService,
     private viewsService: ViewsService,
     private viewsIPCService: ViewsIPCService,
-    private menuService: NbMenuService
+    private menuService: NbMenuService,
+    private dialogService: NbDialogService,
+    private toastService: NbToastrService
   ) { }
 
   async ngOnInit() {
@@ -82,7 +86,42 @@ export class ViewViewComponent implements OnInit, OnDestroy {
   }
 
   deleteRow(row) {
+    console.log("edit", row)
+    let pk: string = this.primaryKeyColumn;
+    if (!pk) {
+      // toast no OK
+      return;
+    }
+    let pkValue = row[pk];
 
+    this.dialogService
+      .open(ConfirmDeleteComponent, { hasBackdrop: true })
+      .onClose
+      .subscribe(async (res) => {
+        if (res)  {
+          const delRes:IIPCDeleteDataResponseMessage = await this.viewsIPCService.deleteData(
+            this.view.table, 
+            [
+              {
+                column: pk,
+                opr: IIPCDeleteDataWhereOpr.EQ,
+                value: pkValue,
+                or: false
+              }
+            ]
+          );
+          
+          if (delRes.error) {
+            this.toastService.danger(res.error, 'Error');
+            return false;
+          } else {
+            if (delRes.valid) {
+              this.toastService.success('Update completed successfully ', 'Success');
+            }
+          }
+          this.selectLimit(this.limit)
+        }
+      });
   }
 
   clearSearch() {

@@ -17,7 +17,11 @@ import {
 
     IPC_CHANNEL_INSERT_DATA,
     IPCInsertDataRequestMessage,
-    IPCInsertDataResponseMessage
+    IPCInsertDataResponseMessage,
+
+    IPC_CHANNEL_DELETE_DATA,
+    IPCDeleteDataRequestMessage,
+    IPCDeleteDataResponseMessage,
 } from '../../shared/ipc/views.ipc';
 
 import { ipcMain } from 'electron-better-ipc';
@@ -34,6 +38,7 @@ export class ViewsIPC {
         ipcMain.answerRenderer(IPC_CHANNEL_READ_DATA, (req: JsonValue) => this.readData(req));
         ipcMain.answerRenderer(IPC_CHANNEL_UPDATE_DATA, (req: JsonValue) => this.updateData(req));
         ipcMain.answerRenderer(IPC_CHANNEL_INSERT_DATA, (req: JsonValue) => this.insertData(req));
+        ipcMain.answerRenderer(IPC_CHANNEL_DELETE_DATA, (req: JsonValue) => this.deleteData(req));
     }
 
     public async listOfTables(req: JsonValue): Promise<JsonValue> {
@@ -175,6 +180,35 @@ export class ViewsIPC {
         }
 
         let resMessage: IPCInsertDataResponseMessage = new IPCInsertDataResponseMessage({
+            valid: isValid,
+            error: dbError
+        });
+        
+        console.log("resMessage", resMessage.toMessage());
+        return Promise.resolve(resMessage.toJsonValue());
+    }
+
+    public async deleteData(req: JsonValue): Promise<JsonValue> {
+        let reqMessage: IPCDeleteDataRequestMessage = new IPCDeleteDataRequestMessage(req);
+
+        let isValid: boolean;
+        let dbError: string;
+        let dbRes: any;
+       
+        let res = await DatabaseService.getInstance().deleteData(
+            reqMessage.toMessage().table,
+            reqMessage.toMessage().where
+            )
+        console.log(res);
+        if (res instanceof Error) {
+            dbError = res.toString();
+            isValid = false;
+        } else {
+            isValid = true;
+            dbRes = res;
+        }
+
+        let resMessage: IPCDeleteDataResponseMessage = new IPCDeleteDataResponseMessage({
             valid: isValid,
             error: dbError
         });

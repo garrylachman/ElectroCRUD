@@ -26,7 +26,13 @@ import {
   IIPCInsertData,
   IIPCInsertDataResponseMessage,
   IPCInsertDataRequestMessage,
-  IPCInsertDataResponseMessage
+  IPCInsertDataResponseMessage,
+
+  IPC_CHANNEL_DELETE_DATA,
+  IIPCDeleteDataWhere,
+  IIPCDeleteDataResponseMessage,
+  IPCDeleteDataRequestMessage,
+  IPCDeleteDataResponseMessage,
 } from '../../../shared/ipc/views.ipc';
 import { ipcRenderer } from 'electron-better-ipc';
 import { IAccount } from '../../../shared/interfaces/accounts.interface';
@@ -112,6 +118,20 @@ export class ViewsIPCService {
     const rawRes:any = await ipcRenderer.callMain(IPC_CHANNEL_INSERT_DATA, req.toJsonValue());
     console.log("rawRes", rawRes);
     return new IPCInsertDataResponseMessage(rawRes).toMessage()
+  }
+
+  public async deleteData(
+    table: string, 
+    where?: IIPCDeleteDataWhere[]
+  ): Promise<IIPCDeleteDataResponseMessage> {
+    const req: IPCDeleteDataRequestMessage = new IPCDeleteDataRequestMessage({
+      table: table,
+      where: where
+    });
+    console.log("req", req);
+    const rawRes:any = await ipcRenderer.callMain(IPC_CHANNEL_DELETE_DATA, req.toJsonValue());
+    console.log("rawRes", rawRes);
+    return new IPCDeleteDataResponseMessage(rawRes).toMessage()
   }
 
 }
