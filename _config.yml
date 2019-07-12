@@ -1,7 +1,7 @@
-title: ElectroCRUD
-description: MySQL CRUD Application
+title: ElectroCRUD 2 (beta)
+description: Simple solution to manage your database that not involves writing code or installs web-based solutions.
 google_analytics: 
-show_downloads: true
+show_downloads: false
 theme: jekyll-theme-minimal
 
 gems:
