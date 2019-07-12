@@ -1,6 +1,0 @@
-{
-  "name": "ElectroCRUD",
-  "tagline": "MySQL CRUD Application",
-  "body": "#ElectroCRUD\r\nNo coding is required; Create basic CRUD (Create, Read, Update, Delete) for your MySQL Database in minutes.\r\nAutomatic analyse your database tables. \r\n\r\nThe main purpose of a CRUD grid is that enables users create/read/update/delete data. Normally data is stored in MySQL Database.\r\n\r\n## Download Binaries\r\n* [Mac OSX, ver. 0.0.1 (pre-alpha)](https://github.com/garrylachman/ElectroCRUD/raw/master/dist_binaries/0.0.1/ElectoCRUD-darwin-x64.zip)\r\n* [Linux 64Bit, ver. 0.0.1 (pre-alpha)](https://github.com/garrylachman/ElectroCRUD/raw/master/dist_binaries/0.0.1/ElectoCRUD-linux-x64.zip)\r\n* [Windows 64Bit, ver. 0.0.1 (pre-alpha)](https://github.com/garrylachman/ElectroCRUD/raw/master/dist_binaries/0.0.1/ElectoCRUD-win32-x64.zip)\r\n\r\n## Download Sources\r\n[ElectroCRUD on GitHub](https://github.com/garrylachman/ElectroCRUD)\r\n\r\n![](http://i.imgur.com/NWFCvR6.png)\r\n![](http://i.imgur.com/6RvntLC.png)\r\n![](http://i.imgur.com/0i30KJA.png)\r\n![](http://i.imgur.com/0i30KJA.png)\r\n![](http://i.imgur.com/zdGdWnw.png)\r\n\r\nBuilt on Electron, NodeJS, Angular & AdminLTE\r\n",
-  "note": "Don't delete this file! It's used internally to help with page regeneration."
-}
