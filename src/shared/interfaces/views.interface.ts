@@ -1,170 +1,121 @@
+import { IWidget } from "./widgets.interface";
+
+/**
+ * Interface represent a view
+ */
 export interface IView {
+    /**
+     * View id
+     */
     id?: number;
+    /**
+     * Account id
+     */
     account: number;
+    /**
+     * View name
+     */
     name: string;
+    /**
+     * The database table assigned to the view
+     */
     table?: string;
+    /**
+     * Array of instances of IViewColumn that describe the columns
+     */
     columns?: IViewColumn[];
+    /**
+     * The table terminology, how we call the records in singular and plural.
+     */
     terms?: IViewTerms;
+    /**
+     * The view permission (create, update, read, delete)
+     */
     permissions?: IViewPermissions;
+    /**
+     * Creation date
+     */
     creation_date: string;
+    /**
+     * Last modification date
+     */
     modify_date?: string;
+    /**
+     * Array of view widgets
+     */
+    widgets:IWidget[];
 }
 
+/**
+ * Interface represent a view column
+ */
 export interface IViewColumn {
+    /**
+     * Is column dispaled in data table
+     */
     enabled: boolean;
+    /**
+     * Is the column searchable
+     */
     searchable: boolean;
+    /**
+     * The column name
+     */
     name: string;
-    type: IViewColumnType | string;
+    /**
+     * The column type
+     */
+    type: string;
+    /**
+     * Is the column nullable
+     */
     nullable?: boolean;
+    /**
+     * Column default value
+     */
     default?: any;
+    /**
+     * Column key
+     */
     key?: string;
+    /**
+     * Column extra details
+     */
     extra?: string;
 }
 
-export interface IViewColumnType {
-    type: MySQLColumnType | MSSQLColumnType | PGColumnType;
-    args?: string | number | [string | number]
-}
-
+/**
+ * Interface represent a view termilology
+ */
 export interface IViewTerms {
+    /**
+     * Singular - One record name. ex: create user
+     */
     one: string;
+    /**
+     * Plural - Many records records name. ex: list of users
+     */
     many: string;
 }
 
+/**
+ * Interface represent a view permissions
+ */
 export interface IViewPermissions {
+    /**
+     * Is create new record are allowed
+     */
     create: boolean;
+    /**
+     * Is read data is allowed. true by default and cannot be changed
+     */
     read: boolean;
+    /**
+     * Is update of record are allowed
+     */
     update: boolean;
+    /**
+     * Is delete of record are allowed
+     */
     delete: boolean;
-}
-
-export enum MySQLColumnType {
-    // Number
-    TINYINT = "int",
-    SMALLINT = "int",
-    MEDIUMINT = "int",
-    INT = "int",
-    BIGINT = "int",
-    DECIMAL = "float",
-    FLOAT = "float",
-    DOUBLE = "float",
-    BIT = "float",
-    // String
-    CHAR = "string",
-    VARCHAR = "string",
-    BINARY = "binary",
-    VARBINARY = "binary",
-    TINYBLOB = "string",
-    BLOB = "string",
-    MEDIUMBLOB = "string",
-    LONGBLOB = "string",
-    TINYTEXT = "string",
-    TEXT = "string",
-    MEDIUMTEXT = "string",
-    LONGTEXT = "string",
-    ENUM = "string",
-    SET = "string",
-    // Date & Time
-    DATE = "datetime",
-    TIME = "datetime",
-    DATETIME = "datetime",
-    TIMESTAMP = "datetime",
-    YEAR = "string",
-    // Special
-    GEOMETRY = "string",
-    POINT = "string",
-    LINESTRING = "string",
-    POLYGON = "string",
-    GEOMETRYCOLLECTION = "string",
-    MULTILINESTRING = "string",
-    MULTIPOINT = "string",
-    MULTIPOLYGON = "string",
-}
-
-export enum MSSQLColumnType {
-    // String
-    CHAR = "string",
-    VARCHAR = "string",
-    TEXT = "string",
-    NCHAR = "string",
-    NVARCHAR = "string",
-    NTEXT = "string",
-    BINARY = "binary",
-    VARBINARY = "binary",
-    IMAGE = "binary",
-    // Number
-    BIT = "int",
-    TINYINT = "int",
-    SMALLINT = "int",
-    INT = "int",
-    BIGINT = "int",
-    DECIMAL = "float",
-    NUMERIC = "float",
-    SMALLMONEY = "float",
-    MONEY = "float",
-    FLOAT = "float",
-    REAL = "float",
-    // Date & Time
-    DATETIME = "datetime",
-    DATETIME2 = "datetime",
-    SMALLDATETIME = "datetime",
-    DATE = "datetime",
-    TIME = "datetime",
-    DATETIMEOFFSET = "datetime",
-    TIMESTAMP = "datetime",
-    // Special
-    SQL_VARIANT = "string",
-    UNIQUEIDENTIFIER = "string",
-    XML = "string",
-    CURSOR = "string",
-    TABLE = "string",
-}
-
-export enum PGColumnType {
-    // Number
-    SMALLINT = "int",
-    INTEGER = "int",
-    BIGINT = "int",
-    DECIMAL = "float",
-    NUMERIC = "float",
-    REAL = "float",
-    DOUBLE = "float",
-    PRECISION = "float",
-    SMALLSERIAL = "float",
-    SERIAL = "float",
-    BIGSERIAL = "float",
-    MONEY = "float",
-    BOOLEAN = "boolean",
-    // String
-    VARCHAR = "string",
-    CHAR = "string",
-    CHARACTER = "string",
-    TEXT = "string",
-    // BINARY
-    BYTEA = "binary",
-    // Date & Time
-    TIMESTAMP = "datetime",
-    TIMESTAMPTZ = "datetime",
-    DATE = "datetime",
-    TIME = "datetime",
-    INTERVAL = "datetime",
-    // Geo
-    POINT = "string",
-    LINE = "string",
-    LSEG = "string",
-    BOX = "string",
-    PATH = "string",
-    POLYGON = "string",
-    CIRCLE = "string",
-    // Network
-    CIDR = "string",
-    INET = "string",
-    MACADDR = "string",
-    // Ranges
-    INT4RANGE = "string",
-    INT8RANGE = "string",
-    NUMRANGE = "string",
-    TSRANGE = "string",
-    TSTZRANGE = "string",
-    DATERANGE = "string",
 }
