@@ -73,8 +73,21 @@ export class ViewViewComponent implements OnInit, OnDestroy {
     this.menuServiceObserver.unsubscribe();
     this.routeObserver.unsubscribe();
   }
+
+  deleteView(): void {
+    this.dialogService
+      .open(ConfirmDeleteComponent, { hasBackdrop: true })
+      .onClose
+      .subscribe(async (res) => {
+        if (res)  {
+          this.viewsService.delete(this.view.id);
+          this.sessionsService.reloadViews();
+          this.router.navigate(['/accounts']);
+        }
+      });
+  }
   
-  editRow(row) {
+  editRow(row): void {
     console.log("edit", row)
     let pk: string = this.primaryKeyColumn;
     if (!pk) {
@@ -85,7 +98,7 @@ export class ViewViewComponent implements OnInit, OnDestroy {
     this.router.navigate(['/views', this.view.id, 'view', 'edit', pk, pkValue])
   }
 
-  deleteRow(row) {
+  deleteRow(row): void {
     console.log("edit", row)
     let pk: string = this.primaryKeyColumn;
     if (!pk) {
@@ -124,7 +137,7 @@ export class ViewViewComponent implements OnInit, OnDestroy {
       });
   }
 
-  clearSearch() {
+  clearSearch(): void {
     // reset search box input
     this.searchInputModel = '' as any;
 
@@ -134,7 +147,7 @@ export class ViewViewComponent implements OnInit, OnDestroy {
     this.selectLimit(this.limit);
   }
 
-  selectLimit(value) {
+  selectLimit(value): void {
     this.limit = Number(value);
     this.offset = 0;
     this.setPage({
@@ -188,10 +201,6 @@ export class ViewViewComponent implements OnInit, OnDestroy {
     console.log(data);
   }
 
-  async pageReload() {
-    
-  }
-
   async setPage(pageInfo){
     console.log("pageInfo:", pageInfo);
     this.offset = pageInfo.offset;
@@ -208,7 +217,7 @@ export class ViewViewComponent implements OnInit, OnDestroy {
     this.rows = [...data.data];
   }
 
-  doSearch(event) {
+  doSearch(event): void {
     this.showSearchClear = String(this.searchInputModel).length >1;
 
     // if no search input, the user clear the text, reload the result to reset
@@ -221,7 +230,7 @@ export class ViewViewComponent implements OnInit, OnDestroy {
     this.selectLimit(this.limit);
   }
 
-  setContextItems(row) {
+  setContextItems(row): void {
     this.menuItems = [...this.menuItems].map(mItem => {
       mItem.data = row;
       return mItem
