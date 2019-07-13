@@ -1,0 +1,76 @@
+<nb-card *ngFor="let widget of view?.widgets">
+  {{widget.name}}
+</nb-card>
+
+<div class="row margin-0">
+
+  <!-- Widget card start -->
+  <div class="col-lg-2 padding-left-0">
+    <nb-flip-card>
+      <!-- Card front start -->
+      <nb-card-front>
+        <nb-card class="widget-card" accent="danger">
+          <nb-card-body>
+            <div class="row">
+              <div class="col-lg-12 widget-title">Widget Name</div>
+              <div class="col-lg-12 widget-value" [fittext]="true" [activateOnResize]="true">122,000,000,000</div>
+              <div class="widget-icon">
+                <nb-icon icon="people" size="large" status="danger" [options]="{ animation: { type: 'zoom' } }"></nb-icon>
+              </div>
+            </div>
+          </nb-card-body>
+        </nb-card>
+      </nb-card-front>
+      <!-- Card front end -->
+      <!-- Card back start-->
+      <nb-card-back>
+        <nb-card class="widget-card" accent="danger">
+          <nb-card-body>
+              <!-- Edit button -->
+              <button 
+              nbButton 
+              status="primary" 
+              hero
+              size="tiny"
+              nbTooltip="Edit Widget"
+              nbTooltipPlacement="top" 
+              nbTooltipStatus="primary" 
+              class="margin-bottom-0-5-rem"
+            >
+              <nb-icon icon="plus"></nb-icon>
+              Edit
+            </button>
+            <!-- Delete button-->
+            <button 
+              nbButton 
+              status="danger" 
+              hero
+              size="tiny"
+              nbTooltip="Ddelete Widget"
+              nbTooltipPlacement="top" 
+              nbTooltipStatus="danger"
+            >
+              <nb-icon icon="trash"></nb-icon>
+              Delete
+            </button>
+          </nb-card-body>
+        </nb-card>
+      </nb-card-back>
+      <!-- Card back end-->
+    </nb-flip-card>
+  </div>
+  <!-- Widget card end -->
+
+</div>
+
+<button 
+  nbButton 
+  status="primary" 
+  ghost
+  size="medium"
+  nbTooltip="Add New Widget"
+  nbTooltipPlacement="top" 
+  nbTooltipStatus="primary"
+>
+  <nb-icon icon="plus"></nb-icon>
+</button>

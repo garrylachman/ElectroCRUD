@@ -43,6 +43,8 @@ import { FormlyModule } from '@ngx-formly/core';
 import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
 
 import { AccountsService } from './services/store/accounts.service';
+import { Ng2FittextModule } from "ng2-fittext";
+
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -91,6 +93,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     FormlyModule.forRoot(),
     NbDatepickerModule.forRoot(),
     FormlyBootstrapModule,
+    Ng2FittextModule
   ],
   providers: [ElectronService, NbMenuService, NbDialogService, AccountsService, NbDatepickerDirective],
   entryComponents: [ConfirmDeleteComponent],

@@ -110,6 +110,7 @@
     "knex": "^0.18.0",
     "mysql": "^2.17.1",
     "ng-dynamic-breadcrumb": "^2.0.2",
+    "ng2-fittext": "^1.2.6",
     "ngx-mask": "^8.0.0",
     "popper.js": "^1.15.0",
     "tunnel-ssh": "^4.1.4",

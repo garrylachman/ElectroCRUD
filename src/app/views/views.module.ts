@@ -33,9 +33,11 @@ import { FormlyFieldNbChechboxComponent } from './view/components/row-form/custo
 import { FormlyFieldNbDatepickerComponent } from './view/components/row-form/custom-types/formly-field-nb-datepicker/formly-field-nb-datepicker.component';
 import { FormlyFieldNbTextareaComponent } from './view/components/row-form/custom-types/formly-field-nb-textarea/formly-field-nb-textarea.component';
 import { NgxMaskModule } from 'ngx-mask';
+import { WidgetsComponent } from './view/view/components/widgets/widgets.component';
+import { Ng2FittextModule } from "ng2-fittext";
 
 @NgModule({
-  declarations: [ViewComponent, ConfigureComponent, EmptyComponent, ViewEditComponent, ViewAddComponent, ViewViewComponent, RowFormComponent, FormlyFieldNbInputComponent, FormlyFieldNbSelectComponent, FormlyFieldNbChechboxComponent, FormlyFieldNbDatepickerComponent, FormlyFieldNbTextareaComponent],
+  declarations: [ViewComponent, ConfigureComponent, EmptyComponent, ViewEditComponent, ViewAddComponent, WidgetsComponent, ViewViewComponent, RowFormComponent, FormlyFieldNbInputComponent, FormlyFieldNbSelectComponent, FormlyFieldNbChechboxComponent, FormlyFieldNbDatepickerComponent, FormlyFieldNbTextareaComponent],
   imports: [
     CommonModule,
     ViewsRoutingModule,
@@ -67,6 +69,7 @@ import { NgxMaskModule } from 'ngx-mask';
         }
       ]
     }),
+    Ng2FittextModule.forRoot(),
   ],
   entryComponents: [ViewComponent, ConfigureComponent, EmptyComponent, ViewEditComponent, ViewAddComponent, ViewViewComponent]
 })
