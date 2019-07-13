@@ -43,7 +43,7 @@ export interface IView {
     /**
      * Array of view widgets
      */
-    widgets:IWidget[];
+    widgets?:IWidget[];
 }
 
 /**
