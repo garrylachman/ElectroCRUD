@@ -17,11 +17,19 @@ export interface IWidget {
     /**
      * Array of where clauses
      */
-    where: IWidgetWhere[];
+    where?: IWidgetWhere[];
     /**
      * The aggrate function to use
      */
     function: WidgetFunction;
+    /**
+     * Widget color
+     */
+    color?: string;
+    /**
+     * Widget icon
+     */
+    icon?: string;
 }
 
 /**
