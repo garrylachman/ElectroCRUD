@@ -81,17 +81,21 @@ export enum WidgetFunction {
     /**
      * Count function - count(*)
      */
-    COUNT = "count",
+    COUNT = "COUNT",
+    /**
+     * Sum function - sum(*)
+     */
+    SUM = "SUM",
     /**
      * Average function - avg(x)
      */
-    AVG = "avg",
+    AVG = "AVG",
     /**
      * Mininum function - min(x)
      */
-    MIN = "min",
+    MIN = "MIN",
     /**
      * Maximum function - max(x)
      */
-    MAX = "max"
+    MAX = "MAX"
 }
