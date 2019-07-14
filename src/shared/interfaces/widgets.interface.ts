@@ -37,6 +37,10 @@ export interface IWidget {
  */
 export interface IWidgetWhere {
     /**
+     * Uniq UUID, internal use in form validator
+     */
+    uuid: string;
+    /**
      * Column name or '*'
      */
     column: string;
