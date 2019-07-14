@@ -99,7 +99,8 @@ export class WidgetsComponent implements OnInit {
   }
 
   /**
-   * Delete widget from the view
+   * Delete widget from the view.
+   * 
    * @param widget The widget for removal
    */
   remove(widget: IWidget): void {
