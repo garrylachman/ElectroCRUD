@@ -35,6 +35,7 @@ import { FormlyFieldNbTextareaComponent } from './view/components/row-form/custo
 import { NgxMaskModule } from 'ngx-mask';
 import { WidgetsComponent } from './view/view/components/widgets/widgets.component';
 import { Ng2FittextModule } from "ng2-fittext";
+import { AddEditWidgetModalComponent } from './view/view/components/widgets/add-edit-widget-modal/add-edit-widget-modal.component';
 
 @NgModule({
   declarations: [ViewComponent, ConfigureComponent, EmptyComponent, ViewEditComponent, ViewAddComponent, WidgetsComponent, ViewViewComponent, RowFormComponent, FormlyFieldNbInputComponent, FormlyFieldNbSelectComponent, FormlyFieldNbChechboxComponent, FormlyFieldNbDatepickerComponent, FormlyFieldNbTextareaComponent],
@@ -71,6 +72,6 @@ import { Ng2FittextModule } from "ng2-fittext";
     }),
     Ng2FittextModule.forRoot(),
   ],
-  entryComponents: [ViewComponent, ConfigureComponent, EmptyComponent, ViewEditComponent, ViewAddComponent, ViewViewComponent]
+  entryComponents: [ViewComponent, ConfigureComponent, EmptyComponent, ViewEditComponent, ViewAddComponent, ViewViewComponent, WidgetsComponent]
 })
 export class ViewsModule { }

@@ -1,21 +1,17 @@
-<nb-card *ngFor="let widget of view?.widgets">
-  {{widget.name}}
-</nb-card>
-
 <div class="row margin-0">
 
   <!-- Widget card start -->
-  <div class="col-lg-2 padding-left-0">
+  <div class="col-lg-2 padding-left-0" *ngFor="let widget of view?.widgets">
     <nb-flip-card>
       <!-- Card front start -->
       <nb-card-front>
-        <nb-card class="widget-card" accent="danger">
+        <nb-card class="widget-card" accent="{{widget.color}}">
           <nb-card-body>
             <div class="row">
-              <div class="col-lg-12 widget-title">Widget Name</div>
-              <div class="col-lg-12 widget-value" [fittext]="true" [activateOnResize]="true">122,000,000,000</div>
+              <div class="col-lg-12 widget-title">{{widget.name}}</div>
+              <div class="col-lg-12 widget-value" [fittext]="true" [activateOnResize]="true">122,000</div>
               <div class="widget-icon">
-                <nb-icon icon="people" size="large" status="danger" [options]="{ animation: { type: 'zoom' } }"></nb-icon>
+                <nb-icon icon="{{widget.icon}}" size="large" status="{{widget.color}}" [options]="{ animation: { type: 'zoom' } }"></nb-icon>
               </div>
             </div>
           </nb-card-body>
@@ -36,6 +32,7 @@
               nbTooltipPlacement="top" 
               nbTooltipStatus="primary" 
               class="margin-bottom-0-5-rem"
+              (click)="edit(widget)"
             >
               <nb-icon icon="plus"></nb-icon>
               Edit
@@ -61,16 +58,27 @@
   </div>
   <!-- Widget card end -->
 
+  <!-- Add widget button start -->
+  <div class="col-lg-2 add-widget-card-container">
+    <nb-card>
+      <nb-card-body>
+          <button 
+            nbButton 
+            status="primary" 
+            ghost 
+            size="tiny"
+            nbTooltip="Add New Widget"
+            nbTooltipPlacement="top" 
+            nbTooltipStatus="primary"
+            (click)="add()"
+          >
+            <nb-icon icon="plus"></nb-icon>
+          </button>
+      </nb-card-body>
+    </nb-card>
+    
+  </div>
+  <!-- Add widget button end -->
+
 </div>
 
-<button 
-  nbButton 
-  status="primary" 
-  ghost
-  size="medium"
-  nbTooltip="Add New Widget"
-  nbTooltipPlacement="top" 
-  nbTooltipStatus="primary"
->
-  <nb-icon icon="plus"></nb-icon>
-</button>

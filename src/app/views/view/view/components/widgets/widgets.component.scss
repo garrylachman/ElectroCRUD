@@ -48,3 +48,16 @@
 .flip-button nb-icon {
     font-size: 2rem;
 }
+
+.add-widget-card-container nb-card {
+    height: 7rem;
+}
+
+.add-widget-card-container nb-card nb-card-body {
+    justify-content: center;
+    display: flex;
+}
+
+.add-widget-card-container nb-card nb-card-body button {
+    margin: auto;
+}
