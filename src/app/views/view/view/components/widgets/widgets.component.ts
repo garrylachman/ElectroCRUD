@@ -4,6 +4,8 @@ import { IWidget } from '../../../../../../shared/interfaces/widgets.interface';
 import { ViewsService } from '../../../../../services/store/views.service';
 import { NbDialogService, NbToastrService } from '@nebular/theme';
 import { AddEditWidgetModalComponent } from './add-edit-widget-modal/add-edit-widget-modal.component';
+import { ViewsIPCService } from '../../../../../services/ipc/views.ipc.service';
+import { IIPCReadWidgetDataResponseMessage } from '../../../../../../shared/ipc/views.ipc';
 
 @Component({
   selector: 'app-widgets',
@@ -24,10 +26,12 @@ export class WidgetsComponent implements OnInit {
   constructor(
     private viewsService:ViewsService,
     private dialogService: NbDialogService,
-    private toastrService: NbToastrService
+    private toastrService: NbToastrService,
+    private viewsIPCService: ViewsIPCService,
   ) { }
 
   ngOnInit() {
+    this.reloadData();
   }
 
   /**
@@ -64,6 +68,8 @@ export class WidgetsComponent implements OnInit {
             this.save();
             // Toast
             this.toastrService.success('The widget has been added');
+            // Reload data from database
+            this.reloadData();
           }
         }
       });
@@ -93,6 +99,8 @@ export class WidgetsComponent implements OnInit {
             this.save();
             // Toast
             this.toastrService.success('The widget has been updated');
+            // Reload data from database
+            this.reloadData();
           }
         }
       });
@@ -105,6 +113,27 @@ export class WidgetsComponent implements OnInit {
    */
   remove(widget: IWidget): void {
 
+  }
+
+  /**
+   * Reload data from database
+   */
+  reloadData(): void {
+    this.view.widgets.forEach(async (widget: IWidget) => {
+      const res:IIPCReadWidgetDataResponseMessage = await this.viewsIPCService.readWidgetData(
+        this.view.table,
+        widget.column,
+        widget.distinct,
+        widget.function,
+        widget.where
+      );
+      if (res.valid) {
+        widget.lastResult = res.data;
+      }
+      if (!res.valid && res.error) {
+        this.toastrService.danger(res.error, `${widget.name} retrive data error`);
+      }
+    })
   }
 
 }

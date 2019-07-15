@@ -30,6 +30,10 @@ export interface IWidget {
      * Widget icon
      */
     icon?: string;
+    /**
+     * Last result handler, here we store the result from database
+     */
+    lastResult?: number;
 }
 
 /**

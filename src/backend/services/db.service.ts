@@ -288,4 +288,49 @@ export class DatabaseService {
         }
     }
 
+    public async readWidgetData(
+        table: string, 
+        column: string, 
+        distinct: boolean, 
+        func: string, 
+        where?: { 
+            column: string, 
+            opr: string, 
+            value: string,
+            or: boolean
+        }[]
+    ): Promise<any | Error> {
+        console.log("where", where);
+        try {
+
+            let aggFunc = func.toLowerCase();
+            if (distinct) {
+                aggFunc = `${aggFunc}Distinct`;
+            }
+            let q = this.connection[aggFunc]({
+                a: column
+            }).from(table);
+
+            if (where) {
+                where.forEach((col, idx:number) => {
+                    if (idx == 0) {
+                        q = q.where(col.column, col.opr, col.value);
+                    } else {
+                        let whereFunc = col.or ? "orWhere" : "andWhere";
+                        q = q[whereFunc](col.column, col.opr, col.value);
+                    }
+                })
+            }
+            console.log("raw query: ", q.toQuery())
+            let res = await q;
+
+            console.log(res);
+            return {
+                data: res[0]['a']
+            };
+        } catch(error) {
+            return error;
+        }
+    }
+
 }

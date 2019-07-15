@@ -61,3 +61,15 @@
 .add-widget-card-container nb-card nb-card-body button {
     margin: auto;
 }
+
+.widget-container nb-flip-card {
+    padding: 0rem 0.5rem;
+}
+
+.widget-container:first-child nb-flip-card{
+    padding-left: 0px;
+}
+
+.widget-container:last-child nb-flip-card{
+    padding-right: 0px;
+}

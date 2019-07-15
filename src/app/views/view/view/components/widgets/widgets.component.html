@@ -1,7 +1,7 @@
 <div class="row margin-0">
 
   <!-- Widget card start -->
-  <div class="col-lg-2 padding-left-0" *ngFor="let widget of view?.widgets">
+  <div class="col-lg-2 padding-0 widget-container" *ngFor="let widget of view?.widgets">
     <nb-flip-card>
       <!-- Card front start -->
       <nb-card-front>
@@ -9,7 +9,7 @@
           <nb-card-body>
             <div class="row">
               <div class="col-lg-12 widget-title">{{widget.name}}</div>
-              <div class="col-lg-12 widget-value" [fittext]="true" [activateOnResize]="true">122,000</div>
+              <div class="col-lg-12 widget-value" [fittext]="true" [activateOnResize]="true">{{widget?.lastResult}}</div>
               <div class="widget-icon">
                 <nb-icon icon="{{widget.icon}}" size="large" status="{{widget.color}}" [options]="{ animation: { type: 'zoom' } }"></nb-icon>
               </div>
@@ -59,7 +59,7 @@
   <!-- Widget card end -->
 
   <!-- Add widget button start -->
-  <div class="col-lg-2 add-widget-card-container">
+  <div class="col-lg-2 add-widget-card-container" *ngIf="view?.widgets?.length<6">
     <nb-card>
       <nb-card-body>
           <button 
