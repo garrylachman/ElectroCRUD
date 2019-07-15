@@ -13,22 +13,58 @@ import { IIPCConnectResponseMessage } from '../../shared/ipc/accounts.ipc';
   templateUrl: './accounts.component.html',
   styleUrls: ['./accounts.component.scss']
 })
+/**
+ * A class representing a AccountsComponent
+ */
 export class AccountsComponent implements OnInit {
 
+  /**
+   * Loading indicator
+   */
   isLoading: boolean = false;
+  /**
+   * Data table loading indicator
+   */
   loadingIndicator: boolean = true;
+  /**
+   * Is data table re-order enabled
+   */
   reorderable: boolean = true;
 
   @ViewChild(DatatableComponent, { static: false }) table: DatatableComponent;
+  /**
+   * @ViewChild Data table modification date template column.
+   */
   @ViewChild('mDateTpl', { static: true }) mDateTpl: TemplateRef<any>;
+  /**
+   * @ViewChild Data table creation date template column.
+   */
   @ViewChild('cDateTpl', { static: true }) cDateTpl: TemplateRef<any>;
+  /**
+   * @ViewChild Data table actions (buttons) template column.
+   */
   @ViewChild('actionsTpl', { static: true }) actionsTpl: TemplateRef<any>;
 
+  /**
+   * Data table rows
+   */
   rows = [];
+  /**
+   * Data table rows temp array to hold results while filtering
+   */
   temp = [];
-
+  /**
+   * Data table columns 
+   */
   columns = [];
 
+  /**
+   * @constructor
+   * @param dialogService   NbDialogService dependency injection.
+   * @param accountsService AccountsService dependency injection.
+   * @param sessionService  SessionService dependency injection.
+   * @param toastrService   NbToastrService dependency injection.
+   */
   constructor(
     private dialogService: NbDialogService,
     private accountsService: AccountsService,
@@ -38,7 +74,7 @@ export class AccountsComponent implements OnInit {
     this.temp = [...this.rows];
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.columns = [
       { prop: 'name' },
       { name: 'Server' },
@@ -49,7 +85,10 @@ export class AccountsComponent implements OnInit {
     this.loadFromStore();
   }
 
-  loadFromStore() {
+  /**
+   * Load accounts from store
+   */
+  loadFromStore(): void {
     this.rows = this.accountsService
       .all()
       .map((row) => {
@@ -64,7 +103,12 @@ export class AccountsComponent implements OnInit {
     this.temp = [...this.rows];
   }
 
-  updateFilter(event) {
+  /**
+   * Filter data table result (search)
+   * 
+   * @param event Search input type event.
+   */
+  updateFilter(event): void {
     const val = event.target.value.toLowerCase();
 
     // filter our data
@@ -78,7 +122,12 @@ export class AccountsComponent implements OnInit {
     this.table.offset = 0;
   }
 
-  edit(row) {
+  /**
+   * Initialize account editor wizard
+   * 
+   * @param row Data table row
+   */
+  edit(row): void {
     let account:IAccount;
     if (row && row.id)  {
       account = this.accountsService.get(row.id);
@@ -103,7 +152,12 @@ export class AccountsComponent implements OnInit {
       });
   }
 
-  delete(row) {
+  /**
+   * Delete account from store
+   * 
+   * @param row Data table row
+   */
+  delete(row): void {
     this.dialogService
       .open(ConfirmDeleteComponent, { hasBackdrop: true })
       .onClose
@@ -115,6 +169,11 @@ export class AccountsComponent implements OnInit {
       });
   }
 
+  /**
+   * Use account (create connection & load account data)
+   * 
+   * @param row Data table row
+   */
   async use(row) {
     this.isLoading = true;
     let account:IAccount = this.accountsService.get(row.id);

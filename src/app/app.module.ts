@@ -19,7 +19,7 @@ import { WebviewDirective } from './directives/webview.directive';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NbThemeModule, NbDatepickerModule, NbDatepickerDirective } from '@nebular/theme';
+import { NbThemeModule, NbDatepickerModule, NbDatepickerDirective, NbInputModule, NbSelectModule, NbCheckboxModule, NbAlertModule } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { 
   NbSidebarModule,
@@ -43,6 +43,9 @@ import { FormlyModule } from '@ngx-formly/core';
 import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
 
 import { AccountsService } from './services/store/accounts.service';
+import { Ng2FittextModule } from "ng2-fittext";
+import { AddEditWidgetModalComponent } from './views/view/view/components/widgets/add-edit-widget-modal/add-edit-widget-modal.component';
+
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -56,6 +59,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     HomeComponent,
     WebviewDirective,
     ConfirmDeleteComponent,
+    AddEditWidgetModalComponent,
   ],
   exports: [
     ConfirmDeleteComponent,
@@ -84,16 +88,21 @@ export function HttpLoaderFactory(http: HttpClient) {
     NbMenuModule.forRoot(),
     NbTooltipModule,
     NbCardModule,
+    NbInputModule,
+    NbCheckboxModule,
+    NbSelectModule,
     NbDialogModule.forRoot(),
     NgxMaskModule.forRoot(),
     NbToastrModule.forRoot(),
     ReactiveFormsModule,
+    NbAlertModule,
     FormlyModule.forRoot(),
     NbDatepickerModule.forRoot(),
     FormlyBootstrapModule,
+    Ng2FittextModule
   ],
   providers: [ElectronService, NbMenuService, NbDialogService, AccountsService, NbDatepickerDirective],
-  entryComponents: [ConfirmDeleteComponent],
+  entryComponents: [ConfirmDeleteComponent, AddEditWidgetModalComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

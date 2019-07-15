@@ -26,5 +26,14 @@
   ],
   "exclude": [
     "node_modules"
-  ]
+  ],
+  "typedocOptions": {
+    "mode": "modules",
+    "out": "docs",
+    "target": "ES6",
+    "exclude": [
+      "src/**/*.spec.ts",
+      "node_modules/**"
+    ]
+  }
 }

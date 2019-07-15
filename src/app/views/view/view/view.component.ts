@@ -6,8 +6,10 @@ import { SessionService } from '../../../services/session.service';
 import { ViewsService } from '../../../services/store/views.service';
 import { ViewsIPCService } from '../../../services/ipc/views.ipc.service';
 import { NgModel } from '@angular/forms';
-import { NbMenuService } from '@nebular/theme';
+import { NbMenuService, NbDialogService, NbToastrService } from '@nebular/theme';
 import { Subscription } from 'rxjs';
+import { ConfirmDeleteComponent } from '../../../components/dialogs/confirm-delete/confirm-delete.component';
+import { IIPCDeleteDataWhereOpr, IIPCDeleteDataResponseMessage } from '../../../../shared/ipc/views.ipc';
 
 @Component({
   selector: 'app-view-view',
@@ -44,7 +46,9 @@ export class ViewViewComponent implements OnInit, OnDestroy {
     private sessionsService: SessionService,
     private viewsService: ViewsService,
     private viewsIPCService: ViewsIPCService,
-    private menuService: NbMenuService
+    private menuService: NbMenuService,
+    private dialogService: NbDialogService,
+    private toastService: NbToastrService
   ) { }
 
   async ngOnInit() {
@@ -69,8 +73,21 @@ export class ViewViewComponent implements OnInit, OnDestroy {
     this.menuServiceObserver.unsubscribe();
     this.routeObserver.unsubscribe();
   }
+
+  deleteView(): void {
+    this.dialogService
+      .open(ConfirmDeleteComponent, { hasBackdrop: true })
+      .onClose
+      .subscribe(async (res) => {
+        if (res)  {
+          this.viewsService.delete(this.view.id);
+          this.sessionsService.reloadViews();
+          this.router.navigate(['/accounts']);
+        }
+      });
+  }
   
-  editRow(row) {
+  editRow(row): void {
     console.log("edit", row)
     let pk: string = this.primaryKeyColumn;
     if (!pk) {
@@ -81,11 +98,46 @@ export class ViewViewComponent implements OnInit, OnDestroy {
     this.router.navigate(['/views', this.view.id, 'view', 'edit', pk, pkValue])
   }
 
-  deleteRow(row) {
+  deleteRow(row): void {
+    console.log("edit", row)
+    let pk: string = this.primaryKeyColumn;
+    if (!pk) {
+      // toast no OK
+      return;
+    }
+    let pkValue = row[pk];
 
+    this.dialogService
+      .open(ConfirmDeleteComponent, { hasBackdrop: true })
+      .onClose
+      .subscribe(async (res) => {
+        if (res)  {
+          const delRes:IIPCDeleteDataResponseMessage = await this.viewsIPCService.deleteData(
+            this.view.table, 
+            [
+              {
+                column: pk,
+                opr: IIPCDeleteDataWhereOpr.EQ,
+                value: pkValue,
+                or: false
+              }
+            ]
+          );
+          
+          if (delRes.error) {
+            this.toastService.danger(res.error, 'Error');
+            return false;
+          } else {
+            if (delRes.valid) {
+              this.toastService.success('Update completed successfully ', 'Success');
+            }
+          }
+          this.selectLimit(this.limit)
+        }
+      });
   }
 
-  clearSearch() {
+  clearSearch(): void {
     // reset search box input
     this.searchInputModel = '' as any;
 
@@ -95,7 +147,7 @@ export class ViewViewComponent implements OnInit, OnDestroy {
     this.selectLimit(this.limit);
   }
 
-  selectLimit(value) {
+  selectLimit(value): void {
     this.limit = Number(value);
     this.offset = 0;
     this.setPage({
@@ -149,10 +201,6 @@ export class ViewViewComponent implements OnInit, OnDestroy {
     console.log(data);
   }
 
-  async pageReload() {
-    
-  }
-
   async setPage(pageInfo){
     console.log("pageInfo:", pageInfo);
     this.offset = pageInfo.offset;
@@ -169,7 +217,7 @@ export class ViewViewComponent implements OnInit, OnDestroy {
     this.rows = [...data.data];
   }
 
-  doSearch(event) {
+  doSearch(event): void {
     this.showSearchClear = String(this.searchInputModel).length >1;
 
     // if no search input, the user clear the text, reload the result to reset
@@ -182,7 +230,7 @@ export class ViewViewComponent implements OnInit, OnDestroy {
     this.selectLimit(this.limit);
   }
 
-  setContextItems(row) {
+  setContextItems(row): void {
     this.menuItems = [...this.menuItems].map(mItem => {
       mItem.data = row;
       return mItem

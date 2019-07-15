@@ -38,7 +38,8 @@
     "electron:mac": "npm run build:prod && electron-builder build --mac",
     "test": "npm run postinstall:web && ng test",
     "e2e": "npm run build:prod && mocha --timeout 300000 --require ts-node/register e2e/**/*.spec.ts",
-    "version": "conventional-changelog -i CHANGELOG.md -s -r 0 && git add CHANGELOG.md"
+    "version": "conventional-changelog -i CHANGELOG.md -s -r 0 && git add CHANGELOG.md",
+    "docs": "node_modules/typedoc/bin/typedoc"
   },
   "devDependencies": {
     "@ngx-translate/core": "11.0.1",
@@ -68,6 +69,7 @@
     "spectron": "5.0.0",
     "ts-node": "7.0.1",
     "tslint": "5.17.0",
+    "typedoc": "^0.14.2",
     "typescript": "3.4.5",
     "wait-on": "3.2.0",
     "webdriver-manager": "12.1.0",
@@ -98,6 +100,7 @@
     "@ngx-formly/core": "^5.2.0",
     "@swimlane/ngx-datatable": "^15.0.2",
     "@types/tunnel-ssh": "^4.1.0",
+    "@types/uuid": "^3.4.5",
     "bootstrap": "^4.3.1",
     "date-fns": "^1.30.1",
     "electron-better-ipc": "https://github.com/garrylachman/electron-better-ipc",
@@ -108,9 +111,11 @@
     "knex": "^0.18.0",
     "mysql": "^2.17.1",
     "ng-dynamic-breadcrumb": "^2.0.2",
+    "ng2-fittext": "^1.2.6",
     "ngx-mask": "^8.0.0",
     "popper.js": "^1.15.0",
     "tunnel-ssh": "^4.1.4",
-    "type-fest": "^0.5.2"
+    "type-fest": "^0.5.2",
+    "uuid": "^3.3.2"
   }
 }

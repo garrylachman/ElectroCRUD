@@ -17,7 +17,15 @@ import {
 
     IPC_CHANNEL_INSERT_DATA,
     IPCInsertDataRequestMessage,
-    IPCInsertDataResponseMessage
+    IPCInsertDataResponseMessage,
+
+    IPC_CHANNEL_DELETE_DATA,
+    IPCDeleteDataRequestMessage,
+    IPCDeleteDataResponseMessage,
+
+    IPC_CHANNEL_READ_WIDGET_DATA,
+    IPCReadWidgetDataRequestMessage,
+    IPCReadWidgetDataResponseMessage,
 } from '../../shared/ipc/views.ipc';
 
 import { ipcMain } from 'electron-better-ipc';
@@ -34,6 +42,8 @@ export class ViewsIPC {
         ipcMain.answerRenderer(IPC_CHANNEL_READ_DATA, (req: JsonValue) => this.readData(req));
         ipcMain.answerRenderer(IPC_CHANNEL_UPDATE_DATA, (req: JsonValue) => this.updateData(req));
         ipcMain.answerRenderer(IPC_CHANNEL_INSERT_DATA, (req: JsonValue) => this.insertData(req));
+        ipcMain.answerRenderer(IPC_CHANNEL_DELETE_DATA, (req: JsonValue) => this.deleteData(req));
+        ipcMain.answerRenderer(IPC_CHANNEL_READ_WIDGET_DATA, (req: JsonValue) => this.readWidgetData(req));
     }
 
     public async listOfTables(req: JsonValue): Promise<JsonValue> {
@@ -177,6 +187,69 @@ export class ViewsIPC {
         let resMessage: IPCInsertDataResponseMessage = new IPCInsertDataResponseMessage({
             valid: isValid,
             error: dbError
+        });
+        
+        console.log("resMessage", resMessage.toMessage());
+        return Promise.resolve(resMessage.toJsonValue());
+    }
+
+    public async deleteData(req: JsonValue): Promise<JsonValue> {
+        let reqMessage: IPCDeleteDataRequestMessage = new IPCDeleteDataRequestMessage(req);
+
+        let isValid: boolean;
+        let dbError: string;
+        let dbRes: any;
+       
+        let res = await DatabaseService.getInstance().deleteData(
+            reqMessage.toMessage().table,
+            reqMessage.toMessage().where
+            )
+        console.log(res);
+        if (res instanceof Error) {
+            dbError = res.toString();
+            isValid = false;
+        } else {
+            isValid = true;
+            dbRes = res;
+        }
+
+        let resMessage: IPCDeleteDataResponseMessage = new IPCDeleteDataResponseMessage({
+            valid: isValid,
+            error: dbError
+        });
+        
+        console.log("resMessage", resMessage.toMessage());
+        return Promise.resolve(resMessage.toJsonValue());
+    }
+
+    public async readWidgetData(req: JsonValue): Promise<JsonValue> {
+        let reqMessage: IPCReadWidgetDataRequestMessage = new IPCReadWidgetDataRequestMessage(req);
+        console.log("reqMessage", reqMessage);
+        let isValid: boolean;
+        let dbError: string;
+        let dbRes: any;
+       
+        let res = await DatabaseService.getInstance().readWidgetData(
+            reqMessage.toMessage().table,
+            reqMessage.toMessage().column,
+            reqMessage.toMessage().distinct,
+            reqMessage.toMessage().function,
+            reqMessage.toMessage().where
+            )
+        console.log(res);
+        if (res instanceof Error) {
+            dbError = res.toString();
+            isValid = false;
+        } else {
+            isValid = true;
+            dbRes = res;
+        }
+
+        let resMessage: IPCReadWidgetDataResponseMessage = new IPCReadWidgetDataResponseMessage({
+            valid: isValid,
+            error: dbError,
+            data: dbRes.data,
+            count: dbRes.count
         });
         
         console.log("resMessage", resMessage.toMessage());

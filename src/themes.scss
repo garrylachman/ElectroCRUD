@@ -31,3 +31,52 @@ $nb-themes: nb-register-theme((
 .input-group {
   display: flex;
 }
+
+.margin-bottom-0-5-rem {
+  margin-bottom: 0.5rem;
+}
+
+.margin-bottom-1-rem {
+  margin-bottom: 1rem;
+}
+
+.padding-0 {
+  padding: 0px !important;
+}
+
+.padding-left-0 {
+  padding-left: 0px !important;
+}
+
+.margin-left-0 {
+  margin-left: 0px !important;
+}
+
+.margin-0 {
+  margin: 0px !important;
+}
+
+.margin-auto {
+  margin: auto;
+}
+
+.margin-auto-0 {
+  margin: auto 0;
+}
+
+.margin-auto-1rem-auto-0rem {
+  margin: auto 1rem auto 0rem;
+}
+
+.margin-0-0-0-auto {
+  margin: 0 0 0 auto;
+}
+
+.padding-right-1-rem
+{
+  padding-right: 1rem !important;
+}
+
+.margin-right-0-5-rem {
+  margin-right: 0.5rem;
+}

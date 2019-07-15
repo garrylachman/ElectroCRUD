@@ -26,10 +26,22 @@ import {
   IIPCInsertData,
   IIPCInsertDataResponseMessage,
   IPCInsertDataRequestMessage,
-  IPCInsertDataResponseMessage
+  IPCInsertDataResponseMessage,
+
+  IPC_CHANNEL_DELETE_DATA,
+  IIPCDeleteDataWhere,
+  IIPCDeleteDataResponseMessage,
+  IPCDeleteDataRequestMessage,
+  IPCDeleteDataResponseMessage,
+
+  IPC_CHANNEL_READ_WIDGET_DATA,
+  IIPCReadWidgetDataResponseMessage,
+  IPCReadWidgetDataRequestMessage,
+  IPCReadWidgetDataResponseMessage,
 } from '../../../shared/ipc/views.ipc';
 import { ipcRenderer } from 'electron-better-ipc';
 import { IAccount } from '../../../shared/interfaces/accounts.interface';
+import { IWidgetWhere } from '../../../shared/interfaces/widgets.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -112,6 +124,45 @@ export class ViewsIPCService {
     const rawRes:any = await ipcRenderer.callMain(IPC_CHANNEL_INSERT_DATA, req.toJsonValue());
     console.log("rawRes", rawRes);
     return new IPCInsertDataResponseMessage(rawRes).toMessage()
+  }
+
+  public async deleteData(
+    table: string, 
+    where?: IIPCDeleteDataWhere[]
+  ): Promise<IIPCDeleteDataResponseMessage> {
+    const req: IPCDeleteDataRequestMessage = new IPCDeleteDataRequestMessage({
+      table: table,
+      where: where
+    });
+    console.log("req", req);
+    const rawRes:any = await ipcRenderer.callMain(IPC_CHANNEL_DELETE_DATA, req.toJsonValue());
+    console.log("rawRes", rawRes);
+    return new IPCDeleteDataResponseMessage(rawRes).toMessage()
+  }
+
+  public async readWidgetData(
+    table: string, 
+    column: string, 
+    distinct: boolean, 
+    func: string, 
+    where?: { 
+        column: string, 
+        opr: string, 
+        value: string,
+        or: boolean
+    }[]
+  ): Promise<IIPCReadWidgetDataResponseMessage> {
+    const req: IPCReadWidgetDataRequestMessage = new IPCReadWidgetDataRequestMessage({
+      table: table,
+      column: column,
+      distinct: distinct,
+      function: func,
+      where: where
+    });
+    console.log("req", req);
+    const rawRes:any = await ipcRenderer.callMain(IPC_CHANNEL_READ_WIDGET_DATA, req.toJsonValue());
+    console.log("rawRes", rawRes);
+    return new IPCReadWidgetDataResponseMessage(rawRes).toMessage()
   }
 
 }
