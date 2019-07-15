@@ -45,7 +45,7 @@ export class WidgetsComponent implements OnInit {
   /**
    * Add new widget, open add new widget modal
    */
-  protected add(): void {
+  public add(): void {
     // Open Add / Edit dialog and wait for response (the user complete or close the dialog)
     this.dialogService
       .open<any>(AddEditWidgetModalComponent, { 
@@ -81,7 +81,7 @@ export class WidgetsComponent implements OnInit {
    * 
    * @param widget IWidget to edit
    */
-  protected edit(widget: IWidget): void {
+  public edit(widget: IWidget): void {
     // Open Add / Edit dialog and wait for response (the user complete or close the dialog)
     this.dialogService
       .open<any>(AddEditWidgetModalComponent, { 

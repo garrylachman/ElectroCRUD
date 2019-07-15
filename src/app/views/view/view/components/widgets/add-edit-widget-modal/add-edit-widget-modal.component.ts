@@ -15,26 +15,26 @@ export class AddEditWidgetModalComponent implements OnInit {
   /**
    * The dialog title
    */
-  protected title: string = "Add a new widget";
+  public title: string = "Add a new widget";
   /**
    * The view we manipulating
    */
-  protected view:IView;
+  public view:IView;
   /**
    * The widget we edit or new instance or widget to add
    */
-  protected widget:IWidget;
+  public widget:IWidget;
 
   /**
    * FormGroup instance to handle the form validation
    */
-  protected widgetForm:FormGroup;
+  public widgetForm:FormGroup;
   /**
    * List of all available icons we can use
    */
-  protected iconsListArr: string[]
+  public iconsListArr: string[]
 
-  protected isSaveEnabled: boolean = false;
+  public isSaveEnabled: boolean = false;
 
   /**
    * 
@@ -43,7 +43,7 @@ export class AddEditWidgetModalComponent implements OnInit {
    * @param iconsLib NbIconLibraries dependecy injection.
    */
   constructor(
-    protected ref: NbDialogRef<any>,
+    public ref: NbDialogRef<any>,
     private fb: FormBuilder,
     private iconsLib: NbIconLibraries
   ) { }
@@ -135,7 +135,7 @@ export class AddEditWidgetModalComponent implements OnInit {
   /**
    * Create a new where clause with the default values
    */
-  protected addWhere(): void {
+  public addWhere(): void {
     this.widget.where.push(
       {
         // Null column as default in order to show the placeholder.
@@ -158,7 +158,7 @@ export class AddEditWidgetModalComponent implements OnInit {
    *  
    * @param uuid Where clause unique id
    */
-  protected deleteWhere(uuid: string): void {
+  public deleteWhere(uuid: string): void {
     let whereIdx = this.widget.where.findIndex((where, idx) => where.uuid == uuid);
     this.widget.where.splice(whereIdx, 1);
 
@@ -170,7 +170,7 @@ export class AddEditWidgetModalComponent implements OnInit {
    * 
    * @returns string[] Array of WidgetFunction
    */
-  protected get widgetFunctionVals(): string[] {
+  public get widgetFunctionVals(): string[] {
     // Ket the ENUM keys
     const keys = Object.keys(WidgetFunction);
     // Get the data by key
@@ -182,7 +182,7 @@ export class AddEditWidgetModalComponent implements OnInit {
    * 
    * @returns string[] Array of WidgetWhereOpr
    */
-  protected get widgetWhereOprVals(): string[] {
+  public get widgetWhereOprVals(): string[] {
     // Ket the ENUM keys
     const keys = Object.keys(WidgetWhereOpr);
     // Get the data by key
@@ -195,7 +195,7 @@ export class AddEditWidgetModalComponent implements OnInit {
    * 
    * @returns string[] Array of icon names
    */
-  protected get iconsList(): string[] {
+  public get iconsList(): string[] {
     // Check if the array exist
     if (!this.iconsListArr) {
       // Init the array
@@ -209,7 +209,7 @@ export class AddEditWidgetModalComponent implements OnInit {
   /**
    * Save button click, pass the widget instance back to opener
    */
-  protected save(): void {
+  public save(): void {
     this.ref.close(this.widget);
   }
 }
