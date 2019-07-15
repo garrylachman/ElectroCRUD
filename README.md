@@ -36,9 +36,9 @@ After a few years that the project was inactive, I decided to bring it an alive 
 - [ ] Views relations
   - [ ] One to one, One to many
   - [ ] Drill from view to view
-- [ ] View widgets (display aggragated data in the view)
-  - [ ] Add / Edit / Remove widgets
-  - [ ] Aggregation functions (AVG, SUM, MIN, MAX)
+- [x] View widgets (display aggragated data in the view)
+  - [x] Add / Edit / Remove widgets
+  - [x] Aggregation functions (AVG, SUM, MIN, MAX, COUNT)
   - [ ] Apply filters on widget data
 - [ ] View filters (build where clauses to filter the data)
   - [ ] Add / Edit / Remove filter in each view
