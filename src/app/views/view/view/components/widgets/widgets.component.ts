@@ -6,6 +6,7 @@ import { NbDialogService, NbToastrService } from '@nebular/theme';
 import { AddEditWidgetModalComponent } from './add-edit-widget-modal/add-edit-widget-modal.component';
 import { ViewsIPCService } from '../../../../../services/ipc/views.ipc.service';
 import { IIPCReadWidgetDataResponseMessage } from '../../../../../../shared/ipc/views.ipc';
+import { ConfirmDeleteComponent } from '../../../../../components/dialogs/confirm-delete/confirm-delete.component';
 
 @Component({
   selector: 'app-widgets',
@@ -112,7 +113,21 @@ export class WidgetsComponent implements OnInit {
    * @param widget The widget for removal
    */
   remove(widget: IWidget): void {
-
+    this.dialogService
+      .open<any>(ConfirmDeleteComponent, { 
+        hasBackdrop: true,
+        context: {}
+      })
+      .onClose
+      .subscribe((res) => {
+        if (res) {
+         let idx = this.view.widgets.indexOf(widget);
+         if (idx > -1) {
+           this.view.widgets.splice(idx, 1);
+           this.save();
+         }
+        }
+      });
   }
 
   /**
