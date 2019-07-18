@@ -41,6 +41,18 @@ export class RowFormComponent implements OnInit {
       if (["int", "smallint", "tinyint", "mediumint"].includes(String(col.type))) {
         this.fields.push(this.generateInputNumeric(col));
       }
+      // decimal 
+      if (["decimal", "float", "double", "numeric"].includes(String(col.type))) {
+        this.fields.push(this.generateInputDecimal(col));
+      }
+      // decimal 
+      if (["boolean"].includes(String(col.type))) {
+        this.fields.push(this.generateCheckbox(col));
+      }
+      // text 
+      if (["text", "tinytext", "mediumtext", "longtext"].includes(String(col.type))) {
+        this.fields.push(this.generateTextArea(col));
+      }
       // date
       if (["datetime", "timestamp"].includes(String(col.type))) {
         this.fields.push(this.generateDatepicker(col));
@@ -87,6 +99,12 @@ export class RowFormComponent implements OnInit {
     return input;
   }
 
+  generateTextArea(col): FormlyFieldConfig {
+    let input = this.generateBasic(col);
+    input.type = 'nb-textarea';
+    return input;
+  }
+
   generateInputNumeric(col): FormlyFieldConfig {
     let input = this.generateBasic(col);
     input.type = 'nb-input';
@@ -94,9 +112,22 @@ export class RowFormComponent implements OnInit {
     return input;
   }
 
+  generateInputDecimal(col): FormlyFieldConfig {
+    let input = this.generateBasic(col);
+    input.type = 'nb-input';
+    input.templateOptions.mask = "0*.0*";
+    return input;
+  }
+
   generateDatepicker(col): FormlyFieldConfig {
     let input = this.generateBasic(col);
     input.type = 'nb-datepicker';
+    return input;
+  }
+
+  generateCheckbox(col): FormlyFieldConfig {
+    let input = this.generateBasic(col);
+    input.type = 'nb-checkbox';
     return input;
   }
 

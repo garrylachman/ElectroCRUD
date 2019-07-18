@@ -1,3 +1,11 @@
 <p>
-  formly-field-nb-textarea works!
+  <label class="input-group">{{ to.label }}</label>
+  <textarea 
+    nbInput 
+    [formControl]="formControl" 
+    class="input-group" 
+    [placeholder]="to.placeholder" 
+    [status]="showError ? 'danger': 'success'" 
+  >
+  </textarea>
 </p>

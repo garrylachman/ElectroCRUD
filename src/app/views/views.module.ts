@@ -67,6 +67,14 @@ import { AddEditWidgetModalComponent } from './view/view/components/widgets/add-
         {
           name: 'nb-datepicker',
           component: FormlyFieldNbDatepickerComponent
+        },
+        {
+          name: 'nb-textarea',
+          component: FormlyFieldNbTextareaComponent
+        },
+        {
+          name: 'nb-checkbox',
+          component: FormlyFieldNbChechboxComponent
         }
       ]
     }),
