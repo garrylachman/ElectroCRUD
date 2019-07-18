@@ -18,7 +18,8 @@ import {
   NbActionsModule,
   NbSpinnerModule,
   NbContextMenuModule,
-  NbDatepickerModule
+  NbDatepickerModule,
+  NbBadgeModule
 } from '@nebular/theme';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
@@ -56,6 +57,7 @@ import { AddEditWidgetModalComponent } from './view/view/components/widgets/add-
     NgxDatatableModule,
     ReactiveFormsModule,
     NbContextMenuModule,
+    NbBadgeModule,
     NgxMaskModule.forChild(),
     NbDatepickerModule,
     FormlyModule.forChild({
