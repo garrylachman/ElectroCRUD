@@ -5,8 +5,10 @@
     type="text" 
     [formControl]="formControl" 
     [placeholder]="to.placeholder" 
-    class="input-group" 
+    class="input-group inline-flex" 
     [status]="showError ? 'danger': 'success'" 
-    mask="{{to.mask}}"
+    mask="{{ to['mask'] }}"
   />
+  <nb-badge text="{{to['badge']}} ({{to['length']}})" position="middle" class="first"></nb-badge>
+  <nb-badge *ngIf="!to.required" status="success" text="Nullable" position="middle"></nb-badge>
 </p>

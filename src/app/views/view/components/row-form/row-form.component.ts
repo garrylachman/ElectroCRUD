@@ -30,12 +30,16 @@ export class RowFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.view.columns.forEach((col) => {
-      console.log("type", col.type);
-      this.model[col.name] = col.default;
+    this.view.columns.forEach((col:IViewColumn) => {
+      console.log("type", col);
+      this.model[col.name] = col.default == 'NULL' ? null : col.default;
       // string
       if (["char", "varchar"].includes(String(col.type))) {
-        this.fields.push(this.generateInput(col));
+        if (col.length && col.length > 50)  {
+          this.fields.push(this.generateTextArea(col));
+        } else {
+          this.fields.push(this.generateInput(col));
+        }
       }
       // number 
       if (["int", "smallint", "tinyint", "mediumint"].includes(String(col.type))) {
@@ -50,11 +54,11 @@ export class RowFormComponent implements OnInit {
         this.fields.push(this.generateCheckbox(col));
       }
       // text 
-      if (["text", "tinytext", "mediumtext", "longtext"].includes(String(col.type))) {
+      if (["text", "tinytext", "mediumtext", "longtext", "blob", "mediumblob", "tinyblob", "longblob"].includes(String(col.type))) {
         this.fields.push(this.generateTextArea(col));
       }
       // date
-      if (["datetime", "timestamp"].includes(String(col.type))) {
+      if (["datetime", "timestamp", "date"].includes(String(col.type))) {
         this.fields.push(this.generateDatepicker(col));
         this.model[col.name] = null;
         this.dateColNames.push(col.name);
@@ -88,7 +92,9 @@ export class RowFormComponent implements OnInit {
       templateOptions: {
         label: col.name,
         placeholder: col.name,
-        required: !col.nullable
+        required: !col.nullable && col.default != 'NULL',
+        badge: col.type,
+        length: col.length
       }
     };
   }
