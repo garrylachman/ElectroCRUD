@@ -82,6 +82,10 @@ export interface IViewColumn {
      * Column extra details
      */
     extra?: string;
+    /**
+     * Column lenght
+     */
+    length?: number;
 }
 
 /**
