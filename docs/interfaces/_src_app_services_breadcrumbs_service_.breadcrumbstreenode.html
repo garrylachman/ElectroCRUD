@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>IIPCUpdateDataResponseMessage | ElectroCRUD</title>
+	<title>BreadcrumbsTreeNode | ElectroCRUD</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -56,24 +56,31 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="../modules/_src_shared_ipc_views_ipc_.html">&quot;src/shared/ipc/views.ipc&quot;</a>
+					<a href="../modules/_src_app_services_breadcrumbs_service_.html">&quot;src/app/services/breadcrumbs.service&quot;</a>
 				</li>
 				<li>
-					<a href="_src_shared_ipc_views_ipc_.iipcupdatedataresponsemessage.html">IIPCUpdateDataResponseMessage</a>
+					<a href="_src_app_services_breadcrumbs_service_.breadcrumbstreenode.html">BreadcrumbsTreeNode</a>
 				</li>
 			</ul>
-			<h1>Interface IIPCUpdateDataResponseMessage</h1>
+			<h1>Interface BreadcrumbsTreeNode</h1>
 		</div>
 	</div>
 </header>
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Interface represent a breadcrumbs node</p>
+					</div>
+				</div>
+			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">IIPCUpdateDataResponseMessage</span>
+						<span class="target">BreadcrumbsTreeNode</span>
 					</li>
 				</ul>
 			</section>
@@ -84,8 +91,10 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_src_shared_ipc_views_ipc_.iipcupdatedataresponsemessage.html#error" class="tsd-kind-icon">error</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_src_shared_ipc_views_ipc_.iipcupdatedataresponsemessage.html#valid" class="tsd-kind-icon">valid</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_src_app_services_breadcrumbs_service_.breadcrumbstreenode.html#child" class="tsd-kind-icon">child</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_src_app_services_breadcrumbs_service_.breadcrumbstreenode.html#name" class="tsd-kind-icon">name</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_src_app_services_breadcrumbs_service_.breadcrumbstreenode.html#parent" class="tsd-kind-icon">parent</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_src_app_services_breadcrumbs_service_.breadcrumbstreenode.html#url" class="tsd-kind-icon">url</a></li>
 							</ul>
 						</section>
 					</div>
@@ -94,22 +103,42 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="error" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> error</h3>
-					<div class="tsd-signature tsd-kind-icon">error<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="child" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> child</h3>
+					<div class="tsd-signature tsd-kind-icon">child<span class="tsd-signature-symbol">:</span> <a href="_src_app_services_breadcrumbs_service_.breadcrumbstreenode.html" class="tsd-signature-type">BreadcrumbsTreeNode</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/garrylachman/ElectroCRUD/blob/a6b1351/src/shared/ipc/views.ipc.ts#L123">src/shared/ipc/views.ipc.ts:123</a></li>
+							<li>Defined in <a href="https://github.com/garrylachman/ElectroCRUD/blob/a6b1351/src/app/services/breadcrumbs.service.ts#L13">src/app/services/breadcrumbs.service.ts:13</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="valid" class="tsd-anchor"></a>
-					<h3>valid</h3>
-					<div class="tsd-signature tsd-kind-icon">valid<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+					<a name="name" class="tsd-anchor"></a>
+					<h3>name</h3>
+					<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/garrylachman/ElectroCRUD/blob/a6b1351/src/shared/ipc/views.ipc.ts#L122">src/shared/ipc/views.ipc.ts:122</a></li>
+							<li>Defined in <a href="https://github.com/garrylachman/ElectroCRUD/blob/a6b1351/src/app/services/breadcrumbs.service.ts#L9">src/app/services/breadcrumbs.service.ts:9</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="parent" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> parent</h3>
+					<div class="tsd-signature tsd-kind-icon">parent<span class="tsd-signature-symbol">:</span> <a href="_src_app_services_breadcrumbs_service_.breadcrumbstreenode.html" class="tsd-signature-type">BreadcrumbsTreeNode</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/garrylachman/ElectroCRUD/blob/a6b1351/src/app/services/breadcrumbs.service.ts#L15">src/app/services/breadcrumbs.service.ts:15</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="url" class="tsd-anchor"></a>
+					<h3>url</h3>
+					<div class="tsd-signature tsd-kind-icon">url<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/garrylachman/ElectroCRUD/blob/a6b1351/src/app/services/breadcrumbs.service.ts#L11">src/app/services/breadcrumbs.service.ts:11</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -122,22 +151,31 @@
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
 					<li class="current tsd-kind-external-module">
-						<a href="../modules/_src_shared_ipc_views_ipc_.html">"src/shared/ipc/views.ipc"</a>
+						<a href="../modules/_src_app_services_breadcrumbs_service_.html">"src/app/services/breadcrumbs.service"</a>
 					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
+					<li class=" tsd-kind-class tsd-parent-kind-external-module">
+						<a href="../classes/_src_app_services_breadcrumbs_service_.breadcrumbsservice.html" class="tsd-kind-icon">Breadcrumbs<wbr>Service</a>
+					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface tsd-parent-kind-external-module">
-						<a href="_src_shared_ipc_views_ipc_.iipcupdatedataresponsemessage.html" class="tsd-kind-icon">IIPCUpdate<wbr>Data<wbr>Response<wbr>Message</a>
+						<a href="_src_app_services_breadcrumbs_service_.breadcrumbstreenode.html" class="tsd-kind-icon">Breadcrumbs<wbr>Tree<wbr>Node</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="_src_shared_ipc_views_ipc_.iipcupdatedataresponsemessage.html#error" class="tsd-kind-icon">error</a>
+								<a href="_src_app_services_breadcrumbs_service_.breadcrumbstreenode.html#child" class="tsd-kind-icon">child</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="_src_shared_ipc_views_ipc_.iipcupdatedataresponsemessage.html#valid" class="tsd-kind-icon">valid</a>
+								<a href="_src_app_services_breadcrumbs_service_.breadcrumbstreenode.html#name" class="tsd-kind-icon">name</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="_src_app_services_breadcrumbs_service_.breadcrumbstreenode.html#parent" class="tsd-kind-icon">parent</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="_src_app_services_breadcrumbs_service_.breadcrumbstreenode.html#url" class="tsd-kind-icon">url</a>
 							</li>
 						</ul>
 					</li>

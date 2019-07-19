@@ -8,6 +8,7 @@ import { NbMenuService, NbToastrService } from '@nebular/theme';
 import { Subscription } from 'rxjs';
 import { IIPCInsertDataResponseMessage } from '../../../../shared/ipc/views.ipc';
 import { RowFormComponent } from '../components/row-form/row-form.component'
+import { BreadcrumbsService } from '../../../services/breadcrumbs.service';
 
 @Component({
   selector: 'app-view-add',
@@ -35,6 +36,7 @@ export class ViewAddComponent implements OnInit, OnDestroy {
     private viewsIPCService: ViewsIPCService,
     private menuService: NbMenuService,
     private toastService: NbToastrService,
+    private breadcrumbsService: BreadcrumbsService,
   ) { }
 
   async ngOnInit() {
@@ -65,6 +67,7 @@ export class ViewAddComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.routeObserver.unsubscribe();
+    this.breadcrumbsService.removeChildByURL(`/views/${this.view.id}/view/add`);
   }
   
  
@@ -74,7 +77,8 @@ export class ViewAddComponent implements OnInit, OnDestroy {
       this.view = this.viewsService.get(
         Number(this.route.parent.snapshot.paramMap.get('id'))
       );
-      this.title = this.view.name;
+      //this.title = this.view.name;
+      this.breadcrumbsService.addChild('Add', `/views/${this.view.id}/view/add`);
     }
   }
 

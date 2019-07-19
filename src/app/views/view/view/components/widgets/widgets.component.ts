@@ -134,6 +134,9 @@ export class WidgetsComponent implements OnInit {
    * Reload data from database
    */
   reloadData(): void {
+    if (!this.view.widgets) {
+      return;
+    }
     this.view.widgets.forEach(async (widget: IWidget) => {
       const res:IIPCReadWidgetDataResponseMessage = await this.viewsIPCService.readWidgetData(
         this.view.table,

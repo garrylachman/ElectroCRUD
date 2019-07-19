@@ -1,15 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { FieldType } from '@ngx-formly/core';
 
 @Component({
   selector: 'app-formly-field-nb-chechbox',
   templateUrl: './formly-field-nb-chechbox.component.html',
-  styleUrls: ['./formly-field-nb-chechbox.component.scss']
+  styleUrls: ['../../row-form.component.scss', './formly-field-nb-chechbox.component.scss']
 })
-export class FormlyFieldNbChechboxComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit() {
-  }
+export class FormlyFieldNbChechboxComponent extends FieldType {
 
 }

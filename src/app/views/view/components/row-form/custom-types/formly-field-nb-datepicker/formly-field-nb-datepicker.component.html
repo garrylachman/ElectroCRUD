@@ -3,10 +3,12 @@
   <input 
     nbInput 
     [placeholder]="to.placeholder" 
-    class="input-group" 
+    class="input-group inline-flex" 
     [nbDatepicker]="formpicker" 
     [formControl]="formControl" 
     [status]="showError ? 'danger': 'success'" 
   />
   <nb-datepicker #formpicker></nb-datepicker>
+  <nb-badge text="{{to['badge']}}" position="middle" class="first"></nb-badge>
+  <nb-badge *ngIf="!to.required" status="success" text="Nullable" position="middle"></nb-badge>
 </p>

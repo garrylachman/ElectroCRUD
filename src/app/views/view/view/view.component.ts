@@ -10,6 +10,7 @@ import { NbMenuService, NbDialogService, NbToastrService } from '@nebular/theme'
 import { Subscription } from 'rxjs';
 import { ConfirmDeleteComponent } from '../../../components/dialogs/confirm-delete/confirm-delete.component';
 import { IIPCDeleteDataWhereOpr, IIPCDeleteDataResponseMessage } from '../../../../shared/ipc/views.ipc';
+import { BreadcrumbsService } from '../../../services/breadcrumbs.service';
 
 @Component({
   selector: 'app-view-view',
@@ -48,9 +49,13 @@ export class ViewViewComponent implements OnInit, OnDestroy {
     private viewsIPCService: ViewsIPCService,
     private menuService: NbMenuService,
     private dialogService: NbDialogService,
-    private toastService: NbToastrService
+    private toastService: NbToastrService,
+    private breadcrumbsService: BreadcrumbsService
   ) { }
 
+  ngAfterViewChecked() {
+    
+  }
   async ngOnInit() {
     this.routeObserver = this.route.parent.params.subscribe((params) => {
       console.log("params", params);
@@ -72,6 +77,7 @@ export class ViewViewComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.menuServiceObserver.unsubscribe();
     this.routeObserver.unsubscribe();
+    this.breadcrumbsService.removeChildByURL(`/views/${this.view.id}/view/view`);
   }
 
   deleteView(): void {
@@ -88,7 +94,6 @@ export class ViewViewComponent implements OnInit, OnDestroy {
   }
   
   editRow(row): void {
-    console.log("edit", row)
     let pk: string = this.primaryKeyColumn;
     if (!pk) {
       // toast no OK
@@ -99,7 +104,6 @@ export class ViewViewComponent implements OnInit, OnDestroy {
   }
 
   deleteRow(row): void {
-    console.log("edit", row)
     let pk: string = this.primaryKeyColumn;
     if (!pk) {
       // toast no OK
@@ -173,7 +177,7 @@ export class ViewViewComponent implements OnInit, OnDestroy {
       this.view = this.viewsService.get(
         Number(this.route.parent.snapshot.paramMap.get('id'))
       );
-      this.title = this.view.name;
+      //this.title = this.view.name;
     }
     this.menuItems = [
       {
@@ -187,6 +191,8 @@ export class ViewViewComponent implements OnInit, OnDestroy {
         hidden: !this.view.permissions.delete
       }
     ]
+    this.breadcrumbsService.addChild('View', `/views/${this.view.id}/view/view`);
+
     await this.reload();
   }
 

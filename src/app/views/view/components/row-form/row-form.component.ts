@@ -30,19 +30,35 @@ export class RowFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.view.columns.forEach((col) => {
-      console.log("type", col.type);
-      this.model[col.name] = col.default;
+    this.view.columns.forEach((col:IViewColumn) => {
+      console.log("type", col);
+      this.model[col.name] = col.default == 'NULL' ? null : col.default;
       // string
       if (["char", "varchar"].includes(String(col.type))) {
-        this.fields.push(this.generateInput(col));
+        if (col.length && col.length > 50)  {
+          this.fields.push(this.generateTextArea(col));
+        } else {
+          this.fields.push(this.generateInput(col));
+        }
       }
       // number 
       if (["int", "smallint", "tinyint", "mediumint"].includes(String(col.type))) {
         this.fields.push(this.generateInputNumeric(col));
       }
+      // decimal 
+      if (["decimal", "float", "double", "numeric"].includes(String(col.type))) {
+        this.fields.push(this.generateInputDecimal(col));
+      }
+      // decimal 
+      if (["boolean"].includes(String(col.type))) {
+        this.fields.push(this.generateCheckbox(col));
+      }
+      // text 
+      if (["text", "tinytext", "mediumtext", "longtext", "blob", "mediumblob", "tinyblob", "longblob"].includes(String(col.type))) {
+        this.fields.push(this.generateTextArea(col));
+      }
       // date
-      if (["datetime", "timestamp"].includes(String(col.type))) {
+      if (["datetime", "timestamp", "date"].includes(String(col.type))) {
         this.fields.push(this.generateDatepicker(col));
         this.model[col.name] = null;
         this.dateColNames.push(col.name);
@@ -76,7 +92,9 @@ export class RowFormComponent implements OnInit {
       templateOptions: {
         label: col.name,
         placeholder: col.name,
-        required: !col.nullable
+        required: !col.nullable && col.default != 'NULL',
+        badge: col.type,
+        length: col.length
       }
     };
   }
@@ -87,6 +105,12 @@ export class RowFormComponent implements OnInit {
     return input;
   }
 
+  generateTextArea(col): FormlyFieldConfig {
+    let input = this.generateBasic(col);
+    input.type = 'nb-textarea';
+    return input;
+  }
+
   generateInputNumeric(col): FormlyFieldConfig {
     let input = this.generateBasic(col);
     input.type = 'nb-input';
@@ -94,9 +118,22 @@ export class RowFormComponent implements OnInit {
     return input;
   }
 
+  generateInputDecimal(col): FormlyFieldConfig {
+    let input = this.generateBasic(col);
+    input.type = 'nb-input';
+    input.templateOptions.mask = "0*.0*";
+    return input;
+  }
+
   generateDatepicker(col): FormlyFieldConfig {
     let input = this.generateBasic(col);
     input.type = 'nb-datepicker';
+    return input;
+  }
+
+  generateCheckbox(col): FormlyFieldConfig {
+    let input = this.generateBasic(col);
+    input.type = 'nb-checkbox';
     return input;
   }
 
