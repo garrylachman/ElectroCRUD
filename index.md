@@ -56,9 +56,9 @@ After a few years that the project was inactive, I decided to bring it an alive 
 ## Download Binaries ![GitHub release](https://img.shields.io/github/release/garrylachman/ElectroCRUD.svg?style=for-the-badge)
 We are in early beta !!!
 
-* [Mac OSX (Release beta)](https://github.com/garrylachman/ElectroCRUD/releases/download/2.1.0-beta/ElectroCRUD-2.1.0-beta.dmg)
-* [Linux (Release beta)](https://github.com/garrylachman/ElectroCRUD/releases/download/2.1.0-beta/ElectroCRUD.2.1.0-beta.AppImage)
-* [Windows (Release beta)](https://github.com/garrylachman/ElectroCRUD/releases/download/2.1.0-beta/ElectroCRUD.2.1.0-beta.exe)
+* [Mac OSX (Release beta)](https://github.com/garrylachman/ElectroCRUD/releases/download/2.1.1-beta/ElectroCRUD-2.1.1-beta.dmg)
+* [Linux (Release beta)](https://github.com/garrylachman/ElectroCRUD/releases/download/2.1.1-beta/ElectroCRUD.2.1.1-beta.AppImage)
+* [Windows (Release beta)](https://github.com/garrylachman/ElectroCRUD/releases/download/2.1.1-beta/ElectroCRUD.2.1.1-beta.exe)
 
 ## Download Sources
 [ElectroCRUD on GitHub](https://github.com/garrylachman/ElectroCRUD)
