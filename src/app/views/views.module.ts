@@ -37,9 +37,11 @@ import { NgxMaskModule } from 'ngx-mask';
 import { WidgetsComponent } from './view/view/components/widgets/widgets.component';
 import { Ng2FittextModule } from "ng2-fittext";
 import { AddEditWidgetModalComponent } from './view/view/components/widgets/add-edit-widget-modal/add-edit-widget-modal.component';
+import { BreadcrumbsService } from '../services/breadcrumbs.service';
 
 @NgModule({
   declarations: [ViewComponent, ConfigureComponent, EmptyComponent, ViewEditComponent, ViewAddComponent, WidgetsComponent, ViewViewComponent, RowFormComponent, FormlyFieldNbInputComponent, FormlyFieldNbSelectComponent, FormlyFieldNbChechboxComponent, FormlyFieldNbDatepickerComponent, FormlyFieldNbTextareaComponent],
+  providers: [BreadcrumbsService],
   imports: [
     CommonModule,
     ViewsRoutingModule,

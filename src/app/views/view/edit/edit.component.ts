@@ -8,6 +8,7 @@ import { NbMenuService, NbToastrService } from '@nebular/theme';
 import { Subscription, Subject } from 'rxjs';
 import { IIPCReadDataWhereOpr, IIPCUpdateDataWhereOpr, IIPCUpdateDataResponseMessage } from '../../../../shared/ipc/views.ipc';
 import { RowFormComponent } from '../components/row-form/row-form.component'
+import { BreadcrumbsService } from '../../../services/breadcrumbs.service';
 
 @Component({
   selector: 'app-view-edit',
@@ -38,6 +39,7 @@ export class ViewEditComponent implements OnInit, OnDestroy {
     private viewsIPCService: ViewsIPCService,
     private menuService: NbMenuService,
     private toastService: NbToastrService,
+    private breadcrumbsService: BreadcrumbsService
   ) { }
 
   async ngOnInit() {
@@ -76,6 +78,7 @@ export class ViewEditComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.routeObserver.unsubscribe();
+    this.breadcrumbsService.removeChildByURL(`/views/${this.view.id}/view/edit`);
   }
   
  
@@ -90,6 +93,7 @@ export class ViewEditComponent implements OnInit, OnDestroy {
       this.pkValue = this.route.snapshot.paramMap.get('pkValue');
       console.log(this.pk, this.pkValue)
     }
+    this.breadcrumbsService.addChild('Edit', `/views/${this.view.id}/view/edit`);
     await this.reload();
   }
 
