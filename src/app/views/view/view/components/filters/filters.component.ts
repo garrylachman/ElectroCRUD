@@ -88,6 +88,14 @@ export class FiltersComponent implements OnInit, OnDestroy, OnChanges {
         this.onFilterSelected.emit(this.selectedMenuItem.parent.data)
       }
 
+      if (item.item.data.action == FilterMenuActions.EDIT) {
+        this.edit(item.item.parent.data);
+      }
+
+      if (item.item.data.action == FilterMenuActions.DELETE) {
+        this.remove(item.item.parent.data);
+      }
+
       // reload the items
       this.reloadData();
     });
@@ -170,7 +178,7 @@ export class FiltersComponent implements OnInit, OnDestroy, OnChanges {
             this.save();
             // Toast
             this.toastrService.success('The filter has been updated');
-            // Reload data from database
+            // Reload data
             this.reloadData();
           }
         }
@@ -195,6 +203,8 @@ export class FiltersComponent implements OnInit, OnDestroy, OnChanges {
          if (idx > -1) {
            this.view.filters.splice(idx, 1);
            this.save();
+           // Reload data
+           this.reloadData();
          }
         }
       });
