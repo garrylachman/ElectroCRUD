@@ -19,7 +19,10 @@ import {
   NbSpinnerModule,
   NbContextMenuModule,
   NbDatepickerModule,
-  NbBadgeModule
+  NbBadgeModule,
+  NbLayoutModule,
+  NbSidebarModule,
+  NbMenuModule
 } from '@nebular/theme';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
@@ -36,11 +39,12 @@ import { FormlyFieldNbTextareaComponent } from './view/components/row-form/custo
 import { NgxMaskModule } from 'ngx-mask';
 import { WidgetsComponent } from './view/view/components/widgets/widgets.component';
 import { Ng2FittextModule } from "ng2-fittext";
-import { AddEditWidgetModalComponent } from './view/view/components/widgets/add-edit-widget-modal/add-edit-widget-modal.component';
 import { BreadcrumbsService } from '../services/breadcrumbs.service';
+import { FiltersComponent } from './view/view/components/filters/filters.component';
+import { AngularFittextModule } from 'angular-fittext';
 
 @NgModule({
-  declarations: [ViewComponent, ConfigureComponent, EmptyComponent, ViewEditComponent, ViewAddComponent, WidgetsComponent, ViewViewComponent, RowFormComponent, FormlyFieldNbInputComponent, FormlyFieldNbSelectComponent, FormlyFieldNbChechboxComponent, FormlyFieldNbDatepickerComponent, FormlyFieldNbTextareaComponent],
+  declarations: [ViewComponent, ConfigureComponent, EmptyComponent, ViewEditComponent, ViewAddComponent, WidgetsComponent, ViewViewComponent, RowFormComponent, FormlyFieldNbInputComponent, FormlyFieldNbSelectComponent, FormlyFieldNbChechboxComponent, FormlyFieldNbDatepickerComponent, FormlyFieldNbTextareaComponent, FiltersComponent],
   providers: [BreadcrumbsService],
   imports: [
     CommonModule,
@@ -82,7 +86,11 @@ import { BreadcrumbsService } from '../services/breadcrumbs.service';
         }
       ]
     }),
-    Ng2FittextModule.forRoot(),
+    //Ng2FittextModule.forRoot(),
+    NbLayoutModule,
+    NbSidebarModule,
+    NbMenuModule,
+    AngularFittextModule,
   ],
   entryComponents: [ViewComponent, ConfigureComponent, EmptyComponent, ViewEditComponent, ViewAddComponent, ViewViewComponent, WidgetsComponent]
 })

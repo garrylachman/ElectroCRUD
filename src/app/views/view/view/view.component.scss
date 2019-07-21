@@ -35,3 +35,27 @@
 .ngx-datatable.bootstrap .datatable-footer .datatable-pager {
     margin: 0;
 }
+
+nb-layout-column {
+    padding-left: 0px !important;
+}
+
+::ng-deep
+nb-sidebar.filter-side-bar .main-container-fixed {
+    top: auto !important;
+    position: sticky !important;
+}
+
+::ng-deep
+nb-sidebar.filter-side-bar .main-container-fixed .scrollable {
+    padding: 0px;
+}
+
+app-widgets {
+    display: block;
+    overflow: hidden;
+}
+
+.view-main-content-layout-column {
+    padding-top: 0px !important;
+}

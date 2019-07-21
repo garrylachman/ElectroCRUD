@@ -172,26 +172,32 @@ export class DatabaseService {
             console.log("countRes: ", countRes);
             let q = this.connection.select(...columns).from(table);
             if (searchColumns && searchText) {
-                searchColumns.forEach((sCol: string, idx: number) => {
-                    if (idx ==0)    {
-                        q  = q.where(sCol, 'like', `%${searchText}%`);
-                    } else {
-                        q = q.orWhere(sCol, 'like', `%${searchText}%`);
-                    }
-                });
+                q = q.whereWrapped((wq) => {
+                    searchColumns.forEach((sCol: string, idx: number) => {
+                        if (idx ==0)    {
+                            wq  = wq.where(sCol, 'like', `%${searchText}%`);
+                        } else {
+                            wq = wq.orWhere(sCol, 'like', `%${searchText}%`);
+                        }
+                    });
+                    return wq;
+                })
             }
             if (where) {
                 where.forEach((col, idx:number) => {
                     if (idx == 0) {
-                        q = q.where(col.column, col.opr, col.value);
+                        // if we have where before (from search) we must use andWhere, if no search use where
+                        let firstWhereFunc = (searchColumns && searchText) ? "andWhere" : "where";
+                        q = q[firstWhereFunc](col.column, col.opr, col.value);
                     } else {
                         let whereFunc = col.or ? "orWhere" : "andWhere";
                         q = q[whereFunc](col.column, col.opr, col.value);
                     }
                 })
             }
-            console.log("raw query: ", q.toQuery())
+            
             let res = await q.limit(limit).offset(offset);
+            console.log("raw query: ", q.toQuery())
 
             console.log(res);
             return {

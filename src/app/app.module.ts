@@ -45,6 +45,7 @@ import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
 import { AccountsService } from './services/store/accounts.service';
 import { Ng2FittextModule } from "ng2-fittext";
 import { AddEditWidgetModalComponent } from './views/view/view/components/widgets/add-edit-widget-modal/add-edit-widget-modal.component';
+import { AddEditFilterModalComponent } from './views/view/view/components/filters/add-edit-filter-modal/add-edit-filter-modal.component';
 
 
 // AoT requires an exported function for factories
@@ -60,6 +61,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     WebviewDirective,
     ConfirmDeleteComponent,
     AddEditWidgetModalComponent,
+    AddEditFilterModalComponent
   ],
   exports: [
     ConfirmDeleteComponent,
@@ -102,7 +104,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     Ng2FittextModule
   ],
   providers: [ElectronService, NbMenuService, NbDialogService, AccountsService, NbDatepickerDirective],
-  entryComponents: [ConfirmDeleteComponent, AddEditWidgetModalComponent],
+  entryComponents: [ConfirmDeleteComponent, AddEditWidgetModalComponent, AddEditFilterModalComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

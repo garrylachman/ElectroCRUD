@@ -1,4 +1,5 @@
 import { IWidget } from "./widgets.interface";
+import { IViewFilter } from "./filters.interface";
 
 /**
  * Interface represent a view
@@ -44,6 +45,10 @@ export interface IView {
      * Array of view widgets
      */
     widgets?:IWidget[];
+    /**
+     * Array of view filters
+     */
+    filters?:IViewFilter[];
 }
 
 /**

@@ -1,6 +1,6 @@
 {
   "name": "ElectroCRUD",
-  "version": "2.1.1-beta",
+  "version": "2.2.0-beta",
   "description": "No coding is required; Create basic CRUD (Create, Read, Update, Delete) for your Database Database in minutes",
   "homepage": "https://github.com/garrylachman/ElectroCRUD",
   "author": {
@@ -102,6 +102,7 @@
     "@swimlane/ngx-datatable": "^15.0.2",
     "@types/tunnel-ssh": "^4.1.0",
     "@types/uuid": "^3.4.5",
+    "angular-fittext": "^2.1.1",
     "bootstrap": "^4.3.1",
     "date-fns": "^1.30.1",
     "electron-better-ipc": "https://github.com/garrylachman/electron-better-ipc",

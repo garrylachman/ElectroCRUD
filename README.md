@@ -40,10 +40,10 @@ After a few years that the project was inactive, I decided to bring it an alive 
   - [x] Add / Edit / Remove widgets
   - [x] Aggregation functions (AVG, SUM, MIN, MAX, COUNT)
   - [ ] Apply filters on widget data
-- [ ] View filters (build where clauses to filter the data)
-  - [ ] Add / Edit / Remove filter in each view
-  - [ ] One click apply / unapply on view data
-  - [ ] Simple & friendly interface to build where clauses
+- [x] View filters (build where clauses to filter the data)
+  - [x] Add / Edit / Remove filter in each view
+  - [x] One click apply / unapply on view data
+  - [x] Simple & friendly interface to build where clauses
 - [ ] Process manager (view running queries)
 - [ ] Export / Import of all user accounts.
 
@@ -56,9 +56,9 @@ After a few years that the project was inactive, I decided to bring it an alive 
 ## Download Binaries ![GitHub release](https://img.shields.io/github/release/garrylachman/ElectroCRUD.svg?style=for-the-badge)
 We are in early beta !!!
 
-* [Mac OSX (Release beta)](https://github.com/garrylachman/ElectroCRUD/releases/download/2.1.1-beta/ElectroCRUD-2.1.1-beta.dmg)
-* [Linux (Release beta)](https://github.com/garrylachman/ElectroCRUD/releases/download/2.1.1-beta/ElectroCRUD.2.1.1-beta.AppImage)
-* [Windows (Release beta)](https://github.com/garrylachman/ElectroCRUD/releases/download/2.1.1-beta/ElectroCRUD.2.1.1-beta.exe)
+* [Mac OSX (Release beta)](https://github.com/garrylachman/ElectroCRUD/releases/download/2.2.0-beta/ElectroCRUD-2.2.0-beta.dmg)
+* [Linux (Release beta)](https://github.com/garrylachman/ElectroCRUD/releases/download/2.2.0-beta/ElectroCRUD.2.2.0-beta.AppImage)
+* [Windows (Release beta)](https://github.com/garrylachman/ElectroCRUD/releases/download/2.2.0-beta/ElectroCRUD.2.2.0-beta.exe)
 
 ## Download Sources
 [ElectroCRUD on GitHub](https://github.com/garrylachman/ElectroCRUD)

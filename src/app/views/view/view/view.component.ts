@@ -9,8 +9,9 @@ import { NgModel } from '@angular/forms';
 import { NbMenuService, NbDialogService, NbToastrService } from '@nebular/theme';
 import { Subscription } from 'rxjs';
 import { ConfirmDeleteComponent } from '../../../components/dialogs/confirm-delete/confirm-delete.component';
-import { IIPCDeleteDataWhereOpr, IIPCDeleteDataResponseMessage } from '../../../../shared/ipc/views.ipc';
+import { IIPCDeleteDataWhereOpr, IIPCDeleteDataResponseMessage, IIPCReadDataWhere } from '../../../../shared/ipc/views.ipc';
 import { BreadcrumbsService } from '../../../services/breadcrumbs.service';
+import { IViewFilter } from '../../../../shared/interfaces/filters.interface';
 
 @Component({
   selector: 'app-view-view',
@@ -41,6 +42,8 @@ export class ViewViewComponent implements OnInit, OnDestroy {
   menuServiceObserver:Subscription;
   routeObserver:Subscription;
 
+  selectedFilter: IViewFilter;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -63,6 +66,9 @@ export class ViewViewComponent implements OnInit, OnDestroy {
     });
 
     this.menuServiceObserver = this.menuService.onItemClick().subscribe(item => {
+      if (item.tag != "rowMenu") {
+        return;
+      }
       switch(item.item.title) {
         case 'Edit':
           this.editRow(item.item.data)
@@ -78,6 +84,20 @@ export class ViewViewComponent implements OnInit, OnDestroy {
     this.menuServiceObserver.unsubscribe();
     this.routeObserver.unsubscribe();
     this.breadcrumbsService.removeChildByURL(`/views/${this.view.id}/view/view`);
+  }
+
+  onFilterSelected(event: IViewFilter) {
+    // set selected filter
+    this.selectedFilter = event;
+    // reload the data
+    this.selectLimit(this.limit);
+  }
+
+  onFilterDeselected() {
+    // remove any selected filter
+    this.selectedFilter = null;
+    // reload the data
+    this.selectLimit(this.limit);
   }
 
   deleteView(): void {
@@ -197,7 +217,13 @@ export class ViewViewComponent implements OnInit, OnDestroy {
   }
 
   async reload() {
-    let data = await this.viewsIPCService.readData(this.view.table, this.view.columns.filter(col => col.enabled).map(col => col.name), this.limit, this.offset);
+    let data = await this.viewsIPCService
+      .readData(
+        this.view.table, 
+        this.view.columns.filter(col => col.enabled).map(col => col.name), 
+        this.limit, 
+        this.offset
+        );
     this.totalElements = data.count;
     let columns = data.data.length > 0 ? Object.keys([...data.data].shift()).map(val => ({ name: val, prop: val })) : [];
     console.log("columns", columns)
@@ -218,7 +244,8 @@ export class ViewViewComponent implements OnInit, OnDestroy {
         this.limit, 
         sqlOffset,
         this.view.columns.filter(col => col.searchable).map(col => col.name),
-        (this.searchInputModel && String(this.searchInputModel).length > 1) ? String(this.searchInputModel)  : null
+        (this.searchInputModel && String(this.searchInputModel).length > 1) ? String(this.searchInputModel)  : null,
+        this.selectedFilter ? this.selectedFilter.where as IIPCReadDataWhere[] : null
       );
     this.rows = [...data.data];
   }
