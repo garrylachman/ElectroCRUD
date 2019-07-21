@@ -1,11 +1,11 @@
-import { Component, OnInit, Input, OnDestroy, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy, Output, EventEmitter, OnChanges } from '@angular/core';
 import { NbSidebarService, NbMenuItem, NbDialogService, NbToastrService, NbMenuService, NbMenuBag } from '@nebular/theme';
 import { IView } from '../../../../../../shared/interfaces/views.interface';
 import { ViewsService } from '../../../../../services/store/views.service';
 import { AddEditFilterModalComponent } from './add-edit-filter-modal/add-edit-filter-modal.component';
 import { IViewFilter } from '../../../../../../shared/interfaces/filters.interface';
 import { ConfirmDeleteComponent } from '../../../../../components/dialogs/confirm-delete/confirm-delete.component';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 
 export enum FilterMenuActions {
   APPLY = 1,
@@ -19,7 +19,7 @@ export enum FilterMenuActions {
   templateUrl: './filters.component.html',
   styleUrls: ['./filters.component.scss']
 })
-export class FiltersComponent implements OnInit, OnDestroy {
+export class FiltersComponent implements OnInit, OnDestroy, OnChanges {
 
    /**
    * Input for the filters view
@@ -45,10 +45,24 @@ export class FiltersComponent implements OnInit, OnDestroy {
     private menuService: NbMenuService
   ) { }
 
+  ngOnChanges(changes) {
+    if (changes.view) {
+      this.reloadData();
+    }
+  }
+
+  onMenuClick() {
+    if (!this.isOpen) {
+      this.toggle();
+    }
+  }
+
   ngOnInit() {
+    
     this.sidebarServiceOnToggleSub = this.sidebarService
     .onToggle()
     .subscribe((val) => {
+      console.log("on Toggle", val);
       if (val.tag == "right") {
         this.isOpen = !this.isOpen;
       }
@@ -84,6 +98,7 @@ export class FiltersComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.sidebarServiceOnToggleSub.unsubscribe();
     this.menuServiceOnItemSelectSub.unsubscribe();
+    this.menuItems = [];
   }
 
   toggle() {

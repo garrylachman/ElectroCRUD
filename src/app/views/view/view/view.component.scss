@@ -50,3 +50,12 @@ nb-sidebar.filter-side-bar .main-container-fixed {
 nb-sidebar.filter-side-bar .main-container-fixed .scrollable {
     padding: 0px;
 }
+
+app-widgets {
+    display: block;
+    overflow: hidden;
+}
+
+.view-main-content-layout-column {
+    padding-top: 0px !important;
+}

@@ -9,7 +9,7 @@
           <nb-card-body>
             <div class="row">
               <div class="col-lg-12 widget-title">{{widget.name}}</div>
-              <div class="col-lg-12 widget-value" [fittext]="true" [activateOnResize]="true" [compression]="5-(widget?.lastResult.toString().length/7)" fontUnit="px">{{widget?.lastResult}}</div>
+              <div class="col-lg-12 widget-value" [fittext]="true" [activateOnResize]="true" [compression]="5-(widget?.lastResult?.toString().length/7)" fontUnit="px">{{widget?.lastResult}}</div>
               <div class="widget-icon">
                 <nb-icon icon="{{widget.icon}}" size="large" status="{{widget.color}}" [options]="{ animation: { type: 'zoom' } }"></nb-icon>
               </div>

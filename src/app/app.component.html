@@ -1,4 +1,4 @@
-<nb-layout>
+<nb-layout windowMode>
   <nb-layout-header fixed>
       <h1>ElectroCRUD 2</h1>
       <nb-actions size="medium">
@@ -13,7 +13,7 @@
       </nb-actions>
   </nb-layout-header>
 
-  <nb-sidebar>
+  <nb-sidebar tag="left-sidebar">
     <h5 id='active-account' *ngIf="account">{{account?.name}}</h5>
     <nb-menu [items]="items"></nb-menu>
     <div class="control-panel">
