@@ -1,0 +1,32 @@
+<!-- Side Menu Title + Open / Close Button-->
+<button
+    nbButton
+    ghost
+    size="small"
+    nbTooltip="Filters. Click to open / close."
+    nbTooltipPlacement="top"
+    nbTooltipStatus="primary"
+    class="padding-1-rem"
+    (click)="toggle()"
+  >
+    <nb-icon icon="funnel"></nb-icon>
+    <span *ngIf="isOpen">Filters</span>
+  </button>
+
+<!-- Add new filter button (only in open mode) -->
+<button
+  nbButton
+  hero 
+  size="small"
+  nbTooltip="Add a new filter"
+  nbTooltipPlacement="top"
+  nbTooltipStatus="primary"
+  class="padding-1-rem float-right"
+  (click)="add()" 
+  *ngIf="isOpen"
+>
+  <nb-icon icon="plus"></nb-icon>
+  Add
+</button>
+
+<nb-menu tag="filtersMenu" [items]="menuItems" autoCollapse="true"></nb-menu>

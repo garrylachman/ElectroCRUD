@@ -22,7 +22,7 @@ export interface IIPCReadDataSearch {
 
 export interface IIPCReadDataWhere {
     column: string;
-    opr: IIPCReadDataWhereOpr;
+    opr: IIPCReadDataWhereOpr | string;
     value: any;
     or: boolean;
 }
