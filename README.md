@@ -63,6 +63,9 @@ We are in early beta !!!
 ## Download Sources
 [ElectroCRUD on GitHub](https://github.com/garrylachman/ElectroCRUD)
 
+## How to Video
+[![How to use](https://img.youtube.com/vi/pt2L4wKTwqA/0.jpg)](https://youtu.be/pt2L4wKTwqA?t=35s "How to use")
+
 ## Screenshots
 <img src="https://i.imgur.com/gV1QHYK.png" width="49.5%" style="float:left" /> <img width="49.5%" src="https://i.imgur.com/02DoYz1.png" style="float:left" />
 <img src="https://i.imgur.com/CotNi4G.png" style="float:left" width="49.5%" /> <img width="49.5%" src="https://i.imgur.com/9MEQMbL.png" style="float:left" />
