@@ -56,12 +56,15 @@ After a few years that the project was inactive, I decided to bring it an alive 
 ## Download Binaries ![GitHub release](https://img.shields.io/github/release/garrylachman/ElectroCRUD.svg?style=for-the-badge)
 We are in early beta !!!
 
-* [Mac OSX (Release beta)](https://github.com/garrylachman/ElectroCRUD/releases/download/2.2.0-beta/ElectroCRUD-2.2.0-beta.dmg)
-* [Linux (Release beta)](https://github.com/garrylachman/ElectroCRUD/releases/download/2.2.0-beta/ElectroCRUD.2.2.0-beta.AppImage)
-* [Windows (Release beta)](https://github.com/garrylachman/ElectroCRUD/releases/download/2.2.0-beta/ElectroCRUD.2.2.0-beta.exe)
+* [Mac OSX (Release beta)](https://github.com/garrylachman/ElectroCRUD/releases/download/2.2.1-beta/ElectroCRUD-2.2.1-beta.dmg)
+* [Linux (Release beta)](https://github.com/garrylachman/ElectroCRUD/releases/download/2.2.1-beta/ElectroCRUD.2.2.1-beta.AppImage)
+* [Windows (Release beta)](https://github.com/garrylachman/ElectroCRUD/releases/download/2.2.1-beta/ElectroCRUD.2.2.1-beta.exe)
 
 ## Download Sources
 [ElectroCRUD on GitHub](https://github.com/garrylachman/ElectroCRUD)
+
+## How to Video
+[![How to use](https://img.youtube.com/vi/pt2L4wKTwqA/0.jpg)](https://youtu.be/pt2L4wKTwqA?t=35s "How to use")
 
 ## Screenshots
 <img src="https://i.imgur.com/gV1QHYK.png" width="49.5%" style="float:left" /> <img width="49.5%" src="https://i.imgur.com/02DoYz1.png" style="float:left" />
