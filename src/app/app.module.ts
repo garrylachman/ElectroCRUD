@@ -1,7 +1,10 @@
 import 'reflect-metadata';
 import '../polyfills';
+import { AppConfig } from '../environments/environment';
+import { version } from '../../package.json';
+
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, ErrorHandler } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { HttpClientModule, HttpClient } from '@angular/common/http';
@@ -47,12 +50,28 @@ import { Ng2FittextModule } from "ng2-fittext";
 import { AddEditWidgetModalComponent } from './views/view/view/components/widgets/add-edit-widget-modal/add-edit-widget-modal.component';
 import { AddEditFilterModalComponent } from './views/view/view/components/filters/add-edit-filter-modal/add-edit-filter-modal.component';
 
+import bugsnag from '@bugsnag/js';
+import { BugsnagErrorHandler } from '@bugsnag/plugin-angular';
+
+// configure Bugsnag ASAP, before any other imports
+const bugsnagClient = bugsnag({
+  apiKey: 'e887c2bdd46d07375e191b250e168764',
+  appVersion: version,
+  appType: 'ui',
+  releaseStage: AppConfig.environment
+})
+
+// create a factory which will return the bugsnag error handler
+export function errorHandlerFactory() {
+  return new BugsnagErrorHandler(bugsnagClient)
+}
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
+console.log("version: ", version ,", env: ", AppConfig.environment);
 
 @NgModule({
   declarations: [
@@ -103,7 +122,17 @@ export function HttpLoaderFactory(http: HttpClient) {
     FormlyBootstrapModule,
     Ng2FittextModule
   ],
-  providers: [ElectronService, NbMenuService, NbDialogService, AccountsService, NbDatepickerDirective],
+  providers: [
+    ElectronService, 
+    NbMenuService, 
+    NbDialogService, 
+    AccountsService, 
+    NbDatepickerDirective,
+    {
+      provide: ErrorHandler, 
+      useFactory: errorHandlerFactory
+    },
+  ],
   entryComponents: [ConfirmDeleteComponent, AddEditWidgetModalComponent, AddEditFilterModalComponent],
   bootstrap: [AppComponent]
 })
