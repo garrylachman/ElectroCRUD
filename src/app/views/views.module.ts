@@ -42,9 +42,10 @@ import { Ng2FittextModule } from "ng2-fittext";
 import { BreadcrumbsService } from '../services/breadcrumbs.service';
 import { FiltersComponent } from './view/view/components/filters/filters.component';
 import { AngularFittextModule } from 'angular-fittext';
+import { SubViewComponent } from './view/view/components/sub-view/sub-view.component';
 
 @NgModule({
-  declarations: [ViewComponent, ConfigureComponent, EmptyComponent, ViewEditComponent, ViewAddComponent, WidgetsComponent, ViewViewComponent, RowFormComponent, FormlyFieldNbInputComponent, FormlyFieldNbSelectComponent, FormlyFieldNbChechboxComponent, FormlyFieldNbDatepickerComponent, FormlyFieldNbTextareaComponent, FiltersComponent],
+  declarations: [ViewComponent, ConfigureComponent, EmptyComponent, ViewEditComponent, ViewAddComponent, WidgetsComponent, ViewViewComponent, RowFormComponent, FormlyFieldNbInputComponent, FormlyFieldNbSelectComponent, FormlyFieldNbChechboxComponent, FormlyFieldNbDatepickerComponent, FormlyFieldNbTextareaComponent, FiltersComponent, SubViewComponent],
   providers: [BreadcrumbsService],
   imports: [
     CommonModule,
@@ -92,6 +93,6 @@ import { AngularFittextModule } from 'angular-fittext';
     NbMenuModule,
     AngularFittextModule,
   ],
-  entryComponents: [ViewComponent, ConfigureComponent, EmptyComponent, ViewEditComponent, ViewAddComponent, ViewViewComponent, WidgetsComponent]
+  entryComponents: [ViewComponent, ConfigureComponent, EmptyComponent, ViewEditComponent, ViewAddComponent, ViewViewComponent, WidgetsComponent, SubViewComponent]
 })
 export class ViewsModule { }

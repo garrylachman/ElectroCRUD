@@ -1,0 +1,16 @@
+<ngx-datatable #subTable 
+  class="bootstrap" 
+  [rows]="rows"
+  [columns]="columns" 
+  [loadingIndicator]="true"
+  [columnMode]="'force'"
+  [headerHeight]="30"
+  [footerHeight]="30"
+  [rowHeight]="'auto'"
+  [reorderable]="true"
+  [externalPaging]="true"
+  [count]="totalElements"
+  [offset]="offset"
+  [limit]="limit"
+  (page)='setPage($event)'
+  ></ngx-datatable>

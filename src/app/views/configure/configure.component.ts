@@ -209,7 +209,7 @@ export class ConfigureComponent implements OnInit {
 
       if (this.subviewForm.value.subviewEnabledCtrl) {
         this.view.subview.enabled = this.subviewForm.value.subviewEnabledCtrl;
-        this.view.subview.view_id = this.subviewForm.value.subviewTargetView;
+        this.view.subview.view_id = this.subviewForm.value.subviewViewIdCtrl;
         this.view.subview.ref = {
           source_column: this.subviewForm.value.subviewSourceColumnCtrl,
           target_column: this.subviewForm.value.subviewTargetColumnCtrl
