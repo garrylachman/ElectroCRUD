@@ -86,6 +86,12 @@ export class ConfigureComponent implements OnInit {
       this.view.subview = {
         enabled: false,
       }
+    } else {
+      // init subviewTargetView if we have already subview (edit mode)
+      if (this.view.subview.view_id)  {
+        // load the target view to subviewTargetView
+        this.subviewTargetView = this.viewsService.get(this.view.subview.view_id);
+      }
     }
 
     this.viewHeaderForm = this.fb.group({

@@ -99,11 +99,11 @@
               <nb-icon icon="more-vertical-outline"></nb-icon>
             </button>
           </ng-template>
-          <ng-template #subviewTableIconTmpl let-row="row">
+          <ng-template #subviewTableIconTmpl let-row="row" let-expanded="expanded">
               <button 
                 class='tableContextMenuButton' ghost nbButton 
                 (click)="subviewTableAction(row)">
-                <nb-icon icon="plus-square"></nb-icon>
+                <nb-icon icon="{{expanded ? 'minus-square' : 'plus-square'}}" icon-end="false"></nb-icon>
               </button>
             </ng-template>
       </nb-card-body>
