@@ -51,6 +51,11 @@ nb-sidebar.filter-side-bar .main-container-fixed .scrollable {
     padding: 0px;
 }
 
+::ng-deep
+.inner_scroll .scrollable-container {
+    height: auto !important;
+}
+
 app-widgets {
     display: block;
     overflow: hidden;

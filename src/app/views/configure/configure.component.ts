@@ -33,9 +33,12 @@ export class ConfigureComponent implements OnInit {
 
   viewHeaderForm: FormGroup;
   termForm: FormGroup;
+  subviewForm: FormGroup;
 
   isSaveEnabled:boolean = false;
   isHavePrimaryKey: boolean = false;
+  allViews: IView[] = [];
+  subviewTargetView: IView;
 
   constructor(
     private route: ActivatedRoute,
@@ -71,8 +74,18 @@ export class ConfigureComponent implements OnInit {
           update: true,
           delete: true
         },
-        columns: []
+        columns: [],
       };
+    }
+
+    // load all view to display in subviews form
+    this.allViews = this.viewsService.all(this.sessionsService.activeAccount);
+
+    // init empty subview if no value
+    if (!this.view.subview) {
+      this.view.subview = {
+        enabled: false,
+      }
     }
 
     this.viewHeaderForm = this.fb.group({
@@ -85,8 +98,43 @@ export class ConfigureComponent implements OnInit {
       termManyCtrl: [this.view.terms.many, Validators.compose([Validators.required, Validators.minLength(1)])],
     });
 
+    this.subviewForm = this.fb.group({
+      subviewEnabledCtrl: [this.view.subview.enabled, Validators.nullValidator],
+      subviewViewIdCtrl: [this.view.subview.view_id || null, Validators.nullValidator],
+      subviewSourceColumnCtrl: [this.view.subview.ref ? this.view.subview.ref.source_column : null, Validators.nullValidator],
+      subviewTargetColumnCtrl: [this.view.subview.ref ? this.view.subview.ref.target_column : null, Validators.nullValidator],
+    });
+
+    this.subviewForm.controls['subviewEnabledCtrl'].valueChanges.subscribe(value => {
+      // Enable/Disable subview form
+      this.view.subview.enabled = value;
+
+      // Change validators on subview enable/disable change
+      const newValidator = value ? Validators.required : Validators.nullValidator;
+      this.subviewForm.controls['subviewViewIdCtrl'].setValidators([newValidator]);
+      this.subviewForm.controls['subviewSourceColumnCtrl'].setValidators([newValidator]);
+      this.subviewForm.controls['subviewTargetColumnCtrl'].setValidators([newValidator]);
+
+      this.subviewForm.controls['subviewViewIdCtrl'].updateValueAndValidity();
+      this.subviewForm.controls['subviewSourceColumnCtrl'].updateValueAndValidity();
+      this.subviewForm.controls['subviewTargetColumnCtrl'].updateValueAndValidity();
+
+      this.checkForm()
+    });
+
+    this.subviewForm.controls['subviewViewIdCtrl'].valueChanges.subscribe(value => {
+      // set target view id in subview.view_id
+      this.view.subview.view_id = value;
+
+      if (this.view.subview.view_id)  {
+        // load the target view to subviewTargetView
+        this.subviewTargetView = this.viewsService.get(value);
+      }
+    });
+
     this.viewHeaderForm.controls['viewtTableCtrl'].valueChanges.subscribe(value => this.selectedChange(value));
     this.viewHeaderForm.valueChanges.subscribe((v) => this.checkForm());
+    this.subviewForm.valueChanges.subscribe((v) => this.checkForm());
 
     await this.loadTablesList();
   }
@@ -149,15 +197,24 @@ export class ConfigureComponent implements OnInit {
   }
 
   checkForm() {
-    this.isSaveEnabled = this.viewHeaderForm.valid && this.termForm.valid;
+    this.isSaveEnabled = this.viewHeaderForm.valid && this.termForm.valid && this.subviewForm.valid
   }
 
   save() {
-    if (this.viewHeaderForm.valid && this.termForm.valid) {
+    if (this.viewHeaderForm.valid && this.termForm.valid && this.subviewForm.valid) {
       this.view.name = this.viewHeaderForm.value.viewtNameCtrl;
       this.view.terms.one = this.termForm.value.termOneCtrl;
       this.view.terms.many = this.termForm.value.termManyCtrl;
       this.view.columns = [...this.rows] as IViewColumn[];
+
+      if (this.subviewForm.value.subviewEnabledCtrl) {
+        this.view.subview.enabled = this.subviewForm.value.subviewEnabledCtrl;
+        this.view.subview.view_id = this.subviewForm.value.subviewTargetView;
+        this.view.subview.ref = {
+          source_column: this.subviewForm.value.subviewSourceColumnCtrl,
+          target_column: this.subviewForm.value.subviewTargetColumnCtrl
+        };
+      }
 
       let insertedId:number;
 
