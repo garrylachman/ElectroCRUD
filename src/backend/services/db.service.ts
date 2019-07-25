@@ -168,9 +168,8 @@ export class DatabaseService {
     ): Promise<any | Error> {
         console.log("where", where);
         try {
-            let countRes = await this.connection.count().from(table);
-            console.log("countRes: ", countRes);
             let q = this.connection.select(...columns).from(table);
+
             if (searchColumns && searchText) {
                 q = q.whereWrapped((wq) => {
                     searchColumns.forEach((sCol: string, idx: number) => {
@@ -195,9 +194,11 @@ export class DatabaseService {
                     }
                 })
             }
-            
+            let countRes = await q.clone().count();
+            console.log("countRes: ", countRes);
+
             let res = await q.limit(limit).offset(offset);
-            console.log("raw query: ", q.toQuery())
+            console.log("raw query: ", q.toQuery());
 
             console.log(res);
             return {

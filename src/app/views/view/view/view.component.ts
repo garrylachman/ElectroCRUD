@@ -22,6 +22,7 @@ export class ViewViewComponent implements OnInit, OnDestroy {
 
   @ViewChild(DatatableComponent, { static: false }) table: DatatableComponent;
   @ViewChild('tableContextMenuTmpl', { static: true }) tableContextMenuTmpl: TemplateRef<any>;
+  @ViewChild('subviewTableIconTmpl', { static: true }) subviewTableIconTmpl: TemplateRef<any>;
 
   view: IView;
   isLoading: boolean = false;
@@ -59,6 +60,7 @@ export class ViewViewComponent implements OnInit, OnDestroy {
   ngAfterViewChecked() {
     
   }
+
   async ngOnInit() {
     this.routeObserver = this.route.parent.params.subscribe((params) => {
       console.log("params", params);
@@ -227,7 +229,12 @@ export class ViewViewComponent implements OnInit, OnDestroy {
     this.totalElements = data.count;
     let columns = data.data.length > 0 ? Object.keys([...data.data].shift()).map(val => ({ name: val, prop: val })) : [];
     console.log("columns", columns)
-    this.columns = [...columns, { cellTemplate: this.tableContextMenuTmpl, frozenRight: true, maxWidth: 50, resizeable: false }];
+    let subviewActionColumn = this.view.subview && this.view.subview.enabled ? [{ cellTemplate: this.subviewTableIconTmpl, frozenLeft: true, maxWidth: 50, resizeable: false }] : [];
+    this.columns = [
+      ...subviewActionColumn,
+      ...columns, 
+      { cellTemplate: this.tableContextMenuTmpl, frozenRight: true, maxWidth: 50, resizeable: false }
+    ];
     this.rows = [...data.data];
     console.log("rows", this.rows)
     console.log(data);
@@ -248,6 +255,7 @@ export class ViewViewComponent implements OnInit, OnDestroy {
         this.selectedFilter ? this.selectedFilter.where as IIPCReadDataWhere[] : null
       );
     this.rows = [...data.data];
+    this.totalElements = data.count;
   }
 
   doSearch(event): void {
@@ -268,6 +276,16 @@ export class ViewViewComponent implements OnInit, OnDestroy {
       mItem.data = row;
       return mItem
     });
+  }
+
+  subviewTableAction(row): void {
+    console.log("click", row);
+    this.table.rowDetail.toggleExpandRow(row);
+
+  }
+
+  onSubviewToggle(event):void {
+    console.log("onSubviewToggle", event);
   }
 
 }

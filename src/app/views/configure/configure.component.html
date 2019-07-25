@@ -1,9 +1,10 @@
-<nb-layout>
-  
-    <nb-layout-column  class="colored-column-primary padding-0" start>
 <nb-card>
     <nb-card-header><h1 class="page-header h4">{{title}}</h1></nb-card-header>
 </nb-card>
+
+<nb-layout class="inner_scroll" [withScroll]="false" [windowMode]="false">
+  
+    <nb-layout-column  class="colored-column-primary" start>
 
 <nb-card [nbSpinner]="isLoading" nbSpinnerSize="giant" nbSpinnerStatus="primary">
     <nb-card-header>
@@ -45,7 +46,7 @@
     </nb-card-body>
 </nb-card>
 
-<div class="row">
+<div class="row" *ngIf="view?.table">
   <div class="col-md-4">
     <nb-card>
       <nb-card-header>Terminology</nb-card-header>
@@ -86,6 +87,50 @@
         </nb-card-body>
     </nb-card>
   </div>
+</div>
+
+<div class="row"  *ngIf="view?.table">
+  <div class="col-md-6">
+    <nb-card>
+      <nb-card-header>Sub View</nb-card-header>
+      <nb-card-body>
+        <div [formGroup]="subviewForm">
+          <p>Connect an existing view as a subview to display child table rows.</p>
+          <div class="form-group">
+            <nb-checkbox formControlName="subviewEnabledCtrl">Enabled</nb-checkbox>
+          </div>
+
+          <div class="form-group margin-bottom-0_5rem">
+            <label class="label" >Select a view to using as a subview</label>
+            <nb-select formControlName="subviewViewIdCtrl" fullWidth placeholder="Select View" [disabled]="!view.subview?.enabled">
+              <nb-option *ngFor="let view of allViews" value="{{view.id}}">{{view.name}}</nb-option>
+            </nb-select>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="label">Select local column to match</label>
+                <nb-select formControlName="subviewSourceColumnCtrl" fullWidth placeholder="Local Column" [disabled]="!view.subview?.enabled && !view.subview?.view_id">
+                  <nb-option *ngFor="let col of view?.columns" value="{{col.name}}">{{col.name}}</nb-option>
+                </nb-select>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="label" >to match in `{{subviewTargetView?.name}}`</label>
+                <nb-select formControlName="subviewTargetColumnCtrl" fullWidth placeholder="Target Column" [disabled]="!view.subview?.enabled && !view.subview?.view_id">
+                  <nb-option *ngFor="let col of subviewTargetView?.columns" value="{{col.name}}">{{col.name}}</nb-option>
+                </nb-select>
+              </div>
+            </div>
+          </div>
+      </div>
+      </nb-card-body>
+    </nb-card>
+  </div>
+
 </div>
 
 <nb-card>

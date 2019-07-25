@@ -49,6 +49,42 @@ export interface IView {
      * Array of view filters
      */
     filters?:IViewFilter[];
+    /**
+     * Reference to Subview
+     */
+    subview?: ISubView;
+}
+
+/**
+ * Interface represent a subview
+ */
+export interface ISubView {
+    /**
+     * Is subview enabled
+     */
+    enabled: boolean;
+    /**
+     * Target view id
+     */
+    view_id?: number;
+    /**
+     * ISubViewRef interface, the columns connections between the views
+     */
+    ref?: ISubViewRef
+}
+
+/**
+ * Interface represent a subview to view referances
+ */
+export interface ISubViewRef {
+    /**
+     * The source view column we match
+     */
+    source_column: string;
+    /**
+     * The target view column we match
+     */
+    target_column: string;
 }
 
 /**

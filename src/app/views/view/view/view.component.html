@@ -1,4 +1,4 @@
-<nb-layout [withScroll]="false" [windowMode]="false">
+<nb-layout class="inner_scroll" [withScroll]="false" [windowMode]="false">
   
   <nb-layout-column  class="colored-column-primary view-main-content-layout-column" start>
 
@@ -75,6 +75,21 @@
           [limit]="limit"
           (page)='setPage($event)'
           >
+            <ngx-datatable-row-detail
+              [rowHeight]="'auto'"
+              #rowDetail
+              (toggle)="onSubviewToggle($event)"
+            >
+              <ng-template
+                let-row="row"
+                let-expanded="expanded"
+                ngx-datatable-row-detail-template
+              >
+                <div style="padding-left:35px;">
+                  <app-sub-view [subview]="view.subview" [row]="row"></app-sub-view>
+                </div>
+              </ng-template>
+            </ngx-datatable-row-detail>
           </ngx-datatable>
           <ng-template #tableContextMenuTmpl let-row="row">
             <button 
@@ -84,6 +99,13 @@
               <nb-icon icon="more-vertical-outline"></nb-icon>
             </button>
           </ng-template>
+          <ng-template #subviewTableIconTmpl let-row="row" let-expanded="expanded">
+              <button 
+                class='tableContextMenuButton' ghost nbButton 
+                (click)="subviewTableAction(row)">
+                <nb-icon icon="{{expanded ? 'minus-square' : 'plus-square'}}" icon-end="false"></nb-icon>
+              </button>
+            </ng-template>
       </nb-card-body>
     </nb-card>
 

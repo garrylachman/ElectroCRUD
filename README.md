@@ -14,7 +14,7 @@ After a failed search for a basic admin panel that not involves writing code or 
 The ElectroCRUD v1 was born in 2016, An Electron application that made it possible to create a friendly dashboard with data tables, search, widgets, filter & relations with few clicks without any experience in programming.
 
 ### ElectroCRUD v2
-After a few years that the project was inactive, I decided to bring it an alive again. The codebase was build from scratch using Electron+Angular8. Many of the original functionality is still missing, but I'm working to cover backward compatibility.
+After a few years that the project was inactive, I decided to bring it an alive again. The codebase was build from scratch using Electron+Angular8. The new version contains most of the features of the first version, and new features added on a weekly basis.
 
  [![forthebadge](https://forthebadge.com/images/badges/approved-by-george-costanza.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/as-seen-on-tv.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com) 
 
@@ -25,7 +25,7 @@ After a few years that the project was inactive, I decided to bring it an alive 
   - [x] Add / Edit
   - [x] Test connection (ssh, db)
   - [ ] Export / Import
-- [x] Views (represent a table) 
+- [x] Views (represent a table)
   - [x] Add new view & Edit view configurations
   - [x] Data table with pagination
   - [x] Search
@@ -34,10 +34,12 @@ After a few years that the project was inactive, I decided to bring it an alive 
   - [x] Selection of columns to display or search by
   - [x] Add new record / Edit record
   - [x] Edit record
+  - [x] Connect existing view as sub views
   - [ ] Export data in various formats like: csv, dump
+- [x] Subviews (represent a sub table)
 - [ ] Views relations
-  - [ ] One to one, One to many
-  - [ ] Drill from view to view
+  - [x] Drill from view to view (subview)
+  - [ ] FOREIGN KEY interactive UI
 - [x] View widgets (display aggragated data in the view)
   - [x] Add / Edit / Remove widgets
   - [x] Aggregation functions (AVG, SUM, MIN, MAX, COUNT)
@@ -58,9 +60,9 @@ After a few years that the project was inactive, I decided to bring it an alive 
 ## Download Binaries ![GitHub release](https://img.shields.io/github/release/garrylachman/ElectroCRUD.svg?style=for-the-badge)
 We are in early beta !!!
 
-* [Mac OSX (Release beta)](https://github.com/garrylachman/ElectroCRUD/releases/download/2.2.1-beta/ElectroCRUD-2.2.1-beta.dmg)
-* [Linux (Release beta)](https://github.com/garrylachman/ElectroCRUD/releases/download/2.2.1-beta/ElectroCRUD.2.2.1-beta.AppImage)
-* [Windows (Release beta)](https://github.com/garrylachman/ElectroCRUD/releases/download/2.2.1-beta/ElectroCRUD.2.2.1-beta.exe)
+* [Mac OSX (Release beta)](https://github.com/garrylachman/ElectroCRUD/releases/download/2.3.0-beta/ElectroCRUD-2.3.0-beta.dmg)
+* [Linux (Release beta)](https://github.com/garrylachman/ElectroCRUD/releases/download/2.3.0-beta/ElectroCRUD.2.3.0-beta.AppImage)
+* [Windows (Release beta)](https://github.com/garrylachman/ElectroCRUD/releases/download/2.3.0-beta/ElectroCRUD.2.3.0-beta.exe)
 
 ## Download Sources
 [ElectroCRUD on GitHub](https://github.com/garrylachman/ElectroCRUD)
