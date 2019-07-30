@@ -4,12 +4,13 @@ import { SessionService } from '../../services/session.service';
 import { IView, IViewColumn } from '../../../shared/interfaces/views.interface';
 import { ViewsService } from '../../services/store/views.service';
 import {
-  NbSpinnerService, NbToastrService
+  NbSpinnerService, NbToastrService, NbDialogService
 } from '@nebular/theme';
 import { NgModel, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ViewsIPCService } from '../../services/ipc/views.ipc.service';
 import { IPCListOfTablesResponseMessage, IIPCListOfTablesResponseMessage, IIPCTableInfoResponseMessage, IIPCTableInfoColumn } from '../../../shared/ipc/views.ipc';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
+import { ColumnReferanceDialogComponent } from './components/column-referance-dialog/column-referance-dialog.component';
 
 @Component({
   selector: 'app-configure',
@@ -47,7 +48,8 @@ export class ConfigureComponent implements OnInit {
     private viewsService: ViewsService,
     private viewsIPCService: ViewsIPCService,
     private fb: FormBuilder,
-    private toastrService: NbToastrService
+    private toastrService: NbToastrService,
+    private dialogService: NbDialogService
   ) { }
 
   async ngOnInit() {
@@ -164,7 +166,10 @@ export class ConfigureComponent implements OnInit {
         ...col,
         searchable: true,
         enabled: true,
-        nullable: Boolean(col.nullable),
+        info: this.getTagsForRow({
+          ...col,
+          ...localCol[0] || {}
+        }),
         ...localCol[0] || {}
       } as IViewColumn
     });
@@ -236,6 +241,41 @@ export class ConfigureComponent implements OnInit {
     } else {
       this.toastrService.danger("Some details are missing or invalid, please check again.")
     }
+  }
+
+  addEditReferance(row) {
+    this.dialogService
+      .open<any>(ColumnReferanceDialogComponent, { 
+        hasBackdrop: true,
+        context: {
+          row: row
+        }
+      })
+      .onClose
+      .subscribe((res) => {
+        console.log("res", res);
+      });
+  }
+
+  getTagsForRow(row: IViewColumn): string[] {
+    let tags: string[] = [];
+    if (row.type) {
+      if (row.length) {
+        tags.push(`${row.type}(${row.length})`);
+      } else {
+        tags.push(`${row.type}`);
+      }
+    }
+    if (row.nullable) {
+      tags.push("Nullable");
+    }
+    if (row.key) {
+      tags.push(row.key);
+    }
+    if (row.extra) {
+      tags.push(row.extra);
+    }
+    return tags;
   }
 
 }

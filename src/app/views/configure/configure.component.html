@@ -27,21 +27,33 @@
             [limit]="10"
         >
         <ngx-datatable-column name="Name"></ngx-datatable-column>
-        <ngx-datatable-column name="Enabled" [sortable]="false" [canAutoResize]="false" [draggable]="false" [resizeable]="false">
+        <ngx-datatable-column name="Enabled" [sortable]="false" [canAutoResize]="false" [width]="120" [draggable]="false" [resizeable]="false">
           <ng-template ngx-datatable-cell-template let-value="value" let-row="row" let-onCheckboxChangeFn="onCheckboxChangeFn">
             <nb-checkbox [checked]=value (checkedChange)="row.enabled=$event"></nb-checkbox>
           </ng-template>
         </ngx-datatable-column>
-        <ngx-datatable-column name="Searchable" [sortable]="false" [canAutoResize]="false" [draggable]="false" [resizeable]="false">
-            <ng-template ngx-datatable-cell-template let-value="value" let-row="row" let-onCheckboxChangeFn="onCheckboxChangeFn">
-              <nb-checkbox [checked]=value (checkedChange)="row.searchable=$event"></nb-checkbox>
-            </ng-template>
-          </ngx-datatable-column>
-        <ngx-datatable-column name="Type"></ngx-datatable-column>
-        <ngx-datatable-column name="Nullable"></ngx-datatable-column>
+        <ngx-datatable-column name="Searchable" [sortable]="false" [canAutoResize]="false" [width]="120" [draggable]="false" [resizeable]="false">
+          <ng-template ngx-datatable-cell-template let-value="value" let-row="row" let-onCheckboxChangeFn="onCheckboxChangeFn">
+            <nb-checkbox [checked]=value (checkedChange)="row.searchable=$event"></nb-checkbox>
+          </ng-template>
+        </ngx-datatable-column>
         <ngx-datatable-column name="Default"></ngx-datatable-column>
-        <ngx-datatable-column name="Key"></ngx-datatable-column>
-        <ngx-datatable-column name="Extra"></ngx-datatable-column>
+        <ngx-datatable-column name="Info" [sortable]="false" [canAutoResize]="true" [draggable]="false" [resizeable]="false">
+          <ng-template ngx-datatable-cell-template let-value="value" let-row="row">
+            <tag-input [(ngModel)]="row.info" [hideForm]="true" [removable]="false" [ripple]="false"></tag-input>
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Actions">
+          <ng-template ngx-datatable-cell-template let-value="value" let-row="row">
+            <button 
+              nbButton status="primary" hero size="small" (click)="addEditReferance(row)" 
+              nbTooltip="Referance" nbTooltipPlacement="top" nbTooltipStatus="primary"
+            >
+              <nb-icon icon="folder"></nb-icon>
+              Referance
+            </button>
+          </ng-template>
+        </ngx-datatable-column>
       </ngx-datatable>
     </nb-card-body>
 </nb-card>

@@ -52,6 +52,8 @@ import { AddEditFilterModalComponent } from './views/view/view/components/filter
 
 import bugsnag from '@bugsnag/js';
 import { BugsnagErrorHandler } from '@bugsnag/plugin-angular';
+import { ColumnReferanceDialogComponent } from './views/configure/components/column-referance-dialog/column-referance-dialog.component';
+import { NgBootstrapFormValidationModule } from 'ng-bootstrap-form-validation';
 
 // configure Bugsnag ASAP, before any other imports
 const bugsnagClient = bugsnag({
@@ -80,7 +82,8 @@ console.log("version: ", version ,", env: ", AppConfig.environment);
     WebviewDirective,
     ConfirmDeleteComponent,
     AddEditWidgetModalComponent,
-    AddEditFilterModalComponent
+    AddEditFilterModalComponent,
+    ColumnReferanceDialogComponent
   ],
   exports: [
     ConfirmDeleteComponent,
@@ -120,7 +123,8 @@ console.log("version: ", version ,", env: ", AppConfig.environment);
     FormlyModule.forRoot(),
     NbDatepickerModule.forRoot(),
     FormlyBootstrapModule,
-    Ng2FittextModule
+    Ng2FittextModule,
+    NgBootstrapFormValidationModule.forRoot(),
   ],
   providers: [
     ElectronService, 
@@ -133,7 +137,7 @@ console.log("version: ", version ,", env: ", AppConfig.environment);
       useFactory: errorHandlerFactory
     },
   ],
-  entryComponents: [ConfirmDeleteComponent, AddEditWidgetModalComponent, AddEditFilterModalComponent],
+  entryComponents: [ConfirmDeleteComponent, AddEditWidgetModalComponent, AddEditFilterModalComponent, ColumnReferanceDialogComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
