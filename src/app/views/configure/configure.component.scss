@@ -58,3 +58,12 @@ tag-input .ng2-tag-input tag {
     color: nb-theme(text-basic-color) !important;
     box-shadow: none !important;
 }
+
+.btn-relerance {
+    position: relative !important;
+}
+
+.btn-relerance nb-badge {
+    top: -5px;
+    right: -5px;
+}

@@ -243,7 +243,8 @@ export class ConfigureComponent implements OnInit {
     }
   }
 
-  addEditReferance(row) {
+  addEditReferance(row: IViewColumn) {
+    console.log("addEditReferance", row)
     this.dialogService
       .open<any>(ColumnReferanceDialogComponent, { 
         hasBackdrop: true,
@@ -254,7 +255,15 @@ export class ConfigureComponent implements OnInit {
       .onClose
       .subscribe((res) => {
         console.log("res", res);
+        if (res) {
+          row.ref = res;
+        }
       });
+  }
+
+  deleteReferance(event, row: IViewColumn) {
+    event.stopImmediatePropagation();
+    row.ref = null;
   }
 
   getTagsForRow(row: IViewColumn): string[] {

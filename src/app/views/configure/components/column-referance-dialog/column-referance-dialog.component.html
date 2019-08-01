@@ -6,30 +6,30 @@
       <div class="form-group mb-3">
         <label class="label" for="table">Referance table</label>
         <nb-select placeholder="Table" id="table" fullWidth formControlName="tableCtrl">
-          <nb-option></nb-option>
+          <nb-option *ngFor="let table of tables" [value]="table">{{table}}</nb-option>
         </nb-select>
       </div>
       <div class="form-group mb-3">
         <label class="label" for="match_column">Match column `{{viewColumn?.name}}` in referance table</label>
         <nb-select placeholder="Column" id="match_column" fullWidth formControlName="matchColumnCtrl">
-          <nb-option></nb-option>
+          <nb-option *ngFor="let col of columns" [value]="col.name">{{col.name}}</nb-option>
         </nb-select>
       </div>
       <!-- Use Column -->
       <div class="form-group">
         <label class="label" for="name">Use column as `{{viewColumn?.name}}` value</label>
         <nb-select placeholder="Column" id="name" fullWidth formControlName="nameCtrl">
-          <nb-option></nb-option>
+          <nb-option *ngFor="let col of columns" [value]="col.name">{{col.name}}</nb-option>
         </nb-select>
       </div>
     </form>
   </nb-card-body>
-  <nb-card-footer>
-    <button nbButton hero status="danger" size="small" (click)="ref.close(false)">
+  <nb-card-footer class="d-flex justify-content-end">
+    <button nbButton hero status="danger" size="small" (click)="ref.close(false)" class="mr-3">
       <nb-icon icon="close"></nb-icon>
       Cancel
     </button>
-    <button nbButton hero status="success" size="small" (click)="save()" [disabled]="!isSaveEnabled">
+    <button nbButton hero status="success" size="small" (click)="save()" [disabled]="!formGroup.valid">
       <nb-icon icon="plus"></nb-icon>
       Save
     </button>

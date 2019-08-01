@@ -12,8 +12,7 @@
         <nb-select class="float-left" placeholder="Select Table" formControlName="viewtTableCtrl">
           <nb-option *ngFor="let tbl of tables" value="{{tbl}}">{{tbl}}</nb-option>
         </nb-select>
-        <input nbInput type="text" placeholder="View name" class="form-control" formControlName="viewtNameCtrl"
-          [status]="viewHeaderForm.controls['viewtNameCtrl'].invalid && (viewHeaderForm.dirty || viewHeaderForm.touched) ? 'danger': 'success'">
+        <input nbInput type="text" placeholder="View name" class="form-control" formControlName="viewtNameCtrl">
       </div>
     </nb-card-header>
     <nb-card-body>
@@ -46,11 +45,13 @@
         <ngx-datatable-column name="Actions">
           <ng-template ngx-datatable-cell-template let-value="value" let-row="row">
             <button 
-              nbButton status="primary" hero size="small" (click)="addEditReferance(row)" 
-              nbTooltip="Referance" nbTooltipPlacement="top" nbTooltipStatus="primary"
+              nbButton  hero size="small" (click)="addEditReferance(row)" class="btn-relerance" 
+              nbTooltipStatus="primary" 
+              [status]="row.ref ? 'success' : 'primary'"
             >
               <nb-icon icon="folder"></nb-icon>
               Referance
+              <nb-badge *ngIf="row.ref" text="X" status="danger" (click)="deleteReferance($event, row)" nbTooltip="Delete Referance" nbTooltipStatus="danger"></nb-badge>
             </button>
           </ng-template>
         </ngx-datatable-column>
@@ -69,13 +70,11 @@
         <div [formGroup]="termForm">
           <div class="input-group">
               <input 
-                nbInput type="text" fullWidth placeholder="One item" class="form-control margin-bottom-1rem" formControlName="termOneCtrl"
-                [status]="termForm.controls['termOneCtrl'].invalid && (termForm.dirty || termForm.touched) ? 'danger': 'success'">
+                nbInput type="text" fullWidth placeholder="One item" class="form-control margin-bottom-1rem" formControlName="termOneCtrl">
             </div>
             <div class="input-group">
               <input 
-                nbInput type="text" fullWidth placeholder="Many items" class="form-control" formControlName="termManyCtrl"
-                [status]="termForm.controls['termManyCtrl'].invalid && (termForm.dirty || termForm.touched) ? 'danger': 'success'">
+                nbInput type="text" fullWidth placeholder="Many items" class="form-control" formControlName="termManyCtrl">
             </div>
         </div>
       </nb-card-body>
