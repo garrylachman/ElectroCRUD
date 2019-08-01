@@ -19,11 +19,10 @@ $nb-themes: nb-register-theme((
 
 ), cosmic, cosmic);
 
-@mixin input-ng-valid-status() {
+@mixin input-ng-valid-status($sub-class: "") {
   $ng-form-valid-status: ("valid": "success", "invalid": "danger");
   @each $ngs, $status in $ng-form-valid-status {
-    &:not([ng-reflect-disabled]).ng-#{$ngs} {
-      border: 1px solid;
+    &:not([ng-reflect-disabled]).ng-#{$ngs} #{$sub-class} {
       border-color: nb-theme(input-#{$status}-border-color);
       &:focus {
         border-color: nb-theme(input-#{$status}-hover-border-color);
@@ -33,6 +32,11 @@ $nb-themes: nb-register-theme((
       }
     }
   }
+}
+
+::ng-deep
+[formcontrolname] {
+  @include input-ng-valid-status(".select-button");
 }
 
 ::ng-deep
