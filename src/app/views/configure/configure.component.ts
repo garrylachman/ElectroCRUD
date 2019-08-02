@@ -236,8 +236,8 @@ export class ConfigureComponent implements OnInit {
   checkForm() {
     console.log(this.view, this.savedView)
     this.view.name = this.viewHeaderForm.value.viewtNameCtrl;
-    this.view.terms.one = this.termForm.value.termOneCtrl;
-    this.view.terms.many = this.termForm.value.termManyCtrl;
+    //this.view.terms.one = this.termForm.value.termOneCtrl;
+    //this.view.terms.many = this.termForm.value.termManyCtrl;
 
     if (this.subviewForm.value.subviewEnabledCtrl) {
       this.view.subview.enabled = this.subviewForm.value.subviewEnabledCtrl;
