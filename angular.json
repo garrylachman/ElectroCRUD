@@ -25,7 +25,8 @@
               "src/favicon.512x512.png",
               "src/assets/whhg-font/font/webhostinghub-glyphs.eot",
               "src/assets/whhg-font/font/webhostinghub-glyphs.svg",
-              "src/assets/whhg-font/font/webhostinghub-glyphs.ttf"
+              "src/assets/whhg-font/font/webhostinghub-glyphs.ttf",
+              "src/assets/icon.png"
             ],
             "styles": [
               "src/styles.scss",
