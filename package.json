@@ -115,6 +115,7 @@
     "electron-better-ipc": "https://github.com/garrylachman/electron-better-ipc",
     "electron-store": "^4.0.0",
     "eva-icons": "^1.1.1",
+    "fast-equals": "^2.0.0",
     "get-port": "^5.0.0",
     "jquery": "^3.4.1",
     "knex": "^0.18.0",

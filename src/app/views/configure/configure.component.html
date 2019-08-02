@@ -2,6 +2,10 @@
     <nb-card-header><h1 class="page-header h4">{{title}}</h1></nb-card-header>
 </nb-card>
 
+<nb-alert *ngIf="!isChangesSaved&&isSaveEnabled" status="warning">
+  Your changes will be lost if you don't save them
+</nb-alert>
+
 <nb-layout class="inner_scroll" [withScroll]="false" [windowMode]="false">
   
     <nb-layout-column  class="colored-column-primary" start>

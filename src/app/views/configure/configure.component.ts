@@ -11,6 +11,7 @@ import { ViewsIPCService } from '../../services/ipc/views.ipc.service';
 import { IPCListOfTablesResponseMessage, IIPCListOfTablesResponseMessage, IIPCTableInfoResponseMessage, IIPCTableInfoColumn } from '../../../shared/ipc/views.ipc';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
 import { ColumnReferanceDialogComponent } from './components/column-referance-dialog/column-referance-dialog.component';
+import { deepEqual } from 'fast-equals';
 
 @Component({
   selector: 'app-configure',
@@ -22,6 +23,7 @@ export class ConfigureComponent implements OnInit {
   @ViewChild(DatatableComponent, { static: false }) table: DatatableComponent;
 
   view: IView;
+  savedView: IView;
   isLoading: boolean = false;
   title: string;
 
@@ -80,6 +82,7 @@ export class ConfigureComponent implements OnInit {
       };
     }
 
+
     // load all view to display in subviews form
     this.allViews = this.viewsService.all(this.sessionsService.activeAccount);
 
@@ -95,6 +98,13 @@ export class ConfigureComponent implements OnInit {
         this.subviewTargetView = this.viewsService.get(this.view.subview.view_id);
       }
     }
+
+    this.savedView = {
+      ...this.view,
+      terms: {...this.view.terms},
+      permissions: {...this.view.permissions},
+      subview: {...this.view.subview}
+    };
 
     this.viewHeaderForm = this.fb.group({
       viewtNameCtrl: [this.view.name, Validators.compose([Validators.required, Validators.minLength(2)])],
@@ -142,9 +152,14 @@ export class ConfigureComponent implements OnInit {
 
     this.viewHeaderForm.controls['viewtTableCtrl'].valueChanges.subscribe(value => this.selectedChange(value));
     this.viewHeaderForm.valueChanges.subscribe((v) => this.checkForm());
+    this.termForm.valueChanges.subscribe((v) => this.checkForm());
     this.subviewForm.valueChanges.subscribe((v) => this.checkForm());
 
     await this.loadTablesList();
+  }
+
+  public get isChangesSaved(): boolean {
+    return deepEqual(this.view, this.savedView);
   }
 
   public async selectedChange(newTable) {
@@ -208,6 +223,20 @@ export class ConfigureComponent implements OnInit {
   }
 
   checkForm() {
+    console.log(this.view, this.savedView)
+    this.view.name = this.viewHeaderForm.value.viewtNameCtrl;
+    this.view.terms.one = this.termForm.value.termOneCtrl;
+    this.view.terms.many = this.termForm.value.termManyCtrl;
+
+    if (this.subviewForm.value.subviewEnabledCtrl) {
+      this.view.subview.enabled = this.subviewForm.value.subviewEnabledCtrl;
+      this.view.subview.view_id = this.subviewForm.value.subviewViewIdCtrl;
+      this.view.subview.ref = {
+        source_column: this.subviewForm.value.subviewSourceColumnCtrl,
+        target_column: this.subviewForm.value.subviewTargetColumnCtrl
+      };
+    }
+
     this.isSaveEnabled = this.viewHeaderForm.valid && this.termForm.valid && this.subviewForm.valid
   }
 
