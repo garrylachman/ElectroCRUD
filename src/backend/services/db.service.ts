@@ -167,8 +167,6 @@ export class DatabaseService {
         }[],
         join?: {
             table: string;
-            column: string;
-            alias: string;
             on: {
                 local: string,
                 target: string,
@@ -178,21 +176,9 @@ export class DatabaseService {
     ): Promise<any | Error> {
         console.log("join", join);
         try {
-            let removeColumns: string[] = []
-            if (join) {
-                removeColumns = [...join].map(j => j.alias);
-            }
-            let selectColumns:string[] = [...columns].filter(col => !removeColumns.includes(col));
+            let selectColumns = [...columns].map(col => !col.includes(".") ? `${table}.${col}` : `${col} as ${col}`)
 
-            let selectFilterColumns:any[] = [];
-            if (join) {
-                selectFilterColumns = [...join]
-                    .map(j => ({
-                        [`${j.alias}`]: `${j.table}.${j.column}`
-                    }))
-            }
-            
-            let q = this.connection.select(...selectColumns, ...selectFilterColumns).from(table);
+            let q = this.connection.select(...selectColumns).from(table);
 
             if (join) {
                 join.forEach((j) => {
@@ -203,6 +189,9 @@ export class DatabaseService {
             if (searchColumns && searchText) {
                 q = q.whereWrapped((wq) => {
                     searchColumns.forEach((sCol: string, idx: number) => {
+                        if (!sCol.includes(".")) {
+                            sCol = `${table}.${sCol}`;
+                        }
                         if (idx ==0)    {
                             wq  = wq.where(sCol, 'like', `%${searchText}%`);
                         } else {
@@ -214,6 +203,10 @@ export class DatabaseService {
             }
             if (where) {
                 where.forEach((col, idx:number) => {
+                    let wCol = col.column;
+                    if (!wCol.includes(".")) {
+                        wCol = `${table}.${wCol}`;
+                    }
                     if (idx == 0) {
                         // if we have where before (from search) we must use andWhere, if no search use where
                         let firstWhereFunc = (searchColumns && searchText) ? "andWhere" : "where";

@@ -225,8 +225,6 @@ export class ViewViewComponent implements OnInit, OnDestroy {
       .map(col => (
         {
           table: col.ref.table,
-          column: col.ref.name,
-          alias: col.name,
           on: {
             local: col.name,
             target: col.ref.match_column,

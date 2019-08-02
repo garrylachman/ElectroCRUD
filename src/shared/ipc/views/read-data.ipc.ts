@@ -30,8 +30,6 @@ export interface IIPCReadDataWhere {
 
 export interface IIPCReadDataJoin {
     table: string;
-    column: string;
-    alias: string;
     on: {
         local: string,
         target: string,

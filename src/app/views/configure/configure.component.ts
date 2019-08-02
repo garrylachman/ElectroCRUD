@@ -4,7 +4,7 @@ import { SessionService } from '../../services/session.service';
 import { IView, IViewColumn } from '../../../shared/interfaces/views.interface';
 import { ViewsService } from '../../services/store/views.service';
 import {
-  NbSpinnerService, NbToastrService, NbDialogService
+  NbSpinnerService, NbToastrService, NbDialogService, NbIconLibraries
 } from '@nebular/theme';
 import { NgModel, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ViewsIPCService } from '../../services/ipc/views.ipc.service';
@@ -51,8 +51,11 @@ export class ConfigureComponent implements OnInit {
     private viewsIPCService: ViewsIPCService,
     private fb: FormBuilder,
     private toastrService: NbToastrService,
-    private dialogService: NbDialogService
-  ) { }
+    private dialogService: NbDialogService,
+    private iconLibraries: NbIconLibraries
+  ) { 
+    this.iconLibraries.registerFontPack('whhg', { iconClassPrefix: 'icon' });
+  }
 
   async ngOnInit() {
     if (this.route.snapshot.paramMap.has('id')) {
@@ -188,6 +191,14 @@ export class ConfigureComponent implements OnInit {
         ...localCol[0] || {}
       } as IViewColumn
     });
+
+    // refereance columns
+    this.view.columns
+      .filter(fCol => fCol.type == 'referance')
+      .forEach((col: IViewColumn) => {
+        columnsFromDB.push(col);
+      })
+
     this.view.columns = [...columnsFromDB];
 
     this.rows = this.view.columns;
@@ -287,12 +298,27 @@ export class ConfigureComponent implements OnInit {
         console.log("res", res);
         if (res) {
           row.ref = res;
+          let newRow:IViewColumn = {
+            name: `${res.table}.${res.name}`,
+            type: `referance`,
+            length: 0,
+            extra: `${res.table}`,
+            enabled: true,
+            searchable: true,
+            nullable: false
+          };
+          newRow.info = this.getTagsForRow(newRow);
+          this.rows.push(newRow);
+          this.rows = [...this.rows];
         }
       });
   }
 
   deleteReferance(event, row: IViewColumn) {
     event.stopImmediatePropagation();
+    if (row.ref && row.ref.table && row.ref.name) {
+      this.rows = this.rows.filter(col => col.name != `${row.ref.table}.${row.ref.name}`)
+    }
     row.ref = null;
   }
 

@@ -29,7 +29,19 @@
             [rowHeight]="'auto'"
             [limit]="10"
         >
-        <ngx-datatable-column name="Name"></ngx-datatable-column>
+        <ngx-datatable-column name="Name">
+            <ng-template ngx-datatable-cell-template let-value="value" let-row="row">
+              <nb-icon 
+                *ngIf="row.type == 'referance'" 
+                icon="merge" 
+                pack="whhg" 
+                class="column-name-prefix-icon mr-1" 
+                status="info" 
+                nbTooltipStatus="info"
+                nbTooltip="Referance column"></nb-icon>
+              {{row.name}}
+            </ng-template>
+        </ngx-datatable-column>
         <ngx-datatable-column name="Enabled" [sortable]="false" [canAutoResize]="false" [width]="120" [draggable]="false" [resizeable]="false">
           <ng-template ngx-datatable-cell-template let-value="value" let-row="row" let-onCheckboxChangeFn="onCheckboxChangeFn">
             <nb-checkbox [checked]=value (checkedChange)="row.enabled=$event"></nb-checkbox>
@@ -51,7 +63,8 @@
             <button 
               nbButton  hero size="small" (click)="addEditReferance(row)" class="btn-relerance" 
               nbTooltipStatus="primary" 
-              [status]="row.ref ? 'success' : 'primary'"
+              [status]="row.ref ? 'success' : 'primary'" 
+              *ngIf="row.type != 'referance'"
             >
               <nb-icon icon="folder"></nb-icon>
               Referance
