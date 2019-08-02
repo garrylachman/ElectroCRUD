@@ -44,6 +44,11 @@ $nb-themes: nb-register-theme((
   @include input-ng-valid-status();
 }
 
+::ng-deep
+.nb-theme-cosmic nb-layout.with-scroll .scrollable-container {
+  height: auto !important;
+}
+
 .float-right {
   float: right
 }
