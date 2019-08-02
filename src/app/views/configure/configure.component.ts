@@ -278,7 +278,8 @@ export class ConfigureComponent implements OnInit {
       .open<any>(ColumnReferanceDialogComponent, { 
         hasBackdrop: true,
         context: {
-          row: row
+          row: row,
+          view: this.view
         }
       })
       .onClose

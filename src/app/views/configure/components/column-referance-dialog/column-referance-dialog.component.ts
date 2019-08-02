@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { NbDialogRef } from '@nebular/theme';
-import { IViewColumn } from '../../../../../shared/interfaces/views.interface';
+import { IViewColumn, IView } from '../../../../../shared/interfaces/views.interface';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ViewsIPCService } from '../../../../services/ipc/views.ipc.service';
 import { IIPCListOfTablesResponseMessage, IIPCTableInfoResponseMessage, IIPCTableInfoColumn } from '../../../../../shared/ipc/views.ipc';
@@ -15,6 +15,7 @@ export class ColumnReferanceDialogComponent implements OnInit  {
   title: string = "Column Referance";
 
   isSaveEnabled: boolean = false;
+  view: IView;
   viewColumn: IViewColumn;
   formGroup: FormGroup;
   tables: string[] = [];
@@ -31,6 +32,7 @@ export class ColumnReferanceDialogComponent implements OnInit  {
   async ngOnInit() {
     if (this.ref.componentRef.instance.row) {
       this.viewColumn = {...this.ref.componentRef.instance.row} as IViewColumn;
+      this.view = {...this.ref.componentRef.instance.view} as IView;
     } else {
       return;
     }
@@ -54,7 +56,6 @@ export class ColumnReferanceDialogComponent implements OnInit  {
     
 
     this.formGroup.controls['tableCtrl'].valueChanges.subscribe((val) => {
-      console.log("val change");
       if (this.viewColumn.ref.table == val) {
         return;
       }
@@ -75,7 +76,7 @@ export class ColumnReferanceDialogComponent implements OnInit  {
   public async loadTablesList() {
     let res:IIPCListOfTablesResponseMessage = await this.viewsIPCService.listOfTables();
     if (res.valid) {
-      this.tables = [...res.tables];
+      this.tables = [...res.tables].filter(tbl => tbl != this.view.table);
     }
   }
 
