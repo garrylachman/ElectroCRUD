@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NbDialogRef } from '@nebular/theme';
 import { IViewColumn, IView } from '../../../../../shared/interfaces/views.interface';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
