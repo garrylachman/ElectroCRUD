@@ -48,3 +48,4 @@ package-lock.json
 # System Files
 .DS_Store
 Thumbs.db
+src/assets/whhg-font/example.html
