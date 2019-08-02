@@ -164,11 +164,41 @@ export class DatabaseService {
             opr: string, 
             value: string,
             or: boolean
+        }[],
+        join?: {
+            table: string;
+            column: string;
+            alias: string;
+            on: {
+                local: string,
+                target: string,
+                opr: string
+            }
         }[]
     ): Promise<any | Error> {
-        console.log("where", where);
+        console.log("join", join);
         try {
-            let q = this.connection.select(...columns).from(table);
+            let removeColumns: string[] = []
+            if (join) {
+                removeColumns = [...join].map(j => j.alias);
+            }
+            let selectColumns:string[] = [...columns].filter(col => !removeColumns.includes(col));
+
+            let selectFilterColumns:any[] = [];
+            if (join) {
+                selectFilterColumns = [...join]
+                    .map(j => ({
+                        [`${j.alias}`]: `${j.table}.${j.column}`
+                    }))
+            }
+            
+            let q = this.connection.select(...selectColumns, ...selectFilterColumns).from(table);
+
+            if (join) {
+                join.forEach((j) => {
+                    q = q.leftJoin(j.table, `${table}.${j.on.local}`, `${j.table}.${j.on.target}`)
+                })
+            }
 
             if (searchColumns && searchText) {
                 q = q.whereWrapped((wq) => {

@@ -7,7 +7,8 @@ export interface IIPCReadDataRequestMessage {
     limit: IIPCReadDataLimit;
     columns: string[];
     search?: IIPCReadDataSearch;
-    where?: IIPCReadDataWhere[]
+    where?: IIPCReadDataWhere[];
+    join?: IIPCReadDataJoin[];
 }
 
 export interface IIPCReadDataLimit {
@@ -25,6 +26,17 @@ export interface IIPCReadDataWhere {
     opr: IIPCReadDataWhereOpr | string;
     value: any;
     or: boolean;
+}
+
+export interface IIPCReadDataJoin {
+    table: string;
+    column: string;
+    alias: string;
+    on: {
+        local: string,
+        target: string,
+        opr: IIPCReadDataWhereOpr
+    }
 }
 
 export enum IIPCReadDataWhereOpr {

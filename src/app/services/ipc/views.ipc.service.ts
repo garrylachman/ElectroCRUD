@@ -38,6 +38,7 @@ import {
   IIPCReadWidgetDataResponseMessage,
   IPCReadWidgetDataRequestMessage,
   IPCReadWidgetDataResponseMessage,
+  IIPCReadDataJoin,
 } from '../../../shared/ipc/views.ipc';
 import { ipcRenderer } from 'electron-better-ipc';
 import { IAccount } from '../../../shared/interfaces/accounts.interface';
@@ -75,7 +76,8 @@ export class ViewsIPCService {
       offset: number, 
       searchColumns?: string[], 
       searchText?: string,
-      where?: IIPCReadDataWhere[]
+      where?: IIPCReadDataWhere[],
+      join?: IIPCReadDataJoin[]
     ): Promise<IIPCReadDataResponseMessage> {
     const req: IPCReadDataRequestMessage = new IPCReadDataRequestMessage({
       table: table,
@@ -88,7 +90,8 @@ export class ViewsIPCService {
         columns: searchColumns,
         text: searchText
       },
-      where: where
+      where: where,
+      join: join
     });
     console.log("req", req);
     const rawRes:any = await ipcRenderer.callMain(IPC_CHANNEL_READ_DATA, req.toJsonValue());

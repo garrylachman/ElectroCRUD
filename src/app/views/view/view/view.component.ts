@@ -9,7 +9,7 @@ import { NgModel } from '@angular/forms';
 import { NbMenuService, NbDialogService, NbToastrService } from '@nebular/theme';
 import { Subscription } from 'rxjs';
 import { ConfirmDeleteComponent } from '../../../components/dialogs/confirm-delete/confirm-delete.component';
-import { IIPCDeleteDataWhereOpr, IIPCDeleteDataResponseMessage, IIPCReadDataWhere } from '../../../../shared/ipc/views.ipc';
+import { IIPCDeleteDataWhereOpr, IIPCDeleteDataResponseMessage, IIPCReadDataWhere, IIPCReadDataJoin, IIPCReadDataWhereOpr } from '../../../../shared/ipc/views.ipc';
 import { BreadcrumbsService } from '../../../services/breadcrumbs.service';
 import { IViewFilter } from '../../../../shared/interfaces/filters.interface';
 
@@ -218,13 +218,35 @@ export class ViewViewComponent implements OnInit, OnDestroy {
     await this.reload();
   }
 
+  private getViewJoints(): IIPCReadDataJoin[] {
+    return this.view
+      .columns
+      .filter(col => col.ref)
+      .map(col => (
+        {
+          table: col.ref.table,
+          column: col.ref.name,
+          alias: col.name,
+          on: {
+            local: col.name,
+            target: col.ref.match_column,
+            opr: IIPCReadDataWhereOpr.EQ
+          }
+        } as IIPCReadDataJoin
+      ));
+  }
+
   async reload() {
     let data = await this.viewsIPCService
       .readData(
         this.view.table, 
         this.view.columns.filter(col => col.enabled).map(col => col.name), 
         this.limit, 
-        this.offset
+        this.offset,
+        null,
+        null,
+        [],
+        this.getViewJoints()
         );
     this.totalElements = data.count;
     let columns = data.data.length > 0 ? Object.keys([...data.data].shift()).map(val => ({ name: val, prop: val })) : [];
@@ -252,7 +274,8 @@ export class ViewViewComponent implements OnInit, OnDestroy {
         sqlOffset,
         this.view.columns.filter(col => col.searchable).map(col => col.name),
         (this.searchInputModel && String(this.searchInputModel).length > 1) ? String(this.searchInputModel)  : null,
-        this.selectedFilter ? this.selectedFilter.where as IIPCReadDataWhere[] : null
+        this.selectedFilter ? this.selectedFilter.where as IIPCReadDataWhere[] : null,
+        this.getViewJoints()
       );
     this.rows = [...data.data];
     this.totalElements = data.count;
