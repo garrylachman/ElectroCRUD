@@ -1,6 +1,6 @@
 {
   "name": "ElectroCRUD",
-  "version": "2.3.0-beta",
+  "version": "2.4.0-beta",
   "description": "No coding is required; Create basic CRUD (Create, Read, Update, Delete) for your Database Database in minutes",
   "homepage": "https://github.com/garrylachman/ElectroCRUD",
   "author": {
@@ -40,7 +40,9 @@
     "test": "npm run postinstall:web && ng test",
     "e2e": "npm run build:prod && mocha --timeout 300000 --require ts-node/register e2e/**/*.spec.ts",
     "version": "conventional-changelog -i CHANGELOG.md -s -r 0 && git add CHANGELOG.md",
-    "docs": "node_modules/typedoc/bin/typedoc"
+    "docs": "node_modules/typedoc/bin/typedoc",
+    "report-bugsnag": "bugsnag-build-reporter -k e887c2bdd46d07375e191b250e168764 -v '2.4.0-beta'",
+    "bugsnag-maps": "bugsnag-sourcemaps upload --api-key e887c2bdd46d07375e191b250e168764 --app-version 2.4.0-beta  --directory ."
   },
   "devDependencies": {
     "@ngx-translate/core": "11.0.1",
@@ -50,6 +52,8 @@
     "@types/jasminewd2": "2.0.3",
     "@types/mocha": "5.2.6",
     "@types/node": "^12.0.10",
+    "bugsnag-build-reporter": "^1.0.2",
+    "bugsnag-sourcemaps": "^1.2.1",
     "chai": "4.2.0",
     "codelyzer": "5.0.1",
     "conventional-changelog-cli": "2.0.11",
@@ -111,12 +115,15 @@
     "electron-better-ipc": "https://github.com/garrylachman/electron-better-ipc",
     "electron-store": "^4.0.0",
     "eva-icons": "^1.1.1",
+    "fast-equals": "^2.0.0",
     "get-port": "^5.0.0",
     "jquery": "^3.4.1",
     "knex": "^0.18.0",
     "mysql": "^2.17.1",
+    "ng-bootstrap-form-validation": "^4.0.0",
     "ng-dynamic-breadcrumb": "^2.0.2",
     "ng2-fittext": "^1.2.6",
+    "ngx-chips": "^2.0.2",
     "ngx-mask": "^8.0.0",
     "popper.js": "^1.15.0",
     "tunnel-ssh": "^4.1.4",

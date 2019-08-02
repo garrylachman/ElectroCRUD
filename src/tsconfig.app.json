@@ -1,6 +1,7 @@
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
+    "sourceMap": true,
     "outDir": "../out-tsc/app",
     "module": "es2015",
     "resolveJsonModule": true,

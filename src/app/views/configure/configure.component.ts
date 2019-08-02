@@ -4,12 +4,14 @@ import { SessionService } from '../../services/session.service';
 import { IView, IViewColumn } from '../../../shared/interfaces/views.interface';
 import { ViewsService } from '../../services/store/views.service';
 import {
-  NbSpinnerService, NbToastrService
+  NbSpinnerService, NbToastrService, NbDialogService, NbIconLibraries
 } from '@nebular/theme';
 import { NgModel, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ViewsIPCService } from '../../services/ipc/views.ipc.service';
 import { IPCListOfTablesResponseMessage, IIPCListOfTablesResponseMessage, IIPCTableInfoResponseMessage, IIPCTableInfoColumn } from '../../../shared/ipc/views.ipc';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
+import { ColumnReferanceDialogComponent } from './components/column-referance-dialog/column-referance-dialog.component';
+import { deepEqual } from 'fast-equals';
 
 @Component({
   selector: 'app-configure',
@@ -21,6 +23,7 @@ export class ConfigureComponent implements OnInit {
   @ViewChild(DatatableComponent, { static: false }) table: DatatableComponent;
 
   view: IView;
+  savedView: IView;
   isLoading: boolean = false;
   title: string;
 
@@ -47,8 +50,12 @@ export class ConfigureComponent implements OnInit {
     private viewsService: ViewsService,
     private viewsIPCService: ViewsIPCService,
     private fb: FormBuilder,
-    private toastrService: NbToastrService
-  ) { }
+    private toastrService: NbToastrService,
+    private dialogService: NbDialogService,
+    private iconLibraries: NbIconLibraries
+  ) { 
+    this.iconLibraries.registerFontPack('whhg', { iconClassPrefix: 'icon' });
+  }
 
   async ngOnInit() {
     if (this.route.snapshot.paramMap.has('id')) {
@@ -78,6 +85,7 @@ export class ConfigureComponent implements OnInit {
       };
     }
 
+
     // load all view to display in subviews form
     this.allViews = this.viewsService.all(this.sessionsService.activeAccount);
 
@@ -93,6 +101,13 @@ export class ConfigureComponent implements OnInit {
         this.subviewTargetView = this.viewsService.get(this.view.subview.view_id);
       }
     }
+
+    this.savedView = {
+      ...this.view,
+      terms: {...this.view.terms},
+      permissions: {...this.view.permissions},
+      subview: {...this.view.subview}
+    };
 
     this.viewHeaderForm = this.fb.group({
       viewtNameCtrl: [this.view.name, Validators.compose([Validators.required, Validators.minLength(2)])],
@@ -140,9 +155,14 @@ export class ConfigureComponent implements OnInit {
 
     this.viewHeaderForm.controls['viewtTableCtrl'].valueChanges.subscribe(value => this.selectedChange(value));
     this.viewHeaderForm.valueChanges.subscribe((v) => this.checkForm());
+    this.termForm.valueChanges.subscribe((v) => this.checkForm());
     this.subviewForm.valueChanges.subscribe((v) => this.checkForm());
 
     await this.loadTablesList();
+  }
+
+  public get isChangesSaved(): boolean {
+    return deepEqual(this.view, this.savedView);
   }
 
   public async selectedChange(newTable) {
@@ -164,15 +184,27 @@ export class ConfigureComponent implements OnInit {
         ...col,
         searchable: true,
         enabled: true,
-        nullable: Boolean(col.nullable),
+        info: this.getTagsForRow({
+          ...col,
+          ...localCol[0] || {}
+        }),
         ...localCol[0] || {}
       } as IViewColumn
     });
+
+    // refereance columns
+    this.view.columns
+      .filter(fCol => fCol.type == 'referance')
+      .forEach((col: IViewColumn) => {
+        columnsFromDB.push(col);
+      })
+
     this.view.columns = [...columnsFromDB];
 
     this.rows = this.view.columns;
     this.termForm.controls.termOneCtrl.setValue(this.view.terms.one);
     this.termForm.controls.termManyCtrl.setValue(this.view.terms.many);
+    this.viewHeaderForm.controls.viewtTableCtrl.patchValue(this.view.table, {emitEvent: false});
     this.isHavePrimaryKey = this.isContainsPrimaryKey;
     this.view.permissions.delete = this.isHavePrimaryKey;
     this.view.permissions.update = this.isHavePrimaryKey;
@@ -203,6 +235,20 @@ export class ConfigureComponent implements OnInit {
   }
 
   checkForm() {
+    console.log(this.view, this.savedView)
+    this.view.name = this.viewHeaderForm.value.viewtNameCtrl;
+    //this.view.terms.one = this.termForm.value.termOneCtrl;
+    //this.view.terms.many = this.termForm.value.termManyCtrl;
+
+    if (this.subviewForm.value.subviewEnabledCtrl) {
+      this.view.subview.enabled = this.subviewForm.value.subviewEnabledCtrl;
+      this.view.subview.view_id = this.subviewForm.value.subviewViewIdCtrl;
+      this.view.subview.ref = {
+        source_column: this.subviewForm.value.subviewSourceColumnCtrl,
+        target_column: this.subviewForm.value.subviewTargetColumnCtrl
+      };
+    }
+
     this.isSaveEnabled = this.viewHeaderForm.valid && this.termForm.valid && this.subviewForm.valid
   }
 
@@ -236,6 +282,66 @@ export class ConfigureComponent implements OnInit {
     } else {
       this.toastrService.danger("Some details are missing or invalid, please check again.")
     }
+  }
+
+  addEditReferance(row: IViewColumn) {
+    console.log("addEditReferance", row)
+    this.dialogService
+      .open<any>(ColumnReferanceDialogComponent, { 
+        hasBackdrop: true,
+        context: {
+          row: row,
+          view: this.view
+        }
+      })
+      .onClose
+      .subscribe((res) => {
+        console.log("res", res);
+        if (res) {
+          row.ref = res;
+          let newRow:IViewColumn = {
+            name: `${res.table}.${res.name}`,
+            type: `referance`,
+            length: 0,
+            extra: `${res.table}`,
+            enabled: true,
+            searchable: true,
+            nullable: false
+          };
+          newRow.info = this.getTagsForRow(newRow);
+          this.rows.push(newRow);
+          this.rows = [...this.rows];
+        }
+      });
+  }
+
+  deleteReferance(event, row: IViewColumn) {
+    event.stopImmediatePropagation();
+    if (row.ref && row.ref.table && row.ref.name) {
+      this.rows = this.rows.filter(col => col.name != `${row.ref.table}.${row.ref.name}`)
+    }
+    row.ref = null;
+  }
+
+  getTagsForRow(row: IViewColumn): string[] {
+    let tags: string[] = [];
+    if (row.type) {
+      if (row.length) {
+        tags.push(`${row.type}(${row.length})`);
+      } else {
+        tags.push(`${row.type}`);
+      }
+    }
+    if (row.nullable) {
+      tags.push("Nullable");
+    }
+    if (row.key) {
+      tags.push(row.key);
+    }
+    if (row.extra) {
+      tags.push(row.extra);
+    }
+    return tags;
   }
 
 }

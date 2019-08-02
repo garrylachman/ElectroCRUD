@@ -22,11 +22,16 @@
               "src/favicon.png",
               "src/favicon.icns",
               "src/favicon.256x256.png",
-              "src/favicon.512x512.png"
+              "src/favicon.512x512.png",
+              "src/assets/whhg-font/font/webhostinghub-glyphs.eot",
+              "src/assets/whhg-font/font/webhostinghub-glyphs.svg",
+              "src/assets/whhg-font/font/webhostinghub-glyphs.ttf",
+              "src/assets/icon.png"
             ],
             "styles": [
               "src/styles.scss",
-              "node_modules/@nebular/theme/styles/prebuilt/default.css"
+              "node_modules/@nebular/theme/styles/prebuilt/default.css",
+              "src/assets/whhg-font/css/whhg.css"
             ],
             "scripts": []
           },
@@ -51,7 +56,7 @@
             "production": {
               "optimization": true,
               "outputHashing": "all",
-              "sourceMap": false,
+              "sourceMap": true,
               "extractCss": true,
               "namedChunks": false,
               "aot": true,

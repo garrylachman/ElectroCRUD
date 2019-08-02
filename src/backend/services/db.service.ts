@@ -164,15 +164,34 @@ export class DatabaseService {
             opr: string, 
             value: string,
             or: boolean
+        }[],
+        join?: {
+            table: string;
+            on: {
+                local: string,
+                target: string,
+                opr: string
+            }
         }[]
     ): Promise<any | Error> {
-        console.log("where", where);
+        console.log("join", join);
         try {
-            let q = this.connection.select(...columns).from(table);
+            let selectColumns = [...columns].map(col => !col.includes(".") ? `${table}.${col}` : `${col} as ${col}`)
+
+            let q = this.connection.select(...selectColumns).from(table);
+
+            if (join) {
+                join.forEach((j) => {
+                    q = q.leftJoin(j.table, `${table}.${j.on.local}`, `${j.table}.${j.on.target}`)
+                })
+            }
 
             if (searchColumns && searchText) {
                 q = q.whereWrapped((wq) => {
                     searchColumns.forEach((sCol: string, idx: number) => {
+                        if (!sCol.includes(".")) {
+                            sCol = `${table}.${sCol}`;
+                        }
                         if (idx ==0)    {
                             wq  = wq.where(sCol, 'like', `%${searchText}%`);
                         } else {
@@ -184,6 +203,10 @@ export class DatabaseService {
             }
             if (where) {
                 where.forEach((col, idx:number) => {
+                    let wCol = col.column;
+                    if (!wCol.includes(".")) {
+                        wCol = `${table}.${wCol}`;
+                    }
                     if (idx == 0) {
                         // if we have where before (from search) we must use andWhere, if no search use where
                         let firstWhereFunc = (searchColumns && searchText) ? "andWhere" : "where";

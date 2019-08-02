@@ -94,11 +94,11 @@ export interface IViewColumn {
     /**
      * Is column dispaled in data table
      */
-    enabled: boolean;
+    enabled?: boolean;
     /**
      * Is the column searchable
      */
-    searchable: boolean;
+    searchable?: boolean;
     /**
      * The column name
      */
@@ -127,6 +127,14 @@ export interface IViewColumn {
      * Column lenght
      */
     length?: number;
+    /**
+     * Column referance (join)
+     */
+    ref?: IViewColumnReferance;
+    /**
+     * Here we store info data while display in view configure
+     */
+    info?: any;
 }
 
 /**
@@ -163,4 +171,22 @@ export interface IViewPermissions {
      * Is delete of record are allowed
      */
     delete: boolean;
+}
+
+/**
+ * Interface represent a view column referance
+ */
+export interface IViewColumnReferance {
+    /**
+     * The table name
+     */
+    table?: string;
+    /**
+     * The column name to use
+     */
+    name?: string;
+    /**
+     * The column to match against the IViewColumn
+     */
+    match_column?: string;
 }

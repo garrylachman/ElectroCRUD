@@ -102,7 +102,7 @@ export class ViewEditComponent implements OnInit, OnDestroy {
       .readData(
         this.view.table, 
         this.view.columns
-          .filter(col => col.enabled)
+          .filter(col => col.type != "referance")
           .map(col => col.name),
         1,
         0,

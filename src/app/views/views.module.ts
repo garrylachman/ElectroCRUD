@@ -1,11 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { ViewsRoutingModule } from './views-routing.module';
 import { ViewComponent } from './view/view.component';
 import { ConfigureComponent } from './configure/configure.component';
 import { EmptyComponent } from './empty/empty.component';
-
 import {
   NbCardModule, 
   NbIconModule, 
@@ -38,11 +36,12 @@ import { FormlyFieldNbDatepickerComponent } from './view/components/row-form/cus
 import { FormlyFieldNbTextareaComponent } from './view/components/row-form/custom-types/formly-field-nb-textarea/formly-field-nb-textarea.component';
 import { NgxMaskModule } from 'ngx-mask';
 import { WidgetsComponent } from './view/view/components/widgets/widgets.component';
-import { Ng2FittextModule } from "ng2-fittext";
 import { BreadcrumbsService } from '../services/breadcrumbs.service';
 import { FiltersComponent } from './view/view/components/filters/filters.component';
 import { AngularFittextModule } from 'angular-fittext';
 import { SubViewComponent } from './view/view/components/sub-view/sub-view.component';
+import { TagInputModule } from 'ngx-chips';
+import { NgBootstrapFormValidationModule } from 'ng-bootstrap-form-validation';
 
 @NgModule({
   declarations: [ViewComponent, ConfigureComponent, EmptyComponent, ViewEditComponent, ViewAddComponent, WidgetsComponent, ViewViewComponent, RowFormComponent, FormlyFieldNbInputComponent, FormlyFieldNbSelectComponent, FormlyFieldNbChechboxComponent, FormlyFieldNbDatepickerComponent, FormlyFieldNbTextareaComponent, FiltersComponent, SubViewComponent],
@@ -87,11 +86,12 @@ import { SubViewComponent } from './view/view/components/sub-view/sub-view.compo
         }
       ]
     }),
-    //Ng2FittextModule.forRoot(),
     NbLayoutModule,
     NbSidebarModule,
     NbMenuModule,
     AngularFittextModule,
+    TagInputModule,
+    NgBootstrapFormValidationModule,
   ],
   entryComponents: [ViewComponent, ConfigureComponent, EmptyComponent, ViewEditComponent, ViewAddComponent, ViewViewComponent, WidgetsComponent, SubViewComponent]
 })

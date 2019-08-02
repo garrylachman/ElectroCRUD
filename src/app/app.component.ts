@@ -6,7 +6,8 @@ import {
   NbMenuService, 
   NbSidebarService, 
   NbSearchService, 
-  NbMenuItem 
+  NbMenuItem, 
+  NbIconLibraries
 } from '@nebular/theme';
 import { IAccount } from '../shared/interfaces/accounts.interface';
 import { SessionService } from './services/session.service';
@@ -38,7 +39,7 @@ export class AppComponent {
     private menuService: NbMenuService,
     private searchService: NbSearchService,
     private sessionService: SessionService) {
-
+      
     translate.setDefaultLang('en');
     console.log('AppConfig', AppConfig);
 

@@ -37,9 +37,9 @@ After a few years that the project was inactive, I decided to bring it an alive 
   - [x] Connect existing view as sub views
   - [ ] Export data in various formats like: csv, dump
 - [x] Subviews (represent a sub table)
-- [ ] Views relations
+- [x] Views relations
   - [x] Drill from view to view (subview)
-  - [ ] FOREIGN KEY interactive UI
+  - [x] Column based tables relation (left join) 
 - [x] View widgets (display aggragated data in the view)
   - [x] Add / Edit / Remove widgets
   - [x] Aggregation functions (AVG, SUM, MIN, MAX, COUNT)
@@ -60,9 +60,9 @@ After a few years that the project was inactive, I decided to bring it an alive 
 ## Download Binaries ![GitHub release](https://img.shields.io/github/release/garrylachman/ElectroCRUD.svg?style=for-the-badge)
 We are in early beta !!!
 
-* [Mac OSX (Release beta)](https://github.com/garrylachman/ElectroCRUD/releases/download/2.3.0-beta/ElectroCRUD-2.3.0-beta.dmg)
-* [Linux (Release beta)](https://github.com/garrylachman/ElectroCRUD/releases/download/2.3.0-beta/ElectroCRUD.2.3.0-beta.AppImage)
-* [Windows (Release beta)](https://github.com/garrylachman/ElectroCRUD/releases/download/2.3.0-beta/ElectroCRUD.2.3.0-beta.exe)
+* [Mac OSX (Release beta)](https://github.com/garrylachman/ElectroCRUD/releases/download/2.4.0-beta/ElectroCRUD-2.4.0-beta.dmg)
+* [Linux (Release beta)](https://github.com/garrylachman/ElectroCRUD/releases/download/2.4.0-beta/ElectroCRUD.2.4.0-beta.AppImage)
+* [Windows (Release beta)](https://github.com/garrylachman/ElectroCRUD/releases/download/2.4.0-beta/ElectroCRUD.2.4.0-beta.exe)
 
 ## Download Sources
 [ElectroCRUD on GitHub](https://github.com/garrylachman/ElectroCRUD)
