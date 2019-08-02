@@ -204,6 +204,7 @@ export class ConfigureComponent implements OnInit {
     this.rows = this.view.columns;
     this.termForm.controls.termOneCtrl.setValue(this.view.terms.one);
     this.termForm.controls.termManyCtrl.setValue(this.view.terms.many);
+    this.viewHeaderForm.controls.viewtTableCtrl.patchValue(this.view.table, {emitEvent: false});
     this.isHavePrimaryKey = this.isContainsPrimaryKey;
     this.view.permissions.delete = this.isHavePrimaryKey;
     this.view.permissions.update = this.isHavePrimaryKey;
