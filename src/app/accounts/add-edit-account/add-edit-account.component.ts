@@ -24,7 +24,8 @@ export class AddEditAccountComponent implements OnInit {
   databaseDetailsForm: FormGroup;
 
   databaseServers: any[] = [
-    { name: 'MySQL', value:1 }
+    { name: 'MySQL', value: 1, port: 3306 },
+    { name: 'Postgres', value: 3, port: 5432 }
   ]
 
   constructor(
@@ -66,6 +67,14 @@ export class AddEditAccountComponent implements OnInit {
       dbPasswordCtrl: [this.editAccount ? this.editAccount.server.password : null, Validators.nullValidator],
       dbDbCtrl: [this.editAccount ? this.editAccount.server.database : null, Validators.required],
     });
+
+    this.basicDetailsForm.controls.databaseServerCtrl.valueChanges.subscribe((newVal) => {
+      this.databaseServers.forEach((dbSrv) => {
+        if (dbSrv.value == newVal) {
+          this.databaseDetailsForm.controls.dbPortCtrl.setValue(dbSrv.port);
+        }
+      })
+    })
 
     this.tunnelDetailsForm.controls.isTunnelEnabledCtrl.valueChanges.subscribe((newVal) => {
       ['sshHostCtrl', 'sshPortCtrl', 'sshUsernameCtrl', 'sshPasswordCtrl'].forEach((item) => {

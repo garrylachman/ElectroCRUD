@@ -26,7 +26,7 @@ export const HeartBeatQueries = {
 export const ListTablesQueries = {
     [ServerType.OracleDB]: 'SELECT table_name FROM user_tables',
     [ServerType.MySQL]: 'SELECT table_name FROM information_schema.tables WHERE table_schema = ?',
-    [ServerType.PostgreSQL]: 'SELECT table_name FROM information_schema.tables WHERE table_schema = current_schema() AND table_catalog = ?',
+    [ServerType.PostgreSQL]: 'SELECT concat(table_schema, \'.\', table_name) as table_name FROM information_schema.tables WHERE table_type = \'BASE TABLE\' AND table_catalog = ?',
     [ServerType.MSSQL]: 'SELECT table_name FROM information_schema.tables WHERE table_schema = \'public\' AND table_catalog = ?'
 }
 
@@ -43,12 +43,17 @@ export const GetPrimaryKeyQueries = {
         EXTRA as 'extra' 
     FROM information_schema.columns WHERE table_schema = ? and table_name = ?
     `,
-    [ServerType.PostgreSQL]: `SELECT
-    c.column_name, c.data_type
-    FROM
-    JOIN information_schema.constraint_column_usage AS ccu USING (constraint_schema, constraint_name)
-    JOIN information_schema.columns AS c ON c.table_schema = tc.constraint_schema AND tc.table_name = c.table_name AND ccu.column_name = c.column_name
-    where constraint_type = 'PRIMARY KEY' and tc.table_name = ?;`
+    [ServerType.PostgreSQL]: `SELECT               
+    pg_attribute.attname as column_name, 
+    format_type(pg_attribute.atttypid, pg_attribute.atttypmod) as data_type
+  FROM pg_index, pg_class, pg_attribute, pg_namespace 
+  WHERE 
+    pg_class.oid = ?::regclass AND 
+    indrelid = pg_class.oid AND  
+    pg_class.relnamespace = pg_namespace.oid AND 
+    pg_attribute.attrelid = pg_class.oid AND 
+    pg_attribute.attnum = any(pg_index.indkey)
+   AND indisprimary`
 }
 
 export class DatabaseService {
@@ -130,10 +135,17 @@ export class DatabaseService {
 
     public async listTables(): Promise<string[] | Error> {
         let listTablesQuery = ListTablesQueries[this.activeClient];
+        console.log("listTablesQuery", listTablesQuery)
         let bindings: string[] = [ this.connection.client.database() ];
         try {
             let res = await this.connection.raw(listTablesQuery, bindings);
-            return res[0].map(row => row.table_name);
+            console.log(res);
+            if (this.activeClient == "mysql") {
+                return res[0].map(row => row.table_name);
+            }
+            if (this.activeClient == "pg") {
+                return (res as any).rows.map(row => row.table_name);
+            }
         } catch(error) {
             return error;
         }
@@ -141,7 +153,10 @@ export class DatabaseService {
 
     public async tableInfo(tableName: string) {
         let tableInfoQuery = GetPrimaryKeyQueries[this.activeClient];
-        let bindings: string[] = [ this.connection.client.database(), tableName ];
+        let bindings: string[] = [ tableName ];
+        if (this.activeClient == "mysql") {
+            bindings = [ this.connection.client.database(), tableName ];
+        }
         let findResult = ((result: any) => result[0]) as ((result: any) => string | undefined);
     
         try {

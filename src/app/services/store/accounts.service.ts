@@ -36,5 +36,6 @@ export class AccountsService {
 
 export const ServerType = {
   '1': 'MySQL',
-  '2': 'SQL Server'
+  '2': 'SQL Server',
+  '3': 'Postres'
 }
