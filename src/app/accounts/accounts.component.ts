@@ -1,9 +1,9 @@
 import { Component, OnInit, Input, ViewChild, TemplateRef } from '@angular/core';
-import { NbSortDirection, NbDialogService, NbToastrService  } from '@nebular/theme';
+import { NbSortDirection, NbDialogService, NbToastrService, NbIconLibraries  } from '@nebular/theme';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
 import { ConfirmDeleteComponent} from '../components/dialogs/confirm-delete/confirm-delete.component';
 import { AddEditAccountComponent } from './add-edit-account/add-edit-account.component';
-import { AccountsService, ServerType } from '../services/store/accounts.service';
+import { AccountsService, ServerType, ServerIcon } from '../services/store/accounts.service';
 import { IAccount } from '../../shared/interfaces/accounts.interface';
 import { SessionService } from '../services/session.service';
 import { IIPCConnectResponseMessage } from '../../shared/ipc/accounts.ipc';
@@ -64,13 +64,16 @@ export class AccountsComponent implements OnInit {
    * @param accountsService AccountsService dependency injection.
    * @param sessionService  SessionService dependency injection.
    * @param toastrService   NbToastrService dependency injection.
+   * @param iconLibraries   NbIconLibraries dependency injection.
    */
   constructor(
     private dialogService: NbDialogService,
     private accountsService: AccountsService,
     private sessionService: SessionService,
-    private toastrService: NbToastrService
+    private toastrService: NbToastrService,
+    private iconLibraries: NbIconLibraries
   ) {
+    this.iconLibraries.registerFontPack('whhg', { iconClassPrefix: 'icon' });
     this.temp = [...this.rows];
   }
 
@@ -96,6 +99,7 @@ export class AccountsComponent implements OnInit {
           id: row.id,
           name: row.name,
           server: ServerType[`${row.server.server_type}`],
+          icon: ServerIcon[`${row.server.server_type}`],
           created: new Date(row.creation_date),
           modified: new Date(row.modify_date)
         }

@@ -1,6 +1,6 @@
 {
   "name": "ElectroCRUD",
-  "version": "2.4.0-beta",
+  "version": "2.5.0",
   "description": "No coding is required; Create basic CRUD (Create, Read, Update, Delete) for your Database Database in minutes",
   "homepage": "https://github.com/garrylachman/ElectroCRUD",
   "author": {
@@ -125,6 +125,7 @@
     "ng2-fittext": "^1.2.6",
     "ngx-chips": "^2.0.2",
     "ngx-mask": "^8.0.0",
+    "pg": "^7.12.1",
     "popper.js": "^1.15.0",
     "tunnel-ssh": "^4.1.4",
     "type-fest": "^0.5.2",
