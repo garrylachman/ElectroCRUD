@@ -57,7 +57,9 @@ export class AddEditAccountComponent implements OnInit {
       sshHostCtrl: [this.editAccount ? this.editAccount.ssh.hostname : null, Validators.required],
       sshPortCtrl: [this.editAccount ? this.editAccount.ssh.port : null, Validators.required],
       sshUsernameCtrl: [this.editAccount ? this.editAccount.ssh.username : null, Validators.required],
-      sshPasswordCtrl: [this.editAccount ? this.editAccount.ssh.password : null, Validators.required],
+      sshPasswordCtrl: [this.editAccount ? this.editAccount.ssh.password : null, Validators.nullValidator],
+      isSSHKeyEnabledCtrl: [this.editAccount ? this.editAccount.ssh.use_key : null, Validators.required],
+      sshPrivateKeyCtrl: [this.editAccount ? this.editAccount.ssh.key : null, Validators.required],
     });
 
     this.databaseDetailsForm = this.fb.group({
@@ -85,6 +87,18 @@ export class AddEditAccountComponent implements OnInit {
           ctrl.disable();
         }
       })
+    });
+
+    this.tunnelDetailsForm.controls.isSSHKeyEnabledCtrl.valueChanges.subscribe((newVal) => {
+      let passCtrl = this.tunnelDetailsForm.controls.sshPasswordCtrl;
+      let keyCtrl = this.tunnelDetailsForm.controls.sshPrivateKeyCtrl
+      if (newVal) {
+        passCtrl.disable();
+        keyCtrl.enable();
+      } else {
+        passCtrl.enable();
+        keyCtrl.disable();
+      }
     });
 
     this.tunnelDetailsForm.controls.isTunnelEnabledCtrl.updateValueAndValidity();
@@ -122,14 +136,16 @@ export class AddEditAccountComponent implements OnInit {
         port: fromDBForm('dbPortCtrl'),
         username: fromDBForm('dbUsernameCtrl'),
         password: fromDBForm('dbPasswordCtrl'),
-        database: fromDBForm('dbDbCtrl')
+        database: fromDBForm('dbDbCtrl'),
       },
       ssh: {
         enabled: fromTunnelForm('isTunnelEnabledCtrl'),
         hostname: fromTunnelForm('sshHostCtrl'),
         port: fromTunnelForm('sshPortCtrl'),
         username: fromTunnelForm('sshUsernameCtrl'),
-        password: fromTunnelForm('sshPasswordCtrl')
+        password: fromTunnelForm('sshPasswordCtrl'),
+        use_key: fromTunnelForm('isSSHKeyEnabledCtrl'),
+        key: fromTunnelForm('sshPrivateKeyCtrl')
       }
     }
   }

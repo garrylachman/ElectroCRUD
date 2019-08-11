@@ -47,10 +47,12 @@ export class AccountsIPC {
             this.tunnel = new TunnelService(
                 reqMessage.toMessage().ssh.hostname,
                 reqMessage.toMessage().ssh.username,
-                reqMessage.toMessage().ssh.password,
                 reqMessage.toMessage().ssh.port,
                 reqMessage.toMessage().server.hostname,
-                reqMessage.toMessage().server.port
+                reqMessage.toMessage().server.port,
+                reqMessage.toMessage().ssh.use_key,
+                reqMessage.toMessage().ssh.password,
+                reqMessage.toMessage().ssh.key
             );
 
             databaseHostname = reqMessage.toMessage().ssh.hostname;
@@ -66,6 +68,8 @@ export class AccountsIPC {
         } else {
             isTunnelValid = true;
         }
+
+        console.log("isTunnelValid", isTunnelValid)
 
         if (isTunnelValid) {
             await DatabaseService.getInstance().connect(
@@ -116,10 +120,12 @@ export class AccountsIPC {
             this.tunnel = new TunnelService(
                 reqMessage.toMessage().ssh.hostname,
                 reqMessage.toMessage().ssh.username,
-                reqMessage.toMessage().ssh.password,
                 reqMessage.toMessage().ssh.port,
                 reqMessage.toMessage().server.hostname,
-                reqMessage.toMessage().server.port
+                reqMessage.toMessage().server.port,
+                reqMessage.toMessage().ssh.use_key,
+                reqMessage.toMessage().ssh.password,
+                reqMessage.toMessage().ssh.key
             );
 
             databaseHostname = reqMessage.toMessage().ssh.hostname;

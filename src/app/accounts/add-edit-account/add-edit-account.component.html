@@ -63,6 +63,18 @@
                   [status]="tunnelDetailsForm.controls['sshPasswordCtrl'].invalid && (tunnelDetailsForm.dirty || tunnelDetailsForm.touched) ? 'danger': 'success'"
                 >
               </div>
+              <div class="input-group">
+                <nb-checkbox 
+                  status="primary" class="form-control" formControlName="isSSHKeyEnabledCtrl"
+                  [status]="tunnelDetailsForm.controls['isSSHKeyEnabledCtrl'].invalid && (tunnelDetailsForm.dirty || tunnelDetailsForm.touched) ? 'danger': 'success'"  
+                >
+                  Use SSH Private Key?
+                </nb-checkbox>
+              </div>
+              <div class="input-group">
+                <input type="file" nbInput placeholder="Private Key" class="form-control" formControlName="sshPrivateKeyCtrl" 
+                [status]="tunnelDetailsForm.controls['sshPrivateKeyCtrl'].invalid && (tunnelDetailsForm.dirty || tunnelDetailsForm.touched) ? 'danger': 'success'" />
+              </div>
               <button nbButton hero nbStepperPrevious>prev</button>
               <button nbButton hero nbStepperNext>next</button>
             </form>
