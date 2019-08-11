@@ -32,9 +32,9 @@ export class RowFormComponent implements OnInit {
   ngOnInit() {
     this.view.columns.forEach((col:IViewColumn) => {
       console.log("type", col);
-      this.model[col.name] = col.default == 'NULL' ? null : col.default;
+      //this.model[col.name] = col.default == 'NULL' ? null : col.default;
       // string
-      if (["char", "varchar"].includes(String(col.type))) {
+      if (["char", "varchar", "bpchar"].includes(String(col.type))) {
         if (col.length && col.length > 50)  {
           this.fields.push(this.generateTextArea(col));
         } else {
@@ -42,15 +42,15 @@ export class RowFormComponent implements OnInit {
         }
       }
       // number 
-      if (["int", "smallint", "tinyint", "mediumint"].includes(String(col.type))) {
+      if (["int", "smallint", "tinyint", "mediumint", "int4", "int8", "int2"].includes(String(col.type))) {
         this.fields.push(this.generateInputNumeric(col));
       }
       // decimal 
-      if (["decimal", "float", "double", "numeric"].includes(String(col.type))) {
+      if (["decimal", "float", "double", "numeric", "float2", "float4", "float8"].includes(String(col.type))) {
         this.fields.push(this.generateInputDecimal(col));
       }
       // decimal 
-      if (["boolean"].includes(String(col.type))) {
+      if (["boolean", "bool"].includes(String(col.type))) {
         this.fields.push(this.generateCheckbox(col));
       }
       // text 
