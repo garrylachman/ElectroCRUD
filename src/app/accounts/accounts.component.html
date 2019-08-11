@@ -45,7 +45,10 @@
             nbButton status="primary" hero size="medium" (click)="use(row, this)" 
             nbTooltip="Login & Use Account" nbTooltipPlacement="top" nbTooltipStatus="primary"
         >
-            <nb-icon icon="monitor"></nb-icon>
+            <nb-icon 
+                icon="{{row.icon}}" 
+                pack="whhg" 
+            ></nb-icon>
             Use
         </button>
         <button 

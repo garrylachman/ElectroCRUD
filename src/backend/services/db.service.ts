@@ -262,19 +262,16 @@ export class DatabaseService {
                     }
                 })
             }
-            let countRes = await q.clone().clearSelect().count()
+            let countRes = await q.clone().clearSelect().count({count: '*'})
             console.log("countRes: ", countRes);
 
-            console.log("raw query: ", q.toQuery());
             let res = await q.limit(limit).offset(offset);
             console.log("raw query: ", q.toQuery());
 
             console.log(res);
             return {
                 data: res,
-                //count: 0
                 count: countRes[0]['count']
-                //count: (countRes as any).rows[0]['count(*)']
             };
         } catch(error) {
             return error;
