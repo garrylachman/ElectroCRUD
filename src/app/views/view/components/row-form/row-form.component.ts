@@ -32,7 +32,6 @@ export class RowFormComponent implements OnInit {
   ngOnInit() {
     this.view.columns.forEach((col:IViewColumn) => {
       console.log("type", col);
-      //this.model[col.name] = col.default == 'NULL' ? null : col.default;
       // string
       if (["char", "varchar", "bpchar"].includes(String(col.type))) {
         if (col.length && col.length > 50)  {
