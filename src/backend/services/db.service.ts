@@ -43,17 +43,40 @@ export const GetPrimaryKeyQueries = {
         EXTRA as 'extra' 
     FROM information_schema.columns WHERE table_schema = ? and table_name = ?
     `,
-    [ServerType.PostgreSQL]: `SELECT               
-    pg_attribute.attname as column_name, 
-    format_type(pg_attribute.atttypid, pg_attribute.atttypmod) as data_type
-  FROM pg_index, pg_class, pg_attribute, pg_namespace 
-  WHERE 
-    pg_class.oid = ?::regclass AND 
-    indrelid = pg_class.oid AND  
-    pg_class.relnamespace = pg_namespace.oid AND 
-    pg_attribute.attrelid = pg_class.oid AND 
-    pg_attribute.attnum = any(pg_index.indkey)
-   AND indisprimary`
+    [ServerType.PostgreSQL]: `select
+	a.*,
+	b.key
+from
+	(
+	select
+		column_name as name,
+		column_default as default,
+		is_nullable as nullable,
+		udt_name as type,
+		greatest(character_maximum_length, 0) + greatest(numeric_precision, 0) as length,
+		'' as extra
+	from
+		information_schema.columns
+	where
+		table_catalog = ?
+		and table_schema = split_part(?, '.', 1)
+		and table_name = split_part(?, '.', 2))a
+left join (
+		select pg_attribute.attname as name,
+		'PRI' as key
+	from
+		pg_index,
+		pg_class,
+		pg_attribute,
+		pg_namespace
+	where
+		pg_class.oid = ?::regclass
+		and indrelid = pg_class.oid
+		and pg_class.relnamespace = pg_namespace.oid
+		and pg_attribute.attrelid = pg_class.oid
+		and pg_attribute.attnum = any(pg_index.indkey)
+		and indisprimary)b on
+	a.name = b.name;`
 }
 
 export class DatabaseService {
@@ -157,10 +180,17 @@ export class DatabaseService {
         if (this.activeClient == "mysql") {
             bindings = [ this.connection.client.database(), tableName ];
         }
+        if (this.activeClient == "pg") {
+            bindings = [ this.connection.client.database(), tableName, tableName, tableName ];
+        }
         let findResult = ((result: any) => result[0]) as ((result: any) => string | undefined);
+        let findResultPG = ((result: any) => result.rows) as ((result: any) => string | undefined);
     
         try {
             let res = await this.connection.raw(tableInfoQuery, bindings);
+            if (this.activeClient == "pg") {
+                return findResultPG(res);
+            }
             return findResult(res);
         } catch(error) {
             return error;
@@ -232,16 +262,19 @@ export class DatabaseService {
                     }
                 })
             }
-            let countRes = await q.clone().count();
+            let countRes = await q.clone().clearSelect().count()
             console.log("countRes: ", countRes);
 
+            console.log("raw query: ", q.toQuery());
             let res = await q.limit(limit).offset(offset);
             console.log("raw query: ", q.toQuery());
 
             console.log(res);
             return {
                 data: res,
-                count: countRes[0]['count(*)']
+                //count: 0
+                count: countRes[0]['count']
+                //count: (countRes as any).rows[0]['count(*)']
             };
         } catch(error) {
             return error;
