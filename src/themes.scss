@@ -34,6 +34,20 @@ $nb-themes: nb-register-theme((
   }
 }
 
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+body {
+  background-color: inherit !important;
+  animation: fadein 1s !important;
+}
+
 ::ng-deep
 [formcontrolname] {
   @include input-ng-valid-status(".select-button");
