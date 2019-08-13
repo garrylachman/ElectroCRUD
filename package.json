@@ -126,6 +126,7 @@
     "ng2-fittext": "^1.2.6",
     "ngx-chips": "^2.0.2",
     "ngx-mask": "^8.0.0",
+    "open-ssh-tunnel": "^0.3.1",
     "pg": "^7.12.1",
     "popper.js": "^1.15.0",
     "tunnel-ssh": "^4.1.4",

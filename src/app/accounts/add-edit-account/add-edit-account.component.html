@@ -72,7 +72,7 @@
                 </nb-checkbox>
               </div>
               <div class="input-group">
-                <input type="file" nbInput placeholder="Private Key" class="form-control" formControlName="sshPrivateKeyCtrl" 
+                <input nbInput placeholder="Private Key" class="form-control" formControlName="sshPrivateKeyCtrl" (click)="openElectronFileDialog()"
                 [status]="tunnelDetailsForm.controls['sshPrivateKeyCtrl'].invalid && (tunnelDetailsForm.dirty || tunnelDetailsForm.touched) ? 'danger': 'success'" />
               </div>
               <button nbButton hero nbStepperPrevious>prev</button>

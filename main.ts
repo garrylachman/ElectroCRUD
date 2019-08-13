@@ -38,12 +38,13 @@ function createWindow() {
   const config: Splashscreen.Config = {
     windowOpts: mainOpts,
     templateUrl: `${__dirname}/splash-screen.html`,
-    minVisible: 2000,
+    minVisible: 3500,
     delay: 0,
     splashScreenOpts: {
-        width: 500,
-        height: 500,
-        transparent: true
+        width: 400,
+        height: 400,
+        transparent: true,
+        center: true
     },
   };
   // initialize the splashscreen handling

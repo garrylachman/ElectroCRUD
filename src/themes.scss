@@ -58,9 +58,30 @@ body {
   @include input-ng-valid-status();
 }
 
-::ng-deep
-.nb-theme-cosmic nb-layout.with-scroll .scrollable-container {
+.scrollable-container .scrollable-container {
   height: auto !important;
+}
+
+.scrollable-container {
+  overflow: overlay !important;
+}
+
+.subtitle,.subtitle-2 {
+  color: #fff
+}
+
+.subtitle {
+  font-family: Open Sans,sans-serif;
+  font-size: .9375rem;
+  font-weight: 600;
+  line-height: 1.5rem
+}
+
+.subtitle-2 {
+  font-family: Open Sans,sans-serif;
+  font-size: .8125rem;
+  font-weight: 600;
+  line-height: 1.5rem
 }
 
 .float-right {

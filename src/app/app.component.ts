@@ -12,7 +12,7 @@ import {
 import { IAccount } from '../shared/interfaces/accounts.interface';
 import { SessionService } from './services/session.service';
 import { IView } from '../shared/interfaces/views.interface';
-
+import { version } from '../../package.json';
 
 @Component({
   selector: 'app-root',
@@ -21,7 +21,7 @@ import { IView } from '../shared/interfaces/views.interface';
 })
 export class AppComponent {
   account:IAccount;
-
+  versionFromPkg: string = version;
   userMenu = [{ title: 'Profile' }, { title: 'Log out' }];
   defaultItems: NbMenuItem[] = [
     {

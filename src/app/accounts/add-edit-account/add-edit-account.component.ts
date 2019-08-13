@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IAccount } from '../../../shared/interfaces/accounts.interface';
 import { IIPCCheckConnectionResponseMessage } from '../../../shared/ipc/accounts.ipc';
 import { AccountsIPCService } from '../../services/ipc/accounts.service';
+import { remote } from 'electron';
 
 @Component({
   selector: 'app-add-edit-account',
@@ -77,7 +78,7 @@ export class AddEditAccountComponent implements OnInit {
         }
       })
     })
-
+    
     this.tunnelDetailsForm.controls.isTunnelEnabledCtrl.valueChanges.subscribe((newVal) => {
       ['sshHostCtrl', 'sshPortCtrl', 'sshUsernameCtrl', 'sshPasswordCtrl'].forEach((item) => {
         let ctrl = this.tunnelDetailsForm.controls[item];
@@ -166,6 +167,17 @@ export class AddEditAccountComponent implements OnInit {
         this.testLog.push([`danger`, `[FAIL] DATABASE,  error: ${res.server.error}`]);
       }
     }
+  }
+
+  openElectronFileDialog() {
+    let fileRes:any = remote.dialog.showOpenDialogSync({
+      properties: ['openFile', 'showHiddenFiles']
+    });
+
+    if (fileRes && fileRes[0]) {
+      this.tunnelDetailsForm.controls.sshPrivateKeyCtrl.setValue(fileRes[0]);
+    }
+    console.log(fileRes);
   }
   
   save() {
