@@ -18,7 +18,7 @@ After a few years that the project was inactive, I decided to bring it an alive 
 ### Functionality
 - [x] MySQL Support
 - [x] PostgreSQL Support
-- [x] SSH Tunnels
+- [x] SSH Tunnels (Keys & Password)
 - [x] Accounts (represent a database)
   - [x] Add / Edit
   - [x] Test connection (ssh, db)
@@ -57,9 +57,9 @@ After a few years that the project was inactive, I decided to bring it an alive 
 
 ## Download Binaries ![GitHub release](https://img.shields.io/github/release/garrylachman/ElectroCRUD.svg?style=for-the-badge)
 
-* [Mac OSX](https://github.com/garrylachman/ElectroCRUD/releases/download/2.5.0/ElectroCRUD-2.5.0.dmg)
-* [Linux](https://github.com/garrylachman/ElectroCRUD/releases/download/2.5.0/ElectroCRUD.2.5.0.AppImage)
-* [Windows](https://github.com/garrylachman/ElectroCRUD/releases/download/2.5.0/ElectroCRUD.2.5.0.exe)
+* [Mac OSX](https://github.com/garrylachman/ElectroCRUD/releases/download/2.5.1/ElectroCRUD-2.5.1.dmg)
+* [Linux](https://github.com/garrylachman/ElectroCRUD/releases/download/2.5.1/ElectroCRUD.2.5.1.AppImage)
+* [Windows](https://github.com/garrylachman/ElectroCRUD/releases/download/2.5.1/ElectroCRUD.2.5.1.exe)
 
 ## Download Sources
 [ElectroCRUD on GitHub](https://github.com/garrylachman/ElectroCRUD)

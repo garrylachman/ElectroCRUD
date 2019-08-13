@@ -1,7 +1,11 @@
 import { app, BrowserWindow, screen } from 'electron';
+import * as Splashscreen from "@trodi/electron-splashscreen";
 import * as path from 'path';
 import * as url from 'url';
 import { BackendMain } from './src/backend/index'
+
+
+
 
 let win, serve;
 const args = process.argv.slice(1);
@@ -16,16 +20,50 @@ function createWindow() {
   const electronScreen = screen;
   const size = electronScreen.getPrimaryDisplay().workAreaSize;
 
-  // Create the browser window.
-  win = new BrowserWindow({
+  const mainOpts: Electron.BrowserWindowConstructorOptions = {
+    titleBarStyle: 'hiddenInset',
     x: 0,
     y: 0,
     width: size.width,
     height: size.height,
+    resizable: false,
+    backgroundColor: '#323259',
+    show: false,
     webPreferences: {
       nodeIntegration: true,
     },
-  });
+  };
+
+  // configure the splashscreen
+  const config: Splashscreen.Config = {
+    windowOpts: mainOpts,
+    templateUrl: `${__dirname}/splash-screen.html`,
+    minVisible: 3500,
+    delay: 0,
+    splashScreenOpts: {
+        width: 400,
+        height: 400,
+        transparent: true,
+        center: true
+    },
+  };
+  // initialize the splashscreen handling
+  win = Splashscreen.initSplashScreen(config);
+
+  // Create the browser window.
+  // win = new BrowserWindow({
+  //   titleBarStyle: 'hiddenInset',
+  //   x: 0,
+  //   y: 0,
+  //   width: size.width,
+  //   height: size.height,
+  //   resizable: false,
+  //   backgroundColor: '#323259',
+  //   show: false,
+  //   webPreferences: {
+  //     nodeIntegration: true,
+  //   },
+  // });
 
   if (serve) {
     require('electron-reload')(__dirname, {
@@ -51,6 +89,10 @@ function createWindow() {
     // when you should delete the corresponding element.
     win = null;
   });
+
+  win.once('ready-to-show', () => {
+    win.show()
+  })
 
 }
 

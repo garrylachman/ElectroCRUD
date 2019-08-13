@@ -1,6 +1,11 @@
 import { Server, AddressInfo } from "net";
+import { Config } from 'tunnel-ssh';
 import * as TunnelSSH from 'tunnel-ssh';
+import * as openSshTunnel from 'open-ssh-tunnel';
 import * as getPort from 'get-port';
+import { readFileSync } from 'fs';
+
+const sleep = m => new Promise(r => setTimeout(r, m))
 
 export class TunnelService {
     
@@ -10,40 +15,58 @@ export class TunnelService {
     constructor(
         hostname: string,
         username: string,
-        password: string,
         sshPort: number,
         dstHostname: string,
-        dstPort: number
+        dstPort: number,
+        useKey: boolean,
+        password?: string,
+        key?: string
     ) {
         this.config = {
             'username': username,
-            'password': password,
             'host': hostname,
             'port': sshPort,
-            'dstHost': dstHostname,
+            'dstAddr': dstHostname,
             'dstPort': dstPort,
-            'localHost':'127.0.0.1'
+            'localAddr':'127.0.0.1',
+            'srcAddr':'127.0.0.1',
+            'keepAlive': true,
+            'readyTimeout': 5000,
+            'forwardTimeout': 2000
         };
+
+        if (useKey) {
+            this.config.privateKey = readFileSync(key);
+        } else {
+            this.config.password = password;
+        }
+
+        console.log("this.config", this.config)
     }
 
     public async start():Promise<any> {
-        let localPort = await getPort({port: getPort.makeRange(3000, 30000)});
+        let localPort = await getPort({port: getPort.makeRange(5000, 30000)});
         this.config.localPort = localPort;
 
-        return new Promise((resolve, reject) => {
-            this.tunnel = TunnelSSH(this.config, (error: Error, server: Server) => {
-                console.log("error: ", error);
-                console.log("server: ", server);
-                if (error) {
-                    return reject(error)
-                }
-                return resolve((server.address() as AddressInfo).port);
+        return new Promise(async (resolve, reject) => {
+            openSshTunnel(this.config)
+                .then(async (server: Server) => {
+                    console.log("server: ", server);
+                    this.tunnel = server;
+                    await sleep(1000);
+                    return resolve((server.address() as AddressInfo).port);
+                })
+                .catch((error) => {
+                    console.log("ssh error", error);
+                    return reject(error);
+                })
             });
-        });
     }
 
     public close(): void {
-        this.tunnel.close();
+        if (this.tunnel) {
+            this.tunnel.close();
+        }
     }
 
 }

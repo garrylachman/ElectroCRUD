@@ -47,19 +47,23 @@ export class AccountsIPC {
             this.tunnel = new TunnelService(
                 reqMessage.toMessage().ssh.hostname,
                 reqMessage.toMessage().ssh.username,
-                reqMessage.toMessage().ssh.password,
                 reqMessage.toMessage().ssh.port,
                 reqMessage.toMessage().server.hostname,
-                reqMessage.toMessage().server.port
+                reqMessage.toMessage().server.port,
+                reqMessage.toMessage().ssh.use_key,
+                reqMessage.toMessage().ssh.password,
+                reqMessage.toMessage().ssh.key
             );
 
             databaseHostname = reqMessage.toMessage().ssh.hostname;
-            databasePort = reqMessage.toMessage().ssh.port;
 
             try {
                 let tunnelRes:any = await this.tunnel.start();
+                console.log("tunnelRes", tunnelRes);
                 isTunnelValid = true;
+                databasePort = tunnelRes;
             } catch (error) {
+                console.log("tunnel error", error);
                 isTunnelValid = false;
                 tunnelError = error.toString();
             }
@@ -67,11 +71,13 @@ export class AccountsIPC {
             isTunnelValid = true;
         }
 
+        console.log("isTunnelValid", isTunnelValid)
+
         if (isTunnelValid) {
             await DatabaseService.getInstance().connect(
                 serverTypeIdAsEnum(reqMessage.toMessage().server.server_type),
-                reqMessage.toMessage().server.hostname,
-                reqMessage.toMessage().server.port,
+                databaseHostname,
+                databasePort,
                 reqMessage.toMessage().server.username,
                 reqMessage.toMessage().server.password,
                 reqMessage.toMessage().server.database
@@ -116,20 +122,26 @@ export class AccountsIPC {
             this.tunnel = new TunnelService(
                 reqMessage.toMessage().ssh.hostname,
                 reqMessage.toMessage().ssh.username,
-                reqMessage.toMessage().ssh.password,
                 reqMessage.toMessage().ssh.port,
                 reqMessage.toMessage().server.hostname,
-                reqMessage.toMessage().server.port
+                reqMessage.toMessage().server.port,
+                reqMessage.toMessage().ssh.use_key,
+                reqMessage.toMessage().ssh.password,
+                reqMessage.toMessage().ssh.key
             );
 
             databaseHostname = reqMessage.toMessage().ssh.hostname;
-            databasePort = reqMessage.toMessage().ssh.port;
+
+            console.log("databaseHostname", databaseHostname);
+            console.log("databasePort", databasePort);
 
             try {
                 let tunnelRes:any = await this.tunnel.start();
-                this.tunnel.close();
+                console.log("tunnelRes", tunnelRes);
                 isTunnelValid = true;
+                databasePort = tunnelRes;
             } catch (error) {
+                console.log(error);
                 isTunnelValid = false;
                 tunnelError = error.toString();
             }
@@ -137,8 +149,8 @@ export class AccountsIPC {
 
         await DatabaseService.getInstance().connect(
             serverTypeIdAsEnum(reqMessage.toMessage().server.server_type),
-            reqMessage.toMessage().server.hostname,
-            reqMessage.toMessage().server.port,
+            databaseHostname,
+            databasePort,
             reqMessage.toMessage().server.username,
             reqMessage.toMessage().server.password,
             reqMessage.toMessage().server.database

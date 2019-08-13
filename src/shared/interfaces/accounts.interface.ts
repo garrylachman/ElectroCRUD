@@ -13,6 +13,8 @@ export interface IAccountSSH {
     port?: number;
     username?: string;
     password?: string;
+    use_key?: boolean;
+    key?: string;
 }
 
 export interface IAccountServer {

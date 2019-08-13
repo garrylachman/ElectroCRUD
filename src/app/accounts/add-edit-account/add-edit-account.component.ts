@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IAccount } from '../../../shared/interfaces/accounts.interface';
 import { IIPCCheckConnectionResponseMessage } from '../../../shared/ipc/accounts.ipc';
 import { AccountsIPCService } from '../../services/ipc/accounts.service';
+import { remote } from 'electron';
 
 @Component({
   selector: 'app-add-edit-account',
@@ -57,7 +58,9 @@ export class AddEditAccountComponent implements OnInit {
       sshHostCtrl: [this.editAccount ? this.editAccount.ssh.hostname : null, Validators.required],
       sshPortCtrl: [this.editAccount ? this.editAccount.ssh.port : null, Validators.required],
       sshUsernameCtrl: [this.editAccount ? this.editAccount.ssh.username : null, Validators.required],
-      sshPasswordCtrl: [this.editAccount ? this.editAccount.ssh.password : null, Validators.required],
+      sshPasswordCtrl: [this.editAccount ? this.editAccount.ssh.password : null, Validators.nullValidator],
+      isSSHKeyEnabledCtrl: [this.editAccount ? this.editAccount.ssh.use_key : null, Validators.required],
+      sshPrivateKeyCtrl: [this.editAccount ? this.editAccount.ssh.key : null, Validators.required],
     });
 
     this.databaseDetailsForm = this.fb.group({
@@ -75,7 +78,7 @@ export class AddEditAccountComponent implements OnInit {
         }
       })
     })
-
+    
     this.tunnelDetailsForm.controls.isTunnelEnabledCtrl.valueChanges.subscribe((newVal) => {
       ['sshHostCtrl', 'sshPortCtrl', 'sshUsernameCtrl', 'sshPasswordCtrl'].forEach((item) => {
         let ctrl = this.tunnelDetailsForm.controls[item];
@@ -85,6 +88,18 @@ export class AddEditAccountComponent implements OnInit {
           ctrl.disable();
         }
       })
+    });
+
+    this.tunnelDetailsForm.controls.isSSHKeyEnabledCtrl.valueChanges.subscribe((newVal) => {
+      let passCtrl = this.tunnelDetailsForm.controls.sshPasswordCtrl;
+      let keyCtrl = this.tunnelDetailsForm.controls.sshPrivateKeyCtrl
+      if (newVal) {
+        passCtrl.disable();
+        keyCtrl.enable();
+      } else {
+        passCtrl.enable();
+        keyCtrl.disable();
+      }
     });
 
     this.tunnelDetailsForm.controls.isTunnelEnabledCtrl.updateValueAndValidity();
@@ -122,14 +137,16 @@ export class AddEditAccountComponent implements OnInit {
         port: fromDBForm('dbPortCtrl'),
         username: fromDBForm('dbUsernameCtrl'),
         password: fromDBForm('dbPasswordCtrl'),
-        database: fromDBForm('dbDbCtrl')
+        database: fromDBForm('dbDbCtrl'),
       },
       ssh: {
         enabled: fromTunnelForm('isTunnelEnabledCtrl'),
         hostname: fromTunnelForm('sshHostCtrl'),
         port: fromTunnelForm('sshPortCtrl'),
         username: fromTunnelForm('sshUsernameCtrl'),
-        password: fromTunnelForm('sshPasswordCtrl')
+        password: fromTunnelForm('sshPasswordCtrl'),
+        use_key: fromTunnelForm('isSSHKeyEnabledCtrl'),
+        key: fromTunnelForm('sshPrivateKeyCtrl')
       }
     }
   }
@@ -150,6 +167,17 @@ export class AddEditAccountComponent implements OnInit {
         this.testLog.push([`danger`, `[FAIL] DATABASE,  error: ${res.server.error}`]);
       }
     }
+  }
+
+  openElectronFileDialog() {
+    let fileRes:any = remote.dialog.showOpenDialogSync({
+      properties: ['openFile', 'showHiddenFiles']
+    });
+
+    if (fileRes && fileRes[0]) {
+      this.tunnelDetailsForm.controls.sshPrivateKeyCtrl.setValue(fileRes[0]);
+    }
+    console.log(fileRes);
   }
   
   save() {
