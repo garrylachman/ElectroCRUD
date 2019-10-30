@@ -119,7 +119,7 @@
     "fast-equals": "^2.0.0",
     "get-port": "^5.0.0",
     "jquery": "^3.4.1",
-    "knex": "^0.18.0",
+    "knex": "^0.20.1",
     "mysql": "^2.17.1",
     "ng-bootstrap-form-validation": "^4.0.0",
     "ng-dynamic-breadcrumb": "^2.0.2",
