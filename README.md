@@ -5,13 +5,13 @@
 Create, Read, Update, and Delete (CRUD) are the four basic functions of persistent storage (Database).
 
 ### Why?
-After a failed search for a basic admin panel that not involves writing code or installs web-based solutions, I come with ElectroCRUD idea.
+After a failed search for a basic admin panel that does not involve writing code or installs web-based solutions, I came up with ElectroCRUD idea.
 
 ### ElectroCRUD v1
-The ElectroCRUD v1 was born in 2016, An Electron application that made it possible to create a friendly dashboard with data tables, search, widgets, filter & relations with few clicks without any experience in programming.
+The ElectroCRUD v1 was born in 2016. An Electron application that made it possible to create a friendly dashboard with data tables, search, widgets, filter & relations with few clicks without any experience in programming.
 
 ### ElectroCRUD v2
-After a few years that the project was inactive, I decided to bring it an alive again. The codebase was build from scratch using Electron+Angular8. The new version contains most of the features of the first version, and new features added on a weekly basis.
+After a few years of the project being inactive, I decided to bring it to life again. The codebase was built from scratch using Electron+Angular8. The new version contains most of the features of the first version, and new features are added on a weekly basis.
 
 [![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com) 
 
