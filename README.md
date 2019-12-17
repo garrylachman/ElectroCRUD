@@ -57,9 +57,9 @@ After a few years of the project being inactive, I decided to bring it to life a
 
 ## Download Binaries ![GitHub release](https://img.shields.io/github/release/garrylachman/ElectroCRUD.svg?style=for-the-badge)
 
-* [Mac OSX](https://github.com/garrylachman/ElectroCRUD/releases/download/2.5.1/ElectroCRUD-2.5.1.dmg)
-* [Linux](https://github.com/garrylachman/ElectroCRUD/releases/download/2.5.1/ElectroCRUD.2.5.1.AppImage)
-* [Windows](https://github.com/garrylachman/ElectroCRUD/releases/download/2.5.1/ElectroCRUD.2.5.1.exe)
+* [Mac OSX](https://github.com/garrylachman/ElectroCRUD/releases/download/2.5.2/ElectroCRUD-2.5.1.dmg)
+* [Linux](https://github.com/garrylachman/ElectroCRUD/releases/download/2.5.2/ElectroCRUD.2.5.1.AppImage)
+* [Windows](https://github.com/garrylachman/ElectroCRUD/releases/download/2.5.2/ElectroCRUD.2.5.1.exe)
 
 ## Download Sources
 [ElectroCRUD on GitHub](https://github.com/garrylachman/ElectroCRUD)
@@ -72,6 +72,17 @@ After a few years of the project being inactive, I decided to bring it to life a
 <img src="https://i.imgur.com/CotNi4G.png" style="float:left" width="49.5%" /> <img width="49.5%" src="https://i.imgur.com/9MEQMbL.png" style="float:left" />
 <img src="https://i.imgur.com/QzlYVJu.png" style="float:left" width="49.5%" /> <img width="49.5%" src="https://i.imgur.com/ypsowlS.png" style="float:left" />
 <img src="https://i.imgur.com/IlKqhdV.png" style="float:left" />
+
+
+## Build from source
+`npm install`
+
+### With codesign
+`npm run electron:mac-win-linux`
+
+### Without codesign
+`CSC_IDENTITY_AUTO_DISCOVERY=false npm run electron:mac-win-linux`
+
 
 
 ![GitHub All Releases](https://img.shields.io/github/downloads/garrylachman/ElectroCRUD/total.svg?style=for-the-badge) 
