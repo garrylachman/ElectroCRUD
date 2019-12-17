@@ -1,6 +1,6 @@
 {
   "name": "ElectroCRUD",
-  "version": "2.5.1",
+  "version": "2.5.2",
   "description": "No coding is required; Create basic CRUD (Create, Read, Update, Delete) for your Database Database in minutes",
   "homepage": "https://github.com/garrylachman/ElectroCRUD",
   "author": {
@@ -41,8 +41,8 @@
     "e2e": "npm run build:prod && mocha --timeout 300000 --require ts-node/register e2e/**/*.spec.ts",
     "version": "conventional-changelog -i CHANGELOG.md -s -r 0 && git add CHANGELOG.md",
     "docs": "node_modules/typedoc/bin/typedoc",
-    "report-bugsnag": "bugsnag-build-reporter -k e887c2bdd46d07375e191b250e168764 -v '2.5.1'",
-    "bugsnag-maps": "bugsnag-sourcemaps upload --api-key e887c2bdd46d07375e191b250e168764 --app-version 2.5.1 --directory . -r ./dist/ -w -o"
+    "report-bugsnag": "bugsnag-build-reporter -k e887c2bdd46d07375e191b250e168764 -v '2.5.2'",
+    "bugsnag-maps": "bugsnag-sourcemaps upload --api-key e887c2bdd46d07375e191b250e168764 --app-version 2.5.2 --directory . -r ./dist/ -w -o"
   },
   "devDependencies": {
     "@ngx-translate/core": "11.0.1",
