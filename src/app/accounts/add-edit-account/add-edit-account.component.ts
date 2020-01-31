@@ -59,8 +59,8 @@ export class AddEditAccountComponent implements OnInit {
       sshPortCtrl: [this.editAccount ? this.editAccount.ssh.port : null, Validators.required],
       sshUsernameCtrl: [this.editAccount ? this.editAccount.ssh.username : null, Validators.required],
       sshPasswordCtrl: [this.editAccount ? this.editAccount.ssh.password : null, Validators.nullValidator],
-      isSSHKeyEnabledCtrl: [this.editAccount ? this.editAccount.ssh.use_key : null, Validators.required],
-      sshPrivateKeyCtrl: [this.editAccount ? this.editAccount.ssh.key : null, Validators.required],
+      isSSHKeyEnabledCtrl: [this.editAccount ? this.editAccount.ssh.use_key : false, Validators.required],
+      sshPrivateKeyCtrl: [this.editAccount ? this.editAccount.ssh.key : null],
     });
 
     this.databaseDetailsForm = this.fb.group({
