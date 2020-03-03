@@ -25,7 +25,7 @@ export const HeartBeatQueries = {
 
 export const ListTablesQueries = {
     [ServerType.OracleDB]: 'SELECT table_name FROM user_tables',
-    [ServerType.MySQL]: 'SELECT table_name FROM information_schema.tables WHERE table_schema = ?',
+    [ServerType.MySQL]: 'SELECT table_name as table_name FROM information_schema.tables WHERE table_schema = ?',
     [ServerType.PostgreSQL]: 'SELECT concat(table_schema, \'.\', table_name) as table_name FROM information_schema.tables WHERE table_type = \'BASE TABLE\' AND table_catalog = ?',
     [ServerType.MSSQL]: 'SELECT table_name FROM information_schema.tables WHERE table_schema = \'public\' AND table_catalog = ?'
 }

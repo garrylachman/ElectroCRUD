@@ -63,5 +63,9 @@ export enum ViewFilterWhereOpr {
     /**
      * Less then
      */
-    LT = "<"
+    LT = "<",
+    /**
+     * Like 
+     */
+    LIKE = "LIKE"
 }

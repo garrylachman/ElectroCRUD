@@ -48,7 +48,10 @@ export class TunnelService {
         let localPort = await getPort({port: getPort.makeRange(5000, 30000)});
         this.config.localPort = localPort;
 
+        console.log("public async start():Promise<any>",this.config);
+
         return new Promise(async (resolve, reject) => {
+            console.log("openSshTunnel")
             openSshTunnel(this.config)
                 .then(async (server: Server) => {
                     console.log("server: ", server);

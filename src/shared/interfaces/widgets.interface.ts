@@ -79,7 +79,11 @@ export enum WidgetWhereOpr {
     /**
      * Less then
      */
-    LT = "<"
+    LT = "<",
+    /**
+     * Like
+     */
+    LIKE = "LIKE"
 }
 
 /**
