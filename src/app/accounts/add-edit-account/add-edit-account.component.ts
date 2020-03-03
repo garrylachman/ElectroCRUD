@@ -161,11 +161,11 @@ export class AddEditAccountComponent implements OnInit {
       } else {
         this.testLog.push([`danger`, `[FAIL] SSH, error: ${res.ssh.error}`]);
       }
-      if (res.server.valid) {
-        this.testLog.push([`success`, `[OK] DATABASE`])
-      } else {
-        this.testLog.push([`danger`, `[FAIL] DATABASE,  error: ${res.server.error}`]);
-      }
+    }
+    if (res.server.valid) {
+      this.testLog.push([`success`, `[OK] DATABASE`])
+    } else {
+      this.testLog.push([`danger`, `[FAIL] DATABASE,  error: ${res.server.error}`]);
     }
   }
 
