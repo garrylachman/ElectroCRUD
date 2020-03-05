@@ -12,13 +12,23 @@
   <nb-sidebar tag="left-sidebar">
     <h5 id='active-account' *ngIf="account">{{account?.name}}</h5>
     <nb-menu [items]="items"></nb-menu>
-    <div class="control-panel">
+    <div class="control-panel d-flex justify-content-between">
       <button 
         *ngIf="account" 
         nbButton hero status="primary" size="tiny"
         nbTooltip="Add a new view" nbTooltipPlacement="top" nbTooltipStatus="primary" 
         [routerLink]="['/views/add']"
-      ><nb-icon icon="plus-outline"></nb-icon>Add</button>
+      >
+        <nb-icon icon="plus-outline"></nb-icon>Add View
+      </button>
+      <button 
+        *ngIf="account" 
+        nbButton hero status="primary" size="tiny"
+        nbTooltip="Custom SQL Query" nbTooltipPlacement="top" nbTooltipStatus="primary" 
+        [routerLink]="['/views/query']"
+      >
+        <nb-icon icon="arrow-right"></nb-icon>Query
+      </button>
     </div>
   </nb-sidebar>
 

@@ -26,8 +26,21 @@ export class AppComponent {
   defaultItems: NbMenuItem[] = [
     {
       title: 'Views',
-      group: true,
-      icon: 'folder-outline'
+      icon: 'folder-outline',
+      expanded: true,
+      children: [
+ 
+      ]
+    },
+    {
+      title: 'Add View',
+      icon: 'plus-outline',
+      link: '/views/add',
+    },
+    {
+      title: 'Custom Query',
+      icon: 'arrow-right',
+      link: '/views/query',
     }
    ];
   items:NbMenuItem[] = [...this.defaultItems];
@@ -69,7 +82,7 @@ export class AppComponent {
     this.items = [...this.defaultItems];
     views.forEach((view:IView) => {
       console.log(view);
-      this.items.push({
+      this.items[0].children.push({
         title: view.name,
         icon: 'layers-outline',
         link: `/views/${view.id}/view`

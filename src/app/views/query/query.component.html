@@ -1,0 +1,21 @@
+<nb-card>
+    <nb-card-header><h1 class="page-header h4">Custom SQL Query</h1></nb-card-header>
+</nb-card>
+
+<nb-layout class="inner_scroll" [withScroll]="false" [windowMode]="false">
+  
+    <nb-layout-column  class="colored-column-primary p-0" start>
+        <nb-card>
+            <nb-card-body>
+                <nb-tabset fullWidth>
+                    <nb-tab tabTitle="Query #1" class="p-0">
+                        <ngx-monaco-editor [options]="editorOptions"></ngx-monaco-editor>
+                    </nb-tab>
+                    <nb-tab tabTitle="Query #2" class="p-0">
+                        <ngx-monaco-editor [options]="editorOptions"></ngx-monaco-editor>
+                    </nb-tab>
+                </nb-tabset>
+            </nb-card-body>
+        </nb-card>
+    </nb-layout-column>
+</nb-layout>
