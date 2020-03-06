@@ -6,6 +6,7 @@
 @import '~@swimlane/ngx-datatable/assets/icons.css';
 @import '~bootstrap/scss/bootstrap-grid.scss';
 @import '~bootstrap/scss/bootstrap-reboot.scss';
+@import '~handsontable/dist/handsontable.full.css';
 
 
 @include nb-install() {
@@ -17,4 +18,8 @@ html, body {
   padding: 0;
 
   height: 100%;
+}
+
+.handsontable table tbody tr td {
+  color: #000000;
 }

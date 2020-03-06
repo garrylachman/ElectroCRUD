@@ -2,7 +2,7 @@
     <nb-card-header><h1 class="page-header h4">Custom SQL Query</h1></nb-card-header>
 </nb-card>
 
-<nb-layout class="inner_scroll" [withScroll]="false" [windowMode]="false">
+<nb-layout #layout [withScroll]="false" [windowMode]="false">
   
     <nb-layout-column  class="colored-column-primary p-0" start>
         <nb-card>
@@ -13,14 +13,14 @@
                     
                         <nb-actions size="small" fullWidth class="pt-3 pb-3">
                             <nb-action icon="arrow-right" nbTooltipStatus="primary" nbTooltip="Execute query"></nb-action>
-                            <nb-action icon="save"  nbTooltipStatus="primary" nbTooltip="Save"></nb-action>
+                            <nb-action icon="save"  nbTooltipStatus="primary" nbTooltip="Save" (click)="saveTab(query)"></nb-action>
                             <nb-action icon="plus"  nbTooltipStatus="primary" nbTooltip="Open new query tab" (click)="addNewTab()"></nb-action>
-                            <nb-action icon="close"  nbTooltipStatus="danger" nbTooltip="Close tab" (click)="closeTab(query.id)"></nb-action>
+                            <nb-action icon="close"  nbTooltipStatus="danger" nbTooltip="Close tab" (click)="closeTab(query)"></nb-action>
                         </nb-actions>
-
                     </nb-tab>
-
                 </nb-tabset>
+
+                <hot-table #hotData [data]="data" [colHeaders]="true" [height]=500 [rowHeaders]="true" [autoColumnSize]="true" [manualColumnResize]="true" [manualRowResize]="true" licenseKey="non-commercial-and-evaluation"></hot-table>
             </nb-card-body>
         </nb-card>
     </nb-layout-column>
