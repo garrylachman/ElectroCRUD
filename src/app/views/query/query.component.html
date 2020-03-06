@@ -8,15 +8,19 @@
         <nb-card>
             <nb-card-body>
                 <nb-tabset>
-                    <nb-tab *ngFor="let query of queries" [tabTitle]=query.name class="p-0 pt-3">
+                    <nb-tab *ngFor="let query of queries; let first = first; let last = last; let idx = index;" [tabTitle]=query.name class="p-0 pt-3" [active]=last>
                         <ngx-monaco-editor [options]="editorOptions" [(ngModel)]=query.query></ngx-monaco-editor>
+                    
+                        <nb-actions size="small" fullWidth class="pt-3 pb-3">
+                            <nb-action icon="arrow-right" nbTooltipStatus="primary" nbTooltip="Execute query"></nb-action>
+                            <nb-action icon="save"  nbTooltipStatus="primary" nbTooltip="Save"></nb-action>
+                            <nb-action icon="plus"  nbTooltipStatus="primary" nbTooltip="Open new query tab" (click)="addNewTab()"></nb-action>
+                            <nb-action icon="close"  nbTooltipStatus="danger" nbTooltip="Close tab" (click)="closeTab(query.id)"></nb-action>
+                        </nb-actions>
+
                     </nb-tab>
+
                 </nb-tabset>
-                <nb-actions size="small" fullWidth class="pt-3 pb-3">
-                    <nb-action icon="arrow-right" nbTooltipStatus="primary" nbTooltip="Execute query"></nb-action>
-                    <nb-action icon="save"  nbTooltipStatus="primary" nbTooltip="Save"></nb-action>
-                    <nb-action icon="plus"  nbTooltipStatus="primary" nbTooltip="Open new query tab"></nb-action>
-                  </nb-actions>
             </nb-card-body>
         </nb-card>
     </nb-layout-column>

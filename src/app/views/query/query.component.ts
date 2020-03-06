@@ -35,4 +35,17 @@ export class QueryComponent implements OnInit {
     })*/
   }
 
+  addNewTab() {
+    this.queriesService.add({
+      name: `Query #${this.queriesService.lastId()}`,
+      account: this.sessionsService.activeAccount.id,
+      query: 'SELECT'
+    })
+  }
+
+  closeTab(idx) {
+    console.log(idx);
+    this.queriesService.delete(idx);
+  }
+
 }
