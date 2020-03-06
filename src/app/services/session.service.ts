@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IAccount } from '../../shared/interfaces/accounts.interface';
 import { AccountsService } from './store/accounts.service';
-import { ViewsService } from './store/views.service';
 import { IView } from '../../shared/interfaces/views.interface';
 import { AccountsIPCService } from './ipc/accounts.service';
 import { IIPCConnectResponseMessage } from '../../shared/ipc/accounts.ipc';
@@ -15,11 +14,9 @@ export class SessionService {
 
   private _activeAccount:IAccount;
   public changes:BehaviorSubject<IAccount> = new BehaviorSubject(this._activeAccount);
-  public viewsChanges: Subject<any> = new Subject();
 
   constructor(
     private accountsStore: AccountsService,
-    private viewsStore: ViewsService,
     private accountsIPCService: AccountsIPCService
   ) { }
 
@@ -41,16 +38,5 @@ export class SessionService {
       return null;
     }
     return this.accountsStore.get(this.activeAccount.id);
-  }
-
-  public get activeAccountViewsFromStore(): IView[] {
-    if (!this.activeAccount) {
-      return null;
-    }
-    return this.viewsStore.all(this.activeAccount);
-  }
-
-  public reloadViews(): void {
-    this.viewsChanges.next();
   }
 }

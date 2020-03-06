@@ -13,6 +13,7 @@ import { IAccount } from '../shared/interfaces/accounts.interface';
 import { SessionService } from './services/session.service';
 import { IView } from '../shared/interfaces/views.interface';
 import { version } from '../../package.json';
+import { ViewsService } from './services/store/views.service';
 
 @Component({
   selector: 'app-root',
@@ -51,6 +52,7 @@ export class AppComponent {
     private sidebarService: NbSidebarService,
     private menuService: NbMenuService,
     private searchService: NbSearchService,
+    private viewsService: ViewsService,
     private sessionService: SessionService) {
       
     translate.setDefaultLang('en');
@@ -73,13 +75,15 @@ export class AppComponent {
       }
     })
 
-    this.sessionService.viewsChanges.subscribe(() => this.reload());
+    this.viewsService.changes.subscribe(() => this.reload());
   }
 
   reload() {
-    let views:IView[] = this.sessionService.activeAccountViewsFromStore;
+    let views:IView[] = this.viewsService.all();
+    console.log(this.defaultItems);
 
     this.items = [...this.defaultItems];
+    this.items[0].children = [];
     views.forEach((view:IView) => {
       console.log(view);
       this.items[0].children.push({

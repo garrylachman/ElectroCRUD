@@ -28,7 +28,7 @@ export class BaseService<T1, T2> {
 
   public add(data: T1): void {
     (this.store as any).add(data);
-    this.changes.next(this.all())
+    this.triggerChanges();
   }
 
   public update(data: T1): void {
@@ -37,10 +37,14 @@ export class BaseService<T1, T2> {
 
   public delete(id: number): void {
     (this.store as any).delete(id);
-    this.changes.next(this.all())
+    this.triggerChanges();
   }
 
   public lastId(): number {
     return (this.store as any).lastId();
+  }
+
+  public triggerChanges(): void {
+    this.changes.next(this.all());
   }
 }
