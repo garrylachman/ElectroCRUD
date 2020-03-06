@@ -7,14 +7,16 @@
     <nb-layout-column  class="colored-column-primary p-0" start>
         <nb-card>
             <nb-card-body>
-                <nb-tabset fullWidth>
-                    <nb-tab tabTitle="Query #1" class="p-0">
-                        <ngx-monaco-editor [options]="editorOptions"></ngx-monaco-editor>
-                    </nb-tab>
-                    <nb-tab tabTitle="Query #2" class="p-0">
-                        <ngx-monaco-editor [options]="editorOptions"></ngx-monaco-editor>
+                <nb-tabset>
+                    <nb-tab *ngFor="let query of queries" [tabTitle]=query.name class="p-0 pt-3">
+                        <ngx-monaco-editor [options]="editorOptions" [(ngModel)]=query.query></ngx-monaco-editor>
                     </nb-tab>
                 </nb-tabset>
+                <nb-actions size="small" fullWidth class="pt-3 pb-3">
+                    <nb-action icon="arrow-right" nbTooltipStatus="primary" nbTooltip="Execute query"></nb-action>
+                    <nb-action icon="save"  nbTooltipStatus="primary" nbTooltip="Save"></nb-action>
+                    <nb-action icon="plus"  nbTooltipStatus="primary" nbTooltip="Open new query tab"></nb-action>
+                  </nb-actions>
             </nb-card-body>
         </nb-card>
     </nb-layout-column>

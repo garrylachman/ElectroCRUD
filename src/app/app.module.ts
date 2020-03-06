@@ -55,6 +55,7 @@ import { BugsnagErrorHandler } from '@bugsnag/plugin-angular';
 import { ColumnReferanceDialogComponent } from './views/configure/components/column-referance-dialog/column-referance-dialog.component';
 import { NgBootstrapFormValidationModule } from 'ng-bootstrap-form-validation';
 import { MonacoEditorModule } from '@materia-ui/ngx-monaco-editor';
+import { SessionService } from './services/session.service';
 
 
 // configure Bugsnag ASAP, before any other imports
@@ -140,6 +141,7 @@ console.log("version: ", version ,", env: ", AppConfig.environment);
       provide: ErrorHandler, 
       useFactory: errorHandlerFactory
     },
+    SessionService
   ],
   entryComponents: [ConfirmDeleteComponent, AddEditWidgetModalComponent, AddEditFilterModalComponent, ColumnReferanceDialogComponent],
   bootstrap: [AppComponent]
