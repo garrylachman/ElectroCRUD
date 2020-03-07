@@ -4,6 +4,7 @@ import { QueriesService } from '../../services/store/queries.service';
 import { IQuery } from '../../../shared/interfaces/queries.interface';
 import { NbLayoutComponent } from '@nebular/theme';
 import { HotTableComponent } from '@handsontable/angular';
+import { QueriesIPCService } from '../../services/ipc/queries.ipc.service';
 
 @Component({
   selector: 'app-query',
@@ -20,58 +21,13 @@ export class QueryComponent implements OnInit {
 
   queries: IQuery[];
 
-  data: any[] = [
-    ['', 'Tesla', 'Mercedes', 'Toyota', 'Volvo', '', 'Tesla', 'Mercedes', 'Toyota', 'Volvo', '', 'Tesla', 'Mercedes', 'Toyota', 'Volvo', '', 'Tesla', 'Mercedes', 'Toyota', 'Volvo', '', 'Tesla', 'Mercedes', 'Toyota', 'Volvo', '', 'Tesla', 'Mercedes', 'Toyota', 'Volvo'],
-    ['2019', 10, 11, 12, 13, '2019', 10, 11, 12, 13],
-    ['2020', 20, 11, 14, 13],
-    ['2021', 30, 15, 12, 13],
-    ['2019', 10, 11, 12, 13, '2019', 10, 11, 12, 13],
-    ['2020', 20, 11, 14, 13],
-    ['2021', 30, 15, 12, 13],
-    ['2019', 10, 11, 12, 13, '2019', 10, 11, 12, 13],
-    ['2020', 20, 11, 14, 13],
-    ['2021', 30, 15, 12, 13],
-    ['2019', 10, 11, 12, 13, '2019', 10, 11, 12, 13],
-    ['2020', 20, 11, 14, 13],
-    ['2021', 30, 15, 12, 13],
-    ['2019', 10, 11, 12, 13, '2019', 10, 11, 12, 13],
-    ['2020', 20, 11, 14, 13],
-    ['2021', 30, 15, 12, 13],
-    ['2019', 10, 11, 12, 13, '2019', 10, 11, 12, 13],
-    ['2020', 20, 11, 14, 13],
-    ['2021', 30, 15, 12, 13],
-    ['2019', 10, 11, 12, 13, '2019', 10, 11, 12, 13],
-    ['2020', 20, 11, 14, 13],
-    ['2021', 30, 15, 12, 13],
-    ['2019', 10, 11, 12, 13, '2019', 10, 11, 12, 13],
-    ['2020', 20, 11, 14, 13],
-    ['2021', 30, 15, 12, 13],
-    ['2019', 10, 11, 12, 13, '2019', 10, 11, 12, 13],
-    ['2020', 20, 11, 14, 13],
-    ['2021', 30, 15, 12, 13],
-    ['2019', 10, 11, 12, 13, '2019', 10, 11, 12, 13],
-    ['2020', 20, 11, 14, 13],
-    ['2021', 30, 15, 12, 13],
-    ['2019', 10, 11, 12, 13, '2019', 10, 11, 12, 13],
-    ['2020', 20, 11, 14, 13],
-    ['2021', 30, 15, 12, 13],
-    ['2019', 10, 11, 12, 13, '2019', 10, 11, 12, 13],
-    ['2020', 20, 11, 14, 13],
-    ['2021', 30, 15, 12, 13],
-    ['2019', 10, 11, 12, 13, '2019', 10, 11, 12, 13],
-    ['2020', 20, 11, 14, 13],
-    ['2021', 30, 15, 12, 13],
-    ['2019', 10, 11, 12, 13, '2019', 10, 11, 12, 13],
-    ['2020', 20, 11, 14, 13],
-    ['2021', 30, 15, 12, 13],
-    ['2019', 10, 11, 12, 13, '2019', 10, 11, 12, 13],
-    ['2020', 20, 11, 14, 13],
-    ['2021', 30, 15, 12, 13]
-  ];
+  data: any[] = [];
+  cols: any[] = [];
 
   constructor(
     private sessionsService: SessionService,
     private queriesService: QueriesService,
+    private queriesIPCService: QueriesIPCService
   ) { }
 
   ngOnInit() {
@@ -105,6 +61,19 @@ export class QueryComponent implements OnInit {
 
   saveTab(query: IQuery) {
     this.queriesService.update(query);
+  }
+
+  async execute(query: IQuery) {
+    const res = await this.queriesIPCService.executeQuery(query.query);
+    console.log(res);
+    if (res.valid && res.data) {
+      this.cols = Object.keys([...res.data][0]);
+      const data = [...res.data].map(val => Object.values(val));
+      console.log(data);
+      this.data = [...res.data];
+      console.log(this.data);
+    }
+    
   }
 
 }

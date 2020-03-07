@@ -1,10 +1,9 @@
-<nb-card>
-    <nb-card-header><h1 class="page-header h4">Custom SQL Query</h1></nb-card-header>
-</nb-card>
-
 <nb-layout #layout [withScroll]="false" [windowMode]="false">
-  
     <nb-layout-column  class="colored-column-primary p-0" start>
+        <nb-card>
+            <nb-card-header><h1 class="page-header h4">Custom SQL Query</h1></nb-card-header>
+        </nb-card>
+
         <nb-card>
             <nb-card-body>
                 <nb-tabset>
@@ -12,7 +11,7 @@
                         <ngx-monaco-editor [options]="editorOptions" [(ngModel)]=query.query></ngx-monaco-editor>
                     
                         <nb-actions size="small" fullWidth class="pt-3 pb-3">
-                            <nb-action icon="arrow-right" nbTooltipStatus="primary" nbTooltip="Execute query"></nb-action>
+                            <nb-action icon="arrow-right" nbTooltipStatus="primary" nbTooltip="Execute query" (click)="execute(query)"></nb-action>
                             <nb-action icon="save"  nbTooltipStatus="primary" nbTooltip="Save" (click)="saveTab(query)"></nb-action>
                             <nb-action icon="plus"  nbTooltipStatus="primary" nbTooltip="Open new query tab" (click)="addNewTab()"></nb-action>
                             <nb-action icon="close"  nbTooltipStatus="danger" nbTooltip="Close tab" (click)="closeTab(query)"></nb-action>
@@ -20,7 +19,9 @@
                     </nb-tab>
                 </nb-tabset>
 
-                <hot-table #hotData [data]="data" [colHeaders]="true" [height]=500 [rowHeaders]="true" [autoColumnSize]="true" [manualColumnResize]="true" [manualRowResize]="true" licenseKey="non-commercial-and-evaluation"></hot-table>
+                <hot-table #hotData [data]="data" [colHeaders]="true" stretchH="All" [rowHeaders]="true" [autoColumnSize]="true" [manualColumnResize]="true" [manualRowResize]="true" [filters]="true" [dropdownMenu]="true" [copyPaste]="true" [columnSorting]="true" licenseKey="non-commercial-and-evaluation">
+                    <hot-column *ngFor="let col of cols" [data]=col [title]=col [readOnly]="true"></hot-column>
+                </hot-table>
             </nb-card-body>
         </nb-card>
     </nb-layout-column>
