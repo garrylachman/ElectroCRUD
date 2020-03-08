@@ -1,28 +1,29 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Input, OnDestroy } from '@angular/core';
 import { SessionService } from '../../services/session.service';
 import { QueriesService } from '../../services/store/queries.service';
 import { IQuery } from '../../../shared/interfaces/queries.interface';
 import { NbLayoutComponent } from '@nebular/theme';
-import { HotTableComponent } from '@handsontable/angular';
 import { QueriesIPCService } from '../../services/ipc/queries.ipc.service';
+
+import { Spreadsheet } from 'dhx-spreadsheet';
+
 
 @Component({
   selector: 'app-query',
   templateUrl: './query.component.html',
   styleUrls: ['./query.component.scss']
 })
-export class QueryComponent implements OnInit {
+export class QueryComponent implements OnInit, OnDestroy {
 
   @ViewChild(NbLayoutComponent, { static: false }) layout: NbLayoutComponent;
-  @ViewChild(HotTableComponent, { static: true }) hotData: HotTableComponent;
+
+  @ViewChild('spreadsheet', {static: true}) container: ElementRef;
+  spreadsheet: Spreadsheet;
 
   editorOptions = {theme: 'vs-dark', language: 'sql', minimap: { enabled: false }};
   code: string = 'SELECT * FROM';
 
   queries: IQuery[];
-
-  data: any[] = [];
-  cols: any[] = [];
 
   constructor(
     private sessionsService: SessionService,
@@ -32,6 +33,11 @@ export class QueryComponent implements OnInit {
 
   ngOnInit() {
 
+    this.spreadsheet = new Spreadsheet(this.container.nativeElement, {
+      toolbar: false,
+      menu: false,
+      editLine: false,
+    });
 
     this.queries = this.queriesService.all();
 
@@ -39,12 +45,10 @@ export class QueryComponent implements OnInit {
       console.log(items)
       this.queries = items;
     })
+  }
 
-    /*this.queriesService.add({
-      name: 'tab 1',
-      account: this.sessionsService.activeAccount.id,
-      query: 'SELECT'
-    })*/
+  ngOnDestroy() {
+    this.spreadsheet.destructor();
   }
 
   addNewTab() {
@@ -63,17 +67,33 @@ export class QueryComponent implements OnInit {
     this.queriesService.update(query);
   }
 
-  async execute(query: IQuery) {
+  async execute(query: IQuery) {    
     const res = await this.queriesIPCService.executeQuery(query.query);
-    console.log(res);
     if (res.valid && res.data) {
-      this.cols = Object.keys([...res.data][0]);
+      const cols = Object.keys([...res.data][0]);
       const data = [...res.data].map(val => Object.values(val));
-      console.log(data);
-      this.data = [...res.data];
-      console.log(this.data);
+      this.spreadsheet.parse(this.data2excel_format([[...cols], ...data]));
     }
-    
+  }
+
+  private data2excel_format(data: any[]) {
+    const ABC: string[] = [
+      "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
+      "AA", "AB", "AC", "AD", "AE", "AF", "AG", "AH", "AI", "AJ", "AK", "AL", "AM", "AN", "AO", "AP", "AQ", "AR", "AS", "AT", "AU", "AV", "AW", "AX", "AY", "AZ"
+    ];
+    let res: any[] = [];
+
+    data.forEach((row, rowIdx) => {
+      return row.forEach((col, colIdx) => {
+        res.push({
+          cell: `${ABC[colIdx]}${rowIdx+1}`,
+          value: col
+        })
+      })
+    });
+
+    return res;
+
   }
 
 }

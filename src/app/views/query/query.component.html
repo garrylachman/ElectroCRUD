@@ -19,9 +19,7 @@
                     </nb-tab>
                 </nb-tabset>
 
-                <hot-table #hotData [data]="data" [colHeaders]="true" stretchH="All" [rowHeaders]="true" [autoColumnSize]="true" [manualColumnResize]="true" [manualRowResize]="true" [filters]="true" [dropdownMenu]="true" [copyPaste]="true" [columnSorting]="true" licenseKey="non-commercial-and-evaluation">
-                    <hot-column *ngFor="let col of cols" [data]=col [title]=col [readOnly]="true"></hot-column>
-                </hot-table>
+                <div #spreadsheet class='widget-box-wide'></div>
             </nb-card-body>
         </nb-card>
     </nb-layout-column>

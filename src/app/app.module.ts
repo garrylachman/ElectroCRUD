@@ -56,7 +56,6 @@ import { ColumnReferanceDialogComponent } from './views/configure/components/col
 import { NgBootstrapFormValidationModule } from 'ng-bootstrap-form-validation';
 import { MonacoEditorModule } from '@materia-ui/ngx-monaco-editor';
 import { SessionService } from './services/session.service';
-import { HotTableModule } from '@handsontable/angular';
 
 
 // configure Bugsnag ASAP, before any other imports
@@ -131,7 +130,6 @@ console.log("version: ", version ,", env: ", AppConfig.environment);
     Ng2FittextModule,
     NgBootstrapFormValidationModule.forRoot(),
     MonacoEditorModule,
-    HotTableModule.forRoot(),
   ],
   providers: [
     ElectronService, 

@@ -1,6 +1,6 @@
 {
   "name": "ElectroCRUD",
-  "version": "2.6.0",
+  "version": "2.6.1",
   "description": "No coding is required; Create basic CRUD (Create, Read, Update, Delete) for your Database Database in minutes",
   "homepage": "https://github.com/garrylachman/ElectroCRUD",
   "author": {
@@ -115,12 +115,12 @@
     "angular-fittext": "^2.1.1",
     "bootstrap": "^4.3.1",
     "date-fns": "^2.8.1",
+    "dhx-spreadsheet": "^3.1.4",
     "electron-better-ipc": "0.7.0",
     "electron-store": "^5.1.0",
     "eva-icons": "^1.1.1",
     "fast-equals": "^2.0.0",
     "get-port": "^5.0.0",
-    "handsontable": "^7.4.2",
     "jquery": "^3.4.1",
     "knex": "^0.20.3",
     "monaco-editor": "^0.18.1",

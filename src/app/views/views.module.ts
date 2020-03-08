@@ -45,8 +45,6 @@ import { TagInputModule } from 'ngx-chips';
 import { NgBootstrapFormValidationModule } from 'ng-bootstrap-form-validation';
 import { QueryComponent } from './query/query.component';
 import { MonacoEditorModule } from '@materia-ui/ngx-monaco-editor';
-import { HotTableModule } from '@handsontable/angular';
-
 
 @NgModule({
   declarations: [ViewComponent, ConfigureComponent, EmptyComponent, ViewEditComponent, ViewAddComponent, WidgetsComponent, ViewViewComponent, RowFormComponent, FormlyFieldNbInputComponent, FormlyFieldNbSelectComponent, FormlyFieldNbChechboxComponent, FormlyFieldNbDatepickerComponent, FormlyFieldNbTextareaComponent, FiltersComponent, SubViewComponent, QueryComponent],
@@ -99,7 +97,6 @@ import { HotTableModule } from '@handsontable/angular';
     TagInputModule,
     NgBootstrapFormValidationModule,
     MonacoEditorModule,
-    HotTableModule,
   ],
   entryComponents: [ViewComponent, ConfigureComponent, EmptyComponent, ViewEditComponent, ViewAddComponent, ViewViewComponent, WidgetsComponent, SubViewComponent, QueryComponent]
 })

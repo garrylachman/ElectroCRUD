@@ -34,6 +34,7 @@ After a few years of the project being inactive, I decided to bring it to life a
   - [x] Edit record
   - [x] Connect existing view as sub views
   - [ ] Export data in various formats like: csv, dump
+- [x] Custom SQL Queries
 - [x] Subviews (represent a sub table)
 - [x] Views relations
   - [x] Drill from view to view (subview)
@@ -57,9 +58,9 @@ After a few years of the project being inactive, I decided to bring it to life a
 
 ## Download Binaries ![GitHub release](https://img.shields.io/github/release/garrylachman/ElectroCRUD.svg?style=for-the-badge)
 
-* [Mac OSX](https://github.com/garrylachman/ElectroCRUD/releases/download/2.6.0/ElectroCRUD-2.6.0.dmg)
-* [Linux](https://github.com/garrylachman/ElectroCRUD/releases/download/2.6.0/ElectroCRUD.2.6.0.AppImage)
-* [Windows](https://github.com/garrylachman/ElectroCRUD/releases/download/2.6.0/ElectroCRUD.2.6.0.exe)
+* [Mac OSX](https://github.com/garrylachman/ElectroCRUD/releases/download/2.6.1/ElectroCRUD-2.6.1.dmg)
+* [Linux](https://github.com/garrylachman/ElectroCRUD/releases/download/2.6.1/ElectroCRUD.2.6.1.AppImage)
+* [Windows](https://github.com/garrylachman/ElectroCRUD/releases/download/2.6.1/ElectroCRUD.2.6.1.exe)
 
 ## Download Sources
 [ElectroCRUD on GitHub](https://github.com/garrylachman/ElectroCRUD)
@@ -71,7 +72,8 @@ After a few years of the project being inactive, I decided to bring it to life a
 <img src="https://i.imgur.com/gV1QHYK.png" width="49.5%" style="float:left" /> <img width="49.5%" src="https://i.imgur.com/02DoYz1.png" style="float:left" />
 <img src="https://i.imgur.com/CotNi4G.png" style="float:left" width="49.5%" /> <img width="49.5%" src="https://i.imgur.com/9MEQMbL.png" style="float:left" />
 <img src="https://i.imgur.com/QzlYVJu.png" style="float:left" width="49.5%" /> <img width="49.5%" src="https://i.imgur.com/ypsowlS.png" style="float:left" />
-<img src="https://i.imgur.com/IlKqhdV.png" style="float:left" />
+<img src="https://i.imgur.com/IlKqhdV.png" style="float:left"/>
+<img  src="https://i.imgur.com/I3IG1e4.png" style="float:left" />
 
 
 ## Build from source
