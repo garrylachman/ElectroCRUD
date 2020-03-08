@@ -156,6 +156,22 @@ export class DatabaseService {
         }
     }
 
+    public async executeQuery(query: string): Promise<any | Error> {
+        console.log("query", query)
+        let findResult = ((result: any) => result[0]) as ((result: any) => string | undefined);
+        let findResultPG = ((result: any) => result.rows) as ((result: any) => string | undefined);
+
+        try {
+            let res = await this.connection.raw(query);
+            if (this.activeClient == "pg") {
+                return findResultPG(res);
+            }
+            return findResult(res);
+        } catch(error) {
+            return error;
+        }
+    }
+
     public async listTables(): Promise<string[] | Error> {
         let listTablesQuery = ListTablesQueries[this.activeClient];
         console.log("listTablesQuery", listTablesQuery)

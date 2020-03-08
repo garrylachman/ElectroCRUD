@@ -54,6 +54,9 @@ import bugsnag from '@bugsnag/js';
 import { BugsnagErrorHandler } from '@bugsnag/plugin-angular';
 import { ColumnReferanceDialogComponent } from './views/configure/components/column-referance-dialog/column-referance-dialog.component';
 import { NgBootstrapFormValidationModule } from 'ng-bootstrap-form-validation';
+import { MonacoEditorModule } from '@materia-ui/ngx-monaco-editor';
+import { SessionService } from './services/session.service';
+
 
 // configure Bugsnag ASAP, before any other imports
 const bugsnagClient = bugsnag({
@@ -72,6 +75,7 @@ export function errorHandlerFactory() {
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
+
 
 console.log("version: ", version ,", env: ", AppConfig.environment);
 
@@ -125,6 +129,7 @@ console.log("version: ", version ,", env: ", AppConfig.environment);
     FormlyBootstrapModule,
     Ng2FittextModule,
     NgBootstrapFormValidationModule.forRoot(),
+    MonacoEditorModule,
   ],
   providers: [
     ElectronService, 
@@ -136,6 +141,7 @@ console.log("version: ", version ,", env: ", AppConfig.environment);
       provide: ErrorHandler, 
       useFactory: errorHandlerFactory
     },
+    SessionService
   ],
   entryComponents: [ConfirmDeleteComponent, AddEditWidgetModalComponent, AddEditFilterModalComponent, ColumnReferanceDialogComponent],
   bootstrap: [AppComponent]

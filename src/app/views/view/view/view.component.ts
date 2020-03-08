@@ -109,7 +109,8 @@ export class ViewViewComponent implements OnInit, OnDestroy {
       .subscribe(async (res) => {
         if (res)  {
           this.viewsService.delete(this.view.id);
-          this.sessionsService.reloadViews();
+          //this.sessionsService.reloadViews();
+          this.viewsService.triggerChanges();
           this.router.navigate(['/accounts']);
         }
       });

@@ -11,15 +11,7 @@
 
   <nb-sidebar tag="left-sidebar">
     <h5 id='active-account' *ngIf="account">{{account?.name}}</h5>
-    <nb-menu [items]="items"></nb-menu>
-    <div class="control-panel">
-      <button 
-        *ngIf="account" 
-        nbButton hero status="primary" size="tiny"
-        nbTooltip="Add a new view" nbTooltipPlacement="top" nbTooltipStatus="primary" 
-        [routerLink]="['/views/add']"
-      ><nb-icon icon="plus-outline"></nb-icon>Add</button>
-    </div>
+    <nb-menu [items]="items" *ngIf="account" ></nb-menu>
   </nb-sidebar>
 
   <nb-layout-column>

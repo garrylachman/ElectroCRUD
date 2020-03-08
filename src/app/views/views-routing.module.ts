@@ -6,6 +6,7 @@ import { ConfigureComponent } from './configure/configure.component'
 import { ViewEditComponent } from './view/edit/edit.component';
 import { ViewComponent } from './view/view.component';
 import { ViewAddComponent } from './view/add/add.component';
+import { QueryComponent } from './query/query.component';
 
 const routes: Routes = [
   {
@@ -19,6 +20,10 @@ const routes: Routes = [
   {
     path: 'add',
     component: ConfigureComponent
+  },
+  {
+    path: 'query',
+    component: QueryComponent
   },
   {
     path: ':id/view',

@@ -20,7 +20,8 @@ import {
   NbBadgeModule,
   NbLayoutModule,
   NbSidebarModule,
-  NbMenuModule
+  NbMenuModule,
+  NbTabsetModule
 } from '@nebular/theme';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
@@ -42,9 +43,11 @@ import { AngularFittextModule } from 'angular-fittext';
 import { SubViewComponent } from './view/view/components/sub-view/sub-view.component';
 import { TagInputModule } from 'ngx-chips';
 import { NgBootstrapFormValidationModule } from 'ng-bootstrap-form-validation';
+import { QueryComponent } from './query/query.component';
+import { MonacoEditorModule } from '@materia-ui/ngx-monaco-editor';
 
 @NgModule({
-  declarations: [ViewComponent, ConfigureComponent, EmptyComponent, ViewEditComponent, ViewAddComponent, WidgetsComponent, ViewViewComponent, RowFormComponent, FormlyFieldNbInputComponent, FormlyFieldNbSelectComponent, FormlyFieldNbChechboxComponent, FormlyFieldNbDatepickerComponent, FormlyFieldNbTextareaComponent, FiltersComponent, SubViewComponent],
+  declarations: [ViewComponent, ConfigureComponent, EmptyComponent, ViewEditComponent, ViewAddComponent, WidgetsComponent, ViewViewComponent, RowFormComponent, FormlyFieldNbInputComponent, FormlyFieldNbSelectComponent, FormlyFieldNbChechboxComponent, FormlyFieldNbDatepickerComponent, FormlyFieldNbTextareaComponent, FiltersComponent, SubViewComponent, QueryComponent],
   providers: [BreadcrumbsService],
   imports: [
     CommonModule,
@@ -66,6 +69,7 @@ import { NgBootstrapFormValidationModule } from 'ng-bootstrap-form-validation';
     NbBadgeModule,
     NgxMaskModule.forChild(),
     NbDatepickerModule,
+    NbTabsetModule,
     FormlyModule.forChild({
       types: [
         {
@@ -92,7 +96,8 @@ import { NgBootstrapFormValidationModule } from 'ng-bootstrap-form-validation';
     AngularFittextModule,
     TagInputModule,
     NgBootstrapFormValidationModule,
+    MonacoEditorModule,
   ],
-  entryComponents: [ViewComponent, ConfigureComponent, EmptyComponent, ViewEditComponent, ViewAddComponent, ViewViewComponent, WidgetsComponent, SubViewComponent]
+  entryComponents: [ViewComponent, ConfigureComponent, EmptyComponent, ViewEditComponent, ViewAddComponent, ViewViewComponent, WidgetsComponent, SubViewComponent, QueryComponent]
 })
 export class ViewsModule { }

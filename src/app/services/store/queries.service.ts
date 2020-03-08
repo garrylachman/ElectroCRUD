@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
-import { IView } from './../../../shared/interfaces/views.interface';
-import { ViewsStore } from '../../../shared/store/views.store';
+import { IQuery } from './../../../shared/interfaces/queries.interface';
+import { QueriesStore } from '../../../shared/store/queries.store';
 import { BaseService } from './base.service';
 import { SessionService } from '../session.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ViewsService extends BaseService<IView, ViewsStore> {
+export class QueriesService extends BaseService<IQuery, QueriesStore> {
 
   constructor(protected sessionService: SessionService) {
     super(
-      new ViewsStore(), 
+      new QueriesStore(), 
       sessionService
     );
   }

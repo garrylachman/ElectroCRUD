@@ -13,6 +13,7 @@ import { IAccount } from '../shared/interfaces/accounts.interface';
 import { SessionService } from './services/session.service';
 import { IView } from '../shared/interfaces/views.interface';
 import { version } from '../../package.json';
+import { ViewsService } from './services/store/views.service';
 
 @Component({
   selector: 'app-root',
@@ -26,8 +27,21 @@ export class AppComponent {
   defaultItems: NbMenuItem[] = [
     {
       title: 'Views',
-      group: true,
-      icon: 'folder-outline'
+      icon: 'folder-outline',
+      expanded: true,
+      children: [
+ 
+      ]
+    },
+    {
+      title: 'Add View',
+      icon: 'plus-outline',
+      link: '/views/add',
+    },
+    {
+      title: 'Custom Query',
+      icon: 'arrow-right',
+      link: '/views/query',
     }
    ];
   items:NbMenuItem[] = [...this.defaultItems];
@@ -38,6 +52,7 @@ export class AppComponent {
     private sidebarService: NbSidebarService,
     private menuService: NbMenuService,
     private searchService: NbSearchService,
+    private viewsService: ViewsService,
     private sessionService: SessionService) {
       
     translate.setDefaultLang('en');
@@ -60,16 +75,18 @@ export class AppComponent {
       }
     })
 
-    this.sessionService.viewsChanges.subscribe(() => this.reload());
+    this.viewsService.changes.subscribe(() => this.reload());
   }
 
   reload() {
-    let views:IView[] = this.sessionService.activeAccountViewsFromStore;
+    let views:IView[] = this.viewsService.all();
+    console.log(this.defaultItems);
 
     this.items = [...this.defaultItems];
+    this.items[0].children = [];
     views.forEach((view:IView) => {
       console.log(view);
-      this.items.push({
+      this.items[0].children.push({
         title: view.name,
         icon: 'layers-outline',
         link: `/views/${view.id}/view`

@@ -87,7 +87,7 @@ export class ConfigureComponent implements OnInit {
 
 
     // load all view to display in subviews form
-    this.allViews = this.viewsService.all(this.sessionsService.activeAccount);
+    this.allViews = this.viewsService.all();
 
     // init empty subview if no value
     if (!this.view.subview) {
@@ -277,7 +277,8 @@ export class ConfigureComponent implements OnInit {
         this.viewsService.add(this.view);
         insertedId = this.viewsService.lastId();
       }
-      this.sessionsService.reloadViews();
+      //this.sessionsService.reloadViews();
+      this.viewsService.triggerChanges();
       this.router.navigate(['views', insertedId, 'view']);
     } else {
       this.toastrService.danger("Some details are missing or invalid, please check again.")
