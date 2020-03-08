@@ -57,9 +57,9 @@ After a few years that the project was inactive, I decided to bring it an alive 
 
 ## Download Binaries ![GitHub release](https://img.shields.io/github/release/garrylachman/ElectroCRUD.svg?style=for-the-badge)
 
-* [Mac OSX](https://github.com/garrylachman/ElectroCRUD/releases/download/2.6.0/ElectroCRUD-2.6.0.dmg)
-* [Linux](https://github.com/garrylachman/ElectroCRUD/releases/download/2.6.0/ElectroCRUD.2.6.0.AppImage)
-* [Windows](https://github.com/garrylachman/ElectroCRUD/releases/download/2.6.0/ElectroCRUD.2.6.0.exe)
+* [Mac OSX](https://github.com/garrylachman/ElectroCRUD/releases/download/2.6.1/ElectroCRUD-2.6.1.dmg)
+* [Linux](https://github.com/garrylachman/ElectroCRUD/releases/download/2.6.1/ElectroCRUD-2.6.1.AppImage)
+* [Windows](https://github.com/garrylachman/ElectroCRUD/releases/download/2.6.1/ElectroCRUD.2.6.1.exe)
 
 ## Install via Package Managers
 ### Homebrew/brew (Mac OS/X)
@@ -76,6 +76,7 @@ After a few years that the project was inactive, I decided to bring it an alive 
 <img src="https://i.imgur.com/CotNi4G.png" style="float:left" width="49.5%" /> <img width="49.5%" src="https://i.imgur.com/9MEQMbL.png" style="float:left" />
 <img src="https://i.imgur.com/QzlYVJu.png" style="float:left" width="49.5%" /> <img width="49.5%" src="https://i.imgur.com/ypsowlS.png" style="float:left" />
 <img src="https://i.imgur.com/IlKqhdV.png" style="float:left" />
+<img  src="https://i.imgur.com/I3IG1e4.png" style="float:left" />
 
 
 ![GitHub All Releases](https://img.shields.io/github/downloads/garrylachman/ElectroCRUD/total.svg?style=for-the-badge) 
