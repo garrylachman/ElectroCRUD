@@ -5,7 +5,7 @@ import { IQuery } from '../../../shared/interfaces/queries.interface';
 import { NbLayoutComponent } from '@nebular/theme';
 import { QueriesIPCService } from '../../services/ipc/queries.ipc.service';
 
-import { Spreadsheet } from 'dhx-spreadsheet';
+import * as canvasDatagrid from 'canvas-datagrid';
 
 
 @Component({
@@ -17,13 +17,12 @@ export class QueryComponent implements OnInit, OnDestroy {
 
   @ViewChild(NbLayoutComponent, { static: false }) layout: NbLayoutComponent;
 
-  @ViewChild('spreadsheet', {static: true}) container: ElementRef;
-  spreadsheet: Spreadsheet;
-
   editorOptions = {theme: 'vs-dark', language: 'sql', minimap: { enabled: false }};
   code: string = 'SELECT * FROM';
 
   queries: IQuery[];
+
+  dataGrid: any;
 
   constructor(
     private sessionsService: SessionService,
@@ -33,11 +32,12 @@ export class QueryComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
-    this.spreadsheet = new Spreadsheet(this.container.nativeElement, {
-      toolbar: false,
-      menu: false,
-      editLine: false,
+    this.dataGrid = canvasDatagrid({
+      parentNode: document.getElementById('gridctr'),
+      data: []
     });
+
+    this.dataGrid.style.width = '100%';
 
     this.queries = this.queriesService.all();
 
@@ -48,7 +48,6 @@ export class QueryComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.spreadsheet.destructor();
   }
 
   addNewTab() {
@@ -70,30 +69,8 @@ export class QueryComponent implements OnInit, OnDestroy {
   async execute(query: IQuery) {    
     const res = await this.queriesIPCService.executeQuery(query.query);
     if (res.valid && res.data) {
-      const cols = Object.keys([...res.data][0]);
-      const data = [...res.data].map(val => Object.values(val));
-      this.spreadsheet.parse(this.data2excel_format([[...cols], ...data]));
+      this.dataGrid.data = [...res.data];
     }
-  }
-
-  private data2excel_format(data: any[]) {
-    const ABC: string[] = [
-      "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
-      "AA", "AB", "AC", "AD", "AE", "AF", "AG", "AH", "AI", "AJ", "AK", "AL", "AM", "AN", "AO", "AP", "AQ", "AR", "AS", "AT", "AU", "AV", "AW", "AX", "AY", "AZ"
-    ];
-    let res: any[] = [];
-
-    data.forEach((row, rowIdx) => {
-      return row.forEach((col, colIdx) => {
-        res.push({
-          cell: `${ABC[colIdx]}${rowIdx+1}`,
-          value: col
-        })
-      })
-    });
-
-    return res;
-
   }
 
 }

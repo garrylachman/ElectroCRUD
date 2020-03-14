@@ -269,7 +269,6 @@ export class ViewViewComponent implements OnInit, OnDestroy {
   }
 
   async reload() {    
-    console.log("reload")
     let data = await this.viewsIPCService
       .readData(
         this.view.table, 
@@ -315,8 +314,15 @@ export class ViewViewComponent implements OnInit, OnDestroy {
         this.selectedFilter ? this.selectedFilter.where as IIPCReadDataWhere[] : null,
         this.getViewJoints()
       );
-    this.rows = [...data.data];
     this.totalElements = data.count;
+
+    if (this.dataViewType == DataViewType.TABLE) {
+      this.rows = [...data.data];
+    }
+
+    if (this.dataViewType == DataViewType.SPREADSHEET) {
+      this.dataGrid.data = [...data.data]
+    }
   }
 
   doSearch(event): void {
