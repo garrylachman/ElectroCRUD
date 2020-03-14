@@ -59,8 +59,12 @@ After a few years of the project being inactive, I decided to bring it to life a
 ## Download Binaries ![GitHub release](https://img.shields.io/github/release/garrylachman/ElectroCRUD.svg?style=for-the-badge)
 
 * [Mac OSX](https://github.com/garrylachman/ElectroCRUD/releases/download/2.6.1/ElectroCRUD-2.6.1.dmg)
-* [Linux](https://github.com/garrylachman/ElectroCRUD/releases/download/2.6.1/ElectroCRUD.2.6.1.AppImage)
+* [Linux](https://github.com/garrylachman/ElectroCRUD/releases/download/2.6.1/ElectroCRUD-2.6.1.AppImage)
 * [Windows](https://github.com/garrylachman/ElectroCRUD/releases/download/2.6.1/ElectroCRUD.2.6.1.exe)
+
+## Install via Package Managers
+### Homebrew/brew (Mac OS/X)
+`brew cask install electrocrud`
 
 ## Download Sources
 [ElectroCRUD on GitHub](https://github.com/garrylachman/ElectroCRUD)
