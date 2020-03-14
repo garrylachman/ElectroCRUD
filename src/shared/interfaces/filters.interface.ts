@@ -46,8 +46,6 @@ export interface IViewFilterWhere {
     or: boolean;
 }
 
-
-
 /**
  * Enum represent a view filter where clause operator
  */
@@ -67,5 +65,9 @@ export enum ViewFilterWhereOpr {
     /**
      * Like 
      */
-    LIKE = "LIKE"
+    LIKE = "LIKE",
+    /**
+     * Not Like 
+     */
+    NOT_LIKE = "NOT LIKE"
 }

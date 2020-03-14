@@ -83,7 +83,11 @@ export enum WidgetWhereOpr {
     /**
      * Like
      */
-    LIKE = "LIKE"
+    LIKE = "LIKE",
+    /**
+     * Not Like 
+     */
+    NOT_LIKE = "NOT LIKE"
 }
 
 /**
