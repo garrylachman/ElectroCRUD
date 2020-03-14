@@ -5,7 +5,7 @@ import * as url from 'url';
 import { BackendMain } from './src/backend/index'
 
 
-
+app.disableHardwareAcceleration();
 
 let win, serve;
 const args = process.argv.slice(1);
@@ -31,6 +31,7 @@ function createWindow() {
     show: false,
     webPreferences: {
       nodeIntegration: true,
+      offscreen: true
     },
   };
 
