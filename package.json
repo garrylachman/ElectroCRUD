@@ -1,6 +1,6 @@
 {
   "name": "ElectroCRUD",
-  "version": "2.6.1",
+  "version": "2.6.2",
   "description": "No coding is required; Create basic CRUD (Create, Read, Update, Delete) for your Database Database in minutes",
   "homepage": "https://github.com/garrylachman/ElectroCRUD",
   "author": {
@@ -75,7 +75,7 @@
     "ts-node": "8.5.4",
     "tslint": "5.17.0",
     "typedoc": "^0.14.2",
-    "typescript": "3.4.5",
+    "typescript": "^3.5.3",
     "wait-on": "3.3.0",
     "webdriver-manager": "12.1.7",
     "zone.js": "0.10.2"
@@ -114,6 +114,7 @@
     "@types/uuid": "^3.4.5",
     "angular-fittext": "^2.1.1",
     "bootstrap": "^4.3.1",
+    "canvas-datagrid": "^0.22.13",
     "date-fns": "^2.8.1",
     "dhx-spreadsheet": "^3.1.4",
     "electron-better-ipc": "0.7.0",
