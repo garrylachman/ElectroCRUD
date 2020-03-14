@@ -1,11 +1,6 @@
-import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { IAccount } from '../../../shared/interfaces/accounts.interface';
 import { SessionService } from '../session.service';
 
-@Injectable({
-  providedIn: 'root'
-})
 export class BaseService<T1, T2> {
 
   protected store: T2;
