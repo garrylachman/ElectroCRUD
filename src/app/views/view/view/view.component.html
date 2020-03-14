@@ -34,7 +34,7 @@
             </nb-select>
             <!-- number of records per page select -->
             <nb-select hero status="primary" 
-              class="margin-right-1rem" placeholder="# of Results / Page" 
+              class="margin-right-1rem" [placeholder]="selectLimitPlaceHolder" 
               (selectedChange)="selectLimit($event)" [selected]="10" size="medium">
               <nb-option value=10>10 Per Page</nb-option>
               <nb-option value=25>25 Per Page</nb-option>

@@ -58,6 +58,7 @@ export class ViewViewComponent implements OnInit, OnDestroy {
   dataViewType: DataViewType = DataViewType.TABLE;
 
   dataGrid: any;
+  selectLimitPlaceHolder:string =  "# of Results / Page";
 
   constructor(
     private route: ActivatedRoute,
@@ -113,8 +114,18 @@ export class ViewViewComponent implements OnInit, OnDestroy {
   onDataViewTypeSelected(event: DataViewType) {
     // set selected filter
     this.dataViewType = event;
+
+    switch (this.dataViewType) {
+      case DataViewType.SPREADSHEET:
+        this.selectLimitPlaceHolder =  "# of Results to display";
+        break;
+
+      case DataViewType.TABLE:
+        this.selectLimitPlaceHolder =  "# of Results / Page";
+        break;
+    }
     // reload the data
-    this.reload();
+    this.selectLimit(this.limit);
   }
 
   onFilterSelected(event: IViewFilter) {
@@ -207,7 +218,11 @@ export class ViewViewComponent implements OnInit, OnDestroy {
     this.limit = Number(value);
     this.offset = 0;
     if (this.dataViewType == DataViewType.SPREADSHEET) {
-      this.reload();
+      this.setPage({
+        offset: 0,
+        limit: this.limit,
+        pageSize: this.limit
+      })
     } else {
       this.setPage({
         offset: this.offset,
