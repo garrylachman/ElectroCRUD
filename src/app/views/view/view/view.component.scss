@@ -1,3 +1,4 @@
+
 #search-input {
     margin-right: 1rem;
     height: 44px;
@@ -67,4 +68,8 @@ app-widgets {
 
 button[nbButton] {
     box-shadow: none !important;
+}
+
+.widget-box-wide {
+    height: 500px;
 }

@@ -25,6 +25,13 @@
           </button>
           <!-- float right start -->
           <div class="float-right">
+            <!-- data view type -->
+            <nb-select hero status="primary" 
+              class="margin-right-1rem" placeholder="Data View Type" 
+              (selectedChange)="onDataViewTypeSelected($event)" [selected]="dataViewType" size="medium">
+              <nb-option [value]="DataViewTypeEnum.TABLE">Table</nb-option>
+              <nb-option [value]="DataViewTypeEnum.SPREADSHEET">Spreadsheet</nb-option>
+            </nb-select>
             <!-- number of records per page select -->
             <nb-select hero status="primary" 
               class="margin-right-1rem" placeholder="# of Results / Page" 
@@ -33,6 +40,8 @@
               <nb-option value=25>25 Per Page</nb-option>
               <nb-option value=50>50 Per Page</nb-option>
               <nb-option value=100>100 Per Page</nb-option>
+              <nb-option value=500>500 Per Page</nb-option>
+              <nb-option value=1000>1000 Per Page</nb-option>
             </nb-select>
             <!-- view configuration button -->
             <button 
@@ -59,7 +68,9 @@
           <!-- float right end -->
       </nb-card-header>
       <nb-card-body>
-        <ngx-datatable #table 
+        <div id="gridctr" [hidden]="dataViewType==DataViewTypeEnum.TABLE"></div>
+
+        <ngx-datatable [hidden]="dataViewType==DataViewTypeEnum.SPREADSHEET" #table 
           class="bootstrap" 
           [rows]="rows"
           [columns]="columns" 
@@ -106,6 +117,8 @@
                 <nb-icon icon="{{expanded ? 'minus-square' : 'plus-square'}}" icon-end="false"></nb-icon>
               </button>
             </ng-template>
+
+          
       </nb-card-body>
     </nb-card>
 

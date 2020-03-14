@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, TemplateRef, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef, OnDestroy, ElementRef } from '@angular/core';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
 import { IView } from '../../../../shared/interfaces/views.interface';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -12,6 +12,15 @@ import { ConfirmDeleteComponent } from '../../../components/dialogs/confirm-dele
 import { IIPCDeleteDataWhereOpr, IIPCDeleteDataResponseMessage, IIPCReadDataWhere, IIPCReadDataJoin, IIPCReadDataWhereOpr } from '../../../../shared/ipc/views.ipc';
 import { BreadcrumbsService } from '../../../services/breadcrumbs.service';
 import { IViewFilter } from '../../../../shared/interfaces/filters.interface';
+
+import * as canvasDatagrid from 'canvas-datagrid';
+import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
+
+
+export enum DataViewType {
+  TABLE,
+  SPREADSHEET
+};
 
 @Component({
   selector: 'app-view-view',
@@ -45,6 +54,11 @@ export class ViewViewComponent implements OnInit, OnDestroy {
 
   selectedFilter: IViewFilter;
 
+  DataViewTypeEnum = DataViewType;
+  dataViewType: DataViewType = DataViewType.TABLE;
+
+  dataGrid: any;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -62,10 +76,18 @@ export class ViewViewComponent implements OnInit, OnDestroy {
   }
 
   async ngOnInit() {
+
     this.routeObserver = this.route.parent.params.subscribe((params) => {
       console.log("params", params);
       this.loadView();
     });
+
+    this.dataGrid = canvasDatagrid({
+      parentNode: document.getElementById('gridctr'),
+      data: []
+    });
+
+    this.dataGrid.style.width = '100%';
 
     this.menuServiceObserver = this.menuService.onItemClick().subscribe(item => {
       if (item.tag != "rowMenu") {
@@ -86,6 +108,13 @@ export class ViewViewComponent implements OnInit, OnDestroy {
     this.menuServiceObserver.unsubscribe();
     this.routeObserver.unsubscribe();
     this.breadcrumbsService.removeChildByURL(`/views/${this.view.id}/view/view`);
+  }
+
+  onDataViewTypeSelected(event: DataViewType) {
+    // set selected filter
+    this.dataViewType = event;
+    // reload the data
+    this.reload();
   }
 
   onFilterSelected(event: IViewFilter) {
@@ -177,11 +206,15 @@ export class ViewViewComponent implements OnInit, OnDestroy {
   selectLimit(value): void {
     this.limit = Number(value);
     this.offset = 0;
-    this.setPage({
-      offset: this.offset,
-      limit: this.limit,
-      pageSize: this.limit
-    })
+    if (this.dataViewType == DataViewType.SPREADSHEET) {
+      this.reload();
+    } else {
+      this.setPage({
+        offset: this.offset,
+        limit: this.limit,
+        pageSize: this.limit
+      })
+    }
   }
 
   get primaryKeyColumn(): string {
@@ -235,7 +268,8 @@ export class ViewViewComponent implements OnInit, OnDestroy {
       ));
   }
 
-  async reload() {
+  async reload() {    
+    console.log("reload")
     let data = await this.viewsIPCService
       .readData(
         this.view.table, 
@@ -248,17 +282,22 @@ export class ViewViewComponent implements OnInit, OnDestroy {
         this.getViewJoints()
         );
     this.totalElements = data.count;
-    let columns = data.data.length > 0 ? Object.keys([...data.data].shift()).map(val => ({ name: val, prop: val })) : [];
-    console.log("columns", columns)
-    let subviewActionColumn = this.view.subview && this.view.subview.enabled ? [{ cellTemplate: this.subviewTableIconTmpl, frozenLeft: true, maxWidth: 50, resizeable: false }] : [];
-    this.columns = [
-      ...subviewActionColumn,
-      ...columns, 
-      { cellTemplate: this.tableContextMenuTmpl, frozenRight: true, maxWidth: 50, resizeable: false }
-    ];
-    this.rows = [...data.data];
-    console.log("rows", this.rows)
-    console.log(data);
+    
+    if (this.dataViewType == DataViewType.TABLE) {
+      let columns = data.data.length > 0 ? Object.keys([...data.data].shift()).map(val => ({ name: val, prop: val })) : [];
+      console.log("columns", columns)
+      let subviewActionColumn = this.view.subview && this.view.subview.enabled ? [{ cellTemplate: this.subviewTableIconTmpl, frozenLeft: true, maxWidth: 50, resizeable: false }] : [];
+      this.columns = [
+        ...subviewActionColumn,
+        ...columns, 
+        { cellTemplate: this.tableContextMenuTmpl, frozenRight: true, maxWidth: 50, resizeable: false }
+      ];
+      this.rows = [...data.data];
+      console.log(data);
+    }
+    if (this.dataViewType == DataViewType.SPREADSHEET) {
+      this.dataGrid.data = [...data.data]
+    }
   }
 
   async setPage(pageInfo){
@@ -309,5 +348,6 @@ export class ViewViewComponent implements OnInit, OnDestroy {
   onSubviewToggle(event):void {
     console.log("onSubviewToggle", event);
   }
+
 
 }
