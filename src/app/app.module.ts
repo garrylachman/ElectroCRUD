@@ -57,6 +57,8 @@ import { NgBootstrapFormValidationModule } from 'ng-bootstrap-form-validation';
 import { MonacoEditorModule } from '@materia-ui/ngx-monaco-editor';
 import { SessionService } from './services/session.service';
 
+import { MobxAngularModule } from 'mobx-angular';
+import { AccountsStoreX } from './store/accounts.store';
 
 // configure Bugsnag ASAP, before any other imports
 const bugsnagClient = bugsnag({
@@ -130,6 +132,7 @@ console.log("version: ", version ,", env: ", AppConfig.environment);
     Ng2FittextModule,
     NgBootstrapFormValidationModule.forRoot(),
     MonacoEditorModule,
+    MobxAngularModule,
   ],
   providers: [
     ElectronService, 
@@ -141,7 +144,8 @@ console.log("version: ", version ,", env: ", AppConfig.environment);
       provide: ErrorHandler, 
       useFactory: errorHandlerFactory
     },
-    SessionService
+    SessionService,
+    AccountsStoreX,
   ],
   entryComponents: [ConfirmDeleteComponent, AddEditWidgetModalComponent, AddEditFilterModalComponent, ColumnReferanceDialogComponent],
   bootstrap: [AppComponent]

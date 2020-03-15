@@ -5,6 +5,7 @@ import { IAccount } from '../../../shared/interfaces/accounts.interface';
 import { IIPCCheckConnectionResponseMessage } from '../../../shared/ipc/accounts.ipc';
 import { AccountsIPCService } from '../../services/ipc/accounts.service';
 import { remote } from 'electron';
+import { AccountsStoreX, Account } from '../../store/accounts.store';
 
 @Component({
   selector: 'app-add-edit-account',
@@ -14,8 +15,8 @@ import { remote } from 'electron';
 export class AddEditAccountComponent implements OnInit {
 
   title: string = "Add new account";
-  accountId: number;
-  editAccount: IAccount;
+  //accountId: number;
+  editAccount: Account;
 
   isSaveEnabled: boolean = false;
   public testLog: [string, string][];
@@ -32,20 +33,24 @@ export class AddEditAccountComponent implements OnInit {
   constructor(
     public ref: NbDialogRef<any>,
     private fb: FormBuilder,
-    private accountsIPCService: AccountsIPCService
+    private accountsIPCService: AccountsIPCService,
+    private accountsStore: AccountsStoreX
   ) { 
     this.testLog = [];
   }
 
   get isEdit(): boolean {
-    return this.accountId > 0;
+    return this.editAccount.id > 0;
   }
 
   ngOnInit() {
     console.log(this.ref);
     if (this.ref.componentRef.instance.account) {
-      this.editAccount = this.ref.componentRef.instance.account;
-      this.accountId = this.editAccount.id;
+      //this.editAccount = this.ref.componentRef.instance.account.id;
+      this.editAccount = this.accountsStore.geById(this.ref.componentRef.instance.account)
+      //this.accountId = this.editAccount.id;
+    } else {
+      this.editAccount = new Account();
     }
 
     this.basicDetailsForm = this.fb.group({
@@ -121,41 +126,37 @@ export class AddEditAccountComponent implements OnInit {
     this.databaseDetailsForm.markAsDirty();
   }
 
-  formAsAccount(): IAccount {
+  fillAccountState() {
     const fromBasicForm = (ctrl: string) => this.basicDetailsForm.controls[ctrl].value;
     const fromTunnelForm = (ctrl: string) => this.tunnelDetailsForm.controls[ctrl].value;
     const fromDBForm = (ctrl: string) => this.databaseDetailsForm.controls[ctrl].value;
 
-    return {
-      id: this.editAccount ? this.editAccount.id : null,
-      name: fromBasicForm('accountNameCtrl'),
-      creation_date: this.editAccount ? this.editAccount.creation_date : new Date().toISOString(),
-      modify_date: this.editAccount ? this.editAccount.modify_date : new Date().toISOString(),
-      server: {
-        server_type: fromBasicForm('databaseServerCtrl'),
-        hostname: fromDBForm('dbHostCtrl'),
-        port: fromDBForm('dbPortCtrl'),
-        username: fromDBForm('dbUsernameCtrl'),
-        password: fromDBForm('dbPasswordCtrl'),
-        database: fromDBForm('dbDbCtrl'),
-      },
-      ssh: {
-        enabled: fromTunnelForm('isTunnelEnabledCtrl'),
-        hostname: fromTunnelForm('sshHostCtrl'),
-        port: fromTunnelForm('sshPortCtrl'),
-        username: fromTunnelForm('sshUsernameCtrl'),
-        password: fromTunnelForm('sshPasswordCtrl'),
-        use_key: fromTunnelForm('isSSHKeyEnabledCtrl'),
-        key: fromTunnelForm('sshPrivateKeyCtrl')
-      }
-    }
+    this.editAccount.name = fromBasicForm('accountNameCtrl');
+
+    // SERVER
+    this.editAccount.server.server_type = fromBasicForm('databaseServerCtrl');
+    this.editAccount.server.hostname = fromDBForm('dbHostCtrl');
+    this.editAccount.server.port = fromDBForm('dbPortCtrl');
+    this.editAccount.server.username = fromDBForm('dbUsernameCtrl');
+    this.editAccount.server.password = fromDBForm('dbPasswordCtrl');
+    this.editAccount.server.database = fromDBForm('dbDbCtrl');
+
+    // SSH
+    this.editAccount.ssh.enabled = fromTunnelForm('isTunnelEnabledCtrl');
+    this.editAccount.ssh.hostname = fromTunnelForm('sshHostCtrl');
+    this.editAccount.ssh.port = fromTunnelForm('sshPortCtrl');
+    this.editAccount.ssh.username = fromTunnelForm('sshUsernameCtrl');
+    this.editAccount.ssh.use_key = fromTunnelForm('isSSHKeyEnabledCtrl');
+    this.editAccount.ssh.key = fromTunnelForm('sshPrivateKeyCtrl');
   }
 
   async testConnection() {
+    this.fillAccountState();
+
     this.testLog = [];
-    const res:IIPCCheckConnectionResponseMessage = await this.accountsIPCService.checkConnection(this.formAsAccount());
-    this.isSaveEnabled = (this.formAsAccount().ssh.enabled) ? (res.ssh.valid && res.server.valid) : res.server.valid;
-    if (this.formAsAccount().ssh.enabled) {
+    const res:IIPCCheckConnectionResponseMessage = await this.accountsIPCService.checkConnection(this.editAccount);
+    this.isSaveEnabled = (this.editAccount.ssh.enabled) ? (res.ssh.valid && res.server.valid) : res.server.valid;
+    if (this.editAccount.ssh.enabled) {
       if (res.ssh.valid) {
         this.testLog.push([`success`, `[OK] SSH`])
       } else {
@@ -181,6 +182,9 @@ export class AddEditAccountComponent implements OnInit {
   }
   
   save() {
-    this.ref.close(this.formAsAccount());
+    //this.ref.close(this.formAsAccount());
+    this.fillAccountState();
+    this.accountsStore.updateOrAddAccount(this.editAccount);
+    this.ref.close();
   }
 }

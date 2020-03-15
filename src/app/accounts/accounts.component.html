@@ -23,7 +23,7 @@
     <nb-card-body>
         <ngx-datatable #table 
             class="bootstrap" 
-            [rows]="rows"
+            [rows]="accountsStore.forDisplay"
             [loadingIndicator]="loadingIndicator"
             [columns]="columns"
             [columnMode]="'force'"
@@ -35,10 +35,10 @@
         >
     </ngx-datatable>
     <ng-template #cDateTpl let-row="row">
-        {{row.created | date}}
+        {{row.creation_date | date}}
     </ng-template>
     <ng-template #mDateTpl let-row="row">
-        {{row.modified | date}}
+        {{row.modify_date | date}}
     </ng-template>
     <ng-template #actionsTpl let-row="row">
         <button 
@@ -46,8 +46,7 @@
             nbTooltip="Login & Use Account" nbTooltipPlacement="top" nbTooltipStatus="primary"
         >
             <nb-icon 
-                icon="{{row.icon}}" 
-                pack="whhg" 
+                icon="layers" 
             ></nb-icon>
             Use
         </button>

@@ -7,6 +7,9 @@ import { AccountsService, ServerType, ServerIcon } from '../services/store/accou
 import { IAccount } from '../../shared/interfaces/accounts.interface';
 import { SessionService } from '../services/session.service';
 import { IIPCConnectResponseMessage } from '../../shared/ipc/accounts.ipc';
+import { AccountsStoreX } from '../store/accounts.store';
+import { observable } from 'mobx-angular';
+import { toJS } from 'mobx';
 
 @Component({
   selector: 'app-accounts',
@@ -71,7 +74,8 @@ export class AccountsComponent implements OnInit {
     private accountsService: AccountsService,
     private sessionService: SessionService,
     private toastrService: NbToastrService,
-    private iconLibraries: NbIconLibraries
+    private iconLibraries: NbIconLibraries,
+    public accountsStore: AccountsStoreX
   ) {
     this.iconLibraries.registerFontPack('whhg', { iconClassPrefix: 'icon' });
     this.temp = [...this.rows];
@@ -85,26 +89,6 @@ export class AccountsComponent implements OnInit {
       { name: 'Modified', cellTemplate: this.mDateTpl },
       { cellTemplate: this.actionsTpl }
     ];
-    this.loadFromStore();
-  }
-
-  /**
-   * Load accounts from store
-   */
-  loadFromStore(): void {
-    this.rows = this.accountsService
-      .all()
-      .map((row) => {
-        return {
-          id: row.id,
-          name: row.name,
-          server: ServerType[`${row.server.server_type}`],
-          icon: ServerIcon[`${row.server.server_type}`],
-          created: new Date(row.creation_date),
-          modified: new Date(row.modify_date)
-        }
-      })
-    this.temp = [...this.rows];
   }
 
   /**
@@ -114,16 +98,7 @@ export class AccountsComponent implements OnInit {
    */
   updateFilter(event): void {
     const val = event.target.value.toLowerCase();
-
-    // filter our data
-    const temp = this.temp.filter(function(d) {
-      return d.name.toLowerCase().indexOf(val) !== -1 || !val;
-    });
-
-    // update the rows
-    this.rows = temp;
-    // Whenever the filter changes, always go back to the first page
-    this.table.offset = 0;
+    this.accountsStore.setFilterDisplayBy(val);
   }
 
   /**
@@ -132,28 +107,13 @@ export class AccountsComponent implements OnInit {
    * @param row Data table row
    */
   edit(row): void {
-    let account:IAccount;
-    if (row && row.id)  {
-      account = this.accountsService.get(row.id);
-    }
     this.dialogService
       .open<any>(AddEditAccountComponent, { 
         hasBackdrop: true,
         context: {
-          account: account
+          account: row ? row.id : undefined
         }
       })
-      .onClose
-      .subscribe((res) => {
-        if (res) {
-          if (!(res as IAccount).id) {
-            this.accountsService.add(res);
-          } else {
-            this.accountsService.update(res);
-          }
-          this.loadFromStore();
-        }
-      });
   }
 
   /**
@@ -167,8 +127,7 @@ export class AccountsComponent implements OnInit {
       .onClose
       .subscribe((res) => {
         if (res)  {
-          this.accountsService.delete(row.id);
-          this.loadFromStore();
+          this.accountsStore.removeAccount(row.id);
         }
       });
   }

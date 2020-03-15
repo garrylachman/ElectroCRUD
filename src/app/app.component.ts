@@ -14,6 +14,7 @@ import { SessionService } from './services/session.service';
 import { IView } from '../shared/interfaces/views.interface';
 import { version } from '../../package.json';
 import { ViewsService } from './services/store/views.service';
+import { AccountsStoreX } from './store/accounts.store';
 
 @Component({
   selector: 'app-root',
@@ -53,7 +54,8 @@ export class AppComponent {
     private menuService: NbMenuService,
     private searchService: NbSearchService,
     private viewsService: ViewsService,
-    private sessionService: SessionService) {
+    private sessionService: SessionService,
+    public accountsStore: AccountsStoreX) {
       
     translate.setDefaultLang('en');
     console.log('AppConfig', AppConfig);
@@ -76,6 +78,8 @@ export class AppComponent {
     })
 
     this.viewsService.changes.subscribe(() => this.reload());
+    
+    console.log(this.accountsStore.accounts);
   }
 
   reload() {
