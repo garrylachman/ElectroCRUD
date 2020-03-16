@@ -7,9 +7,11 @@ import { AccountsService, ServerType, ServerIcon } from '../services/store/accou
 import { IAccount } from '../../shared/interfaces/accounts.interface';
 import { SessionService } from '../services/session.service';
 import { IIPCConnectResponseMessage } from '../../shared/ipc/accounts.ipc';
-import { AccountsStoreX } from '../store/accounts.store';
+import { AccountsStoreX, Account } from '../store/accounts.store';
 import { observable } from 'mobx-angular';
 import { toJS } from 'mobx';
+import { AccountsIPCService } from '../services/ipc/accounts.service';
+import { SessionStore } from '../store/session.store';
 
 @Component({
   selector: 'app-accounts',
@@ -49,14 +51,6 @@ export class AccountsComponent implements OnInit {
   @ViewChild('actionsTpl', { static: true }) actionsTpl: TemplateRef<any>;
 
   /**
-   * Data table rows
-   */
-  rows = [];
-  /**
-   * Data table rows temp array to hold results while filtering
-   */
-  temp = [];
-  /**
    * Data table columns 
    */
   columns = [];
@@ -71,14 +65,13 @@ export class AccountsComponent implements OnInit {
    */
   constructor(
     private dialogService: NbDialogService,
-    private accountsService: AccountsService,
-    private sessionService: SessionService,
     private toastrService: NbToastrService,
     private iconLibraries: NbIconLibraries,
-    public accountsStore: AccountsStoreX
+    private accountsIPCService: AccountsIPCService,
+    public accountsStore: AccountsStoreX,
+    private sessionStore: SessionStore
   ) {
     this.iconLibraries.registerFontPack('whhg', { iconClassPrefix: 'icon' });
-    this.temp = [...this.rows];
   }
 
   ngOnInit(): void {
@@ -97,6 +90,7 @@ export class AccountsComponent implements OnInit {
    * @param event Search input type event.
    */
   updateFilter(event): void {
+    console.log("update filter", event.target.value);
     const val = event.target.value.toLowerCase();
     this.accountsStore.setFilterDisplayBy(val);
   }
@@ -139,14 +133,15 @@ export class AccountsComponent implements OnInit {
    */
   async use(row) {
     this.isLoading = true;
-    let account:IAccount = this.accountsService.get(row.id);
-    let res:IIPCConnectResponseMessage = await this.sessionService.setActiveAccount(account);
-    console.log("connect response: ", row);
+    const account:Account = this.accountsStore.getById(row.id);
+
+    const res: IIPCConnectResponseMessage = await this.accountsIPCService.connect(account);
     this.isLoading = false;
-    if (!res.valid) {
-      this.toastrService.show(status, res.error, { status: "danger" });
-    } else {
+    if (res.valid) {
+      this.sessionStore.setActiveAccount(account);
       this.toastrService.show(status, `Connected to ${account.name}.`, { status: "success" });
+    } else {
+      this.toastrService.show(status, res.error, { status: "danger" });
     }
   }
 

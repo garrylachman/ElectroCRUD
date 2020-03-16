@@ -12,6 +12,7 @@ import { IPCListOfTablesResponseMessage, IIPCListOfTablesResponseMessage, IIPCTa
 import { DatatableComponent } from '@swimlane/ngx-datatable';
 import { ColumnReferanceDialogComponent } from './components/column-referance-dialog/column-referance-dialog.component';
 import { deepEqual } from 'fast-equals';
+import { SessionStore } from '../../store/session.store';
 
 @Component({
   selector: 'app-configure',
@@ -47,6 +48,7 @@ export class ConfigureComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private sessionsService: SessionService,
+    private sessionStore: SessionStore,
     private viewsService: ViewsService,
     private viewsIPCService: ViewsIPCService,
     private fb: FormBuilder,
@@ -70,7 +72,7 @@ export class ConfigureComponent implements OnInit {
       this.view = {
         name: '',
         creation_date: new Date().toISOString(),
-        account: this.sessionsService.activeAccount.id,
+        account: this.sessionStore.activeAccount.id,
         terms: {
           one: '',
           many: ''
@@ -84,6 +86,8 @@ export class ConfigureComponent implements OnInit {
         columns: [],
       };
     }
+
+    console.log("AD VIEW", this.view);
 
 
     // load all view to display in subviews form
@@ -108,6 +112,8 @@ export class ConfigureComponent implements OnInit {
       permissions: {...this.view.permissions},
       subview: {...this.view.subview}
     };
+
+    console.log("------- IM HERE")
 
     this.viewHeaderForm = this.fb.group({
       viewtNameCtrl: [this.view.name, Validators.compose([Validators.required, Validators.minLength(2)])],

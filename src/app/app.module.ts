@@ -59,6 +59,8 @@ import { SessionService } from './services/session.service';
 
 import { MobxAngularModule } from 'mobx-angular';
 import { AccountsStoreX } from './store/accounts.store';
+import { SessionStore } from './store/session.store';
+
 
 // configure Bugsnag ASAP, before any other imports
 const bugsnagClient = bugsnag({
@@ -146,6 +148,7 @@ console.log("version: ", version ,", env: ", AppConfig.environment);
     },
     SessionService,
     AccountsStoreX,
+    SessionStore
   ],
   entryComponents: [ConfirmDeleteComponent, AddEditWidgetModalComponent, AddEditFilterModalComponent, ColumnReferanceDialogComponent],
   bootstrap: [AppComponent]

@@ -1,11 +1,11 @@
 import { Component, OnInit, ViewChild, ElementRef, Input, OnDestroy } from '@angular/core';
-import { SessionService } from '../../services/session.service';
 import { QueriesService } from '../../services/store/queries.service';
 import { IQuery } from '../../../shared/interfaces/queries.interface';
 import { NbLayoutComponent } from '@nebular/theme';
 import { QueriesIPCService } from '../../services/ipc/queries.ipc.service';
 
 import * as canvasDatagrid from 'canvas-datagrid';
+import { SessionStore } from '../../store/session.store';
 
 
 @Component({
@@ -23,9 +23,10 @@ export class QueryComponent implements OnInit, OnDestroy {
   queries: IQuery[];
 
   dataGrid: any;
+  hideResults: boolean = true;
 
   constructor(
-    private sessionsService: SessionService,
+    private sessionsStore: SessionStore,
     private queriesService: QueriesService,
     private queriesIPCService: QueriesIPCService
   ) { }
@@ -53,7 +54,7 @@ export class QueryComponent implements OnInit, OnDestroy {
   addNewTab() {
     this.queriesService.add({
       name: `Query #${this.queriesService.lastId()}`,
-      account: this.sessionsService.activeAccount.id,
+      account: this.sessionsStore.activeAccount.id,
       query: 'SELECT'
     })
   }
@@ -66,11 +67,20 @@ export class QueryComponent implements OnInit, OnDestroy {
     this.queriesService.update(query);
   }
 
+  changeTab(event) {
+    if (event.tabTitle == "New Tab") {
+      this.addNewTab();
+    }
+  }
+
   async execute(query: IQuery) {    
     const res = await this.queriesIPCService.executeQuery(query.query);
-    if (res.valid && res.data) {
-      this.dataGrid.data = [...res.data];
-    }
+    this.hideResults = !res.valid;
+    setTimeout(() => {
+      if (res.valid && res.data) {
+        this.dataGrid.data = [...res.data];
+      }
+    }, 1000);
   }
 
 }

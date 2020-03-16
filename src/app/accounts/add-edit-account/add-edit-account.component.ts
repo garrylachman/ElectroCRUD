@@ -47,7 +47,7 @@ export class AddEditAccountComponent implements OnInit {
     console.log(this.ref);
     if (this.ref.componentRef.instance.account) {
       //this.editAccount = this.ref.componentRef.instance.account.id;
-      this.editAccount = this.accountsStore.geById(this.ref.componentRef.instance.account)
+      this.editAccount = this.accountsStore.getById(this.ref.componentRef.instance.account)
       //this.accountId = this.editAccount.id;
     } else {
       this.editAccount = new Account();

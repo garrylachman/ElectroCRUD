@@ -22,6 +22,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { AddEditAccountComponent } from './add-edit-account/add-edit-account.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxMaskModule } from 'ngx-mask';
+import { MobxAngularModule } from 'mobx-angular';
 
 @NgModule({
   declarations: [AccountsComponent, AddEditAccountComponent],
@@ -45,6 +46,7 @@ import { NgxMaskModule } from 'ngx-mask';
     NbActionsModule,
     NbSpinnerModule,
     NbLayoutModule,
+    MobxAngularModule
   ],
   entryComponents: [AccountsComponent, AddEditAccountComponent]
 })

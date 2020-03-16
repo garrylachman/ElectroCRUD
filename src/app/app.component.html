@@ -1,4 +1,4 @@
-<nb-layout windowMode  *mobxAutorun>
+<nb-layout windowMode>
   <nb-layout-header fixed>
       <h3 class="mt-4 tracking-in-expand">ElectroCRUD <small class="subtitle">v.{{versionFromPkg}}</small></h3>
       <nb-actions size="medium">
@@ -9,9 +9,9 @@
       </nb-actions>
   </nb-layout-header>
 
-  <nb-sidebar tag="left-sidebar">
-    <h5 id='active-account' *ngIf="account">{{account?.name}}</h5>
-    <nb-menu [items]="items" *ngIf="account" ></nb-menu>
+  <nb-sidebar tag="left-sidebar">session
+    <h5 id='active-account' *ngIf="sessionStore?.activeAccount">{{sessionStore?.activeAccount?.name}}</h5>
+    <nb-menu [items]="items" *ngIf="sessionStore?.activeAccount" ></nb-menu>
   </nb-sidebar>
 
   <nb-layout-column>

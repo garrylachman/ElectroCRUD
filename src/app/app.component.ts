@@ -15,6 +15,10 @@ import { IView } from '../shared/interfaces/views.interface';
 import { version } from '../../package.json';
 import { ViewsService } from './services/store/views.service';
 import { AccountsStoreX } from './store/accounts.store';
+import { reaction } from 'mobx';
+import { SessionStore } from './store/session.store';
+import { enableLogging } from 'mobx-logger';
+
 
 @Component({
   selector: 'app-root',
@@ -54,35 +58,32 @@ export class AppComponent {
     private menuService: NbMenuService,
     private searchService: NbSearchService,
     private viewsService: ViewsService,
-    private sessionService: SessionService,
+    public sessionStore: SessionStore,
     public accountsStore: AccountsStoreX) {
+
+      enableLogging();
       
-    translate.setDefaultLang('en');
-    console.log('AppConfig', AppConfig);
+      translate.setDefaultLang('en');
+      console.log('AppConfig', AppConfig);
 
-    if (electronService.isElectron()) {
-      console.log('Mode electron');
-      console.log('Electron ipcRenderer', electronService.ipcRenderer);
-      console.log('NodeJS childProcess', electronService.childProcess);
-    } else {
-      console.log('Mode web');
-    }
-
-    this.sessionService.changes.subscribe({
-      next: (v:IAccount) => {
-        this.account = v;
-        if (v)  {
-          this.reload();
-        }
+      if (electronService.isElectron()) {
+        console.log('Mode electron');
+        console.log('Electron ipcRenderer', electronService.ipcRenderer);
+        console.log('NodeJS childProcess', electronService.childProcess);
+      } else {
+        console.log('Mode web');
       }
-    })
 
-    this.viewsService.changes.subscribe(() => this.reload());
-    
-    console.log(this.accountsStore.accounts);
+      reaction(
+        () => this.sessionStore.activeAccount,
+        () => this.reload()
+      )
+
+      this.viewsService.changes.subscribe(() => this.reload());
   }
 
   reload() {
+    console.log("reload", this.sessionStore.activeAccount);
     let views:IView[] = this.viewsService.all();
     console.log(this.defaultItems);
 

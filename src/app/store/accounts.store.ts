@@ -1,6 +1,6 @@
 import { observable, action } from 'mobx-angular';
 import { Injectable } from '@angular/core';
-import { reaction, computed, autorun, toJS } from 'mobx';
+import { reaction, computed, autorun, toJS, extendObservable } from 'mobx';
 import * as ElectronStore from  'electron-store';
 
 export const ServerType = {
@@ -8,7 +8,6 @@ export const ServerType = {
     '2': 'SQL Server',
     '3': 'Postres'
 }
-  
 
 export class AccountSSH {
     @observable enabled: boolean = false;
@@ -18,6 +17,14 @@ export class AccountSSH {
     @observable password: string;
     @observable use_key: boolean = false;
     @observable key: string;
+
+    public setData(data) {
+        Object.keys(data).forEach(propName => {
+            if (typeof data[propName] != "object") {
+                this[propName] = data[propName];
+            }
+        });
+    }
 }
 
 export class AccountServer {
@@ -27,6 +34,14 @@ export class AccountServer {
     @observable username: string;
     @observable password: string;
     @observable database: string;
+
+    public setData(data) {
+        Object.keys(data).forEach(propName => {
+            if (typeof data[propName] != "object") {
+                this[propName] = data[propName];
+            }
+        });
+    }
 }
 
 export class Account {
@@ -36,6 +51,14 @@ export class Account {
     @observable modify_date: string = new Date().toISOString();
     @observable server: AccountServer = new AccountServer();
     @observable ssh: AccountSSH = new AccountSSH();
+
+    public setData(data) {
+        Object.keys(data).forEach(propName => {
+            if (typeof data[propName] != "object") {
+                this[propName] = data[propName];
+            }
+        });
+    }
 
     constructor(id?: number) {
         if (id) {
@@ -122,7 +145,7 @@ export class AccountsStoreX {
         this.filterDisplayBy = val;
     }
 
-    public geById(id: number):Account {
+    public getById(id: number):Account {
         return this.accounts.find(account => account.id === id);
     }
 
@@ -130,28 +153,11 @@ export class AccountsStoreX {
         const initialAccounts = this.diskStorage.get("accounts", []);
         this.accounts = initialAccounts.map(account => {
             const acc:Account = new Account();
-            acc.name = account.name;
-            acc.id = account.id;
-            acc.creation_date = account.creation_date;
-            acc.modify_date = account.modify_date;
 
-            if (account.server) {
-                acc.server.server_type = account.server.server_type;
-                acc.server.hostname = account.server.hostname;
-                acc.server.username = account.server.username;
-                acc.server.database = account.server.database;
-                acc.server.port = account.server.port;
-                acc.server.password = account.server.password;
-            }
+            acc.setData(account);
+            acc.server.setData(account.server);
+            acc.ssh.setData(account.ssh);
 
-            if (account.ssh) {
-                acc.ssh.enabled = account.ssh.enabled;
-                acc.ssh.hostname = account.ssh.hostname;
-                acc.ssh.password = account.ssh.password;
-                acc.ssh.port = account.ssh.port;
-                acc.ssh.use_key = account.ssh.use_key;
-                acc.ssh.key = account.ssh.key;   
-            }   
             console.log(acc);
             return acc;
         });

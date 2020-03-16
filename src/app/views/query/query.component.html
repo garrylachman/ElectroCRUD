@@ -6,8 +6,9 @@
 
         <nb-card>
             <nb-card-body>
-                <nb-tabset>
-                    <nb-tab *ngFor="let query of queries; let first = first; let last = last; let idx = index;" [tabTitle]=query.name class="p-0 pt-3" [active]=last>
+               
+                <nb-tabset (changeTab)="changeTab($event)">
+                    <nb-tab *ngFor="let query of queries; let first = first; let last = last; let idx = index;" [tabTitle]=query.name class="p-0 pt-3" [active]="idx==queries.length-1">
                         <ngx-monaco-editor [options]="editorOptions" [(ngModel)]=query.query></ngx-monaco-editor>
                     
                         <nb-actions size="small" fullWidth class="pt-3 pb-3">
@@ -17,9 +18,10 @@
                             <nb-action icon="close"  nbTooltipStatus="danger" nbTooltip="Close tab" (click)="closeTab(query)"></nb-action>
                         </nb-actions>
                     </nb-tab>
+                    <nb-tab tabTitle="New Tab" tabIcon="plus"></nb-tab>
                 </nb-tabset>
 
-                <div id="gridctr"></div>
+                <div [hidden]="hideResults" id="gridctr"></div>
             </nb-card-body>
         </nb-card>
     </nb-layout-column>

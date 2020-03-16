@@ -1,5 +1,6 @@
 import { Subject } from 'rxjs';
-import { SessionService } from '../session.service';
+import { SessionStore } from '../../store/session.store';
+import { autorun } from 'mobx';
 
 export class BaseService<T1, T2> {
 
@@ -8,13 +9,13 @@ export class BaseService<T1, T2> {
 
   constructor(
     _store: T2,
-    protected sessionService: SessionService
+    protected sessionStore: SessionStore
     ) { 
     this.store = _store;
   }
 
   public all(): T1[] {
-    return (this.store as any).all(this.sessionService.activeAccount);
+    return (this.store as any).all(this.sessionStore.activeAccount);
   }
 
   public get(id: number): T1 {
