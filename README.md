@@ -93,4 +93,4 @@ After a few years of the project being inactive, I decided to bring it to life a
 
 ![GitHub All Releases](https://img.shields.io/github/downloads/garrylachman/ElectroCRUD/total.svg?style=for-the-badge) 
 ![GitHub package.json version](https://img.shields.io/github/package-json/v/garrylachman/ElectroCRUD.svg?style=for-the-badge)
-![Analytics](https://predix-beacon.appspot.com/UA-77988987-1/github/master?flat&useReferer)
+![Analytics](https://ga-beacon.appspot.com/UA-77988987-1/github/master?flat&useReferer)
