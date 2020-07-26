@@ -59,7 +59,7 @@ After a few years that the project was inactive, I decided to bring it an alive 
 
 * [Mac OSX](https://github.com/garrylachman/ElectroCRUD/releases/download/2.6.1/ElectroCRUD-2.6.1.dmg)
 * [Linux](https://github.com/garrylachman/ElectroCRUD/releases/download/2.6.1/ElectroCRUD-2.6.1.AppImage)
-* [Windows](https://github.com/garrylachman/ElectroCRUD/releases/download/2.6.1/ElectroCRUD.2.6.1.exe)
+* [Windows](https://github.com/garrylachman/ElectroCRUD/releases/download/2.6.1/ElectroCRUD.2.6.1-Setup.exe)
 
 ## Install via Package Managers
 ### Homebrew/brew (Mac OS/X)
