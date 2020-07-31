@@ -117,6 +117,7 @@
     "date-fns": "^2.8.1",
     "dhx-spreadsheet": "^3.1.4",
     "electron-better-ipc": "0.7.0",
+    "electron-rebuild": "^1.11.0",
     "electron-store": "^5.1.0",
     "eva-icons": "^1.1.1",
     "fast-equals": "^2.0.0",
@@ -133,6 +134,7 @@
     "open-ssh-tunnel": "^0.3.1",
     "pg": "^7.12.1",
     "popper.js": "^1.15.0",
+    "sqlite3": "^4.1.1",
     "tunnel-ssh": "^4.1.4",
     "type-fest": "^0.8.1",
     "uuid": "^3.3.2"

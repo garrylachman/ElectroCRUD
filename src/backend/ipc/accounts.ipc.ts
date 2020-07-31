@@ -107,10 +107,13 @@ export class AccountsIPC {
         let isTunnelValid: boolean;
         let tunnelError: string;
 
+        let isSQLite = (reqMessage.toMessage().server.filename && 
+            reqMessage.toMessage().server.filename.length > 0)
+        
         let databaseHostname: string = reqMessage.toMessage().server.hostname;
         let databasePort: number = reqMessage.toMessage().server.port;
         
-        if (reqMessage.toMessage().ssh.enabled) {
+        if (!isSQLite && reqMessage.toMessage().ssh.enabled) {
             try {
                 if (this.tunnel != null) {
                     this.tunnel.close();
@@ -147,14 +150,20 @@ export class AccountsIPC {
             }
         }
 
-        await DatabaseService.getInstance().connect(
-            serverTypeIdAsEnum(reqMessage.toMessage().server.server_type),
-            databaseHostname,
-            databasePort,
-            reqMessage.toMessage().server.username,
-            reqMessage.toMessage().server.password,
-            reqMessage.toMessage().server.database
-        );
+        if (isSQLite) {
+            await DatabaseService.getInstance().connectSQLite(
+                reqMessage.toMessage().server.filename
+            );
+        } else {
+            await DatabaseService.getInstance().connect(
+                serverTypeIdAsEnum(reqMessage.toMessage().server.server_type),
+                databaseHostname,
+                databasePort,
+                reqMessage.toMessage().server.username,
+                reqMessage.toMessage().server.password,
+                reqMessage.toMessage().server.database
+            );
+        }
 
         isDatabaseValid = await DatabaseService.getInstance().heartbeat();
         if (isDatabaseValid instanceof Error) {

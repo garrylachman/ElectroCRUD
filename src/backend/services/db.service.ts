@@ -5,7 +5,8 @@ export enum ServerType {
     MySQL = "mysql",
     PostgreSQL = "pg",
     OracleDB = "oracledb",
-    MSSQL = "mssql"
+    MSSQL = "mssql",
+    SQLITE3 = "sqlite3"
 }
 
 export const serverTypeIdAsEnum = (id: number) => {
@@ -13,6 +14,7 @@ export const serverTypeIdAsEnum = (id: number) => {
     if (id == 2) return ServerType.MSSQL;
     if (id == 3) return ServerType.PostgreSQL;
     if (id == 4) return ServerType.OracleDB;
+    if (id == 5) return ServerType.SQLITE3;
     return null;
 }
 
@@ -20,14 +22,16 @@ export const HeartBeatQueries = {
     [ServerType.OracleDB]: 'select 1 from DUAL',
     [ServerType.MySQL]: 'SELECT 1',
     [ServerType.PostgreSQL]: 'SELECT 1',
-    [ServerType.MSSQL]: 'SELECT 1'
+    [ServerType.MSSQL]: 'SELECT 1',
+    [ServerType.SQLITE3]: 'SELECT 1'
 }
 
 export const ListTablesQueries = {
     [ServerType.OracleDB]: 'SELECT table_name FROM user_tables',
     [ServerType.MySQL]: 'SELECT table_name as table_name FROM information_schema.tables WHERE table_schema = ?',
     [ServerType.PostgreSQL]: 'SELECT concat(table_schema, \'.\', table_name) as table_name FROM information_schema.tables WHERE table_type = \'BASE TABLE\' AND table_catalog = ?',
-    [ServerType.MSSQL]: 'SELECT table_name FROM information_schema.tables WHERE table_schema = \'public\' AND table_catalog = ?'
+    [ServerType.MSSQL]: 'SELECT table_name FROM information_schema.tables WHERE table_schema = \'public\' AND table_catalog = ?',
+    [ServerType.SQLITE3]: `SELECT name FROM my_db.sqlite_master WHERE type='table'`
 }
 
 export const GetPrimaryKeyQueries = {
@@ -120,6 +124,42 @@ export class DatabaseService {
         return true;
     }
 
+    public async connectSQLite(
+        filename: string
+    ): Promise<boolean | Error> {
+        await this.disconnect();
+
+        let config:Knex.Config = {
+            client: 'sqlite3',
+            connection: {
+              filename: filename
+            }
+        };
+        try {
+            this._connection = Knex(config);
+        } catch(error) {
+            return error;
+        }
+        return true;
+    }
+
+    public async fileConnect(client: string, filename: string): Promise<boolean | Error> {
+        await this.disconnect();
+
+        let config:Knex.Config = {
+            client: client,
+            connection: {
+                filename: filename
+            }
+        };
+        try {
+            this._connection = Knex(config);
+        } catch(error) {
+            return error;
+        }
+        return true;
+    }
+
     public async disconnect() {
         if (this.connection) {
             await this.connection.destroy();
@@ -132,6 +172,7 @@ export class DatabaseService {
 
     private get activeClient(): string {
         try {
+            console.log("activeClient:", this.connection.client.config.client);
             return this.connection.client.config.client;
         } catch(error) {
             console.log("activeClient: ", error);

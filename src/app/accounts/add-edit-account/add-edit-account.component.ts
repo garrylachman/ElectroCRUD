@@ -6,6 +6,11 @@ import { IIPCCheckConnectionResponseMessage } from '../../../shared/ipc/accounts
 import { AccountsIPCService } from '../../services/ipc/accounts.service';
 import { remote } from 'electron';
 
+export enum DatabaseConnectionType {
+  SERVER,
+  FILE
+}
+
 @Component({
   selector: 'app-add-edit-account',
   templateUrl: './add-edit-account.component.html',
@@ -23,10 +28,14 @@ export class AddEditAccountComponent implements OnInit {
   basicDetailsForm: FormGroup;
   tunnelDetailsForm: FormGroup;
   databaseDetailsForm: FormGroup;
+  databaseFileDetailsForm: FormGroup;
+  databaseConnectionType: DatabaseConnectionType;
+  DatabaseConnectionType = DatabaseConnectionType;
 
   databaseServers: any[] = [
     { name: 'MySQL', value: 1, port: 3306 },
-    { name: 'Postgres', value: 3, port: 5432 }
+    { name: 'Postgres', value: 3, port: 5432 },
+    { name: 'SQLite3', value: 5 }
   ]
 
   constructor(
@@ -71,10 +80,17 @@ export class AddEditAccountComponent implements OnInit {
       dbDbCtrl: [this.editAccount ? this.editAccount.server.database : null, Validators.required],
     });
 
+    this.databaseFileDetailsForm  = this.fb.group({
+      dbFilenameCtrl: [this.editAccount ? this.editAccount.file.filename : null, Validators.required],
+    });
+
     this.basicDetailsForm.controls.databaseServerCtrl.valueChanges.subscribe((newVal) => {
+      this.databaseConnectionType = (newVal == 5) ? DatabaseConnectionType.FILE : DatabaseConnectionType.SERVER;
       this.databaseServers.forEach((dbSrv) => {
         if (dbSrv.value == newVal) {
-          this.databaseDetailsForm.controls.dbPortCtrl.setValue(dbSrv.port);
+          if (dbSrv.port) {
+            this.databaseDetailsForm.controls.dbPortCtrl.setValue(dbSrv.port);
+          }
         }
       })
     })
@@ -121,24 +137,25 @@ export class AddEditAccountComponent implements OnInit {
     this.databaseDetailsForm.markAsDirty();
   }
 
+  get activeDatabaseDetailsForm(): FormGroup {
+    if (this.databaseConnectionType == DatabaseConnectionType.FILE) {
+      return this.databaseFileDetailsForm;
+    }
+    return this.databaseDetailsForm;
+  }
+
   formAsAccount(): IAccount {
     const fromBasicForm = (ctrl: string) => this.basicDetailsForm.controls[ctrl].value;
     const fromTunnelForm = (ctrl: string) => this.tunnelDetailsForm.controls[ctrl].value;
     const fromDBForm = (ctrl: string) => this.databaseDetailsForm.controls[ctrl].value;
+    const fromFileDBForm = (ctrl: string) => this.databaseFileDetailsForm.controls[ctrl].value;
+    
 
-    return {
+    let obj:any = {
       id: this.editAccount ? this.editAccount.id : null,
       name: fromBasicForm('accountNameCtrl'),
       creation_date: this.editAccount ? this.editAccount.creation_date : new Date().toISOString(),
       modify_date: this.editAccount ? this.editAccount.modify_date : new Date().toISOString(),
-      server: {
-        server_type: fromBasicForm('databaseServerCtrl'),
-        hostname: fromDBForm('dbHostCtrl'),
-        port: fromDBForm('dbPortCtrl'),
-        username: fromDBForm('dbUsernameCtrl'),
-        password: fromDBForm('dbPasswordCtrl'),
-        database: fromDBForm('dbDbCtrl'),
-      },
       ssh: {
         enabled: fromTunnelForm('isTunnelEnabledCtrl'),
         hostname: fromTunnelForm('sshHostCtrl'),
@@ -148,7 +165,28 @@ export class AddEditAccountComponent implements OnInit {
         use_key: fromTunnelForm('isSSHKeyEnabledCtrl'),
         key: fromTunnelForm('sshPrivateKeyCtrl')
       }
+    };
+
+    if (this.databaseConnectionType == DatabaseConnectionType.SERVER) {
+      obj.server = {
+        server_type: fromBasicForm('databaseServerCtrl'),
+        hostname: fromDBForm('dbHostCtrl'),
+        port: fromDBForm('dbPortCtrl'),
+        username: fromDBForm('dbUsernameCtrl'),
+        password: fromDBForm('dbPasswordCtrl'),
+        database: fromDBForm('dbDbCtrl'),
+      };
     }
+
+    if (this.databaseConnectionType == DatabaseConnectionType.FILE) {
+      obj.server = {
+        server_type: fromBasicForm('databaseServerCtrl'),
+        filename: fromFileDBForm('dbFilenameCtrl'),
+      };
+    }
+
+    return obj;
+
   }
 
   async testConnection() {
@@ -169,13 +207,16 @@ export class AddEditAccountComponent implements OnInit {
     }
   }
 
-  openElectronFileDialog() {
+  openElectronFileDialog(dstCtrl) {
+    console.log(this.databaseFileDetailsForm)
+    console.log()
     let fileRes:any = remote.dialog.showOpenDialogSync({
       properties: ['openFile', 'showHiddenFiles']
     });
 
     if (fileRes && fileRes[0]) {
-      this.tunnelDetailsForm.controls.sshPrivateKeyCtrl.setValue(fileRes[0]);
+      dstCtrl.setValue(fileRes[0]);
+      //this.tunnelDetailsForm.controls.sshPrivateKeyCtrl.setValue(fileRes[0]);
     }
     console.log(fileRes);
   }

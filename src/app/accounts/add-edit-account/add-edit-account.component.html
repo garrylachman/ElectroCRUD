@@ -30,13 +30,14 @@
         <nb-step [stepControl]="tunnelDetailsForm" [label]="labelTwo">
           <ng-template #labelTwo>Tunnel</ng-template>
             <h4>SSH Tunnel</h4>
-            <form [formGroup]="tunnelDetailsForm" (ngSubmit)="onTunnelDetailsSubmit()" class="step-container">
+            <form [formGroup]="tunnelDetailsForm" (ngSubmit)="onTunnelDetailsSubmit()" class="step-container" >
               <p class="lorem">
                   An SSH tunnel links a port on your local machine to a port on a remote host. When these ports are linked, anything communicated to the local port is passed through SSH to the remote port; likewise, any communication to the remote port is passed back through SSH to the local port. The added benefit of this setup is that the communications between your local machine and the remote host is encrypted by the SSH connection.
               </p>
               <div class="input-group">
                   <nb-checkbox 
-                    status="primary" class="form-control" formControlName="isTunnelEnabledCtrl"
+                    status="primary" class="form-control" formControlName="isTunnelEnabledCtrl" 
+                    [disabled]="databaseConnectionType!=DatabaseConnectionType.SERVER"
                     [status]="tunnelDetailsForm.controls['isTunnelEnabledCtrl'].invalid && (tunnelDetailsForm.dirty || tunnelDetailsForm.touched) ? 'danger': 'success'"  
                   >
                     Configure SSH Tunnel?
@@ -45,7 +46,8 @@
 
               <div class="input-group">
                 <input 
-                  nbInput type="text" placeholder="Hostname" class="form-control" formControlName="sshHostCtrl"
+                  nbInput type="text" placeholder="Hostname" class="form-control" formControlName="sshHostCtrl" 
+                  [disabled]="databaseConnectionType!=DatabaseConnectionType.SERVER"
                   [status]="tunnelDetailsForm.controls['sshHostCtrl'].invalid && (tunnelDetailsForm.dirty || tunnelDetailsForm.touched) ? 'danger': 'success'"
                 >
                 <input 
@@ -72,7 +74,7 @@
                 </nb-checkbox>
               </div>
               <div class="input-group">
-                <input nbInput placeholder="Private Key" class="form-control" formControlName="sshPrivateKeyCtrl" (click)="openElectronFileDialog()"
+                <input nbInput placeholder="Private Key" class="form-control" formControlName="sshPrivateKeyCtrl" (click)="openElectronFileDialog(tunnelDetailsForm.controls.sshPrivateKeyCtrl)"
                 [status]="tunnelDetailsForm.controls['sshPrivateKeyCtrl'].invalid && (tunnelDetailsForm.dirty || tunnelDetailsForm.touched) ? 'danger': 'success'" />
               </div>
               <button nbButton hero nbStepperPrevious>prev</button>
@@ -80,10 +82,25 @@
             </form>
         </nb-step>
 
-        <nb-step [stepControl]="databaseDetailsForm" [label]="labelThree">
+        <nb-step [stepControl]="databaseFileDetailsForm" [label]="labelThree" >
           <ng-template #labelThree>Database</ng-template>
           <h4>Database</h4>
-          <form [formGroup]="databaseDetailsForm" (ngSubmit)="onDatabaseDetailsSubmit()" class="step-container">
+     
+          <form [formGroup]="databaseFileDetailsForm" (ngSubmit)="onDatabaseDetailsSubmit()" class="step-container" [hidden]="databaseConnectionType!=DatabaseConnectionType.FILE">
+           
+            <div class="input-group">
+              <input 
+                nbInput placeholder="Filename" class="form-control" formControlName="dbFilenameCtrl" (click)="openElectronFileDialog(databaseFileDetailsForm.controls.dbFilenameCtrl)"
+                [status]="databaseFileDetailsForm?.controls['dbFilenameCtrl'].invalid && (databaseFileDetailsForm.dirty || databaseFileDetailsForm.touched) ? 'danger': 'success'" />
+            </div>
+       
+            
+            <button nbButton hero nbStepperPrevious>prev</button>
+            <button nbButton hero nbStepperNext>next</button>
+          </form>
+
+
+          <form [formGroup]="databaseDetailsForm" (ngSubmit)="onDatabaseDetailsSubmit()" class="step-container" [hidden]="databaseConnectionType!=DatabaseConnectionType.SERVER">
             <p class="lorem">
               Let's setup the database connection. If you are using ssh tunnel use the local port on the remote server (avoid the tunnel's port).
             </p>
