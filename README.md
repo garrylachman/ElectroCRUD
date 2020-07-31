@@ -53,6 +53,7 @@ After a few years of the project being inactive, I decided to bring it to life a
 ### Databases
 - [x] MySQL/MariaDB
 - [x] PostgreSQL
+- [ ] SQLite3 (in development - sqlite branch)
 - [ ] MSSQL
 - [ ] Oracle
 
