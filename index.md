@@ -21,6 +21,7 @@ From version 2.7.0 SQLite has been added, currently its very limited support but
 ### Functionality
 - [x] MySQL Support
 - [x] PostgreSQL Support
+- [x] SQLite Support (limited support, work in progress)
 - [x] SSH Tunnels (Keys & Password)
 - [x] Accounts (represent a database)
   - [x] Add / Edit
@@ -37,6 +38,7 @@ From version 2.7.0 SQLite has been added, currently its very limited support but
   - [x] Edit record
   - [x] Connect existing view as sub views
   - [ ] Export data in various formats like: csv, dump
+- [x] Custom SQL Queries
 - [x] Subviews (represent a sub table)
 - [x] Views relations
   - [x] Drill from view to view (subview)
@@ -51,6 +53,7 @@ From version 2.7.0 SQLite has been added, currently its very limited support but
   - [x] Simple & friendly interface to build where clauses
 - [ ] Process manager (view running queries)
 - [ ] Export / Import of all user accounts.
+- [ ] Themes
 
 ### Databases
 - [x] MySQL/MariaDB
