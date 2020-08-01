@@ -31,11 +31,28 @@ export const ListTablesQueries = {
     [ServerType.MySQL]: 'SELECT table_name as table_name FROM information_schema.tables WHERE table_schema = ?',
     [ServerType.PostgreSQL]: 'SELECT concat(table_schema, \'.\', table_name) as table_name FROM information_schema.tables WHERE table_type = \'BASE TABLE\' AND table_catalog = ?',
     [ServerType.MSSQL]: 'SELECT table_name FROM information_schema.tables WHERE table_schema = \'public\' AND table_catalog = ?',
-    [ServerType.SQLITE3]: `SELECT name FROM my_db.sqlite_master WHERE type='table'`
+    [ServerType.SQLITE3]: `SELECT name AS table_name FROM sqlite_master WHERE type='table'`
 }
 
 export const GetPrimaryKeyQueries = {
     ...ListTablesQueries,
+    [ServerType.SQLITE3]: `
+    SELECT
+        m.name AS 'table_name', 
+        p.cid AS 'col_id',
+        p.name AS 'name',
+        p.type AS 'type',
+        p.pk AS 'key',
+        p.dflt_value AS 'default',
+        p.[notnull] AS 'nullable',
+        0 as 'length',
+        '' as 'extra' 
+    FROM sqlite_master m
+    LEFT OUTER JOIN pragma_table_info((m.name)) p
+    ON m.name <> p.name
+    WHERE table_name = ? 
+    ORDER BY table_name, col_id
+    `,
     [ServerType.MySQL]: `
     SELECT 
         COLUMN_NAME as 'name',
@@ -217,6 +234,9 @@ export class DatabaseService {
         let listTablesQuery = ListTablesQueries[this.activeClient];
         console.log("listTablesQuery", listTablesQuery)
         let bindings: string[] = [ this.connection.client.database() ];
+        if (this.activeClient == "sqlite3") {
+            bindings = [];
+        }
         try {
             let res = await this.connection.raw(listTablesQuery, bindings);
             console.log(res);
@@ -225,6 +245,9 @@ export class DatabaseService {
             }
             if (this.activeClient == "pg") {
                 return (res as any).rows.map(row => row.table_name);
+            }
+            if (this.activeClient == "sqlite3") {
+                return (res as any).map(row => row.table_name);
             }
         } catch(error) {
             return error;
@@ -242,9 +265,14 @@ export class DatabaseService {
         }
         let findResult = ((result: any) => result[0]) as ((result: any) => string | undefined);
         let findResultPG = ((result: any) => result.rows) as ((result: any) => string | undefined);
+        //let findResultSQLite = ((result: any) => result) as ((result: any) => string | undefined);
     
         try {
             let res = await this.connection.raw(tableInfoQuery, bindings);
+            console.log(res);
+            if (this.activeClient == "sqlite3") {
+                return res;
+            }
             if (this.activeClient == "pg") {
                 return findResultPG(res);
             }
