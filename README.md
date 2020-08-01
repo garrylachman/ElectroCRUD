@@ -13,6 +13,8 @@ The ElectroCRUD v1 was born in 2016. An Electron application that made it possib
 ### ElectroCRUD v2
 After a few years of the project being inactive, I decided to bring it to life again. The codebase was built from scratch using Electron+Angular8. The new version contains most of the features of the first version, and new features are added on a weekly basis.
 
+From version 2.7.0 SQLite has been added, currently its very limited support but we working on full support for next version.
+
 [![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com) 
 
 ### Functionality
@@ -53,15 +55,15 @@ After a few years of the project being inactive, I decided to bring it to life a
 ### Databases
 - [x] MySQL/MariaDB
 - [x] PostgreSQL
-- [ ] SQLite3 (in development - sqlite branch)
+- [x] SQLite (Limited support)
 - [ ] MSSQL
 - [ ] Oracle
 
 ## Download Binaries ![GitHub release](https://img.shields.io/github/release/garrylachman/ElectroCRUD.svg?style=for-the-badge)
 
-* [Mac OSX](https://github.com/garrylachman/ElectroCRUD/releases/download/2.6.1/ElectroCRUD-2.6.1.dmg)
-* [Linux](https://github.com/garrylachman/ElectroCRUD/releases/download/2.6.1/ElectroCRUD-2.6.1.AppImage)
-* [Windows](https://github.com/garrylachman/ElectroCRUD/releases/download/2.6.1/ElectroCRUD.2.6.1-Setup.exe)
+* [Mac OSX](https://github.com/garrylachman/ElectroCRUD/releases/download/2.7.0/ElectroCRUD-2.7.0.dmg)
+* [Linux](https://github.com/garrylachman/ElectroCRUD/releases/download/2.7.0/ElectroCRUD-2.7.0.AppImage)
+* [Windows](https://github.com/garrylachman/ElectroCRUD/releases/download/2.7.0/ElectroCRUD.2.7.0-Setup.exe)
 
 ## Install via Package Managers
 ### Homebrew/brew (Mac OS/X)

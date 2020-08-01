@@ -4,7 +4,8 @@ export interface IAccount {
     creation_date: string;
     modify_date: string;
     ssh: IAccountSSH;
-    server: IAccountServer;
+    server?: IAccountServer;
+    file?: IAccountFile;
 }
 
 export interface IAccountSSH {
@@ -19,9 +20,14 @@ export interface IAccountSSH {
 
 export interface IAccountServer {
     server_type: number;
-    hostname: string;
-    port: number;
-    username: string;
+    hostname?: string;
+    port?: number;
+    username?: string;
     password?: string;
-    database: string;
+    database?: string;
+}
+
+export interface IAccountFile{
+    server_type: number;
+    filename?: string;
 }

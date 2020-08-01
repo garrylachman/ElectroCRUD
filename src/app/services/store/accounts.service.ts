@@ -37,11 +37,13 @@ export class AccountsService {
 export const ServerType = {
   '1': 'MySQL',
   '2': 'SQL Server',
-  '3': 'Postres'
+  '3': 'Postres',
+  '5': 'SQLite'
 }
 
 export const ServerIcon = {
   '1': 'mysql-dolphin',
   '2': 'windowseight',
-  '3': 'pgsql'
+  '3': 'pgsql',
+  '5': 'database'
 }
