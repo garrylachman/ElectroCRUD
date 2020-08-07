@@ -37,7 +37,8 @@ import {
   NbCardModule,
   NbDialogService,
   NbDialogModule,
-  NbToastrModule
+  NbToastrModule,
+  NbThemeService
 } from '@nebular/theme';
 import { ConfirmDeleteComponent } from './components/dialogs/confirm-delete/confirm-delete.component';
 
@@ -141,7 +142,8 @@ console.log("version: ", version ,", env: ", AppConfig.environment);
       provide: ErrorHandler, 
       useFactory: errorHandlerFactory
     },
-    SessionService
+    SessionService,
+    NbThemeService
   ],
   entryComponents: [ConfirmDeleteComponent, AddEditWidgetModalComponent, AddEditFilterModalComponent, ColumnReferanceDialogComponent],
   bootstrap: [AppComponent]

@@ -3,9 +3,10 @@ nb-layout-header nav {
     -webkit-app-region: drag
 }
 
-nb-actions {
+.right-bar {
     flex-flow: row-reverse;
     flex: 1;
+    display: inline-flex;
 }
 
 .control-panel {

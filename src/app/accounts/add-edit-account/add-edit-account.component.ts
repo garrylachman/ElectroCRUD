@@ -81,7 +81,7 @@ export class AddEditAccountComponent implements OnInit {
     });
 
     this.databaseFileDetailsForm  = this.fb.group({
-      dbFilenameCtrl: [this.editAccount ? this.editAccount.file.filename : null, Validators.required],
+      dbFilenameCtrl: [this.editAccount ? this.editAccount.file.filename : null, null],
     });
 
     this.basicDetailsForm.controls.databaseServerCtrl.valueChanges.subscribe((newVal) => {

@@ -7,13 +7,16 @@ import {
   NbSidebarService, 
   NbSearchService, 
   NbMenuItem, 
-  NbIconLibraries
+  NbIconLibraries,
+  NbThemeService,
+  NbSelectComponent
 } from '@nebular/theme';
 import { IAccount } from '../shared/interfaces/accounts.interface';
 import { SessionService } from './services/session.service';
 import { IView } from '../shared/interfaces/views.interface';
 import { version } from '../../package.json';
 import { ViewsService } from './services/store/views.service';
+
 
 @Component({
   selector: 'app-root',
@@ -53,7 +56,8 @@ export class AppComponent {
     private menuService: NbMenuService,
     private searchService: NbSearchService,
     private viewsService: ViewsService,
-    private sessionService: SessionService) {
+    private sessionService: SessionService,
+    private themeService: NbThemeService) {
       
     translate.setDefaultLang('en');
     console.log('AppConfig', AppConfig);
@@ -76,6 +80,11 @@ export class AppComponent {
     })
 
     this.viewsService.changes.subscribe(() => this.reload());
+  }
+
+  changeTheme($event) {
+    console.log($event);
+    this.themeService.changeTheme($event);
   }
 
   reload() {
