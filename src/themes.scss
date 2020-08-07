@@ -1,5 +1,6 @@
 @import '~@nebular/theme/styles/theming';
 @import '~@nebular/theme/styles/themes/cosmic';
+@import '~@nebular/theme/styles/themes/default';
 
 $nb-themes: nb-register-theme((
 
@@ -17,7 +18,7 @@ $nb-themes: nb-register-theme((
 
   text-button-font-weight: 600
 
-), cosmic, cosmic);
+), default, default);
 
 @mixin input-ng-valid-status($sub-class: "") {
   $ng-form-valid-status: ("valid": "success", "invalid": "danger");
