@@ -100,4 +100,4 @@ From version 2.7.0 SQLite has been added, currently its very limited support but
 
 ![GitHub All Releases](https://img.shields.io/github/downloads/garrylachman/ElectroCRUD/total.svg?style=for-the-badge) 
 ![GitHub package.json version](https://img.shields.io/github/package-json/v/garrylachman/ElectroCRUD.svg?style=for-the-badge)
-![Analytics](https://ga-beacon.appspot.com/UA-77988987-1/github/master?flat&useReferer)
+![Analytics](https://gabeacon.irvinlim.com/UA-77988987-1/github/master?flat&useReferer)
