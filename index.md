@@ -1,8 +1,8 @@
 <img src="https://i.imgur.com/L5nX9pT.png" width="100%" />
 
 # ElectroCRUD 2 ![GitHub Release Date](https://img.shields.io/github/release-date/garrylachman/ElectroCRUD.svg?style=for-the-badge) [![Open Collective backers and sponsors](https://img.shields.io/opencollective/all/electrocrud.svg?style=for-the-badge)](https://opencollective.com/electrocrud)
-### CRUD?
-Create, Read, Update, and Delete (CRUD) are the four basic functions of persistent storage (Database).
+### ElectroCRUD?
+ElectroCRUD is Open Source Database CRUD (Create, Read, Update, Delete) Software. No Code Needed — Just in a few clicks, you can create a Database Admin/Dashboard/Whatever. Its Open Source — It's Free.
 
 ### Why?
 After a failed search for a basic admin panel that not involves writing code or installs web-based solutions, I come with ElectroCRUD idea.
@@ -56,7 +56,7 @@ From version 2.7.0 SQLite has been added, currently its very limited support but
   - [x] Simple & friendly interface to build where clauses
 - [ ] Process manager (view running queries)
 - [ ] Export / Import of all user accounts.
-- [ ] Themes
+- [x] Themes
 
 ### Databases
 - [x] MySQL/MariaDB
@@ -67,9 +67,9 @@ From version 2.7.0 SQLite has been added, currently its very limited support but
 
 ## Download Binaries ![GitHub release](https://img.shields.io/github/release/garrylachman/ElectroCRUD.svg?style=for-the-badge)
 
-* [Mac OSX](https://github.com/garrylachman/ElectroCRUD/releases/download/2.7.1/ElectroCRUD-2.7.0.dmg)
-* [Linux](https://github.com/garrylachman/ElectroCRUD/releases/download/2.7.1/ElectroCRUD-2.7.0.AppImage)
-* [Windows](https://github.com/garrylachman/ElectroCRUD/releases/download/2.7.1/ElectroCRUD.2.7.0-Setup.exe)
+* [Mac OSX](https://github.com/garrylachman/ElectroCRUD/releases/download/2.7.1/ElectroCRUD-2.7.1.dmg)
+* [Linux](https://github.com/garrylachman/ElectroCRUD/releases/download/2.7.1/ElectroCRUD-2.7.1.AppImage)
+* [Windows](https://github.com/garrylachman/ElectroCRUD/releases/download/2.7.1/ElectroCRUD.2.7.1-Setup.exe)
 
 ## Install via Package Managers
 ### Homebrew/brew (Mac OS/X)
