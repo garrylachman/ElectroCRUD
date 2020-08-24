@@ -67,7 +67,7 @@ From version 2.7.0 SQLite has been added, currently its very limited support but
 
 * [Mac OSX](https://github.com/garrylachman/ElectroCRUD/releases/download/2.7.1/ElectroCRUD-2.7.1.dmg)
 * [Linux](https://github.com/garrylachman/ElectroCRUD/releases/download/2.7.1/ElectroCRUD-2.7.1.AppImage)
-* [Windows](https://github.com/garrylachman/ElectroCRUD/releases/download/2.7.1/ElectroCRUD.2.7.1-Setup.exe)
+* [Windows](https://github.com/garrylachman/ElectroCRUD/releases/download/2.7.1/ElectroCRUD.2.7.1.exe)
 
 ## Install via Package Managers
 ### Homebrew/brew (Mac OS/X)
