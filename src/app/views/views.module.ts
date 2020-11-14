@@ -21,8 +21,7 @@ import {
   NbLayoutModule,
   NbSidebarModule,
   NbMenuModule,
-  NbTabsetModule,
-  NbAutocompleteModule
+  NbTabsetModule
 } from '@nebular/theme';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
