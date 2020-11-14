@@ -89,11 +89,11 @@
     "fsevents": "^1.2.9"
   },
   "dependencies": {
-    "@angular-devkit/build-angular": "0.1000.0",
+    "@angular-devkit/build-angular": "0.1002.0",
     "@angular-devkit/schematics": "^10.0.0",
     "@angular/animations": "10.2.3",
-    "@angular/cdk": "^10.0.0",
-    "@angular/cli": "10.0.0",
+    "@angular/cdk": "10.2.3",
+    "@angular/cli": "10.2.0",
     "@angular/common": "10.2.3",
     "@angular/compiler": "10.2.3",
     "@angular/compiler-cli": "10.2.3",
