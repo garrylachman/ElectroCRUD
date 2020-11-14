@@ -19,7 +19,7 @@ export class QueriesIPCService {
       query: query
     });
     console.log("req", req);
-    const rawRes:any = await ipcRenderer.callMain(IPC_CHANNEL_QUERY, req.toJsonValue());
+    const rawRes:any = await ipcRenderer.invoke(IPC_CHANNEL_QUERY, req.toJsonValue());
     console.log("rawRes", rawRes);
     return new IPCQueriesResponseMessage(rawRes).toMessage()
   }

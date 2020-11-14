@@ -20,8 +20,8 @@ export class AccountsIPC {
     constructor() {}
     
     public listen() {
-        ipcMain.answerRenderer(IPC_CHANNEL_CHECK_CONNECTION, (req: JsonValue) => this.checkConnection(req));
-        ipcMain.answerRenderer(IPC_CHANNEL_CONNECT, (req: JsonValue) => this.connect(req));
+        ipcMain.handle(IPC_CHANNEL_CHECK_CONNECTION, async (event, req: JsonValue) => this.checkConnection(req));
+        ipcMain.handle(IPC_CHANNEL_CONNECT, async (event, req: JsonValue) => this.connect(req));
     }
 
     public async connect(req: JsonValue): Promise<JsonValue> {

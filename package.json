@@ -59,7 +59,7 @@
     "codelyzer": "6.0.1",
     "conventional-changelog-cli": "2.0.28",
     "core-js": "^3.7.0",
-    "electron": "^10.1.5",
+    "electron": "^10.0.0",
     "electron-builder": "^22.9.1",
     "electron-rebuild": "^2.3.2",
     "electron-reload": "^1.5.0",
@@ -83,7 +83,7 @@
     "zone.js": "0.10.3"
   },
   "engines": {
-    "node": ">=10.9.0"
+    "node": ">=v13.7.0"
   },
   "optionalDependencies": {
     "fsevents": "^1.2.9"
@@ -103,9 +103,9 @@
     "@angular/platform-browser": "10.2.3",
     "@angular/platform-browser-dynamic": "10.2.3",
     "@angular/router": "10.2.3",
-    "@bugsnag/core": "^6.3.0",
-    "@bugsnag/js": "^6.3.2",
-    "@bugsnag/plugin-angular": "^6.3.2",
+    "@bugsnag/core": "^7.3.5",
+    "@bugsnag/js": "^7.5.1",
+    "@bugsnag/plugin-angular": "^7.5.1",
     "@handsontable/angular": "^5.1.0",
     "@materia-ui/ngx-monaco-editor": "^4.0.1",
     "@nebular/date-fns": "^4.1.1",

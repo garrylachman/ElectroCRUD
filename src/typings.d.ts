@@ -4,7 +4,7 @@ interface NodeModule {
   id: string;
 }
 
-declare var window: Window;
+//declare var window: Window;
 interface Window {
   process: any;
   require: any;

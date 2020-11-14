@@ -24,7 +24,7 @@ export class AccountsIPCService {
       server: account.server,
       ssh: account.ssh
     });
-    const rawRes:any = await ipcRenderer.callMain(IPC_CHANNEL_CHECK_CONNECTION, req.toJsonValue());
+    const rawRes:any = await ipcRenderer.invoke(IPC_CHANNEL_CHECK_CONNECTION, req.toJsonValue());
     console.log("rawRes", rawRes);
     return new IPCCheckConnectionResponseMessage(rawRes).toMessage()
   }
@@ -36,7 +36,7 @@ export class AccountsIPCService {
       ssh: account.ssh
     });
     console.log("req", req);
-    const rawRes:any = await ipcRenderer.callMain(IPC_CHANNEL_CONNECT, req.toJsonValue());
+    const rawRes:any = await ipcRenderer.invoke(IPC_CHANNEL_CONNECT, req.toJsonValue());
     console.log("rawRes", rawRes);
     return new IPCConnectResponseMessage(rawRes).toMessage()
   }

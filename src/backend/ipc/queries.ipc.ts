@@ -5,7 +5,10 @@ import {
 } from '../../shared/ipc/queries.ipc';
 
 
+//import { ipcMain } from 'electron-better-ipc';
+//import { ipcMain } from 'electron';
 import { ipcMain } from 'electron-better-ipc';
+
 import { JsonValue } from 'type-fest';
 import { DatabaseService } from '../services/db.service';
 
@@ -14,7 +17,7 @@ export class QueriesIPC {
     constructor() {}
     
     public listen() {
-        ipcMain.answerRenderer(IPC_CHANNEL_QUERY, (req: JsonValue) => this.execute(req));
+        ipcMain.handle(IPC_CHANNEL_QUERY, async (event, req: JsonValue) => this.execute(req));
     }
 
     public async execute(req: JsonValue): Promise<JsonValue> {
@@ -43,7 +46,7 @@ export class QueriesIPC {
             count: 0
         });
         
-        console.log("resMessage", resMessage.toMessage());
+        console.log("resMessage - ", resMessage.toMessage());
         return Promise.resolve(resMessage.toJsonValue());
     }
 

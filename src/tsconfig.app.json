@@ -3,10 +3,12 @@
   "compilerOptions": {
     "sourceMap": true,
     "outDir": "../out-tsc/app",
-    "module": "es2015",
+    //"module": "es2015",
     "resolveJsonModule": true,
     "baseUrl": "",
-    "types": []
+    "types": [],
+    "target": "esnext",
+    "module": "commonjs",
   },
   "exclude": [
     "**/*.spec.ts"
