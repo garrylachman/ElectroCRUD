@@ -110,7 +110,7 @@
     "@materia-ui/ngx-monaco-editor": "^4.0.1",
     "@nebular/date-fns": "^4.1.1",
     "@nebular/eva-icons": "^4.0.0-rc.8",
-    "@nebular/theme": "^4.1.0",
+    "@nebular/theme": "^6.2.1",
     "@ngx-formly/bootstrap": "^5.2.0",
     "@ngx-formly/core": "^5.2.0",
     "@swimlane/ngx-datatable": "^16.0.2",

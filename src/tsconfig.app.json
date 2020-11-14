@@ -6,7 +6,8 @@
     "module": "es2015",
     "resolveJsonModule": true,
     "baseUrl": "",
-    "types": []
+    "types": [],
+    "skipLibCheck": true,
   },
   "exclude": [
     "**/*.spec.ts"
