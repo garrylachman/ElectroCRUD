@@ -135,7 +135,7 @@
     "ng-dynamic-breadcrumb": "^4.0.0",
     "ng2-fittext": "^1.2.12",
     "ngx-chips": "^2.2.2",
-    "ngx-mask": "^8.2.0",
+    "ngx-mask": "^11.0.0",
     "open-ssh-tunnel": "^0.3.1",
     "pg": "^7.18.2",
     "popper.js": "^1.16.1",
