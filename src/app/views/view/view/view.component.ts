@@ -20,7 +20,7 @@ import { IViewFilter } from '../../../../shared/interfaces/filters.interface';
 })
 export class ViewViewComponent implements OnInit, OnDestroy {
 
-  @ViewChild(DatatableComponent, { static: false }) table: DatatableComponent;
+  @ViewChild(DatatableComponent) table: DatatableComponent;
   @ViewChild('tableContextMenuTmpl', { static: true }) tableContextMenuTmpl: TemplateRef<any>;
   @ViewChild('subviewTableIconTmpl', { static: true }) subviewTableIconTmpl: TemplateRef<any>;
 

@@ -20,7 +20,7 @@ import { deepEqual } from 'fast-equals';
 })
 export class ConfigureComponent implements OnInit {
 
-  @ViewChild(DatatableComponent, { static: false }) table: DatatableComponent;
+  @ViewChild(DatatableComponent) table: DatatableComponent;
 
   view: IView;
   savedView: IView;

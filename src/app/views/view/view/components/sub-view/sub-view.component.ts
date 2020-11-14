@@ -12,7 +12,7 @@ import { IIPCReadDataWhereOpr } from '../../../../../../shared/ipc/views.ipc';
 })
 export class SubViewComponent implements OnInit {
 
-  @ViewChild(DatatableComponent, { static: false }) subTable: DatatableComponent;
+  @ViewChild(DatatableComponent) subTable: DatatableComponent;
 
   @Input() subview:ISubView;
   @Input() row:Object;

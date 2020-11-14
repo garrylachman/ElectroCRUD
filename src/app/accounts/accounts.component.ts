@@ -31,7 +31,7 @@ export class AccountsComponent implements OnInit {
    */
   reorderable: boolean = true;
 
-  @ViewChild(DatatableComponent, { static: false }) table: DatatableComponent;
+  @ViewChild(DatatableComponent) table: DatatableComponent;
   /**
    * @ViewChild Data table modification date template column.
    */

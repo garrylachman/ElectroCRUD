@@ -15,7 +15,7 @@ import { Spreadsheet } from 'dhx-spreadsheet';
 })
 export class QueryComponent implements OnInit, OnDestroy {
 
-  @ViewChild(NbLayoutComponent, { static: false }) layout: NbLayoutComponent;
+  @ViewChild(NbLayoutComponent) layout: NbLayoutComponent;
 
   @ViewChild('spreadsheet', {static: true}) container: ElementRef;
   spreadsheet: Spreadsheet;
