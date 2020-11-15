@@ -34,6 +34,8 @@ export class AddEditAccountComponent implements OnInit {
 
   showPassword = false;
 
+  isLoading = false;
+
   databaseServers: any[] = [
     { name: 'MySQL', value: 1, port: 3306 },
     { name: 'Postgres', value: 3, port: 5432 },
@@ -232,9 +234,11 @@ export class AddEditAccountComponent implements OnInit {
   }
 
   async testConnection() {
+    this.isLoading = true;
     this.testLog = [];
     const res:IIPCCheckConnectionResponseMessage = await this.accountsIPCService.checkConnection(this.formAsAccount());
     this.isSaveEnabled = (this.formAsAccount().ssh.enabled) ? (res.ssh.valid && res.server.valid) : res.server.valid;
+
     if (this.formAsAccount().ssh.enabled) {
       if (res.ssh.valid) {
         this.testLog.push([`success`, `[OK] SSH`])
@@ -247,6 +251,8 @@ export class AddEditAccountComponent implements OnInit {
     } else {
       this.testLog.push([`danger`, `[FAIL] DATABASE,  error: ${res.server.error}`]);
     }
+
+    this.isLoading = false;
   }
 
   openElectronFileDialog(dstCtrl) {

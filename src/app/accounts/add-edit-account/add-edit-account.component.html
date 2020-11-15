@@ -1,4 +1,4 @@
-<nb-card accent="suceess">
+<nb-card accent="suceess" [nbSpinner]="isLoading" nbSpinnerStatus="control" nbSpinnerSize="giant">
   <nb-card-header>{{title}}</nb-card-header>
   <nb-card-body>
     <nb-stepper orientation="horizontal">
@@ -168,15 +168,12 @@
               nbButton status="primary" hero size="giant" (click)="testConnection()" *ngIf="!isSaveEnabled"
             >
               <nb-icon icon="wifi"></nb-icon>
-              Start Test
+              Test Connection
             </button>
           </div>
-          <nb-card id="testLogsCard" *ngIf="testLog.length>0">
-            <nb-card-header>Connectivity Test Results</nb-card-header>
-            <nb-card-body>
-              <nb-alert *ngFor="let tLog of testLog" status="{{tLog[0]}}">{{tLog[1]}}</nb-alert>
-            </nb-card-body>
-          </nb-card>
+          <ng-container xid="testLogsCard" *ngIf="testLog.length>0">
+            <nb-alert *ngFor="let tLog of testLog" status="{{tLog[0]}}">{{tLog[1]}}</nb-alert>
+          </ng-container>
           <button nbButton hero nbStepperPrevious *ngIf="!isSaveEnabled">prev</button>
         </nb-step>
       </nb-stepper>
