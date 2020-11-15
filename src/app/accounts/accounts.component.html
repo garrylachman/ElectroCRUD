@@ -6,14 +6,15 @@
 </nb-card>
 
 <nb-card [nbSpinner]="isLoading" nbSpinnerSize="giant" nbSpinnerStatus="primary">
-    <nb-card-header>
+    <nb-card-header class="d-flex justify-content-between">
         <input nbInput shape="semi-round" 
             type="text"
             placeholder="Type to filter the name column..."
             (keyup)="updateFilter($event)"
+            class="w-25 mw-100"
           />
         <button 
-            nbButton status="primary" hero size="small" (click)="edit(null)" 
+            nbButton status="primary" hero size="medium" (click)="edit(null)" 
             nbTooltip="Add new account" nbTooltipPlacement="top" nbTooltipStatus="primary"
         >
             <nb-icon icon="plus"></nb-icon>
