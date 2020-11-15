@@ -11,23 +11,23 @@
               Let's start with the basic information about your account. The account is represnt a single database.
             </p>
             <div class="input-group">
-              <input nbInput type="text" placeholder="Account name" class="form-control" formControlName="accountNameCtrl"
+              <input nbInput type="text" fieldSize="large" placeholder="Account name" class="form-control" formControlName="accountNameCtrl"
                   [status]="basicDetailsForm.controls['accountNameCtrl'].invalid && (basicDetailsForm.dirty || basicDetailsForm.touched) ? 'danger': 'success'">
             </div>
 
             <div class="input-group">
             <nb-select 
-              placeholder="Database Server" formControlName="databaseServerCtrl"
+              placeholder="Database Server" size="large" formControlName="databaseServerCtrl"
               [status]="basicDetailsForm.controls['databaseServerCtrl'].invalid && (basicDetailsForm.dirty || basicDetailsForm.touched) ? 'danger': 'success'"  
             >
               <nb-option *ngFor="let item of databaseServers" value="{{item.value}}">{{item.name}}</nb-option>
             </nb-select>
             </div>
-            <button nbButton hero nbStepperNext>next</button>
+            <button nbButton hero nbStepperNext [disabled]="basicDetailsForm && basicDetailsForm.invalid" status="primary">next</button>
           </form>
         </nb-step>
 
-        <nb-step [stepControl]="tunnelDetailsForm" [label]="labelTwo">
+        <nb-step [stepControl]="tunnelDetailsForm" [label]="labelTwo"> 
           <ng-template #labelTwo>Tunnel</ng-template>
             <h4>SSH Tunnel</h4>
             <form [formGroup]="tunnelDetailsForm" (ngSubmit)="onTunnelDetailsSubmit()" class="step-container" >
@@ -77,16 +77,16 @@
                 <input nbInput placeholder="Private Key" class="form-control" formControlName="sshPrivateKeyCtrl" (click)="openElectronFileDialog(tunnelDetailsForm.controls.sshPrivateKeyCtrl)"
                 [status]="tunnelDetailsForm.controls['sshPrivateKeyCtrl'].invalid && (tunnelDetailsForm.dirty || tunnelDetailsForm.touched) ? 'danger': 'success'" />
               </div>
-              <button nbButton hero nbStepperPrevious>prev</button>
-              <button nbButton hero nbStepperNext>next</button>
+              <button nbButton hero nbStepperPrevious status="warning">prev</button>
+              <button nbButton hero nbStepperNext [disabled]="tunnelDetailsForm && tunnelDetailsForm.invalid" status="primary">next</button>
             </form>
         </nb-step>
 
-        <nb-step [stepControl]="databaseFileDetailsForm" [label]="labelThree" >
+        <nb-step [stepControl]="databaseFileDetailsForm" [label]="labelThree" [hidden]="databaseConnectionType!=DatabaseConnectionType.FILE">
           <ng-template #labelThree>Database</ng-template>
           <h4>Database</h4>
      
-          <form [formGroup]="databaseFileDetailsForm" (ngSubmit)="onDatabaseDetailsSubmit()" class="step-container" [hidden]="databaseConnectionType!=DatabaseConnectionType.FILE">
+          <form [formGroup]="databaseFileDetailsForm" (ngSubmit)="onDatabaseDetailsSubmit()" class="step-container" *ngIf="databaseConnectionType==DatabaseConnectionType.FILE">
            
             <div class="input-group">
               <input 
@@ -95,8 +95,8 @@
             </div>
        
             
-            <button nbButton hero nbStepperPrevious>prev</button>
-            <button nbButton hero nbStepperNext>next</button>
+            <button nbButton hero nbStepperPrevious status="warning">prev</button>
+            <button nbButton hero nbStepperNext [disabled]="databaseFileDetailsForm && databaseFileDetailsForm.invalid" status="primary">next</button>
           </form>
 
 
@@ -131,8 +131,9 @@
                   [status]="databaseDetailsForm.controls['dbDbCtrl'].invalid && (databaseDetailsForm.dirty || databaseDetailsForm.touched) ? 'danger': 'success'"
                 >
               </div>
-            <button nbButton hero nbStepperPrevious>prev</button>
-            <button nbButton hero nbStepperNext>next</button>
+            <button nbButton hero nbStepperPrevious status="warning"
+            >prev</button>
+            <button nbButton hero nbStepperNext [disabled]="databaseDetailsForm && databaseDetailsForm.invalid" status="primary">next</button>
           </form>
         </nb-step>
 

@@ -80,12 +80,27 @@ export class AddEditAccountComponent implements OnInit {
       dbDbCtrl: [this.editAccount ? this.editAccount.server.database : null, Validators.required],
     });
 
-    this.databaseFileDetailsForm  = this.fb.group({
-      dbFilenameCtrl: [this.editAccount ? this.editAccount.file.filename : null, null],
-    });
+    // In edit mode - set conenction type file or server
+    if (this.editAccount) {
+      this.databaseConnectionType = (this.editAccount.server.server_type == 5) ? DatabaseConnectionType.FILE : DatabaseConnectionType.SERVER;
+
+      // if we have filename - set it file form
+      if (this.editAccount.server.filename) {
+        this.databaseFileDetailsForm  = this.fb.group({
+          dbFilenameCtrl: [this.editAccount.server.filename, null],
+        });
+      }
+    }
 
     this.basicDetailsForm.controls.databaseServerCtrl.valueChanges.subscribe((newVal) => {
       this.databaseConnectionType = (newVal == 5) ? DatabaseConnectionType.FILE : DatabaseConnectionType.SERVER;
+
+      if (this.databaseConnectionType == DatabaseConnectionType.FILE && !this.databaseFileDetailsForm) {
+        this.databaseFileDetailsForm  = this.fb.group({
+          dbFilenameCtrl: [this.editAccount ? this.editAccount.server.filename : null, null],
+        });
+      }
+
       this.databaseServers.forEach((dbSrv) => {
         if (dbSrv.value == newVal) {
           if (dbSrv.port) {
