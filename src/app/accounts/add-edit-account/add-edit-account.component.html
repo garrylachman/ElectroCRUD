@@ -90,7 +90,7 @@
            
             <div class="input-group">
               <input 
-                nbInput placeholder="Filename" class="form-control" formControlName="dbFilenameCtrl" (click)="openElectronFileDialog(databaseFileDetailsForm.controls.dbFilenameCtrl)"
+                nbInput placeholder="Filename" class="form-control w-100 mw-100" formControlName="dbFilenameCtrl" (click)="openElectronFileDialog(databaseFileDetailsForm.controls.dbFilenameCtrl)"
                 [status]="databaseFileDetailsForm?.controls['dbFilenameCtrl'].invalid && (databaseFileDetailsForm.dirty || databaseFileDetailsForm.touched) ? 'danger': 'success'" />
             </div>
        
@@ -107,27 +107,27 @@
 
             <div class="input-group">
               <input 
-                nbInput type="text" placeholder="Hostname" class="form-control" formControlName="dbHostCtrl"
+                nbInput type="text" placeholder="Hostname" class="form-control w-75 mw-100 mr-3" formControlName="dbHostCtrl"
                 [status]="databaseDetailsForm.controls['dbHostCtrl'].invalid && (databaseDetailsForm.dirty || databaseDetailsForm.touched) ? 'danger': 'success'"
               >
               <input 
-                nbInput type="text" placeholder="Port" class="form-control" formControlName="dbPortCtrl" mask="99999" class="portInput" 
+                nbInput type="text" placeholder="Port" class="form-control w-25 mw-100 portInput" formControlName="dbPortCtrl" mask="99999" 
                 [status]="databaseDetailsForm.controls['dbPortCtrl'].invalid && (databaseDetailsForm.dirty || databaseDetailsForm.touched) ? 'danger': 'success'" 
               >
             </div>
             <div class="input-group">
               <input 
-                nbInput type="text" placeholder="Username" class="form-control" formControlName="dbUsernameCtrl"
+                nbInput type="text" placeholder="Username" class="form-control w-50 mw-100 mr-3" formControlName="dbUsernameCtrl"
                 [status]="databaseDetailsForm.controls['dbUsernameCtrl'].invalid && (databaseDetailsForm.dirty || databaseDetailsForm.touched) ? 'danger': 'success'"
               >
               <input 
-                nbInput type="password" placeholder="Password" class="form-control" formControlName="dbPasswordCtrl" 
+                nbInput type="password" placeholder="Password" class="form-control w-50 mw-100" formControlName="dbPasswordCtrl" 
                 [status]="databaseDetailsForm.controls['dbPasswordCtrl'].invalid && (databaseDetailsForm.dirty || databaseDetailsForm.touched) ? 'danger': 'success'"
               >
             </div>
             <div class="input-group">
                 <input 
-                  nbInput type="text" placeholder="Database" class="form-control" formControlName="dbDbCtrl"
+                  nbInput type="text" placeholder="Database" class="form-control w-100 mw-100" formControlName="dbDbCtrl"
                   [status]="databaseDetailsForm.controls['dbDbCtrl'].invalid && (databaseDetailsForm.dirty || databaseDetailsForm.touched) ? 'danger': 'success'"
                 >
               </div>

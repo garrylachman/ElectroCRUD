@@ -84,6 +84,8 @@ export class AddEditAccountComponent implements OnInit {
       dbDbCtrl: [this.editAccount ? this.editAccount.server.database : null, Validators.required],
     });
 
+    this.databaseDetailsForm.markAsTouched();
+
     // In edit mode - set conenction type file or server
     if (this.editAccount) {
       this.databaseConnectionType = (this.editAccount.server.server_type == 5) ? DatabaseConnectionType.FILE : DatabaseConnectionType.SERVER;
