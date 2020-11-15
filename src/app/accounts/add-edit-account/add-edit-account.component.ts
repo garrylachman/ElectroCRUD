@@ -60,7 +60,9 @@ export class AddEditAccountComponent implements OnInit {
     this.basicDetailsForm = this.fb.group({
       accountNameCtrl: [this.editAccount ? this.editAccount.name : null, Validators.compose([Validators.required, Validators.minLength(3)])],
       databaseServerCtrl: [this.editAccount ? String(this.editAccount.server.server_type) : null, Validators.required],
-    });
+    })
+
+    this.basicDetailsForm.markAsTouched();
     
     this.tunnelDetailsForm = this.fb.group({
       isTunnelEnabledCtrl: [this.editAccount ? this.editAccount.ssh.enabled : false, Validators.required],
@@ -71,6 +73,8 @@ export class AddEditAccountComponent implements OnInit {
       isSSHKeyEnabledCtrl: [this.editAccount ? this.editAccount.ssh.use_key : false, Validators.required],
       sshPrivateKeyCtrl: [this.editAccount ? this.editAccount.ssh.key : null],
     });
+
+    this.tunnelDetailsForm.markAsTouched();
 
     this.databaseDetailsForm = this.fb.group({
       dbHostCtrl: [this.editAccount ? this.editAccount.server.hostname : null, Validators.required],
@@ -117,6 +121,8 @@ export class AddEditAccountComponent implements OnInit {
           ctrl.enable();
         } else {
           ctrl.disable();
+          // if we disable tunnel  - disable tunnel key
+          this.tunnelDetailsForm.controls.isSSHKeyEnabledCtrl.patchValue(false);
         }
       })
     });
@@ -125,15 +131,21 @@ export class AddEditAccountComponent implements OnInit {
       let passCtrl = this.tunnelDetailsForm.controls.sshPasswordCtrl;
       let keyCtrl = this.tunnelDetailsForm.controls.sshPrivateKeyCtrl
       if (newVal) {
+        // if we enable tunnel key - enable all tunnel details
+        this.tunnelDetailsForm.controls.isTunnelEnabledCtrl.patchValue(true);
         passCtrl.disable();
         keyCtrl.enable();
       } else {
-        passCtrl.enable();
+        // toggle password \ key only if tunnel is enabled
+        if (this.tunnelDetailsForm.controls.isTunnelEnabledCtrl.value) {
+          passCtrl.enable();
+        }
         keyCtrl.disable();
       }
     });
 
     this.tunnelDetailsForm.controls.isTunnelEnabledCtrl.updateValueAndValidity();
+    this.tunnelDetailsForm.controls.isSSHKeyEnabledCtrl.updateValueAndValidity();
 
     if (this.isEdit) {
       this.title = `Edit Account: ${this.basicDetailsForm.controls['accountNameCtrl'].value}`;
