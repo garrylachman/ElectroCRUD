@@ -22,10 +22,7 @@ export class AccountsComponent implements OnInit {
    * Loading indicator
    */
   isLoading: boolean = false;
-  /**
-   * Data table loading indicator
-   */
-  loadingIndicator: boolean = true;
+  
   /**
    * Is data table re-order enabled
    */
