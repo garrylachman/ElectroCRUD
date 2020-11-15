@@ -47,6 +47,7 @@
             <nb-icon 
                 icon="{{row.icon}}" 
                 pack="whhg" 
+                class="h-auto"
             ></nb-icon>
             Use
         </button>
@@ -54,13 +55,13 @@
             nbButton status="primary" hero size="medium" (click)="edit(row)" 
             nbTooltip="Edit" nbTooltipPlacement="top" nbTooltipStatus="primary"
         >
-            <nb-icon icon="edit"></nb-icon>
+            <nb-icon icon="edit" class="h-auto"></nb-icon>
         </button>
         <button 
             nbButton status="danger" hero size="medium" (click)="delete(row)" 
             nbTooltip="Delete" nbTooltipPlacement="top" nbTooltipStatus="danger"
         >
-            <nb-icon icon="trash-2"></nb-icon>
+            <nb-icon icon="trash-2" class="h-auto"></nb-icon>
         </button>
         
     </ng-template>
