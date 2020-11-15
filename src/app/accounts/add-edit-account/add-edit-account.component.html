@@ -60,10 +60,20 @@
                   nbInput type="text" placeholder="Username" class="form-control w-50 mw-100 mr-3" formControlName="sshUsernameCtrl"
                   [status]="tunnelDetailsForm.controls['sshUsernameCtrl'].invalid && (tunnelDetailsForm.dirty || tunnelDetailsForm.touched) ? 'danger': 'success'"
                 >
-                <input 
-                  nbInput type="password" placeholder="Password" class="form-control w-50 mw-100" formControlName="sshPasswordCtrl" 
+                
+                <nb-form-field class="w-50 mw-100">
+                  <input 
+                  nbInput [type]="getPasswordInputType()" placeholder="Password"  formControlName="sshPasswordCtrl" 
                   [status]="tunnelDetailsForm.controls['sshPasswordCtrl'].invalid && (tunnelDetailsForm.dirty || tunnelDetailsForm.touched) ? 'danger': 'success'"
                 >
+                  <button nbSuffix nbButton ghost (click)="toggleShowPassword()">
+                    <nb-icon [icon]="showPassword ? 'eye-off-outline' : 'eye-outline'"
+                            pack="eva"
+                            [attr.aria-label]="showPassword ? 'hide password' : 'show password'">
+                    </nb-icon>
+                  </button>
+                </nb-form-field>
+
               </div>
               <div class="input-group">
                 <nb-checkbox 
@@ -120,10 +130,21 @@
                 nbInput type="text" placeholder="Username" class="form-control w-50 mw-100 mr-3" formControlName="dbUsernameCtrl"
                 [status]="databaseDetailsForm.controls['dbUsernameCtrl'].invalid && (databaseDetailsForm.dirty || databaseDetailsForm.touched) ? 'danger': 'success'"
               >
-              <input 
-                nbInput type="password" placeholder="Password" class="form-control w-50 mw-100" formControlName="dbPasswordCtrl" 
+
+              <nb-form-field class="w-50 mw-100">
+                <input 
+                nbInput [type]="getPasswordInputType()" placeholder="Password" class="form-control" formControlName="dbPasswordCtrl" 
                 [status]="databaseDetailsForm.controls['dbPasswordCtrl'].invalid && (databaseDetailsForm.dirty || databaseDetailsForm.touched) ? 'danger': 'success'"
               >
+                <button nbSuffix nbButton ghost (click)="toggleShowPassword()">
+                  <nb-icon [icon]="showPassword ? 'eye-off-outline' : 'eye-outline'"
+                          pack="eva"
+                          [attr.aria-label]="showPassword ? 'hide password' : 'show password'">
+                  </nb-icon>
+                </button>
+              </nb-form-field>
+
+
             </div>
             <div class="input-group">
                 <input 

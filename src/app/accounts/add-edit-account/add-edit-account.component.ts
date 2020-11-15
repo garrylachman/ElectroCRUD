@@ -32,6 +32,8 @@ export class AddEditAccountComponent implements OnInit {
   databaseConnectionType: DatabaseConnectionType;
   DatabaseConnectionType = DatabaseConnectionType;
 
+  showPassword = false;
+
   databaseServers: any[] = [
     { name: 'MySQL', value: 1, port: 3306 },
     { name: 'Postgres', value: 3, port: 5432 },
@@ -152,6 +154,17 @@ export class AddEditAccountComponent implements OnInit {
     if (this.isEdit) {
       this.title = `Edit Account: ${this.basicDetailsForm.controls['accountNameCtrl'].value}`;
     }
+  }
+
+  getPasswordInputType() {
+    if (this.showPassword) {
+      return 'text';
+    }
+    return 'password';
+  }
+
+  toggleShowPassword() {
+    this.showPassword = !this.showPassword;
   }
 
   onBasicDetailsSubmit() {
