@@ -5,21 +5,19 @@
 ElectroCRUD is Open Source Database CRUD (Create, Read, Update, Delete) Software. No Code Needed — Just in a few clicks, you can create a Database Admin/Dashboard/Whatever. Its Open Source — It's Free.
 
 ### Why?
-After a failed search for a basic admin panel that not involves writing code or installs web-based solutions, I come with ElectroCRUD idea.
+After a failed search for a basic admin panel that does not involve writing code or installs web-based solutions, I came up with ElectroCRUD idea.
 
 ### ElectroCRUD v1
-The ElectroCRUD v1 was born in 2016, An Electron application that made it possible to create a friendly dashboard with data tables, search, widgets, filter & relations with few clicks without any experience in programming.
+The ElectroCRUD v1 was born in 2016. An Electron application that made it possible to create a friendly dashboard with data tables, search, widgets, filter & relations with few clicks without any experience in programming.
 
 ### ElectroCRUD v2
-After a few years that the project was inactive, I decided to bring it an alive again. The codebase was build from scratch using Electron+Angular8. The new version contains most of the features of the first version, and new features added on a weekly basis.
+After a few years of the project being inactive, I decided to bring it to life again. The codebase was built from scratch using Electron+Angular8. The new version contains most of the features of the first version, and new features are added on a weekly basis.
 
 From version 2.7.0 SQLite has been added, currently its very limited support but we working on full support for next version.
-
 
 [![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com) 
 
 ![Imgur](https://i.imgur.com/EtWrAHG.gif)
-
 
 ### Functionality
 - [x] MySQL Support
@@ -67,9 +65,9 @@ From version 2.7.0 SQLite has been added, currently its very limited support but
 
 ## Download Binaries ![GitHub release](https://img.shields.io/github/release/garrylachman/ElectroCRUD.svg?style=for-the-badge)
 
-* [Mac OSX](https://github.com/garrylachman/ElectroCRUD/releases/download/2.7.1/ElectroCRUD-2.7.1.dmg)
-* [Linux](https://github.com/garrylachman/ElectroCRUD/releases/download/2.7.1/ElectroCRUD-2.7.1.AppImage)
-* [Windows](https://github.com/garrylachman/ElectroCRUD/releases/download/2.7.1/ElectroCRUD.2.7.1.exe)
+* [Mac OSX](https://github.com/garrylachman/ElectroCRUD/releases/download/2.7.2/ElectroCRUD-2.7.2.dmg)
+* [Linux](https://github.com/garrylachman/ElectroCRUD/releases/download/2.7.2/ElectroCRUD-2.7.2.AppImage)
+* [Windows](https://github.com/garrylachman/ElectroCRUD/releases/download/2.7.2/ElectroCRUD.2.7.2.exe)
 
 ## Install via Package Managers
 ### Homebrew/brew (Mac OS/X)
@@ -78,16 +76,31 @@ From version 2.7.0 SQLite has been added, currently its very limited support but
 ## Download Sources
 [ElectroCRUD on GitHub](https://github.com/garrylachman/ElectroCRUD)
 
-## How to Video
+## Videos
 [![How to use](https://img.youtube.com/vi/pt2L4wKTwqA/0.jpg)](https://youtu.be/pt2L4wKTwqA?t=35s "How to use")
+[![Review by David Mettler (ver 2.6.1)](https://img.youtube.com/vi/O6DcPi9ITw0/0.jpg)](https://www.youtube.com/watch?v=O6DcPi9ITw0 "Review by David Mettler (ver 2.6.1)")
+
+
 
 ## Screenshots
 <img src="https://i.imgur.com/gV1QHYK.png" width="49.5%" style="float:left" /> <img width="49.5%" src="https://i.imgur.com/02DoYz1.png" style="float:left" />
 <img src="https://i.imgur.com/CotNi4G.png" style="float:left" width="49.5%" /> <img width="49.5%" src="https://i.imgur.com/9MEQMbL.png" style="float:left" />
 <img src="https://i.imgur.com/QzlYVJu.png" style="float:left" width="49.5%" /> <img width="49.5%" src="https://i.imgur.com/ypsowlS.png" style="float:left" />
-<img src="https://i.imgur.com/IlKqhdV.png" style="float:left" />
+<img src="https://i.imgur.com/IlKqhdV.png" style="float:left"/>
 <img  src="https://i.imgur.com/I3IG1e4.png" style="float:left" />
+
+
+## Build from source
+`npm install`
+
+### With codesign
+`npm run electron:mac-win-linux`
+
+### Without codesign
+`CSC_IDENTITY_AUTO_DISCOVERY=false npm run electron:mac-win-linux`
+
 
 
 ![GitHub All Releases](https://img.shields.io/github/downloads/garrylachman/ElectroCRUD/total.svg?style=for-the-badge) 
 ![GitHub package.json version](https://img.shields.io/github/package-json/v/garrylachman/ElectroCRUD.svg?style=for-the-badge)
+![Analytics](https://gabeacon.irvinlim.com/UA-77988987-1/github/master?flat&useReferer)
