@@ -21,7 +21,8 @@ import {
   NbLayoutModule,
   NbSidebarModule,
   NbMenuModule,
-  NbTabsetModule
+  NbTabsetModule,
+  NbAutocompleteModule
 } from '@nebular/theme';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
@@ -70,6 +71,7 @@ import { MonacoEditorModule } from '@materia-ui/ngx-monaco-editor';
     NgxMaskModule.forChild(),
     NbDatepickerModule,
     NbTabsetModule,
+    NbAutocompleteModule,
     FormlyModule.forChild({
       types: [
         {

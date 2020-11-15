@@ -5,7 +5,6 @@ export interface IAccount {
     modify_date: string;
     ssh: IAccountSSH;
     server?: IAccountServer;
-    file?: IAccountFile;
 }
 
 export interface IAccountSSH {
@@ -25,9 +24,5 @@ export interface IAccountServer {
     username?: string;
     password?: string;
     database?: string;
-}
-
-export interface IAccountFile{
-    server_type: number;
     filename?: string;
 }

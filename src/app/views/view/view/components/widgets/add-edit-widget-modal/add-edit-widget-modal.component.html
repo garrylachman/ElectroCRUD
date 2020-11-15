@@ -56,12 +56,12 @@
         </div>
         <hr/>
         <h6>Data To Show</h6>
-        <div class="input-group">
-            <span class="margin-auto-0 padding-right-1-rem">SELECT  </span>
+        <div class="input-group d-flex flex-row align-items-center">
+            <span class="mr-3">SELECT  </span>
             <!-- Aggragate function -->
             <nb-select 
               placeholder="Function" 
-              class="padding-right-1-rem margin-auto-0" 
+              class="mr-3" 
               formControlName="functionCtrl"
               [(ngModel)]="widget.function"
               [status]="widgetForm.controls['functionCtrl'].invalid && (widgetForm.dirty || widgetForm.touched) ? 'danger': 'success'"
@@ -72,10 +72,10 @@
               <nb-option *ngFor="let func of widgetFunctionVals" value="{{func}}">{{func}}</nb-option>
             </nb-select>
 
-            <span class="margin-auto-0 padding-right-1-rem">(</span>
+            <span class="mr-3">(</span>
             <!-- Distinct -->
             <nb-checkbox 
-                class="form-control margin-auto-0" 
+                class="form-control mr-3" 
                 formControlName="distinctCtrl"
                 [(ngModel)]="widget.distinct"
                 [status]="widgetForm.controls['distinctCtrl'].invalid && (widgetForm.dirty || widgetForm.touched) ? 'danger': 'success'"
@@ -88,7 +88,7 @@
             <!-- Colummn -->
             <nb-select 
               placeholder="Column" 
-              class="padding-right-1-rem margin-auto-0" 
+              class="mr-3" 
               formControlName="columnCtrl"
               [(ngModel)]="widget.column"
               [status]="widgetForm.controls['columnCtrl'].invalid && (widgetForm.dirty || widgetForm.touched) ? 'danger': 'success'"  
@@ -99,8 +99,8 @@
               <nb-option value="*">*</nb-option>
               <nb-option *ngFor="let column of view?.columns" value="{{column.name}}">{{column.name}}</nb-option>
             </nb-select>
-            <span class="margin-auto-0 padding-right-1-rem">)</span>
-            <span class="margin-auto-0 padding-right-1-rem">FROM `{{view.table}}`</span>
+            <span class="mr-3">)</span>
+            <span class="mr-3">FROM `{{view.table}}`</span>
         </div>
         <hr/>
         <h6>Filter The Data</h6>
@@ -109,12 +109,12 @@
             please remove the existing ones by using the red trash button.
         </nb-alert>
         <!-- Where row start -->
-        <div class="input-group margin-bottom-1-rem" *ngFor="let where of widget?.where; let i = index; let last = last">
-          <span class="margin-auto-0 padding-right-1-rem">WHERE </span>
+        <div class="input-group mb-3" *ngFor="let where of widget?.where; let i = index; let last = last">
+          <span class="margin-auto-0 pr-3">WHERE </span>
           <!-- Where Column -->
           <nb-select 
             placeholder="Column" 
-            class="padding-right-1-rem" 
+            class="pr-3" 
             formControlName="whereColumnCtrl_{{where.uuid}}"
             [(ngModel)]="widget.where[i].column"
             [status]="widgetForm.controls['whereColumnCtrl_'+where.uuid].invalid && (widgetForm.dirty || widgetForm.touched) ? 'danger': 'success'"
@@ -127,7 +127,7 @@
           <!-- Where Operator -->
           <nb-select 
             placeholder="=><" 
-            class="padding-right-1-rem opr-select" 
+            class="pr-3 opr-select" 
             formControlName="whereOprCtrl_{{where.uuid}}"
             [(ngModel)]="widget.where[i].opr"
             [status]="widgetForm.controls['whereOprCtrl_'+where.uuid].invalid && (widgetForm.dirty || widgetForm.touched) ? 'danger': 'success'"
@@ -142,7 +142,7 @@
             nbInput 
             type="text" 
             placeholder="Value" 
-            class="form-control margin-auto-1rem-auto-0rem padding-right-1-rem" 
+            class="form-control margin-auto-1rem-auto-0rem pr-3" 
             formControlName="whereValueCtrl_{{where.uuid}}"
             [(ngModel)]="widget.where[i].value"
             [status]="widgetForm.controls['whereValueCtrl_'+where.uuid].invalid && (widgetForm.dirty || widgetForm.touched) ? 'danger': 'success'"
@@ -154,7 +154,7 @@
           <!-- Where OR/AND-->
           <nb-select 
             placeholder="OR/AND" 
-            class="padding-right-1-rem or-and-select margin-0-0-0-auto" 
+            class="pr-3 or-and-select margin-0-0-0-auto" 
             formControlName="whereOrCtrl_{{where.uuid}}"
             [(ngModel)]="widget.where[i].or"
             [status]="widgetForm.controls['whereOrCtrl_'+where.uuid].invalid && (widgetForm.dirty || widgetForm.touched) ? 'danger': 'success'"

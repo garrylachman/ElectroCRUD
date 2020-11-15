@@ -37,13 +37,13 @@ export class ViewsIPC {
     constructor() {}
     
     public listen() {
-        ipcMain.answerRenderer(IPC_CHANNEL_LIST_OF_TABLES, (req: JsonValue) => this.listOfTables(req));
-        ipcMain.answerRenderer(IPC_CHANNEL_TABLE_INFO, (req: JsonValue) => this.tableInfo(req));
-        ipcMain.answerRenderer(IPC_CHANNEL_READ_DATA, (req: JsonValue) => this.readData(req));
-        ipcMain.answerRenderer(IPC_CHANNEL_UPDATE_DATA, (req: JsonValue) => this.updateData(req));
-        ipcMain.answerRenderer(IPC_CHANNEL_INSERT_DATA, (req: JsonValue) => this.insertData(req));
-        ipcMain.answerRenderer(IPC_CHANNEL_DELETE_DATA, (req: JsonValue) => this.deleteData(req));
-        ipcMain.answerRenderer(IPC_CHANNEL_READ_WIDGET_DATA, (req: JsonValue) => this.readWidgetData(req));
+        ipcMain.handle(IPC_CHANNEL_LIST_OF_TABLES,  async (event, req: JsonValue) => this.listOfTables(req));
+        ipcMain.handle(IPC_CHANNEL_TABLE_INFO,  async (event, req: JsonValue) => this.tableInfo(req));
+        ipcMain.handle(IPC_CHANNEL_READ_DATA, async (event, req: JsonValue) => this.readData(req));
+        ipcMain.handle(IPC_CHANNEL_UPDATE_DATA,  async (event, req: JsonValue) => this.updateData(req));
+        ipcMain.handle(IPC_CHANNEL_INSERT_DATA,  async (event, req: JsonValue) => this.insertData(req));
+        ipcMain.handle(IPC_CHANNEL_DELETE_DATA,  async (event, req: JsonValue) => this.deleteData(req));
+        ipcMain.handle(IPC_CHANNEL_READ_WIDGET_DATA,  async (event, req: JsonValue) => this.readWidgetData(req));
     }
 
     public async listOfTables(req: JsonValue): Promise<JsonValue> {

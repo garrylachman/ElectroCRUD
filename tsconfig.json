@@ -8,7 +8,8 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "resolveJsonModule": true,
-    "target": "es5",
+    "target": "esnext",
+    "module": "commonjs",
     "typeRoots": [
       "node_modules/@types"
     ],

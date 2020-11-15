@@ -5,7 +5,8 @@
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "target": "es5",
+    "target": "esnext",
+    "module": "commonjs",
     "types": [
       "node"
     ],

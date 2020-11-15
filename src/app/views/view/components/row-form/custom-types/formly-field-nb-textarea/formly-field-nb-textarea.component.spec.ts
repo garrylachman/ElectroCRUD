@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { FormlyFieldNbTextareaComponent } from './formly-field-nb-textarea.component';
 
@@ -6,7 +6,7 @@ describe('FormlyFieldNbTextareaComponent', () => {
   let component: FormlyFieldNbTextareaComponent;
   let fixture: ComponentFixture<FormlyFieldNbTextareaComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ FormlyFieldNbTextareaComponent ]
     })

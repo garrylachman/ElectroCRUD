@@ -26,6 +26,12 @@ nb-select[formcontrolname="viewtTableCtrl"] {
     height: 2rem;
 }
 
+#permissions-card 
+{
+    min-height: 228px !important;
+}
+
+
 #footer {
     display: flex;
     flex-direction: row-reverse;

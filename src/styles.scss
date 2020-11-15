@@ -6,6 +6,9 @@
 @import '~@swimlane/ngx-datatable/assets/icons.css';
 @import '~bootstrap/scss/bootstrap-grid.scss';
 @import '~bootstrap/scss/bootstrap-reboot.scss';
+@import '~bootstrap/scss/utilities/_sizing.scss';
+@import '~bootstrap/scss/utilities/_text.scss';
+
 @import 'dhx-spreadsheet/codebase/spreadsheet.min.css';
 
 @include nb-install() {

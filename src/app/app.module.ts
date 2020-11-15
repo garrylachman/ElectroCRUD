@@ -51,7 +51,8 @@ import { Ng2FittextModule } from "ng2-fittext";
 import { AddEditWidgetModalComponent } from './views/view/view/components/widgets/add-edit-widget-modal/add-edit-widget-modal.component';
 import { AddEditFilterModalComponent } from './views/view/view/components/filters/add-edit-filter-modal/add-edit-filter-modal.component';
 
-import bugsnag from '@bugsnag/js';
+//import bugsnag from '@bugsnag/js';
+import Bugsnag from '@bugsnag/js';
 import { BugsnagErrorHandler } from '@bugsnag/plugin-angular';
 import { ColumnReferanceDialogComponent } from './views/configure/components/column-referance-dialog/column-referance-dialog.component';
 import { NgBootstrapFormValidationModule } from 'ng-bootstrap-form-validation';
@@ -60,7 +61,7 @@ import { SessionService } from './services/session.service';
 
 
 // configure Bugsnag ASAP, before any other imports
-const bugsnagClient = bugsnag({
+const bugsnagClient = Bugsnag.start({
   apiKey: 'e887c2bdd46d07375e191b250e168764',
   appVersion: version,
   appType: 'ui',

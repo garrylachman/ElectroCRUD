@@ -6,14 +6,15 @@
 </nb-card>
 
 <nb-card [nbSpinner]="isLoading" nbSpinnerSize="giant" nbSpinnerStatus="primary">
-    <nb-card-header>
+    <nb-card-header class="d-flex justify-content-between">
         <input nbInput shape="semi-round" 
             type="text"
             placeholder="Type to filter the name column..."
             (keyup)="updateFilter($event)"
+            class="w-25 mw-100"
           />
         <button 
-            nbButton status="primary" hero size="small" (click)="edit(null)" 
+            nbButton status="primary" hero size="medium" (click)="edit(null)" 
             nbTooltip="Add new account" nbTooltipPlacement="top" nbTooltipStatus="primary"
         >
             <nb-icon icon="plus"></nb-icon>
@@ -24,7 +25,6 @@
         <ngx-datatable #table 
             class="bootstrap" 
             [rows]="rows"
-            [loadingIndicator]="loadingIndicator"
             [columns]="columns"
             [columnMode]="'force'"
             [headerHeight]="30"
@@ -42,26 +42,27 @@
     </ng-template>
     <ng-template #actionsTpl let-row="row">
         <button 
-            nbButton status="primary" hero size="medium" (click)="use(row, this)" 
-            nbTooltip="Login & Use Account" nbTooltipPlacement="top" nbTooltipStatus="primary"
+            nbButton [status]="row.isActive ? 'success' : 'primary'" hero size="small" (click)="use(row, this)" 
+            nbTooltip="Login & Use Account" nbTooltipPlacement="top" nbTooltipStatus="primary"  class="mr-3"
         >
             <nb-icon 
                 icon="{{row.icon}}" 
                 pack="whhg" 
+                class="h-auto"
             ></nb-icon>
-            Use
+            {{row.isActive ? "Connected" : "Use"}}
         </button>
         <button 
-            nbButton status="primary" hero size="medium" (click)="edit(row)" 
-            nbTooltip="Edit" nbTooltipPlacement="top" nbTooltipStatus="primary"
+            nbButton status="primary" hero size="small" (click)="edit(row)" 
+            nbTooltip="Edit" nbTooltipPlacement="top" nbTooltipStatus="primary"  class="mr-3"
         >
-            <nb-icon icon="edit"></nb-icon>
+            <nb-icon icon="edit" class="h-auto"></nb-icon>
         </button>
         <button 
-            nbButton status="danger" hero size="medium" (click)="delete(row)" 
-            nbTooltip="Delete" nbTooltipPlacement="top" nbTooltipStatus="danger"
+            nbButton status="danger" hero size="small" (click)="delete(row)" 
+            nbTooltip="Delete" nbTooltipPlacement="top" nbTooltipStatus="danger" class="mr-0"
         >
-            <nb-icon icon="trash-2"></nb-icon>
+            <nb-icon icon="trash-2" class="h-auto"></nb-icon>
         </button>
         
     </ng-template>

@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { FormlyFieldNbSelectComponent } from './formly-field-nb-select.component';
 
@@ -6,7 +6,7 @@ describe('FormlyFieldNbSelectComponent', () => {
   let component: FormlyFieldNbSelectComponent;
   let fixture: ComponentFixture<FormlyFieldNbSelectComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ FormlyFieldNbSelectComponent ]
     })

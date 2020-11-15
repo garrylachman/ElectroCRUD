@@ -54,7 +54,7 @@ export class ViewsIPCService {
   public async listOfTables(): Promise<IIPCListOfTablesResponseMessage> {
     const req: IPCListOfTablesRequestMessage = new IPCListOfTablesRequestMessage({});
     console.log("req", req);
-    const rawRes:any = await ipcRenderer.callMain(IPC_CHANNEL_LIST_OF_TABLES, req.toJsonValue());
+    const rawRes:any = await ipcRenderer.invoke(IPC_CHANNEL_LIST_OF_TABLES, req.toJsonValue());
     console.log("rawRes", rawRes);
     return new IPCListOfTablesResponseMessage(rawRes).toMessage()
   }
@@ -64,7 +64,7 @@ export class ViewsIPCService {
       table: table
     });
     console.log("req", req);
-    const rawRes:any = await ipcRenderer.callMain(IPC_CHANNEL_TABLE_INFO, req.toJsonValue());
+    const rawRes:any = await ipcRenderer.invoke(IPC_CHANNEL_TABLE_INFO, req.toJsonValue());
     console.log("rawRes", rawRes);
     return new IPCListOfTablesResponseMessage(rawRes).toMessage()
   }
@@ -94,7 +94,8 @@ export class ViewsIPCService {
       join: join
     });
     console.log("req", req);
-    const rawRes:any = await ipcRenderer.callMain(IPC_CHANNEL_READ_DATA, req.toJsonValue());
+
+    const rawRes:any = await ipcRenderer.invoke(IPC_CHANNEL_READ_DATA, req.toJsonValue());
     console.log("rawRes", rawRes);
     return new IPCReadDataResponseMessage(rawRes).toMessage()
   }
@@ -110,7 +111,7 @@ export class ViewsIPCService {
       where: where
     });
     console.log("req", req);
-    const rawRes:any = await ipcRenderer.callMain(IPC_CHANNEL_UPDATE_DATA, req.toJsonValue());
+    const rawRes:any = await ipcRenderer.invoke(IPC_CHANNEL_UPDATE_DATA, req.toJsonValue());
     console.log("rawRes", rawRes);
     return new IPCUpdateDataResponseMessage(rawRes).toMessage()
   }
@@ -124,7 +125,7 @@ export class ViewsIPCService {
       data: data
     });
     console.log("req", req);
-    const rawRes:any = await ipcRenderer.callMain(IPC_CHANNEL_INSERT_DATA, req.toJsonValue());
+    const rawRes:any = await ipcRenderer.invoke(IPC_CHANNEL_INSERT_DATA, req.toJsonValue());
     console.log("rawRes", rawRes);
     return new IPCInsertDataResponseMessage(rawRes).toMessage()
   }
@@ -138,7 +139,7 @@ export class ViewsIPCService {
       where: where
     });
     console.log("req", req);
-    const rawRes:any = await ipcRenderer.callMain(IPC_CHANNEL_DELETE_DATA, req.toJsonValue());
+    const rawRes:any = await ipcRenderer.invoke(IPC_CHANNEL_DELETE_DATA, req.toJsonValue());
     console.log("rawRes", rawRes);
     return new IPCDeleteDataResponseMessage(rawRes).toMessage()
   }
@@ -163,7 +164,7 @@ export class ViewsIPCService {
       where: where
     });
     console.log("req", req);
-    const rawRes:any = await ipcRenderer.callMain(IPC_CHANNEL_READ_WIDGET_DATA, req.toJsonValue());
+    const rawRes:any = await ipcRenderer.invoke(IPC_CHANNEL_READ_WIDGET_DATA, req.toJsonValue());
     console.log("rawRes", rawRes);
     return new IPCReadWidgetDataResponseMessage(rawRes).toMessage()
   }

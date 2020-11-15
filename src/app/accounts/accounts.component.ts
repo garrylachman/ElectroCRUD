@@ -22,16 +22,13 @@ export class AccountsComponent implements OnInit {
    * Loading indicator
    */
   isLoading: boolean = false;
-  /**
-   * Data table loading indicator
-   */
-  loadingIndicator: boolean = true;
+
   /**
    * Is data table re-order enabled
    */
   reorderable: boolean = true;
 
-  @ViewChild(DatatableComponent, { static: false }) table: DatatableComponent;
+  @ViewChild(DatatableComponent) table: DatatableComponent;
   /**
    * @ViewChild Data table modification date template column.
    */
@@ -79,13 +76,24 @@ export class AccountsComponent implements OnInit {
 
   ngOnInit(): void {
     this.columns = [
-      { prop: 'name' },
+      { prop: 'name', cellClass: 'pl-0', headerClass: 'pl-0' },
       { name: 'Server' },
       { name: 'Created', cellTemplate: this.mDateTpl },
       { name: 'Modified', cellTemplate: this.mDateTpl },
-      { cellTemplate: this.actionsTpl }
+      { cellTemplate: this.actionsTpl, cellClass: 'pr-0 text-right', headerClass: 'pr-0', sortable: false }
     ];
     this.loadFromStore();
+
+    this.sessionService.changes.subscribe({ 
+      next: (v:IAccount) => {
+        if (!v) {
+          return;
+        }
+        this.rows.forEach(row => {
+          row.isActive = (row.id == v.id);
+        })
+      }
+    })
   }
 
   /**
@@ -101,7 +109,8 @@ export class AccountsComponent implements OnInit {
           server: ServerType[`${row.server.server_type}`],
           icon: ServerIcon[`${row.server.server_type}`],
           created: new Date(row.creation_date),
-          modified: new Date(row.modify_date)
+          modified: new Date(row.modify_date),
+          isActive: false
         }
       })
     this.temp = [...this.rows];

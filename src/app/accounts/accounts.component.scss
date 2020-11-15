@@ -8,11 +8,7 @@
   font-weight: 200;
 }
 
-::ng-deep
-.datatable-body button {
-  padding: 0.5rem 0.75rem !important;
-  margin-right: 0.8rem;
-}
+
 
 ::ng-deep
 .ngx-datatable.bootstrap .datatable-footer .datatable-pager .disabled a {
@@ -41,13 +37,7 @@
   background: transparent;
 }
 
-nb-card-header input {
-  margin: 1rem auto;
-  padding:8px;
-  width:30%;
-}
-
-nb-card-header button {
-  margin: 1rem auto;
-  float: right;
+::ng-deep
+.ngx-datatable.bootstrap .datatable-footer .page-count {
+  padding: 0rem !important;
 }

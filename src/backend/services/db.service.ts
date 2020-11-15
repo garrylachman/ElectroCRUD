@@ -218,11 +218,15 @@ export class DatabaseService {
         console.log("query", query)
         let findResult = ((result: any) => result[0]) as ((result: any) => string | undefined);
         let findResultPG = ((result: any) => result.rows) as ((result: any) => string | undefined);
+        let findResultSQLite = ((result: any) => result) as ((result: any) => string | undefined);
 
         try {
             let res = await this.connection.raw(query);
             if (this.activeClient == "pg") {
                 return findResultPG(res);
+            }
+            if (this.activeClient == "sqlite3") {
+                return findResultSQLite(res);
             }
             return findResult(res);
         } catch(error) {

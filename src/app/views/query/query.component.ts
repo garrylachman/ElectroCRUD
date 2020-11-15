@@ -15,7 +15,7 @@ import { Spreadsheet } from 'dhx-spreadsheet';
 })
 export class QueryComponent implements OnInit, OnDestroy {
 
-  @ViewChild(NbLayoutComponent, { static: false }) layout: NbLayoutComponent;
+  @ViewChild(NbLayoutComponent) layout: NbLayoutComponent;
 
   @ViewChild('spreadsheet', {static: true}) container: ElementRef;
   spreadsheet: Spreadsheet;
@@ -40,11 +40,15 @@ export class QueryComponent implements OnInit, OnDestroy {
     });
 
     this.queries = this.queriesService.all();
+    
 
     this.queriesService.changes.subscribe((items: IQuery[]) => {
-      console.log(items)
       this.queries = items;
     })
+
+    if (this.queries.length == 0) {
+      this.addNewTab();
+    }
   }
 
   ngOnDestroy() {

@@ -32,6 +32,10 @@ export class AddEditAccountComponent implements OnInit {
   databaseConnectionType: DatabaseConnectionType;
   DatabaseConnectionType = DatabaseConnectionType;
 
+  showPassword = false;
+
+  isLoading = false;
+
   databaseServers: any[] = [
     { name: 'MySQL', value: 1, port: 3306 },
     { name: 'Postgres', value: 3, port: 5432 },
@@ -60,7 +64,9 @@ export class AddEditAccountComponent implements OnInit {
     this.basicDetailsForm = this.fb.group({
       accountNameCtrl: [this.editAccount ? this.editAccount.name : null, Validators.compose([Validators.required, Validators.minLength(3)])],
       databaseServerCtrl: [this.editAccount ? String(this.editAccount.server.server_type) : null, Validators.required],
-    });
+    })
+
+    this.basicDetailsForm.markAsTouched();
     
     this.tunnelDetailsForm = this.fb.group({
       isTunnelEnabledCtrl: [this.editAccount ? this.editAccount.ssh.enabled : false, Validators.required],
@@ -72,6 +78,8 @@ export class AddEditAccountComponent implements OnInit {
       sshPrivateKeyCtrl: [this.editAccount ? this.editAccount.ssh.key : null],
     });
 
+    this.tunnelDetailsForm.markAsTouched();
+
     this.databaseDetailsForm = this.fb.group({
       dbHostCtrl: [this.editAccount ? this.editAccount.server.hostname : null, Validators.required],
       dbPortCtrl: [this.editAccount ? this.editAccount.server.port : null, Validators.required],
@@ -80,12 +88,29 @@ export class AddEditAccountComponent implements OnInit {
       dbDbCtrl: [this.editAccount ? this.editAccount.server.database : null, Validators.required],
     });
 
-    this.databaseFileDetailsForm  = this.fb.group({
-      dbFilenameCtrl: [this.editAccount ? this.editAccount.file.filename : null, null],
-    });
+    this.databaseDetailsForm.markAsTouched();
+
+    // In edit mode - set conenction type file or server
+    if (this.editAccount) {
+      this.databaseConnectionType = (this.editAccount.server.server_type == 5) ? DatabaseConnectionType.FILE : DatabaseConnectionType.SERVER;
+
+      // if we have filename - set it file form
+      if (this.editAccount.server.filename) {
+        this.databaseFileDetailsForm  = this.fb.group({
+          dbFilenameCtrl: [this.editAccount.server.filename, null],
+        });
+      }
+    }
 
     this.basicDetailsForm.controls.databaseServerCtrl.valueChanges.subscribe((newVal) => {
       this.databaseConnectionType = (newVal == 5) ? DatabaseConnectionType.FILE : DatabaseConnectionType.SERVER;
+
+      if (this.databaseConnectionType == DatabaseConnectionType.FILE && !this.databaseFileDetailsForm) {
+        this.databaseFileDetailsForm  = this.fb.group({
+          dbFilenameCtrl: [this.editAccount ? this.editAccount.server.filename : null, null],
+        });
+      }
+
       this.databaseServers.forEach((dbSrv) => {
         if (dbSrv.value == newVal) {
           if (dbSrv.port) {
@@ -102,6 +127,8 @@ export class AddEditAccountComponent implements OnInit {
           ctrl.enable();
         } else {
           ctrl.disable();
+          // if we disable tunnel  - disable tunnel key
+          this.tunnelDetailsForm.controls.isSSHKeyEnabledCtrl.patchValue(false);
         }
       })
     });
@@ -110,19 +137,36 @@ export class AddEditAccountComponent implements OnInit {
       let passCtrl = this.tunnelDetailsForm.controls.sshPasswordCtrl;
       let keyCtrl = this.tunnelDetailsForm.controls.sshPrivateKeyCtrl
       if (newVal) {
+        // if we enable tunnel key - enable all tunnel details
+        this.tunnelDetailsForm.controls.isTunnelEnabledCtrl.patchValue(true);
         passCtrl.disable();
         keyCtrl.enable();
       } else {
-        passCtrl.enable();
+        // toggle password \ key only if tunnel is enabled
+        if (this.tunnelDetailsForm.controls.isTunnelEnabledCtrl.value) {
+          passCtrl.enable();
+        }
         keyCtrl.disable();
       }
     });
 
     this.tunnelDetailsForm.controls.isTunnelEnabledCtrl.updateValueAndValidity();
+    this.tunnelDetailsForm.controls.isSSHKeyEnabledCtrl.updateValueAndValidity();
 
     if (this.isEdit) {
       this.title = `Edit Account: ${this.basicDetailsForm.controls['accountNameCtrl'].value}`;
     }
+  }
+
+  getPasswordInputType() {
+    if (this.showPassword) {
+      return 'text';
+    }
+    return 'password';
+  }
+
+  toggleShowPassword() {
+    this.showPassword = !this.showPassword;
   }
 
   onBasicDetailsSubmit() {
@@ -190,9 +234,11 @@ export class AddEditAccountComponent implements OnInit {
   }
 
   async testConnection() {
+    this.isLoading = true;
     this.testLog = [];
     const res:IIPCCheckConnectionResponseMessage = await this.accountsIPCService.checkConnection(this.formAsAccount());
     this.isSaveEnabled = (this.formAsAccount().ssh.enabled) ? (res.ssh.valid && res.server.valid) : res.server.valid;
+
     if (this.formAsAccount().ssh.enabled) {
       if (res.ssh.valid) {
         this.testLog.push([`success`, `[OK] SSH`])
@@ -205,6 +251,8 @@ export class AddEditAccountComponent implements OnInit {
     } else {
       this.testLog.push([`danger`, `[FAIL] DATABASE,  error: ${res.server.error}`]);
     }
+
+    this.isLoading = false;
   }
 
   openElectronFileDialog(dstCtrl) {

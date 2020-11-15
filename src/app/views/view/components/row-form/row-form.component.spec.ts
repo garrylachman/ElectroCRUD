@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { RowFormComponent } from './row-form.component';
 
@@ -6,7 +6,7 @@ describe('RowFormComponent', () => {
   let component: RowFormComponent;
   let fixture: ComponentFixture<RowFormComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ RowFormComponent ]
     })

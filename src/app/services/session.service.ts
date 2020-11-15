@@ -13,12 +13,14 @@ import { BehaviorSubject, Subject } from 'rxjs';
 export class SessionService {
 
   private _activeAccount:IAccount;
-  public changes:BehaviorSubject<IAccount> = new BehaviorSubject(this._activeAccount);
+  public changes:BehaviorSubject<IAccount>;
 
   constructor(
     private accountsStore: AccountsService,
     private accountsIPCService: AccountsIPCService
-  ) { }
+  ) {
+    this.changes = new BehaviorSubject(this._activeAccount);
+   }
 
   public async setActiveAccount(account: IAccount): Promise<IIPCConnectResponseMessage> {
     let res: IIPCConnectResponseMessage = await this.accountsIPCService.connect(account);

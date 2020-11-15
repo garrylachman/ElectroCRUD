@@ -65,9 +65,9 @@ From version 2.7.0 SQLite has been added, currently its very limited support but
 
 ## Download Binaries ![GitHub release](https://img.shields.io/github/release/garrylachman/ElectroCRUD.svg?style=for-the-badge)
 
-* [Mac OSX](https://github.com/garrylachman/ElectroCRUD/releases/download/2.7.1/ElectroCRUD-2.7.1.dmg)
-* [Linux](https://github.com/garrylachman/ElectroCRUD/releases/download/2.7.1/ElectroCRUD-2.7.1.AppImage)
-* [Windows](https://github.com/garrylachman/ElectroCRUD/releases/download/2.7.1/ElectroCRUD.2.7.1.exe)
+* [Mac OSX](https://github.com/garrylachman/ElectroCRUD/releases/download/2.7.2/ElectroCRUD-2.7.2.dmg)
+* [Linux](https://github.com/garrylachman/ElectroCRUD/releases/download/2.7.2/ElectroCRUD-2.7.2.AppImage)
+* [Windows](https://github.com/garrylachman/ElectroCRUD/releases/download/2.7.2/ElectroCRUD.2.7.2.exe)
 
 ## Install via Package Managers
 ### Homebrew/brew (Mac OS/X)
@@ -76,8 +76,11 @@ From version 2.7.0 SQLite has been added, currently its very limited support but
 ## Download Sources
 [ElectroCRUD on GitHub](https://github.com/garrylachman/ElectroCRUD)
 
-## How to Video
+## Videos
 [![How to use](https://img.youtube.com/vi/pt2L4wKTwqA/0.jpg)](https://youtu.be/pt2L4wKTwqA?t=35s "How to use")
+[![Review by David Mettler (ver 2.6.1)](https://img.youtube.com/vi/O6DcPi9ITw0/0.jpg)](https://www.youtube.com/watch?v=O6DcPi9ITw0 "Review by David Mettler (ver 2.6.1)")
+
+
 
 ## Screenshots
 <img src="https://i.imgur.com/gV1QHYK.png" width="49.5%" style="float:left" /> <img width="49.5%" src="https://i.imgur.com/02DoYz1.png" style="float:left" />

@@ -1,11 +1,11 @@
-import { IAccountServer, IAccountSSH, IAccountFile} from '../interfaces/accounts.interface';
+import { IAccountServer, IAccountSSH} from '../interfaces/accounts.interface';
 import { IPCBaseMessage } from './base.ipc'
 
 // Check Connection
 export const IPC_CHANNEL_CHECK_CONNECTION: string = "channel_check_connection";
 
 export interface IIPCCheckConnectionRequestMessage {
-    server: IAccountServer & IAccountFile;
+    server: IAccountServer;
     ssh: IAccountSSH;
 }
 
@@ -32,7 +32,7 @@ export class IPCCheckConnectionRequestMessage extends IPCBaseMessage<IIPCCheckCo
 export const IPC_CHANNEL_CONNECT: string = "channel_connect";
 
 export interface IIPCConnectRequestMessage {
-    server: IAccountServer & IAccountFile;
+    server: IAccountServer;
     ssh: IAccountSSH;
 }
 

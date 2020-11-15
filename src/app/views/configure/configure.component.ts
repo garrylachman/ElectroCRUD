@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SessionService } from '../../services/session.service';
 import { IView, IViewColumn } from '../../../shared/interfaces/views.interface';
@@ -12,15 +12,19 @@ import { IPCListOfTablesResponseMessage, IIPCListOfTablesResponseMessage, IIPCTa
 import { DatatableComponent } from '@swimlane/ngx-datatable';
 import { ColumnReferanceDialogComponent } from './components/column-referance-dialog/column-referance-dialog.component';
 import { deepEqual } from 'fast-equals';
+import { Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { DefinitionMap } from '@angular/compiler/src/render3/view/util';
 
 @Component({
   selector: 'app-configure',
   templateUrl: './configure.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./configure.component.scss']
 })
 export class ConfigureComponent implements OnInit {
 
-  @ViewChild(DatatableComponent, { static: false }) table: DatatableComponent;
+  @ViewChild(DatatableComponent) table: DatatableComponent;
 
   view: IView;
   savedView: IView;
@@ -30,6 +34,9 @@ export class ConfigureComponent implements OnInit {
   // tables
   selectedTableModel:NgModel;
   tables: string[];
+  filteredTables$: Observable<string[]>;
+
+  @ViewChild('autoInput') input;
 
   rows = [];
   temp = [];
@@ -58,6 +65,7 @@ export class ConfigureComponent implements OnInit {
   }
 
   async ngOnInit() {
+    
     if (this.route.snapshot.paramMap.has('id')) {
       // has id, we are in edit mode
       this.view = this.viewsService.get(
@@ -153,7 +161,7 @@ export class ConfigureComponent implements OnInit {
       }
     });
 
-    this.viewHeaderForm.controls['viewtTableCtrl'].valueChanges.subscribe(value => this.selectedChange(value));
+    //this.viewHeaderForm.controls['viewtTableCtrl'].valueChanges.subscribe(value => this.selectedChange(value));
     this.viewHeaderForm.valueChanges.subscribe((v) => this.checkForm());
     this.termForm.valueChanges.subscribe((v) => this.checkForm());
     this.subviewForm.valueChanges.subscribe((v) => this.checkForm());
@@ -204,7 +212,7 @@ export class ConfigureComponent implements OnInit {
     this.rows = this.view.columns;
     this.termForm.controls.termOneCtrl.setValue(this.view.terms.one);
     this.termForm.controls.termManyCtrl.setValue(this.view.terms.many);
-    this.viewHeaderForm.controls.viewtTableCtrl.patchValue(this.view.table, {emitEvent: false});
+    //this.viewHeaderForm.controls.viewtTableCtrl.patchValue(this.view.table, {emitEvent: false});
     this.isHavePrimaryKey = this.isContainsPrimaryKey;
     this.view.permissions.delete = this.isHavePrimaryKey;
     this.view.permissions.update = this.isHavePrimaryKey;
@@ -222,12 +230,34 @@ export class ConfigureComponent implements OnInit {
     return this.view && this.view.id > 0;
   }
 
+  public getFilteredTables(value: string): Observable<string[]> {
+    return of(value).pipe(
+      map(filterString => this.filter(filterString)),
+    );
+  }
+
+  private filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.tables.filter(optionValue => optionValue.toLowerCase().includes(filterValue));
+  }
+
+  public onTableChange() {
+    this.filteredTables$ = this.getFilteredTables(this.input.nativeElement.value);
+  }
+
+  public onTableSelectionChange($event) {
+    this.filteredTables$ = this.getFilteredTables($event);
+    console.log("onTableSelectionChange")
+    this.selectedChange($event)
+  }
+
   public async loadTablesList() {
     console.log("loadTablesList");
     let res:IIPCListOfTablesResponseMessage = await this.viewsIPCService.listOfTables();
     console.log("loadTablesList: ", res);
     if (res.valid) {
       this.tables = res.tables;
+      this.filteredTables$ = of(this.tables);
     }
     if (this.view.table) {
       this.viewHeaderForm.controls.viewtTableCtrl.setValue(this.view.table);
