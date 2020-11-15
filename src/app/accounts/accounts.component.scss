@@ -8,11 +8,7 @@
   font-weight: 200;
 }
 
-::ng-deep
-.datatable-body button {
-  padding: 0.5rem 0.75rem !important;
-  margin-right: 0.8rem;
-}
+
 
 ::ng-deep
 .ngx-datatable.bootstrap .datatable-footer .datatable-pager .disabled a {
@@ -39,4 +35,9 @@
 ::ng-deep
 .ngx-datatable.bootstrap .datatable-footer {
   background: transparent;
+}
+
+::ng-deep
+.ngx-datatable.bootstrap .datatable-footer .page-count {
+  padding: 0rem !important;
 }

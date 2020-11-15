@@ -42,25 +42,25 @@
     </ng-template>
     <ng-template #actionsTpl let-row="row">
         <button 
-            nbButton status="primary" hero size="medium" (click)="use(row, this)" 
-            nbTooltip="Login & Use Account" nbTooltipPlacement="top" nbTooltipStatus="primary"
+            nbButton [status]="row.isActive ? 'success' : 'primary'" hero size="small" (click)="use(row, this)" 
+            nbTooltip="Login & Use Account" nbTooltipPlacement="top" nbTooltipStatus="primary"  class="mr-3"
         >
             <nb-icon 
                 icon="{{row.icon}}" 
                 pack="whhg" 
                 class="h-auto"
             ></nb-icon>
-            Use
+            {{row.isActive ? "Connected" : "Use"}}
         </button>
         <button 
-            nbButton status="primary" hero size="medium" (click)="edit(row)" 
-            nbTooltip="Edit" nbTooltipPlacement="top" nbTooltipStatus="primary"
+            nbButton status="primary" hero size="small" (click)="edit(row)" 
+            nbTooltip="Edit" nbTooltipPlacement="top" nbTooltipStatus="primary"  class="mr-3"
         >
             <nb-icon icon="edit" class="h-auto"></nb-icon>
         </button>
         <button 
-            nbButton status="danger" hero size="medium" (click)="delete(row)" 
-            nbTooltip="Delete" nbTooltipPlacement="top" nbTooltipStatus="danger"
+            nbButton status="danger" hero size="small" (click)="delete(row)" 
+            nbTooltip="Delete" nbTooltipPlacement="top" nbTooltipStatus="danger" class="mr-0"
         >
             <nb-icon icon="trash-2" class="h-auto"></nb-icon>
         </button>
