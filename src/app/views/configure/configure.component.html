@@ -90,17 +90,17 @@
     <nb-card>
       <nb-card-header>Terminology</nb-card-header>
       <nb-card-body>
-        <p class="margin-top-0rem">
+        <p class="margin-top-0rem mb-4 mt-4 ">
           <sub>The plural & singular terminology of data. Ex. Create "user"; Show "users";</sub>
         </p>
         <div [formGroup]="termForm">
           <div class="input-group">
               <input 
-                nbInput type="text" fullWidth placeholder="One item" class="form-control margin-bottom-1rem" formControlName="termOneCtrl">
+                nbInput type="text" fullWidth placeholder="One item" class="form-control margin-bottom-1rem mb-4" formControlName="termOneCtrl">
             </div>
             <div class="input-group">
               <input 
-                nbInput type="text" fullWidth placeholder="Many items" class="form-control" formControlName="termManyCtrl">
+                nbInput type="text" fullWidth placeholder="Many items" class="form-control  mb-4" formControlName="termManyCtrl">
             </div>
         </div>
       </nb-card-body>
@@ -111,7 +111,7 @@
     <nb-card>
       <nb-card-header>Permissions</nb-card-header>
         <nb-card-body id="permissions-card">
-            <nb-alert *ngIf="!this.isHavePrimaryKey" accent="danger">Primary Key is missing. Update & Delete operations are disabled.</nb-alert>
+            <nb-alert *ngIf="!this.isHavePrimaryKey" accent="danger" class="mb-2">Primary Key is missing. Update & Delete operations are disabled.</nb-alert>
             <p class="margin-top-0rem">
               <sub>Please select the view permissions; you can always edit the permissions later.</sub>
             </p>
