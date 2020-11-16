@@ -153,3 +153,28 @@ body {
 .padding-1-rem {
   padding: 1rem !important;
 }
+
+@keyframes bounce{
+  from{
+      margin-top:0
+  }
+  to{
+      margin-top:1.5rem
+  }
+}
+
+nb-spinner {
+  display: flex;
+  flex-direction: column;
+}
+
+nb-spinner .message {
+  animation-name: bounce;
+  animation-direction: alternate;
+  animation-duration: 0.4s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+  font-size: 1rem !important;
+}
+
+

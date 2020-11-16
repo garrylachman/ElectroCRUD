@@ -1,9 +1,9 @@
 <nb-layout class="inner_scroll" [withScroll]="false" [windowMode]="false">
   
-  <nb-layout-column  class="colored-column-primary view-main-content-layout-column" start>
+  <nb-layout-column  class="colored-column-primary view-main-content-layout-column" start [nbSpinner]="isLoading" nbSpinnerSize="giant" nbSpinnerStatus="primary" nbSpinnerMessage="Loading Some Data">
 
     <app-widgets [view]="view"></app-widgets>
-    <nb-card [nbSpinner]="isLoading" nbSpinnerSize="giant" nbSpinnerStatus="primary">
+    <nb-card >
       <nb-card-header>
           <!-- search input -->
           <input nbInput id="search-input" class="margin-right-1rem" 

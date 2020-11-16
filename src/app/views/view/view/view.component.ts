@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, TemplateRef, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
 import { IView } from '../../../../shared/interfaces/views.interface';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -12,6 +12,7 @@ import { ConfirmDeleteComponent } from '../../../components/dialogs/confirm-dele
 import { IIPCDeleteDataWhereOpr, IIPCDeleteDataResponseMessage, IIPCReadDataWhere, IIPCReadDataJoin, IIPCReadDataWhereOpr } from '../../../../shared/ipc/views.ipc';
 import { BreadcrumbsService } from '../../../services/breadcrumbs.service';
 import { IViewFilter } from '../../../../shared/interfaces/filters.interface';
+import { timer } from 'rxjs';
 
 @Component({
   selector: 'app-view-view',
@@ -54,7 +55,8 @@ export class ViewViewComponent implements OnInit, OnDestroy {
     private menuService: NbMenuService,
     private dialogService: NbDialogService,
     private toastService: NbToastrService,
-    private breadcrumbsService: BreadcrumbsService
+    private breadcrumbsService: BreadcrumbsService,
+    private cdr: ChangeDetectorRef
   ) { }
 
   ngAfterViewChecked() {
@@ -236,6 +238,7 @@ export class ViewViewComponent implements OnInit, OnDestroy {
   }
 
   async reload() {
+    this.isLoading = true;
     let data = await this.viewsIPCService
       .readData(
         this.view.table, 
@@ -259,9 +262,14 @@ export class ViewViewComponent implements OnInit, OnDestroy {
     this.rows = [...data.data];
     console.log("rows", this.rows)
     console.log(data);
+    timer(2000).subscribe(() => { 
+      this.isLoading = false;
+      this.cdr.detectChanges();
+    });
   }
 
   async setPage(pageInfo){
+    this.isLoading = true;
     console.log("pageInfo:", pageInfo);
     this.offset = pageInfo.offset;
     let sqlOffset = this.offset * pageInfo.pageSize;
@@ -278,6 +286,11 @@ export class ViewViewComponent implements OnInit, OnDestroy {
       );
     this.rows = [...data.data];
     this.totalElements = data.count;
+
+    timer(1000).subscribe(() => { 
+      this.isLoading = false;
+      this.cdr.detectChanges();
+    });
   }
 
   doSearch(event): void {

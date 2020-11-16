@@ -12,7 +12,7 @@ import { timer } from 'rxjs';
 @Component({
   selector: 'app-accounts',
   templateUrl: './accounts.component.html',
-  styleUrls: ['./accounts.component.scss']
+  styleUrls: ['./accounts.component.scss']  
 })
 /**
  * A class representing a AccountsComponent
@@ -193,9 +193,7 @@ export class AccountsComponent implements OnInit {
     this.isSpinLoading = true;
     let account:IAccount = this.accountsService.get(row.id);
     let res:IIPCConnectResponseMessage = await this.sessionService.setActiveAccount(account);
-    console.log("connect response: ", row);
     timer(2000).subscribe(() => { 
-      console.log("timer 2000");
       this.isSpinLoading = false;
       this.cdr.detectChanges();
     });
