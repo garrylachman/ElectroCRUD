@@ -1,5 +1,5 @@
-import { Component, OnInit, Input, ViewChild, TemplateRef } from '@angular/core';
-import { NbSortDirection, NbDialogService, NbToastrService, NbIconLibraries  } from '@nebular/theme';
+import { Component, OnInit, Input, ViewChild, TemplateRef, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { NbSortDirection, NbDialogService, NbToastrService, NbIconLibraries, NbSpinnerService  } from '@nebular/theme';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
 import { ConfirmDeleteComponent} from '../components/dialogs/confirm-delete/confirm-delete.component';
 import { AddEditAccountComponent } from './add-edit-account/add-edit-account.component';
@@ -7,6 +7,7 @@ import { AccountsService, ServerType, ServerIcon } from '../services/store/accou
 import { IAccount } from '../../shared/interfaces/accounts.interface';
 import { SessionService } from '../services/session.service';
 import { IIPCConnectResponseMessage } from '../../shared/ipc/accounts.ipc';
+import { timer } from 'rxjs';
 
 @Component({
   selector: 'app-accounts',
@@ -21,7 +22,7 @@ export class AccountsComponent implements OnInit {
   /**
    * Loading indicator
    */
-  isLoading: boolean = false;
+  isSpinLoading: boolean = false;
 
   /**
    * Is data table re-order enabled
@@ -68,7 +69,8 @@ export class AccountsComponent implements OnInit {
     private accountsService: AccountsService,
     private sessionService: SessionService,
     private toastrService: NbToastrService,
-    private iconLibraries: NbIconLibraries
+    private iconLibraries: NbIconLibraries,
+    private cdr: ChangeDetectorRef
   ) {
     this.iconLibraries.registerFontPack('whhg', { iconClassPrefix: 'icon' });
     this.temp = [...this.rows];
@@ -188,11 +190,16 @@ export class AccountsComponent implements OnInit {
    * @param row Data table row
    */
   async use(row) {
-    this.isLoading = true;
+    this.isSpinLoading = true;
     let account:IAccount = this.accountsService.get(row.id);
     let res:IIPCConnectResponseMessage = await this.sessionService.setActiveAccount(account);
     console.log("connect response: ", row);
-    this.isLoading = false;
+    timer(2000).subscribe(() => { 
+      console.log("timer 2000");
+      this.isSpinLoading = false;
+      this.cdr.detectChanges();
+    });
+    //this.isSpinLoading = false;
     if (!res.valid) {
       this.toastrService.show(status, res.error, { status: "danger" });
     } else {
