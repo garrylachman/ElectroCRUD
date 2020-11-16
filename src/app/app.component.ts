@@ -32,6 +32,10 @@ export class AppComponent {
       title: 'Views',
       icon: 'folder-outline',
       expanded: true,
+      badge: {
+        text: '0',
+        status: 'primary',
+      },
       children: [
  
       ]
@@ -93,6 +97,9 @@ export class AppComponent {
 
     this.items = [...this.defaultItems];
     this.items[0].children = [];
+
+    this.items[0].badge.text = views.length;
+
     views.forEach((view:IView) => {
       console.log(view);
       this.items[0].children.push({
