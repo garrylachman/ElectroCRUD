@@ -2,7 +2,7 @@
   
   <nb-layout-column  class="colored-column-primary view-main-content-layout-column" start [nbSpinner]="isLoading" nbSpinnerSize="giant" nbSpinnerStatus="primary" nbSpinnerMessage="Loading Some Data">
 
-    <app-widgets [view]="view"></app-widgets>
+    <app-widgets [view]="view" #widgets></app-widgets>
     <nb-card >
       <nb-card-header>
           <!-- search input -->

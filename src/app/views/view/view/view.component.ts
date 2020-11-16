@@ -13,6 +13,7 @@ import { IIPCDeleteDataWhereOpr, IIPCDeleteDataResponseMessage, IIPCReadDataWher
 import { BreadcrumbsService } from '../../../services/breadcrumbs.service';
 import { IViewFilter } from '../../../../shared/interfaces/filters.interface';
 import { timer } from 'rxjs';
+import { WidgetsComponent } from './components/widgets/widgets.component'
 
 @Component({
   selector: 'app-view-view',
@@ -24,6 +25,7 @@ export class ViewViewComponent implements OnInit, OnDestroy {
   @ViewChild(DatatableComponent) table: DatatableComponent;
   @ViewChild('tableContextMenuTmpl', { static: true }) tableContextMenuTmpl: TemplateRef<any>;
   @ViewChild('subviewTableIconTmpl', { static: true }) subviewTableIconTmpl: TemplateRef<any>;
+  @ViewChild(WidgetsComponent) widgets: WidgetsComponent;
 
   view: IView;
   isLoading: boolean = false;
@@ -266,6 +268,8 @@ export class ViewViewComponent implements OnInit, OnDestroy {
       this.isLoading = false;
       this.cdr.detectChanges();
     });
+    console.log("this.widgets", this.widgets)
+    this.widgets.reloadData();
   }
 
   async setPage(pageInfo){

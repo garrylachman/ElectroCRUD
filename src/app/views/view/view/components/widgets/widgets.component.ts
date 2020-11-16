@@ -133,6 +133,7 @@ export class WidgetsComponent implements OnInit {
   /**
    * Reload data from database
    */
+  @Input()
   reloadData(): void {
     if (!this.view.widgets) {
       return;
