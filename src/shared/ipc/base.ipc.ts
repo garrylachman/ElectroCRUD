@@ -17,3 +17,9 @@ export class IPCBaseMessage<T> {
     }
 
 }
+
+export interface IExportIPC<T1, T2> {
+    channel: string,
+    request: IPCBaseMessage<T1>,
+    response: IPCBaseMessage<T2>
+}

@@ -5,6 +5,7 @@
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "types": ["reflect-metadata"],
     "target": "esnext",
     "module": "commonjs",
     "types": [

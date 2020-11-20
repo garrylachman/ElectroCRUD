@@ -7,6 +7,7 @@
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "types": ["reflect-metadata"],
     "resolveJsonModule": true,
     "target": "esnext",
     "module": "commonjs",

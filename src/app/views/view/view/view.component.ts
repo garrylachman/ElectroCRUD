@@ -14,6 +14,8 @@ import { BreadcrumbsService } from '../../../services/breadcrumbs.service';
 import { IViewFilter } from '../../../../shared/interfaces/filters.interface';
 import { timer } from 'rxjs';
 import { WidgetsComponent } from './components/widgets/widgets.component'
+import { IExtensionContentScriptView } from '../../../../shared/interfaces/extension.interface';
+import { ExtensionsIPCService } from '../../../services/ipc/extensions.ipc.service';
 
 @Component({
   selector: 'app-view-view',
@@ -48,6 +50,8 @@ export class ViewViewComponent implements OnInit, OnDestroy {
 
   selectedFilter: IViewFilter;
 
+  extensionViews: IExtensionContentScriptView[];
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -58,7 +62,8 @@ export class ViewViewComponent implements OnInit, OnDestroy {
     private dialogService: NbDialogService,
     private toastService: NbToastrService,
     private breadcrumbsService: BreadcrumbsService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private extensions: ExtensionsIPCService
   ) { }
 
   ngAfterViewChecked() {
@@ -84,6 +89,13 @@ export class ViewViewComponent implements OnInit, OnDestroy {
         break;
       }
     });
+
+    this.extensionViews = await this.extensions.getViewsScripts();
+    console.log("this.extensionViews", this.extensionViews)
+  }
+
+  selectExtemnsionView($event) {
+    console.log($event);
   }
 
   ngOnDestroy() {

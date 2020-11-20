@@ -1,5 +1,7 @@
+import "reflect-metadata";
+import { fluentProvide } from "inversify-binding-decorators";
+
 import * as Knex from'knex';
-import { query } from '@angular/animations';
 
 export enum ServerType {
     MySQL = "mysql",
@@ -100,6 +102,7 @@ left join (
 	a.name = b.name;`
 }
 
+@fluentProvide(DatabaseService).inSingletonScope().done()
 export class DatabaseService {
     private static instance: DatabaseService;
     private _connection:Knex;

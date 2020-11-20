@@ -1,3 +1,6 @@
+import "reflect-metadata";
+import { fluentProvide } from "inversify-binding-decorators";
+
 import { 
     IPC_CHANNEL_QUERY,
     IPCQueriesRequestMessage,
@@ -12,9 +15,16 @@ import { ipcMain } from 'electron-better-ipc';
 import { JsonValue } from 'type-fest';
 import { DatabaseService } from '../services/db.service';
 
+@fluentProvide(QueriesIPC).inSingletonScope().done()
 export class QueriesIPC {
 
-    constructor() {}
+    private _database: DatabaseService;
+
+    constructor(
+        database: DatabaseService 
+    ) {
+        this._database = database;
+    }
     
     public listen() {
         ipcMain.handle(IPC_CHANNEL_QUERY, async (event, req: JsonValue) => this.execute(req));
@@ -28,7 +38,7 @@ export class QueriesIPC {
         let dbRes: any;
        
         console.log("execute", req)
-        let res = await DatabaseService.getInstance().executeQuery(reqMessage.toMessage().query)
+        let res = await this._database.executeQuery(reqMessage.toMessage().query)
 
         console.log("res", res);
         if (res instanceof Error) {

@@ -1,3 +1,6 @@
+import "reflect-metadata";
+import { fluentProvide } from "inversify-binding-decorators";
+
 import { 
     IPC_CHANNEL_LIST_OF_TABLES,
     IPCListOfTablesRequestMessage,
@@ -32,9 +35,16 @@ import { ipcMain } from 'electron-better-ipc';
 import { JsonValue } from 'type-fest';
 import { DatabaseService } from '../services/db.service';
 
+@fluentProvide(ViewsIPC).inSingletonScope().done()
 export class ViewsIPC {
 
-    constructor() {}
+    private _database: DatabaseService;
+
+    constructor(
+        database: DatabaseService 
+    ) {
+        this._database = database;
+    }
     
     public listen() {
         ipcMain.handle(IPC_CHANNEL_LIST_OF_TABLES,  async (event, req: JsonValue) => this.listOfTables(req));
@@ -53,7 +63,7 @@ export class ViewsIPC {
         let dbError: string;
         let dbRes: any;
        
-        let res = await DatabaseService.getInstance().listTables();
+        let res = await this._database.listTables();
         if (res instanceof Error) {
             dbError = res.toString();
             isValid = false;
@@ -79,7 +89,7 @@ export class ViewsIPC {
         let dbError: string;
         let dbRes: any;
        
-        let res = await DatabaseService.getInstance().tableInfo(reqMessage.toMessage().table)
+        let res = await this._database.tableInfo(reqMessage.toMessage().table)
         if (res instanceof Error) {
             dbError = res.toString();
             isValid = false;
@@ -105,7 +115,7 @@ export class ViewsIPC {
         let dbError: string;
         let dbRes: any;
        
-        let res = await DatabaseService.getInstance().readData(
+        let res = await this._database.readData(
             reqMessage.toMessage().table,
             reqMessage.toMessage().columns,
             reqMessage.toMessage().limit.limit,
@@ -142,7 +152,7 @@ export class ViewsIPC {
         let dbError: string;
         let dbRes: any;
        
-        let res = await DatabaseService.getInstance().updateData(
+        let res = await this._database.updateData(
             reqMessage.toMessage().table,
             reqMessage.toMessage().update,
             reqMessage.toMessage().where
@@ -172,7 +182,7 @@ export class ViewsIPC {
         let dbError: string;
         let dbRes: any;
        
-        let res = await DatabaseService.getInstance().insertData(
+        let res = await this._database.insertData(
             reqMessage.toMessage().table,
             reqMessage.toMessage().data
         )
@@ -201,7 +211,7 @@ export class ViewsIPC {
         let dbError: string;
         let dbRes: any;
        
-        let res = await DatabaseService.getInstance().deleteData(
+        let res = await this._database.deleteData(
             reqMessage.toMessage().table,
             reqMessage.toMessage().where
             )
@@ -230,7 +240,7 @@ export class ViewsIPC {
         let dbError: string;
         let dbRes: any;
        
-        let res = await DatabaseService.getInstance().readWidgetData(
+        let res = await this._database.readWidgetData(
             reqMessage.toMessage().table,
             reqMessage.toMessage().column,
             reqMessage.toMessage().distinct,

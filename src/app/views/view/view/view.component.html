@@ -4,9 +4,9 @@
 
     <app-widgets [view]="view" #widgets></app-widgets>
     <nb-card >
-      <nb-card-header>
+      <nb-card-header class="d-flex justify-content-between">
           <!-- search input -->
-          <input nbInput id="search-input" class="margin-right-1rem" 
+          <input nbInput id="search-input" class="" 
             type="text"
             placeholder="Type to search..."
             (keyup)="doSearch($event)" 
@@ -24,10 +24,18 @@
             Clear Search
           </button>
           <!-- float right start -->
-          <div class="float-right">
+          <div class="d-flex align-items-center">
+            <!-- Extension view -->
+            <nb-select hero status="primary" 
+              class="mr-3" placeholder="Extension View" 
+              (selectedChange)="selectExtemnsionView($event)" selected="default" size="medium">
+              <nb-option value="default">Default</nb-option>
+              <nb-option *ngFor="let eView of extensionViews" [value]="eView.name">{{eView.displayName}}</nb-option>
+            </nb-select>
+
             <!-- number of records per page select -->
             <nb-select hero status="primary" 
-              class="margin-right-1rem" placeholder="# of Results / Page" 
+              class="mr-3" placeholder="# of Results / Page" 
               (selectedChange)="selectLimit($event)" [selected]="10" size="medium">
               <nb-option value=10>10 Per Page</nb-option>
               <nb-option value=25>25 Per Page</nb-option>
@@ -37,14 +45,14 @@
             <!-- view configuration button -->
             <button 
               nbButton status="primary" hero size="medium" [routerLink]="['/views', view.id, 'configure']" 
-              nbTooltip="`{{view.name}}` View Configurations" nbTooltipPlacement="top" nbTooltipStatus="primary" class="margin-right-1rem"
+              nbTooltip="`{{view.name}}` View Configurations" nbTooltipPlacement="top" nbTooltipStatus="primary" class="mr-3"
             >
               <nb-icon icon="options-2"></nb-icon>
             </button>
             <!-- add new record button -->
             <button 
               nbButton status="primary" hero size="medium" [routerLink]="['/views', view.id, 'view', 'add']" 
-              nbTooltip="Add New `{{view.terms.one}}`" nbTooltipPlacement="top" nbTooltipStatus="primary" class="margin-right-1rem"
+              nbTooltip="Add New `{{view.terms.one}}`" nbTooltipPlacement="top" nbTooltipStatus="primary" class="mr-3"
             >
               <nb-icon icon="plus"></nb-icon>
             </button>

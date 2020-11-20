@@ -16,7 +16,7 @@ import { SessionService } from './services/session.service';
 import { IView } from '../shared/interfaces/views.interface';
 import { version } from '../../package.json';
 import { ViewsService } from './services/store/views.service';
-
+import { ExtensionsIPCService } from './services/ipc/extensions.ipc.service'
 
 @Component({
   selector: 'app-root',
@@ -36,9 +36,7 @@ export class AppComponent {
         text: '0',
         status: 'primary',
       },
-      children: [
- 
-      ]
+      children: []
     },
     {
       title: 'Add View',
@@ -61,7 +59,8 @@ export class AppComponent {
     private searchService: NbSearchService,
     private viewsService: ViewsService,
     private sessionService: SessionService,
-    private themeService: NbThemeService) {
+    private themeService: NbThemeService,
+    private extensionsService: ExtensionsIPCService) {
       
     translate.setDefaultLang('en');
     console.log('AppConfig', AppConfig);
@@ -73,6 +72,10 @@ export class AppComponent {
     } else {
       console.log('Mode web');
     }
+
+    console.log("extensions", this.extensionsService.list());
+    console.log("views", this.extensionsService.getViewsScripts());
+    this.extensionsService.getViewsScripts().then(x => console.log(x))
 
     this.sessionService.changes.subscribe({
       next: (v:IAccount) => {
@@ -92,21 +95,38 @@ export class AppComponent {
   }
 
   reload() {
+    console.log("reload - menu")
     let views:IView[] = this.viewsService.all();
-    console.log(this.defaultItems);
+    
+    this.items = [...this.defaultItems].map(v => ({...v}));
+    
+    //this.items[0].children = [];
 
-    this.items = [...this.defaultItems];
-    this.items[0].children = [];
+    const viewItems: any[] = [...views].map((view) => ({...{
+      title: view.name,
+      icon: 'layers-outline',
+      link: `/views/${view.id}/view`
+    }}));
 
-    this.items[0].badge.text = views.length;
+    console.log("viewItems", Array.from(viewItems))
 
-    views.forEach((view:IView) => {
+    this.items[0].children = viewItems; 
+    //this.defaultItems[0].children = 
+
+    this.items[0].badge.text = `${this.items[0].children.length}`;
+
+    /*views.forEach((view:IView) => {
       console.log(view);
-      this.items[0].children.push({
+      viewItems.push({
         title: view.name,
         icon: 'layers-outline',
         link: `/views/${view.id}/view`
       })
-    })
+    })*/
+
+    //this.defaultItems[0].children = [...viewItems]
+    //this.items = [...this.defaultItems].map(v => ({...v}));
+    console.log("this.items", [...this.items]);
+    //this.items = [...this.items];
   }
 }

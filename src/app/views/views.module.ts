@@ -46,9 +46,10 @@ import { TagInputModule } from 'ngx-chips';
 import { NgBootstrapFormValidationModule } from 'ng-bootstrap-form-validation';
 import { QueryComponent } from './query/query.component';
 import { MonacoEditorModule } from '@materia-ui/ngx-monaco-editor';
+import { ExtensionViewComponent } from './view/view/components/extension-view/extension-view.component';
 
 @NgModule({
-  declarations: [ViewComponent, ConfigureComponent, EmptyComponent, ViewEditComponent, ViewAddComponent, WidgetsComponent, ViewViewComponent, RowFormComponent, FormlyFieldNbInputComponent, FormlyFieldNbSelectComponent, FormlyFieldNbChechboxComponent, FormlyFieldNbDatepickerComponent, FormlyFieldNbTextareaComponent, FiltersComponent, SubViewComponent, QueryComponent],
+  declarations: [ViewComponent, ConfigureComponent, EmptyComponent, ViewEditComponent, ViewAddComponent, WidgetsComponent, ViewViewComponent, RowFormComponent, FormlyFieldNbInputComponent, FormlyFieldNbSelectComponent, FormlyFieldNbChechboxComponent, FormlyFieldNbDatepickerComponent, FormlyFieldNbTextareaComponent, FiltersComponent, SubViewComponent, QueryComponent, ExtensionViewComponent],
   providers: [BreadcrumbsService],
   imports: [
     CommonModule,
