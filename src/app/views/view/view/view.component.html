@@ -28,9 +28,9 @@
             <!-- Extension view -->
             <nb-select hero status="primary" 
               class="mr-3" placeholder="Extension View" 
-              (selectedChange)="selectExtemnsionView($event)" selected="default" size="medium">
+              (selectedChange)="selectExtensionView($event)" selected="default" size="medium">
               <nb-option value="default">Default</nb-option>
-              <nb-option *ngFor="let eView of extensionViews" [value]="eView.name">{{eView.displayName}}</nb-option>
+              <nb-option *ngFor="let eView of extensionViews" [value]="eView">{{eView.displayName}}</nb-option>
             </nb-select>
 
             <!-- number of records per page select -->
@@ -67,53 +67,58 @@
           <!-- float right end -->
       </nb-card-header>
       <nb-card-body>
-        <ngx-datatable #table 
-          class="bootstrap" 
-          [rows]="rows"
-          [columns]="columns" 
-          [loadingIndicator]="true"
-          [columnMode]="'force'"
-          [headerHeight]="30"
-          [footerHeight]="30"
-          [rowHeight]="'auto'"
-          [reorderable]="true"
-          [externalPaging]="true"
-          [count]="totalElements"
-          [offset]="offset"
-          [limit]="limit"
-          (page)='setPage($event)'
-          >
-            <ngx-datatable-row-detail
-              [rowHeight]="'auto'"
-              #rowDetail
-              (toggle)="onSubviewToggle($event)"
+        <ng-container *ngIf="isExtensionViewSelected()">
+          <app-extension-view [url]="selectedExtensionView.url" [extension]="selectedExtensionView.extension"></app-extension-view>
+        </ng-container>
+        <ng-container *ngIf="!isExtensionViewSelected()">
+          <ngx-datatable #table 
+            class="bootstrap" 
+            [rows]="rows"
+            [columns]="columns" 
+            [loadingIndicator]="true"
+            [columnMode]="'force'"
+            [headerHeight]="30"
+            [footerHeight]="30"
+            [rowHeight]="'auto'"
+            [reorderable]="true"
+            [externalPaging]="true"
+            [count]="totalElements"
+            [offset]="offset"
+            [limit]="limit"
+            (page)='setPage($event)'
             >
-              <ng-template
-                let-row="row"
-                let-expanded="expanded"
-                ngx-datatable-row-detail-template
+              <ngx-datatable-row-detail
+                [rowHeight]="'auto'"
+                #rowDetail
+                (toggle)="onSubviewToggle($event)"
               >
-                <div style="padding-left:35px;">
-                  <app-sub-view [subview]="view.subview" [row]="row"></app-sub-view>
-                </div>
-              </ng-template>
-            </ngx-datatable-row-detail>
-          </ngx-datatable>
-          <ng-template #tableContextMenuTmpl let-row="row">
-            <button 
-              class='tableContextMenuButton' ghost nbButton 
-              (click)="setContextItems(row)" [nbContextMenu]="menuItems" nbContextMenuTrigger="click" nbContextMenuTag="rowMenu"
-              nbContextMenuPlacement="bottom">
-              <nb-icon icon="more-vertical-outline"></nb-icon>
-            </button>
-          </ng-template>
-          <ng-template #subviewTableIconTmpl let-row="row" let-expanded="expanded">
+                <ng-template
+                  let-row="row"
+                  let-expanded="expanded"
+                  ngx-datatable-row-detail-template
+                >
+                  <div style="padding-left:35px;">
+                    <app-sub-view [subview]="view.subview" [row]="row"></app-sub-view>
+                  </div>
+                </ng-template>
+              </ngx-datatable-row-detail>
+            </ngx-datatable>
+            <ng-template #tableContextMenuTmpl let-row="row">
               <button 
                 class='tableContextMenuButton' ghost nbButton 
-                (click)="subviewTableAction(row)">
-                <nb-icon icon="{{expanded ? 'minus-square' : 'plus-square'}}" icon-end="false"></nb-icon>
+                (click)="setContextItems(row)" [nbContextMenu]="menuItems" nbContextMenuTrigger="click" nbContextMenuTag="rowMenu"
+                nbContextMenuPlacement="bottom">
+                <nb-icon icon="more-vertical-outline"></nb-icon>
               </button>
             </ng-template>
+            <ng-template #subviewTableIconTmpl let-row="row" let-expanded="expanded">
+                <button 
+                  class='tableContextMenuButton' ghost nbButton 
+                  (click)="subviewTableAction(row)">
+                  <nb-icon icon="{{expanded ? 'minus-square' : 'plus-square'}}" icon-end="false"></nb-icon>
+                </button>
+              </ng-template>
+        </ng-container>
       </nb-card-body>
     </nb-card>
 

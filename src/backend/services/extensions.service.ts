@@ -24,6 +24,7 @@ export class ExtensionsService {
     }
 
     private async reloadFromDisk() {
+        let bufList = [];
         try {
             fs.mkdirSync(this.extensionsDir);
         } catch(er) {}
@@ -32,9 +33,13 @@ export class ExtensionsService {
         for await (const dirent of dir) {
           console.log(dirent.name);
           try {
-            this._list.push(require(`${this.extensionsDir}/${dirent.name}/package.json`))
+            bufList.push({
+                ...require(`${this.extensionsDir}/${dirent.name}/package.json`),
+                localPath: `${this.extensionsDir}/${dirent.name}`
+            })
           } catch(er) {}
         }
+        this._list = [...bufList];
         this.isInitialized = true;
     }
 

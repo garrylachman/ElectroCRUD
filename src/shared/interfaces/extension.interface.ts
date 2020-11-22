@@ -4,7 +4,8 @@ export interface IExtensionPackage {
     description: string,
     author: string,
     license?: string,
-    content: IExtensionContent
+    content: IExtensionContent,
+    localPath?: string,
 }
 
 export interface IExtensionContent {

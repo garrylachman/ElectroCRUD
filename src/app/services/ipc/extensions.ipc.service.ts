@@ -25,9 +25,6 @@ export class ExtensionsIPCService {
       .reduce((acc, curr) => {
         return [...acc, ...curr.content.scripts.view]
       }, []);
-
-
-      //.map(item => item.content.scripts.view) as IExtensionContentScriptView[];
   }
 
 }
