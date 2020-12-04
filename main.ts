@@ -31,8 +31,11 @@ function createWindow() {
     show: false,
     webPreferences: {
       nodeIntegration: true,
+      nodeIntegrationInSubFrames: true,
       enableRemoteModule: true,
-      webSecurity: false
+      webSecurity: false,
+      webviewTag: true,
+      scrollBounce: true,
     },
   };
 
