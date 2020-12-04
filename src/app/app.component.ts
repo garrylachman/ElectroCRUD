@@ -16,7 +16,6 @@ import { SessionService } from './services/session.service';
 import { IView } from '../shared/interfaces/views.interface';
 import { version } from '../../package.json';
 import { ViewsService } from './services/store/views.service';
-import { ExtensionsIPCService } from './services/ipc/extensions.ipc.service'
 
 @Component({
   selector: 'app-root',
@@ -59,8 +58,7 @@ export class AppComponent {
     private searchService: NbSearchService,
     private viewsService: ViewsService,
     private sessionService: SessionService,
-    private themeService: NbThemeService,
-    private extensionsService: ExtensionsIPCService) {
+    private themeService: NbThemeService) {
       
     translate.setDefaultLang('en');
     console.log('AppConfig', AppConfig);
@@ -73,9 +71,6 @@ export class AppComponent {
       console.log('Mode web');
     }
 
-    console.log("extensions", this.extensionsService.list());
-    console.log("views", this.extensionsService.getViewsScripts());
-    this.extensionsService.getViewsScripts().then(x => console.log(x))
 
     this.sessionService.changes.subscribe({
       next: (v:IAccount) => {
