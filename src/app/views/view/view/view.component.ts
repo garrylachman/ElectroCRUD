@@ -14,15 +14,7 @@ import { BreadcrumbsService } from '../../../services/breadcrumbs.service';
 import { IViewFilter } from '../../../../shared/interfaces/filters.interface';
 import { timer } from 'rxjs';
 import { WidgetsComponent } from './components/widgets/widgets.component'
-import { IExtensionContentScriptView, IExtensionPackage } from '../../../../shared/interfaces/extension.interface';
-import { ExtensionsIPCService } from '../../../services/ipc/extensions.ipc.service';
 import { filter, reduce } from 'rxjs/operators';
-
-export interface ExtensionViewOption {
-  displayName: string,
-  url: string,
-  extension: IExtensionPackage
-}
 
 @Component({
   selector: 'app-view-view',
@@ -57,11 +49,6 @@ export class ViewViewComponent implements OnInit, OnDestroy {
 
   selectedFilter: IViewFilter;
 
-  //extensions$: Observable<IExtensionPackage>;
-  extensionsSub: Subscription;
-  extensionViews: ExtensionViewOption[];
-
-  selectedExtensionView: ExtensionViewOption;
 
   constructor(
     private route: ActivatedRoute,
@@ -73,8 +60,7 @@ export class ViewViewComponent implements OnInit, OnDestroy {
     private dialogService: NbDialogService,
     private toastService: NbToastrService,
     private breadcrumbsService: BreadcrumbsService,
-    private cdr: ChangeDetectorRef,
-    private extensions: ExtensionsIPCService
+    private cdr: ChangeDetectorRef
   ) { }
 
   ngAfterViewChecked() {
@@ -100,44 +86,12 @@ export class ViewViewComponent implements OnInit, OnDestroy {
         break;
       }
     });
-
-    //this.extensions$ = of(...(await this.extensions.list()).extensions);
-
-    this.extensionsSub = of(...(await this.extensions.list()).extensions).pipe(
-      filter((pkg:IExtensionPackage) => {
-        return pkg.content.scripts.view && pkg.content.scripts.view.length > 0
-      }),
-      reduce((acc:ExtensionViewOption[], obj: IExtensionPackage) => {
-        let views:IExtensionContentScriptView[] = obj.content.scripts.view;
-        let viewsOptions: ExtensionViewOption[] = views.map((view: IExtensionContentScriptView) => ({
-          displayName: view.displayName,
-          url: view.main,
-          extension: obj
-        }))
-        return [...acc, ...viewsOptions];
-      }, [])
-    ).subscribe(val => this.extensionViews=val)
-
-    //this.extensionViews = await this.extensions.getViewsScripts();
-    //this.getExtensionViews().subscribe(val => this.extensionViews=val)
   }
 
-  selectExtensionView($event:ExtensionViewOption | string) {
-    console.log($event);
-    this.selectedExtensionView = null;
-    if (typeof $event == "object") {
-      this.selectedExtensionView = $event as ExtensionViewOption; 
-    }
-  }
-
-  isExtensionViewSelected(): Boolean {
-    return this.selectedExtensionView != null;
-  }
 
   ngOnDestroy() {
     this.menuServiceObserver.unsubscribe();
     this.routeObserver.unsubscribe();
-    this.extensionsSub.unsubscribe();
     this.breadcrumbsService.removeChildByURL(`/views/${this.view.id}/view/view`);
   }
 

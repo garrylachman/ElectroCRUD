@@ -2,13 +2,8 @@ import "reflect-metadata";
 import { fluentProvide } from "inversify-binding-decorators";
 
 import { 
-    IPC_CHANNEL_CHECK_CONNECTION, 
-    IPCCheckConnectionRequestMessage, 
-    IPCCheckConnectionResponseMessage,
-    IPC_CHANNEL_CONNECT,
-    IPCConnectRequestMessage,
-    IPCConnectResponseMessage,
-    IIPCConnectResponseMessage
+    IPCCheckConnection,
+    IPCConnect
 } from '../../shared/ipc/accounts.ipc';
 
 import { ipcMain } from 'electron-better-ipc';
@@ -31,12 +26,12 @@ export class AccountsIPC {
     }
 
     public listen() {
-        ipcMain.handle(IPC_CHANNEL_CHECK_CONNECTION, async (event, req: JsonValue) => this.checkConnection(req));
-        ipcMain.handle(IPC_CHANNEL_CONNECT, async (event, req: JsonValue) => this.connect(req));
+        ipcMain.handle(IPCCheckConnection.CHANNEL, async (event, req: JsonValue) => this.checkConnection(req));
+        ipcMain.handle(IPCConnect.CHANNEL, async (event, req: JsonValue) => this.connect(req));
     }
 
     public async connect(req: JsonValue): Promise<JsonValue> {
-        let reqMessage: IPCConnectRequestMessage = new IPCConnectRequestMessage(req);
+        let reqMessage: IPCConnect.Request = new IPCConnect.Request(req);
 
         let isDatabaseValid: boolean | Error;
         let databaseError: string;
@@ -110,7 +105,7 @@ export class AccountsIPC {
             }
         }
         
-        let resMessage: IPCConnectResponseMessage = new IPCConnectResponseMessage({
+        let resMessage: IPCConnect.Response = new IPCConnect.Response({
             valid: Boolean(isDatabaseValid),
             error: String(`${tunnelError||''} ${databaseError||''}`)
         });
@@ -120,7 +115,7 @@ export class AccountsIPC {
     }
 
     public async checkConnection(req: JsonValue): Promise<JsonValue> {
-        let reqMessage: IPCCheckConnectionRequestMessage = new IPCCheckConnectionRequestMessage(req);
+        let reqMessage: IPCCheckConnection.Request = new IPCCheckConnection.Request(req);
 
         let isDatabaseValid: boolean | Error;
         let databaseError: string;
@@ -192,7 +187,7 @@ export class AccountsIPC {
         }
         await this._database.disconnect();
 
-        let resMessage: IPCCheckConnectionResponseMessage = new IPCCheckConnectionResponseMessage({
+        let resMessage: IPCCheckConnection.Response = new IPCCheckConnection.Response({
             server: {
                 valid: isDatabaseValid,
                 error: databaseError 

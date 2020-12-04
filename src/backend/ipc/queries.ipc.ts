@@ -2,14 +2,9 @@ import "reflect-metadata";
 import { fluentProvide } from "inversify-binding-decorators";
 
 import { 
-    IPC_CHANNEL_QUERY,
-    IPCQueriesRequestMessage,
-    IPCQueriesResponseMessage
+    IPCQuery
 } from '../../shared/ipc/queries.ipc';
 
-
-//import { ipcMain } from 'electron-better-ipc';
-//import { ipcMain } from 'electron';
 import { ipcMain } from 'electron-better-ipc';
 
 import { JsonValue } from 'type-fest';
@@ -27,11 +22,11 @@ export class QueriesIPC {
     }
     
     public listen() {
-        ipcMain.handle(IPC_CHANNEL_QUERY, async (event, req: JsonValue) => this.execute(req));
+        ipcMain.handle(IPCQuery.CHANNEL, async (event, req: JsonValue) => this.execute(req));
     }
 
     public async execute(req: JsonValue): Promise<JsonValue> {
-        let reqMessage: IPCQueriesRequestMessage = new IPCQueriesRequestMessage(req);
+        let reqMessage: IPCQuery.Request = new IPCQuery.Request(req);
 
         let isValid: boolean;
         let dbError: string;
@@ -49,7 +44,7 @@ export class QueriesIPC {
             dbRes = res;
         }
 
-        let resMessage: IPCQueriesResponseMessage = new IPCQueriesResponseMessage({
+        let resMessage: IPCQuery.Response = new IPCQuery.Response({
             valid: isValid,
             error: dbError,
             data: dbRes,

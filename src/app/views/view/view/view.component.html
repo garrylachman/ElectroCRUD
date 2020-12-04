@@ -25,13 +25,7 @@
           </button>
           <!-- float right start -->
           <div class="d-flex align-items-center">
-            <!-- Extension view -->
-            <nb-select hero status="primary" 
-              class="mr-3" placeholder="Extension View" 
-              (selectedChange)="selectExtensionView($event)" selected="default" size="medium">
-              <nb-option value="default">Default</nb-option>
-              <nb-option *ngFor="let eView of extensionViews" [value]="eView">{{eView.displayName}}</nb-option>
-            </nb-select>
+
 
             <!-- number of records per page select -->
             <nb-select hero status="primary" 
@@ -67,10 +61,6 @@
           <!-- float right end -->
       </nb-card-header>
       <nb-card-body>
-        <ng-container *ngIf="isExtensionViewSelected()">
-          <app-extension-view [url]="selectedExtensionView.url" [extension]="selectedExtensionView.extension"></app-extension-view>
-        </ng-container>
-        <ng-container *ngIf="!isExtensionViewSelected()">
           <ngx-datatable #table 
             class="bootstrap" 
             [rows]="rows"
@@ -118,7 +108,6 @@
                   <nb-icon icon="{{expanded ? 'minus-square' : 'plus-square'}}" icon-end="false"></nb-icon>
                 </button>
               </ng-template>
-        </ng-container>
       </nb-card-body>
     </nb-card>
 
