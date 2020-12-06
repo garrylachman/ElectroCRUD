@@ -221,7 +221,7 @@
     private get isContainsPrimaryKey(): boolean {
       let isPK: boolean = false;
       this.rows.forEach((col: IViewColumn) => {
-        if (col.key == "PRI") isPK = true;
+        if (col.key == "PRI" || col.key == "1") isPK = true;
       })
       return isPK;
     }

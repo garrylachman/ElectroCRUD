@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { NbDialogRef } from '@nebular/theme';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IAccount } from '../../../shared/interfaces/accounts.interface';
@@ -45,7 +45,8 @@ export class AddEditAccountComponent implements OnInit {
   constructor(
     public ref: NbDialogRef<any>,
     private fb: FormBuilder,
-    private accountsIPCService: AccountsIPCService
+    private accountsIPCService: AccountsIPCService,
+    private cdr: ChangeDetectorRef
   ) { 
     this.testLog = [];
   }
@@ -253,6 +254,7 @@ export class AddEditAccountComponent implements OnInit {
     }
 
     this.isLoading = false;
+    this.cdr.detectChanges();
   }
 
   openElectronFileDialog(dstCtrl) {

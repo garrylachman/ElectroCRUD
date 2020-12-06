@@ -198,7 +198,7 @@ export class ViewViewComponent implements OnInit, OnDestroy {
   get primaryKeyColumn(): string {
     let pri:string = null;
     this.view.columns.forEach(col => {
-      if (col.key == "PRI") {
+      if (col.key == "PRI" || col.key == "1") {
         pri = col.name;
       }
     })
@@ -262,11 +262,11 @@ export class ViewViewComponent implements OnInit, OnDestroy {
     this.totalElements = data.count;
     let columns = data.data.length > 0 ? Object.keys([...data.data].shift()).map(val => ({ name: val, prop: val })) : [];
     console.log("columns", columns)
-    let subviewActionColumn = this.view.subview && this.view.subview.enabled ? [{ cellTemplate: this.subviewTableIconTmpl, frozenLeft: true, maxWidth: 50, resizeable: false }] : [];
+    let subviewActionColumn = this.view.subview && this.view.subview.enabled ? [{ cellTemplate: this.subviewTableIconTmpl, frozenLeft: true, maxWidth: 50, resizeable: false, sortable: false }] : [];
     this.columns = [
       ...subviewActionColumn,
       ...columns, 
-      { cellTemplate: this.tableContextMenuTmpl, frozenRight: true, maxWidth: 50, resizeable: false }
+      { cellTemplate: this.tableContextMenuTmpl, frozenRight: true, maxWidth: 50, resizeable: false, sortable: false }
     ];
     this.rows = [...data.data];
     console.log("rows", this.rows)
@@ -322,6 +322,7 @@ export class ViewViewComponent implements OnInit, OnDestroy {
       mItem.data = row;
       return mItem
     });
+    console.log(this.menuItems)
   }
 
   subviewTableAction(row): void {

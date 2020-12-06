@@ -68,3 +68,28 @@ app-widgets {
 button[nbButton] {
     box-shadow: none !important;
 }
+
+::ng-deep
+.ngx-datatable.bootstrap .datatable-row-right {
+    transform: none !important;
+
+    .datatable-body-cell {
+        padding-right: 0px !important;
+        text-align: right !important;
+    }
+}
+
+::ng-deep
+.ngx-datatable.bootstrap .datatable-row-left {
+    transform: none !important;
+
+    .datatable-body-cell {
+        padding-left: 0px !important;
+        text-align: left !important;
+    }
+}
+
+::ng-deep
+.ngx-datatable.bootstrap .datatable-header .datatable-header-cell {
+    border-bottom: 0px !important;
+}

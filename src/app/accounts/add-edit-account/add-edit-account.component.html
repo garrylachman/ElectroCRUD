@@ -7,7 +7,7 @@
           <ng-template #labelOne>Basic</ng-template>
           <h4>Basic Details</h4>
           <form [formGroup]="basicDetailsForm" (ngSubmit)="onBasicDetailsSubmit()" class="step-container">
-            <p class="text-body">
+            <p class="">
               Let's start with the basic information about your account. The account is represnt a single database.
             </p>
             <div class="input-group">
@@ -31,7 +31,7 @@
           <ng-template #labelTwo>Tunnel</ng-template>
             <h4>SSH Tunnel</h4>
             <form [formGroup]="tunnelDetailsForm" (ngSubmit)="onTunnelDetailsSubmit()" class="step-container" >
-              <p class="text-body">
+              <p class="">
                   An SSH tunnel links a port on your local machine to a port on a remote host. When these ports are linked, anything communicated to the local port is passed through SSH to the remote port; likewise, any communication to the remote port is passed back through SSH to the local port. The added benefit of this setup is that the communications between your local machine and the remote host is encrypted by the SSH connection.
               </p>
               <div class="input-group">
@@ -92,7 +92,7 @@
             </form>
         </nb-step>
 
-        <nb-step [stepControl]="databaseFileDetailsForm" [label]="labelThree" [hidden]="databaseConnectionType!=DatabaseConnectionType.FILE">
+        <nb-step [stepControl]="databaseFileDetailsForm" [label]="labelThree">
           <ng-template #labelThree>Database</ng-template>
           <h4>Database</h4>
      
@@ -111,7 +111,7 @@
 
 
           <form [formGroup]="databaseDetailsForm" (ngSubmit)="onDatabaseDetailsSubmit()" class="step-container" [hidden]="databaseConnectionType!=DatabaseConnectionType.SERVER">
-            <p class="text-body">
+            <p class="">
               Let's setup the database connection. If you are using ssh tunnel use the local port on the remote server (avoid the tunnel's port).
             </p>
 
@@ -160,7 +160,7 @@
         <nb-step [label]="labelFour">
           <ng-template #labelFour>Connectivity Test</ng-template>
           <h4>Connectivity Test</h4>
-          <p class="text-body">
+          <p class="">
             This is the final step, we have to test the connection to the server. In case of failure you can go back to previous steps and correct the parameters.
           </p>
           <div class="input-group">

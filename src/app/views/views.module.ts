@@ -48,10 +48,10 @@ import { QueryComponent } from './query/query.component';
 import { MonacoEditorModule } from '@materia-ui/ngx-monaco-editor';
 
 @NgModule({
-  schemas: [
+  /*schemas: [
     CUSTOM_ELEMENTS_SCHEMA,
     NO_ERRORS_SCHEMA
-  ],
+  ],*/
   declarations: [ViewComponent, ConfigureComponent, EmptyComponent, ViewEditComponent, ViewAddComponent, WidgetsComponent, ViewViewComponent, RowFormComponent, FormlyFieldNbInputComponent, FormlyFieldNbSelectComponent, FormlyFieldNbChechboxComponent, FormlyFieldNbDatepickerComponent, FormlyFieldNbTextareaComponent, FiltersComponent, SubViewComponent, QueryComponent],
   providers: [BreadcrumbsService],
   imports: [
