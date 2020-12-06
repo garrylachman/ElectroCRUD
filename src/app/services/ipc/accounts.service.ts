@@ -1,13 +1,7 @@
 import { Injectable } from '@angular/core';
 import { 
-  IPC_CHANNEL_CHECK_CONNECTION, 
-  IPCCheckConnectionRequestMessage,
-  IIPCCheckConnectionResponseMessage,
-  IPCCheckConnectionResponseMessage,
-  IPC_CHANNEL_CONNECT, 
-  IPCConnectRequestMessage,
-  IIPCConnectResponseMessage,
-  IPCConnectResponseMessage 
+  IPCConnect,
+  IPCCheckConnection
 } from '../../../shared/ipc/accounts.ipc';
 import { ipcRenderer } from 'electron-better-ipc';
 import { IAccount } from '../../../shared/interfaces/accounts.interface';
@@ -19,26 +13,26 @@ export class AccountsIPCService {
   
   constructor() { }
 
-  public async checkConnection(account: IAccount): Promise<IIPCCheckConnectionResponseMessage> {
-    const req: IPCCheckConnectionRequestMessage = new IPCCheckConnectionRequestMessage({
+  public async checkConnection(account: IAccount): Promise<IPCCheckConnection.IResponse> {
+    const req: IPCCheckConnection.Request = new IPCCheckConnection.Request({
       server: account.server,
       ssh: account.ssh
     });
-    const rawRes:any = await ipcRenderer.invoke(IPC_CHANNEL_CHECK_CONNECTION, req.toJsonValue());
+    const rawRes:any = await ipcRenderer.invoke(IPCCheckConnection.CHANNEL, req.toJsonValue());
     console.log("rawRes", rawRes);
-    return new IPCCheckConnectionResponseMessage(rawRes).toMessage()
+    return new IPCCheckConnection.Response(rawRes).toMessage()
   }
 
-  public async connect(account: IAccount): Promise<IIPCConnectResponseMessage> {
+  public async connect(account: IAccount): Promise<IPCConnect.IResponse> {
     console.log("connect: ", account)
-    const req: IPCConnectRequestMessage = new IPCConnectRequestMessage({
+    const req: IPCConnect.Request = new IPCConnect.Request({
       server: account.server,
       ssh: account.ssh
     });
     console.log("req", req);
-    const rawRes:any = await ipcRenderer.invoke(IPC_CHANNEL_CONNECT, req.toJsonValue());
+    const rawRes:any = await ipcRenderer.invoke(IPCConnect.CHANNEL, req.toJsonValue());
     console.log("rawRes", rawRes);
-    return new IPCConnectResponseMessage(rawRes).toMessage()
+    return new IPCConnect.Response(rawRes).toMessage()
   }
 
 }

@@ -1,11 +1,9 @@
+import "reflect-metadata";
+import { fluentProvide } from "inversify-binding-decorators";
+
 import { 
-    IPC_CHANNEL_CHECK_CONNECTION, 
-    IPCCheckConnectionRequestMessage, 
-    IPCCheckConnectionResponseMessage,
-    IPC_CHANNEL_CONNECT,
-    IPCConnectRequestMessage,
-    IPCConnectResponseMessage,
-    IIPCConnectResponseMessage
+    IPCCheckConnection,
+    IPCConnect
 } from '../../shared/ipc/accounts.ipc';
 
 import { ipcMain } from 'electron-better-ipc';
@@ -13,19 +11,27 @@ import { JsonValue } from 'type-fest';
 import { TunnelService } from '../services/tunnel.service';
 import { DatabaseService, serverTypeIdAsEnum } from '../services/db.service';
 
+@fluentProvide(AccountsIPC).inSingletonScope().done()
 export class AccountsIPC {
 
-    private tunnel:TunnelService;
+    private _tunnel:TunnelService;
+    private _database: DatabaseService;
 
-    constructor() {}
-    
+    constructor(
+        database: DatabaseService,
+        tunnel:TunnelService
+    ) {
+        this._database = database;
+        this._tunnel = tunnel;
+    }
+
     public listen() {
-        ipcMain.handle(IPC_CHANNEL_CHECK_CONNECTION, async (event, req: JsonValue) => this.checkConnection(req));
-        ipcMain.handle(IPC_CHANNEL_CONNECT, async (event, req: JsonValue) => this.connect(req));
+        ipcMain.handle(IPCCheckConnection.CHANNEL, async (event, req: JsonValue) => this.checkConnection(req));
+        ipcMain.handle(IPCConnect.CHANNEL, async (event, req: JsonValue) => this.connect(req));
     }
 
     public async connect(req: JsonValue): Promise<JsonValue> {
-        let reqMessage: IPCConnectRequestMessage = new IPCConnectRequestMessage(req);
+        let reqMessage: IPCConnect.Request = new IPCConnect.Request(req);
 
         let isDatabaseValid: boolean | Error;
         let databaseError: string;
@@ -40,14 +46,14 @@ export class AccountsIPC {
         
         if (!isSQLite && reqMessage.toMessage().ssh.enabled) {
             try {
-                if (this.tunnel != null) {
-                    this.tunnel.close();
+                if (this._tunnel != null) {
+                    this._tunnel.close();
                 }
             } catch(error) {
                 console.log("close error: ", error)
             }
 
-            this.tunnel = new TunnelService(
+            this._tunnel.init(
                 reqMessage.toMessage().ssh.hostname,
                 reqMessage.toMessage().ssh.username,
                 reqMessage.toMessage().ssh.port,
@@ -61,7 +67,7 @@ export class AccountsIPC {
             databaseHostname = reqMessage.toMessage().ssh.hostname;
 
             try {
-                let tunnelRes:any = await this.tunnel.start();
+                let tunnelRes:any = await this._tunnel.start();
                 console.log("tunnelRes", tunnelRes);
                 isTunnelValid = true;
                 databasePort = tunnelRes;
@@ -78,11 +84,11 @@ export class AccountsIPC {
 
         if (isTunnelValid) {
             if (isSQLite) {
-                await DatabaseService.getInstance().connectSQLite(
+                await this._database.connectSQLite(
                     reqMessage.toMessage().server.filename
                 );
             } else {
-                await DatabaseService.getInstance().connect(
+                await this._database.connect(
                     serverTypeIdAsEnum(reqMessage.toMessage().server.server_type),
                     databaseHostname,
                     databasePort,
@@ -92,14 +98,14 @@ export class AccountsIPC {
                 );
             }
     
-            isDatabaseValid = await DatabaseService.getInstance().heartbeat();
+            isDatabaseValid = await this._database.heartbeat();
             if (isDatabaseValid instanceof Error) {
                 databaseError = isDatabaseValid.toString();
                 isDatabaseValid = false;
             }
         }
         
-        let resMessage: IPCConnectResponseMessage = new IPCConnectResponseMessage({
+        let resMessage: IPCConnect.Response = new IPCConnect.Response({
             valid: Boolean(isDatabaseValid),
             error: String(`${tunnelError||''} ${databaseError||''}`)
         });
@@ -109,7 +115,7 @@ export class AccountsIPC {
     }
 
     public async checkConnection(req: JsonValue): Promise<JsonValue> {
-        let reqMessage: IPCCheckConnectionRequestMessage = new IPCCheckConnectionRequestMessage(req);
+        let reqMessage: IPCCheckConnection.Request = new IPCCheckConnection.Request(req);
 
         let isDatabaseValid: boolean | Error;
         let databaseError: string;
@@ -124,14 +130,14 @@ export class AccountsIPC {
         
         if (!isSQLite && reqMessage.toMessage().ssh.enabled) {
             try {
-                if (this.tunnel != null) {
-                    this.tunnel.close();
+                if (this._tunnel != null) {
+                    this._tunnel.close();
                 }
             } catch(error) {
                 console.log("close error: ", error)
             }
 
-            this.tunnel = new TunnelService(
+            this._tunnel.init(
                 reqMessage.toMessage().ssh.hostname,
                 reqMessage.toMessage().ssh.username,
                 reqMessage.toMessage().ssh.port,
@@ -148,7 +154,7 @@ export class AccountsIPC {
             console.log("databasePort", databasePort);
 
             try {
-                let tunnelRes:any = await this.tunnel.start();
+                let tunnelRes:any = await this._tunnel.start();
                 console.log("tunnelRes", tunnelRes);
                 isTunnelValid = true;
                 databasePort = tunnelRes;
@@ -160,11 +166,11 @@ export class AccountsIPC {
         }
 
         if (isSQLite) {
-            await DatabaseService.getInstance().connectSQLite(
+            await this._database.connectSQLite(
                 reqMessage.toMessage().server.filename
             );
         } else {
-            await DatabaseService.getInstance().connect(
+            await this._database.connect(
                 serverTypeIdAsEnum(reqMessage.toMessage().server.server_type),
                 databaseHostname,
                 databasePort,
@@ -174,14 +180,14 @@ export class AccountsIPC {
             );
         }
 
-        isDatabaseValid = await DatabaseService.getInstance().heartbeat();
+        isDatabaseValid = await this._database.heartbeat();
         if (isDatabaseValid instanceof Error) {
             databaseError = isDatabaseValid.toString();
             isDatabaseValid = false;
         }
-        await DatabaseService.getInstance().disconnect();
+        await this._database.disconnect();
 
-        let resMessage: IPCCheckConnectionResponseMessage = new IPCCheckConnectionResponseMessage({
+        let resMessage: IPCCheckConnection.Response = new IPCCheckConnection.Response({
             server: {
                 valid: isDatabaseValid,
                 error: databaseError 

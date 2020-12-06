@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, TemplateRef, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
 import { IView } from '../../../../shared/interfaces/views.interface';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -7,11 +7,18 @@ import { ViewsService } from '../../../services/store/views.service';
 import { ViewsIPCService } from '../../../services/ipc/views.ipc.service';
 import { NgModel } from '@angular/forms';
 import { NbMenuService, NbDialogService, NbToastrService } from '@nebular/theme';
-import { Subscription } from 'rxjs';
+import { Observable, of, Subscription } from 'rxjs';
 import { ConfirmDeleteComponent } from '../../../components/dialogs/confirm-delete/confirm-delete.component';
-import { IIPCDeleteDataWhereOpr, IIPCDeleteDataResponseMessage, IIPCReadDataWhere, IIPCReadDataJoin, IIPCReadDataWhereOpr } from '../../../../shared/ipc/views.ipc';
+import { 
+  IPCDeleteData,
+  IPCReadData
+} from '../../../../shared/ipc/views.ipc';
+
 import { BreadcrumbsService } from '../../../services/breadcrumbs.service';
 import { IViewFilter } from '../../../../shared/interfaces/filters.interface';
+import { timer } from 'rxjs';
+import { WidgetsComponent } from './components/widgets/widgets.component'
+import { filter, reduce } from 'rxjs/operators';
 
 @Component({
   selector: 'app-view-view',
@@ -23,6 +30,7 @@ export class ViewViewComponent implements OnInit, OnDestroy {
   @ViewChild(DatatableComponent) table: DatatableComponent;
   @ViewChild('tableContextMenuTmpl', { static: true }) tableContextMenuTmpl: TemplateRef<any>;
   @ViewChild('subviewTableIconTmpl', { static: true }) subviewTableIconTmpl: TemplateRef<any>;
+  @ViewChild(WidgetsComponent) widgets: WidgetsComponent;
 
   view: IView;
   isLoading: boolean = false;
@@ -45,6 +53,7 @@ export class ViewViewComponent implements OnInit, OnDestroy {
 
   selectedFilter: IViewFilter;
 
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -54,7 +63,8 @@ export class ViewViewComponent implements OnInit, OnDestroy {
     private menuService: NbMenuService,
     private dialogService: NbDialogService,
     private toastService: NbToastrService,
-    private breadcrumbsService: BreadcrumbsService
+    private breadcrumbsService: BreadcrumbsService,
+    private cdr: ChangeDetectorRef
   ) { }
 
   ngAfterViewChecked() {
@@ -81,6 +91,7 @@ export class ViewViewComponent implements OnInit, OnDestroy {
       }
     });
   }
+
 
   ngOnDestroy() {
     this.menuServiceObserver.unsubscribe();
@@ -139,12 +150,12 @@ export class ViewViewComponent implements OnInit, OnDestroy {
       .onClose
       .subscribe(async (res) => {
         if (res)  {
-          const delRes:IIPCDeleteDataResponseMessage = await this.viewsIPCService.deleteData(
+          const delRes:IPCDeleteData.IResponse = await this.viewsIPCService.deleteData(
             this.view.table, 
             [
               {
                 column: pk,
-                opr: IIPCDeleteDataWhereOpr.EQ,
+                opr: IPCDeleteData.IIPCDeleteDataWhereOpr.EQ,
                 value: pkValue,
                 or: false
               }
@@ -187,7 +198,7 @@ export class ViewViewComponent implements OnInit, OnDestroy {
   get primaryKeyColumn(): string {
     let pri:string = null;
     this.view.columns.forEach(col => {
-      if (col.key == "PRI") {
+      if (col.key == "PRI" || col.key == "1") {
         pri = col.name;
       }
     })
@@ -219,7 +230,7 @@ export class ViewViewComponent implements OnInit, OnDestroy {
     await this.reload();
   }
 
-  private getViewJoints(): IIPCReadDataJoin[] {
+  private getViewJoints(): IPCReadData.IIPCReadDataJoin[] {
     return this.view
       .columns
       .filter(col => col.ref)
@@ -229,13 +240,14 @@ export class ViewViewComponent implements OnInit, OnDestroy {
           on: {
             local: col.name,
             target: col.ref.match_column,
-            opr: IIPCReadDataWhereOpr.EQ
+            opr: IPCReadData.IIPCReadDataWhereOpr.EQ
           }
-        } as IIPCReadDataJoin
+        } as IPCReadData.IIPCReadDataJoin
       ));
   }
 
   async reload() {
+    this.isLoading = true;
     let data = await this.viewsIPCService
       .readData(
         this.view.table, 
@@ -250,18 +262,25 @@ export class ViewViewComponent implements OnInit, OnDestroy {
     this.totalElements = data.count;
     let columns = data.data.length > 0 ? Object.keys([...data.data].shift()).map(val => ({ name: val, prop: val })) : [];
     console.log("columns", columns)
-    let subviewActionColumn = this.view.subview && this.view.subview.enabled ? [{ cellTemplate: this.subviewTableIconTmpl, frozenLeft: true, maxWidth: 50, resizeable: false }] : [];
+    let subviewActionColumn = this.view.subview && this.view.subview.enabled ? [{ cellTemplate: this.subviewTableIconTmpl, frozenLeft: true, maxWidth: 50, resizeable: false, sortable: false }] : [];
     this.columns = [
       ...subviewActionColumn,
       ...columns, 
-      { cellTemplate: this.tableContextMenuTmpl, frozenRight: true, maxWidth: 50, resizeable: false }
+      { cellTemplate: this.tableContextMenuTmpl, frozenRight: true, maxWidth: 50, resizeable: false, sortable: false }
     ];
     this.rows = [...data.data];
     console.log("rows", this.rows)
     console.log(data);
+    timer(2000).subscribe(() => { 
+      this.isLoading = false;
+      this.cdr.detectChanges();
+    });
+    console.log("this.widgets", this.widgets)
+    this.widgets.reloadData();
   }
 
   async setPage(pageInfo){
+    this.isLoading = true;
     console.log("pageInfo:", pageInfo);
     this.offset = pageInfo.offset;
     let sqlOffset = this.offset * pageInfo.pageSize;
@@ -273,11 +292,16 @@ export class ViewViewComponent implements OnInit, OnDestroy {
         sqlOffset,
         this.view.columns.filter(col => col.searchable).map(col => col.name),
         (this.searchInputModel && String(this.searchInputModel).length > 1) ? String(this.searchInputModel)  : null,
-        this.selectedFilter ? this.selectedFilter.where as IIPCReadDataWhere[] : null,
+        this.selectedFilter ? this.selectedFilter.where as IPCReadData.IIPCReadDataWhere[] : null,
         this.getViewJoints()
       );
     this.rows = [...data.data];
     this.totalElements = data.count;
+
+    timer(1000).subscribe(() => { 
+      this.isLoading = false;
+      this.cdr.detectChanges();
+    });
   }
 
   doSearch(event): void {
@@ -298,6 +322,7 @@ export class ViewViewComponent implements OnInit, OnDestroy {
       mItem.data = row;
       return mItem
     });
+    console.log(this.menuItems)
   }
 
   subviewTableAction(row): void {

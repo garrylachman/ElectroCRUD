@@ -1,3 +1,5 @@
+import { fluentProvide } from "inversify-binding-decorators";
+
 import { Server, AddressInfo } from "net";
 import { Config } from 'tunnel-ssh';
 import * as TunnelSSH from 'tunnel-ssh';
@@ -7,12 +9,18 @@ import { readFileSync } from 'fs';
 
 const sleep = m => new Promise(r => setTimeout(r, m))
 
+@fluentProvide(TunnelService).inSingletonScope().done()
 export class TunnelService {
     
     private tunnel: Server;
     private config: any;
 
-    constructor(
+    constructor()  {
+
+    }
+    
+
+    public init(
         hostname: string,
         username: string,
         sshPort: number,
@@ -43,6 +51,8 @@ export class TunnelService {
 
         console.log("this.config", this.config)
     }
+
+
 
     public async start():Promise<any> {
         let localPort = await getPort({port: getPort.makeRange(5000, 30000)});

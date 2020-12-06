@@ -3,7 +3,7 @@ import { IAccount } from '../../shared/interfaces/accounts.interface';
 import { AccountsService } from './store/accounts.service';
 import { IView } from '../../shared/interfaces/views.interface';
 import { AccountsIPCService } from './ipc/accounts.service';
-import { IIPCConnectResponseMessage } from '../../shared/ipc/accounts.ipc';
+import { IPCConnect } from '../../shared/ipc/accounts.ipc';
 import { BehaviorSubject, Subject } from 'rxjs';
 
 
@@ -22,8 +22,8 @@ export class SessionService {
     this.changes = new BehaviorSubject(this._activeAccount);
    }
 
-  public async setActiveAccount(account: IAccount): Promise<IIPCConnectResponseMessage> {
-    let res: IIPCConnectResponseMessage = await this.accountsIPCService.connect(account);
+  public async setActiveAccount(account: IAccount): Promise<IPCConnect.IResponse> {
+    let res: IPCConnect.IResponse = await this.accountsIPCService.connect(account);
     if (res.valid) {
       this._activeAccount = account;
       this.changes.next(this._activeAccount);

@@ -2,10 +2,12 @@
   
         <nb-layout-column  class="colored-column-primary padding-0" start>
 <nb-card>
-    <nb-card-header><h1 class="page-header h4">Accounts</h1></nb-card-header>
+    <nb-card-header>
+        <h4 class="page-header h4">Accounts</h4>
+    </nb-card-header>
 </nb-card>
 
-<nb-card [nbSpinner]="isLoading" nbSpinnerSize="giant" nbSpinnerStatus="primary">
+<nb-card [nbSpinner]="isSpinLoading" nbSpinnerSize="giant" nbSpinnerStatus="primary" nbSpinnerMessage="Doing Something">
     <nb-card-header class="d-flex justify-content-between">
         <input nbInput shape="semi-round" 
             type="text"
@@ -28,7 +30,7 @@
             [columns]="columns"
             [columnMode]="'force'"
             [headerHeight]="30"
-            [footerHeight]="30"
+            [footerHeight]="'auto'"
             [rowHeight]="'auto'"
             [reorderable]="reorderable"
             [limit]="10"

@@ -1,9 +1,6 @@
 import { Injectable } from '@angular/core';
 import { 
-  IPC_CHANNEL_QUERY,
-  IPCQueriesResponseMessage,
-  IPCQueriesRequestMessage,
-  IIPCQueriesResponseMessage
+  IPCQuery
 } from '../../../shared/ipc/queries.ipc';
 import { ipcRenderer } from 'electron-better-ipc';
 
@@ -14,14 +11,14 @@ export class QueriesIPCService {
   
   constructor() { }
 
-  public async executeQuery(query: string): Promise<IIPCQueriesResponseMessage> {
-    const req: IPCQueriesRequestMessage = new IPCQueriesRequestMessage({
+  public async executeQuery(query: string): Promise<IPCQuery.IResponse> {
+    const req: IPCQuery.Request = new IPCQuery.Request({
       query: query
     });
     console.log("req", req);
-    const rawRes:any = await ipcRenderer.invoke(IPC_CHANNEL_QUERY, req.toJsonValue());
+    const rawRes:any = await ipcRenderer.invoke(IPCQuery.CHANNEL, req.toJsonValue());
     console.log("rawRes", rawRes);
-    return new IPCQueriesResponseMessage(rawRes).toMessage()
+    return new IPCQuery.Response(rawRes).toMessage()
   }
 
 }

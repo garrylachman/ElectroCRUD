@@ -1,15 +1,14 @@
 import { IPCBaseMessage } from '../base.ipc'
 
-export const IPC_CHANNEL_LIST_OF_TABLES: string = "channel_list_of_tables";
-
-export interface IIPCListOfTablesRequestMessage { }
-
-export interface IIPCListOfTablesResponseMessage {
-    valid: boolean;
-    error?: string;
-    tables?: string[]
+export namespace IPCListOfTables {
+    export interface IRequest {
+    }
+    export interface IResponse {
+        valid: boolean;
+        error?: string;
+        tables?: string[]
+    }
+    export class Request extends IPCBaseMessage<IRequest> {}
+    export class Response extends IPCBaseMessage<IResponse> {}
+    export const CHANNEL: string = "channel_list_of_tables";
 }
-
-export class IPCListOfTablesResponseMessage extends IPCBaseMessage<IIPCListOfTablesResponseMessage> { }
-
-export class IPCListOfTablesRequestMessage extends IPCBaseMessage<IIPCListOfTablesRequestMessage> { }

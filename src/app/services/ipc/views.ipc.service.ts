@@ -1,48 +1,14 @@
 import { Injectable } from '@angular/core';
 import { 
-  IPC_CHANNEL_LIST_OF_TABLES,
-  IPCListOfTablesRequestMessage,
-  IPCListOfTablesResponseMessage,
-
-  IIPCListOfTablesResponseMessage,
-  IIPCTableInfoResponseMessage,
-  IPCTableInfoRequestMessage,
-
-  IPC_CHANNEL_TABLE_INFO,
-  IIPCReadDataResponseMessage,
-  IPCReadDataRequestMessage,
-  IPC_CHANNEL_READ_DATA,
-  IPCReadDataResponseMessage,
-  IIPCReadDataWhere,
-
-  IPC_CHANNEL_UPDATE_DATA,
-  IIPCUpdateDataWhere,
-  IIPCUpdateDataUpdate,
-  IIPCUpdateDataResponseMessage,
-  IPCUpdateDataRequestMessage,
-  IPCUpdateDataResponseMessage,
-
-  IPC_CHANNEL_INSERT_DATA,
-  IIPCInsertData,
-  IIPCInsertDataResponseMessage,
-  IPCInsertDataRequestMessage,
-  IPCInsertDataResponseMessage,
-
-  IPC_CHANNEL_DELETE_DATA,
-  IIPCDeleteDataWhere,
-  IIPCDeleteDataResponseMessage,
-  IPCDeleteDataRequestMessage,
-  IPCDeleteDataResponseMessage,
-
-  IPC_CHANNEL_READ_WIDGET_DATA,
-  IIPCReadWidgetDataResponseMessage,
-  IPCReadWidgetDataRequestMessage,
-  IPCReadWidgetDataResponseMessage,
-  IIPCReadDataJoin,
+  IPCListOfTables,
+  IPCTableInfo,
+  IPCUpdateData,
+  IPCInsertData,
+  IPCDeleteData,
+  IPCReadWidgetData,
+  IPCReadData
 } from '../../../shared/ipc/views.ipc';
 import { ipcRenderer } from 'electron-better-ipc';
-import { IAccount } from '../../../shared/interfaces/accounts.interface';
-import { IWidgetWhere } from '../../../shared/interfaces/widgets.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -51,22 +17,22 @@ export class ViewsIPCService {
   
   constructor() { }
 
-  public async listOfTables(): Promise<IIPCListOfTablesResponseMessage> {
-    const req: IPCListOfTablesRequestMessage = new IPCListOfTablesRequestMessage({});
+  public async listOfTables(): Promise<IPCListOfTables.IResponse> {
+    const req: IPCListOfTables.Request = new IPCListOfTables.Request({});
     console.log("req", req);
-    const rawRes:any = await ipcRenderer.invoke(IPC_CHANNEL_LIST_OF_TABLES, req.toJsonValue());
+    const rawRes:any = await ipcRenderer.invoke(IPCListOfTables.CHANNEL, req.toJsonValue());
     console.log("rawRes", rawRes);
-    return new IPCListOfTablesResponseMessage(rawRes).toMessage()
+    return new IPCListOfTables.Response(rawRes).toMessage()
   }
 
-  public async tableInfo(table: string): Promise<IIPCTableInfoResponseMessage> {
-    const req: IPCTableInfoRequestMessage = new IPCTableInfoRequestMessage({
+  public async tableInfo(table: string): Promise<IPCTableInfo.IResponse> {
+    const req: IPCTableInfo.Request = new IPCTableInfo.Request({
       table: table
     });
     console.log("req", req);
-    const rawRes:any = await ipcRenderer.invoke(IPC_CHANNEL_TABLE_INFO, req.toJsonValue());
+    const rawRes:any = await ipcRenderer.invoke(IPCTableInfo.CHANNEL, req.toJsonValue());
     console.log("rawRes", rawRes);
-    return new IPCListOfTablesResponseMessage(rawRes).toMessage()
+    return new IPCTableInfo.Response(rawRes).toMessage()
   }
 
   public async readData(
@@ -76,10 +42,10 @@ export class ViewsIPCService {
       offset: number, 
       searchColumns?: string[], 
       searchText?: string,
-      where?: IIPCReadDataWhere[],
-      join?: IIPCReadDataJoin[]
-    ): Promise<IIPCReadDataResponseMessage> {
-    const req: IPCReadDataRequestMessage = new IPCReadDataRequestMessage({
+      where?: IPCReadData.IIPCReadDataWhere[],
+      join?: IPCReadData.IIPCReadDataJoin[]
+    ): Promise<IPCReadData.IResponse> {
+    const req: IPCReadData.Request = new IPCReadData.Request({
       table: table,
       columns: columns,
       limit: {
@@ -95,53 +61,53 @@ export class ViewsIPCService {
     });
     console.log("req", req);
 
-    const rawRes:any = await ipcRenderer.invoke(IPC_CHANNEL_READ_DATA, req.toJsonValue());
+    const rawRes:any = await ipcRenderer.invoke(IPCReadData.CHANNEL, req.toJsonValue());
     console.log("rawRes", rawRes);
-    return new IPCReadDataResponseMessage(rawRes).toMessage()
+    return new IPCReadData.Response(rawRes).toMessage()
   }
 
   public async updateData(
     table: string, 
-    update: IIPCUpdateDataUpdate, 
-    where?: IIPCUpdateDataWhere[]
-  ): Promise<IIPCUpdateDataResponseMessage> {
-    const req: IPCUpdateDataRequestMessage = new IPCUpdateDataRequestMessage({
+    update: IPCUpdateData.IIPCUpdateDataUpdate, 
+    where?: IPCUpdateData.IIPCUpdateDataWhere[]
+  ): Promise<IPCUpdateData.IResponse> {
+    const req: IPCUpdateData.Request = new IPCUpdateData.Request({
       table: table,
       update: update,
       where: where
     });
     console.log("req", req);
-    const rawRes:any = await ipcRenderer.invoke(IPC_CHANNEL_UPDATE_DATA, req.toJsonValue());
+    const rawRes:any = await ipcRenderer.invoke(IPCUpdateData.CHANNEL, req.toJsonValue());
     console.log("rawRes", rawRes);
-    return new IPCUpdateDataResponseMessage(rawRes).toMessage()
+    return new IPCUpdateData.Response(rawRes).toMessage()
   }
 
   public async insertData(
     table: string, 
-    data: IIPCInsertData, 
-  ): Promise<IIPCInsertDataResponseMessage> {
-    const req: IPCInsertDataRequestMessage = new IPCInsertDataRequestMessage({
+    data: IPCInsertData.IIPCInsertData, 
+  ): Promise<IPCInsertData.IResponse> {
+    const req: IPCInsertData.Request = new IPCInsertData.Request({
       table: table,
       data: data
     });
     console.log("req", req);
-    const rawRes:any = await ipcRenderer.invoke(IPC_CHANNEL_INSERT_DATA, req.toJsonValue());
+    const rawRes:any = await ipcRenderer.invoke(IPCInsertData.CHANNEL, req.toJsonValue());
     console.log("rawRes", rawRes);
-    return new IPCInsertDataResponseMessage(rawRes).toMessage()
+    return new IPCInsertData.Response(rawRes).toMessage()
   }
 
   public async deleteData(
     table: string, 
-    where?: IIPCDeleteDataWhere[]
-  ): Promise<IIPCDeleteDataResponseMessage> {
-    const req: IPCDeleteDataRequestMessage = new IPCDeleteDataRequestMessage({
+    where?: IPCDeleteData.IIPCDeleteDataWhere[]
+  ): Promise<IPCDeleteData.IResponse> {
+    const req: IPCDeleteData.Request = new IPCDeleteData.Request({
       table: table,
       where: where
     });
     console.log("req", req);
-    const rawRes:any = await ipcRenderer.invoke(IPC_CHANNEL_DELETE_DATA, req.toJsonValue());
+    const rawRes:any = await ipcRenderer.invoke(IPCDeleteData.CHANNEL, req.toJsonValue());
     console.log("rawRes", rawRes);
-    return new IPCDeleteDataResponseMessage(rawRes).toMessage()
+    return new IPCDeleteData.Response(rawRes).toMessage()
   }
 
   public async readWidgetData(
@@ -155,8 +121,8 @@ export class ViewsIPCService {
         value: string,
         or: boolean
     }[]
-  ): Promise<IIPCReadWidgetDataResponseMessage> {
-    const req: IPCReadWidgetDataRequestMessage = new IPCReadWidgetDataRequestMessage({
+  ): Promise<IPCReadWidgetData.IResponse> {
+    const req: IPCReadWidgetData.Request = new IPCReadWidgetData.Request({
       table: table,
       column: column,
       distinct: distinct,
@@ -164,9 +130,9 @@ export class ViewsIPCService {
       where: where
     });
     console.log("req", req);
-    const rawRes:any = await ipcRenderer.invoke(IPC_CHANNEL_READ_WIDGET_DATA, req.toJsonValue());
+    const rawRes:any = await ipcRenderer.invoke(IPCReadWidgetData.CHANNEL, req.toJsonValue());
     console.log("rawRes", rawRes);
-    return new IPCReadWidgetDataResponseMessage(rawRes).toMessage()
+    return new IPCReadWidgetData.Response(rawRes).toMessage()
   }
 
 }

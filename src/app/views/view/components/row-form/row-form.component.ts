@@ -33,7 +33,7 @@ export class RowFormComponent implements OnInit {
     this.view.columns.forEach((col:IViewColumn) => {
       console.log("type", col);
       // string
-      if (["char", "varchar", "bpchar"].includes(String(col.type))) {
+      if (["char", "varchar", "bpchar", "nvarchar"].includes(String(col.type))) {
         if (col.length && col.length > 50)  {
           this.fields.push(this.generateTextArea(col));
         } else {
@@ -41,7 +41,7 @@ export class RowFormComponent implements OnInit {
         }
       }
       // number 
-      if (["int", "smallint", "tinyint", "mediumint", "int4", "int8", "int2"].includes(String(col.type))) {
+      if (["int", "smallint", "tinyint", "mediumint", "int4", "int8", "int2", "integer"].includes(String(col.type))) {
         this.fields.push(this.generateInputNumeric(col));
       }
       // decimal 

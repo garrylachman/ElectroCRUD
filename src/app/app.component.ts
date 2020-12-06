@@ -17,7 +17,6 @@ import { IView } from '../shared/interfaces/views.interface';
 import { version } from '../../package.json';
 import { ViewsService } from './services/store/views.service';
 
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -26,15 +25,16 @@ import { ViewsService } from './services/store/views.service';
 export class AppComponent {
   account:IAccount;
   versionFromPkg: string = version;
-  userMenu = [{ title: 'Profile' }, { title: 'Log out' }];
   defaultItems: NbMenuItem[] = [
     {
       title: 'Views',
       icon: 'folder-outline',
       expanded: true,
-      children: [
- 
-      ]
+      badge: {
+        text: '0',
+        status: 'primary',
+      },
+      children: []
     },
     {
       title: 'Add View',
@@ -70,6 +70,7 @@ export class AppComponent {
       console.log('Mode web');
     }
 
+
     this.sessionService.changes.subscribe({
       next: (v:IAccount) => {
         this.account = v;
@@ -83,23 +84,21 @@ export class AppComponent {
   }
 
   changeTheme($event) {
-    console.log($event);
     this.themeService.changeTheme($event);
   }
 
   reload() {
     let views:IView[] = this.viewsService.all();
-    console.log(this.defaultItems);
+    
+    this.items = [...this.defaultItems].map(v => ({...v}));
+    
+    const viewItems: any[] = [...views].map((view) => ({...{
+      title: view.name,
+      icon: 'layers-outline',
+      link: `/views/${view.id}/view`
+    }}));
 
-    this.items = [...this.defaultItems];
-    this.items[0].children = [];
-    views.forEach((view:IView) => {
-      console.log(view);
-      this.items[0].children.push({
-        title: view.name,
-        icon: 'layers-outline',
-        link: `/views/${view.id}/view`
-      })
-    })
+    this.items[0].children = viewItems; 
+    this.items[0].badge.text = `${this.items[0].children.length}`;
   }
 }

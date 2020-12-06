@@ -6,7 +6,7 @@ import { ViewsService } from '../../../services/store/views.service';
 import { ViewsIPCService } from '../../../services/ipc/views.ipc.service';
 import { NbMenuService, NbToastrService } from '@nebular/theme';
 import { Subscription } from 'rxjs';
-import { IIPCInsertDataResponseMessage } from '../../../../shared/ipc/views.ipc';
+import { IPCInsertData } from '../../../../shared/ipc/views.ipc';
 import { RowFormComponent } from '../components/row-form/row-form.component'
 import { BreadcrumbsService } from '../../../services/breadcrumbs.service';
 
@@ -47,7 +47,7 @@ export class ViewAddComponent implements OnInit, OnDestroy {
 
     this.formRef = {
       save: async (data): Promise<boolean> => {
-        let res:IIPCInsertDataResponseMessage = await this.viewsIPCService.insertData(
+        let res:IPCInsertData.IResponse = await this.viewsIPCService.insertData(
           this.view.table, 
           data
         )

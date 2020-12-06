@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ViewsRoutingModule } from './views-routing.module';
 import { ViewComponent } from './view/view.component';
@@ -48,6 +48,10 @@ import { QueryComponent } from './query/query.component';
 import { MonacoEditorModule } from '@materia-ui/ngx-monaco-editor';
 
 @NgModule({
+  /*schemas: [
+    CUSTOM_ELEMENTS_SCHEMA,
+    NO_ERRORS_SCHEMA
+  ],*/
   declarations: [ViewComponent, ConfigureComponent, EmptyComponent, ViewEditComponent, ViewAddComponent, WidgetsComponent, ViewViewComponent, RowFormComponent, FormlyFieldNbInputComponent, FormlyFieldNbSelectComponent, FormlyFieldNbChechboxComponent, FormlyFieldNbDatepickerComponent, FormlyFieldNbTextareaComponent, FiltersComponent, SubViewComponent, QueryComponent],
   providers: [BreadcrumbsService],
   imports: [

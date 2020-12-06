@@ -1,20 +1,19 @@
 import { IPCBaseMessage } from "./base.ipc";
 
-export const IPC_CHANNEL_QUERY: string = "channel_query";
 
-export interface IIPQueriesRequestMessage {
-    query: string;
+export namespace IPCQuery {
+    export interface IRequest {
+        query: string;
+    }
+    export interface IResponse {
+        valid: boolean;
+        error?: string;
+        data?: {
+            [key: string]: any
+        }[],
+        count?: number;
+    }
+    export class Request extends IPCBaseMessage<IRequest> {}
+    export class Response extends IPCBaseMessage<IResponse> {}
+    export const CHANNEL: string = "channel_query";
 }
-
-export interface IIPCQueriesResponseMessage {
-    valid: boolean;
-    error?: string;
-    data?: {
-        [key: string]: any
-    }[],
-    count?: number;
-}
-
-export class IPCQueriesResponseMessage extends IPCBaseMessage<IIPCQueriesResponseMessage> { }
-
-export class IPCQueriesRequestMessage extends IPCBaseMessage<IIPQueriesRequestMessage> { }
