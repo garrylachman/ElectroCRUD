@@ -6,7 +6,7 @@ import { AddEditAccountComponent } from './add-edit-account/add-edit-account.com
 import { AccountsService, ServerType, ServerIcon } from '../services/store/accounts.service';
 import { IAccount } from '../../shared/interfaces/accounts.interface';
 import { SessionService } from '../services/session.service';
-import { IIPCConnectResponseMessage } from '../../shared/ipc/accounts.ipc';
+import { IPCConnect } from '../../shared/ipc/accounts.ipc';
 import { timer } from 'rxjs';
 
 @Component({
@@ -192,7 +192,7 @@ export class AccountsComponent implements OnInit {
   async use(row) {
     this.isSpinLoading = true;
     let account:IAccount = this.accountsService.get(row.id);
-    let res:IIPCConnectResponseMessage = await this.sessionService.setActiveAccount(account);
+    let res:IPCConnect.IResponse = await this.sessionService.setActiveAccount(account);
     timer(2000).subscribe(() => { 
       this.isSpinLoading = false;
       this.cdr.detectChanges();

@@ -8,7 +8,7 @@
   } from '@nebular/theme';
   import { NgModel, FormGroup, FormBuilder, Validators } from '@angular/forms';
   import { ViewsIPCService } from '../../services/ipc/views.ipc.service';
-  import { IPCListOfTablesResponseMessage, IIPCListOfTablesResponseMessage, IIPCTableInfoResponseMessage, IIPCTableInfoColumn } from '../../../shared/ipc/views.ipc';
+  import { IPCListOfTables, IPCTableInfo } from '../../../shared/ipc/views.ipc';
   import { DatatableComponent } from '@swimlane/ngx-datatable';
   import { ColumnReferanceDialogComponent } from './components/column-referance-dialog/column-referance-dialog.component';
   import { deepEqual } from 'fast-equals';
@@ -177,7 +177,7 @@
       console.log(newTable)
       let isSameTable = (this.view.table == String(newTable));
       this.view.table = String(newTable);
-      let resColumns:IIPCTableInfoResponseMessage = await this.viewsIPCService.tableInfo(String(newTable));
+      let resColumns:IPCTableInfo.IResponse = await this.viewsIPCService.tableInfo(String(newTable));
 
       if (!isSameTable) {
         this.view.terms = {
@@ -186,7 +186,7 @@
         };
       }
 
-      let columnsFromDB = resColumns.columns.map((col:IIPCTableInfoColumn) => {
+      let columnsFromDB = resColumns.columns.map((col:IPCTableInfo.TableInfoColumn) => {
         let localCol = this.view.columns.filter(fCol => fCol.name == col.name);
         return {
           ...col,
@@ -253,7 +253,7 @@
 
     public async loadTablesList() {
       console.log("loadTablesList");
-      let res:IIPCListOfTablesResponseMessage = await this.viewsIPCService.listOfTables();
+      let res:IPCListOfTables.IResponse = await this.viewsIPCService.listOfTables();
       console.log("loadTablesList: ", res);
       if (res.valid) {
         this.tables = res.tables;

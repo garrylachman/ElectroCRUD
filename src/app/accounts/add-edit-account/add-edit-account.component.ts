@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NbDialogRef } from '@nebular/theme';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IAccount } from '../../../shared/interfaces/accounts.interface';
-import { IIPCCheckConnectionResponseMessage } from '../../../shared/ipc/accounts.ipc';
+import { IPCCheckConnection } from '../../../shared/ipc/accounts.ipc';
 import { AccountsIPCService } from '../../services/ipc/accounts.service';
 import { remote } from 'electron';
 
@@ -236,7 +236,7 @@ export class AddEditAccountComponent implements OnInit {
   async testConnection() {
     this.isLoading = true;
     this.testLog = [];
-    const res:IIPCCheckConnectionResponseMessage = await this.accountsIPCService.checkConnection(this.formAsAccount());
+    const res:IPCCheckConnection.IResponse = await this.accountsIPCService.checkConnection(this.formAsAccount());
     this.isSaveEnabled = (this.formAsAccount().ssh.enabled) ? (res.ssh.valid && res.server.valid) : res.server.valid;
 
     if (this.formAsAccount().ssh.enabled) {

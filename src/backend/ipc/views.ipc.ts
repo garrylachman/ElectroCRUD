@@ -1,34 +1,14 @@
 import "reflect-metadata";
 import { fluentProvide } from "inversify-binding-decorators";
 
-import { 
-    IPC_CHANNEL_LIST_OF_TABLES,
-    IPCListOfTablesRequestMessage,
-    IPCListOfTablesResponseMessage,
-
-    IPC_CHANNEL_TABLE_INFO,
-    IPCTableInfoRequestMessage,
-    IPCTableInfoResponseMessage,
-
-    IPC_CHANNEL_READ_DATA,
-    IPCReadDataRequestMessage,
-    IPCReadDataResponseMessage,
-
-    IPC_CHANNEL_UPDATE_DATA,
-    IPCUpdateDataRequestMessage,
-    IPCUpdateDataResponseMessage,
-
-    IPC_CHANNEL_INSERT_DATA,
-    IPCInsertDataRequestMessage,
-    IPCInsertDataResponseMessage,
-
-    IPC_CHANNEL_DELETE_DATA,
-    IPCDeleteDataRequestMessage,
-    IPCDeleteDataResponseMessage,
-
-    IPC_CHANNEL_READ_WIDGET_DATA,
-    IPCReadWidgetDataRequestMessage,
-    IPCReadWidgetDataResponseMessage,
+import {
+    IPCListOfTables,
+    IPCTableInfo,
+    IPCReadData,
+    IPCUpdateData,
+    IPCInsertData,
+    IPCDeleteData,
+    IPCReadWidgetData
 } from '../../shared/ipc/views.ipc';
 
 import { ipcMain } from 'electron-better-ipc';
@@ -47,17 +27,17 @@ export class ViewsIPC {
     }
     
     public listen() {
-        ipcMain.handle(IPC_CHANNEL_LIST_OF_TABLES,  async (event, req: JsonValue) => this.listOfTables(req));
-        ipcMain.handle(IPC_CHANNEL_TABLE_INFO,  async (event, req: JsonValue) => this.tableInfo(req));
-        ipcMain.handle(IPC_CHANNEL_READ_DATA, async (event, req: JsonValue) => this.readData(req));
-        ipcMain.handle(IPC_CHANNEL_UPDATE_DATA,  async (event, req: JsonValue) => this.updateData(req));
-        ipcMain.handle(IPC_CHANNEL_INSERT_DATA,  async (event, req: JsonValue) => this.insertData(req));
-        ipcMain.handle(IPC_CHANNEL_DELETE_DATA,  async (event, req: JsonValue) => this.deleteData(req));
-        ipcMain.handle(IPC_CHANNEL_READ_WIDGET_DATA,  async (event, req: JsonValue) => this.readWidgetData(req));
+        ipcMain.handle(IPCListOfTables.CHANNEL,  async (event, req: JsonValue) => this.listOfTables(req));
+        ipcMain.handle(IPCTableInfo.CHANNEL,  async (event, req: JsonValue) => this.tableInfo(req));
+        ipcMain.handle(IPCReadData.CHANNEL, async (event, req: JsonValue) => this.readData(req));
+        ipcMain.handle(IPCUpdateData.CHANNEL,  async (event, req: JsonValue) => this.updateData(req));
+        ipcMain.handle(IPCInsertData.CHANNEL,  async (event, req: JsonValue) => this.insertData(req));
+        ipcMain.handle(IPCDeleteData.CHANNEL,  async (event, req: JsonValue) => this.deleteData(req));
+        ipcMain.handle(IPCReadWidgetData.CHANNEL,  async (event, req: JsonValue) => this.readWidgetData(req));
     }
 
     public async listOfTables(req: JsonValue): Promise<JsonValue> {
-        let reqMessage: IPCListOfTablesRequestMessage = new IPCListOfTablesRequestMessage(req);
+        let reqMessage: IPCListOfTables.Request = new IPCListOfTables.Request(req);
 
         let isValid: boolean;
         let dbError: string;
@@ -72,7 +52,7 @@ export class ViewsIPC {
             dbRes = res;
         }
 
-        let resMessage: IPCListOfTablesResponseMessage = new IPCListOfTablesResponseMessage({
+        let resMessage: IPCListOfTables.Response = new IPCListOfTables.Response({
             valid: isValid,
             error: dbError,
             tables: dbRes
@@ -83,7 +63,7 @@ export class ViewsIPC {
     }
 
     public async tableInfo(req: JsonValue): Promise<JsonValue> {
-        let reqMessage: IPCTableInfoRequestMessage = new IPCTableInfoRequestMessage(req);
+        let reqMessage: IPCTableInfo.Request = new IPCTableInfo.Request(req);
 
         let isValid: boolean;
         let dbError: string;
@@ -98,7 +78,7 @@ export class ViewsIPC {
             dbRes = res;
         }
 
-        let resMessage: IPCTableInfoResponseMessage = new IPCTableInfoResponseMessage({
+        let resMessage: IPCTableInfo.Response = new IPCTableInfo.Response({
             valid: isValid,
             error: dbError,
             columns: dbRes
@@ -109,7 +89,7 @@ export class ViewsIPC {
     }
 
     public async readData(req: JsonValue): Promise<JsonValue> {
-        let reqMessage: IPCReadDataRequestMessage = new IPCReadDataRequestMessage(req);
+        let reqMessage: IPCReadData.Request = new IPCReadData.Request(req);
 
         let isValid: boolean;
         let dbError: string;
@@ -134,7 +114,7 @@ export class ViewsIPC {
             dbRes = res;
         }
 
-        let resMessage: IPCReadDataResponseMessage = new IPCReadDataResponseMessage({
+        let resMessage: IPCReadData.Response = new IPCReadData.Response({
             valid: isValid,
             error: dbError,
             data: dbRes.data,
@@ -146,7 +126,7 @@ export class ViewsIPC {
     }
 
     public async updateData(req: JsonValue): Promise<JsonValue> {
-        let reqMessage: IPCUpdateDataRequestMessage = new IPCUpdateDataRequestMessage(req);
+        let reqMessage: IPCUpdateData.Request = new IPCUpdateData.Request(req);
 
         let isValid: boolean;
         let dbError: string;
@@ -166,7 +146,7 @@ export class ViewsIPC {
             dbRes = res;
         }
 
-        let resMessage: IPCUpdateDataResponseMessage = new IPCUpdateDataResponseMessage({
+        let resMessage: IPCUpdateData.Response = new IPCUpdateData.Response({
             valid: isValid,
             error: dbError
         });
@@ -176,7 +156,7 @@ export class ViewsIPC {
     }
 
     public async insertData(req: JsonValue): Promise<JsonValue> {
-        let reqMessage: IPCInsertDataRequestMessage = new IPCInsertDataRequestMessage(req);
+        let reqMessage: IPCInsertData.Request = new IPCInsertData.Request(req);
 
         let isValid: boolean;
         let dbError: string;
@@ -195,7 +175,7 @@ export class ViewsIPC {
             dbRes = res;
         }
 
-        let resMessage: IPCInsertDataResponseMessage = new IPCInsertDataResponseMessage({
+        let resMessage: IPCInsertData.Response = new IPCInsertData.Response({
             valid: isValid,
             error: dbError
         });
@@ -205,7 +185,7 @@ export class ViewsIPC {
     }
 
     public async deleteData(req: JsonValue): Promise<JsonValue> {
-        let reqMessage: IPCDeleteDataRequestMessage = new IPCDeleteDataRequestMessage(req);
+        let reqMessage: IPCDeleteData.Request = new IPCDeleteData.Request(req);
 
         let isValid: boolean;
         let dbError: string;
@@ -224,7 +204,7 @@ export class ViewsIPC {
             dbRes = res;
         }
 
-        let resMessage: IPCDeleteDataResponseMessage = new IPCDeleteDataResponseMessage({
+        let resMessage: IPCDeleteData.Response = new IPCDeleteData.Response({
             valid: isValid,
             error: dbError
         });
@@ -234,7 +214,7 @@ export class ViewsIPC {
     }
 
     public async readWidgetData(req: JsonValue): Promise<JsonValue> {
-        let reqMessage: IPCReadWidgetDataRequestMessage = new IPCReadWidgetDataRequestMessage(req);
+        let reqMessage: IPCReadWidgetData.Request = new IPCReadWidgetData.Request(req);
         console.log("reqMessage", reqMessage);
         let isValid: boolean;
         let dbError: string;
@@ -256,7 +236,7 @@ export class ViewsIPC {
             dbRes = res;
         }
 
-        let resMessage: IPCReadWidgetDataResponseMessage = new IPCReadWidgetDataResponseMessage({
+        let resMessage: IPCReadWidgetData.Response = new IPCReadWidgetData.Response({
             valid: isValid,
             error: dbError,
             data: dbRes.data,

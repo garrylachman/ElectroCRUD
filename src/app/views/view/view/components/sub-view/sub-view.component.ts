@@ -3,7 +3,7 @@ import { ISubView, IView } from '../../../../../../shared/interfaces/views.inter
 import { ViewsIPCService } from '../../../../../services/ipc/views.ipc.service';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
 import { ViewsService } from '../../../../../services/store/views.service';
-import { IIPCReadDataWhereOpr } from '../../../../../../shared/ipc/views.ipc';
+import { IPCReadData } from '../../../../../../shared/ipc/views.ipc';
 
 @Component({
   selector: 'app-sub-view',
@@ -54,7 +54,7 @@ export class SubViewComponent implements OnInit {
         [
           {
             column: this.subview.ref.target_column,
-            opr: IIPCReadDataWhereOpr.EQ,
+            opr: IPCReadData.IIPCReadDataWhereOpr.EQ,
             value: this.row[this.subview.ref.source_column],
             or: false
           }
@@ -86,7 +86,7 @@ export class SubViewComponent implements OnInit {
         [
           {
             column: this.subview.ref.target_column,
-            opr: IIPCReadDataWhereOpr.EQ,
+            opr: IPCReadData.IIPCReadDataWhereOpr.EQ,
             value: this.row[this.subview.ref.source_column],
             or: false
           }

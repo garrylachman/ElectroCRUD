@@ -25,7 +25,6 @@ import { ViewsService } from './services/store/views.service';
 export class AppComponent {
   account:IAccount;
   versionFromPkg: string = version;
-  userMenu = [{ title: 'Profile' }, { title: 'Log out' }];
   defaultItems: NbMenuItem[] = [
     {
       title: 'Views',
@@ -85,43 +84,21 @@ export class AppComponent {
   }
 
   changeTheme($event) {
-    console.log($event);
     this.themeService.changeTheme($event);
   }
 
   reload() {
-    console.log("reload - menu")
     let views:IView[] = this.viewsService.all();
     
     this.items = [...this.defaultItems].map(v => ({...v}));
     
-    //this.items[0].children = [];
-
     const viewItems: any[] = [...views].map((view) => ({...{
       title: view.name,
       icon: 'layers-outline',
       link: `/views/${view.id}/view`
     }}));
 
-    console.log("viewItems", Array.from(viewItems))
-
     this.items[0].children = viewItems; 
-    //this.defaultItems[0].children = 
-
     this.items[0].badge.text = `${this.items[0].children.length}`;
-
-    /*views.forEach((view:IView) => {
-      console.log(view);
-      viewItems.push({
-        title: view.name,
-        icon: 'layers-outline',
-        link: `/views/${view.id}/view`
-      })
-    })*/
-
-    //this.defaultItems[0].children = [...viewItems]
-    //this.items = [...this.defaultItems].map(v => ({...v}));
-    console.log("this.items", [...this.items]);
-    //this.items = [...this.items];
   }
 }

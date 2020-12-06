@@ -9,7 +9,11 @@ import { NgModel } from '@angular/forms';
 import { NbMenuService, NbDialogService, NbToastrService } from '@nebular/theme';
 import { Observable, of, Subscription } from 'rxjs';
 import { ConfirmDeleteComponent } from '../../../components/dialogs/confirm-delete/confirm-delete.component';
-import { IIPCDeleteDataWhereOpr, IIPCDeleteDataResponseMessage, IIPCReadDataWhere, IIPCReadDataJoin, IIPCReadDataWhereOpr } from '../../../../shared/ipc/views.ipc';
+import { 
+  IPCDeleteData,
+  IPCReadData
+} from '../../../../shared/ipc/views.ipc';
+
 import { BreadcrumbsService } from '../../../services/breadcrumbs.service';
 import { IViewFilter } from '../../../../shared/interfaces/filters.interface';
 import { timer } from 'rxjs';
@@ -146,12 +150,12 @@ export class ViewViewComponent implements OnInit, OnDestroy {
       .onClose
       .subscribe(async (res) => {
         if (res)  {
-          const delRes:IIPCDeleteDataResponseMessage = await this.viewsIPCService.deleteData(
+          const delRes:IPCDeleteData.IResponse = await this.viewsIPCService.deleteData(
             this.view.table, 
             [
               {
                 column: pk,
-                opr: IIPCDeleteDataWhereOpr.EQ,
+                opr: IPCDeleteData.IIPCDeleteDataWhereOpr.EQ,
                 value: pkValue,
                 or: false
               }
@@ -226,7 +230,7 @@ export class ViewViewComponent implements OnInit, OnDestroy {
     await this.reload();
   }
 
-  private getViewJoints(): IIPCReadDataJoin[] {
+  private getViewJoints(): IPCReadData.IIPCReadDataJoin[] {
     return this.view
       .columns
       .filter(col => col.ref)
@@ -236,9 +240,9 @@ export class ViewViewComponent implements OnInit, OnDestroy {
           on: {
             local: col.name,
             target: col.ref.match_column,
-            opr: IIPCReadDataWhereOpr.EQ
+            opr: IPCReadData.IIPCReadDataWhereOpr.EQ
           }
-        } as IIPCReadDataJoin
+        } as IPCReadData.IIPCReadDataJoin
       ));
   }
 
@@ -288,7 +292,7 @@ export class ViewViewComponent implements OnInit, OnDestroy {
         sqlOffset,
         this.view.columns.filter(col => col.searchable).map(col => col.name),
         (this.searchInputModel && String(this.searchInputModel).length > 1) ? String(this.searchInputModel)  : null,
-        this.selectedFilter ? this.selectedFilter.where as IIPCReadDataWhere[] : null,
+        this.selectedFilter ? this.selectedFilter.where as IPCReadData.IIPCReadDataWhere[] : null,
         this.getViewJoints()
       );
     this.rows = [...data.data];

@@ -6,7 +6,7 @@ import { ViewsService } from '../../../services/store/views.service';
 import { ViewsIPCService } from '../../../services/ipc/views.ipc.service';
 import { NbMenuService, NbToastrService } from '@nebular/theme';
 import { Subscription, Subject } from 'rxjs';
-import { IIPCReadDataWhereOpr, IIPCUpdateDataWhereOpr, IIPCUpdateDataResponseMessage } from '../../../../shared/ipc/views.ipc';
+import { IPCReadData, IPCUpdateData } from '../../../../shared/ipc/views.ipc';
 import { RowFormComponent } from '../components/row-form/row-form.component'
 import { BreadcrumbsService } from '../../../services/breadcrumbs.service';
 
@@ -50,14 +50,14 @@ export class ViewEditComponent implements OnInit, OnDestroy {
 
     this.formRef = {
       save: async (data): Promise<boolean> => {
-        let res:IIPCUpdateDataResponseMessage = await this.viewsIPCService.updateData(
+        let res:IPCUpdateData.IResponse = await this.viewsIPCService.updateData(
           this.view.table, 
           data, 
           [
             {
               column: this.pk,
               value: this.pkValue,
-              opr: IIPCUpdateDataWhereOpr.EQ,
+              opr: IPCUpdateData.IIPCUpdateDataWhereOpr.EQ,
               or: false
             }
           ]
@@ -111,7 +111,7 @@ export class ViewEditComponent implements OnInit, OnDestroy {
         [
           {
             column: this.pk,
-            opr: IIPCReadDataWhereOpr.EQ,
+            opr: IPCReadData.IIPCReadDataWhereOpr.EQ,
             value: this.pkValue,
             or: false
           }

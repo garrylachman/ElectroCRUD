@@ -5,7 +5,7 @@ import { ViewsService } from '../../../../../services/store/views.service';
 import { NbDialogService, NbToastrService } from '@nebular/theme';
 import { AddEditWidgetModalComponent } from './add-edit-widget-modal/add-edit-widget-modal.component';
 import { ViewsIPCService } from '../../../../../services/ipc/views.ipc.service';
-import { IIPCReadWidgetDataResponseMessage } from '../../../../../../shared/ipc/views.ipc';
+import { IPCReadWidgetData } from '../../../../../../shared/ipc/views.ipc';
 import { ConfirmDeleteComponent } from '../../../../../components/dialogs/confirm-delete/confirm-delete.component';
 
 @Component({
@@ -139,7 +139,7 @@ export class WidgetsComponent implements OnInit {
       return;
     }
     this.view.widgets.forEach(async (widget: IWidget) => {
-      const res:IIPCReadWidgetDataResponseMessage = await this.viewsIPCService.readWidgetData(
+      const res:IPCReadWidgetData.IResponse = await this.viewsIPCService.readWidgetData(
         this.view.table,
         widget.column,
         widget.distinct,

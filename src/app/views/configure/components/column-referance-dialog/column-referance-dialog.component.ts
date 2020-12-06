@@ -3,7 +3,7 @@ import { NbDialogRef } from '@nebular/theme';
 import { IViewColumn, IView } from '../../../../../shared/interfaces/views.interface';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ViewsIPCService } from '../../../../services/ipc/views.ipc.service';
-import { IIPCListOfTablesResponseMessage, IIPCTableInfoResponseMessage, IIPCTableInfoColumn } from '../../../../../shared/ipc/views.ipc';
+import { IPCListOfTables, IPCTableInfo } from '../../../../../shared/ipc/views.ipc';
 
 @Component({
   selector: 'app-column-referance-dialog',
@@ -19,7 +19,7 @@ export class ColumnReferanceDialogComponent implements OnInit  {
   viewColumn: IViewColumn;
   formGroup: FormGroup;
   tables: string[] = [];
-  columns: IIPCTableInfoColumn[] = [];
+  columns: IPCTableInfo.TableInfoColumn[] = [];
 
   constructor(
     public ref: NbDialogRef<any>,
@@ -74,7 +74,7 @@ export class ColumnReferanceDialogComponent implements OnInit  {
   }
 
   public async loadTablesList() {
-    let res:IIPCListOfTablesResponseMessage = await this.viewsIPCService.listOfTables();
+    let res:IPCListOfTables.IResponse = await this.viewsIPCService.listOfTables();
     if (res.valid) {
       this.tables = [...res.tables].filter(tbl => tbl != this.view.table);
     }
@@ -84,7 +84,7 @@ export class ColumnReferanceDialogComponent implements OnInit  {
     if (!this.viewColumn.ref.table) {
       return;
     }
-    let resColumns:IIPCTableInfoResponseMessage = await this.viewsIPCService.tableInfo(this.viewColumn.ref.table);
+    let resColumns:IPCTableInfo.IResponse = await this.viewsIPCService.tableInfo(this.viewColumn.ref.table);
 
     this.columns = [...resColumns.columns];    
 
