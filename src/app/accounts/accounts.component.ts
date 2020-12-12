@@ -8,6 +8,8 @@ import { IAccount } from '../../shared/interfaces/accounts.interface';
 import { SessionService } from '../services/session.service';
 import { IPCConnect } from '../../shared/ipc/accounts.ipc';
 import { timer } from 'rxjs';
+import { LogConsoleService } from '../services/log-console.service';
+import { ConsoleLogItemType } from '../../shared/interfaces/log-console.interface';
 
 @Component({
   selector: 'app-accounts',
@@ -70,7 +72,8 @@ export class AccountsComponent implements OnInit {
     private sessionService: SessionService,
     private toastrService: NbToastrService,
     private iconLibraries: NbIconLibraries,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private logConsoleService: LogConsoleService
   ) {
     this.iconLibraries.registerFontPack('whhg', { iconClassPrefix: 'icon' });
     this.temp = [...this.rows];
@@ -200,8 +203,10 @@ export class AccountsComponent implements OnInit {
     //this.isSpinLoading = false;
     if (!res.valid) {
       this.toastrService.show(status, res.error, { status: "danger" });
+      this.logConsoleService.addItem(ConsoleLogItemType.error, res.error)
     } else {
       this.toastrService.show(status, `Connected to ${account.name}.`, { status: "success" });
+      this.logConsoleService.addItem(ConsoleLogItemType.success, `Connected to ${account.name}.`)
     }
   }
 

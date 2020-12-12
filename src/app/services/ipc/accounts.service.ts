@@ -5,21 +5,29 @@ import {
 } from '../../../shared/ipc/accounts.ipc';
 import { ipcRenderer } from 'electron-better-ipc';
 import { IAccount } from '../../../shared/interfaces/accounts.interface';
+import { LogConsoleService } from '../log-console.service';
+import { ConsoleLogItemType } from '../../../shared/interfaces/log-console.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AccountsIPCService {
   
-  constructor() { }
+  constructor(private logConsoleService:LogConsoleService) { }
 
   public async checkConnection(account: IAccount): Promise<IPCCheckConnection.IResponse> {
     const req: IPCCheckConnection.Request = new IPCCheckConnection.Request({
       server: account.server,
       ssh: account.ssh
     });
+
+    this.logConsoleService.addItem(ConsoleLogItemType.info, JSON.stringify(req.toJsonValue()))
+
     const rawRes:any = await ipcRenderer.invoke(IPCCheckConnection.CHANNEL, req.toJsonValue());
     console.log("rawRes", rawRes);
+
+    this.logConsoleService.addItem(ConsoleLogItemType.info, JSON.stringify(rawRes))
+
     return new IPCCheckConnection.Response(rawRes).toMessage()
   }
 
@@ -29,8 +37,13 @@ export class AccountsIPCService {
       server: account.server,
       ssh: account.ssh
     });
-    console.log("req", req);
+    
+    this.logConsoleService.addItem(ConsoleLogItemType.info, JSON.stringify(req.toJsonValue()))
+
     const rawRes:any = await ipcRenderer.invoke(IPCConnect.CHANNEL, req.toJsonValue());
+
+    this.logConsoleService.addItem(ConsoleLogItemType.info, JSON.stringify(rawRes))
+    
     console.log("rawRes", rawRes);
     return new IPCConnect.Response(rawRes).toMessage()
   }

@@ -2,6 +2,8 @@ import "reflect-metadata";
 import { fluentProvide } from "inversify-binding-decorators";
 
 import * as Knex from'knex';
+import { ConsoleLogService } from "./console-log.service";
+import { ConsoleLogItemType } from "../../shared/interfaces/log-console.interface";
 
 export enum ServerType {
     MySQL = "mysql",
@@ -107,14 +109,16 @@ export class DatabaseService {
     private static instance: DatabaseService;
     private _connection:Knex;
 
-    public static getInstance() {
+    /*public static getInstance() {
         if (!DatabaseService.instance) {
             DatabaseService.instance = new DatabaseService();
         }
         return DatabaseService.instance;
-    }
+    }*/
 
-    private constructor() { }
+    private constructor(
+        private consoleLogService: ConsoleLogService
+    ) { }
 
     public async connect(
         client: string,
@@ -136,9 +140,12 @@ export class DatabaseService {
                 database: database
             }
         };
+        this.consoleLogService.addItem(ConsoleLogItemType.info, `Connecting: ${config.connection.toString()}`)
         try {
             this._connection = Knex(config);
+            this.consoleLogService.addItem(ConsoleLogItemType.success, `Connection Success`)
         } catch(error) {
+            this.consoleLogService.addItem(ConsoleLogItemType.error, error.message)
             return error;
         }
         return true;
@@ -155,9 +162,12 @@ export class DatabaseService {
               filename: filename
             }
         };
+        this.consoleLogService.addItem(ConsoleLogItemType.info, `Connecting: ${config.connection.toString()}`)
         try {
             this._connection = Knex(config);
+            this.consoleLogService.addItem(ConsoleLogItemType.success, `Connection Success`)
         } catch(error) {
+            this.consoleLogService.addItem(ConsoleLogItemType.error, error.message)
             return error;
         }
         return true;
@@ -357,6 +367,7 @@ export class DatabaseService {
             let countRes = await q.clone().clearSelect().count({count: '*'})
             console.log("countRes: ", countRes);
 
+            this.consoleLogService.addItem(ConsoleLogItemType.info, `Executing query: ${q.toString()}`)
             let res = await q.limit(limit).offset(offset);
             console.log("raw query: ", q.toQuery());
 
@@ -395,6 +406,7 @@ export class DatabaseService {
                 }
             });
 
+            this.consoleLogService.addItem(ConsoleLogItemType.info, `Executing query: ${q.toString()}`)
             q.update(update);
             let res = await q;
 
@@ -447,6 +459,7 @@ export class DatabaseService {
                 }
             });
 
+            this.consoleLogService.addItem(ConsoleLogItemType.info, `Executing query: ${q.toString()}`)
             let res = await q.delete();
             console.log(res);
             return true;
@@ -489,6 +502,7 @@ export class DatabaseService {
                 })
             }
             console.log("raw query: ", q.toQuery())
+            this.consoleLogService.addItem(ConsoleLogItemType.info, `Executing query: ${q.toString()}`)
             let res = await q;
 
             console.log(res);

@@ -1,0 +1,21 @@
+nb-list {
+    height: 10em;
+    overflow-y: scroll !important;
+}
+
+nb-list nb-list-item {
+    border-bottom: 0px !important;
+    line-height: 1.2rem !important;
+}
+
+nb-list {
+    nb-badge {
+        position: relative !important;
+    }
+
+    nb-alert {
+        nb-badge {
+            position: absolute !important;
+        }
+    }
+}
