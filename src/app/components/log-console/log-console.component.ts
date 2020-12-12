@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer2 } from '@angular/core';
 import { ConsoleLogItem, ConsoleLogItemSource, ConsoleLogItemType } from '../../../shared/interfaces/log-console.interface';
 import { LogConsoleService } from '../../services/log-console.service';
 
@@ -10,11 +10,16 @@ import { LogConsoleService } from '../../services/log-console.service';
 export class LogConsoleComponent implements OnInit {
 
   logTypes = ConsoleLogItemType;
-  logItems: (ConsoleLogItem & {source: ConsoleLogItemSource, sourceName?: string})[] = [];
+  logItems: (ConsoleLogItem & {
+    source: ConsoleLogItemSource, 
+    sourceName?: string,
+    method?: string
+  })[] = [];
   isMinimized: boolean = false;
 
   constructor(
-    private logConsoleService: LogConsoleService
+    private logConsoleService: LogConsoleService,
+    private renderer: Renderer2
   ) { }
   
   ngOnInit(): void {
@@ -22,7 +27,8 @@ export class LogConsoleComponent implements OnInit {
       
       this.logItems.push({
         ...obj,
-        sourceName: ConsoleLogItemSource[obj.source]
+        sourceName: ConsoleLogItemSource[obj.source],
+        method: obj.method
       });
       setTimeout(() => this.scrollDown(), 500);
     });
@@ -33,6 +39,16 @@ export class LogConsoleComponent implements OnInit {
     if(d)
     {
       d.scrollTop = d.scrollHeight;
+    }
+  }
+
+  toggleClass(_event: any, _class: string) {
+    const hasClass = _event.target.classList.contains(_class);
+  
+    if(hasClass) {
+      this.renderer.removeClass(_event.target, _class);
+    } else {
+      this.renderer.addClass(_event.target, _class);
     }
   }
 

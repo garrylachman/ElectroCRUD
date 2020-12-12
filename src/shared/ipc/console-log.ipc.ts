@@ -4,7 +4,7 @@ import { IPCBaseMessage } from "./base.ipc";
 
 export namespace IPCConsoleLog {
     export interface IRequest extends ConsoleLogItem{
-
+        method?: string;
     }
 
     export class Request extends IPCBaseMessage<IRequest> {}

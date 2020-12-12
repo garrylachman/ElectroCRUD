@@ -10,19 +10,21 @@ import { IPCConsoleLog } from '../../shared/ipc/console-log.ipc';
 })
 export class LogConsoleService {
 
-  logItems$: Subject<ConsoleLogItem & { source: ConsoleLogItemSource }> = new Subject();
+  logItems$: Subject<ConsoleLogItem & { source: ConsoleLogItemSource, method?: string }> = new Subject();
 
   constructor() {
     console.log("LogConsoleService::constructor")
-    ipcRenderer.on(IPCConsoleLog.CHANNEL, (event: any, data: any) => this.addItem(data.message.type, data.message.message, ConsoleLogItemSource.Backend))  
+    ipcRenderer.on(IPCConsoleLog.CHANNEL, (event: any, data: any) => this.addItem(data.message.type, data.message.message, data.message.method, ConsoleLogItemSource.Backend))  
   }
 
-  addItem(type: ConsoleLogItemType, message: string, source: ConsoleLogItemSource = ConsoleLogItemSource.UI): void {
+  addItem(type: ConsoleLogItemType, message: string, method?: string, source: ConsoleLogItemSource = ConsoleLogItemSource.UI): void {
     console.log("addItem", type, message, source)
+    
     this.logItems$.next({
       type: type,
       message: `${message}`,
-      source: source
+      source: source,
+      method: method
     })
   }
 }

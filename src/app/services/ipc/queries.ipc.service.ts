@@ -5,6 +5,7 @@ import {
 import { ipcRenderer } from 'electron-better-ipc';
 import { LogConsoleService } from '../log-console.service';
 import { ConsoleLogItemType } from '../../../shared/interfaces/log-console.interface';
+import getCurrentLine from 'get-current-line';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,13 @@ export class QueriesIPCService {
       query: query
     });
     console.log("req", req);
-    this.logConsoleService.addItem(ConsoleLogItemType.info, JSON.stringify(req.toJsonValue()))
+
+    this.logConsoleService.addItem(
+      ConsoleLogItemType.info, 
+      JSON.stringify(req.toJsonValue()), 
+      getCurrentLine().method
+    )
+
     const rawRes:any = await ipcRenderer.invoke(IPCQuery.CHANNEL, req.toJsonValue());
     console.log("rawRes", rawRes);
     return new IPCQuery.Response(rawRes).toMessage()

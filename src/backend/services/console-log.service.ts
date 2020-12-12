@@ -13,10 +13,11 @@ export class ConsoleLogService {
 
     }
     
-    addItem(type: ConsoleLogItemType, message: string): void {
+    addItem(type: ConsoleLogItemType, message: string, method?: string): void {
         ipcMain.sendToRenderers<IPCConsoleLog.Request>(IPCConsoleLog.CHANNEL, new IPCConsoleLog.Request({
             type: type,
-            message: message
+            message: message,
+            method: method
         }))
     }
 }

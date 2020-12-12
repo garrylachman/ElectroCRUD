@@ -1,10 +1,17 @@
 {
+  "angularCompilerOptions": {
+    "strictInjectionParameters": false,
+    "strictInputAccessModifiers": false,
+    "strictTemplates": false
+  },
   "compilerOptions": {
     "sourceMap": true,
     "declaration": false,
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "strict": false,
+    "noImplicitUseStrict": true,
     "types": ["reflect-metadata"],
     "target": "esnext",
     "module": "commonjs",
