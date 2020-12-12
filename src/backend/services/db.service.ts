@@ -140,7 +140,7 @@ export class DatabaseService {
                 database: database
             }
         };
-        this.consoleLogService.addItem(ConsoleLogItemType.info, `Connecting: ${config.connection.toString()}`)
+        this.consoleLogService.addItem(ConsoleLogItemType.info, `Connecting: ${JSON.stringify(config.connection)}`)
         try {
             this._connection = Knex(config);
             this.consoleLogService.addItem(ConsoleLogItemType.success, `Connection Success`)
@@ -162,29 +162,12 @@ export class DatabaseService {
               filename: filename
             }
         };
-        this.consoleLogService.addItem(ConsoleLogItemType.info, `Connecting: ${config.connection.toString()}`)
+        this.consoleLogService.addItem(ConsoleLogItemType.info, `Connecting: ${JSON.stringify(config.connection)}`)
         try {
             this._connection = Knex(config);
             this.consoleLogService.addItem(ConsoleLogItemType.success, `Connection Success`)
         } catch(error) {
             this.consoleLogService.addItem(ConsoleLogItemType.error, error.message)
-            return error;
-        }
-        return true;
-    }
-
-    public async fileConnect(client: string, filename: string): Promise<boolean | Error> {
-        await this.disconnect();
-
-        let config:Knex.Config = {
-            client: client,
-            connection: {
-                filename: filename
-            }
-        };
-        try {
-            this._connection = Knex(config);
-        } catch(error) {
             return error;
         }
         return true;
@@ -234,6 +217,7 @@ export class DatabaseService {
         let findResultSQLite = ((result: any) => result) as ((result: any) => string | undefined);
 
         try {
+            this.consoleLogService.addItem(ConsoleLogItemType.info, `[Custom  Query] Executing query: ${query.toString()}`)
             let res = await this.connection.raw(query);
             if (this.activeClient == "pg") {
                 return findResultPG(res);
@@ -255,6 +239,7 @@ export class DatabaseService {
             bindings = [];
         }
         try {
+            this.consoleLogService.addItem(ConsoleLogItemType.info, `[Table List] Executing query: ${listTablesQuery.toString()}`)
             let res = await this.connection.raw(listTablesQuery, bindings);
             console.log(res);
             if (this.activeClient == "mysql") {
@@ -285,6 +270,7 @@ export class DatabaseService {
         //let findResultSQLite = ((result: any) => result) as ((result: any) => string | undefined);
     
         try {
+            this.consoleLogService.addItem(ConsoleLogItemType.info, `[Table Info] Executing query: ${tableInfoQuery.toString()}`)
             let res = await this.connection.raw(tableInfoQuery, bindings);
             console.log(res);
             if (this.activeClient == "sqlite3") {
@@ -367,7 +353,7 @@ export class DatabaseService {
             let countRes = await q.clone().clearSelect().count({count: '*'})
             console.log("countRes: ", countRes);
 
-            this.consoleLogService.addItem(ConsoleLogItemType.info, `Executing query: ${q.toString()}`)
+            this.consoleLogService.addItem(ConsoleLogItemType.info, `[Read Data] Executing query: ${q.toString()}`)
             let res = await q.limit(limit).offset(offset);
             console.log("raw query: ", q.toQuery());
 
