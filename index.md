@@ -55,6 +55,7 @@ From version 2.7.0 SQLite has been added, currently its very limited support but
 - [ ] Process manager (view running queries)
 - [ ] Export / Import of all user accounts.
 - [x] Themes
+- [x] Log Console
 
 ### Databases
 - [x] MySQL/MariaDB
@@ -65,9 +66,9 @@ From version 2.7.0 SQLite has been added, currently its very limited support but
 
 ## Download Binaries ![GitHub release](https://img.shields.io/github/release/garrylachman/ElectroCRUD.svg?style=for-the-badge)
 
-* [Mac OSX](https://github.com/garrylachman/ElectroCRUD/releases/download/2.7.4/ElectroCRUD-2.7.4.dmg)
-* [Linux](https://github.com/garrylachman/ElectroCRUD/releases/download/2.7.4/ElectroCRUD-2.7.4.AppImage)
-* [Windows](https://github.com/garrylachman/ElectroCRUD/releases/download/2.7.4/ElectroCRUD.2.7.4.exe)
+* [Mac OSX](https://github.com/garrylachman/ElectroCRUD/releases/download/2.8.0/ElectroCRUD-2.8.0.dmg)
+* [Linux](https://github.com/garrylachman/ElectroCRUD/releases/download/2.8.0/ElectroCRUD-2.8.0.AppImage)
+* [Windows](https://github.com/garrylachman/ElectroCRUD/releases/download/2.8.0/ElectroCRUD.2.8.0.exe)
 
 ## Install via Package Managers
 ### Homebrew/brew (Mac OS/X)
