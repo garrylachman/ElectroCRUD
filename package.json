@@ -146,6 +146,7 @@
     "popper.js": "^1.16.1",
     "reflect-metadata": "^0.1.13",
     "sqlite3": "^4.2.0",
+    "stringify-object": "^3.3.0",
     "tunnel-ssh": "^4.1.4",
     "type-fest": "^0.8.1",
     "uuid": "^3.4.0"

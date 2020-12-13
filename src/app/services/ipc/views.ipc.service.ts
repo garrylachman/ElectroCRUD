@@ -11,7 +11,6 @@ import {
 import { ipcRenderer } from 'electron-better-ipc';
 import { LogConsoleService } from '../log-console.service';
 import { ConsoleLogItemType } from '../../../shared/interfaces/log-console.interface';
-//import * as ParentModule from 'parent-module';
 import getCurrentLine from 'get-current-line'
 
 @Injectable({
@@ -29,7 +28,7 @@ export class ViewsIPCService {
     
     this.logConsoleService.addItem(
       ConsoleLogItemType.info, 
-      JSON.stringify(rawRes), 
+      rawRes, 
       getCurrentLine().method
     )
 
@@ -44,7 +43,7 @@ export class ViewsIPCService {
 
     this.logConsoleService.addItem(
       ConsoleLogItemType.info, 
-      JSON.stringify(req.toJsonValue()), 
+      req.toJsonValue(), 
       getCurrentLine().method
     )
 
@@ -53,7 +52,7 @@ export class ViewsIPCService {
 
     this.logConsoleService.addItem(
       ConsoleLogItemType.info, 
-      JSON.stringify(rawRes), 
+      rawRes, 
       getCurrentLine().method
     )
 
@@ -87,7 +86,7 @@ export class ViewsIPCService {
     console.log("req", req);
     this.logConsoleService.addItem(
       ConsoleLogItemType.info, 
-      JSON.stringify(req.toJsonValue()), 
+      req.toJsonValue(), 
       getCurrentLine().method
     )
 
@@ -110,7 +109,7 @@ export class ViewsIPCService {
     
     this.logConsoleService.addItem(
       ConsoleLogItemType.info, 
-      JSON.stringify(req.toJsonValue()), 
+      req.toJsonValue(), 
       getCurrentLine().method
     )
 
@@ -131,7 +130,7 @@ export class ViewsIPCService {
     
     this.logConsoleService.addItem(
       ConsoleLogItemType.info, 
-      JSON.stringify(req.toJsonValue()), 
+      req.toJsonValue(), 
       getCurrentLine().method
     )
 
@@ -152,7 +151,7 @@ export class ViewsIPCService {
     
     this.logConsoleService.addItem(
       ConsoleLogItemType.info, 
-      JSON.stringify(req.toJsonValue()), 
+      req.toJsonValue(), 
       getCurrentLine().method
     )
 
@@ -184,7 +183,7 @@ export class ViewsIPCService {
     
     this.logConsoleService.addItem(
       ConsoleLogItemType.info, 
-      JSON.stringify(req.toJsonValue()), 
+      req.toJsonValue(), 
       getCurrentLine().method
     )
 

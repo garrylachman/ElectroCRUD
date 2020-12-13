@@ -9,10 +9,10 @@
     nbInfiniteList
     listenWindowScroll
     [ngClass]="{'d-none': isMinimized}"
-    class="mt-3 scrollable"
+    class="mt-3 scrollable scrollable-container"
 >
 
-    <nb-list-item *ngFor="let logItem of logItems" class="pl-0 pb-2 pt-2" (click)="toggleClass($event,'format')">
+    <nb-list-item *ngFor="let logItem of logItems" class="pl-0 pb-2 pt-2 d-flex justify-content-between" (click)="toggleClass($event,'format')" nbTooltip="Click to Pretty Print" nbTooltipIcon="info" nbTooltipAdjustment="horizontal" nbTooltipPlacement="left" nbTooltipStatus="basic" >
         <ng-container [ngSwitch]="logItem.type">
 
             <nb-alert *ngSwitchCase="logTypes.error" class="w-100 mb-0" accent="danger">
@@ -34,9 +34,11 @@
             </nb-alert>
 
             <ng-container *ngSwitchDefault>
-                <nb-badge class="mr-2"  text="{{logItem.sourceName}}" status="success"></nb-badge>
-                <nb-badge *ngIf="logItem.method" class="mr-2" position=" end"  text="{{logItem.method}}" status="primary"></nb-badge>
-                {{logItem.message}}
+                <div>{{logItem.message}}</div>
+                <div class="mb-auto pl-3">
+                    <nb-badge class="mr-2" text="{{logItem.sourceName}}" status="success"></nb-badge>
+                    <nb-badge *ngIf="logItem.method" position=" end"  text="{{logItem.method}}" status="primary"></nb-badge>
+                </div>
             </ng-container>
 
         </ng-container>

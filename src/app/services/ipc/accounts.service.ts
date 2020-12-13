@@ -24,7 +24,7 @@ export class AccountsIPCService {
 
     this.logConsoleService.addItem(
       ConsoleLogItemType.info, 
-      JSON.stringify(req.toJsonValue()), 
+      req.toJsonValue(), 
       getCurrentLine().method
     )
 
@@ -33,7 +33,7 @@ export class AccountsIPCService {
 
     this.logConsoleService.addItem(
       ConsoleLogItemType.info, 
-      JSON.stringify(rawRes), 
+      rawRes, 
       getCurrentLine().method
     )
 
@@ -49,7 +49,7 @@ export class AccountsIPCService {
     
     this.logConsoleService.addItem(
       ConsoleLogItemType.info, 
-      JSON.stringify(req.toJsonValue()), 
+      req.toJsonValue(), 
       getCurrentLine().method
     )
 
@@ -57,7 +57,7 @@ export class AccountsIPCService {
 
     this.logConsoleService.addItem(
       ConsoleLogItemType.info, 
-      JSON.stringify(rawRes), 
+      rawRes, 
       getCurrentLine().method
     )
     

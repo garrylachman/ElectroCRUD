@@ -22,7 +22,7 @@ export class QueriesIPCService {
 
     this.logConsoleService.addItem(
       ConsoleLogItemType.info, 
-      JSON.stringify(req.toJsonValue()), 
+      req.toJsonValue(), 
       getCurrentLine().method
     )
 

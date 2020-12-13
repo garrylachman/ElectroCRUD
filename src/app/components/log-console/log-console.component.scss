@@ -1,6 +1,10 @@
 nb-list {
-    height: 10em;
+    height: 10em !important;
     overflow-y: scroll !important;
+}
+
+.scrollable-container {
+    height: 10em !important;
 }
 
 nb-list nb-list-item {
