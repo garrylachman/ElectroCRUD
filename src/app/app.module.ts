@@ -22,7 +22,7 @@ import { WebviewDirective } from './directives/webview.directive';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NbThemeModule, NbDatepickerModule, NbDatepickerDirective, NbInputModule, NbSelectModule, NbCheckboxModule, NbAlertModule } from '@nebular/theme';
+import { NbThemeModule, NbDatepickerModule, NbDatepickerDirective, NbInputModule, NbSelectModule, NbCheckboxModule, NbAlertModule, NbListModule } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { 
   NbSidebarModule,
@@ -38,7 +38,8 @@ import {
   NbDialogService,
   NbDialogModule,
   NbToastrModule,
-  NbThemeService
+  NbThemeService,
+  NbBadgeModule
 } from '@nebular/theme';
 import { ConfirmDeleteComponent } from './components/dialogs/confirm-delete/confirm-delete.component';
 
@@ -58,6 +59,7 @@ import { ColumnReferanceDialogComponent } from './views/configure/components/col
 import { NgBootstrapFormValidationModule } from 'ng-bootstrap-form-validation';
 import { MonacoEditorModule } from '@materia-ui/ngx-monaco-editor';
 import { SessionService } from './services/session.service';
+import { LogConsoleComponent } from './components/log-console/log-console.component';
 
 
 // configure Bugsnag ASAP, before any other imports
@@ -89,7 +91,8 @@ console.log("version: ", version ,", env: ", AppConfig.environment);
     ConfirmDeleteComponent,
     AddEditWidgetModalComponent,
     AddEditFilterModalComponent,
-    ColumnReferanceDialogComponent
+    ColumnReferanceDialogComponent,
+    LogConsoleComponent
   ],
   exports: [
     ConfirmDeleteComponent,
@@ -132,6 +135,8 @@ console.log("version: ", version ,", env: ", AppConfig.environment);
     Ng2FittextModule,
     NgBootstrapFormValidationModule.forRoot(),
     MonacoEditorModule,
+    NbListModule,
+    NbBadgeModule
   ],
   providers: [
     ElectronService, 

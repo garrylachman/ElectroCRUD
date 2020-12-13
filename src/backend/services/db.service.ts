@@ -2,6 +2,16 @@ import "reflect-metadata";
 import { fluentProvide } from "inversify-binding-decorators";
 
 import * as Knex from'knex';
+import { ConsoleLogService } from "./console-log.service";
+import { ConsoleLogItemType } from "../../shared/interfaces/log-console.interface";
+import getCurrentLine from "get-current-line";
+import sqlFormatter from '@sqltools/formatter';
+
+const formatterParams = {
+    reservedWordCase: 'upper',
+    indent: '    ',
+    language: 'sql'
+}
 
 export enum ServerType {
     MySQL = "mysql",
@@ -107,14 +117,16 @@ export class DatabaseService {
     private static instance: DatabaseService;
     private _connection:Knex;
 
-    public static getInstance() {
+    /*public static getInstance() {
         if (!DatabaseService.instance) {
             DatabaseService.instance = new DatabaseService();
         }
         return DatabaseService.instance;
-    }
+    }*/
 
-    private constructor() { }
+    private constructor(
+        private consoleLogService: ConsoleLogService
+    ) { }
 
     public async connect(
         client: string,
@@ -136,9 +148,12 @@ export class DatabaseService {
                 database: database
             }
         };
+        this.consoleLogService.addItem(ConsoleLogItemType.info, `Connecting: ${JSON.stringify(config.connection)}`, getCurrentLine().method)
         try {
             this._connection = Knex(config);
+            this.consoleLogService.addItem(ConsoleLogItemType.success, `Connection Success`, getCurrentLine().method)
         } catch(error) {
+            this.consoleLogService.addItem(ConsoleLogItemType.error, error.message, getCurrentLine().method)
             return error;
         }
         return true;
@@ -155,26 +170,12 @@ export class DatabaseService {
               filename: filename
             }
         };
+        this.consoleLogService.addItem(ConsoleLogItemType.info, `Connecting: ${JSON.stringify(config.connection)}`, getCurrentLine().method)
         try {
             this._connection = Knex(config);
+            this.consoleLogService.addItem(ConsoleLogItemType.success, `Connection Success`, getCurrentLine().method)
         } catch(error) {
-            return error;
-        }
-        return true;
-    }
-
-    public async fileConnect(client: string, filename: string): Promise<boolean | Error> {
-        await this.disconnect();
-
-        let config:Knex.Config = {
-            client: client,
-            connection: {
-                filename: filename
-            }
-        };
-        try {
-            this._connection = Knex(config);
-        } catch(error) {
+            this.consoleLogService.addItem(ConsoleLogItemType.error, error.message, getCurrentLine().method)
             return error;
         }
         return true;
@@ -224,6 +225,7 @@ export class DatabaseService {
         let findResultSQLite = ((result: any) => result) as ((result: any) => string | undefined);
 
         try {
+            this.consoleLogService.addItem(ConsoleLogItemType.info, sqlFormatter.format(query, formatterParams), getCurrentLine().method)
             let res = await this.connection.raw(query);
             if (this.activeClient == "pg") {
                 return findResultPG(res);
@@ -245,6 +247,7 @@ export class DatabaseService {
             bindings = [];
         }
         try {
+            this.consoleLogService.addItem(ConsoleLogItemType.info, sqlFormatter.format(listTablesQuery, formatterParams), getCurrentLine().method)
             let res = await this.connection.raw(listTablesQuery, bindings);
             console.log(res);
             if (this.activeClient == "mysql") {
@@ -275,6 +278,7 @@ export class DatabaseService {
         //let findResultSQLite = ((result: any) => result) as ((result: any) => string | undefined);
     
         try {
+            this.consoleLogService.addItem(ConsoleLogItemType.info, sqlFormatter.format(tableInfoQuery, formatterParams), getCurrentLine().method)
             let res = await this.connection.raw(tableInfoQuery, bindings);
             console.log(res);
             if (this.activeClient == "sqlite3") {
@@ -357,6 +361,7 @@ export class DatabaseService {
             let countRes = await q.clone().clearSelect().count({count: '*'})
             console.log("countRes: ", countRes);
 
+            this.consoleLogService.addItem(ConsoleLogItemType.info, sqlFormatter.format(q.toQuery(), formatterParams), getCurrentLine().method)
             let res = await q.limit(limit).offset(offset);
             console.log("raw query: ", q.toQuery());
 
@@ -395,6 +400,7 @@ export class DatabaseService {
                 }
             });
 
+            this.consoleLogService.addItem(ConsoleLogItemType.info, sqlFormatter.format(q.toQuery(), formatterParams), getCurrentLine().method)
             q.update(update);
             let res = await q;
 
@@ -415,6 +421,7 @@ export class DatabaseService {
             let q = this.connection
                 .table(table);
 
+            this.consoleLogService.addItem(ConsoleLogItemType.info, sqlFormatter.format(q.toQuery(), formatterParams), getCurrentLine().method)
             q.insert(data);
             let res = await q;
 
@@ -447,6 +454,7 @@ export class DatabaseService {
                 }
             });
 
+            this.consoleLogService.addItem(ConsoleLogItemType.info, sqlFormatter.format(q.toQuery(), formatterParams), getCurrentLine().method)
             let res = await q.delete();
             console.log(res);
             return true;
@@ -489,6 +497,7 @@ export class DatabaseService {
                 })
             }
             console.log("raw query: ", q.toQuery())
+            this.consoleLogService.addItem(ConsoleLogItemType.info, sqlFormatter.format(q.toQuery(), formatterParams), getCurrentLine().method)
             let res = await q;
 
             console.log(res);

@@ -76,6 +76,7 @@ import { MonacoEditorModule } from '@materia-ui/ngx-monaco-editor';
     NbDatepickerModule,
     NbTabsetModule,
     NbAutocompleteModule,
+    NbBadgeModule,
     FormlyModule.forChild({
       types: [
         {

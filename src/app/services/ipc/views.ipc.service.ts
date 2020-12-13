@@ -9,19 +9,29 @@ import {
   IPCReadData
 } from '../../../shared/ipc/views.ipc';
 import { ipcRenderer } from 'electron-better-ipc';
+import { LogConsoleService } from '../log-console.service';
+import { ConsoleLogItemType } from '../../../shared/interfaces/log-console.interface';
+import getCurrentLine from 'get-current-line'
 
 @Injectable({
   providedIn: 'root'
 })
 export class ViewsIPCService {
   
-  constructor() { }
+  constructor(private logConsoleService:LogConsoleService) { }
 
   public async listOfTables(): Promise<IPCListOfTables.IResponse> {
     const req: IPCListOfTables.Request = new IPCListOfTables.Request({});
     console.log("req", req);
     const rawRes:any = await ipcRenderer.invoke(IPCListOfTables.CHANNEL, req.toJsonValue());
     console.log("rawRes", rawRes);
+    
+    this.logConsoleService.addItem(
+      ConsoleLogItemType.info, 
+      rawRes, 
+      getCurrentLine().method
+    )
+
     return new IPCListOfTables.Response(rawRes).toMessage()
   }
 
@@ -30,8 +40,22 @@ export class ViewsIPCService {
       table: table
     });
     console.log("req", req);
+
+    this.logConsoleService.addItem(
+      ConsoleLogItemType.info, 
+      req.toJsonValue(), 
+      getCurrentLine().method
+    )
+
     const rawRes:any = await ipcRenderer.invoke(IPCTableInfo.CHANNEL, req.toJsonValue());
     console.log("rawRes", rawRes);
+
+    this.logConsoleService.addItem(
+      ConsoleLogItemType.info, 
+      rawRes, 
+      getCurrentLine().method
+    )
+
     return new IPCTableInfo.Response(rawRes).toMessage()
   }
 
@@ -60,6 +84,11 @@ export class ViewsIPCService {
       join: join
     });
     console.log("req", req);
+    this.logConsoleService.addItem(
+      ConsoleLogItemType.info, 
+      req.toJsonValue(), 
+      getCurrentLine().method
+    )
 
     const rawRes:any = await ipcRenderer.invoke(IPCReadData.CHANNEL, req.toJsonValue());
     console.log("rawRes", rawRes);
@@ -77,6 +106,13 @@ export class ViewsIPCService {
       where: where
     });
     console.log("req", req);
+    
+    this.logConsoleService.addItem(
+      ConsoleLogItemType.info, 
+      req.toJsonValue(), 
+      getCurrentLine().method
+    )
+
     const rawRes:any = await ipcRenderer.invoke(IPCUpdateData.CHANNEL, req.toJsonValue());
     console.log("rawRes", rawRes);
     return new IPCUpdateData.Response(rawRes).toMessage()
@@ -91,6 +127,13 @@ export class ViewsIPCService {
       data: data
     });
     console.log("req", req);
+    
+    this.logConsoleService.addItem(
+      ConsoleLogItemType.info, 
+      req.toJsonValue(), 
+      getCurrentLine().method
+    )
+
     const rawRes:any = await ipcRenderer.invoke(IPCInsertData.CHANNEL, req.toJsonValue());
     console.log("rawRes", rawRes);
     return new IPCInsertData.Response(rawRes).toMessage()
@@ -105,6 +148,13 @@ export class ViewsIPCService {
       where: where
     });
     console.log("req", req);
+    
+    this.logConsoleService.addItem(
+      ConsoleLogItemType.info, 
+      req.toJsonValue(), 
+      getCurrentLine().method
+    )
+
     const rawRes:any = await ipcRenderer.invoke(IPCDeleteData.CHANNEL, req.toJsonValue());
     console.log("rawRes", rawRes);
     return new IPCDeleteData.Response(rawRes).toMessage()
@@ -130,6 +180,13 @@ export class ViewsIPCService {
       where: where
     });
     console.log("req", req);
+    
+    this.logConsoleService.addItem(
+      ConsoleLogItemType.info, 
+      req.toJsonValue(), 
+      getCurrentLine().method
+    )
+
     const rawRes:any = await ipcRenderer.invoke(IPCReadWidgetData.CHANNEL, req.toJsonValue());
     console.log("rawRes", rawRes);
     return new IPCReadWidgetData.Response(rawRes).toMessage()

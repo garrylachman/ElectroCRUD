@@ -1,14 +1,22 @@
 {
   "compileOnSave": false,
+  "angularCompilerOptions": {
+    "strictInjectionParameters": false,
+    "strictInputAccessModifiers": false,
+    "strictTemplates": false
+  },
   "compilerOptions": {
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
-    "declaration": false,
+    "declaration": true,
+    "allowSyntheticDefaultImports": false,
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "types": ["reflect-metadata"],
     "resolveJsonModule": true,
+    "strict": false,
+    "noImplicitUseStrict": true,
     "target": "esnext",
     "module": "commonjs",
     "typeRoots": [
