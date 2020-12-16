@@ -17,7 +17,7 @@ From version 2.7.0 SQLite has been added, currently its very limited support but
 
 [![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com) 
 
-![Imgur](https://i.imgur.com/KUL3AOK.gif)
+![ElectroCRUD](https://github.com/garrylachman/ElectroCRUD/raw/gh-pages/electrocrud-dec-2020.gif)
 
 ### Functionality
 - [x] MySQL Support
