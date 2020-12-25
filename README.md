@@ -72,7 +72,7 @@ From version 2.7.0 SQLite has been added, currently its very limited support but
 
 ## Install via Package Managers
 ### Homebrew/brew (Mac OS/X)
-`brew cask install electrocrud`
+`brew install --cask electrocrud`
 
 ## Download Sources
 [ElectroCRUD on GitHub](https://github.com/garrylachman/ElectroCRUD)
