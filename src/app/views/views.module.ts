@@ -46,13 +46,14 @@ import { TagInputModule } from 'ngx-chips';
 import { NgBootstrapFormValidationModule } from 'ng-bootstrap-form-validation';
 import { QueryComponent } from './query/query.component';
 import { MonacoEditorModule } from '@materia-ui/ngx-monaco-editor';
+import { FormlyFieldNbFilepickerComponent } from './view/components/row-form/custom-types/formly-field-nb-filepicker/formly-field-nb-filepicker.component';
 
 @NgModule({
   /*schemas: [
     CUSTOM_ELEMENTS_SCHEMA,
     NO_ERRORS_SCHEMA
   ],*/
-  declarations: [ViewComponent, ConfigureComponent, EmptyComponent, ViewEditComponent, ViewAddComponent, WidgetsComponent, ViewViewComponent, RowFormComponent, FormlyFieldNbInputComponent, FormlyFieldNbSelectComponent, FormlyFieldNbChechboxComponent, FormlyFieldNbDatepickerComponent, FormlyFieldNbTextareaComponent, FiltersComponent, SubViewComponent, QueryComponent],
+  declarations: [ViewComponent, ConfigureComponent, EmptyComponent, ViewEditComponent, ViewAddComponent, WidgetsComponent, ViewViewComponent, RowFormComponent, FormlyFieldNbInputComponent, FormlyFieldNbSelectComponent, FormlyFieldNbChechboxComponent, FormlyFieldNbDatepickerComponent, FormlyFieldNbTextareaComponent, FiltersComponent, SubViewComponent, QueryComponent, FormlyFieldNbFilepickerComponent],
   providers: [BreadcrumbsService],
   imports: [
     CommonModule,
@@ -94,6 +95,10 @@ import { MonacoEditorModule } from '@materia-ui/ngx-monaco-editor';
         {
           name: 'nb-checkbox',
           component: FormlyFieldNbChechboxComponent
+        },
+        {
+          name: 'nb-filepicker',
+          component: FormlyFieldNbFilepickerComponent
         }
       ]
     }),

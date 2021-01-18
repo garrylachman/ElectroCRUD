@@ -53,8 +53,12 @@ export class RowFormComponent implements OnInit {
         this.fields.push(this.generateCheckbox(col));
       }
       // text 
-      if (["text", "tinytext", "mediumtext", "longtext", "blob", "mediumblob", "tinyblob", "longblob"].includes(String(col.type))) {
+      if (["text", "tinytext", "mediumtext", "longtext"].includes(String(col.type))) {
         this.fields.push(this.generateTextArea(col));
+      }
+      //blob
+      if (["blob", "mediumblob", "tinyblob", "longblob"].includes(String(col.type))) {
+        this.fields.push(this.generateFilepicker(col));
       }
       // date
       if (["datetime", "timestamp", "date"].includes(String(col.type))) {
@@ -127,6 +131,12 @@ export class RowFormComponent implements OnInit {
   generateDatepicker(col): FormlyFieldConfig {
     let input = this.generateBasic(col);
     input.type = 'nb-datepicker';
+    return input;
+  }
+
+  generateFilepicker(col): FormlyFieldConfig {
+    let input = this.generateBasic(col);
+    input.type = 'nb-filepicker';
     return input;
   }
 
