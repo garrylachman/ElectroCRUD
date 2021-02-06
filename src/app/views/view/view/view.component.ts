@@ -9,7 +9,7 @@ import { NgModel } from '@angular/forms';
 import { NbMenuService, NbDialogService, NbToastrService } from '@nebular/theme';
 import { Observable, of, Subscription } from 'rxjs';
 import { ConfirmDeleteComponent } from '../../../components/dialogs/confirm-delete/confirm-delete.component';
-import { 
+import {
   IPCDeleteData,
   IPCReadData
 } from '../../../../shared/ipc/views.ipc';
@@ -19,6 +19,7 @@ import { IViewFilter } from '../../../../shared/interfaces/filters.interface';
 import { timer } from 'rxjs';
 import { WidgetsComponent } from './components/widgets/widgets.component'
 import { filter, reduce } from 'rxjs/operators';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-view-view',
@@ -39,17 +40,17 @@ export class ViewViewComponent implements OnInit, OnDestroy {
   rows = [];
   columns = [];
 
-  totalElements:number = 0;
+  totalElements: number = 0;
   offset: number = 0;
   limit: number = 10;
 
   searchInputModel: NgModel;
   showSearchClear: boolean = false;
 
-  menuItems:any = []
+  menuItems: any = []
 
-  menuServiceObserver:Subscription;
-  routeObserver:Subscription;
+  menuServiceObserver: Subscription;
+  routeObserver: Subscription;
 
   selectedFilter: IViewFilter;
 
@@ -64,11 +65,12 @@ export class ViewViewComponent implements OnInit, OnDestroy {
     private dialogService: NbDialogService,
     private toastService: NbToastrService,
     private breadcrumbsService: BreadcrumbsService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private sanitizer: DomSanitizer
   ) { }
 
   ngAfterViewChecked() {
-    
+
   }
 
   async ngOnInit() {
@@ -81,13 +83,13 @@ export class ViewViewComponent implements OnInit, OnDestroy {
       if (item.tag != "rowMenu") {
         return;
       }
-      switch(item.item.title) {
+      switch (item.item.title) {
         case 'Edit':
           this.editRow(item.item.data)
-        break;
+          break;
         case 'Delete':
           this.deleteRow(item.item.data);
-        break;
+          break;
       }
     });
   }
@@ -118,7 +120,7 @@ export class ViewViewComponent implements OnInit, OnDestroy {
       .open(ConfirmDeleteComponent, { hasBackdrop: true })
       .onClose
       .subscribe(async (res) => {
-        if (res)  {
+        if (res) {
           this.viewsService.delete(this.view.id);
           //this.sessionsService.reloadViews();
           this.viewsService.triggerChanges();
@@ -126,7 +128,7 @@ export class ViewViewComponent implements OnInit, OnDestroy {
         }
       });
   }
-  
+
   editRow(row): void {
     let pk: string = this.primaryKeyColumn;
     if (!pk) {
@@ -149,9 +151,9 @@ export class ViewViewComponent implements OnInit, OnDestroy {
       .open(ConfirmDeleteComponent, { hasBackdrop: true })
       .onClose
       .subscribe(async (res) => {
-        if (res)  {
-          const delRes:IPCDeleteData.IResponse = await this.viewsIPCService.deleteData(
-            this.view.table, 
+        if (res) {
+          const delRes: IPCDeleteData.IResponse = await this.viewsIPCService.deleteData(
+            this.view.table,
             [
               {
                 column: pk,
@@ -161,7 +163,7 @@ export class ViewViewComponent implements OnInit, OnDestroy {
               }
             ]
           );
-          
+
           if (delRes.error) {
             this.toastService.danger(res.error, 'Error');
             return false;
@@ -196,7 +198,7 @@ export class ViewViewComponent implements OnInit, OnDestroy {
   }
 
   get primaryKeyColumn(): string {
-    let pri:string = null;
+    let pri: string = null;
     this.view.columns.forEach(col => {
       if (col.key == "PRI" || col.key == "1") {
         pri = col.name;
@@ -246,32 +248,53 @@ export class ViewViewComponent implements OnInit, OnDestroy {
       ));
   }
 
+  checkValidBase64(str: string) {
+    if (str === '') { return false; }
+    try {
+      return btoa(atob(str.split('base64,')[1])) == str.split('base64,')[1];
+    } catch (err) {
+      return false;
+    }
+  }
+
   async reload() {
     this.isLoading = true;
     let data = await this.viewsIPCService
       .readData(
-        this.view.table, 
-        this.view.columns.filter(col => col.enabled).map(col => col.name), 
-        this.limit, 
+        this.view.table,
+        this.view.columns.filter(col => col.enabled).map(col => col.name),
+        this.limit,
         this.offset,
         null,
         null,
         [],
         this.getViewJoints()
-        );
+      );
     this.totalElements = data.count;
     let columns = data.data.length > 0 ? Object.keys([...data.data].shift()).map(val => ({ name: val, prop: val })) : [];
     console.log("columns", columns)
     let subviewActionColumn = this.view.subview && this.view.subview.enabled ? [{ cellTemplate: this.subviewTableIconTmpl, frozenLeft: true, maxWidth: 50, resizeable: false, sortable: false }] : [];
     this.columns = [
       ...subviewActionColumn,
-      ...columns, 
+      ...columns,
       { cellTemplate: this.tableContextMenuTmpl, frozenRight: true, maxWidth: 50, resizeable: false, sortable: false }
     ];
     this.rows = [...data.data];
+
+    this.rows.map(row => {
+
+      Object.keys(row).forEach(key => {
+        if (this.checkValidBase64(row[key])) {
+          row[key] = this.sanitizer.bypassSecurityTrustHtml(`<a href="${row[key]}" download>Download file</a>`);;
+        }
+      });
+
+      return row;
+    });
+
     console.log("rows", this.rows)
     console.log(data);
-    timer(2000).subscribe(() => { 
+    timer(2000).subscribe(() => {
       this.isLoading = false;
       this.cdr.detectChanges();
     });
@@ -279,33 +302,33 @@ export class ViewViewComponent implements OnInit, OnDestroy {
     this.widgets.reloadData();
   }
 
-  async setPage(pageInfo){
+  async setPage(pageInfo) {
     this.isLoading = true;
     console.log("pageInfo:", pageInfo);
     this.offset = pageInfo.offset;
     let sqlOffset = this.offset * pageInfo.pageSize;
     let data = await this.viewsIPCService
       .readData(
-        this.view.table, 
-        this.view.columns.map(col => col.name), 
-        this.limit, 
+        this.view.table,
+        this.view.columns.map(col => col.name),
+        this.limit,
         sqlOffset,
         this.view.columns.filter(col => col.searchable).map(col => col.name),
-        (this.searchInputModel && String(this.searchInputModel).length > 1) ? String(this.searchInputModel)  : null,
+        (this.searchInputModel && String(this.searchInputModel).length > 1) ? String(this.searchInputModel) : null,
         this.selectedFilter ? this.selectedFilter.where as IPCReadData.IIPCReadDataWhere[] : null,
         this.getViewJoints()
       );
     this.rows = [...data.data];
     this.totalElements = data.count;
 
-    timer(1000).subscribe(() => { 
+    timer(1000).subscribe(() => {
       this.isLoading = false;
       this.cdr.detectChanges();
     });
   }
 
   doSearch(event): void {
-    this.showSearchClear = String(this.searchInputModel).length >1;
+    this.showSearchClear = String(this.searchInputModel).length > 1;
 
     // if no search input, the user clear the text, reload the result to reset
     if (String(this.searchInputModel).length == 0) return this.selectLimit(this.limit)
@@ -331,7 +354,7 @@ export class ViewViewComponent implements OnInit, OnDestroy {
 
   }
 
-  onSubviewToggle(event):void {
+  onSubviewToggle(event): void {
     console.log("onSubviewToggle", event);
   }
 
