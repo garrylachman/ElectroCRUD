@@ -17,13 +17,25 @@ import {
   SlideFade,
   Switch,
   InputProps,
+  SwitchProps,
+  SelectProps,
 } from '@chakra-ui/react';
 import _ from 'lodash';
-import { FC, useMemo, PropsWithChildren, ReactNode } from 'react';
-import { useFormContext, UseFormReturn } from 'react-hook-form';
+import {
+  FC,
+  useMemo,
+  PropsWithChildren,
+  ReactNode,
+  CSSProperties,
+} from 'react';
+import { FieldError, useFormContext } from 'react-hook-form';
 import { FaAsterisk } from 'react-icons/fa';
 import { MdError, MdInfo } from 'react-icons/md';
 import { SubCard } from 'renderer/containers/cards';
+
+type InputError = FieldError | undefined;
+
+type InputErrors = Record<string, InputError>;
 
 export type InputFieldProps = {
   id: string;
@@ -33,15 +45,13 @@ export type InputFieldProps = {
   type?: string;
   size?: string;
   isRequired?: boolean;
-  onUpdate?: () => void;
   helpText?: string;
   helpReadOnly?: string;
   inSubCard?: boolean;
-  context?: UseFormReturn;
   isReadOnly?: boolean;
 };
 
-const subCardAlertStyle = {
+const subCardAlertStyle: Partial<CSSProperties> = {
   bottom: '5px',
   position: 'relative',
   width: '125%',
@@ -58,18 +68,16 @@ export const InputField: FC<PropsWithChildren<InputFieldProps>> = ({
   size = 'lg',
   isRequired = false,
   children,
-  onUpdate,
   helpText,
   helpReadOnly,
   inSubCard = false,
-  context,
   isReadOnly = false,
 }) => {
   const {
     register,
     formState: { errors, dirtyFields },
     // eslint-disable-next-line react-hooks/rules-of-hooks
-  } = context || useFormContext();
+  } = useFormContext();
 
   const [
     isMouseOnRequired,
@@ -78,34 +86,37 @@ export const InputField: FC<PropsWithChildren<InputFieldProps>> = ({
   const textColorPrimary = useColorModeValue('secondaryGray.900', 'white');
 
   const FormInputComponent = (
-    inputProps: InputProps,
+    inputProps: InputProps & (SwitchProps | SelectProps),
     inputChildren?: ReactNode
   ) => {
     const { type: inputType, ...inputRest } = inputProps;
 
     if (inputType === 'select') {
-      return <Select {...inputRest}>{inputChildren}</Select>;
+      return <Select {...(inputRest as SelectProps)}>{inputChildren}</Select>;
     }
     if (inputType === 'checkbox') {
       return (
-        <Switch {...inputRest} pb={3}>
+        <Switch {...(inputRest as SwitchProps)} pb={3}>
           {inputChildren}
         </Switch>
       );
     }
-    return <Input {...inputRest}>{inputChildren}</Input>;
+    return <Input {...(inputProps as InputProps)}>{inputChildren}</Input>;
   };
 
   const { ...errs } = errors;
   const { ...dirts } = dirtyFields;
 
-  const error = useMemo(() => _.get(errs, id, undefined), [errs]);
+  const error = useMemo(
+    () => _.get<InputErrors, string>(errs as InputErrors, id),
+    [errs]
+  );
   const isError = useMemo(() => error !== undefined, [error]);
   const isDirty = useMemo(() => _.get(dirts, id, false), [dirts]);
 
   return (
     <Box as={inSubCard ? SubCard : Box}>
-      <FormControl isInvalid={error !== undefined}>
+      <FormControl isInvalid={isError}>
         <FormLabel
           display="flex"
           htmlFor={id}
@@ -194,10 +205,14 @@ export const InputField: FC<PropsWithChildren<InputFieldProps>> = ({
               reverse
             >
               <Alert
-                colorSchema={
+                colorScheme={
                   isReadOnly && helpReadOnly !== undefined ? 'orange' : 'brand'
                 }
-                status={isReadOnly && helpReadOnly !== undefined ? 'warning' : undefined}
+                status={
+                  isReadOnly && helpReadOnly !== undefined
+                    ? 'warning'
+                    : undefined
+                }
                 variant="solid"
                 mt={1}
                 p={inSubCard ? '14px' : 1}

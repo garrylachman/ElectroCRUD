@@ -25,6 +25,7 @@ export const BasicDetailsCard: FC<BasicDetailsCardProps> = ({
   tables,
   isEditMode = false,
 }) => {
+  console.log(tables);
   return (
     <Card flexDirection="column">
       <Heading size="md" pb={4}>

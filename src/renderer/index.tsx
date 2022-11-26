@@ -35,11 +35,6 @@ const WithStateLoaded: FC<PropsWithChildren<any>> = ({ children }) => {
   return <>{children}</>;
 };
 
-const Routers = () => {
-  const rootState = useAppSelector((state) => state);
-  const getState = () => rootState;
-  return <RouterProvider router={router(getState)} />;
-};
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

@@ -1,6 +1,8 @@
 import { createSlice, createEntityAdapter, Update } from '@reduxjs/toolkit';
 import { v4 as uuidv4 } from 'uuid';
 import { ViewRO } from 'renderer/defenitions/record-object';
+import { x } from 'joi';
+import { TagsReducer } from '.';
 
 const viewsAdapter = createEntityAdapter<ViewRO>({
   selectId: (view) => view.id,
@@ -38,7 +40,7 @@ const viewsSlice = createSlice({
               ...payload,
               modificationDate: Date.now(),
             },
-          }
+          },
         };
       },
     },
@@ -46,6 +48,24 @@ const viewsSlice = createSlice({
     removeOne,
     removeMany,
     removeAll,
+  },
+  extraReducers: {
+    'tags/upsertOneTable': (state, action) => {
+      /* const view = viewsAdapter
+        .getSelectors()
+        .selectById(state, action.meta.viewId);
+      if (view) {
+        const changes = { ...view };
+        changes.metadata?.tableDocs.tags.push(action.payload.id);
+        return updateOne(state, {
+          id: view.id,
+          changes,
+        });
+      } */
+      state.entities[action.meta.viewId]?.metadata?.tableDocs.tags.push(
+        action.payload.id
+      );
+    },
   },
 });
 

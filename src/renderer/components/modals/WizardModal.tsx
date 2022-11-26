@@ -27,9 +27,7 @@ import { ModalProps } from './ModalProps';
 
 export type WizardModalStepContentProps<T> = {
   initialValue?: NestedPartial<T>;
-  onUpdate: (data: NestedPartial<T>) => void;
-  state?: T;
-  setState?: Dispatch<SetStateAction<T>>;
+  onUpdate?: (data: NestedPartial<T>) => void;
   testConnection?: () => void;
   connectionStatus?: 'NOT_TESTED' | 'FAILED' | 'SUCCESS' | 'TESTING';
   connectionError?: string;
@@ -55,6 +53,7 @@ export type WizardModalProps<T> = ModalProps<NestedPartial<T>> & {
   initialStep?: number;
   steps: WizardModalStepProps<NestedPartial<T>>[];
   completedStep: number;
+  state: NestedPartial<T>;
 };
 
 export const WizardModal = <TT,>({
@@ -73,6 +72,8 @@ export const WizardModal = <TT,>({
   isCancelEnabled = true,
   steps = [],
   completedStep,
+  state,
+  setCurrentStep,
 }: WizardModalProps<TT>) => {
   const bg = useColorModeValue('secondaryGray.1000', 'secondaryGray.1100');
   const [isOpen, { off }] = isModalOpenState;
@@ -80,15 +81,15 @@ export const WizardModal = <TT,>({
     initialStep,
   });
 
-  /*useEffect(() => {
+  useEffect(() => {
     if (activeStep > completedStep + 1) {
       setStep(completedStep + 1);
     }
-  }, [activeStep, completedStep]);
+  }, [activeStep, completedStep, setStep]);
 
   useEffect(() => {
     setCurrentStep(activeStep);
-  }, [activeStep]);*/
+  }, [activeStep]);
 
   const handle = useCallback(
     (result: NestedPartial<TT>) => {

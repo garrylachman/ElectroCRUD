@@ -11,6 +11,7 @@ module.exports = {
     'import/no-cycle': 'off',
     'react/require-default-props': 'off',
     'react/jsx-props-no-spreading': 'off',
+    '@typescript-eslint/ban-ts-comment': 'off',
   },
   parserOptions: {
     ecmaVersion: 2020,

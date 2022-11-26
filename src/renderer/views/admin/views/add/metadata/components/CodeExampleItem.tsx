@@ -75,21 +75,25 @@ export const CodeExampleItem: FC<CodeExampleItemProps> = ({ initialValue }) => {
     [initialValue, dispatcher]
   );
 
+  const onDelete = useCallback(
+    (data) => {
+      if (initialValue.id !== undefined) {
+        dispatcher(CodeExamplesReducer.actions.removeOne(initialValue.id));
+      }
+    },
+    [initialValue, dispatcher]
+  );
+
   return (
     <SubCard>
       <FormProvider {...formContext}>
         <form onSubmit={formContext.handleSubmit(onSubmit)}>
           <VStack display="block">
-            <InlineEditField
-              id="title"
-              placeholder="Code Example Title"
-              size="md"
-            />
+            <InlineEditField id="title" placeholder="Code Example Title" />
             <InlineEditField
               type="textarea"
               id="description"
               placeholder="Please describe about your code/example..."
-              size="md"
             />
             <CodeMirror
               ref={ref}
@@ -114,6 +118,7 @@ export const CodeExampleItem: FC<CodeExampleItemProps> = ({ initialValue }) => {
                   variant="solid"
                   colorScheme="red"
                   size="lg"
+                  onClick={onDelete}
                   isDisabled={initialValue.id === undefined}
                 >
                   <Icon mr={2} as={MdDelete} />
@@ -122,19 +127,27 @@ export const CodeExampleItem: FC<CodeExampleItemProps> = ({ initialValue }) => {
               </HStack>
               <HStack>
                 <Stat size="xs" w="180px">
-                  <StatLabel fontSize="sm" align="right">Created at</StatLabel>
+                  <StatLabel fontSize="sm" align="right">
+                    Created at
+                  </StatLabel>
                   <StatNumber align="right">
                     {initialValue.creationDate ? (
                       <ReactTimeAgo date={initialValue.creationDate} />
-                    ) : 'N/A'}
+                    ) : (
+                      'N/A'
+                    )}
                   </StatNumber>
                 </Stat>
                 <Stat size="xs" w="180px">
-                  <StatLabel fontSize="sm" align="right">Last updated at</StatLabel>
+                  <StatLabel fontSize="sm" align="right">
+                    Last updated at
+                  </StatLabel>
                   <StatNumber align="right">
                     {initialValue.modificationDate ? (
                       <ReactTimeAgo date={initialValue.modificationDate} />
-                    ) : 'N/A'}
+                    ) : (
+                      'N/A'
+                    )}
                   </StatNumber>
                 </Stat>
               </HStack>

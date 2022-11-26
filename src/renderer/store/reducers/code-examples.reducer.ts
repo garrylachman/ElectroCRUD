@@ -7,7 +7,7 @@ const codeExamplesAdapter = createEntityAdapter<CodeExampleRO>({
   sortComparer: (a, b) => b.creationDate - a.creationDate,
 });
 
-const { addOne, upsertOne, upsertMany, removeOne, removeMany, removeAll } =
+const { upsertOne, upsertMany, removeOne, removeMany, removeAll } =
   codeExamplesAdapter;
 
 const codeExamplesSlice = createSlice({

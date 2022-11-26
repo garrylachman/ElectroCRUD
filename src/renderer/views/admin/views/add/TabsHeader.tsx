@@ -15,7 +15,7 @@ import { ViewRO } from 'renderer/defenitions/record-object'
 import { FC } from 'react';
 
 type TabsHeaderProps = {
-  viewState: ViewRO;
+  viewState?: ViewRO;
 };
 
 export const CreatedDateCard = ({ value }: { value: number }) => (
@@ -44,8 +44,8 @@ export const TabsHeader: FC<TabsHeaderProps> = ({ viewState }) => {
   return (
     <VStack>
       <SimpleGrid columns={4} spacing={10} w="100%">
-        <CreatedDateCard value={viewState.creationDate} />
-        <ModificationDateCard value={viewState.creationDate} />
+        <CreatedDateCard value={viewState?.creationDate} />
+        <ModificationDateCard value={viewState?.modificationDate} />
       </SimpleGrid>
     </VStack>
   )

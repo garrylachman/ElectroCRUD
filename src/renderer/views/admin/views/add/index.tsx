@@ -63,6 +63,7 @@ const validationSchema = Joi.object<FormData>({
     update: Joi.boolean(),
     delete: Joi.boolean(),
   }),
+  metadata: Joi.object().optional(),
 });
 
 const AddOrEditView = ({
@@ -304,12 +305,14 @@ const AddOrEditView = ({
 };
 
 export const Edit = () => {
-  const sessionState = useAppSelector((state) => state.session);
-  const loaderData = useLoaderData() as NestedPartial<ViewRO>;
+  const loaderData = useLoaderData() as ViewRO;
+  const viewState = useAppSelector((state) =>
+    ViewsReducer.getSelectors().selectById(state.views, loaderData.id)
+  );
 
   return (
     <>
-      <Spacer pt="60px" /> <TabsHeader viewState={loaderData} />
+      <Spacer pt="60px" /> <TabsHeader viewState={viewState} />
       <Tabs isLazy colorScheme="brandTabs" pt="10px">
         <TabList>
           <Tab>
@@ -331,18 +334,10 @@ export const Edit = () => {
         </TabList>
         <TabPanels>
           <TabPanel px={0} pb={0}>
-            <AddOrEditView
-              initialState={{
-                accountId: sessionState.account?.id,
-                ...loaderData,
-              }}
-            />
+            <AddOrEditView initialState={viewState} />
           </TabPanel>
           <TabPanel px={0} pb={0}>
-            <MetaDataIndex viewState={{
-                accountId: sessionState.account?.id,
-                ...loaderData,
-              }}/>
+            <MetaDataIndex viewState={viewState} />
           </TabPanel>
         </TabPanels>
       </Tabs>

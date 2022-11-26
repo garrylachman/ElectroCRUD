@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { Box, Grid, Badge, Flex, Icon, Button } from '@chakra-ui/react';
-import { useForm, FormProvider } from 'react-hook-form';
+import { useForm, FormProvider, useFormState } from 'react-hook-form';
 import { InputField } from 'renderer/components/fields';
 import { FileConnectionConfig } from 'shared/defenitions';
 import { MdSave } from 'react-icons/md';
@@ -14,13 +14,15 @@ export const AccountsWizardFileConnection: FC<AccountsWizardStep> = ({
       filename: undefined,
     },
   },
-  onUpdate,
+  onUpdate = (...args: any[]) => {}
 }) => {
-  const methods = useForm<FormData>({
+  const formContext = useForm<FormData>({
     reValidateMode: 'onChange',
     mode: 'all',
     defaultValues: { ...initialValue.connection },
   });
+  const { handleSubmit, control } = formContext;
+  const { isValid } = useFormState({ control });
 
   const onSubmit = (data: FormData) =>
     onUpdate({
@@ -31,8 +33,8 @@ export const AccountsWizardFileConnection: FC<AccountsWizardStep> = ({
 
   return (
     <Box>
-      <FormProvider {...methods}>
-        <form onSubmit={methods.handleSubmit(onSubmit)}>
+      <FormProvider {...formContext}>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <Grid templateColumns="repeat(1, 1fr)" gap={5}>
             <InputField
               id="filename"
@@ -56,7 +58,7 @@ export const AccountsWizardFileConnection: FC<AccountsWizardStep> = ({
               variant="solid"
               colorScheme="green"
               size="lg"
-              isDisabled={!methods.formState.isValid}
+              isDisabled={!sValid}
             >
               <Icon mr={2} as={MdSave} />
               Save

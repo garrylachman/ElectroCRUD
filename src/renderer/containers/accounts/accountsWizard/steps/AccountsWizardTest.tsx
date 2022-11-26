@@ -1,24 +1,12 @@
 import { FC, useMemo } from 'react';
 import {
   Box,
-  FormControl,
-  FormLabel,
-  Input,
-  FormErrorMessage,
-  Select,
-  Spacer,
   Alert,
   AlertIcon,
   AlertTitle,
   AlertDescription,
+  Text,
 } from '@chakra-ui/react';
-import { joiResolver } from '@hookform/resolvers/joi';
-import { useForm } from 'react-hook-form';
-import {
-  AccountRO,
-  ValidateAccountsWizardStep1,
-} from 'renderer/defenitions/record-object';
-import { ServerTypeEnum } from 'shared';
 import SetUp from 'renderer/components/actions/SetUp';
 import { AccountsWizardStep } from '.';
 
@@ -59,8 +47,8 @@ export const AccountsWizardTest: FC<AccountsWizardStep> = ({
           <AlertTitle fontSize="3xl" mt={3} mb={3}>
             ERROR
           </AlertTitle>
-          <AlertDescription fontSize="sm" lineHeight={1}>
-            {connectionError.substring(0, 200)} ...
+          <AlertDescription fontSize="sm">
+            <Text noOfLines={2}>{connectionError}</Text>
           </AlertDescription>
         </Alert>
       )}

@@ -78,10 +78,14 @@ export const AccountsWizardModal: FC<AccountsWizardModalProps> = ({
       {
         label: 'Test',
         description: 'Test database connection',
-        StepComponent: AccountsWizardTest,
+        StepComponent: (
+          <AccountsWizardTest
+            {...{ connectionStatus, connectionError, testConnection }}
+          />
+        ),
       },
     ],
-    [state]
+    [state, connectionStatus, connectionError, testConnection]
   );
 
   const props = useMemo(
@@ -95,8 +99,18 @@ export const AccountsWizardModal: FC<AccountsWizardModalProps> = ({
       completedStep,
       isModalOpenState,
       steps,
+      state,
     }),
-    [isDone, isNext, isPrev, completedStep, isModalOpenState, steps]
+    [
+      isDone,
+      isNext,
+      isPrev,
+      completedStep,
+      isModalOpenState,
+      steps,
+      state,
+      setCurrentStep,
+    ]
   );
 
   return useMemo(

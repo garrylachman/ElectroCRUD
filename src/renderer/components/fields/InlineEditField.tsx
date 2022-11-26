@@ -3,88 +3,63 @@ import {
   Box,
   useColorModeValue,
   IconButton,
-  Input,
-  useDisclosure,
   useEditableControls,
   ButtonGroup,
-  SlideFade,
   Editable,
   Tooltip,
   EditableInput,
   Icon,
   Flex,
   InputProps,
-  Textarea,
   EditableTextarea,
-  FormControl,
-  FormLabel,
-  FormErrorMessage,
   keyframes,
 } from '@chakra-ui/react';
-import {
-  AsyncCreatableSelect,
-  AsyncSelect,
-  CreatableSelect,
-  Select,
-  OptionsOrGroups,
-} from 'chakra-react-select';
+import { Select, OptionsOrGroups } from 'chakra-react-select';
 import _ from 'lodash';
-import { FC, PropsWithChildren, useCallback, useMemo } from 'react';
-import {
-  useFormContext,
-  useController,
-  Controller,
-  Control,
-} from 'react-hook-form';
+import react, { FC, forwardRef, PropsWithChildren } from 'react';
+import { useFormContext, Controller, Control } from 'react-hook-form';
 import { MdOutlineCheck, MdClose, MdEdit } from 'react-icons/md';
 
-class ChangeEvent extends EventTarget {
-  private secretValue: { name: string; value: string };
-
-  constructor(name: string, value: string) {
-    super();
-    this.secretValue = { name, value };
-  }
-
-  get target() {
-    return this.secretValue;
-  }
-
-  get currentTarget() {
-    return this.secretValue;
-  }
-}
-
 const ReactSelect: FC<
-  InputProps & { options: OptionsOrGroups; control: Control }
-> = ({ options, ...props }) => (
-  <Controller
-    {...props}
-    render={({ field: { name } }) => (
-      <Box hidden={props.hidden}>
-        <Select
-          name={name}
-          ref={props.ref}
-          onBlur={props.onBlur}
-          options={options}
-          value={options.find((c) => c.value === props.value)}
-          onChange={(option) => {
-            props.onChange(new ChangeEvent(name, option.value));
-          }}
-        />
-      </Box>
-    )}
-  />
-);
+  InputProps & {
+    options: OptionsOrGroups<any, any>;
+    control: Control;
+    hidden: boolean;
+  }
+> = forwardRef((props, ref) => {
+  const { options, ...rest } = { ...props, ref };
+  return (
+    // @ts-ignore
+    <Controller
+      {...rest}
+      render={({ field: { name, ref: inRef } }) => (
+        <Box hidden={rest.hidden}>
+          <Select
+            name={name}
+            ref={inRef}
+            onBlur={rest.onBlur}
+            options={options}
+            value={options.find((c) => c.value === rest.value)}
+            onChange={(option) => {
+              if (rest.onChange) {
+                const eventValue = { name, value: option.value };
+                rest.onChange({
+                  target: eventValue,
+                  currentTarget: eventValue,
+                } as react.ChangeEvent<HTMLInputElement>);
+              }
+            }}
+          />
+        </Box>
+      )}
+    />
+  );
+});
 
 export type InlineEditFieldProps = {
   id: string;
-  extra?: JSX.Element;
   placeholder?: string;
   type?: string;
-  size?: string;
-  isRequired?: boolean;
-  helpText?: string;
   fontSize?: string;
   selectOptions?: Record<string, string>[];
 };
@@ -131,7 +106,7 @@ export const EditableControls: FC<any> = () => {
   );
 };
 
-const InputFactory = (props: any) => {
+const InputFactory = forwardRef((props: any, ref) => {
   const { formProps, ...rest } = props;
   switch (rest.type) {
     case 'textarea':
@@ -141,6 +116,7 @@ const InputFactory = (props: any) => {
         <ReactSelect
           {...rest}
           {...formProps}
+          ref={ref}
           onChange={(...args: any[]) => {
             rest.onChange(...args);
             formProps.onChange(...args);
@@ -150,7 +126,21 @@ const InputFactory = (props: any) => {
     default:
       return <EditableInput {...rest} {...formProps} />;
   }
-};
+});
+
+export const RenderHTML: FC<PropsWithChildren> = ({ ...props }) => (
+  <>
+    {props.children && (
+      <div
+        // eslint-disable-next-line react/no-danger
+        dangerouslySetInnerHTML={{
+          __html: props.children?.toString()?.split('\n').join('<br/>'),
+        }}
+        {..._.omit(props, ['children'])}
+      />
+    )}
+  </>
+);
 
 export const InlineEditField: FC<PropsWithChildren<InlineEditFieldProps>> = ({
   id,
@@ -159,7 +149,8 @@ export const InlineEditField: FC<PropsWithChildren<InlineEditFieldProps>> = ({
   fontSize = 'md',
   selectOptions = [],
 }) => {
-  const formContext = useFormContext();
+  const { register, watch } = useFormContext();
+  const value = watch(id);
   const bg = useColorModeValue('gray.200', 'gray.700');
   const fade = keyframes`
   from { background: ${bg} }
@@ -167,13 +158,10 @@ export const InlineEditField: FC<PropsWithChildren<InlineEditFieldProps>> = ({
 `;
   const animation = `${fade} infinite 2s cubic-bezier(0.1, -0.6, 0.2, 0)`;
 
-  const formProps = useMemo(() => {
-    return formContext.register(id);
-  }, [formContext.register, id]);
-
   return (
     <Editable
-      defaultValue={formContext.getValues(id)}
+      defaultValue={value}
+      value={value}
       isPreviewFocusable
       selectAllOnFocus={false}
       placeholder={placeholder}
@@ -191,19 +179,11 @@ export const InlineEditField: FC<PropsWithChildren<InlineEditFieldProps>> = ({
             background: useColorModeValue('gray.200', 'gray.700'),
             animation,
           }}
-          as={(props) => {
-            return (
-              <div
-                dangerouslySetInnerHTML={{
-                  __html: props.children?.toString()?.split('\n').join('<br/>'),
-                }}
-                {..._.omit(props, ['children'])}
-              />
-            );
-          }}
+          as={RenderHTML}
         />
       </Tooltip>
       <EditableTextarea
+        name={id}
         type={type}
         options={selectOptions}
         py={2}
@@ -211,7 +191,7 @@ export const InlineEditField: FC<PropsWithChildren<InlineEditFieldProps>> = ({
         as={InputFactory}
         rows={10}
         overflowY="auto"
-        formProps={formProps}
+        formProps={register(id)}
       />
       <EditableControls />
     </Editable>

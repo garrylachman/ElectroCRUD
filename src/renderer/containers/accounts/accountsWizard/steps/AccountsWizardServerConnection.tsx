@@ -9,7 +9,7 @@ import {
   GridItem,
 } from '@chakra-ui/react';
 import { joiResolver } from '@hookform/resolvers/joi';
-import { useForm, FormProvider } from 'react-hook-form';
+import { useForm, FormProvider, useFormState } from 'react-hook-form';
 import { ValidateServerConnection } from 'renderer/defenitions/record-object';
 import { ServerConnectionConfig } from 'shared';
 import { InputField } from 'renderer/components/fields';
@@ -28,21 +28,24 @@ export const AccountsWizardServerConnection: FC<AccountsWizardStep> = ({
       database: undefined,
     },
   },
-  onUpdate,
+  onUpdate = (...args: any[]) => {}
 }) => {
-  const methods = useForm<FormData>({
+  const formContext = useForm<FormData>({
     resolver: joiResolver(ValidateServerConnection),
     reValidateMode: 'onChange',
     mode: 'all',
     defaultValues: { ...initialValue.connection },
   });
 
+  const { handleSubmit, control } = formContext;
+  const { isValid } = useFormState({ control });
+
   const onSubmit = (data: FormData) => onUpdate({ connection: data });
 
   return (
     <Box>
-      <FormProvider {...methods}>
-        <form onSubmit={methods.handleSubmit(onSubmit)}>
+      <FormProvider {...formContext}>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <Grid templateColumns="repeat(3, 1fr)" gap={5}>
             <InputField
               id="host"
@@ -112,7 +115,7 @@ export const AccountsWizardServerConnection: FC<AccountsWizardStep> = ({
               variant="solid"
               colorScheme="green"
               size="lg"
-              isDisabled={!methods.formState.isValid}
+              isDisabled={!isValid}
             >
               <Icon mr={2} as={MdSave} />
               Save

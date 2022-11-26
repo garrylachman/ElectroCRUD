@@ -1,3 +1,5 @@
+import { NestedPartial } from '.';
+import { IPCError } from './error.def';
 import { IPCChannel } from './ipc.def';
 import { LogItem } from './log.def';
 import {
@@ -11,7 +13,8 @@ export type BaseResponse = {
 };
 
 export type ErrorResponse = BaseResponse & {
-  error: Error;
+  error: IPCError;
+  body?: never;
 };
 
 export type SuccessResponse<T> = BaseResponse & {
@@ -42,8 +45,7 @@ export type UpdateResponse = SuccessResponse<boolean>;
 
 export type LogResponse = SuccessResponse<LogItem>;
 
-export type ResponseType =
-  | ErrorResponse
+export type ResponseTypeSuccess =
   | TablesListResponse
   | TableInfoResponse
   | ConnectResponse
@@ -54,3 +56,6 @@ export type ResponseType =
   | DeleteResponse
   | UpdateResponse
   | LogResponse;
+
+export type ResponseType = ResponseTypeSuccess | ErrorResponse;
+export type ResponseOrError<T> = T & Partial<ErrorResponse>;

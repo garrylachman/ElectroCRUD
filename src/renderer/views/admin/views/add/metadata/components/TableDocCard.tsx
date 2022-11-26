@@ -1,40 +1,19 @@
 import {
   Grid,
-  Badge,
-  Button,
-  Flex,
-  Icon,
   GridItem,
   VStack,
   Heading,
-  EditablePreview,
   Box,
-  useColorModeValue,
-  IconButton,
-  Input,
-  useDisclosure,
-  useEditableControls,
-  ButtonGroup,
-  SlideFade,
-  Editable,
-  Tooltip,
   Text,
-  EditableInput,
   Alert,
   AlertDescription,
   AlertTitle,
   Collapse,
   Divider,
-  HStack,
 } from '@chakra-ui/react';
-import { FC, useEffect } from 'react';
-import { ViewRO } from 'renderer/defenitions/record-object';
+import { FC } from 'react';
 import { useFormContext } from 'react-hook-form';
-import * as Joi from 'joi';
-import { joiResolver } from '@hookform/resolvers/joi';
-import Card from 'renderer/components/card/Card';
-import { InlineEditField, InputField } from 'renderer/components/fields';
-import { CheckIcon, CloseIcon } from '@chakra-ui/icons';
+import { InlineEditField } from 'renderer/components/fields';
 import { Categories } from 'renderer/defenitions/record-object/categories.def';
 import _ from 'lodash';
 
@@ -42,7 +21,7 @@ type TableDocCardProps = {};
 
 export const TableDocCard: FC<TableDocCardProps> = () => {
   const formContext = useFormContext();
-  const { description, title, category, contact } = formContext.watch('tableDocs');
+  const { description, title, category, contact } = formContext.watch();
 
   return (
     <Box flexDirection="column">
@@ -75,7 +54,7 @@ export const TableDocCard: FC<TableDocCardProps> = () => {
           </Alert>
         </Collapse>
         <InlineEditField
-          id="tableDocs.title"
+          id="title"
           fontSize="2xl"
           placeholder="Title (or Name)"
         />
@@ -96,11 +75,9 @@ export const TableDocCard: FC<TableDocCardProps> = () => {
             </Box>
           </Alert>
         </Collapse>
-        <Heading size="sm">
-          Description
-        </Heading>
+        <Heading size="sm">Description</Heading>
         <InlineEditField
-          id="tableDocs.description"
+          id="description"
           type="textarea"
           placeholder="Description"
         />
@@ -121,11 +98,9 @@ export const TableDocCard: FC<TableDocCardProps> = () => {
             </Box>
           </Alert>
         </Collapse>
-        <Heading size="sm">
-          Category
-        </Heading>
+        <Heading size="sm">Category</Heading>
         <InlineEditField
-          id="tableDocs.category"
+          id="category"
           type="dropdown"
           placeholder="Category"
           selectOptions={Object.values(Categories).map((cat) => ({
@@ -143,44 +118,50 @@ export const TableDocCard: FC<TableDocCardProps> = () => {
             <Box>
               <AlertTitle>Contact Information</AlertTitle>
               <AlertDescription fontSize="sm">
-              The name and email address of the publisher of a dataset.
+                The name and email address of the publisher of a dataset.
               </AlertDescription>
             </Box>
           </Alert>
         </Collapse>
-        <Heading size="sm">
-          Contact Information
-        </Heading>
+        <Heading size="sm">Contact Information</Heading>
         <Grid templateColumns="repeat(3, 1fr)" gap={3} my={2}>
           <VStack alignItems="normal">
-            <Text size="md" as='u'>Name</Text>
+            <Text size="md" as="u">
+              Name
+            </Text>
             <InlineEditField
-              id="tableDocs.contact.name"
+              id="contact.name"
               fontSize="sm"
               placeholder="Garry Lachman"
             />
           </VStack>
           <VStack alignItems="normal">
-            <Text size="md" as='u'>Phone</Text>
+            <Text size="md" as="u">
+              Phone
+            </Text>
             <InlineEditField
-              id="tableDocs.contact.phone"
+              id="contact.phone"
               fontSize="sm"
               placeholder="(+1) 123-456-789"
             />
           </VStack>
           <VStack alignItems="normal">
-            <Text size="md" as='u'>E-Mail</Text>
+            <Text size="md" as="u">
+              E-Mail
+            </Text>
             <InlineEditField
-              id="tableDocs.contact.email"
+              id="contact.email"
               fontSize="sm"
               placeholder="example@example.com"
             />
           </VStack>
           <GridItem colSpan={3}>
             <VStack alignItems="normal">
-              <Text size="md" as='u'>Additional details</Text>
+              <Text size="md" as="u">
+                Additional details
+              </Text>
               <InlineEditField
-                id="tableDocs.contact.details"
+                id="contact.details"
                 fontSize="sm"
                 placeholder="Please send email before calling"
               />

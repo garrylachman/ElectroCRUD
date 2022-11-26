@@ -63,6 +63,7 @@ export function SidebarLinks() {
     >
       {links.map((link) => (
         <HStack
+          key={link.to}
           mb="6px"
           spacing={activeRoute(link.to) ? '22px' : '26px'}
           flexDirection="column"
@@ -100,7 +101,10 @@ export function SidebarLinks() {
               {activeRoute(link.to) ? (
                 <VStack alignItems="start" pt={2}>
                   {link.subLinks.map((subLink) => (
-                    <NavLink to={`${link.to}/${subLink.to}`}>
+                    <NavLink
+                      to={`${link.to}/${subLink.to}`}
+                      key={`${link.to}/${subLink.to}`}
+                    >
                       <Flex
                         w="100%"
                         alignItems="center"

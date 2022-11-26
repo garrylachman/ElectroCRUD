@@ -27,16 +27,19 @@ const tagsSlice = createSlice({
         };
       },
     },
-    upsertMany: {
-      reducer: upsertMany,
-      prepare(payload: TagRO[]) {
+    upsertOneTable: {
+      reducer: upsertOne,
+      prepare(payload: TagRO, viewId: string) {
         return {
-          payload: payload.map((item) => ({
-            ...item,
-            id: item.id || uuidv4(),
-            creationDate: item.creationDate || Date.now(),
+          payload: {
+            ...payload,
+            id: payload.id || uuidv4(),
+            creationDate: payload.creationDate || Date.now(),
             modificationDate: Date.now(),
-          })),
+          },
+          meta: {
+            viewId,
+          },
         };
       },
     },

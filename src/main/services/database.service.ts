@@ -1,26 +1,35 @@
 import 'reflect-metadata';
 import { omit } from 'lodash';
 import { singleton, autoInjectable, delay, inject } from 'tsyringe';
-import { knex, Knex } from 'knex';
+import * as Knex from 'knex';
+import { TypedKnex } from '@wwwouter/typed-knex';
 import getCurrentLine from 'get-current-line';
 import sqlFormatter from '@sqltools/formatter';
 import { Config as SQLFormatterConfig } from '@sqltools/formatter/lib/core/types';
-import { NoActiveClientError, NoConnectionError } from '../exceptions';
+import { NoActiveClientError } from '../exceptions';
 import {
   heartBeatQueries,
   primaryKeyQueries,
   tablesListQueries,
 } from '../data/queries';
 import {
+  ConnectArgs,
   ConnectionConfig,
+  DeleteDataArgs,
+  ErrorType,
+  InsertDataArgs,
+  IPCError,
   QueryAggregate,
   QueryJoin,
   QueryWhere,
+  ReadDataArgs,
   ReadDataResult,
+  ReadWidgetDataArgs,
   ReadWidgetDataResult,
   ServerType,
   TableInfoRow,
   TablesListRow,
+  UpdateDataArgs,
 } from '../../shared/defenitions';
 import { QueryAggregateEnum, ServerTypeEnum } from '../../shared/enums';
 import { LogService } from './log.service';
@@ -34,7 +43,9 @@ const formatterParams: SQLFormatterConfig = {
 @singleton()
 @autoInjectable()
 export class DatabaseService {
-  private connection: Knex | null = null;
+  private connection?: Knex.Knex;
+
+  private typedConnection?: TypedKnex;
 
   constructor(
     @inject(delay(() => LogService)) private logService?: LogService
@@ -43,17 +54,17 @@ export class DatabaseService {
   public async connect(
     client: ServerType,
     connection: ConnectionConfig
-  ): Promise<boolean | Error> {
+  ): Promise<boolean | IPCError> {
     await this.disconnect();
 
-    const config: Knex.Config = {
+    const config: Knex.Knex.Config = {
       client,
       connection,
       useNullAsDefault: true,
     };
     this.logService?.info(
       `Connecting: ${JSON.stringify(
-        omit(config.connection as Knex.ConnectionConfigProvider, [
+        omit(config.connection as Knex.Knex.ConnectionConfigProvider, [
           'password',
           'user',
         ])
@@ -61,24 +72,38 @@ export class DatabaseService {
       getCurrentLine().method
     );
     try {
-      this.connection = knex(config);
+      this.connection = Knex.knex(config);
+      this.typedConnection = new TypedKnex(this.connection);
       this.logService?.success(`Connection Success`, getCurrentLine().method);
       return await this.heartbeat();
     } catch (error: any) {
       this.logService?.error(error.message, getCurrentLine().method);
-      throw error;
+      throw {
+        type: ErrorType.NOT_CONNECTED,
+        ...error,
+      };
     }
   }
 
-  public async disconnect() {
+  public async connectWithProps(
+    props: ConnectArgs
+  ): Promise<boolean | IPCError> {
+    const { client, connection } = props;
+    return this.connect(client, connection);
+  }
+
+  public async disconnect(): Promise<void> {
     if (this.connection) {
       await this.connection.destroy();
     }
   }
 
-  public get getConnection(): Knex | NoConnectionError {
+  public get getConnection(): Knex.Knex | IPCError {
     if (!this.connection) {
-      throw new NoConnectionError();
+      return {
+        type: ErrorType.NOT_CONNECTED,
+        message: 'Not Connected',
+      } as IPCError;
     }
     return this.connection;
   }
@@ -94,7 +119,7 @@ export class DatabaseService {
     }
   }
 
-  public async heartbeat(): Promise<boolean | Error> {
+  public async heartbeat(): Promise<boolean | IPCError> {
     const heartbeatQuery = heartBeatQueries[this.activeClient];
 
     try {
@@ -102,12 +127,18 @@ export class DatabaseService {
       return true;
     } catch (error: any) {
       this.logService?.error(error.message, getCurrentLine().method);
-      throw error;
+      throw {
+        type: ErrorType.NOT_CONNECTED,
+        ...error,
+      };
     }
-    return false;
   }
 
-  public async executeQuery(query: string): Promise<any | Error> {
+  public async heartbeatWithProps(): Promise<boolean | IPCError> {
+    return this.heartbeat();
+  }
+
+  public async executeQuery(query: string): Promise<any | IPCError> {
     const findResult = ((result: any) => result[0]) as (
       result: any
     ) => string | undefined;
@@ -138,11 +169,14 @@ export class DatabaseService {
       return findResult(res);
     } catch (error: any) {
       this.logService?.error(error.message, getCurrentLine().method);
-      throw error;
+      throw {
+        type: ErrorType.EXECUTE_ERROR,
+        ...error,
+      };
     }
   }
 
-  public async listTables(): Promise<string[] | Error> {
+  public async listTables(): Promise<string[] | IPCError> {
     const listTablesQuery = tablesListQueries[this.activeClient];
     let bindings: string[] = [this.connection?.client.database()];
     if (this.activeClient === ServerTypeEnum.SQLITE) {
@@ -167,11 +201,20 @@ export class DatabaseService {
       return res.map((row: TablesListRow) => row.table_name);
     } catch (error: any) {
       this.logService?.error(error.message, getCurrentLine().method);
-      throw error;
+      throw {
+        type: ErrorType.EXECUTE_ERROR,
+        ...error,
+      };
     }
   }
 
-  public async tableInfo(tableName: string): Promise<TableInfoRow[] | Error> {
+  public async listTablesWithProps(): Promise<string[] | IPCError> {
+    return this.listTables();
+  }
+
+  public async tableInfo(
+    tableName: string
+  ): Promise<TableInfoRow[] | IPCError> {
     const tableInfoQuery = primaryKeyQueries[this.activeClient];
     let bindings: string[] = [tableName];
     if (this.activeClient === ServerTypeEnum.MYSQL) {
@@ -212,8 +255,17 @@ export class DatabaseService {
       return findResult(res);
     } catch (error: any) {
       this.logService?.error(error.message, getCurrentLine().method);
-      throw error;
+      throw {
+        type: ErrorType.EXECUTE_ERROR,
+        ...error,
+      };
     }
+  }
+
+  public async tableInfoWithProps(
+    props: string
+  ): Promise<TableInfoRow[] | IPCError> {
+    return this.tableInfo(props);
   }
 
   public async readData(
@@ -225,7 +277,7 @@ export class DatabaseService {
     searchText?: string,
     where?: QueryWhere[],
     join?: QueryJoin[]
-  ): Promise<ReadDataResult<any> | Error> {
+  ): Promise<ReadDataResult<any> | IPCError> {
     try {
       const selectColumns = [...columns].map((col) =>
         !col.includes('.') ? `${table}.${col}` : `${col}`
@@ -280,15 +332,43 @@ export class DatabaseService {
       };
     } catch (error: any) {
       this.logService?.error(error.message, getCurrentLine().method);
-      throw error;
+      throw {
+        type: ErrorType.EXECUTE_ERROR,
+        ...error,
+      };
     }
+  }
+
+  public async readDataWithProps(
+    props: ReadDataArgs
+  ): Promise<ReadDataResult<any> | IPCError> {
+    const {
+      table,
+      columns,
+      limit,
+      offset,
+      searchColumns,
+      searchText,
+      where,
+      join,
+    } = props;
+    return this.readData(
+      table,
+      columns,
+      limit,
+      offset,
+      searchColumns,
+      searchText,
+      where,
+      join
+    );
   }
 
   public async updateData(
     table: string,
     update: Record<string, any>,
     where?: QueryWhere[]
-  ): Promise<boolean | Error> {
+  ): Promise<boolean | IPCError> {
     try {
       const q = this.connection?.table(table);
 
@@ -310,14 +390,24 @@ export class DatabaseService {
       return true;
     } catch (error: any) {
       this.logService?.error(error.message, getCurrentLine().method);
-      throw error;
+      throw {
+        type: ErrorType.EXECUTE_ERROR,
+        ...error,
+      };
     }
+  }
+
+  public async updateDataWithProps(
+    props: UpdateDataArgs
+  ): Promise<boolean | IPCError> {
+    const { table, update, where } = props;
+    return this.updateData(table, update, where);
   }
 
   public async insertData(
     table: string,
     data: Record<string, any> | Record<string, any>[]
-  ): Promise<boolean | Error> {
+  ): Promise<boolean | IPCError> {
     try {
       const q = this.connection?.table(table);
 
@@ -331,14 +421,24 @@ export class DatabaseService {
       return true;
     } catch (error: any) {
       this.logService?.error(error.message, getCurrentLine().method);
-      throw error;
+      throw {
+        type: ErrorType.EXECUTE_ERROR,
+        ...error,
+      };
     }
+  }
+
+  public async insertDataWithProps(
+    props: InsertDataArgs
+  ): Promise<boolean | IPCError> {
+    const { table, data } = props;
+    return this.insertData(table, data);
   }
 
   public async deleteData(
     table: string,
     where?: QueryWhere[]
-  ): Promise<boolean | Error> {
+  ): Promise<boolean | IPCError> {
     try {
       const q = this.connection?.table(table);
 
@@ -358,8 +458,18 @@ export class DatabaseService {
       return true;
     } catch (error: any) {
       this.logService?.error(error.message, getCurrentLine().method);
-      throw error;
+      throw {
+        type: ErrorType.EXECUTE_ERROR,
+        ...error,
+      };
     }
+  }
+
+  public async deleteDataWithProps(
+    props: DeleteDataArgs
+  ): Promise<boolean | IPCError> {
+    const { table, where } = props;
+    return this.deleteData(table, where);
   }
 
   public async readWidgetData(
@@ -367,7 +477,7 @@ export class DatabaseService {
     column: string,
     func: QueryAggregate,
     where?: QueryWhere[]
-  ): Promise<ReadWidgetDataResult<number> | Error> {
+  ): Promise<ReadWidgetDataResult<number> | IPCError> {
     try {
       const q = this.connection?.table(table);
       if (q) {
@@ -405,7 +515,17 @@ export class DatabaseService {
       };
     } catch (error: any) {
       this.logService?.error(error.message, getCurrentLine().method);
-      throw error;
+      throw {
+        type: ErrorType.EXECUTE_ERROR,
+        ...error,
+      };
     }
+  }
+
+  public async readWidgetDataWithProps(
+    props: ReadWidgetDataArgs
+  ): Promise<ReadWidgetDataResult<number> | IPCError> {
+    const { table, column, func, where } = props;
+    return this.readWidgetData(table, column, func, where);
   }
 }

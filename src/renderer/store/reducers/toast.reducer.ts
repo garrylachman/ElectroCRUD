@@ -1,11 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ToastOptions } from '@chakra-ui/react';
+import { UseToastOptions } from '@chakra-ui/react';
 import { v4 as uuidv4 } from 'uuid';
 
-const initialState: Partial<ToastOptions> = {};
+const initialState: Partial<UseToastOptions> = {};
 
-const toastDefault: Partial<ToastOptions> = {
-  status: 'default',
+const toastDefault: Partial<UseToastOptions> = {
+  status: 'info',
   duration: 5000,
   position: 'top-right',
   isClosable: true,
@@ -17,10 +17,10 @@ const toastSlice = createSlice({
   initialState,
   reducers: {
     setToast: {
-      reducer: (state, action: PayloadAction<{ toast: ToastOptions }>) => {
+      reducer: (state, action: PayloadAction<UseToastOptions>) => {
         return action.payload;
       },
-      prepare(payload: Partial<ToastOptions>) {
+      prepare(payload: Partial<UseToastOptions>) {
         return {
           payload: {
             ...toastDefault,

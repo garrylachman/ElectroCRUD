@@ -59,8 +59,9 @@ export const useAccountsWizard = (
   });
 
   const testConnection = useCallback(() => {
+    console.log("test")
     execute();
-  }, []);
+  }, [execute]);
 
   const isEdit = useMemo(() => state.id, [state]);
   useEffect(() => {

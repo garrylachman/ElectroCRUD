@@ -21,14 +21,14 @@ export type MetadataTableDocsRO = {
   description?: string;
   category?: Categories;
   contact?: MetadataTableDocsContactRO;
-  tags: number[] | TagRO[];
+  tags: string[];
 };
 
 export type MetadataColumnDocsRO = {
   column: string;
   title?: string;
   description?: string;
-  tags: number[] | TagRO[];
+  tags: number[];
 };
 
 export type MetadataRO = {

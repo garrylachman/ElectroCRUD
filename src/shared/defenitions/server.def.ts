@@ -110,3 +110,11 @@ export type ConnectArgs = {
   client: ServerType;
   connection: ConnectionConfig;
 };
+
+export type ArgsType =
+  | ConnectArgs
+  | ReadWidgetDataArgs
+  | DeleteDataArgs
+  | InsertDataArgs
+  | UpdateDataArgs
+  | ReadDataArgs;

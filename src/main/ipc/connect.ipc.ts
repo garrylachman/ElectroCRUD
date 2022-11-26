@@ -1,22 +1,21 @@
 import { DatabaseService } from '../services/database.service';
-import {
-  ConnectRequest,
-  ResponseType,
-  ConnectResponse,
-} from '../../shared/defenitions';
-import { ResponseFactory } from '../helpers';
+import { ConnectRequest, ErrorType } from '../../shared/defenitions';
+import { ResponseFactoryType } from '../helpers';
 
 export const ConnectIPC = async (
   db: DatabaseService,
   request: ConnectRequest
-): Promise<ResponseType> => {
+) => {
   try {
     const result = await db.connect(
       request.body?.client,
       request.body.connection
     );
-    return ResponseFactory<ConnectResponse>(request.channel, result);
+    return ResponseFactoryType(request.channel, result);
   } catch (e) {
-    return ResponseFactory(request.channel, e as Error);
+    return ResponseFactoryType(request.channel, {
+      type: ErrorType.NOT_CONNECTED,
+      message: (e as Error).message,
+    });
   }
 };

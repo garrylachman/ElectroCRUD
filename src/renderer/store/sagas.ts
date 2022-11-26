@@ -1,9 +1,18 @@
 import { put, takeEvery } from 'redux-saga/effects';
-import { AccountRO, ViewRO } from 'renderer/defenitions/record-object';
+import {
+  AccountRO,
+  CodeExampleRO,
+  ViewRO,
+} from 'renderer/defenitions/record-object';
 import { BaseRequest } from 'renderer/ipc/baseRequest';
 import { ConnectRequest, ConnectResponse, IPCChannelEnum } from 'shared';
 import { PayloadAction } from '@reduxjs/toolkit';
-import { SessionReducer, ToastReducer, ViewsReducer } from './reducers';
+import {
+  CodeExamplesReducer,
+  SessionReducer,
+  ToastReducer,
+  ViewsReducer,
+} from './reducers';
 
 export function* setIsConnected(action: { payload: { account: AccountRO } }) {
   const req: ConnectRequest = {
@@ -40,20 +49,29 @@ function* notifyIfConnected(action: PayloadAction<{ isConnected: boolean }>) {
   }
 }
 
-function* notifyView(action: PayloadAction<ViewRO>) {
-  const title =
-    action.type === ViewsReducer.actions.addOne.type
-      ? 'View Added'
-      : 'View Edited';
-  const description =
-    action.type === ViewsReducer.actions.addOne.type
-      ? `'${action.payload.name}' has been added`
-      : `'${action.payload.name}' has been edited`;
+function* notifyEntityAddedOrEdited(
+  action: PayloadAction<{ id: string; title?: string; name?: string }>
+) {
+  const description = `'${
+    action.payload.name || action.payload.title
+  }' has been saved.`;
 
   yield put(
     ToastReducer.actions.setToast({
       status: 'success',
-      title,
+      title: 'Saved',
+      description,
+    })
+  );
+}
+
+function* notifyEntityDeleted(action: PayloadAction<string>) {
+  const description = `Item id '${action.payload}' has been deleted.`;
+
+  yield put(
+    ToastReducer.actions.setToast({
+      status: 'warning',
+      title: 'Deleted',
       description,
     })
   );
@@ -61,6 +79,11 @@ function* notifyView(action: PayloadAction<ViewRO>) {
 
 export function* watchForNotificationsAsync() {
   yield takeEvery(SessionReducer.actions.setActive, notifyIfConnected);
-  yield takeEvery(ViewsReducer.actions.addOne, notifyView);
-  yield takeEvery(ViewsReducer.actions.updateOne, notifyView);
+  yield takeEvery(ViewsReducer.actions.addOne, notifyEntityAddedOrEdited);
+  yield takeEvery(ViewsReducer.actions.updateOne, notifyEntityAddedOrEdited);
+  yield takeEvery(
+    CodeExamplesReducer.actions.upsertOne,
+    notifyEntityAddedOrEdited
+  );
+  yield takeEvery(CodeExamplesReducer.actions.removeOne, notifyEntityDeleted);
 }

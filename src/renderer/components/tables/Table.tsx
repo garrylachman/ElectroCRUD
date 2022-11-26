@@ -55,6 +55,7 @@ const TableHeader: FC<PropsWithChildren> = ({ children }) => (
     justifyContent="space-between"
     fontSize={{ sm: '10px', lg: '12px' }}
     color="gray.400"
+    as="div"
   >
     {children}
   </Text>
@@ -65,7 +66,7 @@ const TableCell: FC<PropsWithChildren & { textColor: CSS.Property.Color }> = ({
   textColor,
 }) => (
   <Flex alignItems="center">
-    <Text color={textColor} fontSize="sm" fontWeight="700">
+    <Text color={textColor} fontSize="sm" fontWeight="700" as="div">
       {children}
     </Text>
   </Flex>

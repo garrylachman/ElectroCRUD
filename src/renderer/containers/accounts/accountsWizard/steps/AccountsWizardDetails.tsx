@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { Box, Badge, Grid, Button, Flex, Icon } from '@chakra-ui/react';
 import { joiResolver } from '@hookform/resolvers/joi';
-import { useForm, FormProvider } from 'react-hook-form';
+import { useForm, FormProvider, useFormState } from 'react-hook-form';
 import {
   AccountRO,
   ValidateAccountsWizardStep1,
@@ -15,19 +15,21 @@ type FormData = Pick<AccountRO, 'name' | 'client'>;
 
 export const AccountsWizardDetails: FC<AccountsWizardStep> = ({
   initialValue = { name: undefined, client: undefined },
-  onUpdate,
+  onUpdate = (...args: any[]) => {},
 }) => {
-  const methods = useForm<FormData>({
+  const formContext = useForm<FormData>({
     resolver: joiResolver(ValidateAccountsWizardStep1),
     reValidateMode: 'onChange',
     mode: 'all',
     defaultValues: { ...initialValue },
   });
+  const { handleSubmit, control } = formContext;
+  const { isValid } = useFormState({ control });
 
   return (
     <Box>
-      <FormProvider {...methods}>
-        <form onSubmit={methods.handleSubmit(onUpdate)}>
+      <FormProvider {...formContext}>
+        <form onSubmit={handleSubmit(onUpdate)}>
           <Grid templateColumns="repeat(2, 1fr)" gap={5}>
             <InputField
               id="name"
@@ -66,7 +68,7 @@ export const AccountsWizardDetails: FC<AccountsWizardStep> = ({
               variant="solid"
               colorScheme="green"
               size="lg"
-              isDisabled={!methods.formState.isValid}
+              isDisabled={!isValid}
             >
               <Icon mr={2} as={MdSave} />
               Save

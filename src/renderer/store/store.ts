@@ -25,9 +25,9 @@ const persistConfig = {
 const rootReducer = combineReducers({
   [AccountsReducer.name]: AccountsReducer.reducer,
   [SessionReducer.name]: SessionReducer.reducer,
+  [TagsReducer.name]: TagsReducer.reducer,
   [ViewsReducer.name]: ViewsReducer.reducer,
   [ToastReducer.name]: ToastReducer.reducer,
-  [TagsReducer.name]: TagsReducer.reducer,
   [CodeExamplesReducer.name]: CodeExamplesReducer.reducer,
 });
 

@@ -1,4 +1,4 @@
-import { ResponseFactory } from '../helpers';
+import ResponseFactory from '../helpers';
 import { DatabaseService } from '../services/database.service';
 import {
   UpdateRequest,

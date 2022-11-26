@@ -1,6 +1,4 @@
-import { NestedPartial } from '.';
 import { IPCChannel } from './ipc.def';
-import { LogItem } from './log.def';
 import {
   ConnectArgs,
   DeleteDataArgs,
@@ -10,33 +8,30 @@ import {
   UpdateDataArgs,
 } from './server.def';
 
-export type NoBodyRequest = {
+export type BaseRequest<T = undefined> = {
   channel: IPCChannel;
+  body?: T;
 };
 
-export type BaseRequest<T = void> = NoBodyRequest & {
-  body: NestedPartial<T>;
-};
+export type BaseBodyRequest<T> = Required<BaseRequest<T>>;
 
-export type TablesListRequest = NoBodyRequest;
+export type TablesListRequest = BaseRequest;
 
-export type TableInfoRequest = BaseRequest<string>;
+export type TableInfoRequest = BaseBodyRequest<string>;
 
-export type ConnectRequest = BaseRequest<ConnectArgs>;
+export type ConnectRequest = BaseBodyRequest<ConnectArgs>;
 
-export type HeartBeatRequest = NoBodyRequest;
+export type HeartBeatRequest = BaseRequest;
 
-export type ReadDataRequest = BaseRequest<ReadDataArgs>;
+export type ReadDataRequest = BaseBodyRequest<ReadDataArgs>;
 
-export type ReadWidgetDataRequest = BaseRequest<ReadWidgetDataArgs>;
+export type ReadWidgetDataRequest = BaseBodyRequest<ReadWidgetDataArgs>;
 
-export type InsertRequest = BaseRequest<InsertDataArgs>;
+export type InsertRequest = BaseBodyRequest<InsertDataArgs>;
 
-export type DeleteRequest = BaseRequest<DeleteDataArgs>;
+export type DeleteRequest = BaseBodyRequest<DeleteDataArgs>;
 
-export type UpdateRequest = BaseRequest<UpdateDataArgs>;
-
-export type LogRequest = BaseRequest<LogItem>;
+export type UpdateRequest = BaseBodyRequest<UpdateDataArgs>;
 
 export type RequestType =
   | TablesListRequest
@@ -47,5 +42,4 @@ export type RequestType =
   | ReadWidgetDataRequest
   | InsertRequest
   | DeleteRequest
-  | UpdateRequest
-  | LogRequest;
+  | UpdateRequest;

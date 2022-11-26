@@ -92,7 +92,13 @@ export const AccountsTable: FC<any> = () => {
 
   return (
     <>
-      <Card p={0} flexDirection="column" w="100%" overflowX={{ sm: 'hidden' }}>
+      <Card
+        py={6}
+        px={0}
+        flexDirection="column"
+        w="100%"
+        overflowX={{ sm: 'hidden' }}
+      >
         <TableCardHeader
           title="Account List"
           actionItems={[
@@ -115,7 +121,7 @@ export const AccountsTable: FC<any> = () => {
             },
           ]}
         />
-        <Box>
+        <Box py={3}>
           <ElectroCRUDTable<AccountRO>
             onSelectedItems={setSelected}
             data={accounts}

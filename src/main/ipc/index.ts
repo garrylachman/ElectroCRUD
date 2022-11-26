@@ -1,3 +1,4 @@
+export * from './base.ipc';
 export * from './connect.ipc';
 export * from './tables-list.ipc';
 export * from './table-info.ipc';

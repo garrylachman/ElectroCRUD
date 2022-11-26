@@ -1,29 +1,14 @@
 import { ipcMain, IpcMainInvokeEvent, webContents } from 'electron';
 import { injectable, inject, delay } from 'tsyringe';
-import {
-  ConnectIPC,
-  TableInfoIPC,
-  TablesListIPC,
-  ReadDataIPC,
-  ReadWidgetDataIPC,
-  InsertDataIPC,
-  DeleteDataIPC,
-  UpdateDataIPC,
-} from '../ipc';
+import { RequestFactory } from '../ipc';
 import 'reflect-metadata';
 import {
   RequestType,
   ResponseType,
   IPCChannel,
   ErrorResponse,
+  ErrorType,
   ConnectRequest,
-  TablesListRequest,
-  TableInfoRequest,
-  ReadDataRequest,
-  ReadWidgetDataRequest,
-  InsertRequest,
-  DeleteRequest,
-  UpdateRequest,
 } from '../../shared/defenitions';
 import { IPCChannelEnum } from '../../shared/enums';
 import { DatabaseService } from './database.service';
@@ -32,7 +17,9 @@ import { DatabaseService } from './database.service';
 export class IPCService {
   constructor(
     @inject(delay(() => DatabaseService))
-    private db: DatabaseService
+    private db: DatabaseService,
+    @inject(delay(() => RequestFactory))
+    private rFactory: RequestFactory
   ) {}
 
   public listen() {
@@ -53,30 +40,35 @@ export class IPCService {
   ): Promise<ResponseType> | ResponseType {
     switch (request.channel) {
       case IPCChannelEnum.CONNECT:
-        return ConnectIPC(this.db, request as ConnectRequest);
+        return this.rFactory.createRequest(request, 'connectWithProps');
       case IPCChannelEnum.TABLES_LIST:
-        return TablesListIPC(this.db, request as TablesListRequest);
+        return this.rFactory.createRequest(request, 'listTablesWithProps');
       case IPCChannelEnum.TABLE_INFO:
-        return TableInfoIPC(this.db, request as TableInfoRequest);
+        return this.rFactory.createRequest(request, 'tableInfoWithProps');
       case IPCChannelEnum.READ_DATA:
-        return ReadDataIPC(this.db, request as ReadDataRequest);
+        return this.rFactory.createRequest(request, 'readDataWithProps');
       case IPCChannelEnum.READ_WIDGET_DATA:
-        return ReadWidgetDataIPC(this.db, request as ReadWidgetDataRequest);
+        return this.rFactory.createRequest(request, 'readWidgetDataWithProps');
       case IPCChannelEnum.INSERT_DATA:
-        return InsertDataIPC(this.db, request as InsertRequest);
+        return this.rFactory.createRequest(request, 'insertDataWithProps');
       case IPCChannelEnum.DELETE_DATA:
-        return DeleteDataIPC(this.db, request as DeleteRequest);
+        return this.rFactory.createRequest(request, 'deleteDataWithProps');
       case IPCChannelEnum.UPDATE_DATA:
-        return UpdateDataIPC(this.db, request as UpdateRequest);
+        return this.rFactory.createRequest(request, 'updateDataWithProps');
       default:
         return {
           channel: request.channel,
-          error: new Error(),
+          error: {
+            type: ErrorType.GENERIC,
+            message: 'Unexpected Error',
+          },
         } as ErrorResponse;
     }
   }
 
   send(response: ResponseType): void {
-    webContents.getFocusedWebContents().send(response.channel, response);
+    webContents
+      .getFocusedWebContents()
+      .send(response.channel as IPCChannel, response);
   }
 }

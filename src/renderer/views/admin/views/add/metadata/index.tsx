@@ -10,7 +10,7 @@ import Card from 'renderer/components/card/Card';
 import { CodeExamples } from './CodeExamples';
 
 type MetaDataIndexProps = {
-  viewState: NestedPartial<ViewRO>;
+  viewState: ViewRO;
 };
 
 export const MetaDataIndex:FC<MetaDataIndexProps> = ({
