@@ -1,62 +1,75 @@
 import {
   Box,
-  Flex,
-  Text,
-  Badge,
-  Button,
-  HStack,
   Tag,
   TagLeftIcon,
   Switch,
   Heading,
   Highlight,
-  Skeleton,
   SkeletonText,
+  TagLabel,
+  Center,
+  Divider,
 } from '@chakra-ui/react';
 import Card from 'renderer/components/card/Card';
-import { FC, useCallback, useEffect, useMemo, useState } from 'react';
-import { NestedPartial, TableInfoRow } from 'shared';
+import { FC, useEffect, useMemo } from 'react';
+import { IPCChannelEnum } from 'shared';
 import { ElectroCRUDTable } from 'renderer/components/tables/Table';
-import ReactTimeAgo from 'react-time-ago';
 import { ColumnRO } from 'renderer/defenitions/record-object';
-import { DatabaseIcon } from 'renderer/components/icons/DatabaseIcon';
-import { TableCardHeader } from 'renderer/containers/cards';
-import { MdDone, MdClose, MdVpnKey } from 'react-icons/md';
+import { MdVpnKey } from 'react-icons/md';
 import { TableBooleanCell } from 'renderer/components/tables/customCells';
+import { useAppDispatch, useAppSelector } from 'renderer/store/hooks';
+import { ColumnsReducer, ViewsReducer } from 'renderer/store/reducers';
+import _ from 'lodash';
+import { useIPCTableInfo } from 'renderer/ipc';
+import { ViewSelectors } from 'renderer/store/selectors';
+import { useSelector } from 'react-redux';
+import { findType } from 'renderer/defenitions/record-object/data-types';
 
-type TableColumnsCardProps = {
-  initialState?: ColumnRO[];
-  update: (data: ColumnRO[]) => void;
-  table: string;
-  isLoaded?: boolean;
+type TableColumnsCardProperties = {
+  viewId: string;
 };
 
-export const TableColumnsCard: FC<TableColumnsCardProps> = ({
-  initialState = [],
-  update,
-  table,
-  isLoaded = true,
+export const TableColumnsCard: FC<TableColumnsCardProperties> = ({
+  viewId,
 }) => {
-  const [data, setData] = useState<ColumnRO[]>(initialState);
-  useEffect(() => {
-    setData(initialState);
-  }, [initialState]);
+  const columnsState = useAppSelector((state) => state.columns);
+  const viewState = useSelector((state) =>
+    ViewSelectors.createFullViewSelector(state)
+  )(viewId);
+  const dispatch = useAppDispatch();
 
-  const updateColumn = useCallback(
-    (column: ColumnRO, changes: Partial<ColumnRO>) => {
-      setData((prev) =>
-        prev.map((item) => ({
-          ...item,
-          ...(item.name === column.name ? changes : {}),
-        }))
+  const { result, execute, isExecuted } = useIPCTableInfo({
+    channel: IPCChannelEnum.TABLE_INFO,
+    body: viewState?.table || '',
+  });
+
+  useEffect(() => {
+    if (!isExecuted && viewState?.table) {
+      execute();
+    }
+  }, [viewState?.table]);
+
+  useEffect(() => {
+    if (result) {
+      const names = new Set(_.map(viewState.columns, 'name'));
+      const missingColumns = _.filter(
+        result.body,
+        (item) => !names.has(item.name)
       );
-    },
-    [setData]
-  );
-
-  useEffect(() => {
-    update(data);
-  }, [data]);
+      if (missingColumns.length > 0) {
+        dispatch(
+          ColumnsReducer.actions.upsertMany(
+            missingColumns.map((item) => ({
+              ...item,
+              enabled: true,
+              searchable: true,
+            })),
+            { viewId }
+          )
+        );
+      }
+    }
+  }, [result]);
 
   const tableColumns: {
     key: keyof ColumnRO | 'actions';
@@ -77,48 +90,71 @@ export const TableColumnsCard: FC<TableColumnsCardProps> = ({
     <>
       <Card px={0} flexDirection="column" w="100%" overflowX={{ sm: 'hidden' }}>
         <Heading p={5} pt={0} size="md">
-          <SkeletonText isLoaded={isLoaded} noOfLines={2} spacing={3}>
+          <SkeletonText isLoaded={isExecuted} noOfLines={2} spacing={3}>
             <Highlight
-              query={table}
+              query={viewState?.table || ''}
               styles={{ px: 2, py: '1', rounded: 'full', bg: 'brand.100' }}
             >
-              {`Columns of ${table} table`}
+              {`Columns of ${viewState?.table} table`}
             </Highlight>
           </SkeletonText>
         </Heading>
-        <Box px={isLoaded ? 0 : 5}>
+        <Box px={isExecuted ? 0 : 5}>
           <ElectroCRUDTable<ColumnRO>
-            isLoaded={isLoaded}
-            data={data}
+            isLoaded={isExecuted}
+            data={viewState.columns}
             columns={tableColumns}
-            customCell={(info) => {
-              if (info.column.id === 'key' && info.getValue() === 'PRI') {
+            customCell={(row) => {
+              if (row.column.id === 'key' && row.getValue() === 'PRI') {
                 return (
                   <Tag variant="subtle" colorScheme="cyan">
                     <TagLeftIcon as={MdVpnKey} me={0} />
                   </Tag>
                 );
               }
-              if (info.column.id === 'nullable') {
-                return <TableBooleanCell value={info.getValue()} />;
+              if (row.column.id === 'type') {
+                const dataType = findType(row.getValue());
+                return (
+                  <Tag
+                    variant="subtle"
+                    colorScheme="brand"
+                    display="inline-flex"
+                    alignContent="center"
+                  >
+                    {dataType && (
+                      <>
+                        <TagLabel>{row.getValue() || dataType.name}</TagLabel>
+                        <Center height='10px'>
+                          <Divider orientation='vertical' mx={2} borderColor="brand.300" />
+                        </Center>
+                        <TagLeftIcon as={dataType.icon} fontSize={20} mr={0} />
+                      </>
+                    )}
+                  </Tag>
+                );
+              }
+              if (row.column.id === 'nullable') {
+                return <TableBooleanCell value={row.getValue()} />;
               }
               if (
-                info.column.id === 'enabled' ||
-                info.column.id === 'searchable'
+                row.column.id === 'enabled' ||
+                row.column.id === 'searchable'
               ) {
                 return (
                   <Switch
                     size="sm"
-                    defaultChecked={info.getValue()}
-                    onChange={() =>
-                      updateColumn(info.row.original, {
-                        [info.column.id]: !info.getValue(),
-                      })
-                    }
+                    defaultChecked={row.getValue()}
+                    onChange={() => {
+                      dispatch(
+                        ColumnsReducer.actions.upsertOne({
+                          ...row.row.original,
+                          [row.column.id]: !row.getValue(),
+                        })
+                      );
+                    }}
                   />
                 );
               }
-              return undefined;
             }}
           />
         </Box>

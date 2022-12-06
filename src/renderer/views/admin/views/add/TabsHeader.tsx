@@ -2,51 +2,77 @@ import {
   Stat,
   StatLabel,
   StatNumber,
-  StatHelpText,
-  StatArrow,
-  StatGroup,
-  Flex,
   VStack,
   SimpleGrid,
-} from '@chakra-ui/react'
+  HStack,
+  Icon,
+  Box,
+  Center,
+} from '@chakra-ui/react';
 import { SubCard } from 'renderer/containers/cards';
 import ReactTimeAgo from 'react-time-ago';
-import { ViewRO } from 'renderer/defenitions/record-object'
-import { FC } from 'react';
+import { ViewRO } from 'renderer/defenitions/record-object';
+import { FC, useContext, useMemo } from 'react';
+import { useAppSelector } from 'renderer/store/hooks';
+import { ViewsReducer } from 'renderer/store/reducers';
+import { useSelector } from 'react-redux';
+import { ViewSelectors } from 'renderer/store/selectors';
+import { MdAccessTime, MdAccessTimeFilled } from 'react-icons/md';
+import { IconType } from 'react-icons/lib';
+import { ViewScopedContext } from 'renderer/contexts';
 
-type TabsHeaderProps = {
-  viewState?: ViewRO;
+type TabsHeaderProperties = {
 };
 
-export const CreatedDateCard = ({ value }: { value: number }) => (
+export const DateCard = ({
+  value,
+  title,
+  icon,
+}: {
+  value?: number;
+  title: string;
+  icon: IconType;
+}) => (
   <SubCard variant="brand">
-    <Stat>
-      <StatLabel>Created at</StatLabel>
-      <StatNumber>
-        <ReactTimeAgo date={value} />
-      </StatNumber>
-    </Stat>
+    <HStack>
+      <Stat>
+        <StatLabel>{title}</StatLabel>
+        <StatNumber>{value ? <ReactTimeAgo date={value} /> : 'N/A'}</StatNumber>
+      </Stat>
+      <Box
+        bg="blackAlpha.400"
+        position="absolute"
+        right={0}
+        width="65px"
+        height="100%"
+        display="flex"
+        justifyContent="center"
+      >
+        <Center>
+          <Icon as={icon} fontSize="40px" m={2} />
+        </Center>
+      </Box>
+    </HStack>
   </SubCard>
 );
 
-export const ModificationDateCard = ({ value }: { value: number }) => (
-  <SubCard variant="brand">
-    <Stat>
-      <StatLabel>Last updated at</StatLabel>
-      <StatNumber>
-        <ReactTimeAgo date={value} />
-      </StatNumber>
-    </Stat>
-  </SubCard>
-);
+export const TabsHeader: FC<TabsHeaderProperties> = () => {
+  const { viewState } = useContext(ViewScopedContext);
 
-export const TabsHeader: FC<TabsHeaderProps> = ({ viewState }) => {
   return (
     <VStack>
       <SimpleGrid columns={4} spacing={10} w="100%">
-        <CreatedDateCard value={viewState?.creationDate} />
-        <ModificationDateCard value={viewState?.modificationDate} />
+        <DateCard
+          title="Created at"
+          value={viewState?.creationDate}
+          icon={MdAccessTimeFilled}
+        />
+        <DateCard
+          title="Last updated at"
+          value={viewState?.modificationDate}
+          icon={MdAccessTime}
+        />
       </SimpleGrid>
     </VStack>
-  )
+  );
 };

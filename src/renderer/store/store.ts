@@ -10,6 +10,8 @@ import {
   ToastReducer,
   TagsReducer,
   CodeExamplesReducer,
+  ColumnsReducer,
+  ColumnsReferanceReducer,
 } from './reducers';
 import { watchSetAccountAsync, watchForNotificationsAsync } from './sagas';
 
@@ -29,6 +31,8 @@ const rootReducer = combineReducers({
   [ViewsReducer.name]: ViewsReducer.reducer,
   [ToastReducer.name]: ToastReducer.reducer,
   [CodeExamplesReducer.name]: CodeExamplesReducer.reducer,
+  [ColumnsReducer.name]: ColumnsReducer.reducer,
+  [ColumnsReferanceReducer.name]: ColumnsReferanceReducer.reducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

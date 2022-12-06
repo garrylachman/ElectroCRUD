@@ -1,3 +1,4 @@
+/* eslint-disable unicorn/no-useless-spread */
 /**
  * Base webpack config used across other specific configs
  */

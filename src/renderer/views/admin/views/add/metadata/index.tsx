@@ -1,21 +1,25 @@
 import { FC } from 'react';
+import { ViewRO } from 'renderer/defenitions/record-object';
 import {
-  ViewRO,
-} from 'renderer/defenitions/record-object';
-import { Icon, Tabs, Tab, TabList, TabPanel, Flex, Text, TabPanels } from '@chakra-ui/react';
+  Icon,
+  Tabs,
+  Tab,
+  TabList,
+  TabPanel,
+  Flex,
+  Text,
+  TabPanels,
+} from '@chakra-ui/react';
 import { MdBook, MdCode, MdTag } from 'react-icons/md';
-import { NestedPartial } from 'shared';
-import { Metadata } from './Metadata';
 import Card from 'renderer/components/card/Card';
-import { CodeExamples } from './CodeExamples';
+import { TablesMetadata } from './tables-metadata';
+import { CodeExamples } from './code-examples';
+import { ColumnsMetadata } from './columns-metadata';
 
-type MetaDataIndexProps = {
-  viewState: ViewRO;
+type MetadataIndexProperties = {
 };
 
-export const MetaDataIndex:FC<MetaDataIndexProps> = ({
-  viewState
-}) => {
+export const MetadataIndex: FC<MetadataIndexProperties> = () => {
   return (
     <Card px={0}>
       <Tabs isLazy isFitted colorScheme="brandTabs" pt="0px">
@@ -40,20 +44,20 @@ export const MetaDataIndex:FC<MetaDataIndexProps> = ({
             <Flex align="center">
               <Icon as={MdTag} w="15px" h="15px" me="8px" />
               <Text fontSize="sm" fontWeight="500">
-                Tags
+                Columns
               </Text>
             </Flex>
           </Tab>
         </TabList>
         <TabPanels>
           <TabPanel px={0}>
-            <Metadata viewState={viewState} />
+            <TablesMetadata />
           </TabPanel>
           <TabPanel px={0}>
-            <CodeExamples viewState={viewState} />
+            <CodeExamples />
           </TabPanel>
           <TabPanel px={0}>
-            <Text>Soon</Text>
+            <ColumnsMetadata />
           </TabPanel>
         </TabPanels>
       </Tabs>
@@ -61,4 +65,4 @@ export const MetaDataIndex:FC<MetaDataIndexProps> = ({
   );
 };
 
-export * from './Metadata';
+export * from './tables-metadata';

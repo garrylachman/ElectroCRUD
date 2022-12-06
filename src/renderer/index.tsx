@@ -1,7 +1,7 @@
-import React, { PropsWithChildren, Suspense } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom/client';
 import 'renderer/assets/css/App.css';
-import { RouterProvider } from 'react-router-dom';
+import { BrowserRouter, RouterProvider } from 'react-router-dom';
 import { ChakraProvider } from '@chakra-ui/react';
 import { PersistGate } from 'redux-persist/integration/react';
 import { Provider } from 'react-redux';
@@ -10,52 +10,32 @@ import en from 'javascript-time-ago/locale/en.json';
 import theme from './theme/theme';
 import { router } from './router';
 import store, { persistor } from './store/store';
-import { useAppSelector } from './store/hooks';
-import { NotificationsContainer } from './containers/NotificationsContainer';
-import { Spinner } from '@chakra-ui/react'
+import { NotificationsContainer } from './containers/notifications-container';
+import { EntitiesIndexerContextProvider } from './contexts';
 
 TimeAgo.addDefaultLocale(en);
 
-const promise = {
-  then(tellSuspenceToContinue, throwAnError) {
-    const ubsubscribe = store.subscribe(() => {
-      if (store.getState()._persist.rehydrated) {
-        ubsubscribe();
-        tellSuspenceToContinue();
-      }
-    });
-  },
-};
-
-const WithStateLoaded: FC<PropsWithChildren<any>> = ({ children }) => {
-  const store = useAppSelector((state) => state);
-  if (!store._persist.rehydrated) {
-    throw promise;
-  }
-  return <>{children}</>;
-};
-
-
 const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
+  document.querySelector('#root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <ChakraProvider theme={theme}>
-          <React.StrictMode>
-            <React.Suspense fallback="Loading...">
-              <WithStateLoaded>
-                <Suspense fallback={<Spinner size="xl" />}>
-                  <RouterProvider router={router(store)} />
-                  <NotificationsContainer />
-                </Suspense>
-              </WithStateLoaded>
-            </React.Suspense>
-          </React.StrictMode>
-        </ChakraProvider>
-      </PersistGate>
+      <EntitiesIndexerContextProvider
+        mappers={[
+          { watchState: 'views', watchValue: 'name' },
+          { watchState: 'columns', watchValue: 'name' },
+        ]}
+      >
+        <PersistGate loading={null} persistor={persistor}>
+          <ChakraProvider theme={theme}>
+            <React.StrictMode>
+              <RouterProvider router={router} />
+            </React.StrictMode>
+            <NotificationsContainer />
+          </ChakraProvider>
+        </PersistGate>
+      </EntitiesIndexerContextProvider>
     </Provider>
   </React.StrictMode>
 );

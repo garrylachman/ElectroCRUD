@@ -1,10 +1,10 @@
 import { createSlice, createEntityAdapter } from '@reduxjs/toolkit';
-import { v4 as uuidv4 } from 'uuid';
 import { CodeExampleRO } from 'renderer/defenitions/record-object';
+import { v4 as uuidv4 } from 'uuid';
 
 const codeExamplesAdapter = createEntityAdapter<CodeExampleRO>({
-  selectId: (codeExample) => codeExample.id,
-  sortComparer: (a, b) => b.creationDate - a.creationDate,
+  selectId: (codeExample) => codeExample?.id || '',
+  sortComparer: (a, b) => (b?.creationDate || 0) - (a?.creationDate || 0),
 });
 
 const { upsertOne, upsertMany, removeOne, removeMany, removeAll } =

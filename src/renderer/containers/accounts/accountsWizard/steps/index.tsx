@@ -3,8 +3,7 @@ import { AccountRO } from 'renderer/defenitions/record-object';
 
 export type AccountsWizardStep = WizardModalStepContentProps<AccountRO>;
 
-export * from './AccountsWizardDetails';
-export * from './AccountsWizardServerConnection';
-export * from './AccountsWizardTest';
-export * from './AccountsWizardFileConnection';
-
+export * from './accounts-wizard-details';
+export * from './accounts-wizard-server-connection';
+export * from './accounts-wizard-test';
+export * from './accounts-wizard-file-connection';

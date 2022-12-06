@@ -23,7 +23,7 @@ import {
   MdNavigateBefore,
   MdClose,
 } from 'react-icons/md';
-import { ModalProps } from './ModalProps';
+import { ModalProps as ModalProperties } from './ModalProps';
 
 export type WizardModalStepContentProps<T> = {
   initialValue?: NestedPartial<T>;
@@ -41,7 +41,7 @@ export type WizardModalStepProps<T> = {
   StepComponent: FC<WizardModalStepContentProps<T>>;
 };
 
-export type WizardModalProps<T> = ModalProps<NestedPartial<T>> & {
+export type WizardModalProps<T> = ModalProperties<NestedPartial<T>> & {
   isNext: boolean;
   isNextEnabled: boolean;
   isPrev: boolean;

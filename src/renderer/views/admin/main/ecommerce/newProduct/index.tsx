@@ -41,7 +41,7 @@ import {
 
 // Custom components
 import Card from 'renderer/components/card/Card';
-import InputField from 'renderer/components/fields/InputField';
+import InputField from 'renderer/components/fields/input-field';
 import TextField from 'renderer/components/fields/TextField';
 import TagsField from 'renderer/components/fields/TagsField';
 import Dropzone from 'renderer/views/admin/main/ecommerce/newProduct/components/Dropzone';

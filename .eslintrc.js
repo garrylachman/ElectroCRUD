@@ -1,5 +1,7 @@
 module.exports = {
-  extends: 'erb',
+  parser: "@typescript-eslint/parser",
+  extends: ["erb", "eslint:recommended", "plugin:@typescript-eslint/recommended", "plugin:prettier/recommended", "plugin:@typescript-eslint/recommended-requiring-type-checking", "prettier/prettier", "plugin:unicorn/recommended"],
+  plugins: ["@typescript-eslint", "react-hooks", "unicorn"],
   rules: {
     // A temporary hack related to IDE not resolving correct package.json
     'import/no-extraneous-dependencies': 'off',
@@ -12,9 +14,25 @@ module.exports = {
     'react/require-default-props': 'off',
     'react/jsx-props-no-spreading': 'off',
     '@typescript-eslint/ban-ts-comment': 'off',
+    'react-hooks/exhaustive-deps': 'off',
+    '@typescript-eslint/no-unsafe-assignment': 'off',
+    "max-len": ["error", {"code": 80, "ignoreUrls": true}],
+    "no-underscore-dangle": "off",
+    "@typescript-eslint/no-unsafe-member-access": "off",
+    "@typescript-eslint/no-misused-promises": [
+      "error",
+      {
+        "checksVoidReturn": false
+      }
+    ],
+    "@typescript-eslint/no-unsafe-call": "off",
+    "@typescript-eslint/no-unsafe-argument": "off",
+  },
+  env: {
+    "es2022": true,
   },
   parserOptions: {
-    ecmaVersion: 2020,
+    ecmaVersion: 'latest',
     sourceType: 'module',
     project: './tsconfig.json',
     tsconfigRootDir: __dirname,

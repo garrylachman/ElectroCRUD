@@ -4,18 +4,21 @@ import {
   CodeExampleRO,
   ViewRO,
 } from 'renderer/defenitions/record-object';
-import { BaseRequest } from 'renderer/ipc/baseRequest';
+import { BaseRequest } from 'renderer/ipc/base-request';
 import { ConnectRequest, ConnectResponse, IPCChannelEnum } from 'shared';
 import { PayloadAction } from '@reduxjs/toolkit';
 import {
   CodeExamplesReducer,
+  ColumnsReducer,
+  ColumnsReferanceReducer,
   SessionReducer,
+  TagsReducer,
   ToastReducer,
   ViewsReducer,
 } from './reducers';
 
 export function* setIsConnected(action: { payload: { account: AccountRO } }) {
-  const req: ConnectRequest = {
+  const request: ConnectRequest = {
     body: {
       client: action.payload.account.client,
       connection: action.payload.account.connection,
@@ -23,14 +26,21 @@ export function* setIsConnected(action: { payload: { account: AccountRO } }) {
     channel: IPCChannelEnum.CONNECT,
   };
   const result: ConnectResponse = yield BaseRequest<ConnectResponse>(
-    req.channel,
-    req
+    request.channel,
+    request
   ) as any;
-  if ((result as ConnectResponse)?.body) {
-    yield put(SessionReducer.actions.setActive({ isConnected: true }));
-  } else {
-    yield put(SessionReducer.actions.setActive({ isConnected: false }));
-  }
+  yield result.error === undefined
+    ? put(SessionReducer.actions.setActive({ isConnected: true }))
+    : [
+        yield put(SessionReducer.actions.setActive({ isConnected: false })),
+        yield put(
+          ToastReducer.actions.setToast({
+            status: 'error',
+            title: `IPC Error on channel: ${result.channel}`,
+            description: result.error.message,
+          })
+        ),
+      ];
 }
 
 export function* watchSetAccountAsync() {
@@ -50,10 +60,18 @@ function* notifyIfConnected(action: PayloadAction<{ isConnected: boolean }>) {
 }
 
 function* notifyEntityAddedOrEdited(
-  action: PayloadAction<{ id: string; title?: string; name?: string }>
+  action: PayloadAction<{
+    id: string;
+    title?: string;
+    name?: string;
+    label?: string;
+  }>
 ) {
   const description = `'${
-    action.payload.name || action.payload.title
+    action.payload.name ||
+    action.payload.title ||
+    action.payload.label ||
+    action.payload.id
   }' has been saved.`;
 
   yield put(
@@ -81,6 +99,12 @@ export function* watchForNotificationsAsync() {
   yield takeEvery(SessionReducer.actions.setActive, notifyIfConnected);
   yield takeEvery(ViewsReducer.actions.addOne, notifyEntityAddedOrEdited);
   yield takeEvery(ViewsReducer.actions.updateOne, notifyEntityAddedOrEdited);
+  yield takeEvery(TagsReducer.actions.upsertOne, notifyEntityAddedOrEdited);
+  yield takeEvery(ColumnsReducer.actions.upsertOne, notifyEntityAddedOrEdited);
+  yield takeEvery(
+    ColumnsReferanceReducer.actions.upsertOne,
+    notifyEntityAddedOrEdited
+  );
   yield takeEvery(
     CodeExamplesReducer.actions.upsertOne,
     notifyEntityAddedOrEdited

@@ -1,7 +1,7 @@
 // Chakra imports
 import { Flex, FormControl, Text, useColorModeValue } from '@chakra-ui/react';
 import Card from 'renderer/components/card/Card';
-import InputField from 'renderer/components/fields/InputField';
+import InputField from 'renderer/components/fields/input-field';
 
 export default function Socials(props: { [x: string]: any }) {
 	const { ...rest } = props;

@@ -4,6 +4,7 @@ import { AccountRO, SessionRO } from 'renderer/defenitions/record-object';
 const initialState: SessionRO = {
   account: undefined,
   isConnected: false,
+  isEditMode: true,
 };
 
 const sessionSlice = createSlice({
@@ -16,6 +17,9 @@ const sessionSlice = createSlice({
     },
     setActive: (state, action: PayloadAction<{ isConnected: boolean }>) => {
       state.isConnected = action.payload.isConnected;
+    },
+    toggleEditMode: (state) => {
+      state.isEditMode = !state.isEditMode;
     },
   },
 });

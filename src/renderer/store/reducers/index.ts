@@ -4,3 +4,5 @@ export * as ViewsReducer from './views.reducer';
 export * as ToastReducer from './toast.reducer';
 export * as TagsReducer from './tags.reducer';
 export * as CodeExamplesReducer from './code-examples.reducer';
+export * as ColumnsReducer from './columns.reducer';
+export * as ColumnsReferanceReducer from './column-referance.reducer';

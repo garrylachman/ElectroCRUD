@@ -72,13 +72,11 @@ const TableCell: FC<PropsWithChildren & { textColor: CSS.Property.Color }> = ({
   </Flex>
 );
 
-const IndeterminateCheckbox: FC<CheckboxProps> = ({ ...rest }) => {
-  return (
-    <Flex alignItems="center">
-      <Checkbox {...rest} />
-    </Flex>
-  );
-};
+const IndeterminateCheckbox: FC<CheckboxProps> = ({ ...rest }) => (
+  <Flex alignItems="center">
+    <Checkbox {...rest} />
+  </Flex>
+);
 
 export const ElectroCRUDTable = <TT extends Record<string, any>>(
   props: ElectroCRUDTableProps<TT>
@@ -187,7 +185,7 @@ export const ElectroCRUDTable = <TT extends Record<string, any>>(
     <Table variant="striped" color="gray.500">
       <Thead>
         {table.getHeaderGroups().map((headerGroup) => (
-          <Tr key={headerGroup.id} color="gray.400">
+          <Tr key={`hear-${headerGroup.id}`} color="gray.400">
             {headerGroup.headers.map((header) => {
               return (
                 <Th
@@ -223,6 +221,7 @@ export const ElectroCRUDTable = <TT extends Record<string, any>>(
               {row.getVisibleCells().map((cell) => {
                 return (
                   <Skeleton
+                    key={`cell-${cell.id}`}
                     isLoaded={isLoaded}
                     sx={
                       !isLoaded
@@ -235,7 +234,6 @@ export const ElectroCRUDTable = <TT extends Record<string, any>>(
                     }
                   >
                     <Td
-                      key={cell.id}
                       fontSize={{ sm: '14px' }}
                       borderColor="transparent"
                       width={cell.column.id === 'select' ? '30px' : 'auto'}

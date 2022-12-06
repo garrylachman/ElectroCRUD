@@ -1,3 +1,4 @@
+/* eslint-disable unicorn/prevent-abbreviations */
 import 'webpack-dev-server';
 import path from 'path';
 import fs from 'fs';
@@ -187,9 +188,6 @@ const configuration: webpack.Configuration = {
     },
     historyApiFallback: {
       verbose: true,
-      fs: false,
-      path: false,
-      os: false
     },
     setupMiddlewares(middlewares) {
       console.log('Starting preload.js builder...');
@@ -197,7 +195,7 @@ const configuration: webpack.Configuration = {
         shell: true,
         stdio: 'inherit',
       })
-        .on('close', (code: number) => process.exit(code!))
+        .on('close', (code: number) => process.exit(code))
         .on('error', (spawnError) => console.error(spawnError));
 
       console.log('Starting Main Process...');

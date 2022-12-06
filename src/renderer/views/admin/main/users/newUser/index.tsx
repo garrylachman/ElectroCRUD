@@ -37,7 +37,7 @@ import {
 } from '@chakra-ui/react';
 // Custom components
 import Card from 'renderer/components/card/Card';
-import InputField from 'renderer/components/fields/InputField';
+import InputField from 'renderer/components/fields/input-field';
 import TextField from 'renderer/components/fields/TextField';
 import React, { useState } from 'react';
 export default function NewUser() {

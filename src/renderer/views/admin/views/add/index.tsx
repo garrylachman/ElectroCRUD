@@ -16,37 +16,31 @@ import {
   Text,
 } from '@chakra-ui/react';
 import { useAppDispatch, useAppSelector } from 'renderer/store/hooks';
-import { ColumnRO, ViewRO } from 'renderer/defenitions/record-object';
-import { useCountdown } from 'usehooks-ts';
-import { useEffect, useState, useCallback, useMemo } from 'react';
-import {
-  NestedPartial,
-  TablesListResponse,
-  TableInfoResponse,
-  TableInfoRow,
-} from 'shared';
-import _, { omit } from 'lodash';
-import { useIPCTableInfo, useIPCTablesList } from 'renderer/ipc';
-import { IPCChannelEnum } from 'shared/enums/ipc.enum';
+import { ViewRO } from 'renderer/defenitions/record-object';
+import { useEffect, useState, useCallback, memo, useContext } from 'react';
+import { NestedPartial } from 'shared';
+import _ from 'lodash';
 import { useForm, FormProvider } from 'react-hook-form';
 import * as Joi from 'joi';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { MdSave, MdClear, MdOutlineCollections } from 'react-icons/md';
 import Card from 'renderer/components/card/Card';
 import { ViewsReducer } from 'renderer/store/reducers';
+import { useLoaderData, useNavigate, useParams } from 'react-router-dom';
+import store from 'renderer/store/store';
+import { useSelector } from 'react-redux';
+import { ViewSelectors } from 'renderer/store/selectors';
 import {
-  useParams,
-  useLoaderData,
-  useNavigate,
-  useRevalidator,
-} from 'react-router-dom';
+  ViewScopedContext,
+  ViewScopedContextProvider,
+} from 'renderer/contexts';
 import { BasicDetailsCard } from './components/BasicDetailsCard';
 import { ViewsInfoAlert } from './components/ViewsInfoAlert';
 import { TableColumnsCard } from './components/TableColumnsCard';
 import { TerminologyCard } from './components/TerminologyCard';
 import { PermissionsCard } from './components/PermissionsCard';
 import { TabsHeader } from './TabsHeader';
-import { MetaDataIndex } from './metadata';
+import { MetadataIndex } from './metadata';
 
 type FormData = Omit<ViewRO, 'id' | 'creationDate' | 'modificationDate'>;
 
@@ -66,37 +60,26 @@ const validationSchema = Joi.object<FormData>({
   metadata: Joi.object().optional(),
 });
 
-const AddOrEditView = ({
-  initialState,
-}: {
-  initialState: NestedPartial<ViewRO>;
-}) => {
+const AddOrEditView = () => {
+  const { viewState } = useContext(ViewScopedContext);
   const sessionState = useAppSelector((state) => state.session);
   const navigate = useNavigate();
-  const revalidator = useRevalidator();
 
   const dispatch = useAppDispatch();
-  const [state, setState] = useState<NestedPartial<ViewRO>>(initialState);
 
-  const [tables, setTables] = useState<string[]>([]);
-
-  const handleCreateOrUpdate = (data: NestedPartial<ViewRO>) => {
-    console.log('handleCreateOrUpdate', state, state.id);
-    if (state.id) {
-      const res = dispatch(
-        ViewsReducer.actions.updateOne({ ...state, ...data })
+  const handleCreateOrUpdate = (data: ViewRO) => {
+    console.log('handleCreateOrUpdate', viewState, viewState.id);
+    if (viewState.id) {
+      const response = dispatch(
+        ViewsReducer.actions.updateOne({ ...viewState, ...data })
       );
-      console.log('res', res);
-      if (res && res.payload) {
-        setState((prev) => ({ ...prev, ...res.payload.changes }));
-      }
+      console.log('response', response);
     } else {
-      const res = dispatch(ViewsReducer.actions.addOne({ ...state, ...data }));
-      if (res && res.payload) {
-        setState((prev) => ({ ...prev, id: res.payload.id }));
-        setTimeout(() => {
-          navigate(`../${res.payload.id}`);
-        }, 1000);
+      const response = dispatch(
+        ViewsReducer.actions.addOne({ ...viewState, ...data })
+      );
+      if (response && response.payload && response.payload.id) {
+        navigate(`../${response.payload.id}`);
       }
     }
   };
@@ -105,7 +88,7 @@ const AddOrEditView = ({
     resolver: joiResolver(validationSchema),
     reValidateMode: 'onChange',
     mode: 'all',
-    defaultValues: _.omit(state, [
+    defaultValues: _.omit(viewState, [
       'id',
       'creationDate',
       'modificationDate',
@@ -113,12 +96,16 @@ const AddOrEditView = ({
       'columns',
     ]),
   });
+  const {
+    reset,
+    handleSubmit,
+    formState: { isValid },
+  } = formContext;
 
   useEffect(() => {
-    console.log('state effect', revalidator.state);
-    console.log('initialState', initialState);
-    formContext.reset(
-      _.omit(initialState, [
+    console.log('initialState', viewState);
+    reset(
+      _.omit(viewState, [
         'id',
         'creationDate',
         'modificationDate',
@@ -126,147 +113,34 @@ const AddOrEditView = ({
         'columns',
       ])
     );
-    if (initialState.columns !== undefined) {
-      setState((prev) => ({ ...prev, columns: initialState.columns }));
-    }
-    console.log(formContext.formState);
-  }, [initialState]);
+    console.log(formContext);
+  }, [viewState]);
 
-  /* useEffect(() => {
-    console.log('state effect - initialState');
-    formContext.reset();
-    formContext.reset({});
-    console.log(formContext.formState);
-    setState(initialState);
-  }, [initialState]); */
-
-  const {
-    result: tablesResult,
-    execute: tablesExecute,
-    isLoading: tablesIsLoading,
-  } = useIPCTablesList({
-    channel: IPCChannelEnum.TABLES_LIST,
-  });
-
-  const {
-    result: infoResult,
-    execute: infoExecute,
-    isLoading: infoIsLoading,
-  } = useIPCTableInfo({
-    channel: IPCChannelEnum.TABLE_INFO,
-    body: formContext.getValues('table'),
-  });
-
-  const { table } = formContext.getValues();
-
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-
-  useEffect(() => {
-    console.log('table', table);
-    if (table === undefined || table === '') return;
-    if (isLoading) return;
-    console.log('table found');
-    infoExecute();
-    if (state.id === undefined) {
-      formContext.setValue('terminology.plural', `${table}s`, {
-        shouldDirty: true,
-      });
-      formContext.setValue('terminology.singular', table, {
-        shouldDirty: true,
-      });
-    }
-  }, [table]);
-
-  const [count, { startCountdown, stopCountdown, resetCountdown }] =
-    useCountdown({
-      countStart: 3,
-      intervalMs: 1000,
-    });
-
-  useEffect(() => {
-    if (infoIsLoading) {
-      setIsLoading(true);
-      startCountdown();
-    }
-  }, [infoIsLoading]);
-
-  useEffect(() => {
-    if (count === 0) {
-      setIsLoading(false);
-      resetCountdown();
-      stopCountdown();
-    }
-  }, [count]);
-
-  useEffect(() => {
-    if (infoResult && (infoResult as TableInfoResponse).body) {
-      setState((prev) => ({
-        ...prev,
-        columns: (infoResult as TableInfoResponse).body.map<ColumnRO>((row) => {
-          const eRow = _.find<ColumnRO>(prev.columns as ColumnRO[], {
-            name: row.name,
-          });
-          return {
-            ...row,
-            enabled: eRow?.enabled !== undefined ? eRow?.enabled : true,
-            searchable:
-              eRow?.searchable !== undefined ? eRow?.searchable : true,
-          };
-        }),
-      }));
-    }
-  }, [infoResult]);
-
-  useEffect(() => {
-    if (tablesResult && (tablesResult as TablesListResponse).body) {
-      setTables((tablesResult as TablesListResponse).body);
-    }
-  }, [tablesResult]);
-
-  useEffect(() => {
-    if (sessionState.isConnected) {
-      tablesExecute();
-    }
-  }, [sessionState]);
-
-  const onUpdate = useCallback(
-    (data: NestedPartial<ViewRO>) => {
-      console.log('update', state, data);
-      setState((prev) => ({ ...prev, ...data }));
-    },
-    [setState, state]
-  );
+  if (!sessionState.isConnected) {
+    return (
+      <Center>
+        <Spinner />
+      </Center>
+    );
+  }
 
   return (
-    <Box pt={state.id === undefined ? '80px' : '10px'}>
-      {state.id === undefined && (
+    <Box pt={viewState.id === undefined ? '80px' : '10px'}>
+      {viewState.id === undefined && (
         <>
           <ViewsInfoAlert />
           <Spacer p={3} />
         </>
       )}
       <FormProvider {...formContext}>
-        <form onSubmit={formContext.handleSubmit(handleCreateOrUpdate)}>
-          <BasicDetailsCard
-            tables={tables}
-            isEditMode={state.id !== undefined}
-          />
+        <form onSubmit={handleSubmit(handleCreateOrUpdate)}>
+          <BasicDetailsCard isEditMode={viewState.id !== undefined} />
           <Spacer p={3} />
 
-          {table && state.columns && state.columns.length > 0 && (
+          {viewState.id && (
             <>
-              <TableColumnsCard
-                initialState={state.columns as ColumnRO[]}
-                update={(data) => onUpdate({ columns: data })}
-                table={table}
-                isLoaded={!isLoading}
-              />
+              <TableColumnsCard viewId={viewState.id} />
               <Spacer p={3} />
-            </>
-          )}
-
-          {state.columns && state.columns.length > 0 && !isLoading && (
-            <>
               <SimpleGrid columns={{ sm: 1, md: 2 }} spacing={{ base: '20px' }}>
                 <TerminologyCard />
                 <PermissionsCard />
@@ -281,7 +155,7 @@ const AddOrEditView = ({
                 type="submit"
                 variant="brand"
                 size="lg"
-                isDisabled={!formContext.formState.isValid}
+                isDisabled={!isValid}
               >
                 <Icon mr={2} as={MdSave} />
                 Save
@@ -290,8 +164,8 @@ const AddOrEditView = ({
                 variant="solid"
                 colorScheme="red"
                 size="lg"
-                onClick={() => formContext.reset()}
-                isDisabled={state.id !== undefined}
+                onClick={() => reset()}
+                isDisabled={viewState.id !== undefined}
               >
                 <Icon mr={2} as={MdClear} />
                 Reset
@@ -304,15 +178,14 @@ const AddOrEditView = ({
   );
 };
 
-export const Edit = () => {
-  const loaderData = useLoaderData() as ViewRO;
-  const viewState = useAppSelector((state) =>
-    ViewsReducer.getSelectors().selectById(state.views, loaderData.id)
-  );
+export const EditView = () => {
+  const { viewId } = useParams();
+  console.log("viewId", viewId);
+  useEffect(() => console.log("viewId", viewId), [viewId])
 
   return (
-    <>
-      <Spacer pt="60px" /> <TabsHeader viewState={viewState} />
+    <ViewScopedContextProvider viewId={viewId}>
+      <Spacer pt="60px" /> <TabsHeader />
       <Tabs isLazy colorScheme="brandTabs" pt="10px">
         <TabList>
           <Tab>
@@ -334,25 +207,21 @@ export const Edit = () => {
         </TabList>
         <TabPanels>
           <TabPanel px={0} pb={0}>
-            <AddOrEditView initialState={viewState} />
+            <AddOrEditView />
           </TabPanel>
           <TabPanel px={0} pb={0}>
-            <MetaDataIndex viewState={viewState} />
+            <MetadataIndex />
           </TabPanel>
         </TabPanels>
       </Tabs>
-    </>
+    </ViewScopedContextProvider>
   );
 };
 
 export const AddNew = () => {
-  const sessionState = useAppSelector((state) => state.session);
-
   return (
-    <AddOrEditView
-      initialState={{
-        accountId: sessionState.account?.id,
-      }}
-    />
+    <ViewScopedContextProvider>
+      <AddOrEditView />
+    </ViewScopedContextProvider>
   );
 };

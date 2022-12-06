@@ -2,13 +2,14 @@ import { injectable, delay, inject, singleton } from 'tsyringe';
 import { DatabaseService } from '../services/database.service';
 import {
   ErrorResponse,
+  ErrorType,
   IPCError,
   RequestType,
   ResponseTypeSuccess,
 } from '../../shared/defenitions';
 import { ResponseFactoryType } from '../helpers';
 
-type Func = (...args: any[]) => unknown;
+type Function1 = (...arguments_: unknown[]) => unknown;
 
 type Primitive =
   | string
@@ -18,12 +19,15 @@ type Primitive =
   | undefined
   | null
   | void
-  | Func;
+  | Function1;
 
 export type PickMatching<T, V> = {
   [K in keyof T as T[K] extends V ? K : never]: T[K];
 };
-export type ExtractMethods<T> = PickMatching<T, (...args: any[]) => unknown>;
+export type ExtractMethods<T> = PickMatching<
+  T,
+  (...arguments_: any[]) => unknown
+>;
 export type DatabaseServiceMethods = Extract<
   keyof ExtractMethods<DatabaseService>,
   `${string}WithProps`
@@ -50,7 +54,7 @@ export type DeepOmit<T, K> = T extends Primitive
 export class RequestFactory {
   constructor(
     @inject(delay(() => DatabaseService))
-    private db: DatabaseService
+    private database: DatabaseService
   ) {}
 
   async createRequest<T extends RequestType>(
@@ -59,12 +63,14 @@ export class RequestFactory {
   ): Promise<ResponseTypeSuccess | ErrorResponse> {
     const { channel, body } = request;
     try {
-      const result = await this.db[invoke](body as any);
+      // eslint-disable-next-line max-len
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
+      const result = await this.database[invoke](body);
       return ResponseFactoryType(channel, result);
-    } catch (e) {
+    } catch (error) {
       return ResponseFactoryType(channel, {
-        type: (e as IPCError).type,
-        message: (e as IPCError).message,
+        type: (error as IPCError).type || ErrorType.GENERIC,
+        message: (error as IPCError).message,
       });
     }
   }

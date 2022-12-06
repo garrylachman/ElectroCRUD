@@ -3,8 +3,8 @@ import { v4 as uuidv4 } from 'uuid';
 import { TagRO } from 'renderer/defenitions/record-object';
 
 const tagsAdapter = createEntityAdapter<TagRO>({
-  selectId: (tag) => tag.id,
-  sortComparer: (a, b) => b.creationDate - a.creationDate,
+  selectId: (tag: TagRO) => tag?.id || '',
+  sortComparer: (a, b) => (b?.creationDate || 0) - (a?.creationDate || 0),
 });
 
 const { addOne, upsertOne, upsertMany, removeOne, removeMany, removeAll } =
@@ -16,7 +16,7 @@ const tagsSlice = createSlice({
   reducers: {
     upsertOne: {
       reducer: upsertOne,
-      prepare(payload: TagRO) {
+      prepare(payload: TagRO, meta: { viewId?: string; columnId?: string }) {
         return {
           payload: {
             ...payload,
@@ -24,22 +24,7 @@ const tagsSlice = createSlice({
             creationDate: payload.creationDate || Date.now(),
             modificationDate: Date.now(),
           },
-        };
-      },
-    },
-    upsertOneTable: {
-      reducer: upsertOne,
-      prepare(payload: TagRO, viewId: string) {
-        return {
-          payload: {
-            ...payload,
-            id: payload.id || uuidv4(),
-            creationDate: payload.creationDate || Date.now(),
-            modificationDate: Date.now(),
-          },
-          meta: {
-            viewId,
-          },
+          meta,
         };
       },
     },

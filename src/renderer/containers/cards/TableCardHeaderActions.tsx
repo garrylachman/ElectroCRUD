@@ -40,8 +40,8 @@ export const TableCardHeaderActions: FC<TableCardHeaderActionsProps> = ({
             borderTopLeftRadius={isOpen ? 0 : 10}
             borderTopRightRadius={isOpen ? 0 : 10}
           >
-            {items.map((item) => (
-              <MenuItem {...item.props} p={2}>{item.text}</MenuItem>
+            {items.map((item, index) => (
+              <MenuItem key={`m-${index}`} {...item.props} p={2}>{item.text}</MenuItem>
             ))}
           </MenuList>
         </>

@@ -17,7 +17,7 @@ import { DatabaseService } from './database.service';
 export class IPCService {
   constructor(
     @inject(delay(() => DatabaseService))
-    private db: DatabaseService,
+    private database: DatabaseService,
     @inject(delay(() => RequestFactory))
     private rFactory: RequestFactory
   ) {}
@@ -39,23 +39,31 @@ export class IPCService {
     request: RequestType
   ): Promise<ResponseType> | ResponseType {
     switch (request.channel) {
-      case IPCChannelEnum.CONNECT:
+      case IPCChannelEnum.CONNECT: {
         return this.rFactory.createRequest(request, 'connectWithProps');
-      case IPCChannelEnum.TABLES_LIST:
+      }
+      case IPCChannelEnum.TABLES_LIST: {
         return this.rFactory.createRequest(request, 'listTablesWithProps');
-      case IPCChannelEnum.TABLE_INFO:
+      }
+      case IPCChannelEnum.TABLE_INFO: {
         return this.rFactory.createRequest(request, 'tableInfoWithProps');
-      case IPCChannelEnum.READ_DATA:
+      }
+      case IPCChannelEnum.READ_DATA: {
         return this.rFactory.createRequest(request, 'readDataWithProps');
-      case IPCChannelEnum.READ_WIDGET_DATA:
+      }
+      case IPCChannelEnum.READ_WIDGET_DATA: {
         return this.rFactory.createRequest(request, 'readWidgetDataWithProps');
-      case IPCChannelEnum.INSERT_DATA:
+      }
+      case IPCChannelEnum.INSERT_DATA: {
         return this.rFactory.createRequest(request, 'insertDataWithProps');
-      case IPCChannelEnum.DELETE_DATA:
+      }
+      case IPCChannelEnum.DELETE_DATA: {
         return this.rFactory.createRequest(request, 'deleteDataWithProps');
-      case IPCChannelEnum.UPDATE_DATA:
+      }
+      case IPCChannelEnum.UPDATE_DATA: {
         return this.rFactory.createRequest(request, 'updateDataWithProps');
-      default:
+      }
+      default: {
         return {
           channel: request.channel,
           error: {
@@ -63,12 +71,11 @@ export class IPCService {
             message: 'Unexpected Error',
           },
         } as ErrorResponse;
+      }
     }
   }
 
   send(response: ResponseType): void {
-    webContents
-      .getFocusedWebContents()
-      .send(response.channel as IPCChannel, response);
+    webContents.getFocusedWebContents().send(response.channel, response);
   }
 }

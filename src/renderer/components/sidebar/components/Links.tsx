@@ -43,7 +43,7 @@ export function SidebarLinks() {
   const viewsLinks = [
     { to: 'add', text: 'Add View', icon: MdAdd },
     ...sessionViews.map((view) => ({
-      to: `${view.id}`,
+      to: view.id,
       text: view.name,
       icon: MdTableView,
     })),
