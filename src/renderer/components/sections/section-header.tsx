@@ -14,16 +14,18 @@ export const SectionHeader: FC<SectionHeaderProperties> = ({
 }) => {
   return (
     <>
-      <Flex spacing="4" flexDirection="row" justifyContent="space-between">
+      <Flex flexDirection="row" justifyContent="space-between">
         <Box>
-          <Heading mb={1} fontSize="xl">{title}</Heading>
+          <Heading mb={1} fontSize="xl">
+            {title}
+          </Heading>
           <Text alignItems="center" display="flex" as="kbd" fontSize="sm">
             {subTitle && <Box>{subTitle}</Box>}
           </Text>
         </Box>
         <Box>{RightComponent && <RightComponent />}</Box>
       </Flex>
-      <Divider my={5} />
+      <Divider mt={5} mb={5} borderColor="black" />
     </>
   );
 };

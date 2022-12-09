@@ -44,4 +44,5 @@ export const NumberDataType: DataType<number> = {
     'BIT',
   ],
   validationFuction: Number.isNaN,
+  formatter: (value) => Number(value).valueOf(),
 };

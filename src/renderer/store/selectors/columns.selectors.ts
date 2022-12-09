@@ -34,7 +34,7 @@ export const getColumns = memoize((state: RootState) =>
     F.map((id: string) =>
       ColumnsReducer.getSelectors().selectById(state.columns, id)
     ),
-    F.intersection(state.columns.ids.map((value) => value.valueOf()))
+    F.intersection(state.columns.ids.map((value) => value ?? '-'))
   )
 );
 

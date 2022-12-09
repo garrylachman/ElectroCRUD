@@ -1,4 +1,4 @@
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import {
   Box,
   Flex,
@@ -8,8 +8,9 @@ import {
   Icon,
   useColorModeValue,
   Collapse,
+  Button,
 } from '@chakra-ui/react';
-import { MdHome, MdViewList, MdAdd, MdTableView } from 'react-icons/md';
+import { MdHome, MdViewList, MdAdd, MdTableView, MdEdit } from 'react-icons/md';
 import { useAppSelector } from 'renderer/store/hooks';
 import { useMemo } from 'react';
 import { ViewsReducer } from 'renderer/store/reducers';
@@ -28,6 +29,7 @@ export function SidebarLinks() {
   }, [sessionState, viewsState]);
 
   const location = useLocation();
+  const navigate = useNavigate();
   const activeColor = useColorModeValue('gray.700', 'white');
   const inactiveColor = useColorModeValue(
     'secondaryGray.600',
@@ -68,11 +70,10 @@ export function SidebarLinks() {
           spacing={activeRoute(link.to) ? '22px' : '26px'}
           flexDirection="column"
           alignItems="flex-start"
-          alignContent="flex-start"
         >
           <>
             <NavLink to={link.to}>
-              <Flex w="100%" alignItems="center" justifyContent="center">
+              <Flex w="100%" alignItems="center" justifyContent="space-between">
                 <Box
                   color={activeRoute(link.to) ? activeIcon : inactiveColor}
                   me="12px"
@@ -97,49 +98,69 @@ export function SidebarLinks() {
                 </Text>
               </Flex>
             </NavLink>
-            <Collapse in={activeRoute(link.to)}>
+            <Collapse in={activeRoute(link.to)} style={{ width: '-webkit-fill-available' }}>
               {activeRoute(link.to) ? (
                 <VStack alignItems="start" pt={2}>
                   {link.subLinks.map((subLink) => (
-                    <NavLink
-                      to={`${link.to}/${subLink.to}`}
-                      key={`${link.to}/${subLink.to}`}
+                    <Flex
+                      justifyContent="space-between"
+                      borderRightColor="white"
+                      _hover={{
+                        borderRightColor: 'brand.100',
+                      }}
+                      borderRightWidth="5px"
+                      w="100%"
                     >
-                      <Flex
-                        w="100%"
-                        alignItems="center"
-                        justifyContent="flex-start"
+                      <NavLink
+                        to={`${link.to}/${subLink.to}`}
+                        key={`${link.to}/${subLink.to}`}
                       >
-                        <Box
-                          color={
-                            activeRoute(`${link.to}/${subLink.to}`)
-                              ? activeIcon
-                              : inactiveColor
-                          }
-                          me="12px"
-                          display="inline-flex"
+                        <Flex
+                          w="100%"
+                          alignItems="center"
+                          justifyContent="space-between"
                         >
-                          <Icon
-                            as={subLink.icon}
-                            width="20px"
-                            height="20px"
-                            color="inherit"
-                          />
-                        </Box>
-                        <Text
-                          me="auto"
-                          color={
-                            activeRoute(`${link.to}/${subLink.to}`)
-                              ? activeColor
-                              : 'secondaryGray.600'
-                          }
-                          fontWeight="500"
-                          fontSize="md"
-                        >
-                          {subLink.text}
-                        </Text>
-                      </Flex>
-                    </NavLink>
+                          <Box
+                            color={
+                              activeRoute(`${link.to}/${subLink.to}`)
+                                ? activeIcon
+                                : inactiveColor
+                            }
+                            me="12px"
+                            display="inline-flex"
+                          >
+                            <Icon
+                              as={subLink.icon}
+                              width="20px"
+                              height="20px"
+                              color="inherit"
+                            />
+                          </Box>
+                          <Text
+                            me="auto"
+                            color={
+                              activeRoute(`${link.to}/${subLink.to}`)
+                                ? activeColor
+                                : 'secondaryGray.600'
+                            }
+                            fontWeight="500"
+                            fontSize="md"
+                          >
+                            {subLink.text}
+                          </Text>
+                        </Flex>
+                      </NavLink>
+                      <Button
+                        onClick={() => navigate(`${link.to}/${subLink.to}/edit`)}
+                        borderRadius={30}
+                        borderRightRadius={0}
+                        variant="ghost"
+                        _hover={{ bg: 'brand.100' }}
+                        size="xs"
+                      >
+                        <Icon as={MdEdit} />
+                      </Button>
+                    </Flex>
                   ))}
                 </VStack>
               ) : undefined}

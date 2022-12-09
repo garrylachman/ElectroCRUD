@@ -15,6 +15,9 @@ import { ViewSelectors } from 'renderer/store/selectors';
 import { NestedPartial } from 'shared';
 import * as R from 'ramda';
 import { RootState } from 'renderer/store/store';
+import { useIPCLogs } from 'renderer/ipc/use-ipc-log';
+import { json } from 'node:stream/consumers';
+import _ from 'lodash';
 
 export type EntitiesIndexerContextType = {
   getById: (id: string) => string;
@@ -64,6 +67,29 @@ export const EntitiesIndexerContextProvider: FC<
   const getById = useCallback<string | undefined>(
     (id: string) => state[id] || undefined
   );
+
+  const [logs] = useIPCLogs();
+  useEffect(() => {
+    if (!_.last(logs)) return;
+
+    const { body } = _.last(logs);
+    let { message } = body;
+    try {
+      message = JSON.parse(message);
+    } catch {
+      /* empty */
+    }
+
+    console.group('ipc error');
+    console.table(_.omit(body, ['message']));
+    if (typeof message === 'string') {
+      console.log(message);
+    }
+    if (typeof message === 'object') {
+      console.table(message);
+    }
+    console.groupEnd();
+  }, [logs]);
 
   return (
     <EntitiesIndexerContext.Provider value={{ getById }}>

@@ -11,8 +11,15 @@ const columnsAdapter = createEntityAdapter<ColumnRO>({
 
 const { upsertOne, upsertMany, removeOne, removeMany, removeAll } =columnsAdapter;
 
+
+const setId = R.ifElse(
+  R.complement(R.has)('id'),
+  R.over(R.lensProp('id'), uuidv4),
+  R.identity()
+);
+
 const mergeBeforeUpdate = R.compose(
-  R.mergeDeepRight({ id: uuidv4() }),
+  setId,
   R.mergeDeepRight({ creationDate: Date.now() }),
   R.mergeDeepLeft({ modificationDate: Date.now() }),
   R.evolve({
@@ -21,7 +28,7 @@ const mergeBeforeUpdate = R.compose(
     },
   }),
   R.mergeDeepRight({ metadata: { tags: [] } }),
-  R.omit(['referances']),
+  R.omit(['referances'])
 );
 
 const columnsSlice = createSlice({
@@ -40,6 +47,8 @@ const columnsSlice = createSlice({
     upsertMany: {
       reducer: upsertMany,
       prepare(payload: ColumnRO[], meta: { viewId?: string }) {
+        console.log(payload);
+        console.log(payload.map((item) => mergeBeforeUpdate(item)));
         return {
           payload: payload.map((item) => mergeBeforeUpdate(item)),
           meta,

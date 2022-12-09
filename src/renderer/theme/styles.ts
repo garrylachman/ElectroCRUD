@@ -105,14 +105,14 @@ export const globalStyles = {
       body: {
         overflowX: 'hidden',
         bg: mode('#fdfeff', 'navy.900')(props),
-        fontFamily: 'DM Sans',
-        letterSpacing: '-0.5px',
+        fontFamily: 'Poppins',
+        "-webkit-font-smoothing": "antialiased",
       },
       input: {
         color: 'gray.700',
       },
       html: {
-        fontFamily: 'DM Sans',
+        fontFamily: 'Poppins',
       },
     }),
   },

@@ -34,12 +34,13 @@ import {
   ViewScopedContext,
   ViewScopedContextProvider,
 } from 'renderer/contexts';
+import { AnimatePresence, motion } from 'framer-motion';
 import { BasicDetailsCard } from './components/BasicDetailsCard';
 import { ViewsInfoAlert } from './components/ViewsInfoAlert';
 import { TableColumnsCard } from './components/TableColumnsCard';
-import { TerminologyCard } from './components/TerminologyCard';
-import { PermissionsCard } from './components/PermissionsCard';
-import { TabsHeader } from './TabsHeader';
+import { TerminologyCard } from './components/terminology-card';
+import { PermissionsCard } from './components/permissions-card';
+import { TabsHeader } from './tabs-header';
 import { MetadataIndex } from './metadata';
 
 type FormData = Omit<ViewRO, 'id' | 'creationDate' | 'modificationDate'>;
@@ -79,7 +80,7 @@ const AddOrEditView = () => {
         ViewsReducer.actions.addOne({ ...viewState, ...data })
       );
       if (response && response.payload && response.payload.id) {
-        navigate(`../${response.payload.id}`);
+        navigate(`../${response.payload.id}/edit`);
       }
     }
   };
@@ -180,41 +181,48 @@ const AddOrEditView = () => {
 
 export const EditView = () => {
   const { viewId } = useParams();
-  console.log("viewId", viewId);
-  useEffect(() => console.log("viewId", viewId), [viewId])
 
   return (
-    <ViewScopedContextProvider viewId={viewId}>
-      <Spacer pt="60px" /> <TabsHeader />
-      <Tabs isLazy colorScheme="brandTabs" pt="10px">
-        <TabList>
-          <Tab>
-            <Flex align="center">
-              <Icon as={MdOutlineCollections} w="20px" h="20px" me="8px" />
-              <Text fontSize="lg" fontWeight="500">
-                Dataset
-              </Text>
-            </Flex>
-          </Tab>
-          <Tab>
-            <Flex align="center">
-              <Icon as={MdOutlineCollections} w="20px" h="20px" me="8px" />
-              <Text fontSize="lg" fontWeight="500">
-                Metadata
-              </Text>
-            </Flex>
-          </Tab>
-        </TabList>
-        <TabPanels>
-          <TabPanel px={0} pb={0}>
-            <AddOrEditView />
-          </TabPanel>
-          <TabPanel px={0} pb={0}>
-            <MetadataIndex />
-          </TabPanel>
-        </TabPanels>
-      </Tabs>
-    </ViewScopedContextProvider>
+    <AnimatePresence>
+      <motion.div
+        layout
+        initial={{ right: '-1000px', position: 'relative', opacity: 0 }}
+        animate={{ right: '0px', opacity: 1 }}
+        exit={{ right: '-1000px', opacity: 0 }}
+      >
+        <ViewScopedContextProvider viewId={viewId}>
+          <Spacer pt="60px" /> <TabsHeader />
+          <Tabs isLazy colorScheme="brandTabs" pt="10px">
+            <TabList>
+              <Tab>
+                <Flex align="center">
+                  <Icon as={MdOutlineCollections} w="20px" h="20px" me="8px" />
+                  <Text fontSize="lg" fontWeight="500">
+                    Dataset
+                  </Text>
+                </Flex>
+              </Tab>
+              <Tab>
+                <Flex align="center">
+                  <Icon as={MdOutlineCollections} w="20px" h="20px" me="8px" />
+                  <Text fontSize="lg" fontWeight="500">
+                    Metadata
+                  </Text>
+                </Flex>
+              </Tab>
+            </TabList>
+            <TabPanels>
+              <TabPanel px={0} pb={0}>
+                <AddOrEditView />
+              </TabPanel>
+              <TabPanel px={0} pb={0}>
+                <MetadataIndex />
+              </TabPanel>
+            </TabPanels>
+          </Tabs>
+        </ViewScopedContextProvider>
+      </motion.div>
+    </AnimatePresence>
   );
 };
 

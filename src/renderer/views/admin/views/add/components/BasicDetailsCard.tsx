@@ -9,13 +9,15 @@ import {
   Heading,
   Center,
   Spinner,
+  Card,
+  CardHeader,
+  CardBody,
 } from '@chakra-ui/react';
 import { FC, useEffect } from 'react';
 import { ViewRO } from 'renderer/defenitions/record-object';
 import { useFormContext } from 'react-hook-form';
 import * as Joi from 'joi';
 import { joiResolver } from '@hookform/resolvers/joi';
-import Card from 'renderer/components/card/Card';
 import { InputField } from 'renderer/components/fields';
 import { IPCChannelEnum } from 'shared';
 import { useIPCTablesList } from 'renderer/ipc';
@@ -38,10 +40,11 @@ export const BasicDetailsCard: FC<BasicDetailsCardProperties> = ({
   }, []);
 
   return (
-    <Card flexDirection="column">
-      <Heading size="md" pb={4}>
+    <Card variant="solid">
+      <CardHeader>
         Details
-      </Heading>
+      </CardHeader>
+      <CardBody>
       {isExecuted && (
         <Grid templateColumns="repeat(2, 1fr)" gap={6}>
           <GridItem>
@@ -86,6 +89,7 @@ export const BasicDetailsCard: FC<BasicDetailsCardProperties> = ({
           <Spinner />
         </Center>
       )}
+      </CardBody>
     </Card>
   );
 };

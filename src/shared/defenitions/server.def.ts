@@ -1,10 +1,13 @@
+// eslint-disable-next-line unicorn/prevent-abbreviations
 import { QueryAggregateEnum, ServerTypeEnum } from '../enums';
 
 export type ServerType =
+  | ServerTypeEnum.MYSQL2
   | ServerTypeEnum.MYSQL
   | ServerTypeEnum.MSSQL
   | ServerTypeEnum.ORACEL
   | ServerTypeEnum.POSTGRES
+  | ServerTypeEnum.BETTER_SQLITE
   | ServerTypeEnum.SQLITE;
 
 export type TablesListRow = Record<string, any> & {
@@ -12,14 +15,29 @@ export type TablesListRow = Record<string, any> & {
 };
 
 export type TableInfoRow = Record<string, any> & {
-  col_id?: number | string;
   name: string;
-  type: string;
-  length: number;
-  key?: string;
-  default?: number | string;
-  nullable?: boolean;
-  extra?: string;
+  table: string;
+  data_type: string;
+  default_value?: string;
+  max_length?: number;
+  numeric_precision?: number;
+  numeric_scale?: number;
+  is_nullable: boolean;
+  is_unique: boolean;
+  is_primary_key: boolean;
+  is_generated: boolean;
+  generation_expression?: string;
+  has_auto_increment: boolean;
+  foreign_key_table?: string;
+  foreign_key_column?: string;
+  comment?: string;
+  schema?: string;
+  foreign_key_schema?: string;
+};
+
+export type QueryOrder = {
+  column: string;
+  order: 'asc' | 'desc';
 };
 
 export type QueryJoin = {
@@ -81,6 +99,7 @@ export type ReadDataArgs = {
   searchText?: string;
   where?: QueryWhere[];
   join?: QueryJoin[];
+  order?: QueryOrder;
 };
 
 export type UpdateDataArgs = {

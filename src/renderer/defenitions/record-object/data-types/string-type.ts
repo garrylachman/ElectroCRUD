@@ -34,4 +34,5 @@ export const StringDataType: DataType<string> = {
     'bpchar',
   ],
   validationFuction: (value) => new RegExp(/[\D\w]+/g).test(value),
+  formatter: (value) => value,
 };

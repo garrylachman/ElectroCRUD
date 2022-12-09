@@ -58,8 +58,7 @@ import { CodeExamplesReducer } from 'renderer/store/reducers';
 import ReactTimeAgo from 'react-time-ago';
 import { RippleButton } from 'renderer/components/buttons/ripple-button';
 import { CardHeaderBetter } from 'renderer/components/card/CardHeader';
-import { motion } from 'framer-motion';
-import { useVisibleAnimation} from 'framer-motion-visible';
+import { AnimatePresence, motion } from 'framer-motion'
 
 type CodeExampleItemProperties = {
   initialValue: Partial<CodeExampleRO>;
@@ -69,7 +68,7 @@ type CodeExampleItemProperties = {
 
 type FormData = Omit<CodeExampleRO, 'id' | 'creationDate' | 'modificationDate'>;
 
-const CodeExampleItem: FC<CodeExampleItemProperties> = ({
+export const CodeExampleItem: FC<CodeExampleItemProperties> = ({
   initialValue,
   index,
   onSave,
@@ -115,11 +114,17 @@ const CodeExampleItem: FC<CodeExampleItemProperties> = ({
     [initialValue, dispatcher]
   );
 
-  const [isOpen, { on, off, toggle }] = useBoolean(
-    initialValue.id === undefined
-  );
+  const [isOpen, { on, off, toggle }] = useBoolean(initialValue.id === undefined);
 
   return (
+    <AnimatePresence>
+      <motion.div
+        key="CodeExamples"
+        initial={{ scaleY: 0.2, position: 'relative', opacity: 0 }}
+        animate={{ scaleY: 1, opacity: 1 }}
+        exit={{ scaleY: 0.2, opacity: 0 }}
+        transition={{ duration: 1}}
+      >
     <Card>
       <FormProvider {...formContext}>
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -233,20 +238,7 @@ const CodeExampleItem: FC<CodeExampleItemProperties> = ({
         </form>
       </FormProvider>
     </Card>
+    </motion.div>
+    </AnimatePresence>
   );
 };
-
-function AnimateComponent({ children }) {
-  const visibleAnimation = useVisibleAnimation({
-    initial: { x: 0, y: -100, opacity: 0, width: '100%' },
-    visible: { x: 0, y: 0, opacity: 1 },
-  });
-
-  return <motion.div {...visibleAnimation}>{children}</motion.div>;
-}
-
-export const CodeExampleItemComponent = (properties) => (
-  <AnimateComponent>
-    <CodeExampleItem {...properties} />
-  </AnimateComponent>
-);

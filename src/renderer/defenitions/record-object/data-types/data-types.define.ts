@@ -10,5 +10,5 @@ export type DataType<T> = {
   };
   variants: string[];
   validationFuction?: (value: any) => boolean;
-  formatter?: (value: T) => string;
+  formatter?: (value: T) => any;
 };

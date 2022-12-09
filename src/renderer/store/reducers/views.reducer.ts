@@ -16,8 +16,14 @@ const viewsAdapter = createEntityAdapter<ViewRO>({
 const { addOne, updateOne, updateMany, removeOne, removeMany, removeAll } =
   viewsAdapter;
 
+const setId = R.ifElse(
+  R.complement(R.has)('id'),
+  R.over(R.lensProp('id'), uuidv4),
+  R.identity()
+);
+
 const mergeBeforeUpdate = R.compose(
-  R.mergeDeepRight({ id: uuidv4() }),
+  setId,
   R.mergeDeepRight({ creationDate: Date.now() }),
   R.mergeDeepLeft({ modificationDate: Date.now() }),
   R.evolve({
@@ -94,10 +100,13 @@ const viewsSlice = createSlice({
         if (action.meta && action.meta.viewId) {
           const updatedView = state.entities[action.meta.viewId];
           if (updatedView) {
-            updatedView.columns = [
-              ...updatedView.columns,
-              ...action.payload.map((item) => item.id),
-            ];
+            if (updatedView.columns === undefined) {
+              updatedView.columns = [];
+            }
+            // eslint-disable-next-line unicorn/no-array-for-each
+            action.payload.forEach((item) => {
+              updatedView.columns.push(item.id);
+            });
             updatedView.modificationDate = Date.now();
           }
         }

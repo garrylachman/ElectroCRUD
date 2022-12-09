@@ -10,5 +10,6 @@ export const NADataType: DataType<undefined> = {
     long: '',
   },
   variants: [],
-  validationFuction: () => true
+  validationFuction: () => true,
+  formatter: (value) => 'N/A',
 };

@@ -8,18 +8,15 @@ import {
   Icon,
   Box,
   Center,
+  Card,
+  CardBody, StatHelpText
 } from '@chakra-ui/react';
-import { SubCard } from 'renderer/containers/cards';
 import ReactTimeAgo from 'react-time-ago';
-import { ViewRO } from 'renderer/defenitions/record-object';
-import { FC, useContext, useMemo } from 'react';
-import { useAppSelector } from 'renderer/store/hooks';
-import { ViewsReducer } from 'renderer/store/reducers';
-import { useSelector } from 'react-redux';
-import { ViewSelectors } from 'renderer/store/selectors';
+import { FC, useContext } from 'react';
 import { MdAccessTime, MdAccessTimeFilled } from 'react-icons/md';
 import { IconType } from 'react-icons/lib';
 import { ViewScopedContext } from 'renderer/contexts';
+import moment from 'moment';
 
 type TabsHeaderProperties = {
 };
@@ -33,11 +30,13 @@ export const DateCard = ({
   title: string;
   icon: IconType;
 }) => (
-  <SubCard variant="brand">
+  <Card variant="brandBold">
+    <CardBody>
     <HStack>
       <Stat>
-        <StatLabel>{title}</StatLabel>
-        <StatNumber>{value ? <ReactTimeAgo date={value} /> : 'N/A'}</StatNumber>
+        <StatLabel textTransform="uppercase">{title}</StatLabel>
+        <StatNumber fontSize="lg" py={1}>{value ? <ReactTimeAgo date={value} /> : 'N/A'}</StatNumber>
+        <StatHelpText as={"kbd"} fontSize="2xs">{moment(value).toLocaleString()}</StatHelpText>
       </Stat>
       <Box
         bg="blackAlpha.400"
@@ -53,7 +52,8 @@ export const DateCard = ({
         </Center>
       </Box>
     </HStack>
-  </SubCard>
+    </CardBody>
+  </Card>
 );
 
 export const TabsHeader: FC<TabsHeaderProperties> = () => {
@@ -61,7 +61,7 @@ export const TabsHeader: FC<TabsHeaderProperties> = () => {
 
   return (
     <VStack>
-      <SimpleGrid columns={4} spacing={10} w="100%">
+      <SimpleGrid columns={3} spacing={10} w="100%">
         <DateCard
           title="Created at"
           value={viewState?.creationDate}

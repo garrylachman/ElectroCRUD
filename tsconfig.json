@@ -1,15 +1,14 @@
 {
   "compilerOptions": {
     "incremental": true,
-    "target": "es2021",
+    "target": "esnext",
     "skipLibCheck": true,
     "module": "commonjs",
-    "lib": ["dom", "es2021", "esnext", "dom.iterable"],
+    "lib": ["dom", "esnext", "esnext", "dom.iterable"],
     "jsx": "react-jsx",
     "strict": true,
     "sourceMap": true,
     "baseUrl": "./src",
-    "moduleResolution": "node",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
@@ -20,6 +19,7 @@
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
     "isolatedModules": false,
+    "moduleResolution": "nodenext",
   },
   "include": ["./src/**/*"],
   "exclude": ["test", "release/build", "release/app/dist", ".erb/dll"]

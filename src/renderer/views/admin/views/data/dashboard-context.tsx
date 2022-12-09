@@ -1,0 +1,146 @@
+import _ from 'lodash';
+import {
+  createContext,
+  FC,
+  PropsWithChildren,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
+import { useSelector } from 'react-redux';
+import { ViewVO } from 'renderer/defenitions/record-object';
+import { useIPCReadData } from 'renderer/ipc';
+import { useAppSelector } from 'renderer/store/hooks';
+import { ViewSelectors } from 'renderer/store/selectors';
+import { IPCChannelEnum, NestedPartial, QueryOrder } from 'shared';
+
+export type DashboardContextControlType = [
+  execute: () => void,
+  setLimit: (number) => void,
+  setPage: (number) => void,
+  setOrder: (QueryOrder) => void,
+  setSearch: (string) => void
+];
+
+export type DashboardContextDataMetaType = {
+  totalCount: number;
+  limit: number;
+  page: number;
+  order: QueryOrder;
+};
+
+export type DashboardContextType = {
+  setView: (viewId: string) => void;
+  data: {
+    columns: any[];
+    rows: any[];
+    meta: DashboardContextDataMetaType;
+  };
+  control: DashboardContextControlType;
+  status: [isLoading: boolean, isExecuted: boolean];
+};
+
+const initial: DashboardContextType = {
+  setView: (viewId) => {},
+  data: { columns: [], rows: [], meta: { totalCount: 0, limit: 10, page: 1 } },
+  control: [() => {}, (number) => {}, (number) => {}, (value) => {}, (value) => {}],
+  status: [false, false],
+};
+
+export type DashboardContextProviderProperties = {
+  viewId?: string;
+};
+
+export const DashboardContext = createContext<DashboardContextType>(initial);
+
+export const DashboardContextProvider: FC<
+  PropsWithChildren<DashboardContextProviderProperties>
+> = ({ viewId, children }) => {
+  const sessionState = useAppSelector((state) => state.session);
+  const [currentViewId, setCurrentViewId] = useState<string | undefined>(
+    viewId
+  );
+
+  useEffect(() => setCurrentViewId(viewId), [viewId]);
+
+  const viewsStateSelector = useSelector((state) =>
+    ViewSelectors.createFullViewSelector(state)
+  );
+
+  const viewState = useMemo<ViewVO | NestedPartial<ViewVO>>(
+    () =>
+      currentViewId
+        ? viewsStateSelector(currentViewId)
+        : ({ accountId: sessionState.account?.id } as NestedPartial<ViewVO>),
+    [currentViewId, viewsStateSelector]
+  );
+
+  const setView = useCallback((setViewId) => setCurrentViewId(setViewId), []);
+
+  const [limit, setLimit] = useState<number>(10);
+  const [page, setPage] = useState<number>(0);
+  const [order, setOrder] = useState<QueryOrder>();
+  const [search, setSearch] = useState<string>();
+
+  const columns = useMemo<string[]>(
+    () => viewState.columns.map<string>((item) => _.get(item, 'name', item)),
+    [viewState.columns]
+  );
+
+  const searchColumns = useMemo<string[]>(
+    () => viewState.columns?.filter(item => item.searchable).map<string>((item) => _.get(item, 'name', item)),
+    [viewState.columns]
+  );
+
+  const { result, execute, isExecuted, isLoading } = useIPCReadData({
+    channel: IPCChannelEnum.READ_DATA,
+    body: {
+      table: viewState.table,
+      columns,
+      limit,
+      offset: limit * (page-1),
+      order,
+      searchText: search,
+      searchColumns
+    },
+  });
+
+  const control = [execute, setLimit, setPage, setOrder, setSearch];
+  const status = [isLoading, isExecuted];
+  const data = useMemo(
+    () => ({
+      columns,
+      rows: result?.body.data,
+      meta: {
+        totalCount: result?.body.count,
+        limit,
+        page,
+        order,
+      },
+    }),
+    [isExecuted, result?.body.data]
+  );
+
+  useEffect(() => {
+    execute();
+  }, [limit]);
+
+  useEffect(() => {
+    execute();
+  }, [page]);
+
+  useEffect(() => {
+    execute();
+  }, [order]);
+
+  useEffect(() => {
+    execute();
+  }, [search]);
+
+  return (
+    <DashboardContext.Provider value={{ setView, data, control, status }}>
+      {children}
+    </DashboardContext.Provider>
+  );
+};

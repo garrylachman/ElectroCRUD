@@ -6,6 +6,7 @@ import { MdSave } from 'react-icons/md';
 import { useAppDispatch } from 'renderer/store/hooks';
 import { ViewsReducer } from 'renderer/store/reducers';
 import { ViewScopedContext } from 'renderer/contexts';
+import { AnimatePresence, motion } from 'framer-motion';
 import { TableDocumentCardCard } from './components/table-document-card';
 import { TableTagsCard } from './components/table-tags-card';
 
@@ -60,28 +61,38 @@ export const TablesMetadata: FC<TablesMetadataProperties> = () => {
     );
 
   return (
-    <Box px={5} pb={0} pt={3}>
-      <FormProvider {...formContext}>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <TableDocumentCardCard />
-          <Spacer p={3} />
-          <TableTagsCard />
-          <Spacer p={3} />
-          <Box>
-            <HStack justifyContent="space-between">
-              <Button
-                type="submit"
-                variant="brand"
-                size="lg"
-                isDisabled={!isValid}
-              >
-                <Icon mr={2} as={MdSave} />
-                Save
-              </Button>
-            </HStack>
-          </Box>
-        </form>
-      </FormProvider>
-    </Box>
+    <AnimatePresence>
+      <motion.div
+        layout
+        key="TablesMetadata"
+        initial={{ scale: 0.2, position: 'relative', opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        exit={{ scale: 0.2, opacity: 0 }}
+      >
+        <Box px={5} pb={0} pt={3}>
+          <FormProvider {...formContext}>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <TableDocumentCardCard />
+              <Spacer p={3} />
+              <TableTagsCard />
+              <Spacer p={3} />
+              <Box>
+                <HStack justifyContent="space-between">
+                  <Button
+                    type="submit"
+                    variant="brand"
+                    size="lg"
+                    isDisabled={!isValid}
+                  >
+                    <Icon mr={2} as={MdSave} />
+                    Save
+                  </Button>
+                </HStack>
+              </Box>
+            </form>
+          </FormProvider>
+        </Box>
+      </motion.div>
+    </AnimatePresence>
   );
 };

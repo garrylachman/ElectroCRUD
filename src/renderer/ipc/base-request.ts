@@ -22,6 +22,7 @@ export const useBaseRequest = <T extends ResponseType>(
   const [isExecuted, setIsExecuted] = useState<boolean>(false);
 
   const execute = () => {
+    setResult();
     setIsLoading(true);
     setIsExecuted(false);
 

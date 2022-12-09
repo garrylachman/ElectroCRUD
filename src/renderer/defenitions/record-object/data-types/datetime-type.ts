@@ -1,5 +1,6 @@
 import { AiOutlineFieldTime } from 'react-icons/ai';
 import { DataType } from './data-types.define';
+import moment from 'moment';
 
 export const DateTimeDataType: DataType<Date> = {
   name: 'datetime',
@@ -27,4 +28,5 @@ export const DateTimeDataType: DataType<Date> = {
     'tinterval',
   ],
   validationFuction: (value) => !Date.parse(value),
+  formatter: (value) => moment(value).toDate().toLocaleString(),
 };

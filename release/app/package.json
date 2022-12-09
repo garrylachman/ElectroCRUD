@@ -11,17 +11,23 @@
   "main": "./dist/main/main.js",
   "scripts": {
     "rebuild": "node -r ts-node/register ../../.erb/scripts/electron-rebuild.js",
-    "postinstall": "npm run rebuild && npm run link-modules",
+    "postinstall": "yarn run rebuild && yarn run link-modules",
     "link-modules": "node -r ts-node/register ../../.erb/scripts/link-modules.ts"
   },
   "dependencies": {
+    "better-sqlite3": "8.0.0",
+    "chakra-ui-steps": "github:garrylachman/chakra-ui-steps#develop",
     "knex": "2.3.0",
-    "tunnel-ssh": "4.1.1",
-    "sqlite3": "5.1.2",
+    "knex-hooks": "github:garrylachman/knex-hooks",
+    "knex-schema-inspector": "^3.0.0",
     "mysql": "2.18.1",
-    "chakra-ui-steps": "github:garrylachman/chakra-ui-steps#develop"
+    "mysql2": "2.3.3",
+    "pg": "8.8.0",
+    "sqlite3": "5.1.2",
+    "tunnel-ssh": "4.1.1"
   },
   "devDependencies": {
-    "@types/tunnel-ssh": "4.1.1"
+    "@types/tunnel-ssh": "4.1.1",
+    "@types/ramda": "^0.28.0"
   }
 }

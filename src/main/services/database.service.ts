@@ -1,11 +1,13 @@
 import 'reflect-metadata';
-import { omit } from 'lodash';
+import _, { omit } from 'lodash';
 import { singleton, autoInjectable, delay, inject } from 'tsyringe';
 import * as Knex from 'knex';
 import { TypedKnex } from '@wwwouter/typed-knex';
 import getCurrentLine from 'get-current-line';
 import sqlFormatter from '@sqltools/formatter';
 import { Config as SQLFormatterConfig } from '@sqltools/formatter/lib/core/types';
+import knexHooks from 'knex-hooks';
+import { SchemaInspector } from 'knex-schema-inspector';
 import { NoActiveClientError } from '../exceptions';
 import {
   heartBeatQueries,
@@ -13,28 +15,29 @@ import {
   tablesListQueries,
 } from '../data/queries';
 import {
-  ConnectArgs,
+  ConnectArgs as ConnectArguments,
   ConnectionConfig,
-  DeleteDataArgs,
+  DeleteDataArgs as DeleteDataArguments,
   ErrorType,
-  InsertDataArgs,
+  InsertDataArgs as InsertDataArguments,
   IPCError,
   QueryAggregate,
   QueryJoin,
+  QueryOrder,
   QueryWhere,
-  ReadDataArgs,
+  ReadDataArgs as ReadDataArguments,
   ReadDataResult,
-  ReadWidgetDataArgs,
+  ReadWidgetDataArgs as ReadWidgetDataArguments,
   ReadWidgetDataResult,
   ServerType,
   TableInfoRow,
   TablesListRow,
-  UpdateDataArgs,
+  UpdateDataArgs as UpdateDataArguments,
 } from '../../shared/defenitions';
 import { QueryAggregateEnum, ServerTypeEnum } from '../../shared/enums';
 import { LogService } from './log.service';
 
-const formatterParams: SQLFormatterConfig = {
+const formatterParameters: SQLFormatterConfig = {
   reservedWordCase: 'upper',
   indent: '    ',
   language: 'sql',
@@ -43,9 +46,13 @@ const formatterParams: SQLFormatterConfig = {
 @singleton()
 @autoInjectable()
 export class DatabaseService {
+  private config?: Knex.Knex.Config;
+
   private connection?: Knex.Knex;
 
   private typedConnection?: TypedKnex;
+
+  private inspector?: SchemaInspector;
 
   constructor(
     @inject(delay(() => LogService)) private logService?: LogService
@@ -57,14 +64,14 @@ export class DatabaseService {
   ): Promise<boolean | IPCError> {
     await this.disconnect();
 
-    const config: Knex.Knex.Config = {
+    this.config = {
       client,
       connection,
       useNullAsDefault: true,
     };
     this.logService?.info(
       `Connecting: ${JSON.stringify(
-        omit(config.connection as Knex.Knex.ConnectionConfigProvider, [
+        omit(this.config.connection as Knex.Knex.ConnectionConfigProvider, [
           'password',
           'user',
         ])
@@ -72,8 +79,11 @@ export class DatabaseService {
       getCurrentLine().method
     );
     try {
-      this.connection = Knex.knex(config);
+      this.connection = Knex.knex(this.config);
       this.typedConnection = new TypedKnex(this.connection);
+      this.inspector = SchemaInspector(this.connection);
+      this.connectHooks();
+      console.log("client", this.connection.client.constructor.name)
       this.logService?.success(`Connection Success`, getCurrentLine().method);
       return await this.heartbeat();
     } catch (error: any) {
@@ -85,10 +95,31 @@ export class DatabaseService {
     }
   }
 
+  private connectHooks() {
+    knexHooks(this.connection);
+
+    this.connection?.addHook(
+      '*',
+      '*',
+      '*',
+      (when, method, table, parameters) => {
+        this.logService?.info(
+          JSON.stringify({
+            when,
+            method,
+            table,
+            params: parameters.query.toString(),
+          }),
+          getCurrentLine().method
+        );
+      }
+    );
+  }
+
   public async connectWithProps(
-    props: ConnectArgs
+    properties: ConnectArguments
   ): Promise<boolean | IPCError> {
-    const { client, connection } = props;
+    const { client, connection } = properties;
     return this.connect(client, connection);
   }
 
@@ -110,11 +141,11 @@ export class DatabaseService {
 
   public get activeClient(): ServerType {
     try {
-      if (!this.connection?.client?.config?.client) {
+      if (!this.config?.client) {
         throw new NoActiveClientError();
       }
-      return this.connection?.client.config.client;
-    } catch (error) {
+      return this.config.client;
+    } catch {
       throw new NoActiveClientError();
     }
   }
@@ -125,7 +156,7 @@ export class DatabaseService {
     try {
       await this.connection?.raw(heartbeatQuery);
       return true;
-    } catch (error: any) {
+    } catch (error: unknown) {
       this.logService?.error(error.message, getCurrentLine().method);
       throw {
         type: ErrorType.NOT_CONNECTED,
@@ -139,34 +170,29 @@ export class DatabaseService {
   }
 
   public async executeQuery(query: string): Promise<any | IPCError> {
-    const findResult = ((result: any) => result[0]) as (
-      result: any
-    ) => string | undefined;
-    const findResultPG = ((result: any) => result.rows) as (
-      result: any
-    ) => string | undefined;
-    const findResultSQLite = ((result: any) => result) as (
-      result: any
-    ) => string | undefined;
+    const extractResult = (result: any): any => {
+      if (result?.rows) {
+        return result.rows;
+      }
+      if (_.isArray(result) && _.size(result) === 2) {
+        return result[0];
+      }
+      return result;
+    };
 
     this.logService?.info(
-      sqlFormatter.format(query, formatterParams),
+      sqlFormatter.format(query, formatterParameters),
       getCurrentLine().method
     );
 
     try {
       this.logService?.success(
-        sqlFormatter.format(query, formatterParams),
+        sqlFormatter.format(query, formatterParameters),
         getCurrentLine().method
       );
-      const res = await this.connection?.raw(query);
-      if (this.activeClient === ServerTypeEnum.POSTGRES) {
-        return findResultPG(res);
-      }
-      if (this.activeClient === ServerTypeEnum.SQLITE) {
-        return findResultSQLite(res);
-      }
-      return findResult(res);
+      const response = await this.connection.raw(query);
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      return extractResult(response);
     } catch (error: any) {
       this.logService?.error(error.message, getCurrentLine().method);
       throw {
@@ -183,12 +209,12 @@ export class DatabaseService {
       bindings = [];
     }
     this.logService?.info(
-      sqlFormatter.format(listTablesQuery, formatterParams),
+      sqlFormatter.format(listTablesQuery, formatterParameters),
       getCurrentLine().method
     );
     try {
       this.logService?.success(
-        sqlFormatter.format(listTablesQuery, formatterParams),
+        sqlFormatter.format(listTablesQuery, formatterParameters),
         getCurrentLine().method
       );
       const res = await this.connection?.raw(listTablesQuery, bindings);
@@ -215,44 +241,16 @@ export class DatabaseService {
   public async tableInfo(
     tableName: string
   ): Promise<TableInfoRow[] | IPCError> {
-    const tableInfoQuery = primaryKeyQueries[this.activeClient];
-    let bindings: string[] = [tableName];
-    if (this.activeClient === ServerTypeEnum.MYSQL) {
-      bindings = [this.connection?.client.database(), tableName];
-    }
-    if (this.activeClient === ServerTypeEnum.POSTGRES) {
-      bindings = [
-        this.connection?.client.database(),
-        tableName,
-        tableName,
-        tableName,
-      ];
-    }
-    const findResult = (result: any) => result[0] as TableInfoRow[];
-    const findResultPG = (result: any) => result.rows as TableInfoRow[];
-
-    this.logService?.info(
-      sqlFormatter.format(tableInfoQuery, formatterParams),
-      getCurrentLine().method
-    );
-
+    this.getConnection();
+    
     try {
-      this.logService?.info(
-        sqlFormatter.format(tableInfoQuery, formatterParams),
-        getCurrentLine().method
-      );
-      const res = await this.connection?.raw(tableInfoQuery, bindings);
-      if (this.activeClient === ServerTypeEnum.SQLITE) {
-        return res.map((row: TableInfoRow) => ({
-          ...row,
-          key: String(row.key) === '1' ? 'PRI' : undefined,
-          nullable: Boolean(row.nullable),
-        }));
+      console.log(this.inspector);
+      const response = await this.inspector?.columnInfo(tableName) as TableInfoRow[];
+      if (!response) {
+        console.error(response);
+        throw new Error('Cannot inspect table');
       }
-      if (this.activeClient === ServerTypeEnum.POSTGRES) {
-        return findResultPG(res);
-      }
-      return findResult(res);
+      return response;
     } catch (error: any) {
       this.logService?.error(error.message, getCurrentLine().method);
       throw {
@@ -263,9 +261,9 @@ export class DatabaseService {
   }
 
   public async tableInfoWithProps(
-    props: string
+    properties: string
   ): Promise<TableInfoRow[] | IPCError> {
-    return this.tableInfo(props);
+    return this.tableInfo(properties);
   }
 
   public async readData(
@@ -276,29 +274,33 @@ export class DatabaseService {
     searchColumns?: string[],
     searchText?: string,
     where?: QueryWhere[],
-    join?: QueryJoin[]
+    join?: QueryJoin[],
+    order?: QueryOrder
   ): Promise<ReadDataResult<any> | IPCError> {
     try {
       const selectColumns = [...columns].map((col) =>
-        !col.includes('.') ? `${table}.${col}` : `${col}`
+        col.includes('.') ? `${col}` : `${table}.${col}`
       );
 
-      const q = this.connection?.select(...selectColumns).from(table);
+      const q = this.getConnection()
+        .select(...selectColumns)
+        .from(table);
+
       if (join) {
-        join.forEach((j) => {
+        for (const index of join) {
           q?.leftJoin(
-            j.table,
-            `${table}.${j.on.local}`,
-            j.on.opr,
-            `${j.table}.${j.on.target}`
+            index.table,
+            `${table}.${index.on.local}`,
+            index.on.opr,
+            `${index.table}.${index.on.target}`
           );
-        });
+        }
       }
 
       if (searchColumns && searchText) {
         q?.whereWrapped((wq) => {
           searchColumns.forEach((sCol: string) => {
-            const columnName = !sCol.includes('.') ? `${table}.${sCol}` : sCol;
+            const columnName = sCol.includes('.') ? sCol : `${table}.${sCol}`;
             wq.orWhere(columnName, 'like', `%${searchText}%`);
           });
           return wq;
@@ -306,29 +308,40 @@ export class DatabaseService {
       }
       if (where) {
         q?.where((wq) => {
-          where.forEach((col) => {
-            const columnName = !col.column.includes('.')
-              ? `${table}.${col.column}`
-              : col.column;
+          for (const col of where) {
+            const columnName = col.column.includes('.')
+              ? col.column
+              : `${table}.${col.column}`;
 
-            const whereFunc = col.or ? 'orWhere' : 'andWhere';
-            wq[whereFunc](col.column, col.opr, col.value);
-          });
+            const whereFunction = col.or ? 'orWhere' : 'andWhere';
+            wq[whereFunction](col.column, col.opr, col.value);
+          }
           return wq;
         });
       }
-      const countRes = await q?.clone().clearSelect().count({ count: '*' });
 
-      const res = await q?.limit(limit).offset(offset);
+      q.modify((qb) => {
+        if (order && order.column) {
+          qb.orderBy(order.column, order.order);
+        }
+        return qb;
+      });
+
+      const countResponse = await q
+        ?.clone()
+        .clearSelect()
+        .count({ count: '*' });
+
+      const response = await q?.limit(limit).offset(offset);
 
       this.logService?.success(
-        sqlFormatter.format(q?.toQuery() || '', formatterParams),
+        sqlFormatter.format(q?.toQuery() || '', formatterParameters),
         getCurrentLine().method
       );
 
       return {
-        data: res || [],
-        count: countRes ? Number(countRes[0].count) : 0,
+        data: response || [],
+        count: countResponse ? Number(countResponse[0].count) : 0,
       };
     } catch (error: any) {
       this.logService?.error(error.message, getCurrentLine().method);
@@ -340,7 +353,7 @@ export class DatabaseService {
   }
 
   public async readDataWithProps(
-    props: ReadDataArgs
+    properties: ReadDataArguments
   ): Promise<ReadDataResult<any> | IPCError> {
     const {
       table,
@@ -351,7 +364,8 @@ export class DatabaseService {
       searchText,
       where,
       join,
-    } = props;
+      order,
+    } = properties;
     return this.readData(
       table,
       columns,
@@ -360,7 +374,8 @@ export class DatabaseService {
       searchColumns,
       searchText,
       where,
-      join
+      join,
+      order
     );
   }
 
@@ -370,13 +385,14 @@ export class DatabaseService {
     where?: QueryWhere[]
   ): Promise<boolean | IPCError> {
     try {
-      const q = this.connection?.table(table);
+      const q = this.getConnection().table(table);
 
       q?.where((qw) => {
-        where?.forEach((col) => {
-          const whereFunc = col.or ? 'orWhere' : 'andWhere';
-          qw[whereFunc](col.column, col.opr, col.value);
-        });
+        if (where)
+          for (const col of where) {
+            const whereFunction = col.or ? 'orWhere' : 'andWhere';
+            qw[whereFunction](col.column, col.opr, col.value);
+          }
         return qw;
       });
 
@@ -384,7 +400,7 @@ export class DatabaseService {
       await q;
 
       this.logService?.success(
-        sqlFormatter.format(q?.toQuery() || '', formatterParams),
+        sqlFormatter.format(q?.toQuery() || '', formatterParameters),
         getCurrentLine().method
       );
       return true;
@@ -398,9 +414,9 @@ export class DatabaseService {
   }
 
   public async updateDataWithProps(
-    props: UpdateDataArgs
+    properties: UpdateDataArguments
   ): Promise<boolean | IPCError> {
-    const { table, update, where } = props;
+    const { table, update, where } = properties;
     return this.updateData(table, update, where);
   }
 
@@ -409,13 +425,13 @@ export class DatabaseService {
     data: Record<string, any> | Record<string, any>[]
   ): Promise<boolean | IPCError> {
     try {
-      const q = this.connection?.table(table);
+      const q = this.getConnection().table(table);
 
       q?.insert(data);
       await q;
 
       this.logService?.info(
-        sqlFormatter.format(q?.toQuery() || '', formatterParams),
+        sqlFormatter.format(q?.toQuery() || '', formatterParameters),
         getCurrentLine().method
       );
       return true;
@@ -429,9 +445,9 @@ export class DatabaseService {
   }
 
   public async insertDataWithProps(
-    props: InsertDataArgs
+    properties: InsertDataArguments
   ): Promise<boolean | IPCError> {
-    const { table, data } = props;
+    const { table, data } = properties;
     return this.insertData(table, data);
   }
 
@@ -440,19 +456,20 @@ export class DatabaseService {
     where?: QueryWhere[]
   ): Promise<boolean | IPCError> {
     try {
-      const q = this.connection?.table(table);
+      const q = this.getConnection().table(table);
 
       q?.where((qw) => {
-        where?.forEach((col) => {
-          const whereFunc = col.or ? 'orWhere' : 'andWhere';
-          qw[whereFunc](col.column, col.opr, col.value);
-        });
+        if (where)
+          for (const col of where) {
+            const whereFunction = col.or ? 'orWhere' : 'andWhere';
+            qw[whereFunction](col.column, col.opr, col.value);
+          }
         return qw;
       });
 
       await q?.delete();
       this.logService?.success(
-        sqlFormatter.format(q?.toQuery() || '', formatterParams),
+        sqlFormatter.format(q?.toQuery() || '', formatterParameters),
         getCurrentLine().method
       );
       return true;
@@ -466,47 +483,48 @@ export class DatabaseService {
   }
 
   public async deleteDataWithProps(
-    props: DeleteDataArgs
+    properties: DeleteDataArguments
   ): Promise<boolean | IPCError> {
-    const { table, where } = props;
+    const { table, where } = properties;
     return this.deleteData(table, where);
   }
 
   public async readWidgetData(
     table: string,
     column: string,
-    func: QueryAggregate,
+    function_: QueryAggregate,
     where?: QueryWhere[]
   ): Promise<ReadWidgetDataResult<number> | IPCError> {
     try {
-      const q = this.connection?.table(table);
+      const q = this.getConnection().table(table);
       if (q) {
         if (
-          func === QueryAggregateEnum.COUNT ||
-          func === QueryAggregateEnum.COUNT_DISTINCT
+          function_ === QueryAggregateEnum.COUNT ||
+          function_ === QueryAggregateEnum.COUNT_DISTINCT
         ) {
-          q[func]({
+          q[function_]({
             a: column,
           });
         } else {
-          q[func]({
+          q[function_]({
             a: column,
           });
         }
       }
 
       q?.where((qw) => {
-        where?.forEach((col) => {
-          const whereFunc = col.or ? 'orWhere' : 'andWhere';
-          qw[whereFunc](col.column, col.opr, col.value);
-        });
+        if (where)
+          for (const col of where) {
+            const whereFunction = col.or ? 'orWhere' : 'andWhere';
+            qw[whereFunction](col.column, col.opr, col.value);
+          }
         return qw;
       });
 
       const res = await q;
 
       this.logService?.success(
-        sqlFormatter.format(q?.toQuery() || '', formatterParams),
+        sqlFormatter.format(q?.toQuery() || '', formatterParameters),
         getCurrentLine().method
       );
 
@@ -523,9 +541,9 @@ export class DatabaseService {
   }
 
   public async readWidgetDataWithProps(
-    props: ReadWidgetDataArgs
+    properties: ReadWidgetDataArguments
   ): Promise<ReadWidgetDataResult<number> | IPCError> {
-    const { table, column, func, where } = props;
+    const { table, column, func, where } = properties;
     return this.readWidgetData(table, column, func, where);
   }
 }
