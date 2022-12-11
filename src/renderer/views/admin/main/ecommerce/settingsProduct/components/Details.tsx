@@ -1,9 +1,17 @@
-// Chakra imports
-import { Flex, FormControl, FormLabel, Select, SimpleGrid, Text, useColorModeValue } from '@chakra-ui/react';
+import {
+  Flex,
+  FormControl,
+  FormLabel,
+  Select,
+  SimpleGrid,
+  Text,
+  useColorModeValue,
+} from '@chakra-ui/react';
 import Card from 'renderer/components/card/Card';
 import InputField from 'renderer/components/fields/input-field';
-import TagsField from 'renderer/components/fields/TagsField';
+import TagsField from 'renderer/components/fields/tags-field';
 
+// Chakra imports
 export default function Settings() {
 	// Chakra Color Mode
 	const textColorPrimary = useColorModeValue('secondaryGray.900', 'white');

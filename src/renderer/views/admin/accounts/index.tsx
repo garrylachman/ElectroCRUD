@@ -1,5 +1,5 @@
 import { Box, SimpleGrid } from '@chakra-ui/react';
-import { AccountsTable } from './components/AccountsTable';
+import { AccountsTable } from './components/accounts-table';
 
 export default function Accounts() {
   return (

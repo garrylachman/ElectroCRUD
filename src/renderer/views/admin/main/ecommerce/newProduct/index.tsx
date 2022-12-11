@@ -1,3 +1,29 @@
+import {
+  Box,
+  Button,
+  Flex,
+  FormLabel,
+  Icon,
+  Select,
+  SimpleGrid,
+  Stack,
+  Tab,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
+  Text,
+  useColorModeValue,
+} from '@chakra-ui/react';
+import React, { useState } from 'react';
+import { MdOutlineCloudUpload } from 'react-icons/md';
+import Card from 'renderer/components/card/Card';
+import InputField from 'renderer/components/fields/input-field';
+import TagsField from 'renderer/components/fields/tags-field';
+import TextField from 'renderer/components/fields/TextField';
+import Dropzone, 
+from 'renderer/views/admin/main/ecommerce/newProduct/components/Dropzone';
+
 /*!
   _   _  ___  ____  ___ ________  _   _   _   _ ___   ____  ____   ___
  | | | |/ _ \|  _ \|_ _|__  / _ \| \ | | | | | |_ _| |  _ \|  _ \ / _ \
@@ -21,35 +47,8 @@
 */
 
 // Chakra imports
-import {
-	Box,
-	Button,
-	Flex,
-	FormLabel,
-	Select,
-	SimpleGrid,
-	Icon,
-	Stack,
-	Tab,
-	TabList,
-	TabPanel,
-	TabPanels,
-	Tabs,
-	Text,
-	useColorModeValue
-} from '@chakra-ui/react';
-
 // Custom components
-import Card from 'renderer/components/card/Card';
-import InputField from 'renderer/components/fields/input-field';
-import TextField from 'renderer/components/fields/TextField';
-import TagsField from 'renderer/components/fields/TagsField';
-import Dropzone from 'renderer/views/admin/main/ecommerce/newProduct/components/Dropzone';
-import React, { useState } from 'react';
-
 // Assets
-import { MdOutlineCloudUpload } from 'react-icons/md';
-
 export default function NewProduct() {
 	const textColor = useColorModeValue('secondaryGray.900', 'white');
 	const [ activeBullets, setActiveBullets ] = useState({

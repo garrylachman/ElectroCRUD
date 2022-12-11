@@ -1,25 +1,31 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
-  FormLabel,
-  useColorModeValue,
-  FormControl,
-  Flex,
   Badge,
-  Icon,
-  useBoolean,
   Box,
+  Flex,
+  FormControl,
+  FormLabel,
+  Icon,
   SlideFade,
+  useBoolean,
+  useColorModeValue,
 } from '@chakra-ui/react';
 import {
   AsyncCreatableSelect,
-  OptionsOrGroups,
+  AsyncSelect,
   GroupBase,
+  OptionsOrGroups,
   StylesConfig,
-  SelectComponent,
 } from 'chakra-react-select';
 import _ from 'lodash';
-import { useMemo } from 'react';
-import { Controller, FieldError, useFormContext } from 'react-hook-form';
+import { useCallback, useMemo } from 'react';
+import {
+  Controller,
+  FieldError,
+  useForm,
+  useFormContext,
+  UseFormReturn,
+} from 'react-hook-form';
 import { FaAsterisk } from 'react-icons/fa';
 import { SubCard } from 'renderer/containers/cards';
 
@@ -27,14 +33,12 @@ type InputError = FieldError | undefined;
 
 type InputErrors = Record<string, InputError>;
 
-type Option = {
+export type Option<T = any> = {
   readonly label: string;
-  readonly value: string;
+  readonly value: T;
 };
 
-type OptionGroup = OptionsOrGroups<Option, GroupBase<Option>>;
-
-export type AutocompleteFieldProps<T extends Option> = {
+export type AutocompleteFieldProperties<T extends Option<T>> = {
   id: string;
   label?: string;
   extra?: JSX.Element;
@@ -46,13 +50,14 @@ export type AutocompleteFieldProps<T extends Option> = {
   loadOptions: (inputValue?: string) => Promise<T>;
   handleCreate?: (inputValue: string) => any;
   defaultValue: T[];
-  onChange: (values: string[]) => void;
+  onChange: (values: string[] | string) => void;
   defaultOptions: T[];
   isMulti?: boolean;
   components?: any;
+  noFormContext?: boolean;
 };
 
-export const AutocompleteField = <T extends Option>({
+export const AutocompleteField = <T extends Option<unknown>['value']>({
   id,
   label,
   extra,
@@ -68,12 +73,24 @@ export const AutocompleteField = <T extends Option>({
   defaultOptions = [],
   isMulti = true,
   components,
-}: AutocompleteFieldProps<T>) => {
+  noFormContext = false,
+}: AutocompleteFieldProperties<T>) => {
+  const getFomContext = useMemo<any>(
+    () => (noFormContext ? useForm : useFormContext),
+    [noFormContext]
+  );
+
   const {
+    control,
     register,
     formState: { errors, dirtyFields },
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-  } = useFormContext();
+  } = getFomContext({
+    defaultValues: {
+      [`${id}`]: defaultValue,
+    },
+  });
+
+  const SelectComponent = handleCreate ? AsyncCreatableSelect : AsyncSelect;
 
   const [
     isMouseOnRequired,
@@ -155,8 +172,9 @@ export const AutocompleteField = <T extends Option>({
         </FormLabel>
         <Controller
           {...register(id)}
+          control={control}
           render={({ field }) => (
-            <AsyncCreatableSelect
+            <SelectComponent
               {...field}
               size={size}
               placeholder={placeholder}
@@ -167,10 +185,10 @@ export const AutocompleteField = <T extends Option>({
               onChange={(newValue: Option | Option[]) =>
                 onChange(
                   isMulti
-                    ? (newValue.map(
-                        (value: string[]) => value.value as string
-                      ) as string[])
-                    : (newValue.value as string)
+                    ? (newValue as Option[]).map(
+                        (option: Option) => option.value as string
+                      )
+                    : ((newValue as Option).value as string)
                 )
               }
               isMulti={isMulti}

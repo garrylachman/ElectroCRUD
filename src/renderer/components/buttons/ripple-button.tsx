@@ -13,7 +13,7 @@ export const RippleButton: FC<RippleButtonProperties> = ({
   children,
   size,
   key,
-  bgColor = { step1: 'brand.200', step2: 'brand.600', step3: 'brand.100' },
+  bgColor = { step1: 'brand.150', step2: 'brand.600', step3: 'brand.100' },
   ...properties
 }) => (
   <Button

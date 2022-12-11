@@ -1,5 +1,6 @@
 import { TableInfoRow } from 'shared';
-import { BaseRO } from './base.def';
+
+import { BaseRO, RemoveField } from './base.def';
 import { Categories } from './categories.def';
 import { TagRO } from './tags.def';
 
@@ -58,8 +59,8 @@ export type ViewRO = BaseRO & {
   metadata: MetadataTableDocsRO;
 };
 
-export type ViewVO = ViewRO & {
-  columns: ColumnRO &
+type ViewVOModfications = {
+  columns: ColumnRO[] &
     {
       metadata: MetadataColumnDocsRO & {
         tags: TagRO[];
@@ -69,3 +70,5 @@ export type ViewVO = ViewRO & {
     tags: TagRO[];
   };
 };
+
+export type ViewVO = Omit<ViewRO, 'columns'> & ViewVOModfications;

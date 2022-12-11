@@ -35,9 +35,9 @@ import {
   ViewScopedContextProvider,
 } from 'renderer/contexts';
 import { AnimatePresence, motion } from 'framer-motion';
-import { BasicDetailsCard } from './components/BasicDetailsCard';
-import { ViewsInfoAlert } from './components/ViewsInfoAlert';
-import { TableColumnsCard } from './components/TableColumnsCard';
+import { BasicDetailsCard } from './components/basic-details-card';
+import { ViewsInfoAlert } from './components/views-info-alert';
+import { TableColumnsCard } from './components/table-columns-card';
 import { TerminologyCard } from './components/terminology-card';
 import { PermissionsCard } from './components/permissions-card';
 import { TabsHeader } from './tabs-header';

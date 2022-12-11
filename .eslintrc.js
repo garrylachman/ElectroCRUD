@@ -16,7 +16,7 @@ module.exports = {
     '@typescript-eslint/ban-ts-comment': 'off',
     'react-hooks/exhaustive-deps': 'off',
     '@typescript-eslint/no-unsafe-assignment': 'off',
-    "max-len": ["error", {"code": 80, "ignoreUrls": true}],
+    "max-len": ["error", {"code": 125, "ignoreUrls": true}],
     "no-underscore-dangle": "off",
     "@typescript-eslint/no-unsafe-member-access": "off",
     "@typescript-eslint/no-misused-promises": [

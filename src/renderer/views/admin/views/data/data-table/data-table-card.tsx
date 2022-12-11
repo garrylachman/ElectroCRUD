@@ -1,25 +1,27 @@
 import {
+  Badge,
+  Box,
   Button,
   Card,
   CardBody,
   CardFooter,
+  CardHeader,
   Checkbox,
-  ColorModeScript,
-  Icon,
-  useDimensions,
   ColorMode,
+  ColorModeScript,
   ColorProps,
   Colors,
-  useColorModeValue,
-  Box,
-  CardHeader,
-  Text,
-  VStack,
   HStack,
-  InputGroup,
+  Icon,
   Input,
+  InputGroup,
   InputRightElement,
+  Text,
+  useColorModeValue,
+  useDimensions,
+  VStack,
 } from '@chakra-ui/react';
+import _ from 'lodash';
 import {
   FC,
   useCallback,
@@ -28,24 +30,32 @@ import {
   useMemo,
   useState,
 } from 'react';
-import { CardHeaderBetter } from 'renderer/components/card/CardHeader';
-import { AnimateComponent } from 'renderer/components/motions';
-import { SectionHeader } from 'renderer/components/sections/section-header';
-import { ViewScopedContext } from 'renderer/contexts';
 import DataTable, {
   createTheme,
   defaultThemes,
 } from 'react-data-table-component';
-import { ColumnRO } from 'renderer/defenitions/record-object';
 import { FaSortDown } from 'react-icons/fa';
-import { MdOutlineDirectionsBoatFilled, MdSearch } from 'react-icons/md';
+import {
+  MdFilterAlt,
+  MdOutlineDirectionsBoatFilled,
+  MdSearch,
+} from 'react-icons/md';
+import {
+  ActionsDropdownMenu,
+} from 'renderer/components/buttons/actions-dropdown-menu';
+import { CardHeaderBetter } from 'renderer/components/card/CardHeader';
+import { AnimateComponent } from 'renderer/components/motions';
+import { SectionHeader } from 'renderer/components/sections/section-header';
+import { FilterBuilder } from 'renderer/containers/filter-builder';
+import { ViewScopedContext } from 'renderer/contexts';
+import { ColumnRO } from 'renderer/defenitions/record-object';
 import { globalStyles } from 'renderer/theme/styles';
+import { useDebounce } from 'usehooks-ts';
+
 import {
   DashboardContextControlType,
   DashboardContextDataMetaType,
 } from '../dashboard-context';
-import _ from 'lodash';
-import { useDebounce } from 'usehooks-ts';
 
 createTheme(
   'electrocrud',
@@ -129,7 +139,7 @@ export const DataTableCard: FC<DataTableCardProperties> = ({
 
   useEffect(() => {
     setSearch(debouncedSearchValue);
-  }, [debouncedSearchValue])
+  }, [debouncedSearchValue]);
 
   const data = useMemo(() => dataItems, [dataItems]);
 
@@ -152,26 +162,79 @@ export const DataTableCard: FC<DataTableCardProperties> = ({
     );
   }, [data, selectedRows, toggleCleared]);
 
+  const actions = useMemo(
+    () => [
+      {
+        props: {
+          onClick: () => {},
+          fontSize: 'md',
+          icon: <Icon as={MdFilterAlt} w={6} h={6} display="flex" />,
+        },
+        text: 'New Filter',
+      },
+    ],
+    []
+  );
+
   return (
     <>
       <Card variant="solid">
         <CardHeader>
-          <HStack justifyContent="space-between">
-            <Box>
-            {viewState?.name}
-            <Text display="flex" as="kbd" fontSize="sm" fontWeight="normal" color="gray.500">
-              Displaying results from "{viewState.table}" table
-            </Text>
-          </Box>
-          <Box>
-            <InputGroup>
-              <Input type='search' placeholder='Search...' variant="flushed" size="md" width="300px" onChange={(e) => setSearchValue(e.target.value)} />
-              <InputRightElement children={<Icon as={MdSearch} />} />
-            </InputGroup>
-          </Box>
-          </HStack>
+          <VStack>
+            <HStack justifyContent="space-between" width="100%">
+              <Box>
+                {viewState?.name}
+                <Text
+                  display="flex"
+                  as="kbd"
+                  fontSize="sm"
+                  fontWeight="normal"
+                  color="gray.500"
+                >
+                  Displaying results from "{viewState.table}" table
+                </Text>
+              </Box>
+              <HStack gap={5}>
+                <InputGroup w="auto">
+                  <Input
+                    type="search"
+                    placeholder="Search..."
+                    variant="flushed"
+                    size="md"
+                    width="300px"
+                    onChange={(e) => setSearchValue(e.target.value)}
+                  />
+                  <InputRightElement children={<Icon as={MdSearch} />} />
+                </InputGroup>
+                <ActionsDropdownMenu menuName="Filters" items={actions} />
+              </HStack>
+            </HStack>
+          </VStack>
         </CardHeader>
-        <CardBody  px={0}>
+
+        <CardBody px={0}>
+          <Box px={5} pb={5}>
+            <FilterBuilder
+              groups={[
+                {
+                  conds: [
+                    { column: undefined, opr: undefined, value: undefined },
+                  ],
+                  and: true,
+                  groups: [
+                    {
+                      conds: [
+                        { column: undefined, opr: undefined, value: "s" },
+                        { column: undefined, opr: undefined, value: undefined },
+                      ],
+                      and: false,
+                      groups: [],
+                    },
+                  ],
+                },
+              ]}
+            />
+          </Box>
           <DataTable
             columns={columns}
             data={data}
@@ -200,7 +263,10 @@ export const DataTableCard: FC<DataTableCardProperties> = ({
             persistTableHead
             sortServer
             onSort={(selectedColumn, sortDirection, sortedRows) =>
-              setOrder({ column: selectedColumn.sortField, order: sortDirection })
+              setOrder({
+                column: selectedColumn.sortField,
+                order: sortDirection,
+              })
             }
             customStyles={{
               headCells: {

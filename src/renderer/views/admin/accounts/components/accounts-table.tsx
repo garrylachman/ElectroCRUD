@@ -7,8 +7,9 @@ import {
   Icon,
   useBoolean,
   HStack,
+  Card,
+  CardHeader,
 } from '@chakra-ui/react';
-import Card from 'renderer/components/card/Card';
 import { FC, useMemo, useState } from 'react';
 import { NestedPartial } from 'shared';
 import { ElectroCRUDTable } from 'renderer/components/tables/Table';
@@ -92,35 +93,41 @@ export const AccountsTable: FC<any> = () => {
 
   return (
     <>
-      <Card
-        py={6}
-        px={0}
-        flexDirection="column"
-        w="100%"
-        overflowX={{ sm: 'hidden' }}
-      >
-        <TableCardHeader
-          title="Account List"
-          actionItems={[
-            {
-              props: {
-                onClick: deleteModalOpen,
-                isDisabled: selected.length === 0,
-                fontSize: 'md',
-                icon: <Icon as={AiFillDelete} w={5} h={5} display="flex" />,
-              },
-              text: 'Delete ',
-            },
-            {
-              props: {
-                onClick: openAdd,
-                fontSize: 'md',
-                icon: <Icon as={MdPersonAdd} w={5} h={5} display="flex" />,
-              },
-              text: 'Add ',
-            },
-          ]}
-        />
+      <Card>
+        <CardHeader>
+          <HStack justifyContent="space-between">
+            <Box>
+              Account List
+              <Text display="flex" as="kbd" fontSize="sm" fontWeight="normal" color="gray.500">
+               table
+              </Text>
+            </Box>
+            <Box>
+            <TableCardHeader
+              title="Account List"
+              actionItems={[
+                {
+                  props: {
+                    onClick: deleteModalOpen,
+                    isDisabled: selected.length === 0,
+                    fontSize: 'md',
+                    icon: <Icon as={AiFillDelete} w={5} h={5} display="flex" />,
+                  },
+                  text: 'Delete ',
+                },
+                {
+                  props: {
+                    onClick: openAdd,
+                    fontSize: 'md',
+                    icon: <Icon as={MdPersonAdd} w={5} h={5} display="flex" />,
+                  },
+                  text: 'Add ',
+                },
+              ]}
+            />
+            </Box>
+          </HStack>
+        </CardHeader>
         <Box py={3}>
           <ElectroCRUDTable<AccountRO>
             onSelectedItems={setSelected}

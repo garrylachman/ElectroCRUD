@@ -18,3 +18,15 @@ export enum QueryAggregateEnum {
   COUNT_DISTINCT = 'countDistinct',
   COUNT = 'count',
 }
+
+export enum QueryWhereOprEnum {
+  EQ = '=',
+  NOT_EQ = '!=',
+  GT = '>',
+  GTE = '>=',
+  LT = '<',
+  LTE = '<=',
+  IN = 'in',
+  NOT_IN = 'not in',
+  LIKE = 'LIKE',
+}

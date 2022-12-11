@@ -11,10 +11,9 @@ import { useSelector } from 'react-redux';
 import { ViewVO } from 'renderer/defenitions/record-object';
 import { useAppSelector } from 'renderer/store/hooks';
 import { ViewSelectors } from 'renderer/store/selectors';
-import { NestedPartial } from 'shared';
 
 export type ViewScopedContextType = {
-  viewState?: ViewVO | NestedPartial<ViewVO>;
+  viewState?: ViewVO;
   setView: (viewId: string) => void;
 };
 
@@ -43,11 +42,11 @@ export const ViewScopedContextProvider: FC<
     ViewSelectors.createFullViewSelector(state)
   );
 
-  const viewState = useMemo<ViewVO | NestedPartial<ViewVO>>(
+  const viewState = useMemo<ViewVO>(
     () =>
       currentViewId
         ? viewsStateSelector(currentViewId)
-        : ({ accountId: sessionState.account?.id } as NestedPartial<ViewVO>),
+        : ({ accountId: sessionState.account?.id } as ViewVO),
     [currentViewId, viewsStateSelector]
   );
 
