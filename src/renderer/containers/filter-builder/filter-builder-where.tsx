@@ -11,7 +11,13 @@ import { FC, PropsWithChildren, useContext, useEffect, useState } from 'react';
 import { AutocompleteField } from 'renderer/components/fields';
 import TagsField from 'renderer/components/fields/tags-field';
 import { ViewScopedContext } from 'renderer/contexts/view-scoped-context';
+import {
+  FilterRuleRO,
+} from 'renderer/defenitions/record-object/filters.define';
+import { useAppDispatch } from 'renderer/store/hooks';
+import { FilterRulesReducer } from 'renderer/store/reducers';
 import { QueryWhereOprEnum } from 'shared';
+import { useDebounce } from 'usehooks-ts';
 
 import {
   ReactSelectColumnOption,
@@ -25,36 +31,44 @@ enum ValuesInputType {
 }
 
 export type FilterBuilderWheresGroupCondProperties = {
+  id: string;
   column?: string;
   opr?: QueryWhereOprEnum;
   value?: CondValue | CondValue[];
 };
 
-export type FilterBuilderWhereProperties =
-  FilterBuilderWheresGroupCondProperties;
+export type FilterBuilderWhereProperties = {
+  initialState: FilterRuleRO;
+};
 
 export const FilterBuilderWhere: FC<
   PropsWithChildren<FilterBuilderWhereProperties>
-> = ({ column, opr, value, children }) => {
+> = ({ initialState, children }) => {
   const { viewState } = useContext(ViewScopedContext);
+  const distpatch = useAppDispatch();
 
-  const [columnState, setColumnState] = useState(column);
-  const [oprState, setOprState] = useState(opr);
-  const [valueState, setValueState] = useState(value);
+  const [state, setState] = useState(initialState);
+  const debouncedState = useDebounce<FilterRuleRO>(state, 1000)
+
   const [valueType, setValueType] = useState(ValuesInputType.VALUE);
 
   useEffect(() => {
+    distpatch(FilterRulesReducer.actions.upsertOne(debouncedState));
+  }, [debouncedState]);
+
+ 
+  useEffect(() => {
     if (
-      oprState &&
-      [QueryWhereOprEnum.IN, QueryWhereOprEnum.NOT_IN].includes(oprState)
+      state.opr &&
+      [QueryWhereOprEnum.IN, QueryWhereOprEnum.NOT_IN].includes(state.opr)
     ) {
-      setValueState([]);
+      setState((previous) => ({ ...previous, value: [] }));
       setValueType(ValuesInputType.TAGS);
     } else {
-      setValueState('');
+      setState((previous) => ({ ...previous, value: '' }));
       setValueType(ValuesInputType.VALUE);
     }
-  }, [oprState]);
+  }, [state.opr]);
 
   const loadColumns = async (inputValue = '') =>
     viewState?.columns
@@ -104,8 +118,12 @@ export const FilterBuilderWhere: FC<
           loadOptions={loadColumns}
           defaultOptions={columnsList}
           size="sm"
-          defaultValue={columnsList?.find((item) => item.value === columnState)}
-          onChange={setColumnState}
+          defaultValue={columnsList?.find(
+            (item) => item.value === state.column
+          )}
+          onChange={(value) =>
+            setState((previous) => ({ ...previous, column: value }))
+          }
           noFormContext
           components={ReactSelectColumnOption}
         />
@@ -117,22 +135,31 @@ export const FilterBuilderWhere: FC<
           loadOptions={loadOprs}
           defaultOptions={oprsList}
           size="sm"
-          defaultValue={oprsList?.find((item) => item.value === oprState)}
-          onChange={setOprState}
+          defaultValue={oprsList?.find((item) => item.value === state.opr)}
+          onChange={(value) =>
+            setState((previous) => ({ ...previous, opr: value }))
+          }
           noFormContext
         />
       </GridItem>
       <GridItem colSpan={3}>
         {valueType === ValuesInputType.TAGS ? (
-          <TagsField onChange={setValueState} tags={valueState as []} />
+          <TagsField
+            onChange={(value) =>
+              setState((previous) => ({ ...previous, value }))
+            }
+            tags={state.value as []}
+          />
         ) : (
           <Input
             size="sm"
             type="text"
             variant="flushed"
             h="36px"
-            value={valueState}
-            onChange={(e) => setValueState(e.target.value)}
+            value={state.value}
+            onChange={(e) =>
+              setState((previous) => ({ ...previous, value: e.target.value }))
+            }
           />
         )}
       </GridItem>

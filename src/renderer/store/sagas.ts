@@ -1,3 +1,4 @@
+import { PayloadAction } from '@reduxjs/toolkit';
 import { put, takeEvery } from 'redux-saga/effects';
 import {
   AccountRO,
@@ -6,11 +7,13 @@ import {
 } from 'renderer/defenitions/record-object';
 import { BaseRequest } from 'renderer/ipc/base-request';
 import { ConnectRequest, ConnectResponse, IPCChannelEnum } from 'shared';
-import { PayloadAction } from '@reduxjs/toolkit';
+
 import {
   CodeExamplesReducer,
   ColumnsReducer,
   ColumnsReferanceReducer,
+  FilterRulesReducer,
+  FiltersReducer,
   SessionReducer,
   TagsReducer,
   ToastReducer,
@@ -95,6 +98,20 @@ function* notifyEntityDeleted(action: PayloadAction<string>) {
   );
 }
 
+function* onFilterCreated(action) {
+  if (action.meta) {
+    console.log("action", action);
+    yield put(
+      FilterRulesReducer.actions.upsertOne({
+        filterId: action.payload.id,
+        column: undefined,
+        opr: undefined,
+        value: undefined,
+      })
+    );
+  }
+}
+
 export function* watchForNotificationsAsync() {
   yield takeEvery(SessionReducer.actions.setActive, notifyIfConnected);
   yield takeEvery(ViewsReducer.actions.addOne, notifyEntityAddedOrEdited);
@@ -110,4 +127,5 @@ export function* watchForNotificationsAsync() {
     notifyEntityAddedOrEdited
   );
   yield takeEvery(CodeExamplesReducer.actions.removeOne, notifyEntityDeleted);
+  yield takeEvery(FiltersReducer.actions.upsertOne, onFilterCreated);
 }

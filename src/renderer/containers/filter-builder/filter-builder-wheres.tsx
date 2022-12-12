@@ -1,16 +1,15 @@
 import { HStack, Icon, IconButton, VStack } from '@chakra-ui/react';
 import _ from 'lodash';
-import { FC, useState } from 'react';
+import { FC, useMemo } from 'react';
 import { HiOutlineTrash } from 'react-icons/hi';
 import { MdOutlineAdd } from 'react-icons/md';
+import { useAppDispatch, useAppSelector } from 'renderer/store/hooks';
+import { FilterRulesReducer } from 'renderer/store/reducers';
 
-import {
-  FilterBuilderWhere,
-  FilterBuilderWheresGroupCondProperties,
-} from './filter-builder-where';
+import { FilterBuilderWhere } from './filter-builder-where';
 
 export type FilterBuilderWheresProperties = {
-  conds: FilterBuilderWheresGroupCondProperties[];
+  filterId: string;
 };
 
 const getNewItem = () => ({
@@ -20,19 +19,22 @@ const getNewItem = () => ({
 });
 
 export const FilterBuilderWheres: FC<FilterBuilderWheresProperties> = ({
-  conds,
+  filterId,
 }) => {
-  const [condsState, setCondsState] =
-    useState<FilterBuilderWheresGroupCondProperties[]>(conds);
+  const distpatch = useAppDispatch();
+  const allFilterRulesState = useAppSelector((state) => state.filterRules);
+  const filterRulesState = useMemo(
+    () =>
+      FilterRulesReducer.getSelectors()
+        .selectAll(allFilterRulesState)
+        .filter((item) => item.filterId === filterId),
+    [allFilterRulesState, filterId]
+  );
 
   return (
     <VStack flexDirection="column">
-      {condsState.map((item, index, array) => (
-        <FilterBuilderWhere
-          // eslint-disable-next-line react/no-array-index-key
-          key={`filter-cond-${index}`}
-          {...item}
-        >
+      {filterRulesState.map((item, index, array) => (
+        <FilterBuilderWhere key={`filter-rule-${item?.id}`} initialState={item}>
           <HStack display="flex" justifyContent="flex-end">
             {_.isEqual(index + 1, _.size(array)) && (
               <IconButton
@@ -42,7 +44,12 @@ export const FilterBuilderWheres: FC<FilterBuilderWheresProperties> = ({
                 icon={<Icon as={MdOutlineAdd} />}
                 aria-label=""
                 onClick={() =>
-                  setCondsState((previous) => [...previous, getNewItem()])
+                  distpatch(
+                    FilterRulesReducer.actions.upsertOne({
+                      filterId,
+                      ...getNewItem(),
+                    })
+                  )
                 }
               />
             )}
@@ -51,6 +58,11 @@ export const FilterBuilderWheres: FC<FilterBuilderWheresProperties> = ({
               colorScheme="red"
               size="sm"
               aria-label=""
+              onClick={() => {
+                if (item.id) {
+                  distpatch(FilterRulesReducer.actions.removeOne(item.id));
+                }
+              }}
               icon={<Icon as={HiOutlineTrash} />}
             />
           </HStack>

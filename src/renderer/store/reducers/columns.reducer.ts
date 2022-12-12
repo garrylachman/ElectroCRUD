@@ -1,7 +1,8 @@
 import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
+import * as R from 'ramda';
 import { ColumnRO } from 'renderer/defenitions/record-object';
 import { v4 as uuidv4 } from 'uuid';
-import * as R from 'ramda';
+
 import { actions as tagsActions } from './tags.reducer';
 
 const columnsAdapter = createEntityAdapter<ColumnRO>({
@@ -9,8 +10,8 @@ const columnsAdapter = createEntityAdapter<ColumnRO>({
   sortComparer: (a, b) => (b?.creationDate || 0) - (a?.creationDate || 0),
 });
 
-const { upsertOne, upsertMany, removeOne, removeMany, removeAll } =columnsAdapter;
-
+const { upsertOne, upsertMany, removeOne, removeMany, removeAll } =
+  columnsAdapter;
 
 const setId = R.ifElse(
   R.complement(R.has)('id'),

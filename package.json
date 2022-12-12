@@ -158,6 +158,7 @@
     "mapbox-gl": "^2.10.0",
     "marked": "^4.2.3",
     "moment": "^2.29.4",
+    "performant-array-to-tree": "^1.11.0",
     "proxy-memoize": "^1.2.0",
     "rambdax": "^9.0.0",
     "ramda": "^0.28.0",

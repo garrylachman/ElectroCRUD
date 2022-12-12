@@ -51,6 +51,7 @@ import { ViewScopedContext } from 'renderer/contexts';
 import { ColumnRO } from 'renderer/defenitions/record-object';
 import { globalStyles } from 'renderer/theme/styles';
 import { useDebounce } from 'usehooks-ts';
+import { v4 } from 'uuid';
 
 import {
   DashboardContextControlType,
@@ -217,20 +218,17 @@ export const DataTableCard: FC<DataTableCardProperties> = ({
             <FilterBuilder
               groups={[
                 {
+                  id: v4(),
                   conds: [
-                    { column: undefined, opr: undefined, value: undefined },
-                  ],
-                  and: true,
-                  groups: [
                     {
-                      conds: [
-                        { column: undefined, opr: undefined, value: "s" },
-                        { column: undefined, opr: undefined, value: undefined },
-                      ],
-                      and: false,
-                      groups: [],
+                      id: v4(),
+                      column: undefined,
+                      opr: undefined,
+                      value: undefined,
                     },
                   ],
+                  and: true,
+                  groups: [],
                 },
               ]}
             />
