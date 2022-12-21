@@ -142,7 +142,7 @@ export const ColumnMetadataCard: FC<ColumnMetadataCardProperties> = ({
         initial={{ scaleY: 0.2, position: 'relative', opacity: 0 }}
         animate={{ scaleY: 1, opacity: 1, width: '100%' }}
         exit={{ scaleY: 0.2, opacity: 0 }}
-        transition={{ duration: 1 }}
+        transition={{ duration: 0.5 }}
       >
         <Card pb={5} overflow="unset">
           <CardHeaderBetter isTopBorder={isOpen}>
