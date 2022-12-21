@@ -9,11 +9,12 @@ import {
   CodeExamplesReducer,
   ColumnsReducer,
   ColumnsReferanceReducer,
-  FilterRulesReducer,
-  FiltersReducer,
   SessionReducer,
   TagsReducer,
+  TemporaryFilterRulesReducer,
+  TemporaryFiltersReducer,
   ToastReducer,
+  ViewFiltersReducer,
   ViewsReducer,
 } from './reducers';
 import { watchForNotificationsAsync, watchSetAccountAsync } from './sagas';
@@ -27,8 +28,8 @@ const persistConfig = {
   blacklist: [
     SessionReducer.name,
     ToastReducer.name,
-    FiltersReducer.name,
-    FilterRulesReducer.name,
+    TemporaryFiltersReducer.name,
+    TemporaryFilterRulesReducer.name,
   ],
 };
 
@@ -41,8 +42,9 @@ const rootReducer = combineReducers({
   [CodeExamplesReducer.name]: CodeExamplesReducer.reducer,
   [ColumnsReducer.name]: ColumnsReducer.reducer,
   [ColumnsReferanceReducer.name]: ColumnsReferanceReducer.reducer,
-  [FiltersReducer.name]: FiltersReducer.reducer,
-  [FilterRulesReducer.name]: FilterRulesReducer.reducer,
+  [TemporaryFiltersReducer.name]: TemporaryFiltersReducer.reducer,
+  [TemporaryFilterRulesReducer.name]: TemporaryFilterRulesReducer.reducer,
+  [ViewFiltersReducer.name]: ViewFiltersReducer.reducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

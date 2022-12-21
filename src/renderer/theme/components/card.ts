@@ -1,5 +1,5 @@
-import { mode } from '@chakra-ui/theme-tools';
 import { createMultiStyleConfigHelpers } from '@chakra-ui/styled-system';
+import { mode } from '@chakra-ui/theme-tools';
 
 const helpers = createMultiStyleConfigHelpers([
   'container',
@@ -36,6 +36,7 @@ export const Card = helpers.defineMultiStyleConfig({
       fontSize: 'xl',
       alignItems: 'center',
       textTransform: 'uppercase',
+      borderTopRadius: 'md',
     },
     footer: {
       color: 'gray.600',

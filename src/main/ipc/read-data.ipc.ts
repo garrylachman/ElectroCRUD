@@ -1,10 +1,10 @@
-import ResponseFactory from '../helpers';
-import { DatabaseService } from '../services/database.service';
 import {
   ReadDataRequest,
-  ResponseType,
   ReadDataResponse,
+  ResponseType,
 } from '../../shared/defenitions';
+import ResponseFactory from '../helpers';
+import { DatabaseService } from '../services/database.service';
 
 export const ReadDataIPC = async (
   db: DatabaseService,
@@ -20,6 +20,7 @@ export const ReadDataIPC = async (
       searchText,
       where,
       join,
+      filter,
     } = request.body;
     const result = await db.readData(
       table,
@@ -29,7 +30,8 @@ export const ReadDataIPC = async (
       searchColumns,
       searchText,
       where,
-      join
+      join,
+      filter
     );
     return ResponseFactory<ReadDataResponse>(request.channel, result);
   } catch (e) {

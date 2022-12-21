@@ -6,6 +6,6 @@ export * as TagsReducer from './tags.reducer';
 export * as CodeExamplesReducer from './code-examples.reducer';
 export * as ColumnsReducer from './columns.reducer';
 export * as ColumnsReferanceReducer from './column-referance.reducer';
-export * as FiltersReducer from './filters.reducer';
-export * as FilterRulesReducer from './filter-rules.reducer';
-
+export * as TemporaryFiltersReducer from './temporary-filters.reducer';
+export * as ViewFiltersReducer from './view-filters.reducer';
+export * as TemporaryFilterRulesReducer from './temporary-filter-rules.reducer';

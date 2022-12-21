@@ -9073,6 +9073,13 @@ klona@^2.0.4:
   resolved "https://registry.yarnpkg.com/klona/-/klona-2.0.5.tgz#d166574d90076395d9963aa7a928fabb8d76afbc"
   integrity sha512-pJiBpiXMbt7dkzXe8Ghj/u4FfXOOa98fPW+bihOJ4SjnoijweJrNThJfd3ifXpXhREjpoF2mZVH1GfS9LV3kHQ==
 
+knex-json-filter@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/knex-json-filter/-/knex-json-filter-0.1.2.tgz#f81fea0a0d04a087d04264dc58894d4a36dc3a01"
+  integrity sha512-Tvz0A70Z+leYsHkUPU7/Bhio77Nn239feoTSaJ6Kc6zb6VyxcNAIurJ3/aYmCreyTcA85LTMypbOJ6thkCnzwQ==
+  dependencies:
+    lodash "^3.10.0"
+
 language-subtag-registry@^0.3.20:
   version "0.3.22"
   resolved "https://registry.yarnpkg.com/language-subtag-registry/-/language-subtag-registry-0.3.22.tgz#2e1500861b2e457eba7e7ae86877cbd08fa1fd1d"
@@ -9250,6 +9257,11 @@ lodash.uniq@^4.5.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/lodash.uniq/-/lodash.uniq-4.5.0.tgz#d0225373aeb652adc1bc82e4945339a842754773"
   integrity sha512-xfBaXQd9ryd9dlSDvnvI0lvxfLJlYAZzXomUYzLKtUeOQvOP5piqAWuGtrhWeqaXK9hhoM/iyJc5AV+XfsX3HQ==
+
+lodash@^3.10.0:
+  version "3.10.1"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-3.10.1.tgz#5bf45e8e49ba4189e17d482789dfd15bd140b7b6"
+  integrity sha512-9mDDwqVIma6OZX79ZlDACZl8sBm0TEnkf99zV3iMA4GzkIT/9hiqP5mY0HoT1iNLCrKc/R1HByV+yJfRWVJryQ==
 
 lodash@^4.17.11, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.20, lodash@^4.17.21, lodash@^4.17.4:
   version "4.17.21"
@@ -10833,6 +10845,11 @@ react-map-gl@^7.0.10:
   integrity sha512-Q1formrWEdt9vY5DyW2vgdmAPuSMH2TFn8xKMlA+cmBlyS8veQvVTGoq4lAm8p3Hb/90ZpNmMtI4s107r931vQ==
   dependencies:
     "@types/mapbox-gl" "^2.6.0"
+
+react-modal-promise@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/react-modal-promise/-/react-modal-promise-1.0.2.tgz#122620b7f19eec73683affadfa77c543d88edc40"
+  integrity sha512-dqT618ROhG8qh1+O6EZkia5ELw3zaZWGpMX2YfEH4bgwYENPuFonqKw1W70LFx3K/SCZvVBcD6UYEI12yzYXzg==
 
 react-redux@^8.0.5:
   version "8.0.5"
@@ -12527,6 +12544,11 @@ typescript@^4.9.3:
   version "4.9.4"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.9.4.tgz#a2a3d2756c079abda241d75f149df9d561091e78"
   integrity sha512-Uz+dTXYzxXXbsFpM86Wh3dKCxrQqUcVMxwU54orwlJjOpO3ao8L7j5lH+dWfTwgCwIuM9GQ2kvVotzYJMXTBZg==
+
+un-flatten-tree@^2.0.12:
+  version "2.0.12"
+  resolved "https://registry.yarnpkg.com/un-flatten-tree/-/un-flatten-tree-2.0.12.tgz#8d92ec454a1b7e1aead948ed029907e1cb9a9ed8"
+  integrity sha512-E7v59ADEqVQs9gTZYxoe3uGs6Jj/a3gJ7lSJaTIBTc5w0+B3PJ/kVjs/Y/A26NBWEW8WAo556PpRatH4XHZR1w==
 
 unbox-primitive@^1.0.2:
   version "1.0.2"

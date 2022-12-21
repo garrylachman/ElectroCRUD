@@ -1,19 +1,18 @@
 import 'reflect-metadata';
-import _, { omit } from 'lodash';
-import { singleton, autoInjectable, delay, inject } from 'tsyringe';
-import * as Knex from 'knex';
+
+import sqlFormatter from '@sqltools/formatter';
+import {
+  Config as SQLFormatterConfig,
+} from '@sqltools/formatter/lib/core/types';
 import { TypedKnex } from '@wwwouter/typed-knex';
 import getCurrentLine from 'get-current-line';
-import sqlFormatter from '@sqltools/formatter';
-import { Config as SQLFormatterConfig } from '@sqltools/formatter/lib/core/types';
+import * as Knex from 'knex';
 import knexHooks from 'knex-hooks';
+import { whereFilter } from 'knex-json-filter';
 import { SchemaInspector } from 'knex-schema-inspector';
-import { NoActiveClientError } from '../exceptions';
-import {
-  heartBeatQueries,
-  primaryKeyQueries,
-  tablesListQueries,
-} from '../data/queries';
+import _, { omit } from 'lodash';
+import { autoInjectable, delay, inject, singleton } from 'tsyringe';
+
 import {
   ConnectArgs as ConnectArguments,
   ConnectionConfig,
@@ -35,6 +34,12 @@ import {
   UpdateDataArgs as UpdateDataArguments,
 } from '../../shared/defenitions';
 import { QueryAggregateEnum, ServerTypeEnum } from '../../shared/enums';
+import {
+  heartBeatQueries,
+  primaryKeyQueries,
+  tablesListQueries,
+} from '../data/queries';
+import { NoActiveClientError } from '../exceptions';
 import { LogService } from './log.service';
 
 const formatterParameters: SQLFormatterConfig = {
@@ -275,7 +280,8 @@ export class DatabaseService {
     searchText?: string,
     where?: QueryWhere[],
     join?: QueryJoin[],
-    order?: QueryOrder
+    order?: QueryOrder,
+    filter?: any,
   ): Promise<ReadDataResult<any> | IPCError> {
     try {
       const selectColumns = [...columns].map((col) =>
@@ -318,6 +324,18 @@ export class DatabaseService {
           }
           return wq;
         });
+      }
+
+      console.log(filter);
+      if (filter) {
+        q?.where((wq) => {
+          return wq.where(whereFilter(filter));
+        });
+        console.log(q?.toQuery());
+        this.logService?.success(
+          sqlFormatter.format(q?.toQuery() || ''),
+          getCurrentLine().method
+        );
       }
 
       q.modify((qb) => {
@@ -365,6 +383,7 @@ export class DatabaseService {
       where,
       join,
       order,
+      filter
     } = properties;
     return this.readData(
       table,
@@ -375,7 +394,8 @@ export class DatabaseService {
       searchText,
       where,
       join,
-      order
+      order,
+      filter
     );
   }
 

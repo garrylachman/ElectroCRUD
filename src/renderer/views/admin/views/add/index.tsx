@@ -1,47 +1,51 @@
 import {
   Box,
-  SimpleGrid,
-  Spinner,
-  Center,
-  HStack,
   Button,
-  Icon,
-  Spacer,
-  Tabs,
-  TabList,
-  TabPanels,
-  TabPanel,
-  Tab,
+  Center,
   Flex,
+  HStack,
+  Icon,
+  SimpleGrid,
+  Spacer,
+  Spinner,
+  Tab,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
   Text,
 } from '@chakra-ui/react';
-import { useAppDispatch, useAppSelector } from 'renderer/store/hooks';
-import { ViewRO } from 'renderer/defenitions/record-object';
-import { useEffect, useState, useCallback, memo, useContext } from 'react';
-import { NestedPartial } from 'shared';
-import _ from 'lodash';
-import { useForm, FormProvider } from 'react-hook-form';
-import * as Joi from 'joi';
 import { joiResolver } from '@hookform/resolvers/joi';
-import { MdSave, MdClear, MdOutlineCollections } from 'react-icons/md';
-import Card from 'renderer/components/card/Card';
-import { ViewsReducer } from 'renderer/store/reducers';
-import { useLoaderData, useNavigate, useParams } from 'react-router-dom';
-import store from 'renderer/store/store';
+import { AnimatePresence, motion } from 'framer-motion';
+import * as Joi from 'joi';
+import _ from 'lodash';
+import { memo, useCallback, useContext, useEffect, useState } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
+import { MdClear, MdOutlineCollections, MdSave } from 'react-icons/md';
 import { useSelector } from 'react-redux';
-import { ViewSelectors } from 'renderer/store/selectors';
+import { useLoaderData, useNavigate, useParams } from 'react-router-dom';
+import Card from 'renderer/components/card/Card';
+import {
+  ConfirmPromiseSaveModal,
+} from 'renderer/components/modals/confirm-promise-save-modal';
 import {
   ViewScopedContext,
   ViewScopedContextProvider,
 } from 'renderer/contexts';
-import { AnimatePresence, motion } from 'framer-motion';
+import { ViewRO } from 'renderer/defenitions/record-object';
+import { useAppDispatch, useAppSelector } from 'renderer/store/hooks';
+import { ViewsReducer } from 'renderer/store/reducers';
+import { ViewSelectors } from 'renderer/store/selectors';
+import store from 'renderer/store/store';
+import { NestedPartial } from 'shared';
+
 import { BasicDetailsCard } from './components/basic-details-card';
-import { ViewsInfoAlert } from './components/views-info-alert';
+import { PermissionsCard } from './components/permissions-card';
 import { TableColumnsCard } from './components/table-columns-card';
 import { TerminologyCard } from './components/terminology-card';
-import { PermissionsCard } from './components/permissions-card';
-import { TabsHeader } from './tabs-header';
+import { ViewsInfoAlert } from './components/views-info-alert';
 import { MetadataIndex } from './metadata';
+import { TabsHeader } from './tabs-header';
 
 type FormData = Omit<ViewRO, 'id' | 'creationDate' | 'modificationDate'>;
 
@@ -70,19 +74,25 @@ const AddOrEditView = () => {
 
   const handleCreateOrUpdate = (data: ViewRO) => {
     console.log('handleCreateOrUpdate', viewState, viewState.id);
-    if (viewState.id) {
-      const response = dispatch(
-        ViewsReducer.actions.updateOne({ ...viewState, ...data })
-      );
-      console.log('response', response);
-    } else {
-      const response = dispatch(
-        ViewsReducer.actions.addOne({ ...viewState, ...data })
-      );
-      if (response && response.payload && response.payload.id) {
-        navigate(`../${response.payload.id}/edit`);
-      }
-    }
+
+    ConfirmPromiseSaveModal({ entityName: data.name || data.table })
+      .then((value) => {
+        if (value && viewState?.id) {
+          const response = dispatch(
+            ViewsReducer.actions.updateOne({ ...viewState, ...data })
+          );
+          console.log('response', response);
+        } else {
+          const response = dispatch(
+            ViewsReducer.actions.addOne({ ...viewState, ...data })
+          );
+          if (response && response.payload && response.payload.id) {
+            navigate(`../${response?.payload?.id}/edit`);
+          }
+        }
+        return true;
+      })
+      .catch(() => {});
   };
 
   const formContext = useForm<FormData>({

@@ -100,6 +100,7 @@ export type ReadDataArgs = {
   where?: QueryWhere[];
   join?: QueryJoin[];
   order?: QueryOrder;
+  filter?: any;
 };
 
 export type UpdateDataArgs = {

@@ -3,7 +3,7 @@ import { NestedPartial } from 'shared';
 
 export type ModalProps<T> = PropsWithChildren & {
   onModalClose?: (result: NestedPartial<T> | null) => void;
-  isModalOpenState: readonly [
+  isModalOpenState?: readonly [
     boolean,
     {
       on: () => void;

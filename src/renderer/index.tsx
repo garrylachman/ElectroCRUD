@@ -1,18 +1,21 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import 'renderer/assets/css/App.css';
 import '@fontsource/poppins';
-import { BrowserRouter, RouterProvider } from 'react-router-dom';
+import 'renderer/assets/css/App.css';
+
 import { ChakraProvider } from '@chakra-ui/react';
-import { PersistGate } from 'redux-persist/integration/react';
-import { Provider } from 'react-redux';
 import TimeAgo from 'javascript-time-ago';
 import en from 'javascript-time-ago/locale/en.json';
-import theme from './theme/theme';
-import { router } from './router';
-import store, { persistor } from './store/store';
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { Container as ModalContainer } from 'react-modal-promise';
+import { Provider } from 'react-redux';
+import { BrowserRouter, RouterProvider } from 'react-router-dom';
+import { PersistGate } from 'redux-persist/integration/react';
+
 import { NotificationsContainer } from './containers/notifications-container';
 import { EntitiesIndexerContextProvider } from './contexts';
+import { router } from './router';
+import store, { persistor } from './store/store';
+import theme from './theme/theme';
 
 TimeAgo.addDefaultLocale(en);
 
@@ -30,6 +33,7 @@ root.render(
       >
         <PersistGate loading={null} persistor={persistor}>
           <ChakraProvider theme={theme}>
+            <ModalContainer isAppendIntances />
             <React.StrictMode>
               <RouterProvider router={router} />
             </React.StrictMode>

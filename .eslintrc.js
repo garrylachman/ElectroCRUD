@@ -27,6 +27,7 @@ module.exports = {
     ],
     "@typescript-eslint/no-unsafe-call": "off",
     "@typescript-eslint/no-unsafe-argument": "off",
+    "@typescript-eslint/unbound-method": "off",
   },
   env: {
     "es2022": true,

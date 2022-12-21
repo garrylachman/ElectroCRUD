@@ -20,7 +20,8 @@ export type DashboardContextControlType = [
   setLimit: (number) => void,
   setPage: (number) => void,
   setOrder: (QueryOrder) => void,
-  setSearch: (string) => void
+  setSearch: (string) => void,
+  setFilter: (any) => void
 ];
 
 export type DashboardContextDataMetaType = {
@@ -44,7 +45,7 @@ export type DashboardContextType = {
 const initial: DashboardContextType = {
   setView: (viewId) => {},
   data: { columns: [], rows: [], meta: { totalCount: 0, limit: 10, page: 1 } },
-  control: [() => {}, (number) => {}, (number) => {}, (value) => {}, (value) => {}],
+  control: [() => {}, (number) => {}, (number) => {}, (value) => {}, (value) => {}, (value) => {}],
   status: [false, false],
 };
 
@@ -82,6 +83,7 @@ export const DashboardContextProvider: FC<
   const [page, setPage] = useState<number>(0);
   const [order, setOrder] = useState<QueryOrder>();
   const [search, setSearch] = useState<string>();
+  const [filter, setFilter] = useState<any>();
 
   const columns = useMemo<string[]>(
     () => viewState.columns.map<string>((item) => _.get(item, 'name', item)),
@@ -102,11 +104,12 @@ export const DashboardContextProvider: FC<
       offset: limit * (page-1),
       order,
       searchText: search,
-      searchColumns
+      searchColumns,
+      filter,
     },
   });
 
-  const control = [execute, setLimit, setPage, setOrder, setSearch];
+  const control = [execute, setLimit, setPage, setOrder, setSearch, setFilter];
   const status = [isLoading, isExecuted];
   const data = useMemo(
     () => ({
@@ -137,6 +140,10 @@ export const DashboardContextProvider: FC<
   useEffect(() => {
     execute();
   }, [search]);
+
+  useEffect(() => {
+    execute();
+  }, [filter]);
 
   return (
     <DashboardContext.Provider value={{ setView, data, control, status }}>

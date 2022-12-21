@@ -1,51 +1,174 @@
-import { Text, VStack } from '@chakra-ui/react';
-import { FC, useEffect, useState } from 'react';
+import {
+  Alert,
+  AlertDescription,
+  AlertIcon,
+  AlertTitle,
+  Box,
+  Button,
+  Card,
+  CardBody,
+  CardFooter,
+  CardHeader,
+  Center,
+  Divider,
+  Flex,
+  HStack,
+  Input,
+  Text,
+  useOutsideClick,
+  VStack,
+} from '@chakra-ui/react';
+import { EntityState } from '@reduxjs/toolkit';
+import { Select } from 'chakra-react-select';
+import memoize from 'proxy-memoize';
+import * as R from 'ramda';
+import React, {
+  FC,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { useSelector } from 'react-redux';
+import { ViewScopedContext } from 'renderer/contexts/view-scoped-context';
+import {
+  ViewFilterRO,
+} from 'renderer/defenitions/record-object/filters.define';
 import { useAppDispatch } from 'renderer/store/hooks';
-import { FiltersReducer } from 'renderer/store/reducers';
+import {
+  TemporaryFiltersReducer,
+  ViewFiltersReducer,
+} from 'renderer/store/reducers';
 import {
   createFiltersSelector,
+  FiltersTree,
 } from 'renderer/store/selectors/filters.selectors';
 import { RootState } from 'renderer/store/store';
-import { useEffectOnce, useUpdateEffect } from 'usehooks-ts';
 
 import { FilterBuilderWheresGroup } from './filter-builder-wheres-group';
 
 type FilterBuilderProperties = {
   id?: string;
+  setFilter: (name: string, value: string, close?: boolean) => void;
 };
 
-export const FilterBuilder: FC<FilterBuilderProperties> = ({ id }) => {
+export const FilterBuilder: FC<FilterBuilderProperties> = ({
+  id,
+  setFilter,
+}) => {
+  const { viewState } = useContext(ViewScopedContext);
   const distpatch = useAppDispatch();
   const [filterId, setFilterId] = useState(id);
+  const [filterName, setFilterName] = useState<string>('');
+  const [showInfoAlert, setShowInfoAlert] = useState<boolean>(true);
+  const reference = useRef();
+  useOutsideClick({
+    ref: reference,
+    handler: () => setShowInfoAlert(false),
+  });
 
-  useEffect(() => {
-    if (filterId === undefined) {
-      const result = distpatch(
-        FiltersReducer.actions.upsertOne({ and: true }, { new: true })
-      );
-      if (result.payload.id) {
-        setFilterId(result.payload.id);
-      }
-    }
-  }, []);
-
-  const createSelector = useSelector((state: RootState) =>
-    createFiltersSelector(state)
+  const filtersState = useSelector<RootState, FiltersTree>(
+    useCallback(
+      memoize((state) => createFiltersSelector(state)(filterId)),
+      [filterId]
+    )
   );
-
-  const filtersState = createSelector(filterId);
 
   useEffect(() => {
     console.log(filtersState);
+    if (filtersState) {
+      // console.log(filtersToKnex(filtersState));
+      setFilter('Unsaved Filter', filtersState);
+    }
   }, [filtersState]);
 
+  const filterSaveHandle = () => {
+    console.log('save', {
+      name: filterName,
+      viewId: viewState?.id,
+      knexFilter: R.toString(filtersState),
+    });
+    const newFilter = distpatch(
+      ViewFiltersReducer.actions.upsertOne({
+        name: filterName,
+        viewId: viewState?.id,
+        knexFilter: R.toString(filtersState),
+      })
+    );
+    if (newFilter && newFilter.payload.knexFilter) {
+      setFilterId();
+      setFilter(filterName, JSON.parse(newFilter.payload.knexFilter), true);
+    }
+  };
+
+  useState(() => {
+    const result = distpatch(
+      TemporaryFiltersReducer.actions.upsertOne(
+        { and: true, viewId: viewState?.id },
+        { new: true }
+      )
+    );
+    if (result.payload.id) {
+      setFilterId(result.payload.id);
+    }
+    setShowInfoAlert(true);
+  }, []);
+
   return (
-    <VStack alignItems="flex-start" w="100%">
-      <Text fontWeight="bold" fontSize="xl">
-        Where Groups
-      </Text>
-      {filterId && <FilterBuilderWheresGroup filterId={filterId} />}
-    </VStack>
+    <>
+      {filterId && (
+        <VStack alignItems="flex-start" w="100%">
+          <Card variant="solidBold" overflow="unset">
+            <CardHeader>
+              <Text fontWeight="bold" fontSize="xl">
+                Filter where's
+              </Text>
+            </CardHeader>
+            <CardBody>
+              <Alert
+                status="info"
+                variant="left-accent"
+                shadow="md"
+                rounded="lg"
+                hidden={!showInfoAlert}
+                mb={3}
+              >
+                <AlertIcon p={0} mr={5} ml={2} />
+                <Box py={0}>
+                  <AlertTitle>Save Filter</AlertTitle>
+                  <AlertDescription>
+                    The filter is been applyed real-time but its must been saved
+                    for future. The save component is in filter card fotter.
+                  </AlertDescription>
+                </Box>
+              </Alert>
+              {filterId && <FilterBuilderWheresGroup filterId={filterId} />}
+            </CardBody>
+            <CardFooter>
+              <HStack alignItems="center" flex={1} maxWidth="50%">
+                <Text>Save Filter as</Text>
+                <Input
+                  type="text"
+                  placeholder="Filter Name"
+                  variant="flushed"
+                  flex={1}
+                  style={{ marginLeft: '1.8rem', marginRight: '1.8rem' }}
+                  onChange={(e) => setFilterName(e.target.value)}
+                />
+                <Button
+                  variant="solid"
+                  colorScheme="brand"
+                  onClick={filterSaveHandle}
+                >
+                  Save Filter
+                </Button>
+              </HStack>
+            </CardFooter>
+          </Card>
+        </VStack>
+      )}
+    </>
   );
 };

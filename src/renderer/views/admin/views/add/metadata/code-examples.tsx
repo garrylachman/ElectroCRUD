@@ -1,12 +1,13 @@
-import { FC, useContext } from 'react';
-import { CodeExampleRO } from 'renderer/defenitions/record-object';
 import { Box, Grid, useBoolean } from '@chakra-ui/react';
-import { ViewScopedContext } from 'renderer/contexts';
-import { CodeExamplesSelectors } from 'renderer/store/selectors';
-import { useSelector } from 'react-redux';
-import { SectionHeader } from 'renderer/components/sections/section-header';
-import { RippleButton } from 'renderer/components/buttons/ripple-button';
 import { AnimatePresence, LayoutGroup, motion } from 'framer-motion';
+import { FC, useContext } from 'react';
+import { useSelector } from 'react-redux';
+import { RippleButton } from 'renderer/components/buttons/ripple-button';
+import { SectionHeader } from 'renderer/components/sections/section-header';
+import { ViewScopedContext } from 'renderer/contexts';
+import { CodeExampleRO } from 'renderer/defenitions/record-object';
+import { CodeExamplesSelectors } from 'renderer/store/selectors';
+
 import { CodeExampleItem } from './components/code-example-item';
 
 type CodeExamplesProperties = {};
@@ -36,7 +37,7 @@ export const CodeExamples: FC<CodeExamplesProperties> = () => {
             subTitle="This is the place to save code examples, queries & snippets."
             RightComponent={() => (
               <>
-                <RippleButton size="md" onClick={on}>
+                <RippleButton size="md" onClick={on} bgColor={{ step1: 'brand.200', step2: 'brand.600', step3: 'brand.200'}}>
                   Add New
                 </RippleButton>
               </>

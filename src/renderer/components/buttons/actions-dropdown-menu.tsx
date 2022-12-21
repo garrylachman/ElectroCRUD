@@ -1,25 +1,23 @@
-import { FC } from 'react';
 import {
+  Box,
+  Button,
+  Icon,
   Menu,
+  MenuButton,
   MenuItem,
   MenuItemProps,
-  MenuButton,
-  Button,
   MenuList,
-  Icon,
-  useColorModeValue,
-  Box,
 } from '@chakra-ui/react';
+import { FC } from 'react';
 import { MdArrowDropDown } from 'react-icons/md';
-import { RippleButton } from './ripple-button';
-import { AnimateComponent } from '../motions/animate-component';
 
-export type ActionsDropdownMenuProps = {
+
+export type ActionsDropdownMenuProperties = {
   menuName?: string;
   items?: { props: MenuItemProps; text: string }[];
 };
 
-export const ActionsDropdownMenu: FC<ActionsDropdownMenuProps> = ({
+export const ActionsDropdownMenu: FC<ActionsDropdownMenuProperties> = ({
   menuName = 'Actions',
   items = [],
 }) => {
@@ -49,7 +47,15 @@ export const ActionsDropdownMenu: FC<ActionsDropdownMenuProps> = ({
               borderWidth={0}
             >
               {items.map((item, index) => (
-                <MenuItem _hover={{bg: 'gray.200'}}  key={`m-${index}`} {...item.props} px={2} py={3}>{item.text}</MenuItem>
+                <MenuItem
+                  _hover={{ bg: 'gray.200' }}
+                  key={`m-${index}`}
+                  {...item.props}
+                  px={2}
+                  py={3}
+                >
+                  {item.text}
+                </MenuItem>
               ))}
             </MenuList>
           </Box>

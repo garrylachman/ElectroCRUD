@@ -1,12 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/unbound-method */
-import { createSlice, createEntityAdapter } from '@reduxjs/toolkit';
-import { ViewRO } from 'renderer/defenitions/record-object';
-import { v4 as uuidv4 } from 'uuid';
+import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 import _ from 'lodash';
 import * as R from 'ramda';
-import { actions as tagsActions } from './tags.reducer';
+import { ViewRO } from 'renderer/defenitions/record-object';
+import { v4 as uuidv4 } from 'uuid';
+
 import { actions as columnsActions } from './columns.reducer';
+import { actions as tagsActions } from './tags.reducer';
 
 const viewsAdapter = createEntityAdapter<ViewRO>({
   selectId: (view) => view?.id || '',
@@ -22,23 +23,27 @@ const setId = R.ifElse(
   R.identity()
 );
 
-const mergeBeforeUpdate = R.compose(
-  setId,
-  R.mergeDeepRight({ creationDate: Date.now() }),
-  R.mergeDeepLeft({ modificationDate: Date.now() }),
-  R.evolve({
-    metadata: {
-      tags: R.map((item) => (R.is(String, item) ? item : item.id)),
-    },
-  }),
-  R.omit(['columns']),
-  R.mergeDeepRight({ columns: [] }),
-  R.mergeDeepRight({ terminology: { singular: undefined, plural: undefined } }),
-  R.mergeDeepRight({ metadata: { tags: [] } }),
-  R.mergeDeepRight({
-    permissions: { create: true, read: true, update: true, delete: true },
-  })
-);
+const mergeBeforeUpdate = (object) =>
+  R.compose(
+    setId,
+    R.mergeDeepRight({ creationDate: Date.now() }),
+    R.mergeDeepLeft({ modificationDate: Date.now() }),
+    R.omit(['modificationDate']),
+    R.evolve({
+      metadata: {
+        tags: R.map((item) => (R.is(String, item) ? item : item.id)),
+      },
+    }),
+    R.omit(['columns']),
+    R.mergeDeepRight({ columns: [] }),
+    R.mergeDeepRight({
+      terminology: { singular: undefined, plural: undefined },
+    }),
+    R.mergeDeepRight({ metadata: { tags: [] } }),
+    R.mergeDeepRight({
+      permissions: { create: true, read: true, update: true, delete: true },
+    })
+  )(object);
 
 const viewsSlice = createSlice({
   name: 'views',

@@ -1,12 +1,16 @@
+import { Box, Button, HStack, Icon, Spacer } from '@chakra-ui/react';
+import { AnimatePresence, motion } from 'framer-motion';
 import { FC, useContext, useEffect } from 'react';
-import { MetadataTableDocsRO } from 'renderer/defenitions/record-object';
-import { useForm, FormProvider } from 'react-hook-form';
-import { HStack, Button, Icon, Spacer, Box } from '@chakra-ui/react';
+import { FormProvider, useForm } from 'react-hook-form';
 import { MdSave } from 'react-icons/md';
+import {
+  ConfirmPromiseSaveModal,
+} from 'renderer/components/modals/confirm-promise-save-modal';
+import { ViewScopedContext } from 'renderer/contexts';
+import { MetadataTableDocsRO } from 'renderer/defenitions/record-object';
 import { useAppDispatch } from 'renderer/store/hooks';
 import { ViewsReducer } from 'renderer/store/reducers';
-import { ViewScopedContext } from 'renderer/contexts';
-import { AnimatePresence, motion } from 'framer-motion';
+
 import { TableDocumentCardCard } from './components/table-document-card';
 import { TableTagsCard } from './components/table-tags-card';
 
@@ -53,12 +57,17 @@ export const TablesMetadata: FC<TablesMetadataProperties> = () => {
   }, [reset, viewState]);
 
   const onSubmit = (data: FormData) =>
-    dispatch(
-      ViewsReducer.actions.updateOne({
-        ...viewState,
-        metadata: { ...data },
+    ConfirmPromiseSaveModal({ entityName: viewState?.name })
+      .then(() => {
+        dispatch(
+          ViewsReducer.actions.updateOne({
+            ...viewState,
+            metadata: { ...data },
+          })
+        );
+        return true;
       })
-    );
+      .catch(() => {});
 
   return (
     <AnimatePresence>

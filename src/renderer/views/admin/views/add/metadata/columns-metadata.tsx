@@ -1,23 +1,26 @@
-import { FC, useContext, useEffect, useMemo } from 'react';
-import {
-  ViewRO,
-  MetadataColumnDocsRO,
-  ColumnRO,
-} from 'renderer/defenitions/record-object';
-import { useForm, FormProvider, useFieldArray } from 'react-hook-form';
-import { HStack, Button, Icon, Box, Grid } from '@chakra-ui/react';
-import { MdSave } from 'react-icons/md';
-import { useAppDispatch, useAppSelector } from 'renderer/store/hooks';
+import { Box, Button, Grid, HStack, Icon } from '@chakra-ui/react';
 import _ from 'lodash';
-import { useSelector } from 'react-redux';
-import { ViewSelectors } from 'renderer/store/selectors';
-import { ColumnsReducer } from 'renderer/store/reducers';
 import * as R from 'ramda';
+import { FC, useContext, useEffect, useMemo } from 'react';
+import { FormProvider, useFieldArray, useForm } from 'react-hook-form';
+import { MdSave } from 'react-icons/md';
+import { useSelector } from 'react-redux';
+import {
+  ConfirmPromiseSaveModal,
+} from 'renderer/components/modals/confirm-promise-save-modal';
 import { ViewScopedContext } from 'renderer/contexts';
+import {
+  ColumnRO,
+  MetadataColumnDocsRO,
+  ViewRO,
+} from 'renderer/defenitions/record-object';
+import { useAppDispatch, useAppSelector } from 'renderer/store/hooks';
+import { ColumnsReducer } from 'renderer/store/reducers';
+import { ViewSelectors } from 'renderer/store/selectors';
+
 import { ColumnMetadataCard } from './components/column-metadata-card';
 
-type ColumnsMetadataProperties = {
-};
+type ColumnsMetadataProperties = {};
 
 type FormData = {
   metadata: MetadataColumnDocsRO[];
@@ -29,7 +32,10 @@ export const ColumnsMetadata: FC<ColumnsMetadataProperties> = () => {
 
   const formContext = useForm<FormData>({
     defaultValues: {
-      metadata: viewState.columns.map((item) => ({ ...item.metadata , columnId: item.id })),
+      metadata: viewState.columns.map((item) => ({
+        ...item.metadata,
+        columnId: item.id,
+      })),
     },
     mode: 'onSubmit',
     shouldUnregister: false,
@@ -37,9 +43,15 @@ export const ColumnsMetadata: FC<ColumnsMetadataProperties> = () => {
 
   useEffect(() => {
     formContext.reset({
-      metadata: viewState.columns.map((item) => ({ ...item.metadata, columnId: item.id })),
+      metadata: viewState.columns.map((item) => ({
+        ...item.metadata,
+        columnId: item.id,
+      })),
     });
-    console.log("ipdated", viewState.columns.map((item) => ({ ...item.metadata, columnId: item.id })));
+    console.log(
+      'ipdated',
+      viewState.columns.map((item) => ({ ...item.metadata, columnId: item.id }))
+    );
   }, [viewState]);
 
   const {
@@ -51,21 +63,29 @@ export const ColumnsMetadata: FC<ColumnsMetadataProperties> = () => {
   const { fields } = useFieldArray({ control, name: 'metadata' });
 
   const onSubmit = (data) => {
-    console.log(data);
-    dispatch(
-      ColumnsReducer.actions.upsertMany(
-        data.metadata.map((item) =>
-          R.mergeDeepRight<ColumnRO>(
-            viewState.columns.find(
-              (value: ColumnRO) => value.id === item.columnId
-            ),
-            {
-              metadata: { title: item.title, description: item.description, category: item.category },
-            }
+    ConfirmPromiseSaveModal({ entityName: viewState?.name })
+      .then(() => {
+        dispatch(
+          ColumnsReducer.actions.upsertMany(
+            data.metadata.map((item) =>
+              R.mergeDeepRight<ColumnRO>(
+                viewState?.columns.find(
+                  (value: ColumnRO) => value.id === item.columnId
+                ),
+                {
+                  metadata: {
+                    title: item.title,
+                    description: item.description,
+                    category: item.category,
+                  },
+                }
+              )
+            )
           )
-        )
-      )
-    );
+        );
+        return true;
+      })
+      .catch(() => {});
   };
 
   return (

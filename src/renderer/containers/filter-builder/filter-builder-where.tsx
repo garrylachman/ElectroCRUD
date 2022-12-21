@@ -1,21 +1,12 @@
-import {
-  Grid,
-  GridItem,
-  HStack,
-  Icon,
-  IconButton,
-  Input,
-} from '@chakra-ui/react';
+import { Grid, GridItem, Input } from '@chakra-ui/react';
 import _ from 'lodash';
 import { FC, PropsWithChildren, useContext, useEffect, useState } from 'react';
 import { AutocompleteField } from 'renderer/components/fields';
 import TagsField from 'renderer/components/fields/tags-field';
 import { ViewScopedContext } from 'renderer/contexts/view-scoped-context';
-import {
-  FilterRuleRO,
-} from 'renderer/defenitions/record-object/filters.define';
+import { FilterRuleRO } from 'renderer/defenitions/record-object';
 import { useAppDispatch } from 'renderer/store/hooks';
-import { FilterRulesReducer } from 'renderer/store/reducers';
+import { TemporaryFilterRulesReducer } from 'renderer/store/reducers';
 import { QueryWhereOprEnum } from 'shared';
 import { useDebounce } from 'usehooks-ts';
 
@@ -53,7 +44,7 @@ export const FilterBuilderWhere: FC<
   const [valueType, setValueType] = useState(ValuesInputType.VALUE);
 
   useEffect(() => {
-    distpatch(FilterRulesReducer.actions.upsertOne(debouncedState));
+    distpatch(TemporaryFilterRulesReducer.actions.upsertOne(debouncedState));
   }, [debouncedState]);
 
  
@@ -126,6 +117,7 @@ export const FilterBuilderWhere: FC<
           }
           noFormContext
           components={ReactSelectColumnOption}
+          placeholder="Column"
         />
       </GridItem>
       <GridItem colSpan={2}>
@@ -140,6 +132,7 @@ export const FilterBuilderWhere: FC<
             setState((previous) => ({ ...previous, opr: value }))
           }
           noFormContext
+          placeholder="Operator"
         />
       </GridItem>
       <GridItem colSpan={3}>
@@ -160,6 +153,7 @@ export const FilterBuilderWhere: FC<
             onChange={(e) =>
               setState((previous) => ({ ...previous, value: e.target.value }))
             }
+            placeholder="Value"
           />
         )}
       </GridItem>

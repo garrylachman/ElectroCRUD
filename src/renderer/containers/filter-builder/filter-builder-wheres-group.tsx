@@ -10,11 +10,12 @@ import {
   Icon,
   VStack,
 } from '@chakra-ui/react';
-import { FC, useMemo } from 'react';
+import { FC, useContext, useMemo } from 'react';
 import { VscGroupByRefType, VscUngroupByRefType } from 'react-icons/vsc';
 import { RippleButton } from 'renderer/components/buttons/ripple-button';
+import { ViewScopedContext } from 'renderer/contexts/view-scoped-context';
 import { useAppDispatch, useAppSelector } from 'renderer/store/hooks';
-import { FiltersReducer } from 'renderer/store/reducers';
+import { TemporaryFiltersReducer } from 'renderer/store/reducers';
 
 import { FilterBuilderWheres } from './filter-builder-wheres';
 
@@ -27,15 +28,20 @@ export const FilterBuilderWheresGroup: FC<FilterBuilderGroupProperties> = ({
   index = 0,
   filterId,
 }) => {
+  const { viewState } = useContext(ViewScopedContext);
   const distpatch = useAppDispatch();
-  const allFiltersState = useAppSelector((state) => state.filters);
+  const allFiltersState = useAppSelector((state) => state.temporaryFilters);
   const filterState = useMemo(
-    () => FiltersReducer.getSelectors().selectById(allFiltersState, filterId),
+    () =>
+      TemporaryFiltersReducer.getSelectors().selectById(
+        allFiltersState,
+        filterId
+      ),
     [allFiltersState, filterId]
   );
   const childFilersState = useMemo(
     () =>
-      FiltersReducer.getSelectors()
+      TemporaryFiltersReducer.getSelectors()
         .selectAll(allFiltersState)
         .filter((item) => item.parentId === filterId),
     [allFiltersState, filterId]
@@ -89,9 +95,10 @@ export const FilterBuilderWheresGroup: FC<FilterBuilderGroupProperties> = ({
                       }}
                       onClick={() =>
                         distpatch(
-                          FiltersReducer.actions.upsertOne({
+                          TemporaryFiltersReducer.actions.upsertOne({
                             id: filterState.id,
                             and: !filterState.and,
+                            viewId: viewState?.id,
                           })
                         )
                       }
@@ -121,10 +128,11 @@ export const FilterBuilderWheresGroup: FC<FilterBuilderGroupProperties> = ({
                   leftIcon={<Icon as={VscGroupByRefType} fontSize="lg" />}
                   onClick={() => {
                     distpatch(
-                      FiltersReducer.actions.upsertOne(
+                      TemporaryFiltersReducer.actions.upsertOne(
                         {
                           and: true,
                           parentId: filterState.id,
+                          viewId: viewState?.id,
                         },
                         { new: true }
                       )
@@ -145,7 +153,9 @@ export const FilterBuilderWheresGroup: FC<FilterBuilderGroupProperties> = ({
                   onClick={() => {
                     if (filterState?.id) {
                       distpatch(
-                        FiltersReducer.actions.removeOne(filterState.id)
+                        TemporaryFiltersReducer.actions.removeOne(
+                          filterState.id
+                        )
                       );
                     }
                   }}

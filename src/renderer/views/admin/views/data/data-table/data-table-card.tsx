@@ -1,57 +1,52 @@
 import {
-  Badge,
   Box,
   Button,
   Card,
   CardBody,
-  CardFooter,
   CardHeader,
   Checkbox,
-  ColorMode,
-  ColorModeScript,
-  ColorProps,
-  Colors,
   HStack,
   Icon,
   Input,
+  InputElementProps,
   InputGroup,
   InputRightElement,
   Text,
-  useColorModeValue,
-  useDimensions,
   VStack,
 } from '@chakra-ui/react';
+import { EntityState } from '@reduxjs/toolkit';
 import _ from 'lodash';
-import {
-  FC,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
-import DataTable, {
-  createTheme,
-  defaultThemes,
-} from 'react-data-table-component';
+import memoize from 'proxy-memoize';
+import { FC, ReactNode, useContext, useEffect, useMemo, useState } from 'react';
+import DataTable, { createTheme } from 'react-data-table-component';
 import { FaSortDown } from 'react-icons/fa';
+import { GiCheckMark } from 'react-icons/gi';
 import {
+  MdDeleteForever,
   MdFilterAlt,
-  MdOutlineDirectionsBoatFilled,
+  MdFilterList,
+  MdReplay,
   MdSearch,
 } from 'react-icons/md';
+import { useSelector } from 'react-redux';
 import {
   ActionsDropdownMenu,
 } from 'renderer/components/buttons/actions-dropdown-menu';
-import { CardHeaderBetter } from 'renderer/components/card/CardHeader';
-import { AnimateComponent } from 'renderer/components/motions';
-import { SectionHeader } from 'renderer/components/sections/section-header';
+import { RippleButton } from 'renderer/components/buttons/ripple-button';
+import {
+  ConfirmPromiseDeleteModal,
+} from 'renderer/components/modals/confirm-promise-delete-modal';
+import {
+  ConfirmPromiseModal,
+} from 'renderer/components/modals/confirm-promise-modal';
 import { FilterBuilder } from 'renderer/containers/filter-builder';
 import { ViewScopedContext } from 'renderer/contexts';
-import { ColumnRO } from 'renderer/defenitions/record-object';
+import { ViewFilterRO } from 'renderer/defenitions/record-object';
+import { useAppDispatch } from 'renderer/store/hooks';
+import { ViewFiltersReducer } from 'renderer/store/reducers';
+import { RootState } from 'renderer/store/store';
 import { globalStyles } from 'renderer/theme/styles';
 import { useDebounce } from 'usehooks-ts';
-import { v4 } from 'uuid';
 
 import {
   DashboardContextControlType,
@@ -129,8 +124,22 @@ export const DataTableCard: FC<DataTableCardProperties> = ({
   meta,
   control,
 }) => {
-  const [execute, setLimit, setPage, setOrder, setSearch] = control;
+  const [execute, setLimit, setPage, setOrder, setSearch, setInternalFilter] =
+    control;
   const { viewState } = useContext(ViewScopedContext);
+  const dispatch = useAppDispatch();
+  const [addFilterBox, setAddFilterBox] = useState<boolean>(false);
+
+  const viewFilterState = useSelector<RootState, ViewFilterRO[]>((state) =>
+    memoize((viewFiltersState: EntityState<ViewFilterRO>) =>
+      ViewFiltersReducer.getSelectors().selectAll(viewFiltersState)
+    )(state.viewsFilter)
+  );
+
+  const thisViewFilters = useMemo(
+    () => viewFilterState.filter((f) => f.viewId === viewState?.id),
+    [viewState?.id, viewFilterState]
+  );
 
   const [selectedRows, setSelectedRows] = useState([]);
   const [toggleCleared, setToggleCleared] = useState(false);
@@ -138,15 +147,23 @@ export const DataTableCard: FC<DataTableCardProperties> = ({
   const [searchValue, setSearchValue] = useState<string>('');
   const debouncedSearchValue = useDebounce<string>(searchValue, 1000);
 
+  const setFilter = (name: string, value: string, close = false) => {
+    setInternalFilter(value);
+    if (close) {
+      setAddFilterBox(false);
+    }
+  };
+
   useEffect(() => {
     setSearch(debouncedSearchValue);
   }, [debouncedSearchValue]);
 
   const data = useMemo(() => dataItems, [dataItems]);
 
-  const handleRowSelected = useCallback((state) => {
-    setSelectedRows(state.selectedRows);
-  }, []);
+  const handleRowSelected = (selected) => {
+    console.log('selected', selected);
+    setSelectedRows(selected.selectedRows);
+  };
 
   const contextActions = useMemo(() => {
     const handleDelete = () => {};
@@ -156,25 +173,73 @@ export const DataTableCard: FC<DataTableCardProperties> = ({
         key="delete"
         onClick={handleDelete}
         style={{ backgroundColor: 'red' }}
-        icon
       >
         Delete
       </Button>
     );
-  }, [data, selectedRows, toggleCleared]);
+  }, [data, selectedRows]);
 
   const actions = useMemo(
     () => [
       {
         props: {
-          onClick: () => {},
+          onClick: () => setAddFilterBox(true),
           fontSize: 'md',
           icon: <Icon as={MdFilterAlt} w={6} h={6} display="flex" />,
         },
         text: 'New Filter',
       },
+      ...thisViewFilters.map((vFilter) => ({
+        props: {
+          onClick: () => setInternalFilter(JSON.parse(vFilter.knexFilter)),
+          fontSize: 'sm',
+          icon: <Icon as={MdFilterList} w={5} h={5} display="flex" />,
+          pl: 5,
+        },
+        text: (
+          <HStack justifyContent="space-between" pointerEvents="all">
+            <Text fontWeight="bold">{vFilter.name}</Text>
+            <RippleButton
+              bgColor={{
+                step1: 'red.300',
+                step2: 'red.600',
+                step3: 'red.900',
+              }}
+              onClick={(e) => {
+                e.stopPropagation();
+                ConfirmPromiseDeleteModal({ entityName: vFilter.name })
+                  .then((value) => {
+                    if (value && vFilter?.id) {
+                      dispatch(
+                        ViewFiltersReducer.actions.removeOne(vFilter?.id)
+                      );
+                    }
+                    // eslint-disable-next-line unicorn/no-useless-undefined
+                    setInternalFilter(undefined);
+                    return true;
+                  })
+                  .catch(() => {});
+                // ;
+              }}
+              size="xs"
+              rounded={50}
+              boxSize={8}
+            >
+              <Icon as={MdDeleteForever} boxSize={5} />
+            </RippleButton>
+          </HStack>
+        ),
+      })),
+      {
+        props: {
+          onClick: () => setInternalFilter(),
+          fontSize: 'md',
+          icon: <Icon as={MdReplay} w={6} h={6} display="flex" />,
+        },
+        text: 'Clear Selected',
+      },
     ],
-    []
+    [thisViewFilters]
   );
 
   return (
@@ -214,37 +279,37 @@ export const DataTableCard: FC<DataTableCardProperties> = ({
         </CardHeader>
 
         <CardBody px={0}>
-          <Box px={5} pb={5}>
-            <FilterBuilder
-              groups={[
-                {
-                  id: v4(),
-                  conds: [
-                    {
-                      id: v4(),
-                      column: undefined,
-                      opr: undefined,
-                      value: undefined,
-                    },
-                  ],
-                  and: true,
-                  groups: [],
-                },
-              ]}
-            />
-          </Box>
+          {addFilterBox && (
+            <Box px={5} pb={5}>
+              <FilterBuilder setFilter={setFilter} />
+            </Box>
+          )}
           <DataTable
             columns={columns}
             data={data}
             selectableRows
             contextActions={contextActions}
-            selectableRowsComponent={Checkbox}
+            keyField={columns[0].sortField}
+            selectableRowsComponent={(
+              properties: InputElementProps
+            ): ReactNode => (
+              <Checkbox
+                {...properties}
+                isChecked={properties.checked}
+                isDisabled={properties.disabled}
+                inputProps={{
+                  onChange: properties.onChange,
+                  onClick: properties.onClick,
+                }}
+              />
+            )}
             selectableRowsComponentProps={{
               size: 'lg',
               colorScheme: 'brand',
+              icon: <Icon as={GiCheckMark} boxSize={3.5} />,
             }}
             onSelectedRowsChange={handleRowSelected}
-            clearSelectedRows={toggleCleared}
+            clearSelectedRows
             pagination
             progressPending={data === undefined}
             sortIcon={

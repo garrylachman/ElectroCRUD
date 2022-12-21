@@ -12,8 +12,10 @@ import {
   useBoolean,
 } from '@chakra-ui/react';
 import { joiResolver } from '@hookform/resolvers/joi';
+import { AnimatePresence, motion } from 'framer-motion';
+import { useVisibleAnimation } from 'framer-motion-visible';
 import * as Joi from 'joi';
-import { FC, useContext, useMemo, useState, memo } from 'react';
+import { FC, memo, useContext, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import {
   MdArrowForward,
@@ -21,12 +23,14 @@ import {
   MdKeyboardArrowUp,
 } from 'react-icons/md';
 import { InlineEditField } from 'renderer/components/fields';
+import {
+  ConfirmPromiseDeleteModal,
+} from 'renderer/components/modals/confirm-promise-delete-modal';
 import { EntitiesIndexerContext, ViewScopedContext } from 'renderer/contexts';
 import { ColumnReferanceRO } from 'renderer/defenitions/record-object';
 import { useAppDispatch } from 'renderer/store/hooks';
 import { ColumnsReferanceReducer } from 'renderer/store/reducers';
-import { useVisibleAnimation } from 'framer-motion-visible';
-import { AnimatePresence, motion } from 'framer-motion';
+
 import { ColumnReferanceColumnComponent } from './column-referance-column';
 import { ColumnReferanceViewComponent } from './column-referance-view';
 
@@ -93,7 +97,7 @@ export const ColumnReferance: FC<ColumnReferanceProperties> = ({
       <motion.div
         key="CodeExamples"
         initial={{ scaleY: 0.2, position: 'relative', opacity: 0 }}
-        animate={{ scaleY: 1, opacity: 1, width: "100%" }}
+        animate={{ scaleY: 1, opacity: 1, width: '100%' }}
         exit={{ scaleY: 0.2, opacity: 0 }}
         transition={{ duration: 1 }}
       >
@@ -191,11 +195,18 @@ export const ColumnReferance: FC<ColumnReferanceProperties> = ({
                       type="button"
                       hidden={columnReferanceState?.id === undefined}
                       onClick={() =>
-                        dispatch(
-                          ColumnsReferanceReducer.actions.removeOne(
-                            columnReferanceState.id
-                          )
-                        )
+                        ConfirmPromiseDeleteModal({
+                          entityName: `Referance in ${viewState?.name}`,
+                        })
+                          .then(() => {
+                            dispatch(
+                              ColumnsReferanceReducer.actions.removeOne(
+                                columnReferanceState?.id
+                              )
+                            );
+                            return true;
+                          })
+                          .catch(() => {})
                       }
                     >
                       Delete

@@ -23,22 +23,33 @@ export const RippleButton: FC<RippleButtonProperties> = ({
     rounded="lg"
     shadow="base"
     size={size}
+    outlineOffset="0px"
+    outlineStyle="solid"
+    outline="0px"
     _focus={{
       outline: 'none',
     }}
     key={key}
-    transition="background 0.8s"
+    transition="background 0.8s, outline 0.8s, outline-offset 0.8s"
     backgroundPosition="center"
     _hover={{
       bgColor: `${bgColor.step2}`,
       bgGradient: `radial(circle, transparent 1%, ${bgColor.step2} 1%)`,
       bgPos: 'center',
-      backgroundSize: '15000%',
+      outlineStyle: 'solid',
+      outlineWidth: '3px',
+      outlineColor: `${bgColor.step2}`,
+      outlineOffset: '0px',
+      backgroundSize: '50000%',
     }}
     _active={{
       bgColor: `${bgColor.step3}`,
-      backgroundSize: '100%',
-      transition: 'background 0s',
+      backgroundSize: '10%',
+      outlineWidth: '0px',
+      outlineStyle: 'double',
+      outlineColor: `white`,
+      outlineOffset: '8px',
+      transition: 'background 0s, outline 0.8s, outline-offset 0.5s',
     }}
     {...properties}
   >

@@ -2,11 +2,12 @@ import { QueryWhereOprEnum } from 'shared';
 
 import { BaseRO } from './base.def';
 
-type FilterRuleValue = string | number | undefined;
+export type FilterRuleValue = string | number | undefined;
 
 export type FilterRO = BaseRO & {
   parentId?: string;
   and: boolean;
+  viewId?: string;
 };
 
 export type FilterRuleRO = BaseRO & {
@@ -14,4 +15,10 @@ export type FilterRuleRO = BaseRO & {
   column?: string;
   opr?: QueryWhereOprEnum;
   value?: FilterRuleValue | FilterRuleValue[];
+};
+
+export type ViewFilterRO = BaseRO & {
+  viewId?: string;
+  name: string;
+  knexFilter: string;
 };

@@ -9,28 +9,28 @@ const filterRulesAdapter = createEntityAdapter<FilterRuleRO>({
 
 const { upsertOne, upsertMany, removeOne, removeMany } = filterRulesAdapter;
 
-const filterRulesSlice = createSlice({
-  name: 'filterRules',
-  initialState: filterRulesAdapter.getInitialState(),
-  reducers: {
-    upsertOne: {
-      reducer: upsertOne,
-      prepare(payload: FilterRuleRO) {
-        const cdObject = payload.id ? {} : { creationDate: Date.now() };
-        return {
-          payload: {
-            ...payload,
-            id: payload.id || uuidv4(),
-            ...cdObject,
-            modificationDate: Date.now(),
-          },
-        };
+export const filterRulesSlice = (name: string) =>
+  createSlice({
+    name,
+    initialState: filterRulesAdapter.getInitialState(),
+    reducers: {
+      upsertOne: {
+        reducer: upsertOne,
+        prepare(payload: FilterRuleRO) {
+          const cdObject = payload.id ? {} : { creationDate: Date.now() };
+          return {
+            payload: {
+              ...payload,
+              id: payload.id || uuidv4(),
+              ...cdObject,
+              modificationDate: Date.now(),
+            },
+          };
+        },
       },
+      removeOne,
+      removeMany,
     },
-    removeOne,
-    removeMany,
-  },
-});
+  });
 
-export const { actions, reducer, name } = filterRulesSlice;
 export const { getSelectors } = filterRulesAdapter;

@@ -1,64 +1,67 @@
 import {
-  Grid,
-  Badge,
-  Button,
-  Flex,
-  Icon,
-  GridItem,
-  VStack,
-  Heading,
-  EditablePreview,
-  Box,
-  useColorModeValue,
-  IconButton,
-  Input,
-  useDisclosure,
-  useEditableControls,
-  ButtonGroup,
-  SlideFade,
-  Editable,
-  Tooltip,
-  Text,
-  EditableInput,
   Alert,
   AlertDescription,
   AlertTitle,
+  Badge,
+  Box,
+  Button,
+  ButtonGroup,
+  Card,
+  CardBody,
+  CardFooter,
+  CardHeader,
   Collapse,
   Divider,
+  Editable,
+  EditableInput,
+  EditablePreview,
+  Flex,
+  Grid,
+  GridItem,
+  Heading,
   HStack,
+  Icon,
+  IconButton,
+  Input,
+  SlideFade,
   Stat,
   StatLabel,
   StatNumber,
-  Card,
-  CardHeader,
-  CardBody,
-  CardFooter,
+  Text,
+  Tooltip,
   useBoolean,
+  useColorModeValue,
+  useDisclosure,
+  useEditableControls,
+  VStack,
 } from '@chakra-ui/react';
-import { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { CodeExampleRO, ViewRO } from 'renderer/defenitions/record-object';
-import { useForm, FormProvider } from 'react-hook-form';
-import * as Joi from 'joi';
-import { joiResolver } from '@hookform/resolvers/joi';
-import { InlineEditField, InputField } from 'renderer/components/fields';
-import { Categories } from 'renderer/defenitions/record-object/categories.def';
-import _ from 'lodash';
-import { SubCard } from 'renderer/containers/cards';
-import {
-  MdSave,
-  MdDelete,
-  MdKeyboardArrowUp,
-  MdKeyboardArrowDown,
-} from 'react-icons/md';
-import CodeMirror from '@uiw/react-codemirror';
-import { vscodeDark } from '@uiw/codemirror-theme-vscode';
 import { sql } from '@codemirror/lang-sql';
-import { useAppDispatch } from 'renderer/store/hooks';
-import { CodeExamplesReducer } from 'renderer/store/reducers';
+import { joiResolver } from '@hookform/resolvers/joi';
+import { vscodeDark } from '@uiw/codemirror-theme-vscode';
+import CodeMirror from '@uiw/react-codemirror';
+import { AnimatePresence, motion } from 'framer-motion';
+import * as Joi from 'joi';
+import _ from 'lodash';
+import { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
+import {
+  MdDelete,
+  MdKeyboardArrowDown,
+  MdKeyboardArrowUp,
+  MdSave,
+} from 'react-icons/md';
 import ReactTimeAgo from 'react-time-ago';
 import { RippleButton } from 'renderer/components/buttons/ripple-button';
 import { CardHeaderBetter } from 'renderer/components/card/CardHeader';
-import { AnimatePresence, motion } from 'framer-motion'
+import { InlineEditField, InputField } from 'renderer/components/fields';
+import {
+  ConfirmPromiseDeleteModal,
+} from 'renderer/components/modals/confirm-promise-delete-modal';
+import { SubCard } from 'renderer/containers/cards';
+import { CodeExampleRO, ViewRO } from 'renderer/defenitions/record-object';
+import { Categories } from 'renderer/defenitions/record-object/categories.def';
+import { useAppDispatch } from 'renderer/store/hooks';
+import { CodeExamplesReducer } from 'renderer/store/reducers';
 
 type CodeExampleItemProperties = {
   initialValue: Partial<CodeExampleRO>;
@@ -108,13 +111,22 @@ export const CodeExampleItem: FC<CodeExampleItemProperties> = ({
   const onDelete = useCallback(
     (data) => {
       if (initialValue.id !== undefined) {
-        dispatcher(CodeExamplesReducer.actions.removeOne(initialValue.id));
+        ConfirmPromiseDeleteModal({
+          entityName: initialValue.title,
+        })
+          .then(() => {
+            dispatcher(CodeExamplesReducer.actions.removeOne(initialValue.id));
+            return true;
+          })
+          .catch(() => {});
       }
     },
     [initialValue, dispatcher]
   );
 
-  const [isOpen, { on, off, toggle }] = useBoolean(initialValue.id === undefined);
+  const [isOpen, { on, off, toggle }] = useBoolean(
+    initialValue.id === undefined
+  );
 
   return (
     <AnimatePresence>
@@ -123,122 +135,136 @@ export const CodeExampleItem: FC<CodeExampleItemProperties> = ({
         initial={{ scaleY: 0.2, position: 'relative', opacity: 0 }}
         animate={{ scaleY: 1, opacity: 1 }}
         exit={{ scaleY: 0.2, opacity: 0 }}
-        transition={{ duration: 1}}
+        transition={{ duration: 1 }}
       >
-    <Card>
-      <FormProvider {...formContext}>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <CardHeaderBetter isTopBorder={isOpen}>
-            <Flex spacing="4">
-              <Flex flex="1" gap="4" alignItems="center" flexWrap="wrap">
-                <Box display="flex" flexDirection="column">
-                  <Heading size="md">{initialValue.title}</Heading>
-                  <Text
-                    alignItems="center"
-                    display="flex"
-                    as="kbd"
-                    fontSize="sm"
-                  >
-                    {index > 0 ? `Example #${index}` : `New`}
-                  </Text>
-                </Box>
-              </Flex>
-              <IconButton
-                size="sm"
-                aria-label="Open / Close"
-                colorScheme="brand"
-                variant={isOpen ? 'outline' : 'solid'}
-                icon={
-                  isOpen ? (
-                    <MdKeyboardArrowUp size={20} />
-                  ) : (
-                    <MdKeyboardArrowDown size={20} />
-                  )
-                }
-                onClick={toggle}
-              />
-            </Flex>
-          </CardHeaderBetter>
+        <Card variant="solidBold">
+          <FormProvider {...formContext}>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <CardHeaderBetter
+                isTopBorder={false}
+                borderRadius={0}
+                borderBottomEndRadius={0}
+                borderBottomStartRadius={0}
+              >
+                <Flex spacing={4} pb={0}>
+                  <Flex flex="1" gap="4" alignItems="center" flexWrap="wrap">
+                    <Box display="flex" flexDirection="column">
+                      <Heading size="md">{initialValue.title}</Heading>
+                      {!initialValue.title && (
+                        <Text
+                          alignItems="center"
+                          display="flex"
+                          as="kbd"
+                          fontSize="sm"
+                        >
+                          {index > 0 ? `Example #${index}` : `New`}
+                        </Text>
+                      )}
+                    </Box>
+                  </Flex>
+                  <IconButton
+                    size="sm"
+                    aria-label="Open / Close"
+                    colorScheme="blackAlpha"
+                    variant="solid"
+                    icon={
+                      isOpen ? (
+                        <MdKeyboardArrowUp size={20} />
+                      ) : (
+                        <MdKeyboardArrowDown size={20} />
+                      )
+                    }
+                    onClick={toggle}
+                  />
+                </Flex>
+              </CardHeaderBetter>
 
-          <Divider />
+              <Divider />
 
-          <Collapse in={isOpen} animateOpacity style={{ overflow: 'initial' }}>
-            <CardBody>
-              <VStack display="block">
-                <InlineEditField
-                  type="input"
-                  id="title"
-                  placeholder="Code Example Title"
-                />
-                <InlineEditField
-                  type="textarea"
-                  id="description"
-                  placeholder="Please describe about your code/example..."
-                />
-                <CodeMirror
-                  ref={reference}
-                  value={initialValue.code}
-                  extensions={[sql()]}
-                  theme={vscodeDark}
-                  height="200px"
-                />
-              </VStack>
-            </CardBody>
-            <CardFooter justifyContent="space-between">
-              <HStack>
-                <RippleButton
-                  type="submit"
-                  variant="brand"
-                  size="lg"
-                  isDisabled={!isValid}
-                >
-                  <Icon mr={2} as={MdSave} />
-                  Save
-                </RippleButton>
-                <Button
-                  type="button"
-                  variant="solid"
-                  colorScheme="red"
-                  size="lg"
-                  onClick={onDelete}
-                  hidden={initialValue.id === undefined}
-                >
-                  <Icon mr={2} as={MdDelete} />
-                  Delete
-                </Button>
-              </HStack>
-              <HStack>
-                <Stat size="xs" w="180px">
-                  <StatLabel fontSize="sm" align="right">
-                    Created at
-                  </StatLabel>
-                  <StatNumber align="right">
-                    {initialValue.creationDate ? (
-                      <ReactTimeAgo date={initialValue.creationDate} />
-                    ) : (
-                      'N/A'
-                    )}
-                  </StatNumber>
-                </Stat>
-                <Stat size="xs" w="180px">
-                  <StatLabel fontSize="sm" align="right">
-                    Last updated at
-                  </StatLabel>
-                  <StatNumber align="right">
-                    {initialValue.modificationDate ? (
-                      <ReactTimeAgo date={initialValue.modificationDate} />
-                    ) : (
-                      'N/A'
-                    )}
-                  </StatNumber>
-                </Stat>
-              </HStack>
-            </CardFooter>
-          </Collapse>
-        </form>
-      </FormProvider>
-    </Card>
-    </motion.div>
+              <Collapse
+                in={isOpen}
+                animateOpacity
+                style={{ overflow: 'initial' }}
+              >
+                <CardBody pb={0}>
+                  <VStack display="block">
+                    <InlineEditField
+                      type="input"
+                      id="title"
+                      placeholder="Code Example Title"
+                    />
+                    <InlineEditField
+                      type="textarea"
+                      id="description"
+                      placeholder="Please describe about your code/example..."
+                    />
+                    <CodeMirror
+                      ref={reference}
+                      value={initialValue.code}
+                      extensions={[sql()]}
+                      theme={vscodeDark}
+                      height="200px"
+                      style={{
+                        paddingTop: '10px'
+                      }}
+                    />
+                  </VStack>
+                </CardBody>
+                <CardFooter justifyContent="space-between">
+                  <HStack>
+                    <RippleButton
+                      type="submit"
+                      variant="brand"
+                      size="lg"
+                      isDisabled={!isValid}
+                    >
+                      <Icon mr={2} as={MdSave} />
+                      Save
+                    </RippleButton>
+                    <Button
+                      type="button"
+                      variant="solid"
+                      colorScheme="red"
+                      size="lg"
+                      onClick={onDelete}
+                      hidden={initialValue.id === undefined}
+                    >
+                      <Icon mr={2} as={MdDelete} />
+                      Delete
+                    </Button>
+                  </HStack>
+                  <HStack>
+                    <Stat size="xs" w="180px">
+                      <StatLabel fontSize="sm" align="right">
+                        Created at
+                      </StatLabel>
+                      <StatNumber align="right">
+                        {initialValue.creationDate ? (
+                          <ReactTimeAgo date={initialValue.creationDate} />
+                        ) : (
+                          'N/A'
+                        )}
+                      </StatNumber>
+                    </Stat>
+                    <Stat size="xs" w="180px">
+                      <StatLabel fontSize="sm" align="right">
+                        Last updated at
+                      </StatLabel>
+                      <StatNumber align="right">
+                        {initialValue.modificationDate ? (
+                          <ReactTimeAgo date={initialValue.modificationDate} />
+                        ) : (
+                          'N/A'
+                        )}
+                      </StatNumber>
+                    </Stat>
+                  </HStack>
+                </CardFooter>
+              </Collapse>
+            </form>
+          </FormProvider>
+        </Card>
+      </motion.div>
     </AnimatePresence>
   );
 };

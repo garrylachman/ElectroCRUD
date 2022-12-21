@@ -4,7 +4,7 @@ import { FC, useMemo } from 'react';
 import { HiOutlineTrash } from 'react-icons/hi';
 import { MdOutlineAdd } from 'react-icons/md';
 import { useAppDispatch, useAppSelector } from 'renderer/store/hooks';
-import { FilterRulesReducer } from 'renderer/store/reducers';
+import { TemporaryFilterRulesReducer } from 'renderer/store/reducers';
 
 import { FilterBuilderWhere } from './filter-builder-where';
 
@@ -22,10 +22,10 @@ export const FilterBuilderWheres: FC<FilterBuilderWheresProperties> = ({
   filterId,
 }) => {
   const distpatch = useAppDispatch();
-  const allFilterRulesState = useAppSelector((state) => state.filterRules);
+  const allFilterRulesState = useAppSelector((state) => state.temporaryFilterRules);
   const filterRulesState = useMemo(
     () =>
-      FilterRulesReducer.getSelectors()
+      TemporaryFilterRulesReducer.getSelectors()
         .selectAll(allFilterRulesState)
         .filter((item) => item.filterId === filterId),
     [allFilterRulesState, filterId]
@@ -34,7 +34,10 @@ export const FilterBuilderWheres: FC<FilterBuilderWheresProperties> = ({
   return (
     <VStack flexDirection="column">
       {filterRulesState.map((item, index, array) => (
-        <FilterBuilderWhere key={`filter-rule-${item?.id}`} initialState={item}>
+        <FilterBuilderWhere
+          key={`filter-rule-${String(item.id)}`}
+          initialState={item}
+        >
           <HStack display="flex" justifyContent="flex-end">
             {_.isEqual(index + 1, _.size(array)) && (
               <IconButton
@@ -45,7 +48,7 @@ export const FilterBuilderWheres: FC<FilterBuilderWheresProperties> = ({
                 aria-label=""
                 onClick={() =>
                   distpatch(
-                    FilterRulesReducer.actions.upsertOne({
+                    TemporaryFilterRulesReducer.actions.upsertOne({
                       filterId,
                       ...getNewItem(),
                     })
@@ -60,7 +63,9 @@ export const FilterBuilderWheres: FC<FilterBuilderWheresProperties> = ({
               aria-label=""
               onClick={() => {
                 if (item.id) {
-                  distpatch(FilterRulesReducer.actions.removeOne(item.id));
+                  distpatch(
+                    TemporaryFilterRulesReducer.actions.removeOne(item.id)
+                  );
                 }
               }}
               icon={<Icon as={HiOutlineTrash} />}

@@ -12,10 +12,10 @@ import {
   CodeExamplesReducer,
   ColumnsReducer,
   ColumnsReferanceReducer,
-  FilterRulesReducer,
-  FiltersReducer,
   SessionReducer,
   TagsReducer,
+  TemporaryFilterRulesReducer,
+  TemporaryFiltersReducer,
   ToastReducer,
   ViewsReducer,
 } from './reducers';
@@ -102,7 +102,7 @@ function* onFilterCreated(action) {
   if (action.meta) {
     console.log("action", action);
     yield put(
-      FilterRulesReducer.actions.upsertOne({
+      TemporaryFilterRulesReducer.actions.upsertOne({
         filterId: action.payload.id,
         column: undefined,
         opr: undefined,
@@ -127,5 +127,5 @@ export function* watchForNotificationsAsync() {
     notifyEntityAddedOrEdited
   );
   yield takeEvery(CodeExamplesReducer.actions.removeOne, notifyEntityDeleted);
-  yield takeEvery(FiltersReducer.actions.upsertOne, onFilterCreated);
+  yield takeEvery(TemporaryFiltersReducer.actions.upsertOne, onFilterCreated);
 }

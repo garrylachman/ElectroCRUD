@@ -3,13 +3,11 @@ import {
   Box,
   Card,
   CardBody,
-  CardHeader,
-  Center,
   Collapse,
   Divider,
-  Flex,
   Heading,
   HStack,
+  Icon,
   IconButton,
   Tag,
   Text,
@@ -18,9 +16,13 @@ import {
 } from '@chakra-ui/react';
 import { AnimatePresence, LayoutGroup, motion } from 'framer-motion';
 import { FC, useContext, useMemo } from 'react';
-import { MdKeyboardArrowDown, MdKeyboardArrowUp } from 'react-icons/md';
+import {
+  MdCheck,
+  MdClose,
+  MdKeyboardArrowDown,
+  MdKeyboardArrowUp,
+} from 'react-icons/md';
 import { useSelector } from 'react-redux';
-import ReactTimeAgo from 'react-time-ago';
 import { CardHeaderBetter } from 'renderer/components/card/CardHeader';
 import { InlineEditField, TagsAutocomplete } from 'renderer/components/fields';
 import { SectionHeader } from 'renderer/components/sections/section-header';
@@ -30,38 +32,73 @@ import {
   ColumnRO,
   TagType,
 } from 'renderer/defenitions/record-object';
-import { useAppDispatch } from 'renderer/store/hooks';
 import {
   ColumnReferenceSelectors,
   ColumnSelectors,
 } from 'renderer/store/selectors';
+
 import { ColumnReferance } from './column-referance/column-referance';
 
 const TagsLine: FC<{ columnState: ColumnRO }> = ({ columnState }) =>
   useMemo(
     () => (
-      <HStack py={0}>
-        {['key', 'type', 'nullable', 'length', 'enabled', 'searchable'].map(
-          (key) => (
-            <>
-              {columnState[key] !== null && columnState[key] !== undefined && (
-                <Badge variant="subtle" colorScheme="brand" mr={2} size="sm">
-                  <Tag variant="subtle" mr={2} fontSize={10} size="sm">
-                    {key}
-                  </Tag>
-                  <Tag
-                    variant="solid"
-                    colorScheme={columnState[key] === true ? 'green' : 'gray'}
-                    fontSize={10}
-                    size="sm"
-                  >
-                    {String(columnState[key])}
-                  </Tag>
-                </Badge>
-              )}
-            </>
-          )
-        )}
+      <HStack
+        py={0}
+        shouldWrapChildren
+        wrap="wrap"
+        spacing={0}
+        isInline
+        justify="flex-start"
+      >
+        {[
+          'data_type',
+          'default_value',
+          'foreign_key_column',
+          'foreign_key_table',
+          'is_nullable',
+          'is_primary_key',
+          'is_unique',
+          'max_length',
+          'searchable',
+        ].map((key) => (
+          <>
+            {columnState[key] !== null && columnState[key] !== undefined && (
+              <Badge
+                variant="subtle"
+                colorScheme="brand"
+                size="sm"
+                m="0"
+                mt={2}
+                mr={2}
+              >
+                <Tag variant="subtle" fontSize={7} size="sm" mr={1}>
+                  {key}
+                </Tag>
+                <Tag
+                  variant="solid"
+                  colorScheme={
+                    typeof columnState[key] === 'boolean'
+                      ? (columnState[key] === true
+                        ? 'green'
+                        : 'red')
+                      : 'gray'
+                  }
+                  fontSize={7}
+                  size="sm"
+                >
+                  {typeof columnState[key] === 'boolean' ? (
+                    <>
+                      {columnState[key] && <Icon boxSize={3} as={MdCheck} />}
+                      {!columnState[key] && <Icon boxSize={3} as={MdClose} />}
+                    </>
+                  ) : (
+                    <>{String(columnState[key])}</>
+                  )}
+                </Tag>
+              </Badge>
+            )}
+          </>
+        ))}
       </HStack>
     ),
     [columnState]
@@ -77,7 +114,6 @@ export const ColumnMetadataCard: FC<ColumnMetadataCardProperties> = ({
   fieldIndex,
 }) => {
   const { viewState } = useContext(ViewScopedContext);
-  const dispatch = useAppDispatch();
 
   const columnState = useSelector((state) =>
     ColumnSelectors.createColumnSelector(state)
@@ -108,10 +144,10 @@ export const ColumnMetadataCard: FC<ColumnMetadataCardProperties> = ({
         exit={{ scaleY: 0.2, opacity: 0 }}
         transition={{ duration: 1 }}
       >
-        <Card>
+        <Card pb={5} overflow="unset">
           <CardHeaderBetter isTopBorder={isOpen}>
             <SectionHeader
-              title={columnState.name}
+              title={columnState?.name}
               subTitle={`Last Modification: ${new Date(
                 columnState?.modificationDate
               ).toLocaleString()}`}
@@ -135,7 +171,7 @@ export const ColumnMetadataCard: FC<ColumnMetadataCardProperties> = ({
             <TagsLine columnState={columnState} />
           </CardHeaderBetter>
           <Collapse in={isOpen} animateOpacity style={{ overflow: 'initial' }}>
-            <CardBody pt={0}>
+            <CardBody py={0}>
               <Divider pb={1} />
               <VStack w="100%" py={5} alignItems="flex-start">
                 <Box py={2}>
@@ -176,7 +212,7 @@ export const ColumnMetadataCard: FC<ColumnMetadataCardProperties> = ({
                 <LayoutGroup w="100%">
                   {columnReferance.map((item, index) => (
                     <ColumnReferance
-                      key={`ref-${index}`}
+                      key={`ref-${item?.id || index}`}
                       columnReferanceState={item}
                     />
                   ))}

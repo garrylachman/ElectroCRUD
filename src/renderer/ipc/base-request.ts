@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useAppDispatch } from 'renderer/store/hooks';
 import { ToastReducer } from 'renderer/store/reducers';
 import { IPCChannel } from 'shared';
-import { ResponseType, RequestType } from 'shared/defenitions';
+import { RequestType, ResponseType } from 'shared/defenitions';
 
 const { ipcRenderer } = window.electron;
 
@@ -25,6 +25,8 @@ export const useBaseRequest = <T extends ResponseType>(
     setResult();
     setIsLoading(true);
     setIsExecuted(false);
+
+    console.log("request", request);
 
     BaseRequest<T>(request.channel, request)
       .then((value) => {
