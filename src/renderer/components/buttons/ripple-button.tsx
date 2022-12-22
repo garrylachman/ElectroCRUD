@@ -23,8 +23,10 @@ export const RippleButton: FC<RippleButtonProperties> = ({
     rounded="lg"
     shadow="base"
     size={size}
-    outlineOffset="0px"
-    outlineStyle="solid"
+    style={{
+      outlineOffset: 0,
+      outlineStyle: 'solid',
+    }}
     outline="0px"
     _focus={{
       outline: 'none',

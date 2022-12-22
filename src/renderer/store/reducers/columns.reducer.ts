@@ -1,36 +1,40 @@
-import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
+import { createEntityAdapter, createSlice, isAnyOf } from '@reduxjs/toolkit';
 import * as R from 'ramda';
-import { ColumnRO } from 'renderer/defenitions/record-object';
-import { v4 as uuidv4 } from 'uuid';
+import {
+  ColumnRO,
+  StrictColumnRO,
+  TagRO,
+} from 'renderer/defenitions/record-object';
 
+import {
+  AnyActionWithPayload,
+  createLastModificationMatcher,
+  prepareStateUpdate,
+} from './helpers';
 import { actions as tagsActions } from './tags.reducer';
 
-const columnsAdapter = createEntityAdapter<ColumnRO>({
-  selectId: (column) => column?.id || '',
-  sortComparer: (a, b) => (b?.creationDate || 0) - (a?.creationDate || 0),
+const columnsAdapter = createEntityAdapter<StrictColumnRO>({
+  selectId: (column) => column.id,
+  sortComparer: (a, b) => b.creationDate - a.creationDate,
 });
 
 const { upsertOne, upsertMany, removeOne, removeMany, removeAll } =
   columnsAdapter;
 
-const setId = R.ifElse(
-  R.complement(R.has)('id'),
-  R.over(R.lensProp('id'), uuidv4),
-  R.identity()
-);
+const mergeBeforeUpdate = (value: Partial<ColumnRO>): Partial<ColumnRO> => {
+  const result = R.compose(
+    R.evolve({
+      metadata: {
+        tags: R.map((item: TagRO | string) =>
+          R.is(String, item) ? item : item.id
+        ),
+      },
+    }),
+    R.mergeDeepRight({ metadata: { tags: [] } })
+  )(value);
 
-const mergeBeforeUpdate = R.compose(
-  setId,
-  R.mergeDeepRight({ creationDate: Date.now() }),
-  R.mergeDeepLeft({ modificationDate: Date.now() }),
-  R.evolve({
-    metadata: {
-      tags: R.map((item) => (R.is(String, item) ? item : item.id)),
-    },
-  }),
-  R.mergeDeepRight({ metadata: { tags: [] } }),
-  R.omit(['referances'])
-);
+  return R.omit(['referances'], result) as Partial<ColumnRO>;
+};
 
 const columnsSlice = createSlice({
   name: 'columns',
@@ -40,7 +44,9 @@ const columnsSlice = createSlice({
       reducer: upsertOne,
       prepare(payload: ColumnRO, meta?: { viewId?: string }) {
         return {
-          payload: mergeBeforeUpdate(payload),
+          payload: prepareStateUpdate<StrictColumnRO>(
+            mergeBeforeUpdate(payload)
+          ),
           meta,
         };
       },
@@ -48,10 +54,10 @@ const columnsSlice = createSlice({
     upsertMany: {
       reducer: upsertMany,
       prepare(payload: ColumnRO[], meta: { viewId?: string }) {
-        console.log(payload);
-        console.log(payload.map((item) => mergeBeforeUpdate(item)));
         return {
-          payload: payload.map((item) => mergeBeforeUpdate(item)),
+          payload: payload.map((item) =>
+            prepareStateUpdate<StrictColumnRO>(mergeBeforeUpdate(item))
+          ),
           meta,
         };
       },
@@ -70,20 +76,26 @@ const columnsSlice = createSlice({
     removeAll,
   },
   extraReducers: (builder) => {
-    builder
-      .addCase(tagsActions.upsertOne, (state, action) => {
-        if (action.meta.columnId) {
-          state.entities[action.meta.columnId]?.metadata?.tags.push(
-            action.payload.id
-          );
-        }
-      })
-      .addMatcher(columnsSlice.actions.updateTags.match, (state, action) => {
-        const updatedColumn = state.entities[action.payload.columnId];
-        if (updatedColumn !== undefined) {
-          updatedColumn.modificationDate = Date.now();
-        }
-      });
+    builder.addCase(tagsActions.upsertOne, (state, action) => {
+      if (action.meta.columnId) {
+        state.entities[action.meta.columnId]?.metadata?.tags.push(
+          action.payload.id as string
+        );
+      }
+    });
+
+    createLastModificationMatcher<ColumnRO>(
+      builder,
+      isAnyOf(
+        columnsSlice.actions.updateTags.match,
+        columnsSlice.actions.upsertOne.match,
+        columnsSlice.actions.upsertMany.match
+      ),
+      (action: AnyActionWithPayload) =>
+        action.type === columnsSlice.actions.updateTags.type
+          ? (action.payload.columnId as string)
+          : (action.payload.id as string)
+    );
   },
 });
 

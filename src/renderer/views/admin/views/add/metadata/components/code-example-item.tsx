@@ -59,7 +59,9 @@ import {
 } from 'renderer/components/modals/confirm-promise-delete-modal';
 import { SubCard } from 'renderer/containers/cards';
 import { CodeExampleRO, ViewRO } from 'renderer/defenitions/record-object';
-import { Categories } from 'renderer/defenitions/record-object/categories.def';
+import {
+  Categories,
+} from 'renderer/defenitions/record-object/categories.define';
 import { useAppDispatch } from 'renderer/store/hooks';
 import { CodeExamplesReducer } from 'renderer/store/reducers';
 
@@ -129,13 +131,12 @@ export const CodeExampleItem: FC<CodeExampleItemProperties> = ({
   );
 
   return (
-    <AnimatePresence>
       <motion.div
-        key="CodeExamples"
+        layout
         initial={{ scaleY: 0.2, position: 'relative', opacity: 0 }}
         animate={{ scaleY: 1, opacity: 1 }}
         exit={{ scaleY: 0.2, opacity: 0 }}
-        transition={{ duration: 1 }}
+        transition={{ duration: 1, bounce: 0.8, type: 'spring' }}
       >
         <Card variant="solidBold">
           <FormProvider {...formContext}>
@@ -265,6 +266,5 @@ export const CodeExampleItem: FC<CodeExampleItemProperties> = ({
           </FormProvider>
         </Card>
       </motion.div>
-    </AnimatePresence>
   );
 };

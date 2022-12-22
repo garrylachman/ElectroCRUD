@@ -15,7 +15,8 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import { AnimatePresence, LayoutGroup, motion } from 'framer-motion';
-import { FC, useContext, useMemo } from 'react';
+import memoize from 'proxy-memoize';
+import { FC, useCallback, useContext, useEffect, useMemo } from 'react';
 import {
   MdCheck,
   MdClose,
@@ -36,6 +37,7 @@ import {
   ColumnReferenceSelectors,
   ColumnSelectors,
 } from 'renderer/store/selectors';
+import { RootState } from 'renderer/store/store';
 
 import { ColumnReferance } from './column-referance/column-referance';
 
@@ -123,6 +125,23 @@ export const ColumnMetadataCard: FC<ColumnMetadataCardProperties> = ({
     ColumnReferenceSelectors.createColumnReferanceByFromColumnSelector(state)
   )(columnId);
 
+  const columnReferanceIds = columnReferanceState.map(
+    (item) => item?.id
+  ) as string[];
+
+  const columnReferanceWithNamesState = useSelector(
+    useCallback(
+      memoize((state) =>
+        ColumnReferenceSelectors.createColumnReferanceWithNames(state)(
+          columnReferanceIds
+        )
+      ),
+      [columnReferanceIds]
+    )
+  );
+
+  useEffect(() => console.log(columnReferanceWithNamesState, columnReferanceIds), [columnReferanceWithNamesState]);
+
   const columnReferance = useMemo(() => {
     return [
       ...columnReferanceState,
@@ -136,92 +155,90 @@ export const ColumnMetadataCard: FC<ColumnMetadataCardProperties> = ({
   const [isOpen, { on, off, toggle }] = useBoolean();
 
   return (
-    <AnimatePresence>
-      <motion.div
-        key="CodeExamples"
-        initial={{ scaleY: 0.2, position: 'relative', opacity: 0 }}
-        animate={{ scaleY: 1, opacity: 1, width: '100%' }}
-        exit={{ scaleY: 0.2, opacity: 0 }}
-        transition={{ duration: 0.5 }}
-      >
-        <Card pb={5} overflow="unset">
-          <CardHeaderBetter isTopBorder={isOpen}>
-            <SectionHeader
-              title={columnState?.name}
-              subTitle={`Last Modification: ${new Date(
-                columnState?.modificationDate
-              ).toLocaleString()}`}
-              RightComponent={() => (
-                <IconButton
-                  size="sm"
-                  aria-label="Open / Close"
-                  colorScheme="brand"
-                  variant={isOpen ? 'outline' : 'solid'}
-                  icon={
-                    isOpen ? (
-                      <MdKeyboardArrowUp size={20} />
-                    ) : (
-                      <MdKeyboardArrowDown size={20} />
-                    )
-                  }
-                  onClick={toggle}
-                />
-              )}
-            />
-            <TagsLine columnState={columnState} />
-          </CardHeaderBetter>
-          <Collapse in={isOpen} animateOpacity style={{ overflow: 'initial' }}>
-            <CardBody py={0}>
-              <Divider pb={1} />
-              <VStack w="100%" py={5} alignItems="flex-start">
-                <Box py={2}>
-                  <Heading size="md">Title</Heading>
-                </Box>
-                <InlineEditField
-                  id={`metadata[${fieldIndex}].title`}
-                  fontSize="xl"
-                  placeholder="Title (or Name)"
-                />
-                <Box py={5}>
-                  <Heading size="md">Description</Heading>
-                </Box>
-                <InlineEditField
-                  id={`metadata[${fieldIndex}].description`}
-                  type="textarea"
-                  placeholder="Description"
-                />
-                <Divider pt={6} />
-                <Box py={5}>
-                  <Heading size="md">Columns Tags</Heading>
-                  <Text>
-                    you can tag your columns for documantions, apply policies &
-                    searching.
-                  </Text>
-                </Box>
-                <TagsAutocomplete
-                  id={`metadata[${fieldIndex}].tags`}
-                  type={TagType.COLUMN}
-                  target={{ columnId: columnState.id }}
-                  defaultValue={[...columnState.metadata.tags]}
-                />
-                <Divider pt={10} />
-                <Box py={5}>
-                  <Heading size="md">Referances</Heading>
-                  <Text>relations between views/volumns</Text>
-                </Box>
-                <LayoutGroup w="100%">
-                  {columnReferance.map((item, index) => (
-                    <ColumnReferance
-                      key={`ref-${item?.id || index}`}
-                      columnReferanceState={item}
-                    />
-                  ))}
-                </LayoutGroup>
-              </VStack>
-            </CardBody>
-          </Collapse>
-        </Card>
-      </motion.div>
-    </AnimatePresence>
+    <motion.div
+      layout
+      initial={{ scaleY: 0.2, position: 'relative', opacity: 0 }}
+      animate={{ scaleY: 1, opacity: 1, width: '100%' }}
+      exit={{ scaleY: 0.2, opacity: 0 }}
+      transition={{ duration: 1, bounce: 0.8, type: 'spring' }}
+    >
+      <Card pb={5} overflow="unset">
+        <CardHeaderBetter isTopBorder={isOpen}>
+          <SectionHeader
+            title={columnState?.name}
+            subTitle={`Last Modification: ${new Date(
+              columnState?.modificationDate
+            ).toLocaleString()}`}
+            RightComponent={() => (
+              <IconButton
+                size="sm"
+                aria-label="Open / Close"
+                colorScheme="brand"
+                variant={isOpen ? 'outline' : 'solid'}
+                icon={
+                  isOpen ? (
+                    <MdKeyboardArrowUp size={20} />
+                  ) : (
+                    <MdKeyboardArrowDown size={20} />
+                  )
+                }
+                onClick={toggle}
+              />
+            )}
+          />
+          <TagsLine columnState={columnState} />
+        </CardHeaderBetter>
+        <Collapse in={isOpen} animateOpacity style={{ overflow: 'initial' }}>
+          <CardBody py={0}>
+            <Divider pb={1} />
+            <VStack w="100%" py={5} alignItems="flex-start">
+              <Box py={2}>
+                <Heading size="md">Title</Heading>
+              </Box>
+              <InlineEditField
+                id={`metadata[${fieldIndex}].title`}
+                fontSize="xl"
+                placeholder="Title (or Name)"
+              />
+              <Box py={5}>
+                <Heading size="md">Description</Heading>
+              </Box>
+              <InlineEditField
+                id={`metadata[${fieldIndex}].description`}
+                type="textarea"
+                placeholder="Description"
+              />
+              <Divider pt={6} />
+              <Box py={5}>
+                <Heading size="md">Columns Tags</Heading>
+                <Text>
+                  you can tag your columns for documantions, apply policies &
+                  searching.
+                </Text>
+              </Box>
+              <TagsAutocomplete
+                id={`metadata[${fieldIndex}].tags`}
+                type={TagType.COLUMN}
+                target={{ columnId: columnState.id }}
+                defaultValue={[...columnState.metadata.tags]}
+              />
+              <Divider pt={10} />
+              <Box py={5}>
+                <Heading size="md">Referances</Heading>
+                <Text>relations between views/volumns</Text>
+              </Box>
+              <LayoutGroup>
+                {columnReferanceWithNamesState.map((item, index) => (
+                  <ColumnReferance
+                    key={`ref-${item?.id || index}`}
+                    columnReferanceState={item}
+                  />
+                ))}
+              </LayoutGroup>
+            </VStack>
+          </CardBody>
+        </Collapse>
+      </Card>
+    </motion.div>
   );
 };

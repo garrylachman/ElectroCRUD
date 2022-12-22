@@ -1,18 +1,27 @@
-import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import {
   Box,
+  Button,
+  Collapse,
   Flex,
   HStack,
-  VStack,
-  Text,
   Icon,
+  Text,
   useColorModeValue,
-  Collapse,
-  Button,
+  VStack,
 } from '@chakra-ui/react';
-import { MdHome, MdViewList, MdAdd, MdTableView, MdEdit } from 'react-icons/md';
-import { useAppSelector } from 'renderer/store/hooks';
+import { AnimatePresence, LayoutGroup, motion } from 'framer-motion';
 import { useMemo } from 'react';
+import {
+  MdAdd,
+  MdEdit,
+  MdHome,
+  MdSettings,
+  MdTableView,
+  MdViewList,
+} from 'react-icons/md';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { MotionBox } from 'renderer/components/motions/motion-box';
+import { useAppSelector } from 'renderer/store/hooks';
 import { ViewsReducer } from 'renderer/store/reducers';
 
 export function SidebarLinks() {
@@ -52,6 +61,7 @@ export function SidebarLinks() {
   ];
 
   const links = [
+    { to: 'settings', text: 'Settings', icon: MdSettings, subLinks: [] },
     { to: 'accounts', text: 'Accounts', icon: MdHome, subLinks: [] },
     { to: 'views', text: 'Views', icon: MdViewList, subLinks: viewsLinks },
   ];
@@ -62,6 +72,7 @@ export function SidebarLinks() {
       justifyContent="space-between"
       w="100%"
       flexDirection="column"
+      as={MotionBox}
     >
       {links.map((link) => (
         <HStack
@@ -98,71 +109,101 @@ export function SidebarLinks() {
                 </Text>
               </Flex>
             </NavLink>
-            <Collapse in={activeRoute(link.to)} style={{ width: '-webkit-fill-available' }}>
-              {activeRoute(link.to) ? (
-                <VStack alignItems="start" pt={2}>
-                  {link.subLinks.map((subLink) => (
-                    <Flex
-                      justifyContent="space-between"
-                      borderRightColor="white"
-                      _hover={{
-                        borderRightColor: 'brand.100',
-                      }}
-                      borderRightWidth="5px"
-                      w="100%"
-                    >
-                      <NavLink
-                        to={`${link.to}/${subLink.to}`}
-                        key={`${link.to}/${subLink.to}`}
+            <Collapse
+              in={activeRoute(link.to)}
+              style={{ width: '-webkit-fill-available', overflow: 'unset' }}
+            >
+              {activeRoute(link.to) && link.subLinks.length > 0 ? (
+                <LayoutGroup>
+                  <VStack alignItems="start" pt={2} color='secondaryGray.600' fontWeight="500">
+                    {link.subLinks.map((subLink, subLinksIndex) => (
+                      <motion.div
+                        initial={{
+                          x: -50,
+                          scaleY: 0,
+                          position: 'relative',
+                          opacity: 0,
+                        }}
+                        animate={{ x: 0, scaleY: 1, opacity: 1 }}
+                        exit={{ x: -20, scaleY: 0, opacity: 0 }}
+                        transition={{
+                          duration: 0.5,
+                          bounce: 0.7,
+                          type: 'spring',
+                          delay: subLinksIndex * 0.1,
+                          ease: 'easeOut',
+                        }}
+                        whileHover={{
+                          color: '#422AFB',
+                          scale: 1.1,
+                          transition: {
+                            duration: 0.3,
+                            delay: 0,
+                          },
+                        }}
+                        whileTap={{ scaleY: [0.8, 1.1, 0.5, 1.4, 1], transition: { delay: 0, duration: 0.3, } }}
                       >
                         <Flex
-                          w="100%"
-                          alignItems="center"
                           justifyContent="space-between"
+                          borderRightColor="white"
+                          borderRightWidth="5px"
+                          w="100%"
                         >
-                          <Box
-                            color={
-                              activeRoute(`${link.to}/${subLink.to}`)
-                                ? activeIcon
-                                : inactiveColor
-                            }
-                            me="12px"
-                            display="inline-flex"
+                          <NavLink
+                            to={`${link.to}/${subLink.to}`}
+                            key={`${link.to}/${subLink.to}`}
                           >
-                            <Icon
-                              as={subLink.icon}
-                              width="20px"
-                              height="20px"
-                              color="inherit"
-                            />
-                          </Box>
-                          <Text
-                            me="auto"
-                            color={
-                              activeRoute(`${link.to}/${subLink.to}`)
-                                ? activeColor
-                                : 'secondaryGray.600'
+                            <Flex
+                              w="100%"
+                              alignItems="center"
+                              justifyContent="space-between"
+                            >
+                              <Box
+                                color={
+                                  activeRoute(`${link.to}/${subLink.to}`)
+                                    ? activeIcon
+                                    : "inherit"
+                                }
+                                me="12px"
+                                display="inline-flex"
+                              >
+                                <Icon
+                                  as={subLink.icon}
+                                  width="20px"
+                                  height="20px"
+                                  color="inherit"
+                                />
+                              </Box>
+                              <Text
+                                me="auto"
+                                color={
+                                  activeRoute(`${link.to}/${subLink.to}`)
+                                    ? activeColor
+                                    : 'inherit'
+                                }
+                                fontWeight="inherit"
+                                fontSize="md"
+                              >
+                                {subLink.text}
+                              </Text>
+                            </Flex>
+                          </NavLink>
+                          <Button
+                            onClick={() =>
+                              navigate(`${link.to}/${subLink.to}/edit`)
                             }
-                            fontWeight="500"
-                            fontSize="md"
+                            borderRadius={30}
+                            borderRightRadius={0}
+                            variant="ghost"
+                            size="xs"
                           >
-                            {subLink.text}
-                          </Text>
+                            <Icon as={MdEdit} />
+                          </Button>
                         </Flex>
-                      </NavLink>
-                      <Button
-                        onClick={() => navigate(`${link.to}/${subLink.to}/edit`)}
-                        borderRadius={30}
-                        borderRightRadius={0}
-                        variant="ghost"
-                        _hover={{ bg: 'brand.100' }}
-                        size="xs"
-                      >
-                        <Icon as={MdEdit} />
-                      </Button>
-                    </Flex>
-                  ))}
-                </VStack>
+                      </motion.div>
+                    ))}
+                  </VStack>
+                </LayoutGroup>
               ) : undefined}
             </Collapse>
           </>

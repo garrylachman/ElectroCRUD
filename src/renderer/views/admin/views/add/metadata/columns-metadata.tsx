@@ -1,4 +1,5 @@
 import { Box, Button, Grid, HStack, Icon } from '@chakra-ui/react';
+import { LayoutGroup } from 'framer-motion';
 import _ from 'lodash';
 import * as R from 'ramda';
 import { FC, useContext, useEffect, useMemo } from 'react';
@@ -93,13 +94,15 @@ export const ColumnsMetadata: FC<ColumnsMetadataProperties> = () => {
       <FormProvider {...formContext}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Grid templateColumns="repeat(1, 1fr)" gap={6}>
-            {fields.map((data, index) => (
-              <ColumnMetadataCard
-                key={data.columnId}
-                fieldIndex={index}
-                columnId={data.columnId}
-              />
-            ))}
+            <LayoutGroup>
+              {fields.map((data, index) => (
+                <ColumnMetadataCard
+                  key={data.columnId}
+                  fieldIndex={index}
+                  columnId={data.columnId}
+                />
+              ))}
+            </LayoutGroup>
           </Grid>
           <Box pt={8}>
             <HStack justifyContent="space-between">

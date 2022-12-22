@@ -9,6 +9,7 @@ import {
   CodeExamplesReducer,
   ColumnsReducer,
   ColumnsReferanceReducer,
+  PoliciesReducer,
   SessionReducer,
   TagsReducer,
   TemporaryFilterRulesReducer,
@@ -45,6 +46,7 @@ const rootReducer = combineReducers({
   [TemporaryFiltersReducer.name]: TemporaryFiltersReducer.reducer,
   [TemporaryFilterRulesReducer.name]: TemporaryFilterRulesReducer.reducer,
   [ViewFiltersReducer.name]: ViewFiltersReducer.reducer,
+  [PoliciesReducer.name]: PoliciesReducer.reducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

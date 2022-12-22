@@ -1,12 +1,16 @@
-import { ConnectionConfig, ServerType, ServerTypeEnum } from 'shared';
 import * as Joi from 'joi';
-import { BaseRO } from './base.def';
+import { ConnectionConfig, ServerType, ServerTypeEnum } from 'shared';
+import { Object } from 'ts-toolbelt';
+
+import { BaseRO } from './base.define';
 
 export type AccountRO = BaseRO & {
   name: string;
   client: ServerType;
   connection: ConnectionConfig;
 };
+
+export type StrictAccountRO = Object.Required<AccountRO, 'id' | 'creationDate'>;
 
 export const ValidateServerConnection = Joi.object({
   host: Joi.alternatives([Joi.string().hostname(), Joi.string().ip()])
@@ -38,6 +42,7 @@ export const ValidateConnection = Joi.object({
     .required(),
   connection: Joi.when(Joi.ref('..client'), {
     is: ServerTypeEnum.SQLITE,
+    // eslint-disable-next-line unicorn/no-thenable
     then: ValidateSqliteConnection.required(),
     otherwise: ValidateServerConnection.required(),
   }),

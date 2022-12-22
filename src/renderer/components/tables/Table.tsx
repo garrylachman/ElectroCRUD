@@ -1,4 +1,6 @@
 import {
+  Checkbox,
+  CheckboxProps,
   Flex,
   Table,
   Tbody,
@@ -8,31 +10,28 @@ import {
   Thead,
   Tr,
   useColorModeValue,
-  Checkbox,
-  CheckboxProps,
-  Skeleton,
 } from '@chakra-ui/react';
 import {
+  CellContext,
+  ColumnDef,
   createColumnHelper,
   flexRender,
   getCoreRowModel,
   getSortedRowModel,
+  RowSelectionState,
   SortingState,
   useReactTable,
-  CellContext,
-  ColumnDef,
-  RowSelectionState,
 } from '@tanstack/react-table';
-import {
-  FC,
-  ReactElement,
-  useMemo,
-  useState,
-  PropsWithChildren,
-  useEffect,
-} from 'react';
 import CSS from 'csstype';
 import _ from 'lodash';
+import React, {
+  FC,
+  PropsWithChildren,
+  ReactElement,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 
 type ElectroCRUDTableHeader = {
   key: string;
@@ -42,7 +41,7 @@ type ElectroCRUDTableHeader = {
 
 type CustomCellReturn = ReactElement;
 
-type ElectroCRUDTableProps<T> = {
+type ElectroCRUDTableProperties<T> = {
   data: T[];
   columns: ElectroCRUDTableHeader[];
   customCell?: (info: CellContext<T, any>) => CustomCellReturn | void;
@@ -74,14 +73,20 @@ const TableCell: FC<PropsWithChildren & { textColor: CSS.Property.Color }> = ({
 
 const IndeterminateCheckbox: FC<CheckboxProps> = ({ ...rest }) => (
   <Flex alignItems="center">
-    <Checkbox {...rest} />
+    <Checkbox colorScheme="brand" size="lg" {...rest} />
   </Flex>
 );
 
 export const ElectroCRUDTable = <TT extends Record<string, any>>(
-  props: ElectroCRUDTableProps<TT>
+  properties: ElectroCRUDTableProperties<TT>
 ) => {
-  const { data, columns, customCell, onSelectedItems, isLoaded = true } = props;
+  const {
+    data,
+    columns,
+    customCell,
+    onSelectedItems,
+    isLoaded = true,
+  } = properties;
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
   const columnHelper = createColumnHelper<TT>();
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -98,9 +103,8 @@ export const ElectroCRUDTable = <TT extends Record<string, any>>(
 
   const tableColumns = useMemo<ColumnDef<TT>[]>(() => {
     return [
-      ...(!onSelectedItems
-        ? []
-        : [
+      ...(onSelectedItems
+        ? [
             columnHelper.accessor('select' as any, {
               id: 'select',
               enableSorting: false,
@@ -123,7 +127,8 @@ export const ElectroCRUDTable = <TT extends Record<string, any>>(
                 />
               ),
             }),
-          ]),
+          ]
+        : []),
     ].concat(
       columns.map((col) => {
         return columnHelper.accessor(col.key as any, {
@@ -136,15 +141,15 @@ export const ElectroCRUDTable = <TT extends Record<string, any>>(
           ),
           cell: (info) => (
             <TableCell textColor={textColor}>
-              {customCell !== undefined ? (
-                customCell(info) || <>{info.getValue()}</>
-              ) : (
+              {customCell === undefined ? (
                 <>{info.getValue()}</>
+              ) : (
+                customCell(info) || <>{info.getValue()}</>
               )}
             </TableCell>
           ),
         });
-      }) as ColumnDef<TT>[]
+      })
     );
   }, [onSelectedItems, columnHelper, columns, textColor, customCell]);
 
@@ -220,31 +225,15 @@ export const ElectroCRUDTable = <TT extends Record<string, any>>(
             <Tr key={row.id}>
               {row.getVisibleCells().map((cell) => {
                 return (
-                  <Skeleton
+                  <Td
                     key={`cell-${cell.id}`}
-                    isLoaded={isLoaded}
-                    sx={
-                      !isLoaded
-                        ? {
-                            display: 'table-cell',
-                            borderBottom: '15px solid white !important',
-                            td: { border: 'none' },
-                          }
-                        : { display: 'contents' }
-                    }
+                    fontSize={{ sm: '14px' }}
+                    borderColor="transparent"
+                    width={cell.column.id === 'select' ? '30px' : 'auto'}
+                    pe="0px"
                   >
-                    <Td
-                      fontSize={{ sm: '14px' }}
-                      borderColor="transparent"
-                      width={cell.column.id === 'select' ? '30px' : 'auto'}
-                      pe="0px"
-                    >
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </Td>
-                  </Skeleton>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </Td>
                 );
               })}
             </Tr>

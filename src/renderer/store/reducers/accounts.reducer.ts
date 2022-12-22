@@ -1,9 +1,9 @@
-import { createSlice, createEntityAdapter } from '@reduxjs/toolkit';
-import { v4 as uuidv4 } from 'uuid';
-import { AccountRO } from 'renderer/defenitions/record-object';
-import { NestedPartial } from 'shared';
+import { createEntityAdapter, createSlice, isAnyOf } from '@reduxjs/toolkit';
+import { AccountRO, StrictAccountRO } from 'renderer/defenitions/record-object';
 
-const accountsAdapter = createEntityAdapter<AccountRO>({
+import { createLastModificationMatcher, prepareStateUpdate } from './helpers';
+
+const accountsAdapter = createEntityAdapter<StrictAccountRO>({
   selectId: (account) => account.id,
   sortComparer: (a, b) => b.creationDate - a.creationDate,
 });
@@ -17,30 +17,20 @@ const accountsSlice = createSlice({
   reducers: {
     addOne: {
       reducer: addOne,
-      prepare(payload: NestedPartial<AccountRO>) {
+      prepare(payload: AccountRO) {
         return {
-          payload: {
-            ...payload,
-            id: uuidv4(),
-            creationDate: Date.now(),
-            modificationDate: Date.now(),
-          },
+          payload: prepareStateUpdate<StrictAccountRO>(payload),
         };
       },
     },
     updateOne: {
       reducer: updateOne,
-      prepare(payload: AccountRO): {
-        payload: AccountRO & { changes: AccountRO };
-      } {
+      prepare(payload: AccountRO) {
         return {
           payload: {
-            ...payload,
-            modificationDate: Date.now(),
-            changes: {
-              ...payload,
-              modificationDate: Date.now(),
-            },
+            id: payload.id as string,
+            name: payload.name,
+            changes: prepareStateUpdate<StrictAccountRO>(payload),
           },
         };
       },
@@ -49,6 +39,16 @@ const accountsSlice = createSlice({
     removeOne,
     removeMany,
     removeAll,
+  },
+  extraReducers: (builder) => {
+    createLastModificationMatcher<AccountRO>(
+      builder,
+      isAnyOf(
+        accountsSlice.actions.updateOne.match,
+        accountsSlice.actions.addOne.match
+      ),
+      (action) => action.payload.id as string
+    );
   },
 });
 

@@ -1,24 +1,26 @@
 import {
-  Grid,
-  GridItem,
-  VStack,
-  Heading,
-  Box,
-  Text,
   Alert,
   AlertDescription,
   AlertTitle,
+  Box,
   Collapse,
   Divider,
+  Grid,
+  GridItem,
+  Heading,
+  Text,
+  VStack,
 } from '@chakra-ui/react';
+import _ from 'lodash';
 import { FC, useContext } from 'react';
 import { useFormContext } from 'react-hook-form';
-import _ from 'lodash';
-import { ViewRO } from 'renderer/defenitions/record-object';
 import { InlineEditField } from 'renderer/components/fields';
-import { Categories } from 'renderer/defenitions/record-object/categories.def';
-import { useAppSelector } from 'renderer/store/hooks';
 import { ViewScopedContext } from 'renderer/contexts';
+import { ViewRO } from 'renderer/defenitions/record-object';
+import {
+  Categories,
+} from 'renderer/defenitions/record-object/categories.define';
+import { useAppSelector } from 'renderer/store/hooks';
 
 type TableDocumentCardProperties = {
 };

@@ -31,4 +31,4 @@ export enum Categories {
   UTILITIES = 'utilities',
   UNCATEGORIZED = 'uncategorized',
   OTHER = 'other',
-};
+}

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useAppDispatch } from 'renderer/store/hooks';
 import { ToastReducer } from 'renderer/store/reducers';
 import { IPCChannel } from 'shared';
@@ -21,12 +21,10 @@ export const useBaseRequest = <T extends ResponseType>(
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isExecuted, setIsExecuted] = useState<boolean>(false);
 
-  const execute = () => {
+  const execute = useCallback(() => {
     setResult();
     setIsLoading(true);
     setIsExecuted(false);
-
-    console.log("request", request);
 
     BaseRequest<T>(request.channel, request)
       .then((value) => {
@@ -50,7 +48,7 @@ export const useBaseRequest = <T extends ResponseType>(
           })
         );
       });
-  };
+  }, [request]);
 
   useEffect(() => {
     setIsLoading(false);

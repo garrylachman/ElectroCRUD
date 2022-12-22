@@ -1,11 +1,14 @@
-import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
-import { ColumnReferanceRO } from 'renderer/defenitions/record-object';
-import { v4 as uuidv4 } from 'uuid';
-import _ from 'lodash';
+import { createEntityAdapter, createSlice, isAnyOf } from '@reduxjs/toolkit';
+import {
+  ColumnReferanceRO,
+  StrictColumnReferanceRO,
+} from 'renderer/defenitions/record-object';
 
-const columnReferanceAdapter = createEntityAdapter<ColumnReferanceRO>({
-  selectId: (columnReferance) => columnReferance?.id || '',
-  sortComparer: (a, b) => (b?.creationDate || 0) - (a?.creationDate || 0),
+import { createLastModificationMatcher, prepareStateUpdate } from './helpers';
+
+const columnReferanceAdapter = createEntityAdapter<StrictColumnReferanceRO>({
+  selectId: (columnReferance) => columnReferance.id,
+  sortComparer: (a, b) => b.creationDate - a.creationDate,
 });
 
 const { upsertOne, upsertMany, removeOne, removeMany, removeAll } =
@@ -19,11 +22,7 @@ const columnReferanceSlice = createSlice({
       reducer: upsertOne,
       prepare(payload: ColumnReferanceRO) {
         return {
-          payload: {
-            ...payload,
-            id: payload.id || uuidv4(),
-            creationDate: payload.creationDate || Date.now(),
-          },
+          payload: prepareStateUpdate<StrictColumnReferanceRO>(payload),
         };
       },
     },
@@ -31,12 +30,9 @@ const columnReferanceSlice = createSlice({
       reducer: upsertMany,
       prepare(payload: ColumnReferanceRO[]) {
         return {
-          payload: payload.map((item) => ({
-            ...item,
-            id: item.id || uuidv4(),
-            creationDate: item.creationDate || Date.now(),
-            modificationDate: Date.now(),
-          })),
+          payload: payload.map((item) =>
+            prepareStateUpdate<StrictColumnReferanceRO>(item)
+          ),
         };
       },
     },
@@ -45,14 +41,13 @@ const columnReferanceSlice = createSlice({
     removeAll,
   },
   extraReducers: (builder) => {
-    builder.addMatcher(
-      columnReferanceSlice.actions.upsertOne.match,
-      (state, action) => {
-        const updatedColumnReferance = state.entities[action.payload.id];
-        if (updatedColumnReferance !== undefined) {
-          updatedColumnReferance.modificationDate = Date.now();
-        }
-      }
+    createLastModificationMatcher<ColumnReferanceRO>(
+      builder,
+      isAnyOf(
+        columnReferanceSlice.actions.upsertOne.match,
+        columnReferanceSlice.actions.upsertMany
+      ),
+      (action) => action.payload.id as string
     );
   },
 });

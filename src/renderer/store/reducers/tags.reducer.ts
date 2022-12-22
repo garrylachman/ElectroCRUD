@@ -1,14 +1,14 @@
-import { createSlice, createEntityAdapter } from '@reduxjs/toolkit';
-import { v4 as uuidv4 } from 'uuid';
-import { TagRO } from 'renderer/defenitions/record-object';
+import { createEntityAdapter, createSlice, isAnyOf } from '@reduxjs/toolkit';
+import { StrictTagRO, TagRO } from 'renderer/defenitions/record-object';
 
-const tagsAdapter = createEntityAdapter<TagRO>({
-  selectId: (tag: TagRO) => tag?.id || '',
-  sortComparer: (a, b) => (b?.creationDate || 0) - (a?.creationDate || 0),
+import { createLastModificationMatcher, prepareStateUpdate } from './helpers';
+
+const tagsAdapter = createEntityAdapter<StrictTagRO>({
+  selectId: (tag) => tag.id,
+  sortComparer: (a, b) => b.creationDate - a.creationDate,
 });
 
-const { addOne, upsertOne, upsertMany, removeOne, removeMany, removeAll } =
-  tagsAdapter;
+const { upsertOne, upsertMany, removeOne, removeMany, removeAll } = tagsAdapter;
 
 const tagsSlice = createSlice({
   name: 'tags',
@@ -18,12 +18,7 @@ const tagsSlice = createSlice({
       reducer: upsertOne,
       prepare(payload: TagRO, meta: { viewId?: string; columnId?: string }) {
         return {
-          payload: {
-            ...payload,
-            id: payload.id || uuidv4(),
-            creationDate: payload.creationDate || Date.now(),
-            modificationDate: Date.now(),
-          },
+          payload: prepareStateUpdate<StrictTagRO>(payload),
           meta,
         };
       },
@@ -31,6 +26,13 @@ const tagsSlice = createSlice({
     removeOne,
     removeMany,
     removeAll,
+  },
+  extraReducers: (builder) => {
+    createLastModificationMatcher<TagRO>(
+      builder,
+      isAnyOf(tagsSlice.actions.upsertOne.match),
+      (action) => action.payload.id as string
+    );
   },
 });
 

@@ -66,7 +66,7 @@ export const ColumnReferance: FC<ColumnReferanceProperties> = ({
   const { getById } = useContext(EntitiesIndexerContext);
   const dispatch = useAppDispatch();
   const [selectedView, setSelectedView] = useState(
-    columnReferanceState?.toView
+    columnReferanceState?.toView.id
   );
   const [selectedColumnState, setSelectedColumnState] = useState(
     columnReferanceState?.to
@@ -93,159 +93,157 @@ export const ColumnReferance: FC<ColumnReferanceProperties> = ({
   );
 
   return (
-    <AnimatePresence>
-      <motion.div
-        key="CodeExamples"
-        initial={{ scaleY: 0.2, position: 'relative', opacity: 0 }}
-        animate={{ scaleY: 1, opacity: 1, width: '100%' }}
-        exit={{ scaleY: 0.2, opacity: 0 }}
-        transition={{ duration: 1 }}
-      >
-        <FormProvider {...formContext}>
-          <form style={{ width: '100%' }}>
+    <motion.div
+      layout
+      initial={{ scale: 0.2, position: 'relative', opacity: 0.2 }}
+      animate={{ scale: 1, opacity: 1, width: '100%' }}
+      exit={{ scale: 0.2, opacity: 0.2 }}
+      transition={{ duration: 0.5 }}
+    >
+      <FormProvider {...formContext}>
+        <form style={{ width: '100%' }}>
+          <Box
+            flexDirection="column"
+            w="100%"
+            borderLeftWidth={5}
+            p={5}
+            pt="5px"
+            borderLeftRadius="10px"
+            borderLeftColor={isDirty && isValid ? 'green' : 'brand'}
+          >
             <Box
-              flexDirection="column"
-              w="100%"
-              borderLeftWidth={5}
-              p={5}
-              pt="5px"
-              borderLeftRadius="10px"
-              borderLeftColor={isDirty && isValid ? 'green' : 'brand'}
+              alignItems="center"
+              justifyContent="space-between"
+              position="relative"
+              top="-5px"
+              right="0px"
+              textAlign="right"
             >
-              <Box
-                alignItems="center"
-                justifyContent="space-between"
-                position="relative"
-                top="-5px"
-                right="0px"
-                textAlign="right"
-              >
-                <IconButton
-                  hidden={columnReferanceState.id === undefined}
-                  size="xs"
-                  aria-label="Open / Close"
-                  colorScheme="brand"
-                  variant={isOpen ? 'outline' : 'solid'}
-                  icon={
-                    isOpen ? (
-                      <MdKeyboardArrowUp size={20} />
-                    ) : (
-                      <MdKeyboardArrowDown size={20} />
-                    )
-                  }
-                  onClick={toggle}
+              <IconButton
+                hidden={columnReferanceState.id === undefined}
+                size="xs"
+                aria-label="Open / Close"
+                colorScheme="brand"
+                variant={isOpen ? 'outline' : 'solid'}
+                icon={
+                  isOpen ? (
+                    <MdKeyboardArrowUp size={20} />
+                  ) : (
+                    <MdKeyboardArrowDown size={20} />
+                  )
+                }
+                onClick={toggle}
+              />
+            </Box>
+            <Collapse
+              in={isOpen}
+              animateOpacity
+              style={{ overflow: 'initial' }}
+            >
+              <Grid templateColumns="repeat(2, 1fr)" gap={3}>
+                <ColumnReferanceViewComponent
+                  excludeViewId={viewState?.id}
+                  selectedViewId={selectedView}
+                  onSelected={(value, name) => {
+                    setSelectedView(value);
+                  }}
                 />
-              </Box>
-              <Collapse
-                in={isOpen}
-                animateOpacity
-                style={{ overflow: 'initial' }}
-              >
-                <Grid templateColumns="repeat(2, 1fr)" gap={3}>
-                  <ColumnReferanceViewComponent
-                    excludeViewId={viewState?.id}
+                <ScaleFade
+                  in={selectedView !== undefined}
+                  initialScale={0.2}
+                  unmountOnExit
+                >
+                  <ColumnReferanceColumnComponent
                     selectedViewId={selectedView}
+                    selectedColumnId={selectedColumnState}
                     onSelected={(value, name) => {
-                      setSelectedView(value);
+                      setSelectedColumnState(value);
                     }}
                   />
+                </ScaleFade>
+                <GridItem colSpan={2} py={1}>
                   <ScaleFade
-                    in={selectedView !== undefined}
+                    in={selectedColumnState !== undefined}
                     initialScale={0.2}
                     unmountOnExit
                   >
-                    <ColumnReferanceColumnComponent
-                      selectedViewId={selectedView}
-                      selectedColumnId={selectedColumnState}
-                      onSelected={(value, name) => {
-                        setSelectedColumnState(value);
-                      }}
+                    <Heading size="sm" py={2}>
+                      Description
+                    </Heading>
+                    <InlineEditField
+                      id="description"
+                      fontSize="md"
+                      placeholder="Please describe the releations beween the tables / columns"
                     />
                   </ScaleFade>
-                  <GridItem colSpan={2} py={1}>
-                    <ScaleFade
-                      in={selectedColumnState !== undefined}
-                      initialScale={0.2}
-                      unmountOnExit
-                    >
-                      <Heading size="sm" py={2}>
-                        Description
-                      </Heading>
-                      <InlineEditField
-                        id="description"
-                        fontSize="md"
-                        placeholder="Please describe the releations beween the tables / columns"
-                      />
-                    </ScaleFade>
-                  </GridItem>
-                  <GridItem colSpan={2}>
-                    <Button
-                      variant="solid"
-                      colorScheme="brand"
-                      type="button"
-                      isDisabled={!isValid}
-                      onClick={formContext.handleSubmit(onSubmit)}
-                      mr={3}
-                    >
-                      Save
-                    </Button>
-                    <Button
-                      variant="solid"
-                      colorScheme="red"
-                      type="button"
-                      hidden={columnReferanceState?.id === undefined}
-                      onClick={() =>
-                        ConfirmPromiseDeleteModal({
-                          entityName: `Referance in ${viewState?.name}`,
+                </GridItem>
+                <GridItem colSpan={2}>
+                  <Button
+                    variant="solid"
+                    colorScheme="brand"
+                    type="button"
+                    isDisabled={!isValid}
+                    onClick={formContext.handleSubmit(onSubmit)}
+                    mr={3}
+                  >
+                    Save
+                  </Button>
+                  <Button
+                    variant="solid"
+                    colorScheme="red"
+                    type="button"
+                    hidden={columnReferanceState?.id === undefined}
+                    onClick={() =>
+                      ConfirmPromiseDeleteModal({
+                        entityName: `Referance in ${viewState?.name}`,
+                      })
+                        .then(() => {
+                          dispatch(
+                            ColumnsReferanceReducer.actions.removeOne(
+                              columnReferanceState?.id
+                            )
+                          );
+                          return true;
                         })
-                          .then(() => {
-                            dispatch(
-                              ColumnsReferanceReducer.actions.removeOne(
-                                columnReferanceState?.id
-                              )
-                            );
-                            return true;
-                          })
-                          .catch(() => {})
-                      }
-                    >
-                      Delete
-                    </Button>
-                  </GridItem>
-                </Grid>
-              </Collapse>
-              <Collapse
-                in={!isOpen}
-                animateOpacity
-                style={{
-                  overflow: 'initial',
-                  position: 'relative',
-                  top: '-2px',
-                }}
-              >
-                <>
-                  {useMemo(
-                    () => (
-                      <span style={{ display: 'flex' }}>
-                        <Kbd fontSize="md">
-                          {getById(columnReferanceState.fromView)}.
-                          {getById(columnReferanceState.from)}
-                        </Kbd>
-                        <Icon as={MdArrowForward} fontSize={20} mx={2} />
-                        <Kbd fontSize="md">
-                          {getById(columnReferanceState.toView)}.
-                          {getById(columnReferanceState.to)}
-                        </Kbd>
-                      </span>
-                    ),
-                    [columnReferanceState]
-                  )}
-                </>
-              </Collapse>
-            </Box>
-          </form>
-        </FormProvider>
-      </motion.div>
-    </AnimatePresence>
+                        .catch(() => {})
+                    }
+                  >
+                    Delete
+                  </Button>
+                </GridItem>
+              </Grid>
+            </Collapse>
+            <Collapse
+              in={!isOpen}
+              animateOpacity
+              style={{
+                overflow: 'initial',
+                position: 'relative',
+                top: '-2px',
+              }}
+            >
+              <>
+                {useMemo(
+                  () => (
+                    <span style={{ display: 'flex' }}>
+                      <Kbd fontSize="md">
+                        {columnReferanceState.fromView.name}.
+                        {getById(columnReferanceState.from)}
+                      </Kbd>
+                      <Icon as={MdArrowForward} fontSize={20} mx={2} />
+                      <Kbd fontSize="md">
+                        {columnReferanceState.toView.name}.
+                        {getById(columnReferanceState.to)}
+                      </Kbd>
+                    </span>
+                  ),
+                  [columnReferanceState]
+                )}
+              </>
+            </Collapse>
+          </Box>
+        </form>
+      </FormProvider>
+    </motion.div>
   );
 };

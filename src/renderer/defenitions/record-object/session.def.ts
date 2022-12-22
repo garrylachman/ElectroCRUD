@@ -1,4 +1,4 @@
-import { AccountRO } from './account.def';
+import { AccountRO } from './account.define';
 
 export type SessionRO = {
   account?: AccountRO;

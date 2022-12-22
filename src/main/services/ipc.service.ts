@@ -1,17 +1,24 @@
-import { ipcMain, IpcMainInvokeEvent, webContents } from 'electron';
-import { injectable, inject, delay } from 'tsyringe';
-import { RequestFactory } from '../ipc';
 import 'reflect-metadata';
+
+import { ipcMain, IpcMainInvokeEvent, webContents } from 'electron';
+import { Cache, CacheContainer } from 'node-ts-cache';
+import { MemoryStorage } from 'node-ts-cache-storage-memory';
+import * as hash from 'object-hash';
+import { delay, inject, injectable } from 'tsyringe';
+
 import {
-  RequestType,
-  ResponseType,
-  IPCChannel,
+  ConnectRequest,
   ErrorResponse,
   ErrorType,
-  ConnectRequest,
+  IPCChannel,
+  RequestType,
+  ResponseType,
 } from '../../shared/defenitions';
 import { IPCChannelEnum } from '../../shared/enums';
+import { RequestFactory } from '../ipc';
 import { DatabaseService } from './database.service';
+
+const ipcCache = new CacheContainer(new MemoryStorage());
 
 @injectable()
 export class IPCService {
@@ -34,6 +41,7 @@ export class IPCService {
     );
   }
 
+  @Cache(ipcCache, { ttl: 10, calculateKey: (data) => hash.sha1(data) })
   private onRequest(
     event: IpcMainInvokeEvent,
     request: RequestType

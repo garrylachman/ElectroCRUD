@@ -1,8 +1,9 @@
 import { TableInfoRow } from 'shared';
+import { Object } from 'ts-toolbelt';
 
-import { BaseRO, RemoveField } from './base.def';
-import { Categories } from './categories.def';
-import { TagRO } from './tags.def';
+import { BaseRO } from './base.define';
+import { Categories } from './categories.define';
+import { TagRO } from './tags.define';
 
 export type ColumnRO = BaseRO &
   TableInfoRow & {
@@ -12,6 +13,8 @@ export type ColumnRO = BaseRO &
     metadata: MetadataColumnDocsRO;
   };
 
+export type StrictColumnRO = Object.Required<ColumnRO, 'id' | 'creationDate'>;
+
 export type ColumnReferanceRO = BaseRO & {
   fromView: string;
   from: string;
@@ -19,6 +22,16 @@ export type ColumnReferanceRO = BaseRO & {
   to: string;
   description?: string;
 };
+
+export type StrictColumnReferanceRO = Object.Required<
+  ColumnReferanceRO,
+  'id' | 'creationDate'
+>;
+
+export type StrictColumnReferanceWithViewsRO = Object.Overwrite<
+  ColumnReferanceRO,
+  { fromView: ViewRO; toView: ViewRO }
+>;
 
 export type MetadataColumnDocsRO = {
   title?: string;
@@ -58,6 +71,8 @@ export type ViewRO = BaseRO & {
   };
   metadata: MetadataTableDocsRO;
 };
+
+export type StrictViewRO = Object.Required<ViewRO, 'id' | 'creationDate'>;
 
 type ViewVOModfications = {
   columns: ColumnRO[] &

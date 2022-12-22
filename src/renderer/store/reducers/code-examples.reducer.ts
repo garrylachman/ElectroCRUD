@@ -1,10 +1,14 @@
-import { createSlice, createEntityAdapter } from '@reduxjs/toolkit';
-import { CodeExampleRO } from 'renderer/defenitions/record-object';
-import { v4 as uuidv4 } from 'uuid';
+import { createEntityAdapter, createSlice, isAnyOf } from '@reduxjs/toolkit';
+import {
+  CodeExampleRO,
+  StrictCodeExampleRO,
+} from 'renderer/defenitions/record-object';
 
-const codeExamplesAdapter = createEntityAdapter<CodeExampleRO>({
-  selectId: (codeExample) => codeExample?.id || '',
-  sortComparer: (a, b) => (b?.creationDate || 0) - (a?.creationDate || 0),
+import { createLastModificationMatcher, prepareStateUpdate } from './helpers';
+
+const codeExamplesAdapter = createEntityAdapter<StrictCodeExampleRO>({
+  selectId: (codeExample) => codeExample.id,
+  sortComparer: (a, b) => b.creationDate - a.creationDate,
 });
 
 const { upsertOne, upsertMany, removeOne, removeMany, removeAll } =
@@ -18,12 +22,7 @@ const codeExamplesSlice = createSlice({
       reducer: upsertOne,
       prepare(payload: CodeExampleRO) {
         return {
-          payload: {
-            ...payload,
-            id: payload.id || uuidv4(),
-            creationDate: payload.creationDate || Date.now(),
-            modificationDate: Date.now(),
-          },
+          payload: prepareStateUpdate<StrictCodeExampleRO>(payload),
         };
       },
     },
@@ -31,18 +30,25 @@ const codeExamplesSlice = createSlice({
       reducer: upsertMany,
       prepare(payload: CodeExampleRO[]) {
         return {
-          payload: payload.map((item) => ({
-            ...item,
-            id: item.id || uuidv4(),
-            creationDate: item.creationDate || Date.now(),
-            modificationDate: Date.now(),
-          })),
+          payload: payload.map((item) =>
+            prepareStateUpdate<StrictCodeExampleRO>(item)
+          ),
         };
       },
     },
     removeOne,
     removeMany,
     removeAll,
+  },
+  extraReducers: (builder) => {
+    createLastModificationMatcher<CodeExampleRO>(
+      builder,
+      isAnyOf(
+        codeExamplesSlice.actions.upsertOne.match,
+        codeExamplesSlice.actions.upsertMany.match
+      ),
+      (action) => action.payload.id as string
+    );
   },
 });
 

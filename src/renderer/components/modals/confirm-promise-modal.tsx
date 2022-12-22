@@ -5,8 +5,6 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogOverlay,
-  AlertDialogProps,
-  Button,
 } from '@chakra-ui/react';
 import { FocusableElement } from '@chakra-ui/utils';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -40,28 +38,28 @@ export const ConfirmPromiseModalComponent: FC<
   cancelButtonText = 'Cancel',
   confirmButtonColorScheme = 'red',
 }) => {
-  const cancelReference = useRef<FocusableElement>();
+  const cancelReference = useRef<FocusableElement>(null);
 
   const confirm = () => onResolve(true);
   const cancel = () => onReject();
 
   return (
-    <AlertDialog
-      isOpen={isOpen}
-      leastDestructiveRef={cancelReference}
-      isCentered
-      preserveScrollBarGap
-      size={size}
-      onClose={cancel}
-      key={`confirm-alert-${keyu}`}
-    >
-      <AlertDialogOverlay>
-        <AnimatePresence exitBeforeEnter>
+    <AnimatePresence mode="wait">
+      <AlertDialog
+        isOpen={isOpen}
+        leastDestructiveRef={cancelReference}
+        isCentered
+        preserveScrollBarGap
+        size={size}
+        onClose={cancel}
+        key={`confirm-alert-${keyu}`}
+      >
+        <AlertDialogOverlay>
           <motion.div
-            initial={{ scaleX: 0.2, position: 'relative', opacity: 0.2 }}
-            animate={{ scaleX: 1, opacity: 1, width: '100%' }}
-            exit={{ scaleX: 0.2, opacity: 0.2 }}
-            transition={{ duration: 0.3 }}
+            initial={{ scale: 0.2, position: 'relative', opacity: 0.2 }}
+            animate={{ scale: 1, opacity: 1, width: '100%' }}
+            exit={{ scale: 0.2, opacity: 0.2 }}
+            transition={{ duration: 0.8, bounce: 0.7, type: 'spring' }}
           >
             <AlertDialogContent
               overflow="hidden"
@@ -87,7 +85,6 @@ export const ConfirmPromiseModalComponent: FC<
               <AlertDialogFooter py={4} pt={2}>
                 <RippleButton
                   key={`cancel-${keyu}`}
-                  ref={cancelReference}
                   onClick={cancel}
                   bgColor={{
                     step1: 'red.200',
@@ -112,9 +109,9 @@ export const ConfirmPromiseModalComponent: FC<
               </AlertDialogFooter>
             </AlertDialogContent>
           </motion.div>
-        </AnimatePresence>
-      </AlertDialogOverlay>
-    </AlertDialog>
+        </AlertDialogOverlay>
+      </AlertDialog>
+    </AnimatePresence>
   );
 };
 

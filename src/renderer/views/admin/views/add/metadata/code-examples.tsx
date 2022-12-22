@@ -1,5 +1,10 @@
 import { Box, Grid, useBoolean } from '@chakra-ui/react';
-import { AnimatePresence, LayoutGroup, motion } from 'framer-motion';
+import {
+  AnimatePresence,
+  AnimateSharedLayout,
+  LayoutGroup,
+  motion,
+} from 'framer-motion';
 import { FC, useContext } from 'react';
 import { useSelector } from 'react-redux';
 import { RippleButton } from 'renderer/components/buttons/ripple-button';
@@ -23,7 +28,7 @@ export const CodeExamples: FC<CodeExamplesProperties> = () => {
   const [showAdd, { on, off }] = useBoolean();
 
   return (
-    <AnimatePresence>
+    <AnimateSharedLayout>
       <motion.div
         layout
         key="CodeExamples"
@@ -37,22 +42,30 @@ export const CodeExamples: FC<CodeExamplesProperties> = () => {
             subTitle="This is the place to save code examples, queries & snippets."
             RightComponent={() => (
               <>
-                <RippleButton size="md" onClick={on} bgColor={{ step1: 'brand.200', step2: 'brand.600', step3: 'brand.200'}}>
+                <RippleButton
+                  size="md"
+                  onClick={on}
+                  bgColor={{
+                    step1: 'brand.200',
+                    step2: 'brand.600',
+                    step3: 'brand.200',
+                  }}
+                >
                   Add New
                 </RippleButton>
               </>
             )}
           />
           <Grid templateColumns="repeat(1, 1fr)" gap={3}>
-            {showAdd && (
-              <CodeExampleItem
-                index={-1}
-                key={`ce-new-${codeState.length}`}
-                initialValue={{ viewId: viewState.id }}
-                onSave={off}
-              />
-            )}
-            <LayoutGroup id="examples">
+            <LayoutGroup>
+              {showAdd && (
+                <CodeExampleItem
+                  index={-1}
+                  key={`ce-new-${codeState.length}`}
+                  initialValue={{ viewId: viewState.id }}
+                  onSave={off}
+                />
+              )}
               {codeState.map((item, index) => (
                 <CodeExampleItem
                   index={++index}
@@ -64,6 +77,6 @@ export const CodeExamples: FC<CodeExamplesProperties> = () => {
           </Grid>
         </Box>
       </motion.div>
-    </AnimatePresence>
+    </AnimateSharedLayout>
   );
 };

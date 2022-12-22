@@ -1,49 +1,44 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/unbound-method */
-import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
+import { createEntityAdapter, createSlice, isAnyOf } from '@reduxjs/toolkit';
 import _ from 'lodash';
 import * as R from 'ramda';
-import { ViewRO } from 'renderer/defenitions/record-object';
-import { v4 as uuidv4 } from 'uuid';
+import {
+  StrictViewRO,
+  TagRO,
+  ViewRO,
+} from 'renderer/defenitions/record-object';
 
 import { actions as columnsActions } from './columns.reducer';
+import { createLastModificationMatcher, prepareStateUpdate } from './helpers';
 import { actions as tagsActions } from './tags.reducer';
 
-const viewsAdapter = createEntityAdapter<ViewRO>({
-  selectId: (view) => view?.id || '',
-  sortComparer: (a, b) => (b?.creationDate || 0) - (a?.creationDate || 0),
+const viewsAdapter = createEntityAdapter<StrictViewRO>({
+  selectId: (view) => view.id,
+  sortComparer: (a, b) => b.creationDate - a.creationDate,
 });
 
 const { addOne, updateOne, updateMany, removeOne, removeMany, removeAll } =
   viewsAdapter;
 
-const setId = R.ifElse(
-  R.complement(R.has)('id'),
-  R.over(R.lensProp('id'), uuidv4),
-  R.identity()
-);
-
-const mergeBeforeUpdate = (object) =>
-  R.compose(
-    setId,
-    R.mergeDeepRight({ creationDate: Date.now() }),
-    R.mergeDeepLeft({ modificationDate: Date.now() }),
-    R.omit(['modificationDate']),
+const mergeBeforeUpdate = (value: Partial<ViewRO>): Partial<ViewRO> => {
+  const result = R.compose(
     R.evolve({
       metadata: {
-        tags: R.map((item) => (R.is(String, item) ? item : item.id)),
+        tags: R.map((item: TagRO | string) =>
+          R.is(String, item) ? item : item.id
+        ),
       },
     }),
-    R.omit(['columns']),
-    R.mergeDeepRight({ columns: [] }),
     R.mergeDeepRight({
-      terminology: { singular: undefined, plural: undefined },
-    }),
-    R.mergeDeepRight({ metadata: { tags: [] } }),
-    R.mergeDeepRight({
+      columns: [],
+      metadata: { tags: [] },
       permissions: { create: true, read: true, update: true, delete: true },
+      terminology: { singular: undefined, plural: undefined },
     })
-  )(object);
+  )(value);
+  return R.omit(['columns'], result) as Partial<ViewRO>;
+};
 
 const viewsSlice = createSlice({
   name: 'views',
@@ -53,7 +48,7 @@ const viewsSlice = createSlice({
       reducer: addOne,
       prepare(payload: ViewRO) {
         return {
-          payload: mergeBeforeUpdate(payload),
+          payload: prepareStateUpdate<StrictViewRO>(mergeBeforeUpdate(payload)),
         };
       },
     },
@@ -64,7 +59,9 @@ const viewsSlice = createSlice({
           payload: {
             id: payload.id as string,
             name: payload.name,
-            changes: mergeBeforeUpdate(payload),
+            changes: prepareStateUpdate<StrictViewRO>(
+              mergeBeforeUpdate(payload)
+            ),
           },
         };
       },
@@ -116,6 +113,20 @@ const viewsSlice = createSlice({
           }
         }
       });
+
+    createLastModificationMatcher<ViewRO>(
+      builder,
+      isAnyOf(
+        viewsSlice.actions.updateOne.match,
+        viewsSlice.actions.updateTags.match,
+        columnsActions.upsertOne.match,
+        columnsActions.upsertMany.match
+      ),
+      (action) =>
+        action.type === viewsSlice.actions.updateOne.type
+          ? action.payload.id
+          : action.payload.viewId
+    );
   },
 });
 

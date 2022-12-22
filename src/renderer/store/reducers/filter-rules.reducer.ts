@@ -1,6 +1,8 @@
-import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
+import { AnyAction, createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 import { FilterRuleRO } from 'renderer/defenitions/record-object';
-import { v4 as uuidv4 } from 'uuid';
+import { Merge } from 'type-fest';
+
+import { createLastModificationMatcher, prepareStateUpdate } from './helpers';
 
 const filterRulesAdapter = createEntityAdapter<FilterRuleRO>({
   selectId: (filterRule: FilterRuleRO) => filterRule?.id || '',
@@ -17,19 +19,21 @@ export const filterRulesSlice = (name: string) =>
       upsertOne: {
         reducer: upsertOne,
         prepare(payload: FilterRuleRO) {
-          const cdObject = payload.id ? {} : { creationDate: Date.now() };
           return {
-            payload: {
-              ...payload,
-              id: payload.id || uuidv4(),
-              ...cdObject,
-              modificationDate: Date.now(),
-            },
+            payload: prepareStateUpdate<FilterRuleRO>(payload),
           };
         },
       },
       removeOne,
       removeMany,
+    },
+    extraReducers: (builder) => {
+      createLastModificationMatcher<FilterRuleRO>(
+        builder,
+        (action: Merge<AnyAction, { type: string }>) =>
+          action.type.endsWith('temporaryFilterRules/upsertOne'),
+        (action) => action.payload.id as string
+      );
     },
   });
 
