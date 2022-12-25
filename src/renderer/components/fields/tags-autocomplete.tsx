@@ -1,6 +1,8 @@
 import { Box } from '@chakra-ui/react';
+import { AnimatePresence, motion } from 'framer-motion';
 import { FC, useEffect, useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
+import { components, MultiValueGenericProps } from 'react-select';
 import { TagType } from 'renderer/defenitions/record-object';
 import { useAppDispatch, useAppSelector } from 'renderer/store/hooks';
 import {
@@ -8,14 +10,14 @@ import {
   TagsReducer,
   ViewsReducer,
 } from 'renderer/store/reducers';
-import { components, MultiValueGenericProps } from 'react-select';
-import { AnimatePresence, motion } from 'framer-motion';
+
 import { AutocompleteField } from './autocomplete-field';
 
 export type TagsAutocompleteProps = {
   id: string;
   type: TagType;
   defaultValue: string[];
+  size?: string;
   target: {
     viewId?: string;
     columnId?: string;
@@ -27,6 +29,7 @@ export const TagsAutocomplete: FC<TagsAutocompleteProps> = ({
   type,
   target,
   defaultValue = [],
+  size = "lg",
 }) => {
   const { setValue } = useFormContext();
   const tagsState = useAppSelector((state) => state.tags);
@@ -100,6 +103,7 @@ export const TagsAutocomplete: FC<TagsAutocompleteProps> = ({
     <Box w="100%">
       <AutocompleteField
         id="tags"
+        size={size}
         loadOptions={loadOptions}
         handleCreate={handleCreate}
         defaultValue={defaultValueOptions}

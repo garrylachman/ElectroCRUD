@@ -1,29 +1,29 @@
 import {
-  EditablePreview,
   Box,
-  useColorModeValue,
-  IconButton,
-  useEditableControls,
   ButtonGroup,
+  chakra,
+  Divider,
   Editable,
-  Tooltip,
   EditableInput,
-  Icon,
+  EditablePreview,
+  EditableTextarea,
   Flex,
+  Icon,
+  IconButton,
   Input,
   InputProps,
-  EditableTextarea,
   keyframes,
-  Divider,
   shouldForwardProp,
-  chakra,
+  Tooltip,
+  useColorModeValue,
+  useEditableControls,
 } from '@chakra-ui/react';
-import { Select, OptionsOrGroups } from 'chakra-react-select';
+import { OptionsOrGroups, Select } from 'chakra-react-select';
+import { isValidMotionProp, motion } from 'framer-motion';
 import _ from 'lodash';
 import react, { ChangeEvent, FC, forwardRef, PropsWithChildren } from 'react';
-import { useFormContext, Controller, Control } from 'react-hook-form';
-import { MdOutlineCheck, MdClose, MdEdit } from 'react-icons/md';
-import { isValidMotionProp, motion } from 'framer-motion';
+import { Control, Controller, useFormContext } from 'react-hook-form';
+import { MdClose, MdEdit, MdOutlineCheck } from 'react-icons/md';
 
 const ReactSelect: FC<
   InputProps & {
@@ -157,23 +157,18 @@ const InputFactory = forwardRef((properties, reference) => {
   }
 });
 
-const ChakraBox = chakra(motion.div, {
-  shouldForwardProp: (property) =>
-    isValidMotionProp(property) || shouldForwardProp(property),
-});
-
 export const RenderHTML: FC<PropsWithChildren> = ({ ...properties }) => (
-  <>
-    {properties.children && (
+  <Box>
+    {properties?.children && (
       <div
         // eslint-disable-next-line react/no-danger
         dangerouslySetInnerHTML={{
           __html: properties.children?.toString()?.split('\n').join('<br/>'),
         }}
-        {..._.omit(properties, ['children'])}
+        {..._.omit(properties, ['children', 'ref'])}
       />
     )}
-  </>
+  </Box>
 );
 
 export const InlineEditField: FC<

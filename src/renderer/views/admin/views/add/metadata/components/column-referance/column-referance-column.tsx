@@ -1,13 +1,20 @@
-import { FC, memo, useCallback, useEffect, useMemo, useState } from 'react';
+import { Flex, Tag, TagLabel, TagLeftIcon } from '@chakra-ui/react';
+import { chakraComponents } from 'chakra-react-select';
+import {
+  FC,
+  ReactElement,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useSelector } from 'react-redux';
-import { ColumnSelectors, ViewSelectors } from 'renderer/store/selectors';
-import { chakraComponents } from 'chakra-react-select';
-import { Badge, Flex, Tag, TagLabel, TagLeftIcon, TagRightIcon } from '@chakra-ui/react';
 import { AutocompleteField } from 'renderer/components/fields';
-import { AiOutlineFieldNumber } from 'react-icons/ai';
 import { findType } from 'renderer/defenitions/record-object/data-types';
-import { FcKey } from 'react-icons/fc';
+import { ColumnRO } from 'renderer/defenitions/record-object/view.define';
+import { ColumnSelectors } from 'renderer/store/selectors';
+import { v4 } from 'uuid';
 
 export type ColumnReferancColumnProperties = {
   onSelected: (value: string, name: string) => void;
@@ -15,7 +22,7 @@ export type ColumnReferancColumnProperties = {
   selectedColumnId?: string;
 };
 
-const ColumnReferanceColumn: FC<ColumnReferancColumnProperties> = ({
+export const ColumnReferanceColumn: FC<ColumnReferancColumnProperties> = ({
   onSelected,
   selectedViewId,
   selectedColumnId,
@@ -52,8 +59,7 @@ const ColumnReferanceColumn: FC<ColumnReferancColumnProperties> = ({
       !selectedColumn || {
         label: selectedColumn.name,
         value: selectedColumn.id,
-        stats: selectedColumn.type,
-        key: selectedColumn.key,
+        stats: selectedColumn.data_type,
       },
     [selectedColumn]
   );
@@ -67,8 +73,7 @@ const ColumnReferanceColumn: FC<ColumnReferancColumnProperties> = ({
         .map((item) => ({
           label: item.name,
           value: item.id,
-          stats: item.type,
-          key: item.key,
+          stats: item.data_type,
         })),
     [columns]
   );
@@ -77,8 +82,7 @@ const ColumnReferanceColumn: FC<ColumnReferancColumnProperties> = ({
     return columns.map((item) => ({
       label: item.name,
       value: item.id,
-      stats: item.type,
-      key: item.key,
+      stats: item.data_type,
     }));
   }, [columns]);
 
@@ -105,9 +109,6 @@ const ColumnReferanceColumn: FC<ColumnReferancColumnProperties> = ({
             <Tag variant="subtle" colorScheme="brand" mr={2} size="sm">
               <TagByType type={properties.data.stats} />
               <TagLabel>{properties.data.stats}</TagLabel>
-              {properties.data.key === 'PRI' && (
-                <TagRightIcon fontSize={13} as={FcKey} />
-              )}
             </Tag>
           )}
         </Flex>
@@ -117,7 +118,7 @@ const ColumnReferanceColumn: FC<ColumnReferancColumnProperties> = ({
 
   return (
     <AutocompleteField
-      id="to"
+      id={v4()}
       label="Destination Column"
       loadOptions={loadOptions}
       defaultValue={defaultValueOptions}
@@ -129,5 +130,3 @@ const ColumnReferanceColumn: FC<ColumnReferancColumnProperties> = ({
     />
   );
 };
-
-export const ColumnReferanceColumnComponent = memo(ColumnReferanceColumn);

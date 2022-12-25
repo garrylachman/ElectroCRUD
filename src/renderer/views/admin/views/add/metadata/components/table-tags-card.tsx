@@ -1,16 +1,16 @@
 import {
-  Grid,
-  Heading,
-  Box,
   Alert,
   AlertDescription,
+  Box,
   Collapse,
+  Grid,
+  Heading,
 } from '@chakra-ui/react';
+import _ from 'lodash';
 import { FC, useContext } from 'react';
 import { TagsAutocomplete } from 'renderer/components/fields';
-import _ from 'lodash';
-import { TagType } from 'renderer/defenitions/record-object';
 import { ViewScopedContext } from 'renderer/contexts';
+import { TagType } from 'renderer/defenitions/record-object';
 
 type TableTagsCardProperties = unknown;
 

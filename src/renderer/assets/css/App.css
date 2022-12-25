@@ -10,3 +10,7 @@ option {
 table thead tr th:last-child {
   border-right-width: 0;
 }
+
+.chakra-react-select__menu {
+  position: static !important;
+}

@@ -16,7 +16,7 @@ import {
 } from '@chakra-ui/react';
 import { AnimatePresence, LayoutGroup, motion } from 'framer-motion';
 import memoize from 'proxy-memoize';
-import { FC, useCallback, useContext, useEffect, useMemo } from 'react';
+import React, { FC, useCallback, useContext, useEffect, useMemo } from 'react';
 import {
   MdCheck,
   MdClose,
@@ -63,7 +63,11 @@ const TagsLine: FC<{ columnState: ColumnRO }> = ({ columnState }) =>
           'max_length',
           'searchable',
         ].map((key) => (
-          <>
+          <React.Fragment
+            key={`tags-${key}-${
+              columnState[key] ? columnState[key].id : 'new'
+            }`}
+          >
             {columnState[key] !== null && columnState[key] !== undefined && (
               <Badge
                 variant="subtle"
@@ -80,9 +84,9 @@ const TagsLine: FC<{ columnState: ColumnRO }> = ({ columnState }) =>
                   variant="solid"
                   colorScheme={
                     typeof columnState[key] === 'boolean'
-                      ? (columnState[key] === true
+                      ? columnState[key] === true
                         ? 'green'
-                        : 'red')
+                        : 'red'
                       : 'gray'
                   }
                   fontSize={7}
@@ -99,7 +103,7 @@ const TagsLine: FC<{ columnState: ColumnRO }> = ({ columnState }) =>
                 </Tag>
               </Badge>
             )}
-          </>
+          </React.Fragment>
         ))}
       </HStack>
     ),
@@ -140,24 +144,25 @@ export const ColumnMetadataCard: FC<ColumnMetadataCardProperties> = ({
     )
   );
 
-  useEffect(() => console.log(columnReferanceWithNamesState, columnReferanceIds), [columnReferanceWithNamesState]);
+  const columnReferanceWithNamesStateWithPlaceHolder = useMemo(
+    () => [
+      ...columnReferanceWithNamesState,
+      //{ from: columnId, fromView: viewState?.id },
+    ],
+    [columnReferanceWithNamesState]
+  );
 
-  const columnReferance = useMemo(() => {
-    return [
-      ...columnReferanceState,
-      {
-        from: columnId,
-        fromView: viewState.id,
-      } as ColumnReferanceRO,
-    ];
-  }, [columnReferanceState, viewState, columnId]);
+  useEffect(
+    () => console.log(columnReferanceWithNamesState, columnReferanceIds),
+    [columnReferanceWithNamesState]
+  );
 
   const [isOpen, { on, off, toggle }] = useBoolean();
 
   return (
     <motion.div
       layout
-      initial={{ scaleY: 0.2, position: 'relative', opacity: 0 }}
+      initial={{ scaleY: 0.2, opacity: 0 }}
       animate={{ scaleY: 1, opacity: 1, width: '100%' }}
       exit={{ scaleY: 0.2, opacity: 0 }}
       transition={{ duration: 1, bounce: 0.8, type: 'spring' }}
@@ -188,7 +193,7 @@ export const ColumnMetadataCard: FC<ColumnMetadataCardProperties> = ({
           />
           <TagsLine columnState={columnState} />
         </CardHeaderBetter>
-        <Collapse in={isOpen} animateOpacity style={{ overflow: 'initial' }}>
+        <Collapse in={isOpen} animateOpacity style={{ overflow: 'unset' }}>
           <CardBody py={0}>
             <Divider pb={1} />
             <VStack w="100%" py={5} alignItems="flex-start">
@@ -228,9 +233,9 @@ export const ColumnMetadataCard: FC<ColumnMetadataCardProperties> = ({
                 <Text>relations between views/volumns</Text>
               </Box>
               <LayoutGroup>
-                {columnReferanceWithNamesState.map((item, index) => (
+                {columnReferanceWithNamesStateWithPlaceHolder.map((item, index) => (
                   <ColumnReferance
-                    key={`ref-${item?.id || index}`}
+                    key={item.id || 'new'}
                     columnReferanceState={item}
                   />
                 ))}

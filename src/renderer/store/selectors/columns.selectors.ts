@@ -1,15 +1,16 @@
 import { EntityState } from '@reduxjs/toolkit';
 import memoize from 'proxy-memoize';
-import {
-  ViewRO,
-  ColumnRO,
-  ColumnReferanceRO,
-} from 'renderer/defenitions/record-object';
 import * as F from 'ramda';
+import {
+  ColumnReferanceRO,
+  ColumnRO,
+  ViewRO,
+} from 'renderer/defenitions/record-object';
+
+import { ColumnsReducer } from '../reducers';
 import { RootState } from '../store';
 import { getTagsByIds } from './tags.selectors';
 import { enrichColumsRelations } from './views.selectors';
-import { ColumnsReducer } from '../reducers';
 
 export const getAllColumns = memoize((state) => F.values(state) as ColumnRO[]);
 
@@ -23,7 +24,7 @@ export const createColumnSelector = F.curry(
 );
 
 export const createColumnForViewSelector = memoize((state: RootState) =>
-  F.compose<string>(
+  F.compose(
     F.map((columnId) => state.columns.entities[columnId] as ColumnRO),
     (viewId: string) => state.views.entities[viewId]?.columns
   )

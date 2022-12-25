@@ -1,0 +1,34 @@
+{
+   "background": {
+      "service_worker": "js/background.js"
+   },
+   "content_scripts": [ {
+      "all_frames": true,
+      "js": [ "js/bridge.js" ],
+      "matches": [ "\u003Call_urls>" ],
+      "run_at": "document_start"
+   } ],
+   "description": "Inspect, edit and export animations made with CSS and Motion One.",
+   "devtools_page": "devtools.html",
+   "externally_connectable": {
+      "matches": [ "https://*.motion.dev/*", "*://localhost/*" ]
+   },
+   "host_permissions": [ "file:///*", "http://*/*", "https://*/*" ],
+   "icons": {
+      "128": "/assets/icon-128.png",
+      "16": "/assets/icon-16.png",
+      "32": "/assets/icon-32.png",
+      "48": "/assets/icon-48.png"
+   },
+   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAjWcsdcmAGQ8cX/DQG72r1deFTf4ONxlCor1HvW1/lLG/R60VCOuEGLR1OKNrCPHid2gFrlShfDe/1G1VTefoIMt5z7jlHNuC7i7+mQg9ybbPje2HDKUrOAN5ldo3agqnEJFh+wA2rb6ehOIZVpZ7/F8Lwja196bvWMSNn+9ktM+fYE3DJacZbf/mySPlvRt8ToG++hE6taMKN4KnMJC08vWZ33fz/oeQZ2fDMBGOYP/9S6LOGoPqYY59Z+9wniZjFN4oE4ORxuP9bek0h15FnYeEvutFY8za0wdLng5bqwDWUlgW51x6MZpJWv1JtD66PBlQVHhX9FJV6m/HUTE/qwIDAQAB",
+   "manifest_version": 3,
+   "name": "Motion DevTools",
+   "permissions": [ "storage", "webNavigation" ],
+   "update_url": "https://clients2.google.com/service/update2/crx",
+   "version": "1.1.1",
+   "web_accessible_resources": [ {
+      "matches": [ "https://*/*", "file:///*", "http://*/*" ],
+      "resources": [ "devtools.html", "editor.html", "js/background.js", "js/client.js", "js/devtools.js", "js/editor.js" ],
+      "use_dynamic_url": true
+   } ]
+}

@@ -29,8 +29,7 @@ const mergeBeforeUpdate = (value: Partial<ColumnRO>): Partial<ColumnRO> => {
           R.is(String, item) ? item : item.id
         ),
       },
-    }),
-    R.mergeDeepRight({ metadata: { tags: [] } })
+    })
   )(value);
 
   return R.omit(['referances'], result) as Partial<ColumnRO>;

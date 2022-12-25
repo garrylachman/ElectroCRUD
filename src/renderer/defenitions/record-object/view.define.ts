@@ -1,19 +1,18 @@
 import { TableInfoRow } from 'shared';
-import { Object } from 'ts-toolbelt';
+import { O } from 'ts-toolbelt';
 
 import { BaseRO } from './base.define';
 import { Categories } from './categories.define';
 import { TagRO } from './tags.define';
 
-export type ColumnRO = BaseRO &
-  TableInfoRow & {
-    alias?: string;
-    searchable: boolean;
-    enabled: boolean;
-    metadata: MetadataColumnDocsRO;
-  };
+export type ColumnRO = O.Merge<BaseRO, TableInfoRow> & {
+  alias?: string;
+  searchable: boolean;
+  enabled: boolean;
+  metadata: MetadataColumnRO;
+};
 
-export type StrictColumnRO = Object.Required<ColumnRO, 'id' | 'creationDate'>;
+export type StrictColumnRO = O.Required<ColumnRO, 'id' | 'creationDate'>;
 
 export type ColumnReferanceRO = BaseRO & {
   fromView: string;
@@ -23,19 +22,23 @@ export type ColumnReferanceRO = BaseRO & {
   description?: string;
 };
 
-export type StrictColumnReferanceRO = Object.Required<
+export type StrictColumnReferanceRO = O.Required<
   ColumnReferanceRO,
   'id' | 'creationDate'
 >;
 
-export type StrictColumnReferanceWithViewsRO = Object.Overwrite<
-  ColumnReferanceRO,
-  { fromView: ViewRO; toView: ViewRO }
+export type StrictColumnReferanceWithViewsRO = O.Overwrite<
+  StrictColumnReferanceRO,
+  { fromView: StrictViewRO; toView: StrictViewRO }
 >;
 
-export type MetadataColumnDocsRO = {
-  title?: string;
-  description?: string;
+export type StrictColumnReferanceWithViewsAndCoumnsRO = O.Overwrite<
+  StrictColumnReferanceWithViewsRO,
+  { from: StrictColumnRO; to: StrictColumnRO }
+>;
+
+export type MetadataColumnRO = {
+  md?: string;
   tags: string[];
 };
 
@@ -72,7 +75,7 @@ export type ViewRO = BaseRO & {
   metadata: MetadataTableDocsRO;
 };
 
-export type StrictViewRO = Object.Required<ViewRO, 'id' | 'creationDate'>;
+export type StrictViewRO = O.Required<ViewRO, 'id' | 'creationDate'>;
 
 type ViewVOModfications = {
   columns: ColumnRO[] &

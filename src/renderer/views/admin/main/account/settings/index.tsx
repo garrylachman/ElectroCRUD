@@ -1,3 +1,23 @@
+import { Box, Flex, SimpleGrid } from '@chakra-ui/react';
+import Connected, 
+from 'renderer/views/admin/main/account/settings/components/Connected';
+import Delete, 
+from 'renderer/views/admin/main/account/settings/components/Delete';
+import Information, 
+from 'renderer/views/admin/main/account/settings/components/Information';
+import Newsletter, 
+from 'renderer/views/admin/main/account/settings/components/Newsletter';
+import Password, 
+from 'renderer/views/admin/main/account/settings/components/Password';
+import Profile, 
+from 'renderer/views/admin/main/account/settings/components/Profile';
+import Sessions, 
+from 'renderer/views/admin/main/account/settings/components/Sessions';
+import Socials, 
+from 'renderer/views/admin/main/account/settings/components/Socials';
+import TwoFactor, 
+from 'renderer/views/admin/main/account/settings/components/TwoFactor';
+
 /*!
   _   _  ___  ____  ___ ________  _   _   _   _ ___   ____  ____   ___
  | | | |/ _ \|  _ \|_ _|__  / _ \| \ | | | | | |_ _| |  _ \|  _ \ / _ \
@@ -9,7 +29,7 @@
 * Horizon UI Dashboard PRO - v1.0.0
 =========================================================
 
-* Product Page: https://www.horizon-ui.com/pro/
+* Product Page: https://www.horizon-uireact-router-dom.com/pro/
 * Copyright 2022 Horizon UI (https://www.horizon-ui.com/)
 
 * Designed and Coded by Simmmple
@@ -21,17 +41,6 @@
 */
 
 // Chakra imports
-import { Box, Flex, SimpleGrid } from '@chakra-ui/react';
-import Connected from 'renderer/views/admin/main/account/settings/components/Connected';
-import Delete from 'renderer/views/admin/main/account/settings/components/Delete';
-import Information from 'renderer/views/admin/main/account/settings/components/Information';
-import Newsletter from 'renderer/views/admin/main/account/settings/components/Newsletter';
-import Password from 'renderer/views/admin/main/account/settings/components/Password';
-import Profile from 'renderer/views/admin/main/account/settings/components/Profile';
-import Sessions from 'renderer/views/admin/main/account/settings/components/Sessions';
-import Socials from 'renderer/views/admin/main/account/settings/components/Socials';
-import TwoFactor from 'renderer/views/admin/main/account/settings/components/TwoFactor';
-
 export default function Settings() {
 	// Chakra Color Mode
 	return (

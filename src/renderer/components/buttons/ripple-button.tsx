@@ -1,4 +1,5 @@
 import { Button, ButtonProps } from '@chakra-ui/react';
+import { motion } from 'framer-motion';
 import { FC } from 'react';
 
 type RippleButtonProperties = ButtonProps & {
@@ -13,10 +14,11 @@ export const RippleButton: FC<RippleButtonProperties> = ({
   children,
   size,
   key,
-  bgColor = { step1: 'brand.150', step2: 'brand.600', step3: 'brand.100' },
+  bgColor = { step1: 'brand.150', step2: 'brand.600', step3: 'brand.600' },
   ...properties
 }) => (
   <Button
+    as={motion.div}
     bgColor={bgColor.step1}
     color="white"
     fontWeight="medium"
@@ -31,18 +33,21 @@ export const RippleButton: FC<RippleButtonProperties> = ({
     _focus={{
       outline: 'none',
     }}
+    cursor="pointer"
     key={key}
-    transition="background 0.8s, outline 0.8s, outline-offset 0.8s"
     backgroundPosition="center"
+    whileHover={{
+      outlineStyle: 'solid',
+      outlineWidth: '2px',
+      outlineOffset: '0px',
+      scale: 1.01,
+      transition: 'duration 0.3s, type: spring, bounce: 0.8',
+    }}
     _hover={{
       bgColor: `${bgColor.step2}`,
       bgGradient: `radial(circle, transparent 1%, ${bgColor.step2} 1%)`,
       bgPos: 'center',
-      outlineStyle: 'solid',
-      outlineWidth: '3px',
       outlineColor: `${bgColor.step2}`,
-      outlineOffset: '0px',
-      backgroundSize: '50000%',
     }}
     _active={{
       bgColor: `${bgColor.step3}`,

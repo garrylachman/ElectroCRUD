@@ -14,7 +14,7 @@ export type TablesListRow = Record<string, any> & {
   table_name: string;
 };
 
-export type TableInfoRow = Record<string, any> & {
+export type TableInfoRow = {
   name: string;
   table: string;
   data_type: string;

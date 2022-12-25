@@ -13,6 +13,7 @@ import {
 import {
   AsyncCreatableSelect,
   AsyncSelect,
+  ChakraStylesConfig,
   GroupBase,
   OptionsOrGroups,
   StylesConfig,
@@ -108,18 +109,19 @@ export const AutocompleteField = <T extends Option<unknown>['value']>({
   const isError = useMemo(() => error !== undefined, [error]);
   const isDirty = useMemo(() => _.get(dirts, id, false), [dirts]);
 
-  const optionStyle: StylesConfig<Option, true> = {
-    multiValueLabel: (styles, { data }) => ({
-      ...styles,
-      backgroundColor: 'red',
-      color: 'red',
+  const chakraStyles: ChakraStylesConfig = {
+    menu: (provided, state) => ({
+      ...provided,
+      background: state.isFocused ? "black" : provided.background,
+      p: 0,
+      zIndex: 1000,
     }),
-    multiValue: (styles, { data }) => {
-      return {
-        ...styles,
-        backgroundColor: 'red',
-      };
-    },
+    menuList: (provided, state) => ({
+      ...provided,
+      background: state.isFocused ? "black" : provided.background,
+      p: 0,
+      zIndex: 1000,
+    }),
   };
 
   return (
@@ -171,8 +173,8 @@ export const AutocompleteField = <T extends Option<unknown>['value']>({
           )}
         </FormLabel>
         <Controller
-          {...register(id)}
           control={control}
+          name={id}
           render={({ field }) => (
             <SelectComponent
               {...field}
@@ -198,6 +200,7 @@ export const AutocompleteField = <T extends Option<unknown>['value']>({
               defaultOptions={defaultOptions}
               classNamePrefix="chakra-react-select"
               components={components}
+              chakraStyle={chakraStyles}
             />
           )}
         />

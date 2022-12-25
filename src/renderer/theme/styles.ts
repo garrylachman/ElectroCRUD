@@ -19,6 +19,8 @@ export const globalStyles = {
         200: 'linear-gradient(rgb(244, 247, 254) 0%, rgba(244, 247, 254, 0) 90%)',
         300: 'linear-gradient(rgb(244, 247, 254) 0%, rgba(244, 247, 254, 0) 95%)',
         400: 'linear-gradient(rgb(244, 247, 254) 0%, rgba(244, 247, 254, 0) 98%)',
+        500: 'linear-gradient(to right, rgba(0, 210, 255, 0.1), rgba(146, 141, 171, 0.05))',
+        600: 'linear-gradient(to right, rgb(244, 247, 254) 0%, rgba(244, 247, 254, 0.3))',
       },
     },
     brand: {

@@ -1,8 +1,3 @@
-import { FC, memo, useCallback, useEffect, useMemo, useState } from 'react';
-import { useFormContext } from 'react-hook-form';
-import { useSelector } from 'react-redux';
-import { ViewSelectors } from 'renderer/store/selectors';
-import { chakraComponents } from 'chakra-react-select';
 import {
   Badge,
   Flex,
@@ -11,10 +6,16 @@ import {
   TagLabel,
   TagLeftIcon,
 } from '@chakra-ui/react';
+import { chakraComponents } from 'chakra-react-select';
+import { FC, memo, useCallback, useEffect, useMemo, useState } from 'react';
+import { useFormContext } from 'react-hook-form';
+import { BiColumns, BiTable } from 'react-icons/bi';
+import { useSelector } from 'react-redux';
 import { AutocompleteField } from 'renderer/components/fields';
-import { NestedPartial } from 'shared';
 import { ViewRO } from 'renderer/defenitions/record-object';
-import { BiTable, BiColumns } from 'react-icons/bi';
+import { ViewSelectors } from 'renderer/store/selectors';
+import { NestedPartial } from 'shared';
+import { v4 } from 'uuid';
 
 export type ColumnReferanceViewProperties = {
   excludeViewId?: string;
@@ -22,7 +23,7 @@ export type ColumnReferanceViewProperties = {
   selectedViewId?: string;
 };
 
-const ColumnReferanceView: FC<ColumnReferanceViewProperties> = ({
+export const ColumnReferanceView: FC<ColumnReferanceViewProperties> = ({
   excludeViewId = '-',
   selectedViewId,
   onSelected,
@@ -122,7 +123,7 @@ const ColumnReferanceView: FC<ColumnReferanceViewProperties> = ({
 
   return (
     <AutocompleteField
-      id="toView"
+      id={v4()}
       label="Destination Table"
       loadOptions={loadOptions}
       defaultValue={defaultValueOptions}
@@ -134,5 +135,3 @@ const ColumnReferanceView: FC<ColumnReferanceViewProperties> = ({
     />
   );
 };
-
-export const ColumnReferanceViewComponent = memo(ColumnReferanceView);

@@ -1,16 +1,18 @@
 /* eslint-disable unicorn/prevent-abbreviations */
 import 'webpack-dev-server';
-import path from 'path';
-import fs from 'fs';
-import webpack from 'webpack';
-import HtmlWebpackPlugin from 'html-webpack-plugin';
-import chalk from 'chalk';
-import { merge } from 'webpack-merge';
-import { execSync, spawn } from 'child_process';
+
 import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
+import chalk from 'chalk';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import { execSync, spawn } from 'node:child_process';
+import fs from 'node:fs';
+import path from 'node:path';
+import webpack from 'webpack';
+import { merge } from 'webpack-merge';
+
+import checkNodeEnv from '../scripts/check-node-env';
 import baseConfig from './webpack.config.base';
 import webpackPaths from './webpack.paths';
-import checkNodeEnv from '../scripts/check-node-env';
 
 // When an ESLint server is running, we can't set the NODE_ENV so we'll check if it's
 // at the dev webpack config is not accidentally run in a production environment
@@ -121,6 +123,15 @@ const configuration: webpack.Configuration = {
           'file-loader',
         ],
       },
+      // Markdown
+      {
+        test: /\.md$/,
+        use: [
+          {
+            loader: 'raw-loader',
+          },
+        ],
+      },
     ],
   },
   plugins: [
@@ -211,7 +222,7 @@ const configuration: webpack.Configuration = {
       })
         .on('close', (code: number) => {
           preloadProcess.kill();
-          process.exit(code!);
+          process.exit(code);
         })
         .on('error', (spawnError) => console.error(spawnError));
       return middlewares;

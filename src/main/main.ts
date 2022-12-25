@@ -7,6 +7,17 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint global-require: off, no-console: off, promise/always-return: off */
+import 'reflect-metadata';
+
+import { app, BrowserWindow, ipcMain, session, shell } from 'electron';
+import log from 'electron-log';
+import { autoUpdater } from 'electron-updater';
+import path from 'path';
+
+import MenuBuilder from './menu';
+import { initServices } from './services';
+import { resolveHtmlPath } from './util';
+
 
 /**
  * This module executes inside of electron's main process. You can start
@@ -16,15 +27,7 @@
  * When running `npm run build` or `npm run build:main`, this file is compiled to
  * `./src/main.js` using webpack. This gives us some performance wins.
  */
-import 'reflect-metadata';
-import path from 'path';
-import { app, BrowserWindow, shell, ipcMain } from 'electron';
-import { autoUpdater } from 'electron-updater';
-import log from 'electron-log';
-import MenuBuilder from './menu';
-import { resolveHtmlPath } from './util';
-import { initServices } from './services';
-
+const reactDevToolsPath = path.resolve('./devtools/');
 
 class AppUpdater {
   constructor() {
@@ -44,10 +47,10 @@ ipcMain.on('ipc-example', async (event, arg) => {
   event.reply('ipc-example', msgTemplate('pong'));
 });
 
-if (process.env.NODE_ENV === 'production') {
+//if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');
   sourceMapSupport.install();
-}
+//}
 
 const isDebug =
   process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true';
@@ -140,7 +143,22 @@ app.on('window-all-closed', () => {
 
 app
   .whenReady()
-  .then(() => {
+  .then(async () => {
+    await session.defaultSession.loadExtension(
+      path.join(reactDevToolsPath, 'react-devtools')
+    );
+    /*await session.defaultSession.loadExtension(
+      path.join(reactDevToolsPath, 'react-context-devtools')
+    );*/
+    await session.defaultSession.loadExtension(
+      path.join(reactDevToolsPath, 'redux-devtools')
+    );
+    /*await session.defaultSession.loadExtension(
+      path.join(reactDevToolsPath, 'node-devtools')
+    );
+    await session.defaultSession.loadExtension(
+      path.join(reactDevToolsPath, 'motion-devtools')
+    );*/
     createWindow();
     app.on('activate', () => {
       // On macOS it's common to re-create a window in the app when the
