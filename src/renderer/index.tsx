@@ -1,4 +1,5 @@
 import '@fontsource/poppins';
+import '@inovua/reactdatagrid-community/index.css';
 import 'renderer/assets/css/App.css';
 
 import { ChakraProvider } from '@chakra-ui/react';
@@ -17,25 +18,22 @@ import { router } from './router';
 import store, { persistor } from './store/store';
 import theme from './theme/theme';
 
-
 TimeAgo.addDefaultLocale(en);
 
 const root = ReactDOM.createRoot(
   document.querySelector('#root') as HTMLElement
 );
 root.render(
-  <React.StrictMode>
+  <>
     <FlipperContextProvider />
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <ChakraProvider theme={theme}>
           <ModalContainer isAppendIntances />
-          <React.StrictMode>
             <RouterProvider router={router} />
-          </React.StrictMode>
           <NotificationsContainer />
         </ChakraProvider>
       </PersistGate>
     </Provider>
-  </React.StrictMode>
+  </>
 );

@@ -7,6 +7,7 @@ import {
   AlertDialogOverlay,
 } from '@chakra-ui/react';
 import { FocusableElement } from '@chakra-ui/utils';
+import chroma from 'chroma-js';
 import { AnimatePresence, motion } from 'framer-motion';
 import { FC, ReactNode, useRef } from 'react';
 import { create, InstanceProps } from 'react-modal-promise';
@@ -69,40 +70,58 @@ export const ConfirmPromiseModalComponent: FC<
               whileHover={{ y: -5 }}
               _hover={{ shadow: 'xl' }}
             >
-              <AlertDialogHeader
-                fontSize="lg"
-                fontWeight="bold"
-                bg="brand.200"
-                color="white"
-                as={MotionBox}
-                py={3}
+              <motion.div
+                animate={{
+                  background: [
+                    `linear-gradient(60deg, #422AFB 0%, ${chroma('#422AFB')
+                      .brighten(0.1)
+                      .hex()} 100%)`,
+                    `linear-gradient(60deg, #422AFB 0%, ${chroma('#422AFB')
+                      .brighten(1)
+                      .hex()} 100%)`,
+                    `linear-gradient(60deg, ${chroma('#422AFB')
+                      .brighten(1.2)
+                      .hex()} 0%, #422AFB 100%)`,
+                    `linear-gradient(60deg, ${chroma('#422AFB')
+                      .brighten(0)
+                      .hex()} 0%, #422AFB 100%)`,
+                  ],
+                }}
+                transition={{
+                  duration: 10,
+                  repeat: Number.POSITIVE_INFINITY,
+                }}
+                style={{
+                  borderTopRightRadius: '10px',
+                  borderTopLeftRadius: '10px',
+                }}
               >
-                {title}
-              </AlertDialogHeader>
+                <AlertDialogHeader
+                  fontSize="lg"
+                  fontWeight="bold"
+                  color="white"
+                  py={3}
+                >
+                  {title}
+                </AlertDialogHeader>
+              </motion.div>
 
               <AlertDialogBody py={4}>{children}</AlertDialogBody>
 
-              <AlertDialogFooter py={4} pt={2}>
+              <AlertDialogFooter py={4} pt={2} gap={4}>
                 <RippleButton
                   key={`cancel-${keyu}`}
                   onClick={cancel}
-                  bgColor={{
-                    step1: 'red.200',
-                    step2: 'red.400',
-                    step3: 'red.100',
-                  }}
+                  bgColorScheme="red"
+                  size="lg"
                 >
                   {cancelButtonText}
                 </RippleButton>
                 <RippleButton
                   key={`confirm-${keyu}`}
                   onClick={confirm}
-                  ml={3}
-                  bgColor={{
-                    step1: `${confirmButtonColorScheme}.200`,
-                    step2: `${confirmButtonColorScheme}.600`,
-                    step3: `${confirmButtonColorScheme}.100`,
-                  }}
+                  size="lg"
+                  bgColorScheme={confirmButtonColorScheme}
                 >
                   {confirmButtonText}
                 </RippleButton>

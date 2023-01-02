@@ -1,3 +1,4 @@
+import { Card, CardBody } from '@chakra-ui/react';
 import { FC } from 'react';
 import { MdAccountTree, MdSettingsSuggest } from 'react-icons/md';
 import {
@@ -5,7 +6,7 @@ import {
   ElectroCRUDTabs,
 } from 'renderer/components/tabs/tabs';
 
-import { SettingsData } from './data';
+import { SettingsDataTabs } from './data';
 import { SettingsGeneral } from './general';
 
 const tabs: ElectroCRUDTabProperties[] = [
@@ -16,15 +17,13 @@ const tabs: ElectroCRUDTabProperties[] = [
   },
   {
     name: 'Data',
-    component: () =>  <SettingsData />,
+    component: () =>  <SettingsDataTabs />,
     icon: MdAccountTree,
   },
 ];
 
 export const SettingsTabs: FC<any> = () => {
   return (
-    <>
-      <ElectroCRUDTabs tabsList={tabs} tabIndex={0} iconSize={6} colorScheme="brand" />
-    </>
+    <ElectroCRUDTabs tabsList={tabs} tabIndex={0} iconSize={6} colorScheme="brand" isFitted={false}  />
   );
 };

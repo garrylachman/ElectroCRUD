@@ -1,7 +1,16 @@
 /* eslint-disable */
 // Chakra Imports
-import { Box, Breadcrumb, BreadcrumbItem, BreadcrumbLink, Flex, Link, Text, useColorModeValue } from '@chakra-ui/react';
-import { useState, useEffect } from 'react';
+import {
+  Box,
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  Flex,
+  Link,
+  Text,
+  useColorModeValue,
+} from '@chakra-ui/react';
+import { useEffect, useState } from 'react';
 import AdminNavbarLinks from 'renderer/components/navbar/NavbarLinksAdmin';
 
 export default function AdminNavbar(props: {
@@ -45,7 +54,6 @@ export default function AdminNavbar(props: {
 
 	return (
 		<Box
-			position={navbarPosition}
 			boxShadow={navbarShadow}
 			bg={navbarBg}
 			borderColor={navbarBorder}
@@ -78,12 +86,7 @@ export default function AdminNavbar(props: {
 			}}
 			pt='8px'
 			top={{ base: '12px', md: '16px', xl: '0px' }}
-			w={{
-				base: 'calc(100vw - 8%)',
-				md: 'calc(100vw - 8%)',
-				lg: 'calc(100vw - 8%)',
-				xl: 'calc(100vw - 363px)',
-			}}>
+			>
 			<Flex
 				w='100%'
 				flexDirection={{

@@ -1,18 +1,14 @@
 // Chakra imports
-import { Flex, useColorModeValue, Text } from '@chakra-ui/react';
-
-import { HSeparator } from 'renderer/components/separator/Separator';
+import { Text, useColorModeValue } from '@chakra-ui/react';
 
 export function SidebarBrand() {
   //   Chakra color mode
   const logoColor = useColorModeValue('navy.700', 'white');
 
   return (
-    <Flex alignItems="center" flexDirection="column">
-      <Text my="40px" fontWeight="extrabold" fontSize="3xl" color={logoColor}>
-        ElectroCRUD v3
-      </Text>
-    </Flex>
+    <Text my={10} fontWeight="extrabold" fontSize="3xl" color={logoColor}>
+      ElectroCRUD v3
+    </Text>
   );
 }
 

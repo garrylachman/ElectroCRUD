@@ -11,6 +11,29 @@ table thead tr th:last-child {
   border-right-width: 0;
 }
 
-.chakra-react-select__menu {
-  position: static !important;
+.chakra-react-select__menu-NO {
+  position: relative !important;
+}
+
+.chakra-react-select__menu-lis-NO {
+  position: absolute !important;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  33% {
+    transform: scale(5);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(30);
+    opacity: 0;
+  }
+}
+
+.InovuaReactDataGrid .inovua-react-pagination-toolbar {
+  position: unset;
 }

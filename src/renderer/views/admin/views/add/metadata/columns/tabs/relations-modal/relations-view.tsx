@@ -1,55 +1,38 @@
-import {
-  Badge,
-  Flex,
-  Icon,
-  Tag,
-  TagLabel,
-  TagLeftIcon,
-} from '@chakra-ui/react';
+import { Flex, Tag, TagLeftIcon } from '@chakra-ui/react';
 import { chakraComponents } from 'chakra-react-select';
-import { FC, memo, useCallback, useEffect, useMemo, useState } from 'react';
+import { FC, ReactElement, useCallback, useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { BiColumns, BiTable } from 'react-icons/bi';
 import { useSelector } from 'react-redux';
 import { AutocompleteField } from 'renderer/components/fields';
-import { ViewRO } from 'renderer/defenitions/record-object';
+import { ViewRO, ViewVO } from 'renderer/defenitions/record-object';
 import { ViewSelectors } from 'renderer/store/selectors';
-import { NestedPartial } from 'shared';
-import { v4 } from 'uuid';
+import { RootState } from 'renderer/store/store';
 
-export type ColumnReferanceViewProperties = {
+export type RelationsViewProperties = {
   excludeViewId?: string;
-  onSelected: (value: string, name: string) => void;
-  selectedViewId?: string;
 };
 
-export const ColumnReferanceView: FC<ColumnReferanceViewProperties> = ({
+export const RelationsView: FC<RelationsViewProperties> = ({
   excludeViewId = '-',
-  selectedViewId,
-  onSelected,
 }) => {
-  const formContext = useFormContext();
-  const [selected, setSelected] = useState(selectedViewId);
-  const allViews: NestedPartial<ViewRO>[] = useSelector((state) =>
+  const { watch } = useFormContext();
+  const selected = watch('toView');
+
+  const allViews = useSelector<RootState, ViewRO[]>((state) =>
     ViewSelectors.getAllViewsSummary(state)
   );
-  const viewSelector = useSelector((state) => ViewSelectors.getView(state));
-
-  useEffect(() => console.log(allViews), [allViews]);
-
-  const selectedView = useMemo(
-    () => (selected === undefined ? undefined : viewSelector(selected)),
-    [selected]
+  const viewSelector = useSelector<RootState>((state) =>
+    ViewSelectors.getView(state)
   );
 
-  useEffect(() => {
-    if (selectedView) {
-      onSelected(selectedView?.id, selectedView?.name);
-      formContext.setValue('toView', selected);
+  const selectedView = useMemo<ViewVO | undefined>(() => {
+    if (selected) {
+      return viewSelector(selected) as ViewVO;
     }
-  }, [selectedView]);
+  }, [selected]);
 
-  const views = useMemo(
+  const notExludedViews = useMemo(
     () => allViews.filter((value) => value.id !== excludeViewId),
     [allViews]
   );
@@ -65,13 +48,9 @@ export const ColumnReferanceView: FC<ColumnReferanceViewProperties> = ({
     [selectedView, allViews]
   );
 
-  const handleChange = (value: string) => {
-    setSelected(value);
-  };
-
   const loadOptions = useCallback(
     (inputValue: string) =>
-      views
+      notExludedViews
         .filter((item) => item.name.includes(inputValue))
         .map((item) => ({
           label: item.name,
@@ -79,18 +58,18 @@ export const ColumnReferanceView: FC<ColumnReferanceViewProperties> = ({
           stats: item.columns,
           table: item.table,
         })),
-    [views]
+    [notExludedViews]
   );
 
   const defaultOptions = useMemo(
     () =>
-      views.map((item) => ({
+      notExludedViews.map((item) => ({
         label: item.name,
         value: item.id,
         stats: item.columns,
         table: item.table,
       })),
-    [views]
+    [notExludedViews]
   );
 
   const customComponents = {
@@ -123,11 +102,10 @@ export const ColumnReferanceView: FC<ColumnReferanceViewProperties> = ({
 
   return (
     <AutocompleteField
-      id={v4()}
+      id="toView"
       label="Destination Table"
       loadOptions={loadOptions}
       defaultValue={defaultValueOptions}
-      onChange={handleChange}
       defaultOptions={defaultOptions}
       isMulti={false}
       components={customComponents}

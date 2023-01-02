@@ -1,58 +1,40 @@
 import { Flex, Tag, TagLabel, TagLeftIcon } from '@chakra-ui/react';
 import { chakraComponents } from 'chakra-react-select';
-import {
-  FC,
-  ReactElement,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
+import { FC, ReactElement, useCallback, useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { AutocompleteField } from 'renderer/components/fields';
-import { findType } from 'renderer/defenitions/record-object/data-types';
-import { ColumnRO } from 'renderer/defenitions/record-object/view.define';
+import { ColumnRO } from 'renderer/defenitions/record-object';
+import {
+  findType,
+} from 'renderer/defenitions/record-object/data-types/data-type-finder';
 import { ColumnSelectors } from 'renderer/store/selectors';
-import { v4 } from 'uuid';
+import { RootState } from 'renderer/store/store';
 
-export type ColumnReferancColumnProperties = {
-  onSelected: (value: string, name: string) => void;
-  selectedViewId?: string;
-  selectedColumnId?: string;
-};
+export type RelationsColumnProperties = {};
 
-export const ColumnReferanceColumn: FC<ColumnReferancColumnProperties> = ({
-  onSelected,
-  selectedViewId,
-  selectedColumnId,
-}) => {
-  const formContext = useFormContext();
-  const [selected, setSelected] = useState(selectedColumnId);
+export const RelationsColumn: FC<RelationsColumnProperties> = () => {
+  const { watch } = useFormContext();
+  const selected = watch('to');
+  const selectedViewId = watch('toView');
 
-  const columnsByViewSelector = useSelector((state) =>
+  const columnsByViewSelector = useSelector<RootState>((state: RootState) =>
     ColumnSelectors.createColumnForViewSelector(state)
   );
-  const columnSelector = useSelector((state) =>
+
+  const columnSelector = useSelector<RootState>((state) =>
     ColumnSelectors.createColumnSelector(state)
   );
 
   const columns = useMemo<ColumnRO[]>(
-    () => columnsByViewSelector(selectedViewId),
+    () => (selectedViewId ? columnsByViewSelector(selectedViewId) : []),
     [selectedViewId]
   );
 
   const selectedColumn = useMemo(
-    () => !selected || columnSelector(selected),
+    () => (selected ? columnSelector(selected) : undefined),
     [selected]
   );
-
-  useEffect(() => {
-    if (selectedColumn) {
-      onSelected(selectedColumn.id, selectedColumn.name);
-      formContext.setValue('to', selectedColumn.id);
-    }
-  }, [selectedColumn]);
 
   const defaultValueOptions = useMemo(
     () =>
@@ -63,8 +45,6 @@ export const ColumnReferanceColumn: FC<ColumnReferancColumnProperties> = ({
       },
     [selectedColumn]
   );
-
-  const handleChange = (value: string) => setSelected(value);
 
   const loadOptions = useCallback(
     (inputValue: string) =>
@@ -118,11 +98,10 @@ export const ColumnReferanceColumn: FC<ColumnReferancColumnProperties> = ({
 
   return (
     <AutocompleteField
-      id={v4()}
+      id="to"
       label="Destination Column"
       loadOptions={loadOptions}
       defaultValue={defaultValueOptions}
-      onChange={handleChange}
       defaultOptions={defaultOptions}
       isMulti={false}
       components={customComponents}

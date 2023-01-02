@@ -44,17 +44,20 @@ type CustomCellReturn = ReactElement;
 type ElectroCRUDTableProperties<T> = {
   data: T[];
   columns: ElectroCRUDTableHeader[];
-  customCell?: (info: CellContext<T, any>) => CustomCellReturn | void;
+  customCell?: (
+    info: CellContext<T, any>
+  ) => CustomCellReturn | void | undefined;
   onSelectedItems?: (items: T[]) => void;
   isLoaded?: boolean;
 };
 
-const TableHeader: FC<PropsWithChildren> = ({ children }) => (
+const TableHeader: FC<PropsWithChildren> = ({ children, ...rest }) => (
   <Text
     justifyContent="space-between"
     fontSize={{ sm: '10px', lg: '12px' }}
     color="gray.400"
     as="div"
+    {...rest}
   >
     {children}
   </Text>
@@ -63,8 +66,9 @@ const TableHeader: FC<PropsWithChildren> = ({ children }) => (
 const TableCell: FC<PropsWithChildren & { textColor: CSS.Property.Color }> = ({
   children,
   textColor,
+  ...rest
 }) => (
-  <Flex alignItems="center">
+  <Flex alignItems="center" {...rest}>
     <Text color={textColor} fontSize="sm" fontWeight="700" as="div">
       {children}
     </Text>
@@ -140,7 +144,7 @@ export const ElectroCRUDTable = <TT extends Record<string, any>>(
             </TableHeader>
           ),
           cell: (info) => (
-            <TableCell textColor={textColor}>
+            <TableCell textColor={textColor} {...col?.style}>
               {customCell === undefined ? (
                 <>{info.getValue()}</>
               ) : (
@@ -204,6 +208,7 @@ export const ElectroCRUDTable = <TT extends Record<string, any>>(
                   color="gray.400"
                   width={header.column.id === 'select' ? 0 : undefined}
                   pe={header.column.id === 'select' ? '0px' : '10px'}
+                  width={columns[header.index]?.width}
                 >
                   {flexRender(
                     header.column.columnDef.header,

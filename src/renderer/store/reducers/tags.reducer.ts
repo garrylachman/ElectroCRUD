@@ -16,7 +16,10 @@ const tagsSlice = createSlice({
   reducers: {
     upsertOne: {
       reducer: upsertOne,
-      prepare(payload: TagRO, meta: { viewId?: string; columnId?: string }) {
+      prepare(
+        payload: TagRO,
+        meta: { viewId?: string; columnId?: string } = {}
+      ) {
         return {
           payload: prepareStateUpdate<StrictTagRO>(payload),
           meta,

@@ -6,3 +6,4 @@ export * from './tags.define';
 export * from './code-examples.define';
 export * from './filters.define';
 export * from './policy.define';
+export * from './view-details.define';

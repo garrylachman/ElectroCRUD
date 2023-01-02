@@ -44,6 +44,7 @@ export const TableTagsCard: FC<TableTagsCardProperties> = () => {
             </Alert>
           </Collapse>
           <TagsAutocomplete
+            id="metadata.tags"
             type={TagType.TABLE}
             target={{ viewId: viewState.id }}
             defaultValue={viewState.metadata.tags.map((item) => item.id)}

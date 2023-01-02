@@ -19,7 +19,7 @@ import {
   StylesConfig,
 } from 'chakra-react-select';
 import _ from 'lodash';
-import { useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import {
   Controller,
   FieldError,
@@ -51,7 +51,7 @@ export type AutocompleteFieldProperties<T extends Option<T>> = {
   loadOptions: (inputValue?: string) => Promise<T>;
   handleCreate?: (inputValue: string) => any;
   defaultValue: T[];
-  onChange: (values: string[] | string) => void;
+  onChange?: (values: string[] | string) => void;
   defaultOptions: T[];
   isMulti?: boolean;
   components?: any;
@@ -76,22 +76,30 @@ export const AutocompleteField = <T extends Option<unknown>['value']>({
   components,
   noFormContext = false,
 }: AutocompleteFieldProperties<T>) => {
-  const getFomContext = useMemo<any>(
+  const getFomContext = useMemo(
     () => (noFormContext ? useForm : useFormContext),
     [noFormContext]
   );
 
-  const {
-    control,
-    register,
-    formState: { errors, dirtyFields },
-  } = getFomContext({
+  const formContext = getFomContext({
     defaultValues: {
       [`${id}`]: defaultValue,
     },
   });
 
-  const SelectComponent = handleCreate ? AsyncCreatableSelect : AsyncSelect;
+  const {
+    control,
+    setValue,
+    formState: { errors, dirtyFields },
+  } = formContext;
+
+
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  const SelectComponent_ = handleCreate ? AsyncCreatableSelect : AsyncSelect;
+  const SelectComponent = React.forwardRef((properties, reference) => (
+    // eslint-disable-next-line react/jsx-pascal-case
+    <SelectComponent_ {...properties} ref={reference} />
+  ));
 
   const [
     isMouseOnRequired,
@@ -173,26 +181,41 @@ export const AutocompleteField = <T extends Option<unknown>['value']>({
           )}
         </FormLabel>
         <Controller
-          control={control}
           name={id}
+          control={control}
           render={({ field }) => (
             <SelectComponent
               {...field}
-              size={size}
+              menuPosition="fixed"
+              menuPlacement="auto"
+              maxMenuHeight={200}
               placeholder={placeholder}
               isReadOnly={isReadOnly}
               loadOptions={loadOptions}
               onCreateOption={handleCreate}
               value={defaultValue}
-              onChange={(newValue: Option | Option[]) =>
-                onChange(
-                  isMulti
-                    ? (newValue as Option[]).map(
-                        (option: Option) => option.value as string
-                      )
-                    : ((newValue as Option).value as string)
-                )
-              }
+              onChange={(newValue: Option | Option[]) => {
+                if (onChange) {
+                  onChange(
+                    isMulti
+                      ? (newValue as Option[]).map(
+                          (option: Option) => option.value as string
+                        )
+                      : ((newValue as Option).value as string)
+                  );
+                }
+                if (!isMulti) {
+                  setValue(id, (newValue as Option).value as string);
+                  const eventValue = {
+                    name: id,
+                    value: (newValue as Option).value as string,
+                  };
+                  field.onChange({
+                    target: eventValue,
+                    currentTarget: eventValue,
+                  } as React.ChangeEvent<HTMLInputElement>);
+                }
+              }}
               isMulti={isMulti}
               tagVariant="subtle"
               colorScheme="brand"

@@ -1,7 +1,9 @@
 import {
   Box,
+  Button,
   Card,
   CardBody,
+  CardFooter,
   Center,
   Flex,
   Heading,
@@ -11,41 +13,41 @@ import {
   ListItem,
   Spinner,
   Text,
-  useBoolean,
+  VStack,
 } from '@chakra-ui/react';
-import MarkdownEditor from '@uiw/react-markdown-editor';
 import memoize from 'proxy-memoize';
-import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
-import { MdArrowForward, MdEdit, MdPreview } from 'react-icons/md';
+import { useCallback, useContext, useMemo } from 'react';
+import { MdAdd, MdArrowForward } from 'react-icons/md';
 import { useSelector } from 'react-redux';
 import {
+  AddButton,
   DeleteIconButton,
-} from 'renderer/components/buttons/delete-icon-button';
-import { SaveButton } from 'renderer/components/buttons/save-button';
+  EditIconButton,
+} from 'renderer/components/buttons';
 import {
-  ConfirmPromiseSaveModal,
-} from 'renderer/components/modals/confirm-promise-save-modal';
-import {
-  ElectroCRUDTabProperties,
-  ElectroCRUDTabs,
-} from 'renderer/components/tabs/tabs';
+  ConfirmPromiseDeleteModal,
+} from 'renderer/components/modals/confirm-promise-delete-modal';
 import { ScopeContext } from 'renderer/contexts/scope-context';
+import { ViewScopedContext } from 'renderer/contexts/view-scoped-context';
 import {
   ColumnReferanceRO,
   ColumnRO,
   StrictColumnReferanceWithViewsAndCoumnsRO,
 } from 'renderer/defenitions/record-object/view.define';
 import { useAppDispatch } from 'renderer/store/hooks';
-import { ColumnsReducer } from 'renderer/store/reducers';
+import { ColumnsReferanceReducer } from 'renderer/store/reducers';
 import {
   ColumnReferenceSelectors,
   ColumnSelectors,
 } from 'renderer/store/selectors';
 import { RootState } from 'renderer/store/store';
 
+import { RelationsModal } from './relations-modal/relations-modal';
+
 export const ColumnReletions = () => {
   const dispatch = useAppDispatch();
   const { memState } = useContext(ScopeContext);
+  const { viewState } = useContext(ViewScopedContext);
 
   const columnState = useSelector<RootState, ColumnRO>(
     useCallback(
@@ -80,11 +82,41 @@ export const ColumnReletions = () => {
       memoize((state) =>
         ColumnReferenceSelectors.createColumnReferanceWithNames(state)(
           columnReferanceIds
-        )
+        ).sort((a, b) => b?.modificationDate - a?.modificationDate)
       ),
       [columnReferanceIds]
     )
   );
+
+  const save = (data: ColumnReferanceRO) =>
+    dispatch(ColumnsReferanceReducer.actions.upsertOne(data));
+
+  const addModal = () => {
+    RelationsModal({
+      fromViewId: viewState?.id,
+      from: memState.columnId,
+    })
+      .then(save)
+      .catch(() => {});
+  };
+
+  const editModal = (id: string) => {
+    RelationsModal({
+      columnRelationId: id,
+    })
+      .then(save)
+      .catch(() => {});
+  };
+
+  const handleDelete = (item: StrictColumnReferanceWithViewsAndCoumnsRO) =>
+    ConfirmPromiseDeleteModal({
+      entityName: `${item.from.name} - ${item.to.name}`,
+    })
+      .then(() => {
+        dispatch(ColumnsReferanceReducer.actions.removeOne(item.id));
+        return true;
+      })
+      .catch(() => {});
 
   if (!columnState) {
     return (
@@ -97,31 +129,42 @@ export const ColumnReletions = () => {
   return (
     <Box px={4} key={`column-ref--${columnState.id}`}>
       <Heading size="md">Reletions</Heading>
-      <Box pb={4}>
-        <Text>
-          You can map columns to columns between all columns in your database.
-          You can map ids to thier parent tables.
-        </Text>
-      </Box>
+      <Flex pb={4}>
+        <Flex flexDirection="row">
+          <Text>
+            You can map columns to columns between all columns in your database.
+            You can map ids to thier parent tables.
+          </Text>
+        </Flex>
+        <AddButton size="md" onClick={addModal} />
+      </Flex>
 
       <Box maxHeight="385px" overflowY="scroll">
         <List spacing={3}>
           {columnReferanceWithNamesState.map((row) => (
             <ListItem>
-              <Card variant="outline" boxShadow={0} rounded={10}>
+              <Card variant="outline" boxShadow={0} rounded={10} _hover={{ boxShadow: 'lg' }}>
                 <CardBody>
                   <Flex justifyContent="space-between">
-                    <Flex alignItems="center">
-                      <Kbd fontSize="md" lineHeight="unset">
-                        {row?.fromView?.name}.{row?.from?.name}
-                      </Kbd>
-                      <Icon as={MdArrowForward} fontSize={20} mx={2} my={2} />
-                      <Kbd fontSize="md" lineHeight="unset">
-                        {row?.toView?.name}.{row?.to?.name}
-                      </Kbd>
+                    <Flex flex={1}>
+                      <VStack flex={1} alignItems="flex-start">
+                        <Flex alignItems="center">
+                          <Kbd fontSize="md" lineHeight="unset">
+                            {row?.fromView?.name}.{row?.from?.name}
+                          </Kbd>
+                          <Icon as={MdArrowForward} fontSize={20} mx={2} my={2} />
+                          <Kbd fontSize="md" lineHeight="unset">
+                            {row?.toView?.name}.{row?.to?.name}
+                          </Kbd>
+                        </Flex>
+                        <Flex w="100%">
+                          <Text fontSize="sm" as="span">{row.description || 'N/A'}</Text>
+                        </Flex>
+                      </VStack>
                     </Flex>
-                    <Flex>
-                      <DeleteIconButton />
+                    <Flex gap={2}>
+                      <EditIconButton onClick={() => editModal(row.id)} />
+                      <DeleteIconButton onClick={() => handleDelete(row)} />
                     </Flex>
                   </Flex>
                 </CardBody>

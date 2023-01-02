@@ -21,7 +21,12 @@ import * as Joi from 'joi';
 import _ from 'lodash';
 import { memo, useCallback, useContext, useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { MdClear, MdOutlineCollections, MdSave } from 'react-icons/md';
+import {
+  MdClear,
+  MdFormatPaint,
+  MdOutlineCollections,
+  MdSave,
+} from 'react-icons/md';
 import { useSelector } from 'react-redux';
 import { useLoaderData, useNavigate, useParams } from 'react-router-dom';
 import Card from 'renderer/components/card/Card';
@@ -44,6 +49,7 @@ import { PermissionsCard } from './components/permissions-card';
 import { TableColumnsCard } from './components/table-columns-card';
 import { TerminologyCard } from './components/terminology-card';
 import { ViewsInfoAlert } from './components/views-info-alert';
+import { Desinger } from './designer';
 import { MetadataIndex } from './metadata';
 import { TabsHeader } from './tabs-header';
 
@@ -201,7 +207,7 @@ export const EditView = () => {
         exit={{ right: '-1000px', opacity: 0 }}
       >
         <ViewScopedContextProvider viewId={viewId}>
-          <Spacer pt="60px" /> <TabsHeader />
+          <TabsHeader />
           <Tabs isLazy colorScheme="brandTabs" pt="10px">
             <TabList>
               <Tab>
@@ -220,6 +226,14 @@ export const EditView = () => {
                   </Text>
                 </Flex>
               </Tab>
+              <Tab>
+                <Flex align="center">
+                  <Icon as={MdFormatPaint} w="20px" h="20px" me="8px" />
+                  <Text fontSize="lg" fontWeight="500">
+                    Desinger
+                  </Text>
+                </Flex>
+              </Tab>
             </TabList>
             <TabPanels>
               <TabPanel px={0} pb={0}>
@@ -227,6 +241,9 @@ export const EditView = () => {
               </TabPanel>
               <TabPanel px={0} pb={0}>
                 <MetadataIndex />
+              </TabPanel>
+              <TabPanel px={0} pb={0}>
+                <Desinger />
               </TabPanel>
             </TabPanels>
           </Tabs>

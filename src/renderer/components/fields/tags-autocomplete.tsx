@@ -29,9 +29,11 @@ export const TagsAutocomplete: FC<TagsAutocompleteProps> = ({
   type,
   target,
   defaultValue = [],
-  size = "lg",
+  size = 'lg',
 }) => {
-  const { setValue } = useFormContext();
+  const { setValue, watch } = useFormContext();
+  const tags = watch(id, defaultValue) as string[];
+
   const tagsState = useAppSelector((state) => state.tags);
   const dispatch = useAppDispatch();
 
@@ -40,7 +42,7 @@ export const TagsAutocomplete: FC<TagsAutocompleteProps> = ({
       TagsReducer.getSelectors()
         .selectAll(tagsState)
         .filter((value) => value.type === type),
-    []
+    [tagsState]
   );
 
   const defaultValueOptions = useMemo(
@@ -51,10 +53,9 @@ export const TagsAutocomplete: FC<TagsAutocompleteProps> = ({
       })),
     [tagsState, defaultValue]
   );
-  // useEffect(() => setValue(id, defaultValue), [defaultValue]);
 
   const handleCreate = (inputValue: string) => {
-    dispatch(
+    const result = dispatch(
       TagsReducer.actions.upsertOne(
         {
           label: inputValue,
@@ -63,11 +64,12 @@ export const TagsAutocomplete: FC<TagsAutocompleteProps> = ({
         target
       )
     );
+    setValue(id, [...(tags || []), result.payload.id]);
   };
 
   const handleChange = (values: string[]) => {
     setValue(id, values);
-    if (target.viewId) {
+    if (target && target?.viewId) {
       dispatch(
         ViewsReducer.actions.updateTags({
           viewId: target.viewId,
@@ -75,7 +77,7 @@ export const TagsAutocomplete: FC<TagsAutocompleteProps> = ({
         })
       );
     }
-    if (target.columnId) {
+    if (target && target?.columnId) {
       dispatch(
         ColumnsReducer.actions.updateTags({
           columnId: target.columnId,
@@ -99,16 +101,26 @@ export const TagsAutocomplete: FC<TagsAutocompleteProps> = ({
     [tagsByType]
   );
 
+  const defaultValueTags = useMemo(() => {
+    if (!tags) {
+      return [];
+    }
+    return tagsByType
+      .filter((item) => tags.includes(item.id))
+      .map((item) => ({ label: item.label, value: item.id }));
+  }, [tags, tagsByType]);
+
   return (
     <Box w="100%">
       <AutocompleteField
-        id="tags"
+        id={id}
         size={size}
         loadOptions={loadOptions}
         handleCreate={handleCreate}
         defaultValue={defaultValueOptions}
         onChange={handleChange}
         defaultOptions={defaultOptions}
+        defaultValue={defaultValueTags}
       />
     </Box>
   );

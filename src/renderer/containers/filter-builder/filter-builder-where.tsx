@@ -104,7 +104,7 @@ export const FilterBuilderWhere: FC<
     >
       <GridItem colSpan={3}>
         <AutocompleteField<string | undefined>
-          id={_.uniqueId('column')}
+          id={'column'}
           isMulti={false}
           loadOptions={loadColumns}
           defaultOptions={columnsList}
@@ -122,7 +122,7 @@ export const FilterBuilderWhere: FC<
       </GridItem>
       <GridItem colSpan={2}>
         <AutocompleteField<QueryWhereOprEnum>
-          id={_.uniqueId('opr')}
+          id={'opr'}
           isMulti={false}
           loadOptions={loadOprs}
           defaultOptions={oprsList}

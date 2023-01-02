@@ -15,6 +15,7 @@ import {
   TemporaryFilterRulesReducer,
   TemporaryFiltersReducer,
   ToastReducer,
+  ViewDetailsReducer,
   ViewFiltersReducer,
   ViewsReducer,
 } from './reducers';
@@ -47,6 +48,7 @@ const rootReducer = combineReducers({
   [TemporaryFilterRulesReducer.name]: TemporaryFilterRulesReducer.reducer,
   [ViewFiltersReducer.name]: ViewFiltersReducer.reducer,
   [PoliciesReducer.name]: PoliciesReducer.reducer,
+  [ViewDetailsReducer.name]: ViewDetailsReducer.reducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

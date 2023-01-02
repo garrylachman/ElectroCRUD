@@ -77,13 +77,13 @@ export type ViewRO = BaseRO & {
 
 export type StrictViewRO = O.Required<ViewRO, 'id' | 'creationDate'>;
 
+export type ColumnWithMetadataAndTags = O.Overwrite<
+  ColumnRO,
+  { metadata: { tags: TagRO[] } }
+>;
+
 type ViewVOModfications = {
-  columns: ColumnRO[] &
-    {
-      metadata: MetadataColumnDocsRO & {
-        tags: TagRO[];
-      };
-    }[];
+  columns: ColumnWithMetadataAndTags[];
   metadata: MetadataTableDocsRO & {
     tags: TagRO[];
   };

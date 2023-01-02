@@ -1,28 +1,30 @@
 import {
-  Box,
-  Flex,
-  Text,
   Badge,
+  Box,
   Button,
-  Icon,
-  useBoolean,
-  HStack,
   Card,
   CardHeader,
+  Flex,
+  HStack,
+  Icon,
+  Text,
+  useBoolean,
 } from '@chakra-ui/react';
 import { FC, useMemo, useState } from 'react';
-import { NestedPartial } from 'shared';
-import { ElectroCRUDTable } from 'renderer/components/tables/Table';
-import ReactTimeAgo from 'react-time-ago';
-import { useAppDispatch, useAppSelector } from 'renderer/store/hooks';
-import { AccountsReducer, SessionReducer } from 'renderer/store/reducers';
-import { AccountRO } from 'renderer/defenitions/record-object';
-import { DatabaseIcon } from 'renderer/components/icons/DatabaseIcon';
 import { AiFillDelete } from 'react-icons/ai';
 import { MdPersonAdd } from 'react-icons/md';
+import ReactTimeAgo from 'react-time-ago';
+import { DatabaseIcon } from 'renderer/components/icons/DatabaseIcon';
 import { ConfirmDeleteModal } from 'renderer/components/modals';
-import { AccountsWizardModal } from 'renderer/containers/accounts/accountsWizard';
+import { ElectroCRUDTable } from 'renderer/components/tables/Table';
+import {
+  AccountsWizardModal,
+} from 'renderer/containers/accounts/accountsWizard';
 import { TableCardHeader } from 'renderer/containers/cards';
+import { AccountRO } from 'renderer/defenitions/record-object';
+import { useAppDispatch, useAppSelector } from 'renderer/store/hooks';
+import { AccountsReducer, SessionReducer } from 'renderer/store/reducers';
+import { NestedPartial } from 'shared';
 
 export const AccountsTable: FC<any> = () => {
   const accountsState = useAppSelector((state) => state.accounts);
@@ -93,7 +95,7 @@ export const AccountsTable: FC<any> = () => {
 
   return (
     <>
-      <Card>
+      <Card h="100%">
         <CardHeader>
           <HStack justifyContent="space-between">
             <Box>

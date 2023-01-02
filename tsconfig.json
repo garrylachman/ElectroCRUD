@@ -3,7 +3,7 @@
     "incremental": true,
     "target": "esnext",
     "skipLibCheck": true,
-    "module": "commonjs",
+    "module": "ESNext",
     "lib": ["dom", "esnext", "esnext", "dom.iterable"],
     "jsx": "react-jsx",
     "strict": true,
@@ -19,8 +19,13 @@
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
     "isolatedModules": false,
-    "moduleResolution": "nodenext",
+    "moduleResolution": "node",
   },
   "include": ["./src/**/*"],
-  "exclude": ["test", "release/build", "release/app/dist", ".erb/dll"]
+  "exclude": ["test", "release/build", "release/app/dist", ".erb/dll"],
+  "ts-node": {
+    "compilerOptions": {
+      "module": "commonjs"
+    }
+  }
 }

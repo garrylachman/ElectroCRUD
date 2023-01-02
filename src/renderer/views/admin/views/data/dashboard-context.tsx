@@ -80,7 +80,7 @@ export const DashboardContextProvider: FC<
   const setView = useCallback((setViewId) => setCurrentViewId(setViewId), []);
 
   const [limit, setLimit] = useState<number>(10);
-  const [page, setPage] = useState<number>(0);
+  const [page, setPage] = useState<number>(1);
   const [order, setOrder] = useState<QueryOrder>();
   const [search, setSearch] = useState<string>();
   const [filter, setFilter] = useState<any>();
@@ -101,7 +101,7 @@ export const DashboardContextProvider: FC<
       table: viewState.table,
       columns,
       limit,
-      offset: limit * (page-1),
+      offset: limit * (page -1 ),
       order,
       searchText: search,
       searchColumns,
@@ -109,40 +109,55 @@ export const DashboardContextProvider: FC<
     },
   });
 
-  const control = [execute, setLimit, setPage, setOrder, setSearch, setFilter];
+  const debouncedExecute = useCallback(_.debounce(execute, 250), [
+    limit,
+    page,
+    order,
+    search,
+    filter,
+  ]);
+
+  const control = [
+    debouncedExecute,
+    setLimit,
+    setPage,
+    setOrder,
+    setSearch,
+    setFilter,
+  ];
   const status = [isLoading, isExecuted];
   const data = useMemo(
     () => ({
       columns,
-      rows: result?.body.data,
+      rows: result?.body?.data || [],
       meta: {
-        totalCount: result?.body.count,
+        totalCount: result?.body.count || 0,
         limit,
         page,
         order,
       },
     }),
-    [isExecuted, result?.body.data]
+    [isExecuted, result?.body]
   );
 
   useEffect(() => {
-    execute();
+    debouncedExecute();
   }, [limit]);
 
   useEffect(() => {
-    execute();
+    debouncedExecute();
   }, [page]);
 
   useEffect(() => {
-    execute();
+    debouncedExecute();
   }, [order]);
 
   useEffect(() => {
-    execute();
+    debouncedExecute();
   }, [search]);
 
   useEffect(() => {
-    execute();
+    debouncedExecute();
   }, [filter]);
 
   return (

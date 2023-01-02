@@ -1,13 +1,32 @@
-import { Card, CardBody, CardHeader } from '@chakra-ui/react';
+import { Card, CardBody, Text } from '@chakra-ui/react';
 import { FC } from 'react';
+import { MdSettingsSuggest } from 'react-icons/md';
+import {
+  ElectroCRUDTabProperties,
+  ElectroCRUDTabs,
+} from 'renderer/components/tabs/tabs';
 
-export const SettingsData: FC<any> = () => {
+import { Policies } from './tabs/policies';
+
+const tabs: ElectroCRUDTabProperties[] = [
+  {
+    name: 'Policies',
+    component: () => <Policies />,
+    icon: MdSettingsSuggest,
+  },
+];
+
+export const SettingsDataTabs: FC<any> = () => {
   return (
-    <>
-      <Card>
-        <CardHeader>Data Title</CardHeader>
-        <CardBody>Data Body</CardBody>
-      </Card>
-    </>
+    <Card flex={1} display="flex" height="-webkit-fill-available">
+      <CardBody px={0} overflow="scroll">
+        <ElectroCRUDTabs
+          tabsList={tabs}
+          tabIndex={0}
+          iconSize={6}
+          colorScheme="brand"
+        />
+      </CardBody>
+    </Card>
   );
 };

@@ -13,10 +13,9 @@ import {
 import { AnimatePresence, LayoutGroup, motion } from 'framer-motion';
 import { FC } from 'react';
 import { MdBook, MdCode, MdTag } from 'react-icons/md';
-import { ViewRO } from 'renderer/defenitions/record-object';
 
 import { CodeExamples } from './code-examples';
-import { ColumnsMetadata } from './columns-metadata';
+import { MetaColumnsWithContext } from './columns';
 import { TablesMetadata } from './tables-metadata';
 
 type MetadataIndexProperties = {};
@@ -86,7 +85,7 @@ export const MetadataIndex: FC<MetadataIndexProperties> = () => {
                     exit={{ opacity: 0, y: -200 }}
                     transition={{ duration: 0.3 }}
                   >
-                    <ColumnsMetadata />
+                     <MetaColumnsWithContext />
                   </motion.div>
                 </AnimatePresence>
               </TabPanel>

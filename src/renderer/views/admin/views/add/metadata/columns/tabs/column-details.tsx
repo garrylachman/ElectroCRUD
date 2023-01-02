@@ -1,129 +1,50 @@
 import {
   Badge,
   Box,
-  Button,
-  Card,
-  CardBody,
   Center,
   Checkbox,
+  Code,
   Divider,
+  Flex,
   FormControl,
   FormHelperText,
   FormLabel,
   Heading,
   HStack,
-  Icon,
   Input,
   Spinner,
-  Stat,
-  StatLabel,
-  StatNumber,
-  StatProps,
-  Tag,
   Text,
 } from '@chakra-ui/react';
-import { isBoolean, isNil } from 'lodash';
 import memoize from 'proxy-memoize';
 import * as R from 'ramda';
-import {
-  FC,
-  Fragment,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-} from 'react';
+import { useCallback, useContext, useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { MdCheck, MdClose } from 'react-icons/md';
 import { useSelector } from 'react-redux';
 import ReactTimeAgo from 'react-time-ago';
 import { SaveButton } from 'renderer/components/buttons/save-button';
-import { InputField } from 'renderer/components/fields/input-field';
 import { TagsAutocomplete } from 'renderer/components/fields/tags-autocomplete';
 import {
   ConfirmPromiseSaveModal,
 } from 'renderer/components/modals/confirm-promise-save-modal';
 import { ScopeContext } from 'renderer/contexts/scope-context';
 import { TagType } from 'renderer/defenitions/record-object/tags.define';
-import { ColumnRO } from 'renderer/defenitions/record-object/view.define';
+import {
+  ColumnRO,
+  StrictColumnRO,
+} from 'renderer/defenitions/record-object/view.define';
+import { usePolicy } from 'renderer/hooks';
 import { useAppDispatch } from 'renderer/store/hooks';
 import { ColumnsReducer } from 'renderer/store/reducers';
 import { ColumnSelectors } from 'renderer/store/selectors';
 import { RootState } from 'renderer/store/store';
 
-type TagsLineProperties = {
-  columnState: ColumnRO;
-};
-
-const TagsLine: FC<TagsLineProperties> = ({ columnState }) =>
-  useMemo(
-    () => (
-      <HStack
-        py={0}
-        shouldWrapChildren
-        wrap="wrap"
-        spacing={0}
-        isInline
-        justify="flex-start"
-      >
-        {[
-          'data_type',
-          'default_value',
-          'foreign_key_column',
-          'foreign_key_table',
-          'is_nullable',
-          'is_primary_key',
-          'is_unique',
-          'max_length',
-          'searchable',
-        ].map((key) => (
-          <Fragment key={`tags-${key}-${columnState.id}`}>
-            {!isNil(columnState[key]) && (
-              <Badge
-                variant="subtle"
-                colorScheme="brand"
-                size="sm"
-                my={1}
-                mr={2}
-              >
-                <Tag variant="subtle" fontSize={10} size="sm" mr={2}>
-                  {key}
-                </Tag>
-                <Tag
-                  variant="solid"
-                  colorScheme={
-                    isBoolean(columnState[key])
-                      ? (columnState[key] === true
-                        ? 'green'
-                        : 'red')
-                      : 'blackAlpha'
-                  }
-                  fontSize={10}
-                  size="sm"
-                >
-                  {isBoolean(columnState[key]) ? (
-                    <>
-                      {columnState[key] && <Icon boxSize={3} as={MdCheck} />}
-                      {!columnState[key] && <Icon boxSize={3} as={MdClose} />}
-                    </>
-                  ) : (
-                    <>{String(columnState[key])}</>
-                  )}
-                </Tag>
-              </Badge>
-            )}
-          </Fragment>
-        ))}
-      </HStack>
-    ),
-    [columnState]
-  );
+import { ColumnTagsLine } from './column-tag-line';
 
 export const ColumnDetails = () => {
   const dispatch = useAppDispatch();
   const { memState } = useContext(ScopeContext);
 
-  const columnState = useSelector<RootState, ColumnRO>(
+  const columnState = useSelector<RootState, StrictColumnRO>(
     useCallback(
       memoize((state) =>
         ColumnSelectors.createColumnSelector(state)(memState.columnId)
@@ -132,15 +53,22 @@ export const ColumnDetails = () => {
     )
   );
 
+  const exampleData = {
+    [columnState.name]: 'Example Text',
+  };
+  const policy = usePolicy([columnState], [exampleData]);
+
   const formContext = useForm({
     reValidateMode: 'onChange',
     mode: 'all',
-    defaultValues: R.pickAll(['enabled', 'searchable', 'alias'], columnState),
+    defaultValues: {
+      ...R.pickAll(['enabled', 'searchable', 'alias', 'metadata'], columnState),
+    },
   });
 
   const { register, handleSubmit, reset, setValue } = formContext;
 
-  const onSubmit = (data) => {
+  const onSubmit = (data: ColumnRO) => {
     ConfirmPromiseSaveModal({
       entityName: columnState.name,
     })
@@ -148,7 +76,10 @@ export const ColumnDetails = () => {
         dispatch(
           ColumnsReducer.actions.upsertOne({
             ...R.pickAll(['id', 'name'], columnState),
-            ...R.pickAll(['enabled', 'searchable', 'alias'], data),
+            ...R.pickAll<ColumnRO, ColumnRO>(
+              ['enabled', 'searchable', 'alias'],
+              data
+            ),
           })
         );
         return true;
@@ -157,8 +88,11 @@ export const ColumnDetails = () => {
   };
 
   useEffect(() => {
-    const data = R.mergeRight(
-      R.pickAll(['enabled', 'searchable', 'alias'], columnState),
+    const data: ColumnRO = R.mergeRight<ColumnRO, ColumnRO>(
+      R.pickAll<ColumnRO, ColumnRO>(
+        ['enabled', 'searchable', 'alias', 'metadata'],
+        columnState
+      ),
       { alias: R.propOr('', 'alias', columnState) }
     );
     reset(data);
@@ -202,7 +136,7 @@ export const ColumnDetails = () => {
             </Box>
           </HStack>
 
-          <TagsLine columnState={columnState} />
+          <ColumnTagsLine columnState={columnState} />
 
           <Divider py={2} />
 
@@ -247,6 +181,27 @@ export const ColumnDetails = () => {
             target={{ columnId: columnState.id }}
             defaultValue={[...columnState.metadata.tags]}
           />
+
+          {JSON.stringify(exampleData) !== JSON.stringify(policy[0]) && (
+            <Box pt={4}>
+              <Heading size="md">
+                Applied Policy
+              </Heading>
+              <HStack pt={2}>
+                <Flex flex={1} flexDirection="column">
+                  <Text>Original:</Text>
+                  <Code ml={2} children={JSON.stringify(exampleData)} />
+                </Flex>
+                <Center height='50px' px={10}>
+                  <Divider orientation='vertical' />
+                </Center>
+                <Flex flex={1} flexDirection="column">
+                  <Text>Result:</Text>
+                  <Code ml={2} children={JSON.stringify(policy[0])} />
+                </Flex>
+              </HStack>
+            </Box>
+          )}
         </Box>
 
         <Box py={4}>
