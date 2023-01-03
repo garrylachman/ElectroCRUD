@@ -70,53 +70,28 @@ export default function AdminNavbar(props: {
 			transitionTimingFunction='linear, linear, linear, linear'
 			alignItems={{ xl: 'center' }}
 			display={secondary ? 'block' : 'flex'}
-			minH='75px'
 			justifyContent={{ xl: 'center' }}
-			lineHeight='25.6px'
 			mx='auto'
 			mt={secondaryMargin}
-			pb='8px'
 			right={{ base: '12px', md: '30px' }}
 			px={{
 				sm: '0px',
 				md: '0px'
 			}}
-			ps={{
-				xl: '0px'
-			}}
-			pt='8px'
 			top={{ base: '12px', md: '16px', xl: '0px' }}
 			>
 			<Flex
 				w='100%'
-				flexDirection={{
-					sm: 'column',
-					md: 'row'
-				}}
 				alignItems={{ xl: 'center' }}
 				mb={gap}>
-				<Box mb={{ sm: '8px', md: '0px' }}>
-					<Breadcrumb>
-						<BreadcrumbItem color={secondaryText} fontSize='sm'>
-							<BreadcrumbLink href='#' color={secondaryText}>
-								Main
-							</BreadcrumbLink>
-						</BreadcrumbItem>
-
-						<BreadcrumbItem color={secondaryText} fontSize='sm'>
-							<BreadcrumbLink href='#' color={secondaryText}>
-								{brandText}
-							</BreadcrumbLink>
-						</BreadcrumbItem>
-					</Breadcrumb>
-					{/* Here we create navbar brand, based on route name */}
+				<Box>
 					<Link
 						color={mainText}
 						href='#'
 						bg='inherit'
 						borderRadius='inherit'
 						fontWeight='bold'
-						fontSize='34px'
+						fontSize="3xl"
 						_hover={{ color: { mainText } }}
 						_active={{
 							bg: 'inherit',

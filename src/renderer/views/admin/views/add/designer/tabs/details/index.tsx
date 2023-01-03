@@ -9,6 +9,7 @@ import {
   GridItem,
   Icon,
   IconButton,
+  SimpleGrid,
   Text,
   Tooltip,
   VStack,
@@ -112,10 +113,10 @@ export const DesignerDetails: FC<DesignerDetailsProperties> = ({
   return (
     <>
       <Card>
-        <CardHeader>Details Page Desinger</CardHeader>
+        {!readOnly && <CardHeader>Details Page Desinger</CardHeader>}
         <CardBody>
           <Grid templateColumns="repeat(5, 1fr)" gap={10}>
-            <GridItem colSpan={4}>
+            <GridItem colSpan={readOnly ? 5 : 4}>
               <DragDropContext onDragEnd={onDragEnd}>
                 <Droppable
                   droppableId="droppable"
@@ -123,72 +124,84 @@ export const DesignerDetails: FC<DesignerDetailsProperties> = ({
                 >
                   {(provided, snapshot) => (
                     <div {...provided.droppableProps} ref={provided.innerRef}>
-                      {state.map((item, index) => (
-                        <Draggable
-                          key={item.id}
-                          draggableId={item.id}
-                          index={index}
-                        >
-                          {(provided, snapshot) => (
-                            <div
-                              ref={provided.innerRef}
-                              {...provided.draggableProps}
+                      <Grid templateColumns="repeat(2, 1fr)" gap={4}>
+                        {state.map((item, index) => (
+                          <GridItem
+                            colSpan={item.properties?.grid?.colSpan}
+                            borderBottomWidth={
+                              item.properties?.grid?.borderBottomWidth
+                            }
+                            borderBottomStyle={
+                              item.properties?.grid?.borderBottomStyle
+                            }
+                          >
+                            <Draggable
+                              key={item.id}
+                              draggableId={item.id}
+                              index={index}
                             >
-                              <Flex gap={2} alignItems="center">
-                                {!readOnly && (
-                                  <>
-                                    <Tooltip
-                                      bgColor="brand.600"
-                                      label="Drag to re-order"
-                                      rounded={8}
-                                    >
-                                      <IconButton
-                                        size="sm"
-                                        icon={<Icon as={MdDragIndicator} />}
-                                        variant="ghost"
-                                        {...provided.dragHandleProps}
-                                      />
-                                    </Tooltip>
-                                    <EditPopover
-                                      key={`ep-${index}`}
-                                      item={item}
-                                      onDelete={() =>
-                                        setState((previous) =>
-                                          previous.filter(
-                                            (value) => value.id !== item.id
-                                          )
-                                        )
-                                      }
-                                      onUpdate={(value) =>
-                                        setState((previous) =>
-                                          R.update(
-                                            index,
-                                            {
-                                              ...previous[index],
-                                              properties: value,
-                                            },
-                                            previous
-                                          )
-                                        )
-                                      }
-                                    >
-                                      <RenderElement
-                                        item={item}
-                                        row={{
-                                          Name: 'https://bit.ly/dan-abramov',
-                                        }}
-                                      />
-                                    </EditPopover>
-                                  </>
-                                )}
-                                {readOnly && (
-                                  <RenderElement item={item} row={data} />
-                                )}
-                              </Flex>
-                            </div>
-                          )}
-                        </Draggable>
-                      ))}
+                              {(provided, snapshot) => (
+                                <div
+                                  ref={provided.innerRef}
+                                  {...provided.draggableProps}
+                                >
+                                  <Flex gap={2} alignItems="center">
+                                    {!readOnly && (
+                                      <>
+                                        <Tooltip
+                                          bgColor="brand.600"
+                                          label="Drag to re-order"
+                                          rounded={8}
+                                        >
+                                          <IconButton
+                                            size="sm"
+                                            icon={<Icon as={MdDragIndicator} />}
+                                            variant="ghost"
+                                            {...provided.dragHandleProps}
+                                          />
+                                        </Tooltip>
+                                        <EditPopover
+                                          key={`ep-${item.id}`}
+                                          item={item}
+                                          onDelete={() =>
+                                            setState((previous) =>
+                                              previous.filter(
+                                                (value) => value.id !== item.id
+                                              )
+                                            )
+                                          }
+                                          onUpdate={(value) =>
+                                            setState((previous) =>
+                                              R.update(
+                                                index,
+                                                {
+                                                  ...previous[index],
+                                                  properties: value,
+                                                },
+                                                previous
+                                              )
+                                            )
+                                          }
+                                        >
+                                          <RenderElement
+                                            item={item}
+                                            row={{
+                                              Name: 'https://bit.ly/dan-abramov',
+                                            }}
+                                          />
+                                        </EditPopover>
+                                      </>
+                                    )}
+                                    {readOnly && (
+                                      <RenderElement item={item} row={data} />
+                                    )}
+                                  </Flex>
+                                </div>
+                              )}
+                            </Draggable>
+                          </GridItem>
+                        ))}
+                      </Grid>
                     </div>
                   )}
                 </Droppable>

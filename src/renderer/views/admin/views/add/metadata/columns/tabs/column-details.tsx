@@ -184,27 +184,25 @@ export const ColumnDetails = () => {
 
           {JSON.stringify(exampleData) !== JSON.stringify(policy[0]) && (
             <Box pt={4}>
-              <Heading size="md">
-                Applied Policy
-              </Heading>
+              <Heading size="md">Applied Policy</Heading>
               <HStack pt={2}>
                 <Flex flex={1} flexDirection="column">
                   <Text>Original:</Text>
-                  <Code ml={2} children={JSON.stringify(exampleData)} />
+                  <Code ml={2}>{JSON.stringify(exampleData)}</Code>
                 </Flex>
-                <Center height='50px' px={10}>
-                  <Divider orientation='vertical' />
+                <Center height="50px" px={10}>
+                  <Divider orientation="vertical" />
                 </Center>
                 <Flex flex={1} flexDirection="column">
                   <Text>Result:</Text>
-                  <Code ml={2} children={JSON.stringify(policy[0])} />
+                  <Code ml={2}>{JSON.stringify(policy[0])}</Code>
                 </Flex>
               </HStack>
             </Box>
           )}
         </Box>
 
-        <Box py={4}>
+        <Box pt={4}>
           <SaveButton onClick={handleSubmit(onSubmit)} />
         </Box>
       </FormProvider>

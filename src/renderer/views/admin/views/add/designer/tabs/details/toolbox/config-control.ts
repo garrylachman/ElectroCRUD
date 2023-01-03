@@ -3,5 +3,5 @@ export type ConfigControl = {
   field: string;
   value?: any;
   options?: string[];
-  onUpdate: (value: string) => void;
+  onUpdate: (value: string | boolean | number) => void;
 };

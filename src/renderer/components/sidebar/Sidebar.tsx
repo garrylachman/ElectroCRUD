@@ -5,15 +5,13 @@ import {
   renderTrack,
   renderView,
 } from 'renderer/components/scrollbar/Scrollbar';
-import Content from 'renderer/components/sidebar/components/Content';
+import { Content } from 'renderer/components/sidebar/components/content';
 
 export function Sidebar() {
   const shadow = useColorModeValue(
-    '14px 17px 40px 4px rgba(112, 144, 176, 0.08)',
+    '10px 7px 30px 5px rgb(112 144 176 / 30%)',
     'unset'
   );
-
-  const sidebarBg = useColorModeValue('white', 'navy.800');
 
   return (
     <Box
@@ -24,19 +22,11 @@ export function Sidebar() {
       h="full"
       overflowX="hidden"
       overflowY="auto"
-      borderRadius="3xl"
-      bg={sidebarBg}
+      bg="blackAlpha.900"
       boxShadow={shadow}
       minH="100%"
     >
-      <Scrollbars
-        autoHide
-        renderTrackVertical={renderTrack}
-        renderThumbVertical={renderThumb}
-        renderView={renderView}
-      >
-        <Content />
-      </Scrollbars>
+      <Content />
     </Box>
   );
 }

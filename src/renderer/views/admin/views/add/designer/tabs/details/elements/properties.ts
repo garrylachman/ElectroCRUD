@@ -1,3 +1,5 @@
+import * as CSS from 'csstype';
+
 import { PropertyEntry } from './elements';
 
 export type LabelProperty = PropertyEntry<
@@ -5,8 +7,17 @@ export type LabelProperty = PropertyEntry<
   {
     enabled: boolean;
     text?: string;
-    direction?: string;
-    alignItems?: string;
+    direction?: CSS.Property.FlexDirection;
+    alignItems?: CSS.Property.AlignItems;
+  }
+>;
+
+export type GridProperty = PropertyEntry<
+  'grid',
+  {
+    colSpan: number;
+    borderBottomWidth: string;
+    borderBottomStyle: CSS.Property.BorderStyle;
   }
 >;
 
@@ -42,8 +53,8 @@ export type ImageProperty = PropertyEntry<
   'image',
   {
     columnName: string;
-    width: number;
-    height: number;
+    width: CSS.Property.Width;
+    height: CSS.Property.Height;
     borderRadius?: string;
   }
 >;

@@ -4,12 +4,13 @@ import { FC } from 'react';
 import { v4 } from 'uuid';
 
 import { Element, ElementType } from './elements';
+import { getGridDefualt, getGridToolbox } from './grid';
 import { getLabelToolbox, Label } from './label';
-import { BoolProperty, LabelProperty } from './properties';
+import { BoolProperty, GridProperty, LabelProperty } from './properties';
 
 export type BoolElementRO = Element<
   ElementType.BOOL,
-  LabelProperty | BoolProperty
+  LabelProperty | BoolProperty | GridProperty
 >;
 
 export type BoolElementProperties = {
@@ -23,11 +24,13 @@ export const getNewBoolElement = (): BoolElementRO => ({
   properties: {
     label: { enabled: true, text: 'Label' },
     bool: { columnName: '' },
+    ...getGridDefualt(),
   },
 });
 
 export const getBoolElementToolbox = () => ({
   ...getLabelToolbox(),
+  ...getGridToolbox(),
   bool: [
     { label: 'Column', field: 'columnName', type: 'column' },
     { label: 'Size', field: 'size', type: ['sm', 'md', 'lg'] },

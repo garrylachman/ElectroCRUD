@@ -19,7 +19,7 @@ const tabs: ElectroCRUDTabProperties[] = [
 export const SettingsDataTabs: FC<any> = () => {
   return (
     <Card flex={1} display="flex" height="-webkit-fill-available">
-      <CardBody px={0} overflow="scroll">
+      <CardBody px={0} pb={0} overflow="scroll">
         <ElectroCRUDTabs
           tabsList={tabs}
           tabIndex={0}

@@ -109,28 +109,39 @@ export const EditPopover: FC<PropsWithChildren<EditPopoverProperties>> = ({
           <PopoverBody>
             <SimpleGrid>
               {Object.keys(config).map((secItem) => (
-                <GridItem my={2}>
-                  <Flex fontWeight="semibold" textTransform="capitalize">{secItem}</Flex>
-                  {config[secItem].map((configItem) => (
+                <GridItem my={1} key={secItem}>
+                  <Flex
+                    fontWeight="semibold"
+                    textTransform="capitalize"
+                    fontSize="sm"
+                    borderBottom="1px solid #e2e8f0  "
+                    mb={1}
+                  >
+                    {secItem}
+                  </Flex>
+                  {R.prop(secItem, config).map((configItem) => (
                     <Flex
                       justifyContent="space-between"
                       gap={3}
                       alignItems="center"
-                      my={1}
-                      fontSize="sm"
+                      my={0}
+                      fontSize="xs"
                     >
-                      <Text flex={1} textTransform="capitalize">{configItem.label}</Text>
+                      <Text flex={1} textTransform="capitalize">
+                        {configItem.label}
+                      </Text>
                       {configItem.type === 'bool' && (
                         <ConfigSwitch
                           section={secItem}
                           field={configItem.field}
-                          value={R.path(
-                            [secItem, configItem.field],
-                            state
-                          )}
-                          onUpdate={
-                            (value) => setState(
-                              (prev) => R.set(R.lensPath([secItem, configItem.field]), value, prev)
+                          value={R.path([secItem, configItem.field], state)}
+                          onUpdate={(value) =>
+                            setState((previous) =>
+                              R.set(
+                                R.lensPath([secItem, configItem.field]),
+                                value,
+                                previous
+                              )
                             )
                           }
                         />
@@ -139,13 +150,14 @@ export const EditPopover: FC<PropsWithChildren<EditPopoverProperties>> = ({
                         <ConfigInput
                           section={secItem}
                           field={configItem.field}
-                          value={R.path(
-                            [secItem, configItem.field],
-                            state
-                          )}
-                          onUpdate={
-                            (value) => setState(
-                              (prev) => R.set(R.lensPath([secItem, configItem.field]), value, prev)
+                          value={R.path([secItem, configItem.field], state)}
+                          onUpdate={(value) =>
+                            setState((previous) =>
+                              R.set(
+                                R.lensPath([secItem, configItem.field]),
+                                value,
+                                previous
+                              )
                             )
                           }
                         />
@@ -155,13 +167,14 @@ export const EditPopover: FC<PropsWithChildren<EditPopoverProperties>> = ({
                           options={configItem.type}
                           section={secItem}
                           field={configItem.field}
-                          value={R.path(
-                            [secItem, configItem.field],
-                            state
-                          )}
-                          onUpdate={
-                            (value) => setState(
-                              (prev) => R.set(R.lensPath([secItem, configItem.field]), value, prev)
+                          value={R.path([secItem, configItem.field], state)}
+                          onUpdate={(value) =>
+                            setState((previous) =>
+                              R.set(
+                                R.lensPath([secItem, configItem.field]),
+                                value,
+                                previous
+                              )
                             )
                           }
                         />
@@ -171,13 +184,14 @@ export const EditPopover: FC<PropsWithChildren<EditPopoverProperties>> = ({
                           options={columnList}
                           section={secItem}
                           field={configItem.field}
-                          value={R.path(
-                            [secItem, configItem.field],
-                            state
-                          )}
-                          onUpdate={
-                            (value) => setState(
-                              (prev) => R.set(R.lensPath([secItem, configItem.field]), value, prev)
+                          value={R.path([secItem, configItem.field], state)}
+                          onUpdate={(value) =>
+                            setState((previous) =>
+                              R.set(
+                                R.lensPath([secItem, configItem.field]),
+                                value,
+                                previous
+                              )
                             )
                           }
                         />

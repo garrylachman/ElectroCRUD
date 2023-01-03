@@ -6,7 +6,12 @@ import { ImageElement, ImageElementRO } from './image-element';
 import { StaticTextElement, StaticTextElementRO } from './static-text-element';
 import { TextElement, TextElementRO } from './text-element';
 
-export type ElementTypes = TextElementRO | BoolElementRO | StaticTextElementRO | ImageElementRO;
+export type ElementTypes =
+  | TextElementRO
+  | BoolElementRO
+  | StaticTextElementRO
+  | ImageElementRO;
+
 type RenderElementProperties = {
   item: ElementTypes;
   row: Record<string, any>;

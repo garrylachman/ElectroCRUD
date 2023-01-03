@@ -5,6 +5,9 @@ import { ConfigControl } from './config-control';
 
 export const ConfigSwitch: FC<ConfigControl> = ({ value, onUpdate }) => {
   return (
-    <Switch defaultChecked={value} onChange={(e) => onUpdate(e.target.checked)} />
+    <Switch
+      defaultChecked={value}
+      onChange={(event_) => onUpdate(event_.target.checked)}
+    />
   );
 };

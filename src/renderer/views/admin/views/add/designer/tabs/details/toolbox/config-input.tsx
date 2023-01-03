@@ -10,7 +10,7 @@ export const ConfigInput: FC<ConfigControl> = ({ value, onUpdate }) => {
       size="xs"
       variant="flushed"
       defaultValue={value}
-      onChange={(e) => onUpdate(e.target.value)}
+      onChange={(event_) => onUpdate(event_.target.value)}
     />
   );
 };

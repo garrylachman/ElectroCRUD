@@ -4,10 +4,14 @@ import { FC } from 'react';
 import { v4 } from 'uuid';
 
 import { Element, ElementType } from './elements';
+import { getGridDefualt, getGridToolbox } from './grid';
 import { getLabelToolbox } from './label';
-import { ImageProperty } from './properties';
+import { GridProperty, ImageProperty } from './properties';
 
-export type ImageElementRO = Element<ElementType.IMAGE, ImageProperty>;
+export type ImageElementRO = Element<
+  ElementType.IMAGE,
+  ImageProperty | GridProperty
+>;
 
 export type ImageElementProperties = {
   item: ImageElementRO;
@@ -18,11 +22,18 @@ export const getNewImageElement = (): ImageElementRO => ({
   type: ElementType.IMAGE,
   id: v4(),
   properties: {
-    image: { columnName: '', width: 150, height: 150, borderRadius: 'base' },
+    image: {
+      columnName: '',
+      width: '150px',
+      height: '150px',
+      borderRadius: 'base',
+    },
+    ...getGridDefualt(),
   },
 });
 
 export const getImageElementToolbox = () => ({
+  ...getGridToolbox(),
   image: [
     { label: 'Column', field: 'columnName', type: 'column' },
     { label: 'Width (px)', field: 'width', type: 'text' },
@@ -38,11 +49,11 @@ export const getImageElementToolbox = () => ({
 export const ImageElement: FC<ImageElementProperties> = ({ item, row }) => {
   const {
     columnName,
-    width = 150,
-    height = 150,
+    width = '150px',
+    height = '150px',
     borderRadius = 'base',
   } = item.properties.image;
-  const wh = { width: `${width}px`, height: `${height}px` };
+  const wh = { width, height };
   return (
     <Flex gap={2} my={2} alignItems="center">
       <Image

@@ -3,11 +3,12 @@ import { FC } from 'react';
 import { v4 } from 'uuid';
 
 import { Element, ElementType } from './elements';
-import { StaticTextProperty } from './properties';
+import { getGridDefualt, getGridToolbox } from './grid';
+import { GridProperty, StaticTextProperty } from './properties';
 
 export type StaticTextElementRO = Element<
   ElementType.STATIC_TEXT,
-  StaticTextProperty
+  StaticTextProperty | GridProperty
 >;
 
 export type StaticTextElementProperties = {
@@ -19,10 +20,12 @@ export const getNewStaticTextElement = (): StaticTextElementRO => ({
   id: v4(),
   properties: {
     text: { text: '' },
+    ...getGridDefualt(),
   },
 });
 
 export const getStaticTextElementToolbox = () => ({
+  ...getGridToolbox(),
   text: [
     { label: 'Text', field: 'text', type: 'text' },
     {
@@ -64,7 +67,9 @@ export const getStaticTextElementToolbox = () => ({
   ],
 });
 
-export const StaticTextElement: FC<StaticTextElementProperties> = ({ item, row }) => {
+export const StaticTextElement: FC<StaticTextElementProperties> = ({
+  item,
+}) => {
   const {
     fontSize = 'md',
     fontWeight = 'normal',

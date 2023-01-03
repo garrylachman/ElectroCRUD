@@ -4,12 +4,13 @@ import { FC } from 'react';
 import { v4 } from 'uuid';
 
 import { Element, ElementType } from './elements';
+import { getGridDefualt, getGridToolbox } from './grid';
 import { getLabelToolbox, Label } from './label';
-import { LabelProperty, TextProperty } from './properties';
+import { GridProperty, LabelProperty, TextProperty } from './properties';
 
 export type TextElementRO = Element<
   ElementType.TEXT,
-  LabelProperty | TextProperty
+  LabelProperty | TextProperty | GridProperty
 >;
 
 export type TextElementProperties = {
@@ -23,11 +24,13 @@ export const getNewTextElement = (): TextElementRO => ({
   properties: {
     label: { enabled: true, text: 'Label' },
     text: { columnName: 'column' },
+    ...getGridDefualt(),
   },
 });
 
 export const getTextElementToolbox = () => ({
   ...getLabelToolbox(),
+  ...getGridToolbox(),
   text: [
     { label: 'Column', field: 'columnName', type: 'column' },
     {

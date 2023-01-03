@@ -131,7 +131,7 @@ export const ColumnDocumentation = () => {
         variant="enclosed-colored"
         isBoxed
       />
-      <Box py={4}>
+      <Box pt={4}>
         <SaveButton
           onClick={handleSave}
           isDisabled={markdown === columnState.metadata.md}

@@ -29,8 +29,15 @@ export const Policies = () => {
       .catch(() => {});
 
   return (
-    <Flex flexDirection="column" flex={1}>
-      <Flex p={4} justifyContent="space-between">
+    <Flex
+      flexDirection="column"
+      flex={1}
+      overflow="scroll"
+      height="-webkit-fill-available"
+      width="-webkit-fill-available"
+      position="absolute"
+    >
+      <Flex justifyContent="space-between" px={4}>
         <Text>
           Policies rules applied by column tags. You can created masking rules that
           applyed on the data by column tags.
