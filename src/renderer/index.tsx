@@ -3,6 +3,7 @@ import '@inovua/reactdatagrid-community/index.css';
 import 'renderer/assets/css/App.css';
 
 import { ChakraProvider } from '@chakra-ui/react';
+import { SaasProvider } from '@saas-ui/react';
 import TimeAgo from 'javascript-time-ago';
 import en from 'javascript-time-ago/locale/en.json';
 import React from 'react';
@@ -18,6 +19,7 @@ import { router } from './router';
 import store, { persistor } from './store/store';
 import theme from './theme/theme';
 
+
 TimeAgo.addDefaultLocale(en);
 
 const root = ReactDOM.createRoot(
@@ -28,11 +30,11 @@ root.render(
     <FlipperContextProvider />
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <ChakraProvider theme={theme}>
+        <SaasProvider theme={theme}>
           <ModalContainer isAppendIntances />
             <RouterProvider router={router} />
           <NotificationsContainer />
-        </ChakraProvider>
+        </SaasProvider>
       </PersistGate>
     </Provider>
   </>

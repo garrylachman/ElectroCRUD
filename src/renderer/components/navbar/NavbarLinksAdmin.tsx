@@ -1,5 +1,6 @@
 import {
   Avatar,
+  Box,
   Button,
   Flex,
   Icon,
@@ -7,14 +8,13 @@ import {
   MenuButton,
   MenuItem,
   MenuList,
-  Text,
-  useColorModeValue,
-  useColorMode,
   Switch,
-  Box,
+  Text,
+  useColorMode,
+  useColorModeValue,
 } from '@chakra-ui/react';
-import { SearchBar } from 'renderer/components/navbar/searchBar/SearchBar';
 import { IoMdMoon, IoMdSunny } from 'react-icons/io';
+import { SearchBar } from 'renderer/components/navbar/searchBar/SearchBar';
 import { useAppDispatch, useAppSelector } from 'renderer/store/hooks';
 import { SessionReducer } from 'renderer/store/reducers';
 
@@ -24,7 +24,7 @@ export default function HeaderLinks(props: { secondary: boolean }) {
   const navbarIcon = useColorModeValue('gray.400', 'white');
   const menuBg = useColorModeValue('white', 'navy.800');
   const textColor = useColorModeValue('secondaryGray.900', 'white');
-  const textColorBrand = useColorModeValue('brand.700', 'brand.400');
+  const textColorBrand = useColorModeValue('primary.700', 'primary.400');
   const ethColor = useColorModeValue('gray.700', 'white');
   const borderColor = useColorModeValue('#E6ECFA', 'rgba(135, 140, 189, 0.3)');
   const ethBg = useColorModeValue('secondaryGray.300', 'navy.900');
@@ -66,11 +66,11 @@ export default function HeaderLinks(props: { secondary: boolean }) {
         alignItems="center"
         borderRadius="30px"
         mx={5}
-        bg={sessionState.isEditMode ? 'gradient.perper.100' : 'brand.100'}
+        bg={sessionState.isEditMode ? 'gradient.perper.100' : 'primary.100'}
       >
         <Text
           w="max-content"
-          color={sessionState.isEditMode ? 'white' : 'brand.900'}
+          color={sessionState.isEditMode ? 'white' : 'primary.900'}
           fontSize="sm"
           fontWeight="700"
           mx="10px"
@@ -78,7 +78,7 @@ export default function HeaderLinks(props: { secondary: boolean }) {
           Edit Mode
         </Text>
         <Switch
-          colorScheme="brand"
+          colorScheme="primary"
           isChecked={sessionState.isEditMode}
           onChange={() => dispatch(SessionReducer.actions.toggleEditMode())}
         />

@@ -48,7 +48,7 @@ export const ColumnsListPane: FC<ColumnsListPaneProperties> = ({
   return (
     <Box py={3} px={3} {...properties}>
       <Heading
-        borderColor="brand.100"
+        borderColor="primary.100"
         borderBottomWidth={2}
         backgroundColor="whiteAlpha.800"
         p={3}
@@ -67,7 +67,7 @@ export const ColumnsListPane: FC<ColumnsListPaneProperties> = ({
             whiteSpace="nowrap"
             overflowX="hidden"
             textOverflow="ellipsis"
-            borderColor="brand.100"
+            borderColor="primary.100"
             as={motion.div}
             variants={variants}
             animate={isOpen ? 'open' : 'close'}
@@ -87,10 +87,10 @@ export const ColumnsListPane: FC<ColumnsListPaneProperties> = ({
             cursor="pointer"
             onClick={() => setSelected(index)}
           >
-            <Badge colorScheme="brand" rounded={8} size="xs">
+            <Badge colorScheme="primary" rounded={8} size="xs">
               <ListIcon
                 as={HiViewColumns}
-                color="brand.200"
+                color="primary.200"
                 boxSize={4}
                 m={0}
               />

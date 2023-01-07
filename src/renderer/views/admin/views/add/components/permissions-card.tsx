@@ -3,7 +3,7 @@ import { InputField } from 'renderer/components/fields';
 
 export const PermissionsCard = () => {
   return (
-    <Card variant="solid">
+    <Card variant="elevated">
       <CardHeader>
         Permissions
       </CardHeader>

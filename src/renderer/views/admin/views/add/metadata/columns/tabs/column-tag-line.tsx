@@ -50,7 +50,7 @@ export const ColumnTagsLine: FC<ColumnTagsLineProperties> = ({
       ]
         .map((key) => (
           <Fragment key={`tags-${key}-${columnState.id}`}>
-            <Badge variant="subtle" colorScheme="brand" size="sm">
+            <Badge variant="subtle" colorScheme="primary" size="sm">
               <Flex gap={2}>
                 <Tag variant="subtle" fontSize={10} size="sm">
                   {key}
@@ -87,7 +87,7 @@ export const ColumnTagsLine: FC<ColumnTagsLineProperties> = ({
         opacity={0.7}
         cursor="pointer"
         variant="outline"
-        colorScheme="brand"
+        colorScheme="primary"
         size="sm"
         _hover={{ opacity: 1 }}
         onClick={toggle}
@@ -95,7 +95,7 @@ export const ColumnTagsLine: FC<ColumnTagsLineProperties> = ({
       >
         <Flex gap={2} alignItems="center">
           <Text>Show</Text>
-          <Tag variant="solid" colorScheme="brand" fontSize={10} size="sm">
+          <Tag variant="solid" colorScheme="primary" fontSize={10} size="sm">
             {isShowAll ? 'Less' : 'More'}
           </Tag>
         </Flex>

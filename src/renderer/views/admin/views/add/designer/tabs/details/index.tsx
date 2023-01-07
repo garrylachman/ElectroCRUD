@@ -112,7 +112,7 @@ export const DesignerDetails: FC<DesignerDetailsProperties> = ({
 
   return (
     <>
-      <Card>
+      <Card variant="outline" height="auto">
         {!readOnly && <CardHeader>Details Page Desinger</CardHeader>}
         <CardBody>
           <Grid templateColumns="repeat(5, 1fr)" gap={10}>
@@ -149,7 +149,7 @@ export const DesignerDetails: FC<DesignerDetailsProperties> = ({
                                     {!readOnly && (
                                       <>
                                         <Tooltip
-                                          bgColor="brand.600"
+                                          bgColor="primary.600"
                                           label="Drag to re-order"
                                           rounded={8}
                                         >

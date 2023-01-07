@@ -102,7 +102,7 @@ export const ColumnDetails = () => {
   if (!columnState) {
     return (
       <Center>
-        <Spinner size="xl" color="brand.200" />
+        <Spinner size="xl" color="primary.300" />
       </Center>
     );
   }

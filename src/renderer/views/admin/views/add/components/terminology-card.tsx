@@ -3,7 +3,7 @@ import { InputField } from 'renderer/components/fields';
 
 export const TerminologyCard = () => {
   return (
-    <Card variant="solid">
+    <Card variant="elevated">
       <CardHeader>Terminology</CardHeader>
       <CardBody>
         <Grid templateColumns="repeat(1, 1fr)" gap={6}>

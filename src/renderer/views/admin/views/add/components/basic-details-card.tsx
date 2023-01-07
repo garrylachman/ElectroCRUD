@@ -1,26 +1,26 @@
 import {
-  Grid,
   Badge,
   Button,
-  Flex,
-  Icon,
-  GridItem,
-  VStack,
-  Heading,
-  Center,
-  Spinner,
   Card,
-  CardHeader,
   CardBody,
+  CardHeader,
+  Center,
+  Flex,
+  Grid,
+  GridItem,
+  Heading,
+  Icon,
+  Spinner,
+  VStack,
 } from '@chakra-ui/react';
-import { FC, useEffect } from 'react';
-import { ViewRO } from 'renderer/defenitions/record-object';
-import { useFormContext } from 'react-hook-form';
-import * as Joi from 'joi';
 import { joiResolver } from '@hookform/resolvers/joi';
+import * as Joi from 'joi';
+import { FC, useEffect } from 'react';
+import { useFormContext } from 'react-hook-form';
 import { InputField } from 'renderer/components/fields';
-import { IPCChannelEnum } from 'shared';
+import { ViewRO } from 'renderer/defenitions/record-object';
 import { useIPCTablesList } from 'renderer/ipc';
+import { IPCChannelEnum } from 'shared';
 
 type BasicDetailsCardProperties = {
   isEditMode?: boolean;
@@ -40,7 +40,7 @@ export const BasicDetailsCard: FC<BasicDetailsCardProperties> = ({
   }, []);
 
   return (
-    <Card variant="solid">
+    <Card variant="elevated">
       <CardHeader>
         Details
       </CardHeader>

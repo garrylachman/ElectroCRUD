@@ -61,7 +61,7 @@ export const TagsField: FC<TagsFieldProperties> = ({
         bg="transparent"
         borderBottom="1px solid"
         borderColor="gray.200"
-        _focusWithin={{ borderColor: 'brand.200', borderBottomWidth: '2px' }}
+        _focusWithin={{ borderColor: 'primary.200', borderBottomWidth: '2px' }}
         cursor="text"
         overflowX="scroll"
         width="100%"
@@ -74,7 +74,7 @@ export const TagsField: FC<TagsFieldProperties> = ({
           return (
             <Tag
               fontSize="xs"
-              colorScheme="brand"
+              colorScheme="primary"
               variant="solid"
               mr={1}
               key={index}

@@ -31,7 +31,7 @@ export const TableTagsCard: FC<TableTagsCardProperties> = () => {
             animateOpacity
             unmountOnExit
           >
-            <Alert colorScheme="brand" variant="left-accent">
+            <Alert colorScheme="primary" variant="left-accent">
               <Box>
                 <AlertDescription fontSize="sm">
                   Tags (or keywords) are generally single words which help

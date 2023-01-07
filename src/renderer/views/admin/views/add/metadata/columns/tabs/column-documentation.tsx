@@ -104,7 +104,7 @@ export const ColumnDocumentation = () => {
   if (!columnState) {
     return (
       <Center>
-        <Spinner size="xl" color="brand.200" />
+        <Spinner size="xl" color="primary.200" />
       </Center>
     );
   }
@@ -126,7 +126,7 @@ export const ColumnDocumentation = () => {
         tabIndex={0}
         iconSize={5}
         fontSize="md"
-        colorScheme="brand"
+        colorScheme="primary"
         isFitted={false}
         variant="enclosed-colored"
         isBoxed

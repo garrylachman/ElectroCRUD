@@ -218,7 +218,7 @@ export const AutocompleteField = <T extends Option<unknown>['value']>({
               }}
               isMulti={isMulti}
               tagVariant="subtle"
-              colorScheme="brand"
+              colorScheme="primary"
               variant="flushed"
               defaultOptions={defaultOptions}
               classNamePrefix="chakra-react-select"

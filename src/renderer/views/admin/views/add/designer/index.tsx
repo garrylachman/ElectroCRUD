@@ -1,11 +1,13 @@
-import { Card, CardBody, Spacer } from '@chakra-ui/react';
+import { Box, Card, CardBody } from '@chakra-ui/react';
 
 import { DesignTabs } from './tabs';
 
 export const Desinger = () => (
-  <Card px={0} overflow="unset">
-      <CardBody px={0}>
-        <DesignTabs />
-    </CardBody>
-  </Card>
+  <Box height="-webkit-fill-available" pt={5}>
+    <Card overflow="unset" variant="elevated" height="100%">
+        <CardBody px={0}>
+          <DesignTabs />
+      </CardBody>
+    </Card>
+  </Box>
 );

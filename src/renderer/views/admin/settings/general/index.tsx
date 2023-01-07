@@ -4,7 +4,7 @@ import { FC } from 'react';
 export const SettingsGeneral: FC<any> = () => {
   return (
     <>
-      <Card>
+      <Card variant="elevated">
         <CardHeader>General Title</CardHeader>
         <CardBody>General Body</CardBody>
       </Card>

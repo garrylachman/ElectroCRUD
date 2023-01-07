@@ -14,7 +14,7 @@ export const ConfirmPromiseDeleteModal = ({
     keyu: v4(),
     instanceId: v4(),
     confirmButtonText: 'Delete',
-    confirmButtonColorScheme: 'brand',
+    confirmButtonColorScheme: 'primary',
     title: (
       <Text display="inline-flex" fontWeight="medium" textTransform="uppercase">
         Delete{' '}

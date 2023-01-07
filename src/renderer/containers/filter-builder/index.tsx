@@ -120,13 +120,13 @@ export const FilterBuilder: FC<FilterBuilderProperties> = ({
     <>
       {filterId && (
         <VStack alignItems="flex-start" w="100%">
-          <Card variant="solidBold" overflow="unset">
+          <Card variant="elevated" overflow="unset">
             <CardHeader>
               <Text fontWeight="bold" fontSize="xl">
                 Filter where's
               </Text>
             </CardHeader>
-            <CardBody>
+            <CardBody overflow="scroll">
               <Alert
                 status="info"
                 variant="left-accent"
@@ -144,7 +144,9 @@ export const FilterBuilder: FC<FilterBuilderProperties> = ({
                   </AlertDescription>
                 </Box>
               </Alert>
-              {filterId && <FilterBuilderWheresGroup filterId={filterId} />}
+              <Box height="220px">
+                {filterId && <FilterBuilderWheresGroup filterId={filterId} />}
+              </Box>
             </CardBody>
             <CardFooter>
               <HStack alignItems="center" flex={1} maxWidth="50%">
@@ -159,7 +161,7 @@ export const FilterBuilder: FC<FilterBuilderProperties> = ({
                 />
                 <Button
                   variant="solid"
-                  colorScheme="brand"
+                  colorScheme="primary"
                   onClick={filterSaveHandle}
                 >
                   Save Filter

@@ -1,28 +1,29 @@
 import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  Button,
-  ModalCloseButton,
-  Flex,
-  Icon,
-  HStack,
   Box,
+  Button,
   Divider,
+  Flex,
+  HStack,
+  Icon,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
   useColorModeValue,
 } from '@chakra-ui/react';
-import { useCallback, Dispatch, SetStateAction, FC, useEffect } from 'react';
 import { Step, Steps, useSteps } from 'chakra-ui-steps/chakra-ui-steps';
-import { NestedPartial } from 'shared';
+import { Dispatch, FC, SetStateAction, useCallback, useEffect } from 'react';
 import {
-  MdDone,
-  MdNavigateNext,
-  MdNavigateBefore,
   MdClose,
+  MdDone,
+  MdNavigateBefore,
+  MdNavigateNext,
 } from 'react-icons/md';
+import { NestedPartial } from 'shared';
+
 import { ModalProps as ModalProperties } from './ModalProps';
 
 export type WizardModalStepContentProps<T> = {
@@ -144,7 +145,7 @@ export const WizardModal = <TT,>({
             <HStack>
               {isPrev && (
                 <Button
-                  colorScheme="brand"
+                  colorScheme="primary"
                   onClick={prevStep}
                   isDisabled={!isPrevEnabled}
                 >
@@ -154,7 +155,7 @@ export const WizardModal = <TT,>({
               )}
               {isNext && (
                 <Button
-                  colorScheme="brand"
+                  colorScheme="primary"
                   onClick={nextStep}
                   isDisabled={!isNextEnabled}
                 >

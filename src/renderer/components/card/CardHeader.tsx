@@ -8,7 +8,7 @@ export type CardHeaderBetterProps = CardHeaderProps & {
 
 export const CardHeaderBetter: FC<CardHeaderBetterProps> = ({
   children,
-  topBoderColor = 'brand.200',
+  topBoderColor = 'primary.200',
   isTopBorder = false,
   ...properties
 }) => (

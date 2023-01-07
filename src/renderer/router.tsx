@@ -5,11 +5,13 @@ import {
   Route,
 } from 'react-router-dom';
 import AdminLayout from 'renderer/layouts/admin';
-import Accounts from 'renderer/views/admin/accounts';
-import { AddNew as AddView, EditView } from 'renderer/views/admin/views/add';
+import Accounts, { ManageAccounts } from 'renderer/views/admin/accounts';
+import { AddNew as AddView } from 'renderer/views/admin/views/add';
 import { DashboardWithContext } from 'renderer/views/admin/views/data';
 
 import { Settings } from './views/admin/settings';
+import { EditTabs } from './views/admin/views/add/edit-tabs';
+import { ManageViews } from './views/admin/views/add/manage-views';
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -18,7 +20,7 @@ export const router = createBrowserRouter(
         <Route
           path="accounts"
           handle={{ title: 'Accounts' }}
-          element={<Accounts />}
+          element={<ManageAccounts />}
         />
         <Route
           path="settings"
@@ -30,7 +32,7 @@ export const router = createBrowserRouter(
             <Route
               path="edit"
               handle={{ title: 'Edit' }}
-              element={<EditView />}
+              element={<EditTabs />}
             />
             <Route
               path="dashboard"
@@ -41,9 +43,10 @@ export const router = createBrowserRouter(
           </Route>
           <Route
             path="add"
-            handle={{ title: 'Add View' }}
-            element={<AddView />}
+            handle={{ title: 'Manage Views' }}
+            element={<ManageViews />}
           />
+          <Route path="" element={<Navigate to="add" />} />
         </Route>
       </Route>
       <Route path="/" element={<Navigate to="/admin/" />} />

@@ -48,7 +48,7 @@ export const TableDocumentCardCard: FC<TableDocumentCardProperties> = () => {
             Many of these items will appear directly in catalog navigation pages
             or search results.
           </Text>
-          <Alert colorScheme="brand" variant="left-accent">
+          <Alert colorScheme="primary" variant="left-accent">
             <Box>
               <AlertTitle>Title (or Name)</AlertTitle>
               <AlertDescription fontSize="sm">
@@ -70,7 +70,7 @@ export const TableDocumentCardCard: FC<TableDocumentCardProperties> = () => {
           animateOpacity
           unmountOnExit
         >
-          <Alert colorScheme="brand" variant="left-accent">
+          <Alert colorScheme="primary" variant="left-accent">
             <Box>
               <AlertTitle>Description</AlertTitle>
               <AlertDescription fontSize="sm">
@@ -93,7 +93,7 @@ export const TableDocumentCardCard: FC<TableDocumentCardProperties> = () => {
           animateOpacity
           unmountOnExit
         >
-          <Alert colorScheme="brand" variant="left-accent">
+          <Alert colorScheme="primary" variant="left-accent">
             <Box>
               <AlertTitle>Category</AlertTitle>
               <AlertDescription fontSize="sm">
@@ -120,7 +120,7 @@ export const TableDocumentCardCard: FC<TableDocumentCardProperties> = () => {
           animateOpacity
           unmountOnExit
         >
-          <Alert colorScheme="brand" variant="left-accent">
+          <Alert colorScheme="primary" variant="left-accent">
             <Box>
               <AlertTitle>Contact Information</AlertTitle>
               <AlertDescription fontSize="sm">

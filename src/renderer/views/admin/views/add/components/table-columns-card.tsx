@@ -1,37 +1,28 @@
 import {
-  Box,
-  Tag,
-  TagLeftIcon,
-  Switch,
-  Heading,
-  Highlight,
-  SkeletonText,
-  TagLabel,
-  Center,
-  Divider,
-  Spinner,
-  VStack,
-  Text,
-  CardBody,
   Card,
+  CardBody,
   CardHeader,
+  Center,
   HStack,
+  Spinner,
+  Switch,
+  Text,
+  VStack,
 } from '@chakra-ui/react';
-import { FC, useEffect, useMemo } from 'react';
-import { IPCChannelEnum } from 'shared';
+import _ from 'lodash';
+import { FC, useEffect } from 'react';
+import { MdHdrAuto, MdOutline1XMobiledata, MdVpnKey } from 'react-icons/md';
+import { RxTextNone } from 'react-icons/rx';
+import { useSelector } from 'react-redux';
+import { TableIconCell } from 'renderer/components/tables/customCells';
 import { ElectroCRUDTable } from 'renderer/components/tables/Table';
 import { ColumnRO } from 'renderer/defenitions/record-object';
-import { MdVpnKey, MdOutline1XMobiledata, MdHdrAuto } from 'react-icons/md';
-import { TableBooleanCell, TableIconCell } from 'renderer/components/tables/customCells';
-import { useAppDispatch, useAppSelector } from 'renderer/store/hooks';
-import { ColumnsReducer, ViewsReducer } from 'renderer/store/reducers';
-import _, { size } from 'lodash';
-import { useIPCTableInfo } from 'renderer/ipc';
-import { ViewSelectors } from 'renderer/store/selectors';
-import { useSelector } from 'react-redux';
 import { findType } from 'renderer/defenitions/record-object/data-types';
-import { SectionHeader } from 'renderer/components/sections/section-header';
-import { RxTextNone } from 'react-icons/rx';
+import { useIPCTableInfo } from 'renderer/ipc';
+import { useAppDispatch, useAppSelector } from 'renderer/store/hooks';
+import { ColumnsReducer } from 'renderer/store/reducers';
+import { ViewSelectors } from 'renderer/store/selectors';
+import { IPCChannelEnum } from 'shared';
 
 type TableColumnsCardProperties = {
   viewId: string;
@@ -80,25 +71,6 @@ export const TableColumnsCard: FC<TableColumnsCardProperties> = ({
     }
   }, [result]);
 
-  /*name: string;
-  table: string;
-  data_type: string;
-  default_value?: string;
-  max_length?: number;
-  numeric_precision?: number;
-  numeric_scale?: number;
-  is_nullable: boolean;
-  is_unique: boolean;
-  is_primary_key: boolean;
-  is_generated: boolean;
-  generation_expression?: string;
-  has_auto_increment: boolean;
-  foreign_key_table?: string;
-  foreign_key_column?: string;
-  comment?: string;
-  schema?: string;
-  foreign_key_schema?: string;*/
-
   const tableColumns: {
     key: keyof ColumnRO | 'actions';
     label: string;
@@ -116,12 +88,12 @@ export const TableColumnsCard: FC<TableColumnsCardProperties> = ({
 
   if (isLoading) {
     return (
-      <Card variant="solid">
+      <Card variant="elevated">
         <CardBody>
         <Center>
           <VStack>
-            <Spinner size="xl" thickness='6px' color='brand.300' />
-            <Text fontSize='lg'>Analyzing "{viewState?.table}" table...</Text>
+              <Spinner size="xl" thickness="6px" color="primary.300" />
+              <Text fontSize="lg">Analyzing "{viewState?.table}" table...</Text>
           </VStack>
         </Center>
       </CardBody>
@@ -130,7 +102,7 @@ export const TableColumnsCard: FC<TableColumnsCardProperties> = ({
 
   return (
     <>
-      <Card variant="solid">
+      <Card variant="elevated">
         <CardHeader>
           Columns
           <Text display="flex" as="kbd" fontSize="sm" fontWeight="normal" color="gray.500">

@@ -29,7 +29,7 @@ export const DataTableActionMenu: FC<DataTableActionMenuProperties> = ({
 }) => (
   <Menu offset={[-15, -5]} isLazy strategy="absolute">
     <MenuButton as={Button} variant="link" _hover={{ color: 'black' }}>
-      <Icon as={MdOutlineMoreVert} boxSize={6} />
+      <Icon as={MdOutlineMoreVert} boxSize={6} mr={3} />
     </MenuButton>
     <Portal>
       <MenuList rounded="lg" boxShadow="lg" py={0} overflow="hidden">

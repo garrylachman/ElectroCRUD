@@ -10,7 +10,7 @@ type TableIconCellProps = {
 export const TableIconCell: FC<TableIconCellProps> = ({ icon, tooltip }) => {
   return (
     <Tooltip label={tooltip}>
-      <Tag variant="subtle" colorScheme={'brand'}>
+      <Tag variant="subtle" colorScheme={'primary'}>
         <TagLeftIcon as={icon} me={0} fontSize='md' />
       </Tag>
     </Tooltip>

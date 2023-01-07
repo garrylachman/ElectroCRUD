@@ -7,7 +7,7 @@ import { RippleButton } from './ripple-button';
 export const SaveButton: FC<ButtonProps> = (properties) => (
   <RippleButton
     variant="solid"
-    bgColorScheme="brand"
+    bgColorScheme="primary"
     size="lg"
     {...properties}
     gap={2}

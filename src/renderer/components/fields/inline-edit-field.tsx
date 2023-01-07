@@ -77,7 +77,7 @@ const ShowUnderline = () => {
     <Divider
       borderTopWidth={isEditing ? 0 : 2}
       borderBottomWidth="0px"
-      borderColor="brand.500"
+      borderColor="primary.500"
     />
   );
 };
@@ -101,7 +101,8 @@ export const EditableControls = () => {
       top="-4px"
     >
       <IconButton
-        variant="brand"
+        variant="solid"
+        colorScheme="primary"
         icon={<Icon as={MdOutlineCheck} />}
         {...getSubmitButtonProps()}
       />
@@ -124,7 +125,7 @@ export const EditableControls = () => {
       <IconButton
         size="sm"
         variant="solid"
-        colorScheme="brand"
+        colorScheme="primary"
         icon={<Icon as={MdEdit} boxSize={4} />}
         {...getEditButtonProps()}
       />

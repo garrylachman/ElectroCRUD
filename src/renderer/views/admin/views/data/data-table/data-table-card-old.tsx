@@ -54,7 +54,7 @@ createTheme(
         backgroundColor: globalStyles.colors.secondaryGray[400],
         minHeight: '40px',
         borderBottomWidth: '1px',
-        borderBottomColor: globalStyles.colors.brand[200],
+        borderBottomColor: globalStyles.colors.primary[200],
         borderBottomStyle: 'solid',
       },
       denseStyle: {
@@ -197,7 +197,7 @@ export const DataTableCard: FC<DataTableCardProperties> = ({
           )}
           selectableRowsComponentProps={{
             size: 'lg',
-            colorScheme: 'brand',
+            colorScheme: 'primary',
             icon: <Icon as={GiCheckMark} boxSize={3.5} />,
           }}
           onSelectedRowsChange={handleRowSelected}

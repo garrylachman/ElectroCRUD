@@ -22,8 +22,10 @@ export const DesignTabs: FC<any> = () => {
         tabsList={tabs}
         tabIndex={0}
         iconSize="15px"
-        colorScheme="brand"
+        colorScheme="primary"
         fontSize="sm"
+        hasScrollbar
+        fillAvailable
       />
     </>
   );

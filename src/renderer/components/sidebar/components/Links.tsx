@@ -21,7 +21,7 @@ import { ViewsReducer } from 'renderer/store/reducers';
 
 const iconhMotion = {
   rest: {
-    filter: '',
+    filter: 'drop-shadow(0 0 0rem #E9E3FF)brightness(1)',
     transition: {
       duration: 2,
       type: 'spring',
@@ -96,7 +96,7 @@ export function Links() {
     'secondaryGray.600',
     'secondaryGray.600'
   );
-  const activeIcon = useColorModeValue('brand.500', 'white');
+  const activeIcon = useColorModeValue('primary.500', 'white');
 
   // verifies if routeName is the one active (in browser input)
   const activeRoute = (routeName: string) => {
@@ -104,7 +104,7 @@ export function Links() {
   };
 
   const viewsLinks = [
-    { to: 'add', text: 'Add View', icon: TbSquarePlus },
+    { to: 'add', text: 'Manage Views', icon: TbSquarePlus },
     ...sessionViews.map((view) => ({
       to: view.id,
       text: view.name,
@@ -140,7 +140,7 @@ export function Links() {
           {link.hr && (
             <Divider borderColor="#42454c" my={3} w="85%" alignSelf="center" />
           )}
-          <HStack key={link.to} sx={link?.style} display="block">
+          <HStack key={link.to} sx={link?.style} display="block" zIndex={1} w="95%">
             <>
               <NavLink to={link.to} style={{ width: '100%' }}>
                 <Flex
@@ -211,14 +211,14 @@ export function Links() {
               </NavLink>
               <Box as={Collapse} in={activeRoute(link.to)} style={{ margin: '0px' }}>
                 <Flex
-                  bgColor={(activeRoute(link.to) && link.to === 'views' )? '#1f222b' : undefined}
+                  bgColor={(activeRoute(link.to) && link.to === 'views' ) ? '#1f222b' : undefined}
                   height="-webkit-fill-available"
-                  overflow="scroll"
                   overscrollBehavior="contain"
                   position="absolute"
                   flexDirection="column"
                   width="285px"
-                  className='custom-scroll'
+                  className={(activeRoute(link.to) && link.to === 'views' ) ? 'custom-scroll' : ''}
+                  overflow={(activeRoute(link.to) && link.to === 'views' ) ? "scroll" : "hidden"}
                 >
                   {activeRoute(link.to) && link.subLinks.length > 0 ? (
                     <LayoutGroup>
@@ -313,8 +313,8 @@ export function Links() {
                                     }
                                     fontSize="13"
                                     whiteSpace="nowrap"
-                                    overflow="scroll"
                                     textOverflow="ellipsis"
+                                    overflow="hidden"
                                   >
                                     {subLink.text}
                                   </Text>

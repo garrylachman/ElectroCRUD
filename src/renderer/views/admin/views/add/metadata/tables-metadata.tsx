@@ -70,38 +70,29 @@ export const TablesMetadata: FC<TablesMetadataProperties> = () => {
       .catch(() => {});
 
   return (
-    <AnimatePresence>
-      <motion.div
-        layout
-        key="TablesMetadata"
-        initial={{ scale: 0.2, position: 'relative', opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        exit={{ scale: 0.2, opacity: 0 }}
-      >
-        <Box px={5} pb={0} pt={3}>
-          <FormProvider {...formContext}>
-            <form onSubmit={handleSubmit(onSubmit)}>
-              <TableDocumentCardCard />
-              <Spacer p={3} />
-              <TableTagsCard />
-              <Spacer p={3} />
-              <Box>
-                <HStack justifyContent="space-between">
-                  <Button
-                    type="submit"
-                    variant="brand"
-                    size="lg"
-                    isDisabled={!isValid}
-                  >
-                    <Icon mr={2} as={MdSave} />
-                    Save
-                  </Button>
-                </HStack>
-              </Box>
-            </form>
-          </FormProvider>
-        </Box>
-      </motion.div>
-    </AnimatePresence>
+    <Box p={5}>
+      <FormProvider {...formContext}>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <TableDocumentCardCard />
+          <Spacer p={3} />
+          <TableTagsCard />
+          <Spacer p={3} />
+          <Box>
+            <HStack justifyContent="space-between">
+              <Button
+                type="submit"
+                variant="solid"
+                colorScheme="primary"
+                size="lg"
+                isDisabled={!isValid}
+              >
+                <Icon mr={2} as={MdSave} />
+                Save
+              </Button>
+            </HStack>
+          </Box>
+        </form>
+      </FormProvider>
+    </Box>
   );
 };

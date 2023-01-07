@@ -52,6 +52,8 @@ export type ElectroCRUDTabsProperties = Omit<TabsProps, 'children'> & {
   isBoxed?: boolean;
   fontSize?: string;
   fillAvailable?: boolean;
+  hasScrollbar?: boolean;
+  marginTop?: ResponsiveValue<number>;
 };
 
 export const ElectroCRUDTabs = forwardRef<
@@ -67,7 +69,9 @@ export const ElectroCRUDTabs = forwardRef<
       isBoxed = false,
       fontSize = 'lg',
       fillAvailable = false,
+      hasScrollbar = false,
       variant,
+      marginTop,
       ...rest
     },
     reference
@@ -108,7 +112,7 @@ export const ElectroCRUDTabs = forwardRef<
           as={Flex}
           isFitted={isFitted}
           isLazy
-          lazyBehavior="keepMounted"
+          lazyBehavior="unmount"
           variant={variant}
           {...rest}
           index={tabIndex}
@@ -121,6 +125,7 @@ export const ElectroCRUDTabs = forwardRef<
           style={{
             height: '100%',
           }}
+          position="relative"
         >
           <TabList>
             <Reorder.Group
@@ -152,12 +157,14 @@ export const ElectroCRUDTabs = forwardRef<
                       panelId={tab.name}
                       isSelected={tab === selectedTab}
                       width={isFitted ? '100%' : 'auto'}
+                      minWidth="150px"
                     >
                       <motion.span layout="position">
                         <Tooltip
                           hasArrow
                           label="Drag to change tabs order"
-                          bg="brand.600"
+                          variant="solid"
+                          bg="secondary.100"
                           openDelay={500}
                           rounded="lg"
                         >
@@ -201,23 +208,24 @@ export const ElectroCRUDTabs = forwardRef<
             display="flex"
             flexDirection="column"
             overflow="hidden"
+            height="100%"
           >
             {tabsState.map((tab, index) => (
               <TabPanel
                 key={`tab-content-${tab.name}`}
                 id={tab.name}
                 tabIndex={tabsState.indexOf(tab)}
-                px={0}
-                pb={0}
+                p={0}
                 borderWidth={isBoxed ? '1px' : 0}
                 borderTopWidth={isBoxed ? '1px' : 0}
                 overflowX="hidden"
                 height="100%"
                 width="auto"
-                position="sticky"
+                position="initial"
                 flex={1}
                 display="flex"
                 flexDirection="column"
+                marginTop={marginTop}
               >
                 <motion.div
                   key={tabIndex ? tab.name : 'empty'}
@@ -233,9 +241,14 @@ export const ElectroCRUDTabs = forwardRef<
                   }}
                   style={{
                     height: fillAvailable ? '-webkit-fill-available' : '100%',
-                    display: 'flex',
+                    display: 'block',
                     flexDirection: 'column',
+                    width: '-webkit-fill-available',
+                    overflow: 'scroll',
+                    overscrollBehavior: 'contain',
+                    position: fillAvailable ? 'absolute' : 'static',
                   }}
+                  className={hasScrollbar ? 'tabScroller' : 'NoTabScroller'}
                 >
                   {tabsState[tabIndex].element ? (
                     <>{tabsState[tabIndex].element}</>

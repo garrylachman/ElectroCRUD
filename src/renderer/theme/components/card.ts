@@ -65,14 +65,14 @@ export const Card = helpers.defineMultiStyleConfig({
         color: 'gray.600',
       },
       header: {
-        bg: 'brand.400',
+        bg: 'primary.400',
         color: 'white',
         py: 4,
       },
     },
     brand: {
       container: {
-        background: 'brand.100',
+        background: 'primary.100',
       },
       body: {
         color: 'gray.800',
@@ -80,7 +80,7 @@ export const Card = helpers.defineMultiStyleConfig({
     },
     brandBold: {
       container: {
-        background: 'brand.400',
+        background: 'primary.400',
       },
       body: {
         color: 'white',

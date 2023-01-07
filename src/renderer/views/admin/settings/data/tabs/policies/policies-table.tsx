@@ -79,7 +79,7 @@ export const PoliciesTable: FC<PoliciesTableProperties> = ({
       customCell={(row) => {
         if (row.column.id === 'associated_tags') {
           return (
-            <Badge variant="subtle" colorScheme="brand">
+            <Badge variant="subtle" colorScheme="primary">
               {row.getValue()}
             </Badge>
           );

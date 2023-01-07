@@ -23,17 +23,16 @@ export default function Dashboard() {
   return (
     <Grid
       templateAreas={`"nav header"
-                    "nav main"
-                    "nav footer"`}
+                    "nav main"`}
       gridTemplateRows="auto 1fr 30px"
-      gridTemplateColumns="285px 1fr"
-      gap="1"
+      gridTemplateColumns="285px minmax(0, 1fr)"
+      gap="0"
       color="blackAlpha.700"
       fontWeight="bold"
       height="100vh"
       overflow="hidden"
     >
-      <GridItem p={2} area="header">
+      <GridItem p={2} px={6} area="header" bgColor="white" boxShadow="md">
         <Navbar
           onOpen={() => {}}
           logoText="ElectroCRUD"
@@ -45,12 +44,17 @@ export default function Dashboard() {
       <GridItem area="nav" h="100vh" borderRadius={0}>
         <Sidebar />
       </GridItem>
-      <GridItem p={2} area="main" height="auto" overflow="hidden">
+      <GridItem
+        p={6}
+        px={9}
+        area="main"
+        height="auto"
+        overflow="hidden"
+        bgColor="blackAlpha.100"
+        display="flex"
+      >
         <Outlet />
-      </GridItem>
-      <GridItem p={2} area="footer">
-        Footer
       </GridItem>
     </Grid>
   );
-};
+}

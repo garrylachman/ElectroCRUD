@@ -14,7 +14,7 @@ import { FC, useMemo, useState } from 'react';
 import { AiFillDelete } from 'react-icons/ai';
 import { MdPersonAdd } from 'react-icons/md';
 import ReactTimeAgo from 'react-time-ago';
-import { DatabaseIcon } from 'renderer/components/icons/DatabaseIcon';
+import { DatabaseIcon } from 'renderer/components/icons/database-icon';
 import { ConfirmDeleteModal } from 'renderer/components/modals';
 import { ElectroCRUDTable } from 'renderer/components/tables/Table';
 import {
@@ -95,7 +95,7 @@ export const AccountsTable: FC<any> = () => {
 
   return (
     <>
-      <Card h="100%">
+      <Card h="100%" variant="elevated">
         <CardHeader>
           <HStack justifyContent="space-between">
             <Box>

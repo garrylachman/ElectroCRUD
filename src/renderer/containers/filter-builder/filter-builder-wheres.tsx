@@ -42,7 +42,7 @@ export const FilterBuilderWheres: FC<FilterBuilderWheresProperties> = ({
             {_.isEqual(index + 1, _.size(array)) && (
               <IconButton
                 variant="solid"
-                colorScheme="brand"
+                colorScheme="primary"
                 size="sm"
                 icon={<Icon as={MdOutlineAdd} />}
                 aria-label=""

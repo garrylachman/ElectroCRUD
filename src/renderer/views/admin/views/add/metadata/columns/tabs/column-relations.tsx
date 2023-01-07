@@ -121,7 +121,7 @@ export const ColumnReletions = () => {
   if (!columnState) {
     return (
       <Center>
-        <Spinner size="xl" color="brand.200" />
+        <Spinner size="xl" color="primary.200" />
       </Center>
     );
   }
@@ -129,7 +129,7 @@ export const ColumnReletions = () => {
   return (
     <Box px={4} key={`column-ref--${columnState.id}`}>
       <Heading size="md">Reletions</Heading>
-      <Flex pb={4}>
+      <Flex pb={4} gap={4}>
         <Flex flexDirection="row">
           <Text>
             You can map columns to columns between all columns in your database.

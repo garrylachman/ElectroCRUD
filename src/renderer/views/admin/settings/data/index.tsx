@@ -18,13 +18,13 @@ const tabs: ElectroCRUDTabProperties[] = [
 
 export const SettingsDataTabs: FC<any> = () => {
   return (
-    <Card flex={1} display="flex" height="-webkit-fill-available">
+    <Card flex={1} display="flex" height="-webkit-fill-available" variant="elevated">
       <CardBody px={0} pb={0} overflow="scroll">
         <ElectroCRUDTabs
           tabsList={tabs}
           tabIndex={0}
           iconSize={6}
-          colorScheme="brand"
+          colorScheme="primary"
         />
       </CardBody>
     </Card>

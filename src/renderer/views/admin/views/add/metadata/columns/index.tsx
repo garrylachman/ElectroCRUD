@@ -1,4 +1,4 @@
-import { BoxProps } from '@chakra-ui/react';
+import { Box, BoxProps } from '@chakra-ui/react';
 import { FC } from 'react';
 import { Pane, usePaneHook } from 'renderer/components/pane';
 import { PaneContextProvider } from 'renderer/components/pane/pane-context';
@@ -15,24 +15,26 @@ const MetaColumns: FC<MetaColumnsProperties> = ({ ...rest }) => {
     {
       bg: 'gradient.white.600',
       borderRadius: 'lg',
-      borderRight: '2px solid',
-      borderColor: 'brand.200',
+      borderRight: '4px solid',
+      borderColor: 'gray.200',
       minH: '35rem',
     },
     {
       bg: 'white',
-      borderRadius: 'lg',
-      borderLeft: '2px solid',
-      borderColor: 'brand.200',
+      borderRadius: 'sm',
+      borderLeft: '3px solid',
+      borderColor: 'gray.300',
       minH: '35rem',
     }
   );
 
   return (
-    <Pane
-      leftComponent={<ColumnsListPane />}
-      rightComponent={<DetailsPane />}
-    />
+    <Box px={5}>
+      <Pane
+        leftComponent={<ColumnsListPane />}
+        rightComponent={<DetailsPane />}
+      />
+    </Box>
   );
 };
 

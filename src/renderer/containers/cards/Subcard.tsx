@@ -10,7 +10,7 @@ export const SubCard: FC<PropsWithChildren<SubCardProps>> = ({
   ...rest
 }) => {
   const bg = useColorModeValue('white', 'navy.700');
-  const bgBrand = useColorModeValue('gradient.perper.100', 'brand.400');
+  const bgBrand = useColorModeValue('gradient.perper.100', 'primary.400');
   return (
     <Card
       {...rest}

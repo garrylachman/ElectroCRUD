@@ -1,25 +1,23 @@
 import {
+  Box,
+  Card,
+  CardBody,
+  Center,
+  HStack,
+  Icon,
+  SimpleGrid,
   Stat,
+  StatHelpText,
   StatLabel,
   StatNumber,
   VStack,
-  SimpleGrid,
-  HStack,
-  Icon,
-  Box,
-  Center,
-  Card,
-  CardBody, StatHelpText
 } from '@chakra-ui/react';
-import ReactTimeAgo from 'react-time-ago';
-import { FC, useContext } from 'react';
-import { MdAccessTime, MdAccessTimeFilled } from 'react-icons/md';
-import { IconType } from 'react-icons/lib';
-import { ViewScopedContext } from 'renderer/contexts';
 import moment from 'moment';
-
-type TabsHeaderProperties = {
-};
+import { FC, useContext } from 'react';
+import { IconType } from 'react-icons/lib';
+import { MdAccessTime, MdAccessTimeFilled } from 'react-icons/md';
+import ReactTimeAgo from 'react-time-ago';
+import { ViewScopedContext } from 'renderer/contexts';
 
 export const DateCard = ({
   value,
@@ -30,33 +28,37 @@ export const DateCard = ({
   title: string;
   icon: IconType;
 }) => (
-  <Card variant="brandBold">
+  <Card variant="elevated">
     <CardBody>
-    <HStack>
-      <Stat>
-        <StatLabel textTransform="uppercase">{title}</StatLabel>
-        <StatNumber fontSize="lg" py={1}>{value ? <ReactTimeAgo date={value} /> : 'N/A'}</StatNumber>
-        <StatHelpText as={"kbd"} fontSize="2xs">{moment(value).toLocaleString()}</StatHelpText>
-      </Stat>
-      <Box
-        bg="blackAlpha.400"
-        position="absolute"
-        right={0}
-        width="65px"
-        height="100%"
-        display="flex"
-        justifyContent="center"
-      >
-        <Center>
-          <Icon as={icon} fontSize="40px" m={2} />
-        </Center>
-      </Box>
-    </HStack>
+      <HStack>
+        <Stat>
+          <StatLabel textTransform="uppercase">{title}</StatLabel>
+          <StatNumber fontSize="lg" py={1}>
+            {value ? <ReactTimeAgo date={value} /> : 'N/A'}
+          </StatNumber>
+          <StatHelpText as="kbd" fontSize="2xs">
+            {moment(value).toLocaleString()}
+          </StatHelpText>
+        </Stat>
+        <Box
+          bg="blackAlpha.400"
+          position="absolute"
+          right={0}
+          width="65px"
+          height="100%"
+          display="flex"
+          justifyContent="center"
+        >
+          <Center>
+            <Icon as={icon} fontSize="40px" m={2} />
+          </Center>
+        </Box>
+      </HStack>
     </CardBody>
   </Card>
 );
 
-export const TabsHeader: FC<TabsHeaderProperties> = () => {
+export const TabsHeader = () => {
   const { viewState } = useContext(ViewScopedContext);
 
   return (

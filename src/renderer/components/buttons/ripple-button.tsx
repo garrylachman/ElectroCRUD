@@ -2,15 +2,19 @@ import { Button, ButtonProps, keyframes, useToken } from '@chakra-ui/react';
 import chroma from 'chroma-js';
 import { motion } from 'framer-motion';
 import { FC } from 'react';
+import { O } from 'ts-toolbelt';
 
-type RippleButtonProperties = ButtonProps & {
-  bgColor?: {
-    step1: string;
-    step2: string;
-    step3: string;
-  };
-  bgColorScheme?: string;
-};
+export type RippleButtonProperties = O.Merge<
+  ButtonProps,
+  {
+    bgColor?: {
+      step1: string;
+      step2: string;
+      step3: string;
+    };
+    bgColorScheme?: string;
+  }
+>;
 
 const pulse = keyframes({
   '0%': {
@@ -31,9 +35,9 @@ export const RippleButton: FC<RippleButtonProperties> = ({
   children,
   size,
   key,
-  bgColorScheme = 'brand',
+  bgColorScheme = 'primary',
   bgColor = {
-    step1: `${bgColorScheme}.300`,
+    step1: `${bgColorScheme}.400`,
     step2: `${bgColorScheme}.600`,
     step3: `${bgColorScheme}.700`,
   },

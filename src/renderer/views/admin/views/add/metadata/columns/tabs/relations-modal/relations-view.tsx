@@ -85,11 +85,11 @@ export const RelationsView: FC<RelationsViewProperties> = ({
           {children}
           {properties.data && properties.data.stats && (
             <Flex>
-              <Tag variant="subtle" colorScheme="brand" mr={2} size="sm">
+              <Tag variant="subtle" colorScheme="primary" mr={2} size="sm">
                 <TagLeftIcon as={BiTable} />
                 {properties.data.table}
               </Tag>
-              <Tag variant="subtle" colorScheme="brand" size="sm">
+              <Tag variant="subtle" colorScheme="primary" size="sm">
                 <TagLeftIcon as={BiColumns} />
                 {properties.data.stats}
               </Tag>

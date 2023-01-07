@@ -41,12 +41,13 @@ export const DetailsPane: FC<DetailsPaneProperties> = ({ ...properties }) => {
           tabsList={tabs}
           tabIndex={0}
           iconSize={6}
-          colorScheme="brand"
+          colorScheme="primary"
+          marginTop={5}
         />
       )}
       {!memState.columnId && (
         <Center>
-          <Spinner size="xl" color="brand.200" />
+          <Spinner size="xl" color="primary.200" />
         </Center>
       )}
     </Box>

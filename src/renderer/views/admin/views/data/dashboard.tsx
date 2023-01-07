@@ -113,7 +113,7 @@ export const Dashboard = () => {
                     .toDate()
                     .toLocaleString()}
                 >
-                  <Tag variant="subtle" colorScheme="brand">
+                  <Tag variant="subtle" colorScheme="primary">
                     <TagRightIcon as={column.type.icon} m={0} />
                   </Tag>
                 </Tooltip>
@@ -123,7 +123,7 @@ export const Dashboard = () => {
 
           return (
             <Tooltip
-              bg={isMasked ? 'brand.500' : 'gray.500'}
+              bg={isMasked ? 'primary.500' : 'gray.500'}
               hasArrow
               label={isMasked ? 'Masked Value' : value}
             >
@@ -141,7 +141,7 @@ export const Dashboard = () => {
     <>
       <Tabs
         isLazy
-        colorScheme="brandTabs"
+        colorScheme="primary"
         height="100%"
         display="flex"
         flexDirection="column"

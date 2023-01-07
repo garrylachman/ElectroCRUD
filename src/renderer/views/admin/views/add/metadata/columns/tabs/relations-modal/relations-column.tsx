@@ -86,7 +86,7 @@ export const RelationsColumn: FC<RelationsColumnProperties> = () => {
         <Flex justifyContent="space-between" w="100%">
           {children}
           {properties.data && properties.data.stats && (
-            <Tag variant="subtle" colorScheme="brand" mr={2} size="sm">
+            <Tag variant="subtle" colorScheme="primary" mr={2} size="sm">
               <TagByType type={properties.data.stats} />
               <TagLabel>{properties.data.stats}</TagLabel>
             </Tag>

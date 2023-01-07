@@ -17,7 +17,7 @@ export const ReactSelectColumnOption = {
       <Flex justifyContent="space-between" w="100%">
         {children}
         {properties.data && properties.data.type && (
-          <Tag variant="subtle" colorScheme="brand" size="sm" textTransform="uppercase">
+          <Tag variant="subtle" colorScheme="primary" size="sm" textTransform="uppercase">
             <TagLabel>{findType(properties.data.type).name}</TagLabel>
           </Tag>
         )}

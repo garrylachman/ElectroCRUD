@@ -52,7 +52,7 @@ export const FilterBuilderWheresGroup: FC<FilterBuilderGroupProperties> = ({
       {filterState?.id && (
         <VStack key={`filter-${filterState.id}`} w="100%">
           <Card
-            variant="solid"
+            variant="outline"
             boxShadow="sm"
             borderWidth={1}
             mt={index === 0 ? 0 : 3}
@@ -76,11 +76,11 @@ export const FilterBuilderWheresGroup: FC<FilterBuilderGroupProperties> = ({
                       borderRightWidth={0}
                       borderTopLeftRadius="5px"
                       borderBottomLeftRadius="5px"
-                      borderColor="brand.300"
+                      borderColor="primary.300"
                     />
                     <Button
-                      colorScheme="brand"
-                      bg="brand.200"
+                      colorScheme="primary"
+                      bg="primary.200"
                       variant="solid"
                       size="xs"
                       position="absolute"
@@ -123,7 +123,7 @@ export const FilterBuilderWheresGroup: FC<FilterBuilderGroupProperties> = ({
               <HStack>
                 <RippleButton
                   fontWeight="thin"
-                  colorScheme="brand"
+                  colorScheme="primary"
                   size="sm"
                   leftIcon={<Icon as={VscGroupByRefType} fontSize="lg" />}
                   onClick={() => {

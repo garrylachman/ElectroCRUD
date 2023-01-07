@@ -1,99 +1,50 @@
-import {
-  Card,
-  CardBody,
-  Flex,
-  Icon,
-  Tab,
-  TabList,
-  TabPanel,
-  TabPanels,
-  Tabs,
-  Text,
-} from '@chakra-ui/react';
-import { AnimatePresence, LayoutGroup, motion } from 'framer-motion';
-import { FC } from 'react';
+import { Box, Card, CardBody } from '@chakra-ui/react';
 import { MdBook, MdCode, MdTag } from 'react-icons/md';
+import {
+  ElectroCRUDTabProperties,
+  ElectroCRUDTabs,
+} from 'renderer/components/tabs/tabs';
 
 import { CodeExamples } from './code-examples';
 import { MetaColumnsWithContext } from './columns';
 import { TablesMetadata } from './tables-metadata';
 
-type MetadataIndexProperties = {};
+const tabs: ElectroCRUDTabProperties[] = [
+  {
+    name: 'Table Documentation',
+    element: <TablesMetadata />,
+    icon: MdBook,
+  },
+  {
+    name: 'Code & Queries',
+    element: <CodeExamples />,
+    icon: MdCode,
+  },
+  {
+    name: 'Columns',
+    element: <MetaColumnsWithContext />,
+    icon: MdTag,
+  },
+];
 
-export const MetadataIndex: FC<MetadataIndexProperties> = () => {
+export const MetadataTabs = () => {
   return (
-    <Card px={0} overflow="unset">
-      <CardBody px={0}>
-        <Tabs isLazy isFitted colorScheme="brandTabs" pt="0px">
-          <TabList>
-              <Tab>
-                <Flex align="center">
-                  <Icon as={MdBook} w="15px" h="15px" me="8px" />
-                  <Text fontSize="sm" fontWeight="500">
-                    Table Documentation
-                  </Text>
-                </Flex>
-              </Tab>
-              <Tab>
-                <Flex align="center">
-                  <Icon as={MdCode} w="15px" h="15px" me="8px" />
-                  <Text fontSize="sm" fontWeight="500">
-                    Code & Queries
-                  </Text>
-                </Flex>
-              </Tab>
-              <Tab>
-                <Flex align="center">
-                  <Icon as={MdTag} w="15px" h="15px" me="8px" />
-                  <Text fontSize="sm" fontWeight="500">
-                    Columns
-                  </Text>
-                </Flex>
-              </Tab>
-          </TabList>
-          <LayoutGroup>
-            <TabPanels>
-              <TabPanel px={0}>
-                <AnimatePresence mode="wait" key="tables-metadata">
-                  <motion.div
-                    animate={{ opacity: 1, y: 0 }}
-                    initial={{ opacity: 0, y: 200 }}
-                    exit={{ opacity: 0, y: -200 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <TablesMetadata />
-                  </motion.div>
-                </AnimatePresence>
-              </TabPanel>
-              <TabPanel px={0}>
-                <AnimatePresence mode="wait" key="code-examples">
-                  <motion.div
-                    animate={{ opacity: 1, y: 0 }}
-                    initial={{ opacity: 0, y: 200 }}
-                    exit={{ opacity: 0, y: -200 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <CodeExamples />
-                  </motion.div>
-                </AnimatePresence>
-              </TabPanel>
-              <TabPanel px={0}>
-                <AnimatePresence mode="wait" key="columns-metadata">
-                  <motion.div
-                    animate={{ opacity: 1, y: 0 }}
-                    initial={{ opacity: 0, y: 200 }}
-                    exit={{ opacity: 0, y: -200 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                     <MetaColumnsWithContext />
-                  </motion.div>
-                </AnimatePresence>
-              </TabPanel>
-            </TabPanels>
-          </LayoutGroup>
-        </Tabs>
-      </CardBody>
-    </Card>
+    <Box height="-webkit-fill-available">
+      <Card height="100%" variant="elevated">
+        <CardBody px={0}>
+          <ElectroCRUDTabs
+            tabsList={tabs}
+            tabIndex={0}
+            iconSize="15px"
+            colorScheme="primary"
+            fontSize="sm"
+            fillAvailable
+            hasScrollbar
+            marginTop={5}
+          />
+        </CardBody>
+      </Card>
+    </Box>
   );
 };
 

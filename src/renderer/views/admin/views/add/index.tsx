@@ -2,33 +2,19 @@ import {
   Box,
   Button,
   Center,
-  Flex,
   HStack,
   Icon,
   SimpleGrid,
   Spacer,
   Spinner,
-  Tab,
-  TabList,
-  TabPanel,
-  TabPanels,
-  Tabs,
-  Text,
 } from '@chakra-ui/react';
 import { joiResolver } from '@hookform/resolvers/joi';
-import { AnimatePresence, motion } from 'framer-motion';
 import * as Joi from 'joi';
 import _ from 'lodash';
-import { memo, useCallback, useContext, useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import {
-  MdClear,
-  MdFormatPaint,
-  MdOutlineCollections,
-  MdSave,
-} from 'react-icons/md';
-import { useSelector } from 'react-redux';
-import { useLoaderData, useNavigate, useParams } from 'react-router-dom';
+import { MdClear, MdSave } from 'react-icons/md';
+import { useNavigate } from 'react-router-dom';
 import Card from 'renderer/components/card/Card';
 import {
   ConfirmPromiseSaveModal,
@@ -40,18 +26,12 @@ import {
 import { ViewRO } from 'renderer/defenitions/record-object';
 import { useAppDispatch, useAppSelector } from 'renderer/store/hooks';
 import { ViewsReducer } from 'renderer/store/reducers';
-import { ViewSelectors } from 'renderer/store/selectors';
-import store from 'renderer/store/store';
-import { NestedPartial } from 'shared';
 
 import { BasicDetailsCard } from './components/basic-details-card';
 import { PermissionsCard } from './components/permissions-card';
 import { TableColumnsCard } from './components/table-columns-card';
 import { TerminologyCard } from './components/terminology-card';
 import { ViewsInfoAlert } from './components/views-info-alert';
-import { Desinger } from './designer';
-import { MetadataIndex } from './metadata';
-import { TabsHeader } from './tabs-header';
 
 type FormData = Omit<ViewRO, 'id' | 'creationDate' | 'modificationDate'>;
 
@@ -71,7 +51,7 @@ const validationSchema = Joi.object<FormData>({
   metadata: Joi.object().optional(),
 });
 
-const AddOrEditView = () => {
+export const AddOrEditView = () => {
   const { viewState } = useContext(ViewScopedContext);
   const sessionState = useAppSelector((state) => state.session);
   const navigate = useNavigate();
@@ -142,7 +122,7 @@ const AddOrEditView = () => {
   }
 
   return (
-    <Box pt={viewState.id === undefined ? '80px' : '10px'}>
+    <Box overflow="scroll" paddingRight={2} height="-webkit-fill-available">
       {viewState.id === undefined && (
         <>
           <ViewsInfoAlert />
@@ -166,11 +146,12 @@ const AddOrEditView = () => {
             </>
           )}
 
-          <Card>
+          <Card variant="outline">
             <HStack justifyContent="space-between">
               <Button
                 type="submit"
-                variant="brand"
+                variant="solid"
+                colorScheme="primary"
                 size="lg"
                 isDisabled={!isValid}
               >
@@ -192,64 +173,6 @@ const AddOrEditView = () => {
         </form>
       </FormProvider>
     </Box>
-  );
-};
-
-export const EditView = () => {
-  const { viewId } = useParams();
-
-  return (
-    <AnimatePresence>
-      <motion.div
-        layout
-        initial={{ right: '-1000px', position: 'relative', opacity: 0 }}
-        animate={{ right: '0px', opacity: 1 }}
-        exit={{ right: '-1000px', opacity: 0 }}
-      >
-        <ViewScopedContextProvider viewId={viewId}>
-          <TabsHeader />
-          <Tabs isLazy colorScheme="brandTabs" pt="10px">
-            <TabList>
-              <Tab>
-                <Flex align="center">
-                  <Icon as={MdOutlineCollections} w="20px" h="20px" me="8px" />
-                  <Text fontSize="lg" fontWeight="500">
-                    Dataset
-                  </Text>
-                </Flex>
-              </Tab>
-              <Tab>
-                <Flex align="center">
-                  <Icon as={MdOutlineCollections} w="20px" h="20px" me="8px" />
-                  <Text fontSize="lg" fontWeight="500">
-                    Metadata
-                  </Text>
-                </Flex>
-              </Tab>
-              <Tab>
-                <Flex align="center">
-                  <Icon as={MdFormatPaint} w="20px" h="20px" me="8px" />
-                  <Text fontSize="lg" fontWeight="500">
-                    Desinger
-                  </Text>
-                </Flex>
-              </Tab>
-            </TabList>
-            <TabPanels>
-              <TabPanel px={0} pb={0}>
-                <AddOrEditView />
-              </TabPanel>
-              <TabPanel px={0} pb={0}>
-                <MetadataIndex />
-              </TabPanel>
-              <TabPanel px={0} pb={0}>
-                <Desinger />
-              </TabPanel>
-            </TabPanels>
-          </Tabs>
-        </ViewScopedContextProvider>
-      </motion.div>
-    </AnimatePresence>
   );
 };
 

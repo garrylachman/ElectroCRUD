@@ -1,6 +1,14 @@
 import { Box, Center, Icon, IconButton, Stack } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
-import { FC, ReactNode, useContext, useMemo } from 'react';
+import {
+  FC,
+  MouseEvent,
+  ReactNode,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from 'react-icons/md';
 
 import { RippleButton } from '../buttons/ripple-button';
@@ -29,6 +37,23 @@ export const Pane: FC<PaneProperties> = ({ leftComponent, rightComponent }) => {
     isOpen,
     options,
   } = useContext(PaneContext);
+  const [mouseState, setMouseState] =
+    useState<MouseEvent<HTMLDivElement, globalThis.MouseEvent>>();
+  const y = useMemo(() => {
+    if (!mouseState && !mouseState?.target) return 0;
+    const screenY = mouseState?.screenY || 0;
+    const offsetParentTop = Number(
+      (mouseState?.target as any).offsetParent.scrollTop
+    );
+    const offsetParentHeight = Number(
+      (mouseState?.target as any).offsetParent.clientHeight
+    );
+    const offsetTop = Number((mouseState?.target as any).offsetTop);
+    return Math.max(
+      screenY + offsetParentTop - offsetParentHeight + offsetTop - 20,
+      0
+    );
+  }, [mouseState]);
 
   const icon = useMemo(
     () => (isOpen ? MdKeyboardArrowLeft : MdKeyboardArrowRight),
@@ -47,7 +72,7 @@ export const Pane: FC<PaneProperties> = ({ leftComponent, rightComponent }) => {
   };
 
   return (
-    <Stack spacing={2} direction="row">
+    <Stack spacing={0} direction="row">
       <Box
         as={motion.div}
         {...leftPaneProperties}
@@ -56,21 +81,37 @@ export const Pane: FC<PaneProperties> = ({ leftComponent, rightComponent }) => {
       >
         {leftComponent}
       </Box>
-      <Center margin={0} padding={0} display="flex" position="relative">
-        <RippleButton
-          colorScheme="brand"
-          size="md"
-          rounded={60}
-          position="absolute"
-          onClick={() => togglePane()}
-          aria-label=""
-          cursor="pointer"
-          p={0}
-          top="100px"
+      <Box>
+        <Center
+          margin={0}
+          padding={0}
+          display="flex"
+          position="relative"
+          width="13px"
+          height="100%"
+          onMouseMove={(event_) => {
+            if (event_.target?.id === 'track')  {
+              setMouseState(event_);
+            }
+          }}
+          id="track"
+          borderLeft="3px solid transparent"
         >
-          <Icon fontSize={30} as={icon} />
-        </RippleButton>
-      </Center>
+          <RippleButton
+            bgColorScheme="primary"
+            size="md"
+            rounded={60}
+            position="absolute"
+            onClick={() => togglePane()}
+            aria-label=""
+            cursor="pointer"
+            p={0}
+            top={`${y}px`}
+          >
+            <Icon fontSize={30} as={icon} />
+          </RippleButton>
+        </Center>
+      </Box>
       <Box {...rightPaneProperties}>{rightComponent}</Box>
     </Stack>
   );

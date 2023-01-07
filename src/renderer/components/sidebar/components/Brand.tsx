@@ -7,7 +7,7 @@ export function Brand() {
   return (
     <Text fontWeight="light" fontSize="3xl" color="gray.700" cursor="default">
       <Badge
-        colorScheme="brand"
+        colorScheme="primary"
         variant="solid"
         textTransform="none"
         fontSize="3xl"
@@ -18,26 +18,26 @@ export function Brand() {
           transition: '2s ease-out',
         }}
         whileHover={{
-          textShadow: '0 0 10px #fff, 0 0 20px #422AFB, 0 0 50px #fff',
+          textShadow: '0 0 10px #fff, 0 0 20px #7434DB, 0 0 50px #fff',
         }}
         animate={{
           background: [
-            `linear-gradient(60deg, #422AFB 0%, ${chroma('#422AFB')
+            `linear-gradient(60deg, #7434DB 0%, ${chroma('#7434DB')
               .brighten(0)
               .hex()} 100%)`,
-            `linear-gradient(60deg, #422AFB 0%, ${chroma('#422AFB')
+            `linear-gradient(60deg, #7434DB 0%, ${chroma('#7434DB')
               .brighten(1.2)
               .hex()} 100%)`,
-            `linear-gradient(60deg, ${chroma('#422AFB')
+            `linear-gradient(60deg, ${chroma('#7434DB')
               .brighten(2)
-              .hex()} 0%, #422AFB 100%)`,
-            `linear-gradient(60deg, ${chroma('#422AFB')
+              .hex()} 0%, #7434DB 100%)`,
+            `linear-gradient(60deg, ${chroma('#7434DB')
               .brighten(-0.5)
-              .hex()} 100%, #422AFB 50%)`,
-            `linear-gradient(60deg, ${chroma('#422AFB')
+              .hex()} 100%, #7434DB 50%)`,
+            `linear-gradient(60deg, ${chroma('#7434DB')
               .brighten(0.5)
-              .hex()} 0%, #422AFB 100%)`,
-            `linear-gradient(60deg, #422AFB 0%, ${chroma('#422AFB')
+              .hex()} 0%, #7434DB 100%)`,
+            `linear-gradient(60deg, #7434DB 0%, ${chroma('#7434DB')
               .brighten(0)
               .hex()} 100%)`,
           ],

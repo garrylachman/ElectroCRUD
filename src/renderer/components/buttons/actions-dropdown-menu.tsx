@@ -32,7 +32,8 @@ export const ActionsDropdownMenu: FC<ActionsDropdownMenuProperties> = ({
               borderBottomRightRadius={isOpen ? 0 : 10}
               borderBottomLeftRadius={isOpen ? 0 : 10}
               as={Button}
-              variant="brand"
+              variant="solid"
+              colorScheme="primary"
               rightIcon={<Icon as={MdArrowDropDown} fontSize="2xl" />}
             >
               {menuName}

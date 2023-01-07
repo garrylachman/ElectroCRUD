@@ -25,20 +25,20 @@ export const DatasetCoordinator = () => {
 
   return (
     <Card
-      variant="solid"
+      variant="elevated"
       flex={1}
       display="flex"
       flexDirection="column"
       height="100%"
-      overflow="scroll"
       overscrollBehavior="contain"
     >
       <ElectroCRUDTabs
         tabsList={tabs}
         tabIndex={0}
         iconSize="15px"
-        colorScheme="brand"
+        colorScheme="primary"
         fontSize="sm"
+        hasScrollbar={false}
         ref={tabsReference}
       />
     </Card>
