@@ -109,16 +109,10 @@ export const ConfirmPromiseModalComponent: FC<
               <AlertDialogBody py={4}>{children}</AlertDialogBody>
 
               <AlertDialogFooter py={4} pt={2} gap={4}>
-                <RippleButton
-                  key={`cancel-${keyu}`}
-                  onClick={cancel}
-                  bgColorScheme="red"
-                  size="lg"
-                >
+                <RippleButton onClick={cancel} bgColorScheme="red" size="lg">
                   {cancelButtonText}
                 </RippleButton>
                 <RippleButton
-                  key={`confirm-${keyu}`}
                   onClick={confirm}
                   size="lg"
                   bgColorScheme={confirmButtonColorScheme}
