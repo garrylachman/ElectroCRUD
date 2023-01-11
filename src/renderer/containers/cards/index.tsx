@@ -1,4 +1,2 @@
-export * from './TableCardHeader';
-export * from './TableCardHeaderSearchBar';
-export * from '../../components/buttons/actions-dropdown-menu';
-export * from './Subcard';
+export * from './table-card-header';
+export * from './sub-card';

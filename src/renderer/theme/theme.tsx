@@ -4,6 +4,7 @@ import {
   HTMLChakraProps,
   ThemingProps,
 } from '@chakra-ui/react';
+import { theme as hdsTheme } from '@highoutput/hds';
 import { theme as saasTheme } from '@saas-ui/react';
 import { StepsStyleConfig as Steps } from 'chakra-ui-steps/chakra-ui-steps';
 
@@ -21,6 +22,7 @@ import { breakpoints } from './foundations/breakpoints';
 import { globalStyles } from './styles';
 
 export default extendTheme(
+  hdsTheme,
   saasTheme,
   { breakpoints }, // Breakpoints
   globalStyles,

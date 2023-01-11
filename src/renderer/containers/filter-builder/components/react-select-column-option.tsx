@@ -1,9 +1,7 @@
 import { Flex, Tag, TagLabel } from '@chakra-ui/react';
 import { chakraComponents } from 'chakra-react-select';
 import { ReactElement } from 'react';
-import {
-  findType,
-} from 'renderer/defenitions/record-object/data-types/data-type-finder';
+import { findType } from 'renderer/defenitions/record-object/data-types';
 
 export const ReactSelectColumnOption = {
   Option: ({

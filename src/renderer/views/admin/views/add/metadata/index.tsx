@@ -31,7 +31,7 @@ export const MetadataTabs = () => {
   return (
     <Box height="-webkit-fill-available">
       <Card height="100%" variant="elevated">
-        <CardBody px={0}>
+        <CardBody px={0} py={0}>
           <ElectroCRUDTabs
             tabsList={tabs}
             tabIndex={0}

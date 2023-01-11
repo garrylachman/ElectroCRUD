@@ -52,6 +52,9 @@ const configuration: webpack.Configuration = {
     fallback: {
       fs: false,
       path: require.resolve('path-browserify'),
+      buffer: require.resolve('buffer'),
+      crypto: require.resolve('crypto-browserify'),
+      stream: require.resolve('stream-browserify'),
       __dirname: './',
     },
   },
@@ -144,7 +147,9 @@ const configuration: webpack.Configuration = {
             sourceType: 'var',
           }),
         ]),
-
+    new webpack.ProvidePlugin({
+      Buffer: ['buffer', 'Buffer'],
+    }),
     new webpack.NoEmitOnErrorsPlugin(),
 
     /**

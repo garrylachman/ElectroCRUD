@@ -41,102 +41,6 @@ export const Dashboard = () => {
 
   useEffect(() => control[0](), []);
 
-  const columnsForTable = useMemo(
-    () =>
-      (viewState.columns as ColumnRO[]).map((column: ColumnRO) => ({
-        id: column.id,
-        metadata: column.metadata,
-        name: column.metadata.title || column.name,
-        selector: (row) => row[column.name],
-        format: (row) => findType(column.data_type).formatter(row[column.name]),
-        type: _.pick(findType(column.data_type), ['icon', 'name']),
-        sortable: true,
-        sortField: column.name,
-        reorder: true,
-        width:
-          findType(column.data_type).name === 'datetime' ? '159px' : undefined,
-        grow: findType(column.data_type).name === 'number' ? 1 : 2,
-        right: findType(column.data_type).name === 'datetime',
-        omit: !column.enabled,
-        cell: (row, index, column, id) => {
-          let value = row[column.sortField];
-          let isMasked = false;
-
-          if (
-            column.metadata.tags.find(
-              (tags: TagRO) => tags.label === 'PII - MASK'
-            )
-          ) {
-            value = _.repeat('#', Math.min(_.size(_.toString(value)), 8));
-            isMasked = true;
-          }
-
-          if (
-            column.metadata.tags.find(
-              (tags: TagRO) => tags.label === 'PII - FAKE FIRST NAME'
-            )
-          ) {
-            value = faker.name.firstName();
-            isMasked = true;
-          }
-
-          if (
-            column.metadata.tags.find(
-              (tags: TagRO) => tags.label === 'PII - FAKE LAST NAME'
-            )
-          ) {
-            value = faker.name.lastName();
-            isMasked = true;
-          }
-
-          if (
-            column.metadata.tags.find(
-              (tags: TagRO) => tags.label === 'PII - FAKE FULL NAME'
-            )
-          ) {
-            value = faker.name.fullName();
-            isMasked = true;
-          }
-
-          if (
-            column.type.name === 'datetime' &&
-            moment(row[column.sortField]).isValid()
-          ) {
-            return (
-              <>
-                <ReactTimeAgo
-                  date={moment(row[column.sortField]).toDate().getTime()}
-                />
-                <Spacer m={2} flex={0} />
-                <Tooltip
-                  label={moment(row[column.sortField])
-                    .toDate()
-                    .toLocaleString()}
-                >
-                  <Tag variant="subtle" colorScheme="primary">
-                    <TagRightIcon as={column.type.icon} m={0} />
-                  </Tag>
-                </Tooltip>
-              </>
-            );
-          }
-
-          return (
-            <Tooltip
-              bg={isMasked ? 'primary.500' : 'gray.500'}
-              hasArrow
-              label={isMasked ? 'Masked Value' : value}
-            >
-              <Text noOfLines={1}>{value}</Text>
-            </Tooltip>
-          );
-        },
-      })),
-    [viewState.columns]
-  );
-
-  useEffect(() => console.log(columnsForTable), [columnsForTable]);
-
   return (
     <>
       <Tabs
@@ -146,6 +50,7 @@ export const Dashboard = () => {
         display="flex"
         flexDirection="column"
         flex="1"
+        mt={0}
       >
         <TabList>
           <Tab>
@@ -166,14 +71,8 @@ export const Dashboard = () => {
           </Tab>
         </TabList>
         <TabPanels height="100%">
-          <TabPanel px={0} pb={0} height="100%">
-            {columnsForTable ? (
-              <DatasetCoordinator />
-            ) : (
-              <Center>
-                <Spinner />
-              </Center>
-            )}
+          <TabPanel px={0} pb={0} height="100%" mt={0}>
+            <DatasetCoordinator />
           </TabPanel>
           <TabPanel px={0} pb={0}>
             SOON

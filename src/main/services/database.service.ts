@@ -89,13 +89,14 @@ export class DatabaseService {
       this.inspector = SchemaInspector(this.connection);
       this.connectHooks();
       console.log("client", this.connection.client.constructor.name)
+      const result = await this.heartbeat();
       this.logService?.success(`Connection Success`, getCurrentLine().method);
-      return await this.heartbeat();
+      return result;
     } catch (error: any) {
       this.logService?.error(error.message, getCurrentLine().method);
       throw {
         type: ErrorType.NOT_CONNECTED,
-        ...error,
+        message: JSON.stringify(error),
       };
     }
   }
@@ -165,7 +166,7 @@ export class DatabaseService {
       this.logService?.error(error.message, getCurrentLine().method);
       throw {
         type: ErrorType.NOT_CONNECTED,
-        ...error,
+        message: JSON.stringify(error),
       };
     }
   }
@@ -201,8 +202,8 @@ export class DatabaseService {
     } catch (error: any) {
       this.logService?.error(error.message, getCurrentLine().method);
       throw {
-        type: ErrorType.EXECUTE_ERROR,
-        ...error,
+        type: ErrorType.NOT_CONNECTED,
+        message: JSON.stringify(error),
       };
     }
   }
@@ -233,8 +234,8 @@ export class DatabaseService {
     } catch (error: any) {
       this.logService?.error(error.message, getCurrentLine().method);
       throw {
-        type: ErrorType.EXECUTE_ERROR,
-        ...error,
+        type: ErrorType.NOT_CONNECTED,
+        message: JSON.stringify(error),
       };
     }
   }
@@ -259,8 +260,8 @@ export class DatabaseService {
     } catch (error: any) {
       this.logService?.error(error.message, getCurrentLine().method);
       throw {
-        type: ErrorType.EXECUTE_ERROR,
-        ...error,
+        type: ErrorType.NOT_CONNECTED,
+        message: JSON.stringify(error),
       };
     }
   }
@@ -364,8 +365,8 @@ export class DatabaseService {
     } catch (error: any) {
       this.logService?.error(error.message, getCurrentLine().method);
       throw {
-        type: ErrorType.EXECUTE_ERROR,
-        ...error,
+        type: ErrorType.NOT_CONNECTED,
+        message: JSON.stringify(error),
       };
     }
   }
@@ -427,8 +428,8 @@ export class DatabaseService {
     } catch (error: any) {
       this.logService?.error(error.message, getCurrentLine().method);
       throw {
-        type: ErrorType.EXECUTE_ERROR,
-        ...error,
+        type: ErrorType.NOT_CONNECTED,
+        message: JSON.stringify(error),
       };
     }
   }
@@ -458,8 +459,8 @@ export class DatabaseService {
     } catch (error: any) {
       this.logService?.error(error.message, getCurrentLine().method);
       throw {
-        type: ErrorType.EXECUTE_ERROR,
-        ...error,
+        type: ErrorType.NOT_CONNECTED,
+        message: JSON.stringify(error),
       };
     }
   }
@@ -496,8 +497,8 @@ export class DatabaseService {
     } catch (error: any) {
       this.logService?.error(error.message, getCurrentLine().method);
       throw {
-        type: ErrorType.EXECUTE_ERROR,
-        ...error,
+        type: ErrorType.NOT_CONNECTED,
+        message: JSON.stringify(error),
       };
     }
   }
@@ -554,8 +555,8 @@ export class DatabaseService {
     } catch (error: any) {
       this.logService?.error(error.message, getCurrentLine().method);
       throw {
-        type: ErrorType.EXECUTE_ERROR,
-        ...error,
+        type: ErrorType.NOT_CONNECTED,
+        message: JSON.stringify(error),
       };
     }
   }

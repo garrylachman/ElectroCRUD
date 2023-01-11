@@ -50,7 +50,7 @@ export const Pane: FC<PaneProperties> = ({ leftComponent, rightComponent }) => {
     );
     const offsetTop = Number((mouseState?.target as any).offsetTop);
     return Math.max(
-      screenY + offsetParentTop - offsetParentHeight + offsetTop - 20,
+      screenY + offsetParentTop - offsetParentHeight + 60,
       0
     );
   }, [mouseState]);

@@ -1,10 +1,9 @@
-import { Box, useColorModeValue } from '@chakra-ui/react';
+import { Box, Card, CardProps, useColorModeValue } from '@chakra-ui/react';
 import { FC, PropsWithChildren } from 'react';
-import Card, { CustomCardProps } from 'renderer/components/card/Card';
 
-type SubCardProps = CustomCardProps & { overflow?: string };
+type SubCardProperties = CardProps & { overflow?: string };
 
-export const SubCard: FC<PropsWithChildren<SubCardProps>> = ({
+export const SubCard: FC<PropsWithChildren<SubCardProperties>> = ({
   children,
   overflow = 'hidden',
   ...rest
@@ -14,12 +13,13 @@ export const SubCard: FC<PropsWithChildren<SubCardProps>> = ({
   return (
     <Card
       {...rest}
-      bg={rest.variant === "brand" ? bgBrand : bg}
+      bg={rest.variant === 'brand' ? bgBrand : bg}
       p="15px"
       style={{ overflow }}
       shadow="lg"
       rounded="lg"
-      color={rest.variant === "brand" ? "white" : undefined}
+      color={rest.variant === 'brand' ? 'white' : undefined}
+      variant="elevated"
     >
       <Box>{children}</Box>
     </Card>

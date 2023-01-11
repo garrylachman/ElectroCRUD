@@ -33,7 +33,7 @@ const pulse = keyframes({
 
 export const RippleButton: FC<RippleButtonProperties> = ({
   children,
-  size,
+  size = 'md',
   key,
   bgColorScheme = 'primary',
   bgColor = {
@@ -62,7 +62,6 @@ export const RippleButton: FC<RippleButtonProperties> = ({
       size={size}
       cursor="pointer"
       overflow="hidden"
-      key={key}
       backgroundPosition="center"
       style={{
         background: `linear-gradient(60deg, ${step1} 0%, ${chroma(step1)

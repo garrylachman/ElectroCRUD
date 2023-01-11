@@ -9,6 +9,7 @@ export const ActionButton = R.curry(
   (properties: ActionButtonProperties, children?: ReactNode) => (
     <RippleButton
       variant="solid"
+      size="md"
       bgColorScheme={properties.colorScheme || 'primary'}
       {...R.omit(['bgColor', 'actionName'], properties)}
     >

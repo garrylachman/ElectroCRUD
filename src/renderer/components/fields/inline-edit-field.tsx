@@ -1,7 +1,6 @@
 import {
   Box,
   ButtonGroup,
-  chakra,
   Divider,
   Editable,
   EditableInput,
@@ -10,16 +9,10 @@ import {
   Flex,
   Icon,
   IconButton,
-  Input,
   InputProps,
-  keyframes,
-  shouldForwardProp,
-  Tooltip,
-  useColorModeValue,
   useEditableControls,
 } from '@chakra-ui/react';
 import { OptionsOrGroups, Select } from 'chakra-react-select';
-import { isValidMotionProp, motion } from 'framer-motion';
 import _ from 'lodash';
 import react, { ChangeEvent, FC, forwardRef, PropsWithChildren } from 'react';
 import { Control, Controller, useFormContext } from 'react-hook-form';
@@ -153,7 +146,7 @@ const InputFactory = forwardRef((properties, reference) => {
       );
     }
     default: {
-      return <EditableInput {...rest} {...formProps} />;
+      return <EditableInput {...rest} {...formProps} variant="flushed" />;
     }
   }
 });
@@ -183,12 +176,6 @@ export const InlineEditField: FC<
 }) => {
   const { register, watch } = useFormContext();
   const value = watch(id);
-  const bg = useColorModeValue('gradient.perper.100', 'gradient.perper.200');
-  const fade = keyframes`
-  from { opacity: 0 }
-  to { opacity: 1 }
-`;
-  const animation = `${fade} infinite 2s cubic-bezier(0.1, -0.6, 0.2, 0)`;
 
   return (
     <Editable
@@ -197,6 +184,7 @@ export const InlineEditField: FC<
       isPreviewFocusable
       selectAllOnFocus={false}
       placeholder={placeholder}
+      variant="flushed"
       sx={{
         position: 'relative',
         width: '100%',
@@ -215,7 +203,6 @@ export const InlineEditField: FC<
         options={selectOptions}
         py={2}
         px={2}
-        variant="flushed"
         as={InputFactory}
         rows={10}
         overflowY="auto"

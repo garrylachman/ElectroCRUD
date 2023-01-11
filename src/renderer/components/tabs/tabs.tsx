@@ -7,6 +7,7 @@ import {
   Tab,
   TabList,
   TabPanel,
+  TabPanelProps,
   TabPanels,
   Tabs,
   TabsProps,
@@ -26,6 +27,7 @@ import {
 } from 'react';
 import { IconType } from 'react-icons';
 import { MdClose } from 'react-icons/md';
+import { ObjectID } from 'renderer/helpers';
 import { O } from 'ts-toolbelt';
 
 export type ElectroCRUDTabProperties = O.Either<
@@ -54,6 +56,7 @@ export type ElectroCRUDTabsProperties = Omit<TabsProps, 'children'> & {
   fillAvailable?: boolean;
   hasScrollbar?: boolean;
   marginTop?: ResponsiveValue<number>;
+  tabPanelProps?: TabPanelProps;
 };
 
 export const ElectroCRUDTabs = forwardRef<
@@ -71,7 +74,8 @@ export const ElectroCRUDTabs = forwardRef<
       fillAvailable = false,
       hasScrollbar = false,
       variant,
-      marginTop,
+      marginTop = 0,
+      tabPanelProps,
       ...rest
     },
     reference
@@ -139,9 +143,10 @@ export const ElectroCRUDTabs = forwardRef<
               <AnimatePresence initial={false}>
                 {tabsState.map((tab) => (
                   <Reorder.Item
-                    key={tab.name}
+                    key={ObjectID.id(
+                      _.omit(tab, ['element', 'component', 'icon'])
+                    )}
                     value={tab}
-                    id={tab.name}
                     initial={{ opacity: 0, y: 30 }}
                     style={{ width: isFitted ? '100%' : 'auto' }}
                     animate={{
@@ -153,8 +158,6 @@ export const ElectroCRUDTabs = forwardRef<
                     whileDrag={{ backgroundColor: '#e3e3e3' }}
                   >
                     <Tab
-                      key={`tab-${tab.name}`}
-                      panelId={tab.name}
                       isSelected={tab === selectedTab}
                       width={isFitted ? '100%' : 'auto'}
                       minWidth="150px"
@@ -174,7 +177,7 @@ export const ElectroCRUDTabs = forwardRef<
                               alignItems="center"
                               onPointerDown={() => setSelectedTab(tab)}
                             >
-                              <Icon as={tab.icon} boxSize={iconSize} />
+                              <Icon as={tab.icon} boxSize={4} />
                               <Text fontSize={fontSize} fontWeight="500">
                                 {tab.name}
                               </Text>
@@ -184,14 +187,16 @@ export const ElectroCRUDTabs = forwardRef<
                                 display="flex"
                                 onClick={(e) => {
                                   e.stopPropagation();
-                                  setSelectedTab(tabsState[tabsState.length-2]);
+                                  setSelectedTab(
+                                    tabsState[tabsState.length - 2]
+                                  );
                                   setTabsState((previous) =>
                                     previous.filter((value) => value !== tab)
                                   );
                                 }}
                                 color="red.500"
                               >
-                                <Icon as={MdClose} boxSize={iconSize} />
+                                <Icon as={MdClose} boxSize={4} />
                               </Box>
                             )}
                           </Center>
@@ -213,7 +218,6 @@ export const ElectroCRUDTabs = forwardRef<
             {tabsState.map((tab, index) => (
               <TabPanel
                 key={`tab-content-${tab.name}`}
-                id={tab.name}
                 tabIndex={tabsState.indexOf(tab)}
                 p={0}
                 borderWidth={isBoxed ? '1px' : 0}
@@ -226,6 +230,8 @@ export const ElectroCRUDTabs = forwardRef<
                 display="flex"
                 flexDirection="column"
                 marginTop={marginTop}
+                marginBottom={4}
+                {...tabPanelProps}
               >
                 <motion.div
                   key={tabIndex ? tab.name : 'empty'}

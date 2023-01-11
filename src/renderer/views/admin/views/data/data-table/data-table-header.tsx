@@ -11,7 +11,7 @@ import {
 import { EntityState } from '@reduxjs/toolkit';
 import _ from 'lodash';
 import memoize from 'proxy-memoize';
-import { FC, useContext, useEffect, useMemo, useState } from 'react';
+import { FC, useContext, useMemo } from 'react';
 import { MdSearch } from 'react-icons/md';
 import { TbFilter, TbFilterOff, TbPlaylistAdd, TbTrash } from 'react-icons/tb';
 import { useSelector } from 'react-redux';
@@ -27,7 +27,6 @@ import { ViewFilterRO } from 'renderer/defenitions/record-object';
 import { useAppDispatch } from 'renderer/store/hooks';
 import { ViewFiltersReducer } from 'renderer/store/reducers';
 import { RootState } from 'renderer/store/store';
-import { useDebounce } from 'usehooks-ts';
 
 type DataTableHeaderProperties = {
   setInternalFilter: (any: any) => void;
@@ -118,7 +117,7 @@ export const DataTableHeader: FC<DataTableHeaderProperties> = ({
   );
 
   return (
-    <VStack>
+    <VStack pt={3}>
       <HStack justifyContent="space-between" width="100%">
         <Box>
           {viewState?.name}

@@ -84,6 +84,9 @@ export class IPCService {
   }
 
   send(response: ResponseType): void {
-    webContents.getFocusedWebContents().send(response.channel, response);
+    // eslint-disable-next-line no-restricted-syntax
+    for (const w of webContents.getAllWebContents()) {
+      w.send(response.channel, response);
+    }
   }
 }

@@ -1,7 +1,7 @@
 import { Box, BoxProps, Center, Spinner } from '@chakra-ui/react';
 import { FC, useContext } from 'react';
 import { MdNotes, MdOutlineRepeat } from 'react-icons/md';
-import { TbBinary, TbListDetails } from 'react-icons/tb';
+import { TbListDetails } from 'react-icons/tb';
 import {
   ElectroCRUDTabProperties,
   ElectroCRUDTabs,
@@ -35,14 +35,17 @@ export const DetailsPane: FC<DetailsPaneProperties> = ({ ...properties }) => {
   const { memState } = useContext(ScopeContext);
 
   return (
-    <Box py={3} px={3} {...properties} overflowX="hidden">
+    <Box py={0} pl={3} {...properties} mt={0} overflowX="hidden">
       {memState.columnId && (
         <ElectroCRUDTabs
           tabsList={tabs}
           tabIndex={0}
           iconSize={6}
           colorScheme="primary"
-          marginTop={5}
+          mt={0}
+          tabPanelProps={{
+            marginTop: 3,
+          }}
         />
       )}
       {!memState.columnId && (

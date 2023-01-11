@@ -40,6 +40,7 @@ export const useBaseRequest = <T extends ResponseType>(
             })
           );
         }
+        setIsLoading(false);
         return setResult(value);
       })
       .catch((error) => {
@@ -50,6 +51,7 @@ export const useBaseRequest = <T extends ResponseType>(
             description: (error as Error).message,
           })
         );
+        setIsLoading(false);
       });
   }, [request]);
 
@@ -59,7 +61,7 @@ export const useBaseRequest = <T extends ResponseType>(
   }, [result]);
 
   return {
-    result,
+    result: result as T,
     isLoading,
     isExecuted,
     execute,

@@ -42,6 +42,7 @@ export const EditTabs = () => {
         marginTop={5}
         fillAvailable
         isFitted={false}
+        mt={0}
       />
     </ViewScopedContextProvider>
   );

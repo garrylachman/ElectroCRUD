@@ -15,6 +15,7 @@ import {
   Spinner,
   Text,
 } from '@chakra-ui/react';
+import { Property, PropertyList } from '@saas-ui/react';
 import memoize from 'proxy-memoize';
 import * as R from 'ramda';
 import { useCallback, useContext, useEffect } from 'react';
@@ -113,28 +114,20 @@ export const ColumnDetails = () => {
         <Box>
           <Heading size="md">{columnState.name}</Heading>
 
-          <HStack py={2}>
-            <Box flex={1}>
-              <Text as="span" mr={2} fontWeight="semibold">
-                Created at
-              </Text>
-              {columnState.creationDate ? (
-                <ReactTimeAgo date={columnState.creationDate} />
-              ) : (
-                <Text>N/A</Text>
-              )}
-            </Box>
-            <Box flex={1}>
-              <Text as="span" mr={2} fontWeight="semibold">
-                Last updated at
-              </Text>
-              {columnState.modificationDate ? (
-                <ReactTimeAgo date={columnState.modificationDate} />
-              ) : (
-                <Text>N/A</Text>
-              )}
-            </Box>
-          </HStack>
+          <PropertyList display="flex" flex={1} gap={3}>
+            <Property
+              flexDirection="row"
+              flex={1}
+              label="Created at"
+              value={<ReactTimeAgo date={columnState.creationDate} />}
+            />
+            <Property
+              flexDirection="row"
+              flex={1}
+              label="Updated at"
+              value={<ReactTimeAgo date={columnState.modificationDate} />}
+            />
+          </PropertyList>
 
           <ColumnTagsLine columnState={columnState} />
 

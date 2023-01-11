@@ -10,8 +10,10 @@ import {
   MenuList,
   Text,
 } from '@chakra-ui/react';
-import { FC } from 'react';
+import _ from 'lodash';
+import { FC, useMemo } from 'react';
 import { MdArrowDropDown } from 'react-icons/md';
+import { ObjectID } from 'renderer/helpers';
 
 export type ActionsDropdownMenuProperties = {
   menuName?: string;
@@ -22,9 +24,27 @@ export const ActionsDropdownMenu: FC<ActionsDropdownMenuProperties> = ({
   menuName = 'Actions',
   items = [],
 }) => {
+  const cachedItems = useMemo(
+    () =>
+      items.map((item, itemIndex) => {
+        return {
+          ...item,
+          key: ObjectID.id(
+            _.omit({ ...item, itemIndex }, [
+              'props',
+              'text.props',
+              'text.type',
+              'text._owner',
+            ])
+          ),
+        };
+      }),
+    [items]
+  );
+
   return (
     <Box position="relative" right={0}>
-      <Menu offset={[0, 0]} strategy="fixed">
+      <Menu offset={[0, 0]} strategy="fixed" placement="bottom-end">
         {({ isOpen }) => (
           <Box>
             <MenuButton
@@ -45,12 +65,12 @@ export const ActionsDropdownMenu: FC<ActionsDropdownMenuProperties> = ({
               overflow="hidden"
               borderTopRightRadius={0}
             >
-              {items.map((item, index) =>
+              {cachedItems.map((item) =>
                 item.isDivider ? (
                   <Box
                     textAlign="center"
                     height="12px"
-                    key={`m-${index}`}
+                    key={item.key}
                     width="90%"
                     m="auto"
                   >
@@ -69,7 +89,7 @@ export const ActionsDropdownMenu: FC<ActionsDropdownMenuProperties> = ({
                   </Box>
                 ) : (
                   <MenuItem
-                    key={`m-${index}`}
+                    key={item.key}
                     {...item.props}
                     py={3}
                     alignItems="center"

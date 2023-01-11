@@ -23,6 +23,8 @@ import { AccountRO, StrictAccountRO } from 'renderer/defenitions/record-object';
 import { useAppDispatch, useAppSelector } from 'renderer/store/hooks';
 import { AccountsReducer, SessionReducer } from 'renderer/store/reducers';
 
+import { AddAccountsModalPromise } from './add-account-modal';
+
 export type AccountsListTableProperties = {
   accountsState: StrictAccountRO[];
 };
@@ -68,12 +70,19 @@ export const AccountsListTable: FC<AccountsListTableProperties> = ({
       .catch(() => {});
   };
 
-  const handleEdit = (row: StrictAccountRO) => {};
-
   const handleUse = (row: StrictAccountRO) =>
     dispatch(SessionReducer.actions.setAccount({ account: row }));
 
-  const handleAdd = () => {};
+  const handleAddEdit = async (row?: StrictAccountRO) => {
+    const result = await AddAccountsModalPromise({ account: row });
+    if (result) {
+      if (result.id) {
+        dispatch(AccountsReducer.actions.updateOne(result as AccountRO));
+      } else {
+        dispatch(AccountsReducer.actions.addOne(result));
+      }
+    }
+  };
 
   const actionMenuActions: DataTableActionMenuItem[] = [
     {
@@ -84,7 +93,7 @@ export const AccountsListTable: FC<AccountsListTableProperties> = ({
     {
       menuIcon: TbEdit,
       label: 'Edit',
-      onClick: (row: StrictAccountRO) => handleEdit(row),
+      onClick: (row: StrictAccountRO) => handleAddEdit(row),
     },
     {
       menuIcon: TbPlugConnected,
@@ -98,7 +107,7 @@ export const AccountsListTable: FC<AccountsListTableProperties> = ({
       <CardHeader>
         <Flex justifyContent="space-between" alignItems="center">
           <Text>Accounts</Text>
-          <AddButton onClick={handleAdd} />
+          <AddButton onClick={() => handleAddEdit()} />
         </Flex>
       </CardHeader>
       <CardBody px={0}>

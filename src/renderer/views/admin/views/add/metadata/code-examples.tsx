@@ -23,7 +23,7 @@ export const CodeExamples: FC<CodeExamplesProperties> = () => {
   const [showAdd, { on, off }] = useBoolean();
 
   return (
-    <Box p={5}>
+    <Box px={5} pb={6}>
       <SectionHeader
         title="Code Examples"
         subTitle="This is the place to save code examples, queries & snippets."

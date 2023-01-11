@@ -70,7 +70,7 @@ export const TablesMetadata: FC<TablesMetadataProperties> = () => {
       .catch(() => {});
 
   return (
-    <Box p={5}>
+    <Box px={5} pb={6}>
       <FormProvider {...formContext}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <TableDocumentCardCard />

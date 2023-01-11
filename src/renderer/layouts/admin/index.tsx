@@ -1,14 +1,10 @@
-// Chakra imports
-import { Box, Grid, GridItem, Portal, useDisclosure } from '@chakra-ui/react';
+import { Grid, GridItem } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { Outlet, useMatches } from 'react-router-dom';
 
-import Footer from '../../components/footer/FooterAdmin';
-import Navbar from '../../components/navbar/NavbarAdmin';
+import { Navbar } from '../../components/navbar/navbar';
 import { Sidebar } from '../../components/sidebar/Sidebar';
-import { SidebarContext } from '../../contexts/SidebarContext';
 
-// Layout components
 export default function Dashboard() {
   const [title, setTitle] = useState<string>();
   const matches = useMatches();
@@ -33,13 +29,7 @@ export default function Dashboard() {
       overflow="hidden"
     >
       <GridItem p={2} px={6} area="header" bgColor="white" boxShadow="md">
-        <Navbar
-          onOpen={() => {}}
-          logoText="ElectroCRUD"
-          brandText={title || ''}
-          secondary
-          fixed={false}
-        />
+        <Navbar brandText={title || ''} />
       </GridItem>
       <GridItem area="nav" h="100vh" borderRadius={0}>
         <Sidebar />

@@ -24,6 +24,18 @@ const tabs: ElectroCRUDTabProperties[] = [
 
 export const SettingsTabs: FC<any> = () => {
   return (
-    <ElectroCRUDTabs tabsList={tabs} tabIndex={0} iconSize={6} colorScheme="primary" isFitted={false} fillAvailable  />
+    <ElectroCRUDTabs
+      tabsList={tabs}
+      tabIndex={0}
+      iconSize={6}
+      colorScheme="primary"
+      isFitted={false}
+      fillAvailable
+      tabPanelProps={{
+        marginBottom: 5,
+      }}
+      marginTop={5}
+      mt={0}
+    />
   );
 };

@@ -32,7 +32,6 @@ export const Policies = () => {
     <Flex
       flexDirection="column"
       flex={1}
-      overflow="scroll"
       height="-webkit-fill-available"
       width="-webkit-fill-available"
       position="absolute"

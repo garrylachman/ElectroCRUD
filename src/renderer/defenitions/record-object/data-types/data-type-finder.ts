@@ -1,5 +1,11 @@
 /* eslint-disable no-restricted-syntax */
-import { NumberDataType, StringDataType, DateTimeDataType, DataType, NADataType } from '.';
+import {
+  DataType,
+  DateTimeDataType,
+  NADataType,
+  NumberDataType,
+  StringDataType,
+} from '.';
 
 export const findType = (type: string): DataType<number> | DataType<string> => {
   // eslint-disable-next-line no-restricted-syntax

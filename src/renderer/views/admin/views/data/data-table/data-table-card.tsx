@@ -138,7 +138,7 @@ export const DataTableCard: FC<DataTableCardProperties> = ({
 
   return (
     <Box p={0} m={0} flex={1} display="flex" flexDirection="column" h="100%">
-      <CardHeader>
+      <CardHeader py={0}>
         <DataTableHeader
           setInternalFilter={setInternalFilter}
           setSearchValue={setSearchValue}
@@ -163,7 +163,6 @@ export const DataTableCard: FC<DataTableCardProperties> = ({
             scrollProps={{
               alwaysShowTrack: true,
               hideNativeScrollbarIfPossible: true,
-              hideTransitionDuration: true,
               resizer: true,
               usePassiveScroll: false,
               showScrollbarsOnOver: true,

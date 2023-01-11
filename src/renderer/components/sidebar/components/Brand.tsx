@@ -5,7 +5,13 @@ import Typist from 'react-typist';
 
 export function Brand() {
   return (
-    <Text fontWeight="light" fontSize="3xl" color="gray.700" cursor="default">
+    <Text
+      fontWeight="light"
+      fontSize="3xl"
+      color="gray.700"
+      cursor="default"
+      as="div"
+    >
       <Badge
         colorScheme="primary"
         variant="solid"
@@ -44,8 +50,8 @@ export function Brand() {
           transition: {
             duration: 10,
             type: 'spring',
-            //repeat: Number.POSITIVE_INFINITY,
-            repeat: 1,
+            repeat: Number.POSITIVE_INFINITY,
+            //repeat: 1,
           },
         }}
       >

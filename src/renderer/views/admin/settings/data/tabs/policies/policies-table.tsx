@@ -76,6 +76,7 @@ export const PoliciesTable: FC<PoliciesTableProperties> = ({
     <ElectroCRUDTable
       data={data}
       columns={tableColumns}
+      hasScroll
       customCell={(row) => {
         if (row.column.id === 'associated_tags') {
           return (
