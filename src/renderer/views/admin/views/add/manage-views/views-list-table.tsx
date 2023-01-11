@@ -65,6 +65,16 @@ export const ViewsListTable: FC<ViewsListTableProperties> = ({
             ViewsReducer.actions.addOne({
               ...data,
               accountId: sessionState.account?.id,
+              terminology: {
+                singular: data.name,
+                plural: `${data.name}s`,
+              },
+              permissions: {
+                create: true,
+                read: true,
+                delete: true,
+                update: true,
+              },
             })
           );
           navigate(`/admin/views/${result.payload.id}/edit`);
