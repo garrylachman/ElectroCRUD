@@ -45,6 +45,30 @@ import { RootState } from 'renderer/store/store';
 
 import { PolicyFactory } from './policy-factory';
 
+const flip = {
+  hidden: {
+    transform: 'translateZ(150px) translateX(-10px) rotateY(90deg)',
+    transformOrigin: '50% 100%',
+    opacity: 0,
+  },
+  visible: {
+    transform: 'translateZ(0px) translateX(0%) rotateY(0deg)',
+    transformOrigin: '50% 100%',
+    opacity: 1,
+    transition: {
+      duration: 0.5,
+      delay: 0.3,
+    },
+  },
+  exit: {
+    transform: 'translateZ(-500px) translateX(20px) rotateY(90deg)',
+    opacity: 0,
+    transition: {
+      duration: 0.3,
+    },
+  },
+};
+
 export type PolicyModalProperties = {
   policyId?: string;
 } & InstanceProps<unknown>;
@@ -109,7 +133,6 @@ const PolicyModalComponent: FC<PolicyModalProperties> = ({
       <AlertDialog
         isOpen={isOpen}
         leastDestructiveRef={cancelReference}
-        isCentered
         preserveScrollBarGap
         size="3xl"
         onClose={cancel}
@@ -117,10 +140,11 @@ const PolicyModalComponent: FC<PolicyModalProperties> = ({
       >
         <AlertDialogOverlay>
           <motion.div
-            initial={{ scale: 0.2, position: 'relative', opacity: 0.2 }}
-            animate={{ scale: 1, opacity: 1, width: '100%' }}
-            exit={{ scale: 0.2, opacity: 0.2 }}
-            transition={{ duration: 0.8, bounce: 0.7, type: 'spring' }}
+            onClick={(error_) => error_.stopPropagation()}
+            variants={flip}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
           >
             <AlertDialogContent
               overflow="unset"
@@ -133,18 +157,18 @@ const PolicyModalComponent: FC<PolicyModalProperties> = ({
                 <motion.div
                   animate={{
                     background: [
-                      `linear-gradient(60deg, #422AFB 0%, ${chroma('#422AFB')
+                      `linear-gradient(60deg, #7434db 0%, ${chroma('#7434db')
                         .brighten(0.1)
                         .hex()} 100%)`,
-                      `linear-gradient(60deg, #422AFB 0%, ${chroma('#422AFB')
+                      `linear-gradient(60deg, #7434db 0%, ${chroma('#7434db')
                         .brighten(1)
                         .hex()} 100%)`,
-                      `linear-gradient(60deg, ${chroma('#422AFB')
+                      `linear-gradient(60deg, ${chroma('#7434db')
                         .brighten(1.2)
-                        .hex()} 0%, #422AFB 100%)`,
-                      `linear-gradient(60deg, ${chroma('#422AFB')
+                        .hex()} 0%, #7434db 100%)`,
+                      `linear-gradient(60deg, ${chroma('#7434db')
                         .brighten(0)
-                        .hex()} 0%, #422AFB 100%)`,
+                        .hex()} 0%, #7434db 100%)`,
                     ],
                   }}
                   transition={{

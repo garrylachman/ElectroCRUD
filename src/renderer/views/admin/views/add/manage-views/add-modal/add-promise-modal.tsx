@@ -39,11 +39,7 @@ const AddModalContent: FC<AddModalContentProperties> = ({
   }, []);
 
   return (
-    <Form
-      ref={formCtxRef}
-      resolver={yupResolver(schema)}
-      mode="all"
-    >
+    <Form ref={formCtxRef} resolver={yupResolver(schema)} mode="all">
       <FormLayout>
         <InputField name="name" label="Name" variant="flushed" />
         <SelectField

@@ -27,24 +27,24 @@ import { useConnectionTest } from './use-connection-test';
 
 const flip = {
   hidden: {
-    transform: 'scale(0) rotateX(-360deg)',
+    transform: 'translateZ(150px) translateX(-10px) rotateY(90deg)',
+    transformOrigin: '50% 100%',
     opacity: 0,
-    transition: {
-      delay: 0.3,
-    },
   },
   visible: {
-    transform: 'scale(1) rotateX(0deg)',
+    transform: 'translateZ(0px) translateX(0%) rotateY(0deg)',
+    transformOrigin: '50% 100%',
     opacity: 1,
     transition: {
       duration: 0.5,
+      delay: 0.3,
     },
   },
   exit: {
-    transform: 'scale(0) rotateX(360deg)',
+    transform: 'translateZ(-500px) translateX(20px) rotateY(90deg)',
     opacity: 0,
     transition: {
-      duration: 0.5,
+      duration: 0.3,
     },
   },
 };

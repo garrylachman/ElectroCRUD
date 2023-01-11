@@ -21,24 +21,24 @@ import { MotionBox } from '../motions/motion-box';
 
 const flip = {
   hidden: {
-    transform: 'scale(0) rotateX(-360deg)',
+    transform: 'translateZ(150px) translateX(-10px) rotateY(90deg)',
+    transformOrigin: '50% 100%',
     opacity: 0,
-    transition: {
-      delay: 0.3,
-    },
   },
   visible: {
-    transform: 'scale(1) rotateX(0deg)',
+    transform: 'translateZ(0px) translateX(0%) rotateY(0deg)',
+    transformOrigin: '50% 100%',
     opacity: 1,
     transition: {
       duration: 0.5,
+      delay: 0.3,
     },
   },
   exit: {
-    transform: 'scale(0) rotateX(360deg)',
+    transform: 'translateZ(-500px) translateX(20px) rotateY(90deg)',
     opacity: 0,
     transition: {
-      duration: 0.5,
+      duration: 0.3,
     },
   },
 };
@@ -121,18 +121,18 @@ export const PromiseModalComponent: FC<PromiseModalProperties> = ({
               <motion.div
                 animate={{
                   background: [
-                    `linear-gradient(60deg, #422AFB 0%, ${chroma('#422AFB')
+                    `linear-gradient(60deg, #7434db 0%, ${chroma('#7434db')
                       .brighten(0.1)
                       .hex()} 100%)`,
-                    `linear-gradient(60deg, #422AFB 0%, ${chroma('#422AFB')
+                    `linear-gradient(60deg, #7434db 0%, ${chroma('#7434db')
                       .brighten(1)
                       .hex()} 100%)`,
-                    `linear-gradient(60deg, ${chroma('#422AFB')
+                    `linear-gradient(60deg, ${chroma('#7434db')
                       .brighten(1.2)
-                      .hex()} 0%, #422AFB 100%)`,
-                    `linear-gradient(60deg, ${chroma('#422AFB')
+                      .hex()} 0%, #7434db 100%)`,
+                    `linear-gradient(60deg, ${chroma('#7434db')
                       .brighten(0)
-                      .hex()} 0%, #422AFB 100%)`,
+                      .hex()} 0%, #7434db 100%)`,
                   ],
                 }}
                 transition={{

@@ -15,6 +15,32 @@ import { create, InstanceProps } from 'react-modal-promise';
 import { RippleButton } from '../buttons/ripple-button';
 import { MotionBox } from '../motions/motion-box';
 
+const flip = {
+  hidden: {
+    transform: 'translateZ(500px) translateX(-5px) rotateY(90deg)',
+    transformOrigin: '50% 100%',
+    opacity: 0,
+    transition: {
+      delay: 0.3,
+    },
+  },
+  visible: {
+    transform: 'translateZ(0px) translateX(0%) rotateY(0deg)',
+    transformOrigin: '50% 100%',
+    opacity: 1,
+    transition: {
+      duration: 0.5,
+    },
+  },
+  exit: {
+    transform: 'translateZ(-500px) translateX(20px) rotateY(90deg)',
+    opacity: 0,
+    transition: {
+      duration: 0.3,
+    },
+  },
+};
+
 export type ConfirmPromiseModalProperties = {
   keyu: string;
   title?: string | ReactNode;
@@ -49,42 +75,43 @@ export const ConfirmPromiseModalComponent: FC<
       <AlertDialog
         isOpen={isOpen}
         leastDestructiveRef={cancelReference}
-        isCentered
         preserveScrollBarGap
         size={size}
         onClose={cancel}
         key={`confirm-alert-${keyu}`}
+        useInert
+        trapFocus
       >
         <AlertDialogOverlay>
           <motion.div
-            initial={{ scale: 0.2, position: 'relative', opacity: 0.2 }}
-            animate={{ scale: 1, opacity: 1, width: '100%' }}
-            exit={{ scale: 0.2, opacity: 0.2 }}
-            transition={{ duration: 0.8, bounce: 0.7, type: 'spring' }}
+            onClick={(e) => e.stopPropagation()}
+            variants={flip}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
           >
             <AlertDialogContent
               overflow="hidden"
               rounded={10}
               shadow="sm"
               as={MotionBox}
-              whileHover={{ y: -5 }}
               _hover={{ shadow: 'xl' }}
             >
               <motion.div
                 animate={{
                   background: [
-                    `linear-gradient(60deg, #422AFB 0%, ${chroma('#422AFB')
+                    `linear-gradient(60deg, #7434db 0%, ${chroma('#7434db')
                       .brighten(0.1)
                       .hex()} 100%)`,
-                    `linear-gradient(60deg, #422AFB 0%, ${chroma('#422AFB')
+                    `linear-gradient(60deg, #7434db 0%, ${chroma('#7434db')
                       .brighten(1)
                       .hex()} 100%)`,
-                    `linear-gradient(60deg, ${chroma('#422AFB')
+                    `linear-gradient(60deg, ${chroma('#7434db')
                       .brighten(1.2)
-                      .hex()} 0%, #422AFB 100%)`,
-                    `linear-gradient(60deg, ${chroma('#422AFB')
+                      .hex()} 0%, #7434db 100%)`,
+                    `linear-gradient(60deg, ${chroma('#7434db')
                       .brighten(0)
-                      .hex()} 0%, #422AFB 100%)`,
+                      .hex()} 0%, #7434db 100%)`,
                   ],
                 }}
                 transition={{
