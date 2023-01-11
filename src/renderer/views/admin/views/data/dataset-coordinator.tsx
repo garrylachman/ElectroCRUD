@@ -1,5 +1,5 @@
 import { Card } from '@chakra-ui/react';
-import { FC, useMemo, useRef } from 'react';
+import { FC, memo, useMemo, useRef } from 'react';
 import { TbTable } from 'react-icons/tb';
 import {
   ElectroCRUDTabProperties,
@@ -9,7 +9,7 @@ import {
 
 import { DataTableCard } from './data-table';
 
-export const DatasetCoordinator = () => {
+export default memo(function DatasetCoordinator() {
   const tabsReference = useRef<ElectroCRUDTabsAPI>();
 
   const tabs: ElectroCRUDTabProperties[] = useMemo(
@@ -43,4 +43,4 @@ export const DatasetCoordinator = () => {
       />
     </Card>
   );
-};
+});

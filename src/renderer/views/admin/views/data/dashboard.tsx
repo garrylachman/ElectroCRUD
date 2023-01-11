@@ -9,28 +9,11 @@ import {
   Text,
 } from '@chakra-ui/react';
 import _ from 'lodash';
-import { useContext, useEffect } from 'react';
 import { MdOutlineCollections } from 'react-icons/md';
-import { useParams } from 'react-router-dom';
-import { WithErrorComponent } from 'renderer/containers/error';
-import {
-  ViewScopedContext,
-  ViewScopedContextProvider,
-} from 'renderer/contexts';
 
-import {
-  DashboardContext,
-  DashboardContextProvider,
-} from './dashboard-context';
-import { DatasetCoordinator } from './dataset-coordinator';
+import DatasetCoordinator from './dataset-coordinator';
 
 export const Dashboard = () => {
-  const { viewState } = useContext(ViewScopedContext);
-  const { status, data, control } = useContext(DashboardContext);
-  const [isLoading, isExecuted] = status;
-
-  useEffect(() => control[0](), []);
-
   return (
     <>
       <Tabs

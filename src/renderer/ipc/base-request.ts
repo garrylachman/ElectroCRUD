@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import { useCallback, useEffect, useState } from 'react';
 import { useAppDispatch } from 'renderer/store/hooks';
 import { ToastReducer } from 'renderer/store/reducers';
@@ -21,39 +22,41 @@ export const useBaseRequest = <T extends ResponseType>(
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isExecuted, setIsExecuted] = useState<boolean>(false);
 
-  const execute = useCallback(() => {
-    setResult();
-    setIsLoading(true);
-    setIsExecuted(false);
+  const execute = useCallback(
+    _.throttle(() => {
+      setResult();
+      setIsLoading(true);
+      setIsExecuted(false);
 
-    console.log("request", request);
+      console.log('request', request);
 
-    BaseRequest<T>(request.channel, request)
-      .then((value) => {
-        console.log("value", value);
-        if (value.error) {
+      BaseRequest<T>(request.channel, request)
+        .then((value) => {
+          console.log('value', value);
+          if (value.error) {
+            dispatch(
+              ToastReducer.actions.setToast({
+                status: 'error',
+                title: `IPC Error on channel: ${value.channel}`,
+                description: value.error.message,
+              })
+            );
+          }
+          return setResult(value);
+        })
+        .catch((error) => {
           dispatch(
             ToastReducer.actions.setToast({
               status: 'error',
-              title: `IPC Error on channel: ${value.channel}`,
-              description: value.error.message,
+              title: (error as Error).name,
+              description: (error as Error).message,
             })
           );
-        }
-        setIsLoading(false);
-        return setResult(value);
-      })
-      .catch((error) => {
-        dispatch(
-          ToastReducer.actions.setToast({
-            status: 'error',
-            title: (error as Error).name,
-            description: (error as Error).message,
-          })
-        );
-        setIsLoading(false);
-      });
-  }, [request]);
+          setIsLoading(false);
+        });
+    }, 250),
+    [request]
+  );
 
   useEffect(() => {
     setIsLoading(false);

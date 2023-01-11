@@ -10,6 +10,7 @@ import {
 } from 'react';
 import { useSelector } from 'react-redux';
 import { ViewVO } from 'renderer/defenitions/record-object';
+import { useUpdateEffect } from 'renderer/hooks';
 import { useIPCReadData } from 'renderer/ipc';
 import { useAppSelector } from 'renderer/store/hooks';
 import { ViewSelectors } from 'renderer/store/selectors';
@@ -109,13 +110,7 @@ export const DashboardContextProvider: FC<
     },
   });
 
-  const debouncedExecute = useCallback(_.debounce(execute, 250), [
-    limit,
-    page,
-    order,
-    search,
-    filter,
-  ]);
+  const debouncedExecute = _.throttle(execute, 1000);
 
   const control = [
     debouncedExecute,
@@ -140,23 +135,25 @@ export const DashboardContextProvider: FC<
     [isExecuted, result?.body]
   );
 
-  useEffect(() => {
+  useEffect(() => debouncedExecute, []);
+
+  useUpdateEffect(() => {
     debouncedExecute();
   }, [limit]);
 
-  useEffect(() => {
-    debouncedExecute();
+  useUpdateEffect(() => {
+   debouncedExecute();
   }, [page]);
 
-  useEffect(() => {
+  useUpdateEffect(() => {
     debouncedExecute();
   }, [order]);
 
-  useEffect(() => {
+  useUpdateEffect(() => {
     debouncedExecute();
   }, [search]);
 
-  useEffect(() => {
+  useUpdateEffect(() => {
     debouncedExecute();
   }, [filter]);
 

@@ -17,8 +17,6 @@ export const useColumnsForTable = () => {
     viewState?.columns || []
   );
 
-  useEffect(() => control[0](), []);
-
   useEffect(() => {
     setColumnState(
       columns.map((column) => ({
