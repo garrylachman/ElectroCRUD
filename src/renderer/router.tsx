@@ -1,17 +1,22 @@
+import { lazy } from 'react';
 import {
   createBrowserRouter,
   createRoutesFromElements,
   Navigate,
   Route,
 } from 'react-router-dom';
-import AdminLayout from 'renderer/layouts/admin';
-import Accounts, { ManageAccounts } from 'renderer/views/admin/accounts';
-import { AddNew as AddView } from 'renderer/views/admin/views/add';
-import { DashboardWithContext } from 'renderer/views/admin/views/data';
 
-import { Settings } from './views/admin/settings';
-import { EditTabs } from './views/admin/views/add/edit-tabs';
-import { ManageViews } from './views/admin/views/add/manage-views';
+
+const AdminLayout = lazy(() => import('renderer/layouts/admin'));
+const ManageAccounts = lazy(() => import('renderer/views/admin/accounts'));
+const EditTabs = lazy(() => import('renderer/views/admin/views/add/edit-tabs'));
+const DashboardWithContext = lazy(
+  () => import('renderer/views/admin/views/data')
+);
+const ManageViews = lazy(
+  () => import('renderer/views/admin/views/add/manage-views')
+);
+const Settings = lazy(() => import('renderer/views/admin/settings'));
 
 export const router = createBrowserRouter(
   createRoutesFromElements(

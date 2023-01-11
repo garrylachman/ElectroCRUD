@@ -3,6 +3,7 @@ import { EntityState } from '@reduxjs/toolkit';
 import memoize from 'proxy-memoize';
 import { useCallback } from 'react';
 import { useSelector } from 'react-redux';
+import { WithErrorComponent } from 'renderer/containers/error';
 import { StrictViewRO, ViewRO } from 'renderer/defenitions/record-object';
 import { useAppSelector } from 'renderer/store/hooks';
 import { ViewsReducer } from 'renderer/store/reducers';
@@ -26,9 +27,13 @@ export const ManageViews = () => {
   );
 
   return (
-    <Box display="flex" flexDirection="column" flex={1}>
-      <ViewsListStats viewsState={viewsState} />
-      <ViewsListTable viewsState={viewsState} />
-    </Box>
+    <WithErrorComponent>
+      <Box display="flex" flexDirection="column" flex={1}>
+        <ViewsListStats viewsState={viewsState} />
+        <ViewsListTable viewsState={viewsState} />
+      </Box>
+    </WithErrorComponent>
   );
 };
+
+export default ManageViews;

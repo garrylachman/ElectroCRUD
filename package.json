@@ -140,7 +140,7 @@
     "@highoutput/hds-auto-form": "^0.1.43",
     "@highoutput/hds-forms": "^0.1.27",
     "@highoutput/hds-icons": "^0.1.19",
-    "@highoutput/hds-spinner": "^0.1.12",
+    "@highoutput/hds-spinner": "^0.1.14",
     "@highoutput/hds-utilities": "^0.1.8",
     "@highoutput/object-id": "^0.1.8",
     "@highoutput/ui-components": "^0.4.11",

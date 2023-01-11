@@ -8,6 +8,7 @@ import {
 } from '@saas-ui/react';
 import memoize from 'proxy-memoize';
 import { useSelector } from 'react-redux';
+import { WithErrorComponent } from 'renderer/containers/error';
 import { StrictAccountRO } from 'renderer/defenitions/record-object';
 import { AccountsReducer } from 'renderer/store/reducers';
 import { RootState } from 'renderer/store/store';
@@ -23,17 +24,21 @@ export const ManageAccounts = () => {
 
   return (
     <Box display="flex" flexDirection="column" flex={1}>
-      <Banner status="info" mb={5} variant="subtle" motionPreset="scale">
-        <BannerIcon />
-        <BannerContent>
-          <BannerTitle fontWeight="bold">How to use account</BannerTitle>
-          <BannerDescription fontWeight="normal">
-            After adding the account, please use the account action dropdown
-            menu and click on use.
-          </BannerDescription>
-        </BannerContent>
-      </Banner>
-      <AccountsListTable accountsState={accountsState} />
+      <WithErrorComponent>
+        <Banner status="info" mb={5} variant="subtle" motionPreset="scale">
+          <BannerIcon />
+          <BannerContent>
+            <BannerTitle fontWeight="bold">How to use account</BannerTitle>
+            <BannerDescription fontWeight="normal">
+              After adding the account, please use the account action dropdown
+              menu and click on use.
+            </BannerDescription>
+          </BannerContent>
+        </Banner>
+        <AccountsListTable accountsState={accountsState} />
+      </WithErrorComponent>
     </Box>
   );
 };
+
+export default ManageAccounts;

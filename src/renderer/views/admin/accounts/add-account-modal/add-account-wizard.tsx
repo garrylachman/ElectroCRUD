@@ -13,6 +13,7 @@ import _ from 'lodash';
 import { FC, useCallback, useState } from 'react';
 import { InstanceProps } from 'react-modal-promise';
 import { MotionBox } from 'renderer/components/motions';
+import { WithErrorComponent } from 'renderer/containers/error';
 import { AccountRO } from 'renderer/defenitions/record-object';
 import { ConnectionConfig, ServerTypeEnum } from 'shared';
 
@@ -171,51 +172,53 @@ export const AddAccountWizard: FC<AddAccountWizardProperties> = ({
               as={MotionBox}
               _hover={{ shadow: 'xl' }}
             >
-              <motion.div
-                animate={{
-                  background: [
-                    `linear-gradient(60deg, #7434db 0%, ${chroma('#7434db')
-                      .brighten(0.1)
-                      .hex()} 100%)`,
-                    `linear-gradient(60deg, #7434db 0%, ${chroma('#7434db')
-                      .brighten(1)
-                      .hex()} 100%)`,
-                    `linear-gradient(60deg, ${chroma('#7434db')
-                      .brighten(1.2)
-                      .hex()} 0%, #7434db 100%)`,
-                    `linear-gradient(60deg, ${chroma('#7434db')
-                      .brighten(0)
-                      .hex()} 0%, #7434db 100%)`,
-                  ],
-                }}
-                transition={{
-                  duration: 10,
-                  repeat: Number.POSITIVE_INFINITY,
-                }}
-                style={{
-                  borderTopRightRadius: '10px',
-                  borderTopLeftRadius: '10px',
-                }}
-              >
-                <ModalHeader
-                  fontSize="lg"
-                  fontWeight="bold"
-                  color="white"
-                  py={3}
+              <WithErrorComponent>
+                <motion.div
+                  animate={{
+                    background: [
+                      `linear-gradient(60deg, #7434db 0%, ${chroma('#7434db')
+                        .brighten(0.1)
+                        .hex()} 100%)`,
+                      `linear-gradient(60deg, #7434db 0%, ${chroma('#7434db')
+                        .brighten(1)
+                        .hex()} 100%)`,
+                      `linear-gradient(60deg, ${chroma('#7434db')
+                        .brighten(1.2)
+                        .hex()} 0%, #7434db 100%)`,
+                      `linear-gradient(60deg, ${chroma('#7434db')
+                        .brighten(0)
+                        .hex()} 0%, #7434db 100%)`,
+                    ],
+                  }}
+                  transition={{
+                    duration: 10,
+                    repeat: Number.POSITIVE_INFINITY,
+                  }}
+                  style={{
+                    borderTopRightRadius: '10px',
+                    borderTopLeftRadius: '10px',
+                  }}
                 >
-                  Accounts Wizard
-                </ModalHeader>
-              </motion.div>
+                  <ModalHeader
+                    fontSize="lg"
+                    fontWeight="bold"
+                    color="white"
+                    py={3}
+                  >
+                    Accounts Wizard
+                  </ModalHeader>
+                </motion.div>
 
-              <ModalBody py={4}>
-                <Stepper step={step} mb="2" orientation="vertical">
-                  {steps.map(({ name, title, children }) => (
-                    <StepperStep key={name} name={name} title={title}>
-                      {children}
-                    </StepperStep>
-                  ))}
-                </Stepper>
-              </ModalBody>
+                <ModalBody py={4}>
+                  <Stepper step={step} mb="2" orientation="vertical">
+                    {steps.map(({ name, title, children }) => (
+                      <StepperStep key={name} name={name} title={title}>
+                        {children}
+                      </StepperStep>
+                    ))}
+                  </Stepper>
+                </ModalBody>
+              </WithErrorComponent>
             </ModalContent>
           </motion.div>
         </ModalOverlay>

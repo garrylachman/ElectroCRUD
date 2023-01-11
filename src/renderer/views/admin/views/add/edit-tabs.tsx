@@ -4,6 +4,7 @@ import {
   ElectroCRUDTabProperties,
   ElectroCRUDTabs,
 } from 'renderer/components/tabs/tabs';
+import { WithErrorComponent } from 'renderer/containers/error';
 import { ViewScopedContextProvider } from 'renderer/contexts';
 
 import { AddOrEditView } from '.';
@@ -32,18 +33,22 @@ export const EditTabs = () => {
   const { viewId } = useParams();
 
   return (
-    <ViewScopedContextProvider viewId={viewId}>
-      <ElectroCRUDTabs
-        tabsList={tabs}
-        tabIndex={0}
-        iconSize="15px"
-        colorScheme="primary"
-        fontSize="md"
-        marginTop={5}
-        fillAvailable
-        isFitted={false}
-        mt={0}
-      />
-    </ViewScopedContextProvider>
+    <WithErrorComponent>
+      <ViewScopedContextProvider viewId={viewId}>
+        <ElectroCRUDTabs
+          tabsList={tabs}
+          tabIndex={0}
+          iconSize="15px"
+          colorScheme="primary"
+          fontSize="md"
+          marginTop={5}
+          fillAvailable
+          isFitted={false}
+          mt={0}
+        />
+      </ViewScopedContextProvider>
+    </WithErrorComponent>
   );
 };
+
+export default EditTabs;

@@ -1,6 +1,9 @@
 import { Grid, GridItem } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
+import { LogoSpinner } from '@highoutput/hds-spinner';
+import { Loader } from '@saas-ui/react';
+import { Suspense, useEffect, useState } from 'react';
 import { Outlet, useMatches } from 'react-router-dom';
+import { ECSpinner } from 'renderer/components/icons';
 
 import { Navbar } from '../../components/navbar/navbar';
 import { Sidebar } from '../../components/sidebar/Sidebar';
@@ -43,7 +46,15 @@ export default function Dashboard() {
         bgColor="blackAlpha.100"
         display="flex"
       >
-        <Outlet />
+        <Suspense
+          fallback={
+            <Loader variant="overlay" isLoading spinner={<ECSpinner />}>
+              Loading...
+            </Loader>
+          }
+        >
+          <Outlet />
+        </Suspense>
       </GridItem>
     </Grid>
   );

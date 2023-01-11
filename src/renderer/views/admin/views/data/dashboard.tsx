@@ -1,32 +1,22 @@
 import {
-  Center,
   Flex,
   Icon,
-  Spacer,
-  Spinner,
   Tab,
   TabList,
   TabPanel,
   TabPanels,
   Tabs,
-  Tag,
-  TagRightIcon,
   Text,
-  Tooltip,
 } from '@chakra-ui/react';
-import { faker } from '@faker-js/faker';
 import _ from 'lodash';
-import moment from 'moment';
-import { useContext, useEffect, useMemo } from 'react';
+import { useContext, useEffect } from 'react';
 import { MdOutlineCollections } from 'react-icons/md';
 import { useParams } from 'react-router-dom';
-import ReactTimeAgo from 'react-time-ago';
+import { WithErrorComponent } from 'renderer/containers/error';
 import {
   ViewScopedContext,
   ViewScopedContextProvider,
 } from 'renderer/contexts';
-import { ColumnRO, TagRO } from 'renderer/defenitions/record-object';
-import { findType } from 'renderer/defenitions/record-object/data-types';
 
 import {
   DashboardContext,
@@ -83,14 +73,3 @@ export const Dashboard = () => {
   );
 };
 
-export const DashboardWithContext = () => {
-  const { viewId } = useParams();
-
-  return (
-    <ViewScopedContextProvider viewId={viewId}>
-      <DashboardContextProvider viewId={viewId}>
-        <Dashboard />
-      </DashboardContextProvider>
-    </ViewScopedContextProvider>
-  );
-};

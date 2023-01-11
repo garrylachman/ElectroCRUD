@@ -3555,10 +3555,10 @@
     react "18.2.0"
     react-dom "18.2.0"
 
-"@highoutput/hds-spinner@^0.1.12":
-  version "0.1.12"
-  resolved "https://registry.npmjs.org/@highoutput/hds-spinner/-/hds-spinner-0.1.12.tgz#91a51ff1135302045e7185c6ea1b9bbf301e10a2"
-  integrity sha512-bfUMfe90G2f5x4sJG+Nzo6BEVIoVfcdxm96OIb5bktCkWLwQLfYcb5aIaOEKFMW97u45BZy2Q/vqDPHXqjwTRw==
+"@highoutput/hds-spinner@^0.1.14":
+  version "0.1.14"
+  resolved "https://registry.npmjs.org/@highoutput/hds-spinner/-/hds-spinner-0.1.14.tgz#c59fba9f5f475fda4b7a6ee01cc7736846b30b54"
+  integrity sha512-zKwMyA5lAfwuxvMnOwntqbM0ivCFU1FAWm8ci7W48FsV2OJhkHWT7dBLqdyRQ373/MNNjHW2MmhGANR3ySjxtQ==
 
 "@highoutput/hds-utilities@^0.1.8":
   version "0.1.8"

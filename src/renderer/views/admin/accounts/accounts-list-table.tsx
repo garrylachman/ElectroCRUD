@@ -8,7 +8,7 @@ import {
   Text,
 } from '@chakra-ui/react';
 import { FC, useMemo } from 'react';
-import { TbEdit, TbLayout2, TbPlugConnected, TbTrash } from 'react-icons/tb';
+import { TbEdit, TbPlugConnected, TbTrash } from 'react-icons/tb';
 import ReactTimeAgo from 'react-time-ago';
 import { AddButton } from 'renderer/components/buttons';
 import { DatabaseIcon } from 'renderer/components/icons/database-icon';
@@ -74,13 +74,17 @@ export const AccountsListTable: FC<AccountsListTableProperties> = ({
     dispatch(SessionReducer.actions.setAccount({ account: row }));
 
   const handleAddEdit = async (row?: StrictAccountRO) => {
-    const result = await AddAccountsModalPromise({ account: row });
-    if (result) {
-      if (result.id) {
-        dispatch(AccountsReducer.actions.updateOne(result as AccountRO));
-      } else {
-        dispatch(AccountsReducer.actions.addOne(result));
+    try {
+      const result = await AddAccountsModalPromise({ account: row });
+      if (result) {
+        if (result.id) {
+          dispatch(AccountsReducer.actions.updateOne(result as AccountRO));
+        } else {
+          dispatch(AccountsReducer.actions.addOne(result));
+        }
       }
+    } catch {
+      /* empty */
     }
   };
 
