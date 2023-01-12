@@ -40,6 +40,9 @@ export default memo(function DatasetCoordinator() {
         fontSize="sm"
         hasScrollbar={false}
         ref={tabsReference}
+        tabPanelProps={{
+          marginBottom: 0,
+        }}
       />
     </Card>
   );

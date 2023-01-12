@@ -42,6 +42,16 @@ table thead tr th:last-child {
   position: unset;
 }
 
+.inovua-react-scroll-container__wrapper .inovua-react-scroll-container__scroller {
+  overflow: hidden;
+  margin-bottom: auto !important;
+}
+
+.inovua-react-scroll-container__wrapper .inovua-react-scroll-container__scroller .inovua-react-scroll-container__view > div {
+  padding-bottom: inherit !important;
+  overflow: hidden !important;
+}
+
 .chakra-input, .chakra-textarea, .chakra-react-select__control {
   border: 0; border-bottom: 1px solid #ccc; transition: 1s;
 }
