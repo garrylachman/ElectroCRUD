@@ -99,7 +99,7 @@ export const usePolicy = (columns: ColumnRO[], data: any[]) => {
         keys.forEach((key) => {
           const column = columnsWithPolicies.find((col) => col.name === key);
           const policy = R.prop<PolicyByTagType>('policy', column);
-          if (policy) {
+          if (policy && !column?.is_primary_key) {
             const value = String(R.prop<string>(key, row));
             if (value && policy.type === PolicyType.PARTIAL_MASKING) {
               maskedRow[key] = doMask(
