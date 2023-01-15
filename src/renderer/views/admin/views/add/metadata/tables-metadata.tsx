@@ -11,7 +11,10 @@ import { MetadataTableDocsRO } from 'renderer/defenitions/record-object';
 import { useAppDispatch } from 'renderer/store/hooks';
 import { ViewsReducer } from 'renderer/store/reducers';
 
-import { TableDocumentCardCard } from './components/table-document-card';
+import {
+  TabeDocumentation,
+  TabeDocumentation,
+} from './components/table-document';
 import { TableTagsCard } from './components/table-tags-card';
 
 type TablesMetadataProperties = unknown;
@@ -73,7 +76,7 @@ export const TablesMetadata: FC<TablesMetadataProperties> = () => {
     <Box px={5} pb={6}>
       <FormProvider {...formContext}>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <TableDocumentCardCard />
+          <TabeDocumentation />
           <Spacer p={3} />
           <TableTagsCard />
           <Spacer p={3} />

@@ -50,10 +50,7 @@ export type MetadataTableDocsContactRO = {
 };
 
 export type MetadataTableDocsRO = {
-  title?: string;
-  description?: string;
-  category?: Categories;
-  contact?: MetadataTableDocsContactRO;
+  md?: string;
   tags: string[];
 };
 
@@ -90,3 +87,5 @@ type ViewVOModfications = {
 };
 
 export type ViewVO = Omit<ViewRO, 'columns'> & ViewVOModfications;
+export type StrictViewVO = Omit<StrictViewRO, 'columns'> & ViewVOModfications;
+
