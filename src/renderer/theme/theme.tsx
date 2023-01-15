@@ -14,6 +14,7 @@ import { buttonStyles } from './components/button';
 import { Card } from './components/card';
 import { inputStyles } from './components/input';
 import { linkStyles } from './components/link';
+import { menuStyles } from './components/menu';
 import { progressStyles } from './components/progress';
 import { sliderStyles } from './components/slider';
 import { switchStyles } from './components/switch';
@@ -34,6 +35,7 @@ export default extendTheme(
   inputStyles, // input styles
   textareaStyles, // textarea styles
   switchStyles, // switch styles
+  menuStyles,
   //CardComponent, // card component
   {
     components: {
