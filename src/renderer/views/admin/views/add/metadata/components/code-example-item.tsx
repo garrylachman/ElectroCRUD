@@ -16,6 +16,8 @@ import {
   EditableInput,
   EditablePreview,
   Flex,
+  FormControl,
+  FormLabel,
   Grid,
   GridItem,
   Heading,
@@ -87,6 +89,7 @@ export const CodeExampleItem: FC<CodeExampleItemProperties> = ({
   });
 
   const {
+    register,
     handleSubmit,
     reset,
     formState: { isDirty, isValid, dirtyFields },
@@ -142,10 +145,12 @@ export const CodeExampleItem: FC<CodeExampleItemProperties> = ({
         <FormProvider {...formContext}>
           <form onSubmit={handleSubmit(onSubmit)}>
             <CardHeader pt={0} mx={2} my={4}>
-                <Flex padding={0} pt={0}>
+              <Flex padding={0} pt={0}>
                 <Flex flex="1" gap="0" alignItems="center" flexWrap="wrap">
                   <Box display="flex" flexDirection="column">
-                    <Heading size="md" p={0}>{initialValue.title}</Heading>
+                    <Heading size="md" p={0}>
+                      {initialValue.title}
+                    </Heading>
                     {!initialValue.title && (
                       <Text
                         alignItems="center"
@@ -184,16 +189,25 @@ export const CodeExampleItem: FC<CodeExampleItemProperties> = ({
             >
               <CardBody pb={0}>
                 <VStack display="block">
-                  <InlineEditField
-                    type="input"
-                    id="title"
-                    placeholder="Code Example Title"
-                  />
-                  <InlineEditField
-                    type="textarea"
-                    id="description"
-                    placeholder="Please describe about your code/example..."
-                  />
+                  <FormControl>
+                    <FormLabel>Name</FormLabel>
+                    <Input
+                      type="text"
+                      {...register('title')}
+                      variant="flushed"
+                      placeholder="Title / Name"
+                    />
+                  </FormControl>
+                  <FormControl>
+                    <FormLabel>Description</FormLabel>
+                    <Input
+                      type="text"
+                      {...register('description')}
+                      variant="flushed"
+                      placeholder="Please describe about your code/example..."
+                    />
+                  </FormControl>
+
                   <CodeMirror
                     ref={reference}
                     value={initialValue.code}

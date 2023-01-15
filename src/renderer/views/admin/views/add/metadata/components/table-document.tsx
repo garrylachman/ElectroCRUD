@@ -93,7 +93,7 @@ export const TabeDocumentation = () => {
   }
 
   return (
-    <Box px={4}>
+    <Box>
       <Box pb={4}>
         <Text>
           Simply data about data. It means it is a description and context of
@@ -112,7 +112,6 @@ export const TabeDocumentation = () => {
         fontSize="md"
         colorScheme="primary"
         isFitted={false}
-        variant="enclosed-colored"
         isBoxed
       />
       <Box pt={4}>
