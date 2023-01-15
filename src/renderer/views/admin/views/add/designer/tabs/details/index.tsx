@@ -112,7 +112,7 @@ export const DesignerDetails: FC<DesignerDetailsProperties> = ({
 
   return (
     <>
-      <Card variant="outline" height="auto">
+      <Card variant="outline" height="-webkit-fill-available">
         {!readOnly && <CardHeader>Details Page Desinger</CardHeader>}
         <CardBody>
           <Grid templateColumns="repeat(5, 1fr)" gap={10}>
