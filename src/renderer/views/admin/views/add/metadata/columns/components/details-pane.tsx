@@ -1,5 +1,5 @@
 import { Box, BoxProps, Center, Spinner } from '@chakra-ui/react';
-import { FC, useContext } from 'react';
+import { FC, useContext, useMemo } from 'react';
 import { MdNotes, MdOutlineRepeat } from 'react-icons/md';
 import { TbListDetails } from 'react-icons/tb';
 import {
@@ -11,28 +11,41 @@ import { O } from 'ts-toolbelt';
 
 import { ColumnDetails, ColumnDocumentation, ColumnReletions } from '../tabs';
 
-const tabs: ElectroCRUDTabProperties[] = [
-  {
-    name: 'Details',
-    component: () => <ColumnDetails />,
-    icon: TbListDetails,
-  },
-  {
-    name: 'Documentation',
-    component: () => <ColumnDocumentation />,
-    icon: MdNotes,
-  },
-  {
-    name: 'Relations',
-    component: () => <ColumnReletions />,
-    icon: MdOutlineRepeat,
-  },
-];
-
 export type DetailsPaneProperties = O.Merge<BoxProps, {}>;
 
 export const DetailsPane: FC<DetailsPaneProperties> = ({ ...properties }) => {
   const { memState } = useContext(ScopeContext);
+
+  const tabs: ElectroCRUDTabProperties[] = useMemo(
+    () => [
+      {
+        name: 'Details',
+        element: (
+          <ColumnDetails key={`ColumnDetails-${memState?.columnId || ''}`} />
+        ),
+        icon: TbListDetails,
+      },
+      {
+        name: 'Documentation',
+        element: (
+          <ColumnDocumentation
+            key={`ColumnDocumentation-${memState?.columnId || ''}`}
+          />
+        ),
+        icon: MdNotes,
+      },
+      {
+        name: 'Relations',
+        element: (
+          <ColumnReletions
+            key={`ColumnReletions-${memState?.columnId || ''}`}
+          />
+        ),
+        icon: MdOutlineRepeat,
+      },
+    ],
+    [memState?.columnId]
+  );
 
   return (
     <Box py={0} pl={3} {...properties} mt={0} overflowX="hidden">

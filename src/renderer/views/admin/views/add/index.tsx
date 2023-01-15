@@ -16,6 +16,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { MdClear, MdSave } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
 import Card from 'renderer/components/card/Card';
+import { Alert } from 'renderer/components/dataDisplay';
 import {
   ConfirmPromiseSaveModal,
 } from 'renderer/components/modals/confirm-promise-save-modal';
@@ -52,14 +53,13 @@ const validationSchema = Joi.object<FormData>({
 });
 
 export const AddOrEditView = () => {
-  const { viewState } = useContext(ViewScopedContext);
+  const { viewState, hasPrimaryKey } = useContext(ViewScopedContext);
   const sessionState = useAppSelector((state) => state.session);
   const navigate = useNavigate();
 
   const dispatch = useAppDispatch();
 
   const handleCreateOrUpdate = (data: ViewRO) => {
-    console.log('handleCreateOrUpdate', viewState, viewState.id);
 
     ConfirmPromiseSaveModal({ entityName: data.name || data.table })
       .then((value) => {
@@ -67,7 +67,6 @@ export const AddOrEditView = () => {
           const response = dispatch(
             ViewsReducer.actions.updateOne({ ...viewState, ...data })
           );
-          console.log('response', response);
         } else {
           const response = dispatch(
             ViewsReducer.actions.addOne({ ...viewState, ...data })
@@ -94,13 +93,13 @@ export const AddOrEditView = () => {
     ]),
   });
   const {
+    watch,
     reset,
     handleSubmit,
     formState: { isValid },
   } = formContext;
 
   useEffect(() => {
-    console.log('initialState', viewState);
     reset(
       _.omit(viewState, [
         'id',
@@ -110,7 +109,6 @@ export const AddOrEditView = () => {
         'columns',
       ])
     );
-    console.log(formContext);
   }, [viewState]);
 
   if (!sessionState.isConnected) {
@@ -123,54 +121,67 @@ export const AddOrEditView = () => {
 
   return (
     <Box overflow="scroll" paddingRight={2} height="-webkit-fill-available">
-      {viewState.id === undefined && (
+      {viewState?.id === undefined && (
         <>
           <ViewsInfoAlert />
           <Spacer p={3} />
         </>
       )}
       <FormProvider {...formContext}>
-        <form onSubmit={handleSubmit(handleCreateOrUpdate)}>
-          <BasicDetailsCard isEditMode={viewState.id !== undefined} />
-          <Spacer p={3} />
-
-          {viewState.id && (
+        {viewState && viewState.id && (
+          <form onSubmit={handleSubmit(handleCreateOrUpdate)}>
+            <BasicDetailsCard isEditMode={viewState?.id !== undefined} />
+            <Spacer p={3} />
             <>
-              <TableColumnsCard viewId={viewState.id} />
+              <TableColumnsCard viewId={viewState?.id} />
               <Spacer p={3} />
+              {!hasPrimaryKey && (
+                <>
+                  <Alert
+                    status="warning"
+                    title="Primary key is missing"
+                    description="In order to do use Modify operations (Create / Update /
+                      Delete) a primary column must be definded."
+                  />
+                  <Spacer p={3} />
+                </>
+              )}
               <SimpleGrid columns={{ sm: 1, md: 2 }} spacing={{ base: '20px' }}>
                 <TerminologyCard />
-                <PermissionsCard />
+                <PermissionsCard
+                  key={`permissions-${viewState?.id || ''}`}
+                  canModify={hasPrimaryKey}
+                />
               </SimpleGrid>
               <Spacer p={3} />
             </>
-          )}
 
-          <Card variant="outline">
-            <HStack justifyContent="space-between">
-              <Button
-                type="submit"
-                variant="solid"
-                colorScheme="primary"
-                size="lg"
-                isDisabled={!isValid}
-              >
-                <Icon mr={2} as={MdSave} />
-                Save
-              </Button>
-              <Button
-                variant="solid"
-                colorScheme="red"
-                size="lg"
-                onClick={() => reset()}
-                isDisabled={viewState.id !== undefined}
-              >
-                <Icon mr={2} as={MdClear} />
-                Reset
-              </Button>
-            </HStack>
-          </Card>
-        </form>
+            <Card variant="outline">
+              <HStack justifyContent="space-between">
+                <Button
+                  type="submit"
+                  variant="solid"
+                  colorScheme="primary"
+                  size="lg"
+                  isDisabled={!isValid}
+                >
+                  <Icon mr={2} as={MdSave} />
+                  Save
+                </Button>
+                <Button
+                  variant="solid"
+                  colorScheme="red"
+                  size="lg"
+                  onClick={() => reset()}
+                  isDisabled={viewState?.id !== undefined}
+                >
+                  <Icon mr={2} as={MdClear} />
+                  Reset
+                </Button>
+              </HStack>
+            </Card>
+          </form>
+        )}
       </FormProvider>
     </Box>
   );

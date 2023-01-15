@@ -1,35 +1,36 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
-  FormLabel,
-  Input,
-  useColorModeValue,
-  FormControl,
-  Flex,
+  Alert,
+  AlertDescription,
+  AlertIcon,
   Badge,
+  Box,
+  chakra,
+  Flex,
+  FormControl,
+  FormLabel,
   Icon,
-  useBoolean,
+  Input,
+  InputProps,
   ScaleFade,
   Select,
-  Box,
-  Alert,
-  AlertIcon,
-  AlertDescription,
-  SlideFade,
-  Switch,
-  InputProps,
-  SwitchProps,
   SelectProps,
   shouldForwardProp,
-  chakra,
+  SlideFade,
+  Switch,
+  SwitchProps,
+  useBoolean,
+  useColorModeValue,
 } from '@chakra-ui/react';
+import chroma from 'chroma-js';
 import { isValidMotionProp, motion } from 'framer-motion';
 import _ from 'lodash';
 import {
+  CSSProperties,
   FC,
-  useMemo,
   PropsWithChildren,
   ReactNode,
-  CSSProperties,
+  useMemo,
 } from 'react';
 import { FieldError, useFormContext } from 'react-hook-form';
 import { FaAsterisk } from 'react-icons/fa';
@@ -192,11 +193,7 @@ export const InputField: FC<PropsWithChildren<InputFieldProps>> = ({
               unmountOnExit
               reverse
             >
-              <Alert
-                variant="solid"
-                mt={1}
-                p={inSubCard ? '14px' : 1}
-              >
+              <Alert variant="solid" mt={1} p={inSubCard ? '14px' : 1}>
                 <AlertIcon as={MdError} mr={1} zIndex={1} />
                 <AlertDescription fontSize="xs" zIndex={1}>
                   {error?.message}
@@ -245,8 +242,8 @@ export const InputField: FC<PropsWithChildren<InputFieldProps>> = ({
               <Alert
                 bg={
                   isReadOnly && helpReadOnly !== undefined
-                    ? 'orange'
-                    : 'gradient.perper.100'
+                    ? 'gray.600'
+                    : 'primary.600'
                 }
                 variant="solid"
                 mt={1}
@@ -268,10 +265,18 @@ export const InputField: FC<PropsWithChildren<InputFieldProps>> = ({
                   opacity={0.6}
                   animate={{
                     background: [
-                      'linear-gradient(180deg, #8E2DE2 0%, #4A00E0 100%)',
-                      'linear-gradient(180deg, #4A00E0 100%, #8E2DE2 100%)',
-                      'linear-gradient(180deg, #4A00E0 0%, #8E2DE2 100%)',
-                      'linear-gradient(180deg, #8E2DE2 100%, #4A00E0 100%)',
+                      `linear-gradient(60deg, ${isReadOnly ? '#33373d' : '#7434db'} 0%, ${chroma(isReadOnly ? '#abadaf' : '#7434db')
+                        .brighten(0.2)
+                        .hex()} 100%)`,
+                      `linear-gradient(60deg, ${isReadOnly ? '#33373d' : '#7434db'} 0%, ${chroma(isReadOnly ? '#abadaf' : '#7434db')
+                        .brighten(1)
+                        .hex()} 100%)`,
+                      `linear-gradient(60deg, ${chroma(isReadOnly ? '#abadaf' : '#7434db')
+                        .brighten(1.2)
+                        .hex()} 0%, ${isReadOnly ? '#33373d' : '#7434db'} 100%)`,
+                      `linear-gradient(60deg, ${chroma(isReadOnly ? '#abadaf' : '#7434db')
+                        .brighten(0)
+                        .hex()} 0%, ${isReadOnly ? '#33373d' : '#7434db'} 100%)`,
                     ],
                   }}
                   transition={{

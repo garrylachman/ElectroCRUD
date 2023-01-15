@@ -1,12 +1,15 @@
 import { EntityId, EntityState } from '@reduxjs/toolkit';
 import memoize from 'proxy-memoize';
+import * as F from 'ramda';
 import {
-  ViewRO,
-  ColumnRO,
   ColumnReferanceRO,
+  ColumnRO,
+  StrictViewVO,
+  ViewRO,
   ViewVO,
 } from 'renderer/defenitions/record-object';
-import * as F from 'ramda';
+
+import { ColumnsReducer, ViewsReducer } from '../reducers';
 import { RootState } from '../store';
 import {
   enrichColumns,
@@ -15,7 +18,6 @@ import {
   getColumns,
 } from './columns.selectors';
 import { getTagsByIds } from './tags.selectors';
-import { ColumnsReducer, ViewsReducer } from '../reducers';
 
 export const getView = memoize((state) =>
   F.compose<string>(
@@ -51,7 +53,22 @@ export const enrichColumsRelations = (state: RootState) =>
     })
   );
 
+const isHasPrimaryKey = (columns: ColumnRO[]) => {
+  console.log("columns", columns);
+  const pkCols = columns.find((col: ColumnRO) => col.is_primary_key);
+  console.log("pkCols", pkCols);
+  return pkCols !== undefined;
+};
+
 export const getFullView = F.compose<{ state: RootState; viewId: string }>(
+  F.tap(console.log),
+  (view) => ({
+      ...view,
+    permissions:
+      isHasPrimaryKey(view.columns)
+        ? view.permissions
+        : { ...view.permissions, create: false, delete: false, update: false },
+  }),
   ({ state, view }) =>
     F.mergeDeepRight(view, {
       columns: enrichColumnsForView(state)(view.columns),
@@ -64,9 +81,9 @@ export const getFullView = F.compose<{ state: RootState; viewId: string }>(
 
 export const createFullViewSelector = F.curry(
   (rootState: RootState, viewId: string) =>
-    memoize((state: RootState) => getFullView({ state, viewId }) as ViewVO)(
-      rootState
-    )
+    memoize(
+      (state: RootState) => getFullView({ state, viewId }) as StrictViewVO
+    )(rootState)
 );
 
 export const getAllViews = F.curry((rootState: RootState) =>

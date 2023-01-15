@@ -8,18 +8,21 @@ import {
   useState,
 } from 'react';
 import { useSelector } from 'react-redux';
-import { ViewVO } from 'renderer/defenitions/record-object';
+import { StrictViewRO, StrictViewVO } from 'renderer/defenitions/record-object';
 import { useAppSelector } from 'renderer/store/hooks';
 import { ViewSelectors } from 'renderer/store/selectors';
+import { RootState } from 'renderer/store/store';
 
 export type ViewScopedContextType = {
-  viewState?: ViewVO;
+  viewState?: StrictViewRO;
   setView: (viewId: string) => void;
+  hasPrimaryKey: boolean;
 };
 
 const initial: ViewScopedContextType = {
   setView: (viewId) => {},
   viewState: undefined,
+  hasPrimaryKey: false,
 };
 
 export type ViewScopedContextProviderProperties = {
@@ -38,22 +41,32 @@ export const ViewScopedContextProvider: FC<
 
   useEffect(() => setCurrentViewId(viewId), [viewId]);
 
-  const viewsStateSelector = useSelector((state) =>
+  const viewsStateSelector = useSelector((state: RootState) =>
     ViewSelectors.createFullViewSelector(state)
   );
 
-  const viewState = useMemo<ViewVO>(
+  const viewState = useMemo<StrictViewVO>(
     () =>
       currentViewId
         ? viewsStateSelector(currentViewId)
-        : ({ accountId: sessionState.account?.id } as ViewVO),
+        : ({ accountId: sessionState.account?.id } as StrictViewVO),
     [currentViewId, viewsStateSelector]
   );
 
-  const setView = useCallback((setViewId) => setCurrentViewId(setViewId), []);
+  const setView = useCallback(
+    (setViewId: string) => setCurrentViewId(setViewId),
+    []
+  );
+
+  const hasPrimaryKey = useMemo(() => {
+    if (viewState && viewState.columns) {
+      return viewState.columns.some((column) => column.is_primary_key);
+    }
+    return false;
+  }, [viewState]);
 
   return (
-    <ViewScopedContext.Provider value={{ viewState, setView }}>
+    <ViewScopedContext.Provider value={{ viewState, setView, hasPrimaryKey }}>
       {children}
     </ViewScopedContext.Provider>
   );

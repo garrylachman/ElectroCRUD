@@ -172,7 +172,7 @@ export const ColumnDetails = () => {
             id="metadata.tags"
             type={TagType.COLUMN}
             target={{ columnId: columnState.id }}
-            defaultValue={[...columnState.metadata.tags]}
+            defaultValue={[...columnState.metadata?.tags || []]}
           />
 
           {JSON.stringify(exampleData) !== JSON.stringify(policy[0]) && (

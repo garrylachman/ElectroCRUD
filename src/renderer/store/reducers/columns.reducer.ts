@@ -67,6 +67,11 @@ const columnsSlice = createSlice({
     ) => {
       const updatedColumn = state.entities[action.payload.columnId];
       if (updatedColumn) {
+        if (updatedColumn.metadata === undefined) {
+          updatedColumn.metadata = {
+            tags: [],
+          };
+        }
         updatedColumn.metadata.tags = action.payload.tags;
       }
     },

@@ -77,13 +77,13 @@ export const usePolicy = (columns: ColumnRO[], data: any[]) => {
         .map((col) => ({
           ...col,
           metadata: {
-            tags: col.metadata.tags.map((tag) => (tag?.id as string) || tag),
+            tags: col?.metadata?.tags?.map((tag) => (tag?.id as string) || tag),
           },
         }))
         .map((col) => ({
           ...col,
           policy: _.compact(
-            col.metadata.tags.map((tag) => R.prop(tag, policiesByTags))
+            col?.metadata?.tags?.map((tag) => R.prop(tag, policiesByTags))
           ).pop(),
         })),
     [policiesByTags, columns]

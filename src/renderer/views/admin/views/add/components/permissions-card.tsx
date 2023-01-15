@@ -1,12 +1,17 @@
 import { Card, CardBody, CardHeader, Grid } from '@chakra-ui/react';
+import { FC } from 'react';
 import { InputField } from 'renderer/components/fields';
 
-export const PermissionsCard = () => {
+export type PermissionsCardProperties = {
+  canModify?: boolean;
+};
+
+export const PermissionsCard: FC<PermissionsCardProperties> = ({
+  canModify = true,
+}) => {
   return (
     <Card variant="elevated">
-      <CardHeader>
-        Permissions
-      </CardHeader>
+      <CardHeader>Permissions</CardHeader>
       <CardBody>
         <Grid templateColumns="repeat(2, 1fr)" gap={6}>
           <InputField
@@ -18,6 +23,8 @@ export const PermissionsCard = () => {
             isRequired
             inSubCard
             helpText="Write permission"
+            helpReadOnly="Primary Key Required"
+            isReadOnly={!canModify}
           />
           <InputField
             id="permissions.read"
@@ -38,6 +45,8 @@ export const PermissionsCard = () => {
             isRequired
             inSubCard
             helpText="Update permission"
+            helpReadOnly="Primary Key Required"
+            isReadOnly={!canModify}
           />
           <InputField
             id="permissions.delete"
@@ -48,6 +57,8 @@ export const PermissionsCard = () => {
             isRequired
             inSubCard
             helpText="Delete permission"
+            helpReadOnly="Primary Key Required"
+            isReadOnly={!canModify}
           />
         </Grid>
       </CardBody>

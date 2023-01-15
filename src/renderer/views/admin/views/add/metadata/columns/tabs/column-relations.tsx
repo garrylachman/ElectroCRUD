@@ -139,7 +139,7 @@ export const ColumnReletions = () => {
         <AddButton size="md" onClick={addModal} />
       </Flex>
 
-      <Box maxHeight="385px" overflowY="scroll">
+      <Box maxHeight="385px" overflowY="auto">
         <List spacing={3}>
           {columnReferanceWithNamesState.map((row) => (
             <ListItem>
