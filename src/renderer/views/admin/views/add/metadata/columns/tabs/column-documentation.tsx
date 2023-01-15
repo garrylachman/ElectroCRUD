@@ -120,7 +120,6 @@ export const ColumnDocumentation = () => {
         fontSize="md"
         colorScheme="primary"
         isFitted={false}
-        variant="enclosed-colored"
         isBoxed
       />
       <Box pt={4}>
