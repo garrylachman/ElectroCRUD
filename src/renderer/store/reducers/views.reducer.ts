@@ -18,7 +18,7 @@ const viewsAdapter = createEntityAdapter<StrictViewRO>({
   sortComparer: (a, b) => b.creationDate - a.creationDate,
 });
 
-const { addOne, updateOne, updateMany, removeOne, removeMany, removeAll } =
+const { addOne, updateOne, updateMany, removeOne, removeMany, removeAll, upsertOne } =
   viewsAdapter;
 
 const mergeBeforeUpdate = (value: Partial<ViewRO>): Partial<ViewRO> => {
@@ -32,7 +32,7 @@ const mergeBeforeUpdate = (value: Partial<ViewRO>): Partial<ViewRO> => {
     }),
     R.mergeDeepRight({
       columns: [],
-      metadata: { tags: [] },
+      metadata: { tags: [], md: '' },
       permissions: { create: true, read: true, update: true, delete: true },
       terminology: { singular: undefined, plural: undefined },
     })
@@ -44,6 +44,14 @@ const viewsSlice = createSlice({
   name: 'views',
   initialState: viewsAdapter.getInitialState(),
   reducers: {
+    upsertOne: {
+      reducer: upsertOne,
+      prepare(payload: ViewRO) {
+        return {
+          payload: prepareStateUpdate<StrictViewRO>(mergeBeforeUpdate(payload)),
+        };
+      },
+    },
     addOne: {
       reducer: addOne,
       prepare(payload: ViewRO) {
@@ -118,12 +126,13 @@ const viewsSlice = createSlice({
       builder,
       isAnyOf(
         viewsSlice.actions.updateOne.match,
+        viewsSlice.actions.upsertOne.match,
         viewsSlice.actions.updateTags.match,
         columnsActions.upsertOne.match,
         columnsActions.upsertMany.match
       ),
       (action) =>
-        action.type === viewsSlice.actions.updateOne.type
+        action.type === viewsSlice.actions.updateOne.type || viewsSlice.actions.upsertOne.type
           ? action.payload.id
           : action.payload.viewId
     );
