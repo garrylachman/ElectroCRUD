@@ -1,7 +1,8 @@
 import { Box, Center, Spinner, Text, useBoolean } from '@chakra-ui/react';
 import MarkdownEditor from '@uiw/react-markdown-editor';
+import _ from 'lodash';
 import memoize from 'proxy-memoize';
-import { useCallback, useContext, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { MdEdit, MdPreview } from 'react-icons/md';
 import { useSelector } from 'react-redux';
 import { SaveButton } from 'renderer/components/buttons/save-button';
@@ -25,7 +26,7 @@ import columnDescription from './column-description.md';
 export const ColumnDocumentation = () => {
   const dispatch = useAppDispatch();
   const { memState } = useContext(ScopeContext);
-  const [markdown, setMarkdown] = useState('');
+  const [markdownTemp, setMarkdown] = useState('');
 
   const columnState = useSelector<RootState, ColumnRO>(
     useCallback(
@@ -36,13 +37,11 @@ export const ColumnDocumentation = () => {
     )
   );
 
-  useEffect(() => {
-    if (columnState && columnState.metadata.md) {
-      setMarkdown(columnState.metadata.md);
-    } else {
-      setMarkdown(columnDescription);
-    }
-  }, [columnDescription, columnState]);
+  const markdown = useMemo(
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    () => columnState?.metadata?.md || columnDescription,
+    [columnState?.metadata?.md, columnDescription]
+  );
 
   const handleSave = useCallback(() => {
     ConfirmPromiseSaveModal({
@@ -54,49 +53,41 @@ export const ColumnDocumentation = () => {
             ...columnState,
             metadata: {
               ...columnState.metadata,
-              md: markdown,
+              md: markdownTemp,
             },
           })
         );
         return true;
       })
       .catch(() => {});
-  }, [markdown, columnState]);
+  }, [markdownTemp, columnState]);
 
-  useEffect(() => console.log('markdown', markdown), [markdown]);
-
-  const RenderPreview = useCallback(
-    () => (
-      <Box px={4} pb={4}>
-        <MarkdownEditor.Markdown source={markdown} />
-      </Box>
-    ),
-    [markdown, setMarkdown]
+  const RenderPreview = () => (
+    <Box p={4}>
+      <MarkdownEditor.Markdown source={markdown} />
+    </Box>
   );
 
-  const RenderEdit = useCallback(
-    () => (
-      <Box px={4} pb={4}>
-        <MarkdownEditor
-          value={markdown}
-          onChange={(value, viewUpdate) => setMarkdown(value)}
-          enableScroll
-          height="350px"
-        />
-      </Box>
-    ),
-    [markdown, setMarkdown]
+  const RenderEdit = () => (
+    <Box p={4}>
+      <MarkdownEditor
+        value={markdown}
+        onChange={(value, viewUpdate) => setMarkdown(value)}
+        enableScroll
+        height="350px"
+      />
+    </Box>
   );
 
   const tabs: ElectroCRUDTabProperties[] = [
     {
       name: 'Preview',
-      element: <RenderPreview />,
+      element: <RenderPreview key={markdown} />,
       icon: MdPreview,
     },
     {
       name: 'Edit',
-      element: <RenderEdit />,
+      element: <RenderEdit key={markdown} />,
       icon: MdEdit,
     },
   ];
@@ -110,11 +101,11 @@ export const ColumnDocumentation = () => {
   }
 
   return (
-    <Box px={4} key={`column-docs--${columnState.id}`}>
+    <Box px={4}>
       <Box pb={4}>
         <Text>
-          Simply data about data. It means it is a description and context of the
-          data. It helps to organize, find and understand data.
+          Simply data about data. It means it is a description and context of
+          the data. It helps to organize, find and understand data.
         </Text>
         <Text>
           You can use our simple example or create your own. We use Markdown
@@ -123,6 +114,7 @@ export const ColumnDocumentation = () => {
       </Box>
       <ElectroCRUDTabs
         tabsList={tabs}
+        key={`ElectroCRUDTabs-${columnState.id || ''}-${columnState.modificationDate || ''}`}
         tabIndex={0}
         iconSize={5}
         fontSize="md"
@@ -132,10 +124,7 @@ export const ColumnDocumentation = () => {
         isBoxed
       />
       <Box pt={4}>
-        <SaveButton
-          onClick={handleSave}
-          isDisabled={markdown === columnState.metadata.md}
-        />
+        <SaveButton onClick={handleSave} />
       </Box>
     </Box>
   );
