@@ -11,6 +11,7 @@ import {
   ColumnsReferanceReducer,
   PoliciesReducer,
   SessionReducer,
+  SettingsReducer,
   TagsReducer,
   TemporaryFilterRulesReducer,
   TemporaryFiltersReducer,
@@ -36,6 +37,7 @@ const persistConfig = {
 };
 
 const rootReducer = combineReducers({
+  [SettingsReducer.name]: SettingsReducer.reducer,
   [AccountsReducer.name]: AccountsReducer.reducer,
   [SessionReducer.name]: SessionReducer.reducer,
   [TagsReducer.name]: TagsReducer.reducer,
@@ -51,11 +53,17 @@ const rootReducer = combineReducers({
   [ViewDetailsReducer.name]: ViewDetailsReducer.reducer,
 });
 
+const preloadedState = {
+  [SettingsReducer.name]: SettingsReducer.initialState,
+  [SessionReducer.name]: SessionReducer.initialState,
+};
+
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const store = configureStore({
   reducer: persistedReducer,
   middleware: [logger, sagaMiddleware],
+  preloadedState,
 });
 
 sagaMiddleware.run(watchSetAccountAsync);

@@ -3532,6 +3532,11 @@
     react-dom "18.2.0"
     yup "^0.32.11"
 
+"@highoutput/hds-checkbox-group@^0.1.4":
+  version "0.1.4"
+  resolved "https://registry.npmjs.org/@highoutput/hds-checkbox-group/-/hds-checkbox-group-0.1.4.tgz#5a3892c8da24f978ba04fdaddcab1fea25102398"
+  integrity sha512-FCHc7G6AcxHUiTUidDC3+X8O4zGppGnwIyovaLt4dVwEZezGb5VJd67P366Fo7rbfj51E/1ApWcN0ESXKp4WuA==
+
 "@highoutput/hds-forms@^0.1.27":
   version "0.1.27"
   resolved "https://registry.npmjs.org/@highoutput/hds-forms/-/hds-forms-0.1.27.tgz#70c774fc3ce7ad80adbcf5753da20cce627f6a2f"
@@ -10082,6 +10087,11 @@ crypto-browserify@^3.11.0, crypto-browserify@^3.12.0:
     public-encrypt "^4.0.0"
     randombytes "^2.0.0"
     randomfill "^1.0.3"
+
+crypto-js@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.npmjs.org/crypto-js/-/crypto-js-4.1.1.tgz#9e485bcf03521041bd85844786b83fb7619736cf"
+  integrity sha512-o2JlM7ydqd3Qk9CA0L4NL6mTzU2sdx96a+oOfPu8Mkl/PK51vSyoi8/rQ8NknZtk44vq15lmhAj9CIAGwgeWKw==
 
 crypto-random-string@^2.0.0:
   version "2.0.0"
@@ -16977,6 +16987,11 @@ object-copy@^0.1.0:
     copy-descriptor "^0.1.0"
     define-property "^0.2.5"
     kind-of "^3.0.3"
+
+object-hash@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.npmjs.org/object-hash/-/object-hash-3.0.0.tgz#73f97f753e7baffc0e2cc9d6e079079744ac82e9"
+  integrity sha512-RSn9F68PjH9HqtltsSnqYC1XXoWe9Bju5+213R98cNGttag9q9yAOTzdbsqvIa7aNm5WffBZFpWYr2aWrklWAw==
 
 object-inspect@^1.12.2, object-inspect@^1.9.0:
   version "1.12.2"

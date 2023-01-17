@@ -12,3 +12,4 @@ export * as ViewFiltersReducer from './view-filters.reducer';
 export * as TemporaryFilterRulesReducer from './temporary-filter-rules.reducer';
 export * as PoliciesReducer from './policies.reducer';
 export * as ViewDetailsReducer from './view-details.reducer';
+export * as SettingsReducer from './settings.reducer';

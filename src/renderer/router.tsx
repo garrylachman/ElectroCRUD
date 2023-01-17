@@ -1,4 +1,4 @@
-import { lazy } from 'react';
+import React, { lazy } from 'react';
 import {
   createBrowserRouter,
   createRoutesFromElements,
@@ -6,6 +6,8 @@ import {
   Route,
 } from 'react-router-dom';
 
+import { ProtectedRoute } from './protected-route';
+import { Login } from './views/login';
 
 const AdminLayout = lazy(() => import('renderer/layouts/admin'));
 const ManageAccounts = lazy(() => import('renderer/views/admin/accounts'));
@@ -21,7 +23,11 @@ const Settings = lazy(() => import('renderer/views/admin/settings'));
 export const router = createBrowserRouter(
   createRoutesFromElements(
     <>
-      <Route path="/admin/*" element={<AdminLayout />}>
+      <Route path="/login" element={<Login />} />
+      <Route
+        path="/admin/*"
+        element={<ProtectedRoute><AdminLayout /></ProtectedRoute>}
+      >
         <Route
           path="accounts"
           handle={{ title: 'Accounts' }}
@@ -53,6 +59,7 @@ export const router = createBrowserRouter(
           />
           <Route path="" element={<Navigate to="add" />} />
         </Route>
+        <Route path="*" element={<Navigate to="/admin/accounts" />} />
       </Route>
       <Route path="/" element={<Navigate to="/admin/" />} />
     </>

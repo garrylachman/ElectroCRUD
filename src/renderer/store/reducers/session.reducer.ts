@@ -1,10 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AccountRO, SessionRO } from 'renderer/defenitions/record-object';
 
-const initialState: SessionRO = {
+export const initialState: SessionRO = {
   account: undefined,
   isConnected: false,
   isEditMode: true,
+  isLoggedIn: false,
 };
 
 const sessionSlice = createSlice({
@@ -20,6 +21,9 @@ const sessionSlice = createSlice({
     },
     toggleEditMode: (state) => {
       state.isEditMode = !state.isEditMode;
+    },
+    setLoggedIn: (state, action: PayloadAction<boolean>) => {
+      state.isLoggedIn = action.payload;
     },
   },
 });
