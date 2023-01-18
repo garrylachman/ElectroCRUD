@@ -5,6 +5,7 @@ import { BsShieldLockFill } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'renderer/store/hooks';
 import { SessionReducer } from 'renderer/store/reducers';
+import { Tooltip } from 'renderer/components/dataDisplay';
 
 export const Navbar: FC<{ brandText: string }> = ({ brandText }) => {
   const dispatch = useAppDispatch();
@@ -32,9 +33,11 @@ export const Navbar: FC<{ brandText: string }> = ({ brandText }) => {
           </AnimatedText>
         </Heading>
         {sessionState.isLoggedIn && (
-          <Button onClick={logout}>
-            <Icon as={BsShieldLockFill} boxSize={18} />
-          </Button>
+          <Tooltip label="Logout / Lock">
+            <Button onClick={logout}>
+              <Icon as={BsShieldLockFill} boxSize={18} />
+            </Button>
+          </Tooltip>
         )}
       </Flex>
     </Box>

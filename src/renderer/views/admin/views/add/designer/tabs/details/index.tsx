@@ -11,9 +11,9 @@ import {
   IconButton,
   SimpleGrid,
   Text,
-  Tooltip,
   VStack,
 } from '@chakra-ui/react';
+import { Tooltip } from 'renderer/components/dataDisplay';
 import memoize from 'proxy-memoize';
 import * as R from 'ramda';
 import { FC, useContext, useEffect, useMemo, useState } from 'react';
@@ -148,11 +148,7 @@ export const DesignerDetails: FC<DesignerDetailsProperties> = ({
                                   <Flex gap={2} alignItems="center">
                                     {!readOnly && (
                                       <>
-                                        <Tooltip
-                                          bgColor="primary.600"
-                                          label="Drag to re-order"
-                                          rounded={8}
-                                        >
+                                        <Tooltip label="Drag to re-order">
                                           <IconButton
                                             size="sm"
                                             icon={<Icon as={MdDragIndicator} />}

@@ -50,7 +50,7 @@ export const TableColumnsCard: FC<TableColumnsCardProperties> = ({
 
   useEffect(() => {
     if (result) {
-      console.log(result)
+      console.log(result);
       const names = new Set(_.map(viewState.columns, 'name'));
       const missingColumns = _.filter(
         result.body,
@@ -90,14 +90,15 @@ export const TableColumnsCard: FC<TableColumnsCardProperties> = ({
     return (
       <Card variant="elevated">
         <CardBody>
-        <Center>
-          <VStack>
+          <Center>
+            <VStack>
               <Spinner size="xl" thickness="6px" color="primary.300" />
               <Text fontSize="lg">Analyzing "{viewState?.table}" table...</Text>
-          </VStack>
-        </Center>
-      </CardBody>
-    </Card>);
+            </VStack>
+          </Center>
+        </CardBody>
+      </Card>
+    );
   }
 
   return (
@@ -105,8 +106,14 @@ export const TableColumnsCard: FC<TableColumnsCardProperties> = ({
       <Card variant="elevated">
         <CardHeader>
           Columns
-          <Text display="flex" as="kbd" fontSize="sm" fontWeight="normal" color="gray.500">
-          of "{viewState.table}" table
+          <Text
+            display="flex"
+            as="kbd"
+            fontSize="sm"
+            fontWeight="normal"
+            color="gray.500"
+          >
+            of "{viewState.table}" table
           </Text>
         </CardHeader>
         <CardBody px={0}>
@@ -122,7 +129,10 @@ export const TableColumnsCard: FC<TableColumnsCardProperties> = ({
                     {dataType && (
                       <HStack>
                         <Text>{row.getValue() || dataType.name}</Text>
-                        <TableIconCell icon={dataType.icon} tooltip={dataType.name} />
+                        <TableIconCell
+                          icon={dataType.icon}
+                          tooltip={dataType.name}
+                        />
                       </HStack>
                     )}
                   </>
@@ -131,10 +141,24 @@ export const TableColumnsCard: FC<TableColumnsCardProperties> = ({
               if (row.column.id === 'properties') {
                 return (
                   <HStack>
-                    {row.row.original.is_nullable && (<TableIconCell icon={RxTextNone} tooltip='nullable' />)}
-                    {row.row.original.is_primary_key && (<TableIconCell icon={MdVpnKey} tooltip='primary key' />)}
-                    {row.row.original.is_unique && (<TableIconCell icon={MdOutline1XMobiledata} tooltip='unique' />)}
-                    {row.row.original.has_auto_increment && (<TableIconCell icon={MdHdrAuto} tooltip='auto increment' />)}
+                    {row.row.original.is_nullable && (
+                      <TableIconCell icon={RxTextNone} tooltip="nullable" />
+                    )}
+                    {row.row.original.is_primary_key && (
+                      <TableIconCell icon={MdVpnKey} tooltip="primary key" />
+                    )}
+                    {row.row.original.is_unique && (
+                      <TableIconCell
+                        icon={MdOutline1XMobiledata}
+                        tooltip="unique"
+                      />
+                    )}
+                    {row.row.original.has_auto_increment && (
+                      <TableIconCell
+                        icon={MdHdrAuto}
+                        tooltip="auto increment"
+                      />
+                    )}
                   </HStack>
                 );
               }

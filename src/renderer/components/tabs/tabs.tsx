@@ -12,8 +12,8 @@ import {
   Tabs,
   TabsProps,
   Text,
-  Tooltip,
 } from '@chakra-ui/react';
+import { Tooltip } from 'renderer/components/dataDisplay';
 import * as CSS from 'csstype';
 import { AnimatePresence, motion, Reorder } from 'framer-motion';
 import {
@@ -164,12 +164,8 @@ export const ElectroCRUDTabs = forwardRef<
                     >
                       <motion.span layout="position">
                         <Tooltip
-                          hasArrow
                           label="Drag to change tabs order"
-                          variant="solid"
-                          bg="secondary.100"
                           openDelay={500}
-                          rounded="lg"
                         >
                           <Center gap={iconGap} justifyContent="space-between">
                             <Flex
