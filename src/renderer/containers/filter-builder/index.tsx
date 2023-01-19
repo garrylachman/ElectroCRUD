@@ -85,11 +85,6 @@ export const FilterBuilder: FC<FilterBuilderProperties> = ({
   }, [filtersState]);
 
   const filterSaveHandle = () => {
-    console.log('save', {
-      name: filterName,
-      viewId: viewState?.id,
-      knexFilter: R.toString(filtersState),
-    });
     const newFilter = distpatch(
       ViewFiltersReducer.actions.upsertOne({
         name: filterName,
@@ -149,7 +144,7 @@ export const FilterBuilder: FC<FilterBuilderProperties> = ({
               </Box>
             </CardBody>
             <CardFooter>
-              <HStack alignItems="center" flex={1} maxWidth="50%">
+              <HStack alignItems="center" flex={1} maxWidth="60%" gap={5}>
                 <Text>Save Filter as</Text>
                 <Input
                   type="text"
@@ -165,6 +160,13 @@ export const FilterBuilder: FC<FilterBuilderProperties> = ({
                   onClick={filterSaveHandle}
                 >
                   Save Filter
+                </Button>
+                <Button
+                  variant="solid"
+                  colorScheme="red"
+                  onClick={() => setFilter(undefined, undefined, true)}
+                >
+                  Close
                 </Button>
               </HStack>
             </CardFooter>
