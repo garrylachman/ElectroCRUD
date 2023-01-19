@@ -487,7 +487,7 @@ export class DatabaseService {
           }
         return qw;
       });
-
+      console.log(q?.toQuery());
       await q?.delete();
       this.logService?.success(
         sqlFormatter.format(q?.toQuery() || '', formatterParameters),
@@ -507,6 +507,7 @@ export class DatabaseService {
     properties: DeleteDataArguments
   ): Promise<boolean | IPCError> {
     const { table, where } = properties;
+    console.log("deleteDataWithProps", table, where);
     return this.deleteData(table, where);
   }
 

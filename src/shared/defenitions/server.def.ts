@@ -109,6 +109,11 @@ export type UpdateDataArgs = {
   where?: QueryWhere[];
 };
 
+export type DeleteDataArgs = {
+  table: string;
+  where?: QueryWhere[];
+};
+
 export type InsertDataArgs = {
   table: string;
   data: Record<string, any> | Record<string, any>[];

@@ -40,7 +40,7 @@ type PolicyByTagType = {
 
 type ColumnWithPoliciesType = O.Merge<ColumnRO, { policy?: PolicyByTagType }>;
 
-export const usePolicy = (columns: ColumnRO[], data: any[]) => {
+export const usePolicy = (columns: Partial<ColumnRO>[], data: any[]) => {
   const policyState = useAppSelector((root: RootState) =>
     memoize((state: RootState) => state.policies)(root)
   );

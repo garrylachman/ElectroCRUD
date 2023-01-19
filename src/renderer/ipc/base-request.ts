@@ -24,15 +24,13 @@ export const useBaseRequest = <T extends ResponseType>(
 
   const execute = useCallback(
     _.throttle(() => {
+      // @ts-ignore
       setResult();
       setIsLoading(true);
       setIsExecuted(false);
 
-      console.log('request', request);
-
       BaseRequest<T>(request.channel, request)
         .then((value) => {
-          console.log('value', value);
           if (value.error) {
             dispatch(
               ToastReducer.actions.setToast({

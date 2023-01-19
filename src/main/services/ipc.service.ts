@@ -46,6 +46,7 @@ export class IPCService {
     event: IpcMainInvokeEvent,
     request: RequestType
   ): Promise<ResponseType> | ResponseType {
+    console.log("onRequest", request);
     switch (request.channel) {
       case IPCChannelEnum.CONNECT: {
         return this.rFactory.createRequest(request, 'connectWithProps');

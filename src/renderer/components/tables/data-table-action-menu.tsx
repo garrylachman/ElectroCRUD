@@ -13,9 +13,15 @@ import { FC } from 'react';
 import { IconType } from 'react-icons';
 import { MdOutlineMoreVert } from 'react-icons/md';
 import { O } from 'ts-toolbelt';
+import { Tooltip } from '../dataDisplay';
 
 export type DataTableActionMenuItem = O.Merge<
-  { menuIcon: IconType; label: string; onClick: (row: any) => any },
+  { 
+    menuIcon: IconType;
+    label: string;
+    onClick: (row: any) => any;
+    tooltip?: string;
+  },
   MenuItemProps
 >;
 export type DataTableActionMenuProperties = {
@@ -41,29 +47,31 @@ export const DataTableActionMenu: FC<DataTableActionMenuProperties> = ({
         backdropFilter="blur(10px) contrast(100%) saturate(190%)"
       >
         {items.map((item) => (
-          <MenuItem
-            key={item.label}
-            {...R.omit<DataTableActionMenuItem, 'menuIcon' | 'label'>(
-              ['menuIcon', 'label'],
-              item
-            )}
-            onClick={() => {
-              if (item.onClick) {
-                item.onClick(row);
-              }
-            }}
-            py={3}
-            alignItems="center"
-            fontSize="sm"
-            textTransform="uppercase"
-            gap={3}
-            iconSpacing={0}
-            _hover={{ fontWeight: 'bold', bgColor: 'blackAlpha.200' }}
-            icon={<Icon display="flex" as={item.menuIcon} boxSize={4} />}
-            bgColor="transparent"
-          >
-            {item.label}
-          </MenuItem>
+          <Tooltip label={item.tooltip} placement="left">
+            <MenuItem
+              key={item.label}
+              {...R.omit<DataTableActionMenuItem, 'menuIcon' | 'label'>(
+                ['menuIcon', 'label'],
+                item
+              )}
+              onClick={() => {
+                if (item.onClick) {
+                  item.onClick(row);
+                }
+              }}
+              py={3}
+              alignItems="center"
+              fontSize="sm"
+              textTransform="uppercase"
+              gap={3}
+              iconSpacing={0}
+              _hover={{ fontWeight: 'bold', bgColor: 'blackAlpha.200' }}
+              icon={<Icon display="flex" as={item.menuIcon} boxSize={4} />}
+              bgColor="transparent"
+            >
+              {item.label}
+            </MenuItem>
+          </Tooltip>
         ))}
       </MenuList>
     </Portal>
