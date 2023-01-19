@@ -1,37 +1,25 @@
 import {
   Box,
-  Button,
   CardBody,
   CardHeader,
-  Checkbox,
-  Icon,
-  InputElementProps,
-  Text,
-  withDelay,
 } from '@chakra-ui/react';
 import ReactDataGrid from '@inovua/reactdatagrid-community';
 import { TypeSortInfo } from '@inovua/reactdatagrid-community/types';
-import _, { delay } from 'lodash';
-import * as R from 'ramda';
+import _ from 'lodash';
 import {
   FC,
   MutableRefObject,
-  ReactNode,
   useCallback,
   useContext,
   useEffect,
   useMemo,
   useState,
 } from 'react';
-import { FaSortDown } from 'react-icons/fa';
-import { GiCheckMark } from 'react-icons/gi';
 import { TbEdit, TbListDetails, TbTrash } from 'react-icons/tb';
 import { ElectroCRUDTabsAPI } from 'renderer/components/tabs';
 import { FilterBuilder } from 'renderer/containers/filter-builder';
 import { ViewScopedContext } from 'renderer/contexts';
-import { findType } from 'renderer/defenitions/record-object/data-types';
 import { usePolicy, useUpdateEffect } from 'renderer/hooks';
-import { globalStyles } from 'renderer/theme/styles';
 import { IPCChannelEnum, QueryOrder } from 'shared';
 import { useDebounce } from 'usehooks-ts';
 
@@ -46,6 +34,7 @@ import {
 import { DataDetailsCard } from '../details';
 import { DataTableHeader } from './data-table-header';
 import { ColumnRO } from 'renderer/defenitions/record-object';
+import { ToastReducer } from 'renderer/store/reducers';
 
 type DataTableCardProperties = {
   tabsReference?: MutableRefObject<ElectroCRUDTabsAPI | undefined>;
@@ -68,7 +57,7 @@ export const DataTableCard: FC<DataTableCardProperties> = ({
   const [execute, setLimit, setPage, setOrder, setSearch, setInternalFilter] =
     control;
   const { viewState } = useContext(ViewScopedContext);
-  const disoatch = useAppDispatch();
+  const dispatch = useAppDispatch();
   const [addFilterBox, setAddFilterBox] = useState<boolean>(false);
 
   const [selectedRows, setSelectedRows] = useState([]);
@@ -122,6 +111,13 @@ export const DataTableCard: FC<DataTableCardProperties> = ({
 
   useUpdateEffect(() => {
     _.delay(executeDelete, 1000);
+    dispatch(
+      ToastReducer.actions.setToast({
+        status: 'success',
+        title: `Delete success`,
+        description: `Row ${rowForDelete[primaryKeyColumn?.name]} has been deleted`,
+      })
+    );
   }, [rowForDelete]);
 
   useUpdateEffect(() => {
@@ -142,7 +138,13 @@ export const DataTableCard: FC<DataTableCardProperties> = ({
           setRowForDelete(row.data);
         }
       } catch {
-        /* empty */
+        dispatch(
+          ToastReducer.actions.setToast({
+            status: 'error',
+            title: `Delete success`,
+            description: `Error while delete Row ${rowForDelete[primaryKeyColumn?.name]}`,
+          })
+        );
       }
     }
   };
@@ -223,7 +225,7 @@ export const DataTableCard: FC<DataTableCardProperties> = ({
           <ReactDataGrid
             idProperty={primaryKeyColumn?.name}
             useNativeFlex
-            checkboxColumn
+            checkboxColumn={primaryKeyColumn !== undefined}
             virtualized
             enableColumnAutosize
             scrollProps={{
