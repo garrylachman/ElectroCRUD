@@ -24,6 +24,7 @@ export const useColumnsForTable = () => {
         header: column.alias || column.name,
         type: findType(column.data_type).name,
         visible: column.enabled,
+        editable: !column.is_primary_key,
       }))
     );
   }, [columns]);

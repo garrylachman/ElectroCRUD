@@ -1,8 +1,4 @@
-import {
-  Box,
-  CardBody,
-  CardHeader,
-} from '@chakra-ui/react';
+import { Box, CardBody, CardHeader } from '@chakra-ui/react';
 import ReactDataGrid from '@inovua/reactdatagrid-community';
 import { TypeSortInfo } from '@inovua/reactdatagrid-community/types';
 import _ from 'lodash';
@@ -13,6 +9,7 @@ import {
   useContext,
   useEffect,
   useMemo,
+  useRef,
   useState,
 } from 'react';
 import { TbEdit, TbListDetails, TbTrash } from 'react-icons/tb';
@@ -25,7 +22,9 @@ import { useDebounce } from 'usehooks-ts';
 
 import { ConfirmPromiseDeleteModal } from 'renderer/components/modals';
 import { useAppDispatch } from 'renderer/store/hooks';
-import { useIPCDeleteData } from 'renderer/ipc';
+import { useIPCDeleteData, useIPCUpdateData } from 'renderer/ipc';
+import { ColumnRO } from 'renderer/defenitions/record-object';
+import { ToastReducer } from 'renderer/store/reducers';
 import { useColumnsForTable } from '.';
 import {
   DataTableActionMenu,
@@ -33,8 +32,6 @@ import {
 } from '../../../../../components/tables/data-table-action-menu';
 import { DataDetailsCard } from '../details';
 import { DataTableHeader } from './data-table-header';
-import { ColumnRO } from 'renderer/defenitions/record-object';
-import { ToastReducer } from 'renderer/store/reducers';
 
 type DataTableCardProperties = {
   tabsReference?: MutableRefObject<ElectroCRUDTabsAPI | undefined>;
@@ -61,6 +58,8 @@ export const DataTableCard: FC<DataTableCardProperties> = ({
   const [addFilterBox, setAddFilterBox] = useState<boolean>(false);
 
   const [selectedRows, setSelectedRows] = useState([]);
+  /// const [gridRef, setGridRef] = useState(null);
+  const gridReference = useRef();
 
   const [searchValue, setSearchValue] = useState<string>('');
   const debouncedSearchValue = useDebounce<string>(searchValue, 1000);
@@ -102,7 +101,9 @@ export const DataTableCard: FC<DataTableCardProperties> = ({
           {
             column: _.get(primaryKeyColumn, 'name'),
             opr: '=',
-            value: rowForDelete ? rowForDelete[primaryKeyColumn?.name] : undefined,
+            value: rowForDelete
+              ? rowForDelete[primaryKeyColumn?.name]
+              : undefined,
             or: false,
           },
         ],
@@ -110,18 +111,23 @@ export const DataTableCard: FC<DataTableCardProperties> = ({
     });
 
   useUpdateEffect(() => {
-    _.delay(executeDelete, 1000);
-    dispatch(
-      ToastReducer.actions.setToast({
-        status: 'success',
-        title: `Delete success`,
-        description: `Row ${rowForDelete[primaryKeyColumn?.name]} has been deleted`,
-      })
-    );
+    if (rowForDelete !== undefined) {
+      _.delay(executeDelete, 250);
+    }
   }, [rowForDelete]);
 
-  useUpdateEffect(() => {
-    _.delay(execute, 1000);
+  useEffect(() => {
+    if (isDeleteExecuted === true && rowForDelete !== undefined) {
+      setRowForDelete();
+      _.delay(execute, 1000);
+      dispatch(
+        ToastReducer.actions.setToast({
+          status: 'success',
+          title: `Delete success`,
+          description: `Row has been deleted`,
+        })
+      );
+    }
   }, [isDeleteExecuted]);
 
   const handleDelete = async (row: Record<string, any>) => {
@@ -142,12 +148,79 @@ export const DataTableCard: FC<DataTableCardProperties> = ({
           ToastReducer.actions.setToast({
             status: 'error',
             title: `Delete success`,
-            description: `Error while delete Row ${rowForDelete[primaryKeyColumn?.name]}`,
+            description: `Error while delete row`,
           })
         );
       }
     }
   };
+
+  const [rowForUpdate, setRowForUpdate] = useState<Record<string, any>>();
+
+  const { execute: executeUpdate, isExecuted: isUpdateExecuted } =
+    useIPCUpdateData({
+      channel: IPCChannelEnum.UPDATE_DATA,
+      body: {
+        table: viewState?.table as string,
+        update: rowForUpdate,
+        where: [
+          {
+            column: _.get(primaryKeyColumn, 'name'),
+            opr: '=',
+            value: rowForUpdate
+              ? rowForUpdate[primaryKeyColumn?.name]
+              : undefined,
+            or: false,
+          },
+        ],
+      },
+    });
+
+  useEffect(() => {
+    if (rowForUpdate !== undefined){
+      _.delay(executeUpdate, 250);
+    }
+  }, [rowForUpdate]);
+
+  useEffect(() => {
+    if (isUpdateExecuted === true && rowForUpdate !== undefined) {
+      setRowForUpdate();
+      dispatch(
+        ToastReducer.actions.setToast({
+          status: 'success',
+          title: `Update success`,
+          description: `The column has been updated`,
+        })
+      );
+      _.delay(execute, 250);
+    }
+  }, [isUpdateExecuted]);
+
+  const onEditComplete = useCallback(
+    ({ value, columnId, rowId, data }) => {
+      const pk = _.get(primaryKeyColumn, 'name');
+      const row = dataItems.find((r) => r[pk] == rowId);
+      const oldValue = _.get(row, columnId);
+      if (_.isEqual(oldValue, value)) {
+        return;
+      }
+
+      console.log('dataItems', dataItems);
+      console.log('rowId', rowId);
+      console.log('row', row);
+      console.log('columnId', columnId);
+      console.log('pk', pk);
+      console.log('data', data)
+
+      setRowForUpdate({
+        ...row,
+        [columnId]: value,
+      });
+
+      // console.log("change row id: " + row[pk] + ", column: " + column + " to " + value);
+    },
+    [dataItems]
+  );
 
   const dataTableActionMenuActions: DataTableActionMenuItem[] = [
     {
@@ -164,15 +237,6 @@ export const DataTableCard: FC<DataTableCardProperties> = ({
       tooltip: viewState?.permissions.delete
         ? 'Delete Row'
         : 'No Delete Permissions',
-    },
-    {
-      menuIcon: TbEdit,
-      label: 'Edit',
-      onClick: () => {},
-      isDisabled: !viewState?.permissions.update,
-      tooltip: viewState?.permissions.delete
-        ? 'Edit Row'
-        : 'No Update Permissions',
     },
   ];
 
@@ -242,6 +306,9 @@ export const DataTableCard: FC<DataTableCardProperties> = ({
               },
             }}
             nativeScroll={false}
+            onReady={(reference) => {
+              gridReference.current = reference;
+            }}
             loading={isLoading}
             pagination="remote"
             limit={meta.limit}
@@ -250,6 +317,10 @@ export const DataTableCard: FC<DataTableCardProperties> = ({
             onSkipChange={(skip) => setPage(Math.max(skip / meta.limit, 0) + 1)}
             defaultLimit={meta.limit}
             style={{ position: 'relative', height: '100%' }}
+            editable={
+              primaryKeyColumn !== undefined && viewState?.permissions.update
+            }
+            onEditComplete={onEditComplete}
             dataSource={dataSource}
             columns={columnsWithMenu}
             rowStyle={{
