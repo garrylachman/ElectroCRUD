@@ -12,7 +12,7 @@ export const TableDocumentation = () => {
         <MarkdownEditor.Markdown
           source={viewState?.metadata.md}
           pluginsFilter={(name, value) => {
-            if (name === "remark") {
+            if (name === 'remark') {
               return value;
             }
           }}

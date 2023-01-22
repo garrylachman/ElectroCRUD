@@ -19,6 +19,6 @@ export const ColumnDocumentation: FC<ColumnDocumentationProperties> = ({
           (<MarkdownEditor.Markdown source={columnState?.metadata.md} />)
         }
       </>
-    </Flex>
+    </Flex> 
   )
 };
