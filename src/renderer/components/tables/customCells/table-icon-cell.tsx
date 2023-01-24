@@ -14,7 +14,7 @@ export const TableIconCell: FC<TableIconCellProperties> = ({
 }) => {
   return (
     <Tooltip label={tooltip}>
-      <Tag variant="subtle" colorScheme="primary">
+      <Tag variant="subtle" colorScheme="primary" justifyContent="center">
         <TagLeftIcon as={icon} me={0} fontSize="md" />
       </Tag>
     </Tooltip>

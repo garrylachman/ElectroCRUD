@@ -31,7 +31,6 @@ type TableColumnsCardProperties = {
 export const TableColumnsCard: FC<TableColumnsCardProperties> = ({
   viewId,
 }) => {
-  const columnsState = useAppSelector((state) => state.columns);
   const viewState = useSelector((state) =>
     ViewSelectors.createFullViewSelector(state)
   )(viewId);
@@ -50,7 +49,6 @@ export const TableColumnsCard: FC<TableColumnsCardProperties> = ({
 
   useEffect(() => {
     if (result) {
-      console.log(result);
       const names = new Set(_.map(viewState.columns, 'name'));
       const missingColumns = _.filter(
         result.body,
@@ -72,14 +70,14 @@ export const TableColumnsCard: FC<TableColumnsCardProperties> = ({
   }, [result]);
 
   const tableColumns: {
-    key: keyof ColumnRO | 'actions';
+    key: keyof ColumnRO | 'properties';
     label: string;
     group?: string;
   }[] = [
     { key: 'name', label: 'Name', group: 'Database' },
     { key: 'data_type', label: 'Type', group: 'Database' },
-    { key: 'max_length', label: 'Max Length', group: 'Database' },
-    { key: 'numeric_precision', label: 'Num. precision', group: 'Database' },
+    { key: 'max_length', label: 'Length', group: 'Database' },
+    { key: 'numeric_precision', label: 'precision', group: 'Database' },
     { key: 'default_value', label: 'Default', group: 'Database' },
     { key: 'properties', label: 'Properties', group: 'Database' },
     { key: 'enabled', label: 'Enabled', group: 'View' },
@@ -128,7 +126,7 @@ export const TableColumnsCard: FC<TableColumnsCardProperties> = ({
                   <>
                     {dataType && (
                       <HStack>
-                        <Text>{row.getValue() || dataType.name}</Text>
+                        <Text>{dataType.name || row.getValue()}</Text>
                         <TableIconCell
                           icon={dataType.icon}
                           tooltip={dataType.name}

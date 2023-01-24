@@ -299,12 +299,21 @@ export class DatabaseService {
       }
 
       if (searchColumns && searchText) {
-        q?.whereWrapped((wq) => {
-          searchColumns.forEach((sCol: string) => {
-            const columnName = sCol.includes('.') ? sCol : `${table}.${sCol}`;
-            wq.orWhere(columnName, 'like', `%${searchText}%`);
-          });
-          return wq;
+        q?.where((wq) => {
+          const lWhere: string[] = [];
+          const lWhereValues: string[] = [];
+          // eslint-disable-next-line no-restricted-syntax
+          for (const col of searchColumns) {
+            const columnName = col.includes('.') ? col : `${table}.${col}`;
+            if (this.activeClient === ServerTypeEnum.POSTGRES) {
+              lWhere.push(`CAST(${columnName} as TEXT) ilike ?`);
+            } else {
+              lWhere.push(`${columnName} like ?`);
+            }
+            lWhereValues.push(`%${searchText}%`);
+          }
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+          return wq.whereRaw(lWhere.join(' or '), lWhereValues);
         });
       }
       if (where) {
@@ -320,7 +329,6 @@ export class DatabaseService {
           return wq;
         });
       }
-
       console.log(filter);
       if (filter) {
         q?.where((wq) => {

@@ -87,12 +87,18 @@ export const DashboardContextProvider: FC<
   const [filter, setFilter] = useState<any>();
 
   const columns = useMemo<string[]>(
-    () => viewState.columns.filter((item) => item.enabled).map<string>((item) => _.get(item, 'name', item)),
+    () =>
+      viewState.columns
+        .filter((item) => item.enabled)
+        .map<string>((item) => _.get(item, 'name', item)),
     [viewState.columns]
   );
 
   const searchColumns = useMemo<string[]>(
-    () => viewState.columns?.filter(item => item.searchable).map<string>((item) => _.get(item, 'name', item)),
+    () =>
+      viewState.columns
+        .filter((item) => item.searchable && item.enabled)
+        .map<string>((item) => _.get(item, 'name', item)),
     [viewState.columns]
   );
 
@@ -126,7 +132,7 @@ export const DashboardContextProvider: FC<
       columns,
       rows: result?.body?.data || [],
       meta: {
-        totalCount: result?.body.count || 0,
+        totalCount: result?.body?.count || 0,
         limit,
         page,
         order,

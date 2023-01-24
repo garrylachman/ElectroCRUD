@@ -1,4 +1,3 @@
-import { EntityId, EntityState } from '@reduxjs/toolkit';
 import memoize from 'proxy-memoize';
 import * as F from 'ramda';
 import {
@@ -9,7 +8,6 @@ import {
   ViewVO,
 } from 'renderer/defenitions/record-object';
 
-import { ColumnsReducer, ViewsReducer } from '../reducers';
 import { RootState } from '../store';
 import {
   enrichColumns,
@@ -53,21 +51,15 @@ export const enrichColumsRelations = (state: RootState) =>
     })
   );
 
-const isHasPrimaryKey = (columns: ColumnRO[]) => {
-  console.log("columns", columns);
-  const pkCols = columns.find((col: ColumnRO) => col.is_primary_key);
-  console.log("pkCols", pkCols);
-  return pkCols !== undefined;
-};
+const isHasPrimaryKey = (columns: ColumnRO[]) =>
+  columns.some((col: ColumnRO) => col.is_primary_key);
 
 export const getFullView = F.compose<{ state: RootState; viewId: string }>(
-  F.tap(console.log),
   (view) => ({
-      ...view,
-    permissions:
-      isHasPrimaryKey(view.columns)
-        ? view.permissions
-        : { ...view.permissions, create: false, delete: false, update: false },
+    ...view,
+    permissions: isHasPrimaryKey(view.columns)
+      ? view.permissions
+      : { ...view.permissions, create: false, delete: false, update: false },
   }),
   ({ state, view }) =>
     F.mergeDeepRight(view, {
@@ -95,7 +87,7 @@ export const getAllViews = F.curry((rootState: RootState) =>
 );
 
 export const getViewSummary = F.curry((state: RootState) =>
-  F.compose<string>(F.tap(console.log), (viewId: string) =>
+  F.compose<string>((viewId: string) =>
     F.mergeDeepRight(state.views.entities[viewId])
   )
 );
