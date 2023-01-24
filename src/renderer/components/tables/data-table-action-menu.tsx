@@ -47,7 +47,11 @@ export const DataTableActionMenu: FC<DataTableActionMenuProperties> = ({
         backdropFilter="blur(10px) contrast(100%) saturate(190%)"
       >
         {items.map((item) => (
-          <Tooltip label={item.tooltip} placement="left">
+          <Tooltip
+            label={item.tooltip}
+            placement="left"
+            key={`tooltip-${item.label}`}
+          >
             <MenuItem
               key={item.label}
               {...R.omit<DataTableActionMenuItem, 'menuIcon' | 'label'>(
