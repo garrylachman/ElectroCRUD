@@ -21,10 +21,6 @@ import theme from './theme/theme';
 
 TimeAgo.addDefaultLocale(en);
 
-const onError = (error) => {
-  console.log("onError", error);
-};
-
 const root = ReactDOM.createRoot(
   document.querySelector('#root') as HTMLElement
 );
@@ -33,7 +29,7 @@ root.render(
     <FlipperContextProvider />
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <SaasProvider theme={theme} onError={onError}>
+        <SaasProvider theme={theme}>
           <Suspense
             fallback={
               <Loader variant="fullscreen" isLoading spinner={<ECSpinner />}>
@@ -42,7 +38,7 @@ root.render(
             }
           >
             <ModalContainer isAppendIntances />
-              <RouterProvider router={router} />
+            <RouterProvider router={router} />
             <NotificationsContainer />
           </Suspense>
         </SaasProvider>
