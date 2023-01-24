@@ -61,8 +61,8 @@ export const Login = () => {
         <EmptyStateDescription marginTop="30px">
           <HStack>
             <PinInput mask autoFocus type="alphanumeric" size="lg" onComplete={check}>
-              {Array.from({ length: passwordState.passwordLenght }).map(() => (
-                <PinInputField />
+              {Array.from({ length: passwordState.passwordLenght }).map((v, index) => (
+                <PinInputField key={`pininput-${index}`} />
               ))}
             </PinInput>
           </HStack>
