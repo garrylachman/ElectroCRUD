@@ -11,7 +11,7 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import { LayoutGroup, motion } from 'framer-motion';
-import { useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { MdHome, MdSettings, MdViewList } from 'react-icons/md';
 import { TbArrowRight, TbEdit, TbSquarePlus, TbTable } from 'react-icons/tb';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
@@ -91,12 +91,6 @@ export function Links() {
 
   const location = useLocation();
   const navigate = useNavigate();
-  const activeColor = useColorModeValue('gray.700', 'white');
-  const inactiveColor = useColorModeValue(
-    'secondaryGray.600',
-    'secondaryGray.600'
-  );
-  const activeIcon = useColorModeValue('primary.500', 'white');
 
   // verifies if routeName is the one active (in browser input)
   const activeRoute = (routeName: string) => {
@@ -113,8 +107,14 @@ export function Links() {
   ];
 
   const links = [
-    { to: 'settings', text: 'Settings', icon: MdSettings, subLinks: [], hr: false, },
-    { to: 'accounts', text: 'Accounts', icon: MdHome, subLinks: [], hr: false, },
+    {
+      to: 'settings',
+      text: 'Settings',
+      icon: MdSettings,
+      subLinks: [],
+      hr: false,
+    },
+    { to: 'accounts', text: 'Accounts', icon: MdHome, subLinks: [], hr: false },
     {
       to: 'views',
       text: 'Views',
@@ -136,11 +136,11 @@ export function Links() {
       overflow="hidden"
     >
       {links.map((link) => (
-        <>
+        <React.Fragment key={link.to}>
           {link.hr && (
             <Divider borderColor="#42454c" my={3} w="85%" alignSelf="center" />
           )}
-          <HStack key={link.to} sx={link?.style} display="block" zIndex={1} w="95%">
+          <HStack sx={link?.style} display="block" zIndex={1} w="95%">
             <>
               <NavLink to={link.to} style={{ width: '100%' }}>
                 <Flex
@@ -174,7 +174,9 @@ export function Links() {
                       transitionTimingFunction: 'ease-in-out',
                     }}
                     filter={
-                      activeRoute(link.to) ? iconhMotion.hover.filter : undefined
+                      activeRoute(link.to)
+                        ? iconhMotion.hover.filter
+                        : undefined
                     }
                   >
                     <Icon
@@ -209,23 +211,44 @@ export function Links() {
                   )}
                 </Flex>
               </NavLink>
-              <Box as={Collapse} in={activeRoute(link.to)} style={{ margin: '0px' }}>
+              <Box
+                as={Collapse}
+                in={activeRoute(link.to)}
+                style={{ margin: '0px' }}
+              >
                 <Flex
-                  bgColor={(activeRoute(link.to) && link.to === 'views' ) ? '#1f222b' : undefined}
+                  bgColor={
+                    activeRoute(link.to) && link.to === 'views'
+                      ? '#1f222b'
+                      : undefined
+                  }
                   height="-webkit-fill-available"
                   overscrollBehavior="contain"
                   position="absolute"
                   flexDirection="column"
                   width="285px"
-                  className={(activeRoute(link.to) && link.to === 'views' ) ? 'custom-scroll' : ''}
-                  overflow={(activeRoute(link.to) && link.to === 'views' ) ? "scroll" : "hidden"}
+                  className={
+                    activeRoute(link.to) && link.to === 'views'
+                      ? 'custom-scroll'
+                      : ''
+                  }
+                  overflow={
+                    activeRoute(link.to) && link.to === 'views'
+                      ? 'scroll'
+                      : 'hidden'
+                  }
                 >
                   {activeRoute(link.to) && link.subLinks.length > 0 ? (
                     <LayoutGroup>
                       <VStack color="secondaryGray.600" fontWeight="100">
                         {link.subLinks.map((subLink, subLinksIndex) => (
                           <motion.div
-                            style={{ width: '100%', alignItems: 'center', marginTop: '0px' }}
+                            key={subLink.to}
+                            style={{
+                              width: '100%',
+                              alignItems: 'center',
+                              marginTop: '0px',
+                            }}
                             initial={{
                               x: -50,
                               position: 'relative',
@@ -251,13 +274,14 @@ export function Links() {
                               animate="rest"
                               whileHover="hover"
                               variants={menuItemMotion}
-                              px={0}
                               px={5}
                               py={2}
                               sx={{
                                 transition: '0.5s',
                                 transitionTimingFunction: 'ease-in-out',
-                                backgroundColor: activeRoute(`${link.to}/${subLink.to}`)
+                                backgroundColor: activeRoute(
+                                  `${link.to}/${subLink.to}`
+                                )
                                   ? '#42454c !important'
                                   : undefined,
                               }}
@@ -277,7 +301,11 @@ export function Links() {
                                   width="160px"
                                 >
                                   <Box
-                                    color={activeRoute(`${link.to}/${subLink.to}`) ? 'white' : '#cfd0d2'}
+                                    color={
+                                      activeRoute(`${link.to}/${subLink.to}`)
+                                        ? 'white'
+                                        : '#cfd0d2'
+                                    }
                                     display="inline-flex"
                                     alignItems="center"
                                     as={motion.div}
@@ -346,7 +374,7 @@ export function Links() {
               </Box>
             </>
           </HStack>
-        </>
+        </React.Fragment>
       ))}
     </Flex>
   );
