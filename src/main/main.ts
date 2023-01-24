@@ -37,9 +37,7 @@ class AppUpdater {
   }
 }
 
-let mainWindow: BrowserWindow | null = null;
-
-initServices();
+export let mainWindow: BrowserWindow | null = null;
 
 ipcMain.on('ipc-example', async (event, arg) => {
   const msgTemplate = (pingPong: string) => `IPC test: ${pingPong}`;
@@ -104,6 +102,7 @@ const createWindow = async () => {
     if (!mainWindow) {
       throw new Error('"mainWindow" is not defined');
     }
+    initServices();
     if (process.env.START_MINIMIZED) {
       mainWindow.minimize();
     } else {

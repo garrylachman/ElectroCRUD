@@ -1,10 +1,11 @@
 import 'reflect-metadata';
 
-import { ipcMain, IpcMainInvokeEvent, webContents } from 'electron';
+import { BrowserWindow, ipcMain, IpcMainInvokeEvent, webContents } from 'electron';
 import { Cache, CacheContainer } from 'node-ts-cache';
 import { MemoryStorage } from 'node-ts-cache-storage-memory';
 import * as hash from 'object-hash';
 import { delay, inject, injectable } from 'tsyringe';
+import { mainWindow } from '../main';
 
 import {
   ConnectRequest,
@@ -30,6 +31,7 @@ export class IPCService {
   ) {}
 
   public listen() {
+    this.disconnect();
     Object.values(IPCChannelEnum).forEach((channel: IPCChannel) =>
       ipcMain.handle(channel, this.onRequest.bind(this))
     );
@@ -86,8 +88,6 @@ export class IPCService {
 
   send(response: ResponseType): void {
     // eslint-disable-next-line no-restricted-syntax
-    for (const w of webContents.getAllWebContents()) {
-      w.send(response.channel, response);
-    }
+    mainWindow?.webContents.send(response.channel, response);
   }
 }

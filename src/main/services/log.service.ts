@@ -2,6 +2,7 @@ import 'reflect-metadata';
 
 import { autoInjectable, delay, inject, singleton } from 'tsyringe';
 
+import _ from 'lodash';
 import { LogItem, LogItemType } from '../../shared/defenitions';
 import {
   IPCChannelEnum,
@@ -43,8 +44,9 @@ export class LogService implements ILogService {
       message,
       method,
       source: LogItemSourceEnum.Backend,
+      ts: Date.now(),
+      id: _.uniqueId('logitem_'),
     };
-    console.log(item);
     this.ipcService?.send({ channel: IPCChannelEnum.LOG_CHANNEL, body: item });
   }
 }

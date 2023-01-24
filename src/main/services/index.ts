@@ -1,3 +1,5 @@
+import { BrowserWindow } from 'electron';
+
 import { container } from 'tsyringe';
 
 import { DatabaseService } from './database.service';
@@ -13,7 +15,17 @@ export const initServices = () => {
   container.resolve(LogService);
   container.resolve(DatabaseService);
   container.resolve(RequestFactory);
-  const ipcService = container.resolve(IPCService);
-
-  ipcService.listen();
+  container.afterResolution(
+    IPCService,
+    // Callback signature is (token: InjectionToken<T>, result: T | T[], resolutionType: ResolutionType)
+    (_t, result) => {
+      try {
+        (result as IPCService).listen();
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    { frequency: 'Once' }
+  );
+  container.resolve(IPCService);
 };

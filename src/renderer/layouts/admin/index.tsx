@@ -7,6 +7,7 @@ import { ECSpinner } from 'renderer/components/icons';
 
 import { Navbar } from '../../components/navbar/navbar';
 import { Sidebar } from '../../components/sidebar/Sidebar';
+import { ConsoleLog } from 'renderer/containers/console-log';
 
 export default function Dashboard() {
   const [title, setTitle] = useState<string>();
@@ -53,7 +54,10 @@ export default function Dashboard() {
             </Loader>
           }
         >
-          <Outlet />
+          <>
+            <Outlet />
+            <ConsoleLog />
+          </>
         </Suspense>
       </GridItem>
     </Grid>

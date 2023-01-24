@@ -13,4 +13,6 @@ export type LogItem = {
   source: LogItemSource;
   message: string;
   method?: string;
+  ts: number;
+  id: string;
 };
