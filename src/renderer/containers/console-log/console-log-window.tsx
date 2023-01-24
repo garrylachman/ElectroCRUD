@@ -3,6 +3,7 @@ import { Card, CardBody } from '@chakra-ui/card';
 import { motion } from 'framer-motion';
 import { useIPCLogs } from 'renderer/ipc/use-ipc-log';
 import { ListItem, UnorderedList, Badge, Text } from '@chakra-ui/react';
+import { LogItem } from 'shared/defenitions';
 import ReactTimeAgo from 'react-time-ago';
 import { statusToColor } from 'renderer/helpers';
 
@@ -38,13 +39,21 @@ export type ConsoleLogWindowProperties = {
 export const ConsoleLogWindow: FC<ConsoleLogWindowProperties> = ({
   isOpen,
 }) => {
-  const [log, clear] = useIPCLogs();
-  const logReference = useRef();
+  const [log] = useIPCLogs();
+  const logReference = useRef<HTMLOListElement | undefined>();
   useEffect(() => {
     if (logReference.current) {
+      // eslint-disable-next-line unicorn/numeric-separators-style
       logReference.current?.scrollTo(0, 10000000);
     }
   }, [log]);
+
+  useEffect(() => {
+    if (logReference.current) {
+      // eslint-disable-next-line unicorn/numeric-separators-style
+      logReference.current?.scrollTo(0, 10000000);
+    }
+  }, [isOpen]);
 
   return (
     <Card
@@ -63,7 +72,8 @@ export const ConsoleLogWindow: FC<ConsoleLogWindowProperties> = ({
       zIndex={999}
     >
       <CardBody bgColor="blackAlpha.800">
-        <UnorderedList
+        {isOpen && (
+          <UnorderedList
           overflow="auto"
           position="absolute"
           width="-webkit-fill-available"
@@ -71,16 +81,25 @@ export const ConsoleLogWindow: FC<ConsoleLogWindowProperties> = ({
           marginInlineStart={0}
           ref={logReference}
         >
-          {log.map((logItem, logIndex) => (
-            <ListItem key={`log-item-${logIndex}`} color="white" my={2} fontSize="xs">
-              <Badge variant="solid" fontSize="2xs" colorScheme={statusToColor(logItem.body.type)}>{logItem.body.type}</Badge>
+          {(log as LogItem[]).map((logItem) => (
+            <ListItem key={logItem.body.id} color="white" my={2} fontSize="xs">
+              <Badge
+                variant="solid"
+                fontSize="2xs"
+                colorScheme={statusToColor(logItem.body.type)}
+              >
+                {logItem.body.type}
+              </Badge>
               <Badge mx={2} colorScheme="primary" fontSize="2xs">
                 <ReactTimeAgo date={logItem.body.ts} timeStyle="twitter" />
               </Badge>
-              <Text as="span">{logItem.body.method}: {logItem.body.message}</Text>
+              <Text as="span">
+                {logItem.body.method}: {logItem.body.message}
+              </Text>
             </ListItem>
           ))}
-        </UnorderedList>
+          </UnorderedList>
+        )}
       </CardBody>
     </Card>
   );

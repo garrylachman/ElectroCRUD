@@ -20,4 +20,4 @@ export const ConsoleButton: FC<ButtonProps> = ({ ...properties }) => {
       <Icon as={TbTerminal2} boxSize={5} />
     </Button>
   );
-}
+};

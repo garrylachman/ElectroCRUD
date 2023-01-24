@@ -11,4 +11,4 @@ export const ConsoleLog = () => {
       <ConsoleLogWindow isOpen={isOpen} />
     </>
   );
-}
+};
