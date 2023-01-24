@@ -223,14 +223,8 @@ export class DatabaseService {
         sqlFormatter.format(listTablesQuery, formatterParameters),
         getCurrentLine().method
       );
-      const res = await this.connection?.raw(listTablesQuery, bindings);
-      if (this.activeClient === ServerTypeEnum.MYSQL) {
-        return res[0].map((row: TablesListRow) => row.table_name);
-      }
-      if (this.activeClient === ServerTypeEnum.POSTGRES) {
-        return res.rows.map((row: TablesListRow) => row.table_name);
-      }
-      return res.map((row: TablesListRow) => row.table_name);
+      const tables = (await this.inspector?.tables()) as string[];
+      return tables;
     } catch (error: any) {
       this.logService?.error(error.message, getCurrentLine().method);
       throw {
@@ -339,17 +333,17 @@ export class DatabaseService {
         );
       }
 
+      const countResponse = await q
+        ?.clone()
+        .clearSelect()
+        .count({ count: '*' });
+
       q.modify((qb) => {
         if (order && order.column) {
           qb.orderBy(order.column, order.order);
         }
         return qb;
       });
-
-      const countResponse = await q
-        ?.clone()
-        .clearSelect()
-        .count({ count: '*' });
 
       const response = await q?.limit(limit).offset(offset);
 

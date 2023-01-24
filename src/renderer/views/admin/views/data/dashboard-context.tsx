@@ -87,7 +87,7 @@ export const DashboardContextProvider: FC<
   const [filter, setFilter] = useState<any>();
 
   const columns = useMemo<string[]>(
-    () => viewState.columns.map<string>((item) => _.get(item, 'name', item)),
+    () => viewState.columns.filter((item) => item.enabled).map<string>((item) => _.get(item, 'name', item)),
     [viewState.columns]
   );
 

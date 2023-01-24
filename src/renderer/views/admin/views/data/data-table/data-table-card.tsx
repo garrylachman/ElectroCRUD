@@ -192,7 +192,7 @@ export const DataTableCard: FC<DataTableCardProperties> = ({
           description: `The column has been updated`,
         })
       );
-      _.delay(execute, 250);
+      _.delay(execute, 1000);
     }
   }, [isUpdateExecuted]);
 
@@ -204,20 +204,10 @@ export const DataTableCard: FC<DataTableCardProperties> = ({
       if (_.isEqual(oldValue, value)) {
         return;
       }
-
-      console.log('dataItems', dataItems);
-      console.log('rowId', rowId);
-      console.log('row', row);
-      console.log('columnId', columnId);
-      console.log('pk', pk);
-      console.log('data', data)
-
       setRowForUpdate({
         ...row,
         [columnId]: value,
       });
-
-      // console.log("change row id: " + row[pk] + ", column: " + column + " to " + value);
     },
     [dataItems]
   );
@@ -330,7 +320,7 @@ export const DataTableCard: FC<DataTableCardProperties> = ({
               const sort = _.isArray(sortInfo) ? _.head(sortInfo) : sortInfo;
               if (sortInfo) {
                 setOrder({
-                  column: sort?.name,
+                  column: `${viewState?.table as string}.${sort?.name}`,
                   order: sort?.dir === 1 ? 'asc' : 'desc',
                 } as QueryOrder);
               } else {
