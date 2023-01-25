@@ -1,4 +1,5 @@
 // eslint-disable-next-line unicorn/prevent-abbreviations
+import { O } from 'ts-toolbelt';
 import { QueryAggregateEnum, ServerTypeEnum } from '../enums';
 
 export type ServerType =
@@ -76,13 +77,17 @@ export type QueryAggregate =
   | QueryAggregateEnum.SUM
   | QueryAggregateEnum.SUM_DISTINCT;
 
-export type ServerConnectionConfig = {
-  host: string;
-  port: number;
-  user: string;
-  password?: string;
-  database: string;
-};
+export type ServerConnectionConfig = O.Either<
+  {
+    host: string;
+    server: string;
+    port: number;
+    user: string;
+    password?: string;
+    database: string;
+  },
+  'host' | 'server'
+>;
 
 export type FileConnectionConfig = {
   filename: string;

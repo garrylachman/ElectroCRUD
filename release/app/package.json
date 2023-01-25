@@ -1,12 +1,12 @@
 {
-  "name": "electron-react-boilerplate",
-  "version": "4.6.0",
-  "description": "A foundation for scalable desktop apps",
+  "name": "electrocrud",
+  "version": "3.0.0",
+  "description": "",
   "license": "MIT",
   "author": {
-    "name": "Electron React Boilerplate Maintainers",
-    "email": "electronreactboilerplate@gmail.com",
-    "url": "https://github.com/electron-react-boilerplate"
+    "name": "Garry Lachman",
+    "email": "garry@lachman.co",
+    "url": "https://github.com/garrylachman/ElectroCRUD/"
   },
   "main": "./dist/main/main.js",
   "scripts": {
@@ -15,24 +15,24 @@
     "link-modules": "node -r ts-node/register ../../.erb/scripts/link-modules.ts"
   },
   "dependencies": {
-    "better-sqlite3": "8.0.0",
-    "chakra-ui-steps": "github:garrylachman/chakra-ui-steps#develop",
-    "knex": "2.3.0",
+    "better-sqlite3": "8.0.1",
+    "knex": "2.4.0",
     "knex-hooks": "github:garrylachman/knex-hooks",
     "knex-schema-inspector": "^3.0.0",
     "mysql": "2.18.1",
-    "mysql2": "2.3.3",
+    "mysql2": "3.0.1",
     "node-ts-cache": "^4.4.0",
     "node-ts-cache-storage-memory": "^4.4.0",
     "object-hash": "^3.0.0",
     "pg": "8.8.0",
-    "sqlite3": "5.1.2",
-    "tunnel-ssh": "4.1.1",
-    "type-fest": "^3.4.0"
+    "sqlite3": "5.1.4",
+    "tunnel-ssh": "5.0.5",
+    "type-fest": "^3.4.0",
+    "tedious": "^15.1.2"
   },
   "devDependencies": {
     "@types/object-hash": "^3.0.2",
     "@types/ramda": "^0.28.0",
-    "@types/tunnel-ssh": "4.1.1"
+    "@types/tunnel-ssh": "5.0.5"
   }
 }

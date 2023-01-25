@@ -1,10 +1,7 @@
 import 'reflect-metadata';
 
 import sqlFormatter from '@sqltools/formatter';
-import {
-  Config as SQLFormatterConfig,
-} from '@sqltools/formatter/lib/core/types';
-import { TypedKnex } from '@wwwouter/typed-knex';
+import { Config as SQLFormatterConfig } from '@sqltools/formatter/lib/core/types';
 import getCurrentLine from 'get-current-line';
 import * as Knex from 'knex';
 import knexHooks from 'knex-hooks';
@@ -28,6 +25,7 @@ import {
   ReadDataResult,
   ReadWidgetDataArgs as ReadWidgetDataArguments,
   ReadWidgetDataResult,
+  ServerConnectionConfig,
   ServerType,
   TableInfoRow,
   UpdateDataArgs as UpdateDataArguments,
@@ -50,8 +48,6 @@ export class DatabaseService {
 
   private connection?: Knex.Knex;
 
-  private typedConnection?: TypedKnex;
-
   private inspector?: SchemaInspector;
 
   constructor(
@@ -64,9 +60,18 @@ export class DatabaseService {
   ): Promise<boolean | IPCError> {
     await this.disconnect();
 
+    const connectionConfig =
+      client === ServerTypeEnum.MSSQL
+        ? {
+            ...connection,
+            server: (connection as ServerConnectionConfig).host,
+            port: Number((connection as ServerConnectionConfig).port),
+          }
+        : connection;
+
     this.config = {
       client,
-      connection,
+      connection: connectionConfig,
       useNullAsDefault: true,
     };
     this.logService?.info(
@@ -80,7 +85,6 @@ export class DatabaseService {
     );
     try {
       this.connection = Knex.knex(this.config);
-      this.typedConnection = new TypedKnex(this.connection);
       this.inspector = SchemaInspector(this.connection);
       this.connectHooks();
       const result = await this.heartbeat();
@@ -228,9 +232,11 @@ export class DatabaseService {
     tableName: string
   ): Promise<TableInfoRow[] | IPCError> {
     this.getConnection();
-    
+
     try {
-      const response = await this.inspector?.columnInfo(tableName) as TableInfoRow[];
+      const response = (await this.inspector?.columnInfo(
+        tableName
+      )) as TableInfoRow[];
       if (!response) {
         throw new Error('Cannot inspect table');
       }
@@ -260,7 +266,7 @@ export class DatabaseService {
     where?: QueryWhere[],
     join?: QueryJoin[],
     order?: QueryOrder,
-    filter?: any,
+    filter?: any
   ): Promise<ReadDataResult<any> | IPCError> {
     try {
       const selectColumns = [...columns].map((col) =>
@@ -368,7 +374,7 @@ export class DatabaseService {
       where,
       join,
       order,
-      filter
+      filter,
     } = properties;
     return this.readData(
       table,
