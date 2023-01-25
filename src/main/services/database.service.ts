@@ -86,6 +86,9 @@ export class DatabaseService {
     try {
       this.connection = Knex.knex(this.config);
       this.inspector = SchemaInspector(this.connection);
+      if (this.config.connection?.schema) {
+        this.inspector.withSchema(this.config.connection?.schema);
+      }
       this.connectHooks();
       const result = await this.heartbeat();
       this.logService?.success(`Connection Success`, getCurrentLine().method);
@@ -186,7 +189,9 @@ export class DatabaseService {
         sqlFormatter.format(query, formatterParameters),
         getCurrentLine().method
       );
-      const response = await this.connection.raw(query);
+      const response = await this.connection
+        .withSchema(this.config.connection?.schema || '')
+        .raw(query);
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       return extractResult(response);
     } catch (error: any) {
@@ -274,6 +279,9 @@ export class DatabaseService {
       );
 
       const q = this.getConnection()
+        .withSchema(
+          this.config.connection?.schema || ''
+        )
         .select(...selectColumns)
         .from(table);
 
@@ -396,18 +404,20 @@ export class DatabaseService {
     where?: QueryWhere[]
   ): Promise<boolean | IPCError> {
     try {
-      const q = this.getConnection().table(table);
+      const q = this.getConnection()
+        .withSchema(this.config.connection?.schema || '')
+        .table(table);
 
       q?.where((qw) => {
         if (where)
           for (const col of where) {
             const whereFunction = col.or ? 'orWhere' : 'andWhere';
-            qw[whereFunction](col.column, col.opr, col.value);
+            qw[whereFunction](`${table}.${col.column}`, col.opr, col.value);
           }
         return qw;
       });
 
-      q?.update(update);
+      q?.update(_.mapKeys(update, (value, key) => `${table}.${key}`));
       await q;
 
       this.logService?.success(
@@ -436,7 +446,9 @@ export class DatabaseService {
     data: Record<string, any> | Record<string, any>[]
   ): Promise<boolean | IPCError> {
     try {
-      const q = this.getConnection().table(table);
+      const q = this.getConnection().withSchema(
+        this.config.connection?.schema || ''
+      ).table(table);
 
       q?.insert(data);
       await q;
@@ -467,7 +479,9 @@ export class DatabaseService {
     where?: QueryWhere[]
   ): Promise<boolean | IPCError> {
     try {
-      const q = this.getConnection().table(table);
+      const q = this.getConnection().withSchema(
+        this.config.connection?.schema || ''
+      ).table(table);
 
       q?.where((qw) => {
         if (where)
@@ -506,7 +520,9 @@ export class DatabaseService {
     where?: QueryWhere[]
   ): Promise<ReadWidgetDataResult<number> | IPCError> {
     try {
-      const q = this.getConnection().table(table);
+      const q = this.getConnection().withSchema(
+        this.config.connection?.schema || ''
+      ).table(table);
       if (q) {
         if (
           function_ === QueryAggregateEnum.COUNT ||

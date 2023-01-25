@@ -162,7 +162,7 @@ export const DataTableCard: FC<DataTableCardProperties> = ({
       channel: IPCChannelEnum.UPDATE_DATA,
       body: {
         table: viewState?.table as string,
-        update: rowForUpdate,
+        update: _.omit(rowForUpdate, [_.get(primaryKeyColumn, 'name')]),
         where: [
           {
             column: _.get(primaryKeyColumn, 'name'),

@@ -20,6 +20,7 @@ export const AccountsWizardServerConnection: FC<
     user: undefined,
     password: undefined,
     database: undefined,
+    schema: undefined,
   },
 }) => {
   const onSubmit = (data: FormData) => next(data);
@@ -69,14 +70,23 @@ export const AccountsWizardServerConnection: FC<
               variant="flushed"
             />
           </FormLayout>
-          <Field
-            name="database"
-            label="Database"
-            placeholder="Database name"
-            type="text"
-            variant="flushed"
-            isRequired
-          />
+          <FormLayout templateColumns="50% 50%">
+            <Field
+              name="database"
+              label="Database"
+              placeholder="Database name"
+              type="text"
+              variant="flushed"
+              isRequired
+            />
+            <Field
+              name="schema"
+              label="Schema"
+              placeholder="Schema name"
+              type="text"
+              variant="flushed"
+            />
+          </FormLayout>
         </FormLayout>
         <FormLayout py={2} px={5} display="flex" justifyContent="space-between">
           <Button

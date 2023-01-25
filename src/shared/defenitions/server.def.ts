@@ -37,7 +37,7 @@ export type TableInfoRow = {
 };
 
 export type QueryOrder = {
-  column: string;
+  column: string | number;
   order: 'asc' | 'desc';
 };
 
@@ -85,6 +85,7 @@ export type ServerConnectionConfig = O.Either<
     user: string;
     password?: string;
     database: string;
+    schema?: string;
   },
   'host' | 'server'
 >;

@@ -109,7 +109,7 @@ export const DashboardContextProvider: FC<
       columns,
       limit,
       offset: limit * (page -1 ),
-      order,
+      order: order || { column: 1, order: 'asc' },
       searchText: search,
       searchColumns,
       filter,
