@@ -1,4 +1,5 @@
-import { Button, Icon, FC, ButtonProps } from '@chakra-ui/react';
+import { Button, Icon, ButtonProps } from '@chakra-ui/react';
+import { FC } from 'react';
 import { TbTerminal2 } from 'react-icons/tb';
 
 export const ConsoleButton: FC<ButtonProps> = ({ ...properties }) => {

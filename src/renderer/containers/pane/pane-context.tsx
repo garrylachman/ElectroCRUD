@@ -39,6 +39,12 @@ const initial: PaneContextType = {
     leftPaneOpenSize: 0,
   },
   isOpen: true,
+  setLeftPaneProperties: () => {
+    throw new Error('Function not implemented.');
+  },
+  setRightPaneProperties: () => {
+    throw new Error('Function not implemented.');
+  },
 };
 
 export type PaneContextProviderProperties = {

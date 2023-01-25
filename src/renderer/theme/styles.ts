@@ -103,12 +103,12 @@ export const globalStyles = {
     },
   },
   styles: {
-    global: (props: any) => ({
+    global: (properties: any) => ({
       body: {
         overflowX: 'hidden',
-        bg: mode('#fdfeff', 'navy.900')(props),
+        bg: mode('#fdfeff', 'navy.900')(properties),
         fontFamily: 'Poppins',
-        "-webkit-font-smoothing": "antialiased",
+        '-webkit-font-smoothing': 'antialiased',
       },
       input: {
         color: 'gray.700',

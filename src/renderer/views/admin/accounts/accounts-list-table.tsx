@@ -51,7 +51,7 @@ export const AccountsListTable: FC<AccountsListTableProperties> = ({
     style?: any;
     width?: string;
   }[] = [
-    { key: 'name', label: 'Name', width: '30%' },
+    { key: 'name', label: 'Name', width: '25%' },
     { key: 'client', label: 'Type', width: '15%' },
     { key: 'creationDate', label: 'Modification', width: '20%' },
     { key: 'modificationDate', label: 'Modification', width: '20%' },
@@ -131,7 +131,7 @@ export const AccountsListTable: FC<AccountsListTableProperties> = ({
                 <Badge variant="solid" colorScheme="primary">
                   <Flex alignItems="center" gap={2}>
                     <DatabaseIcon w={5} h={5} client={info.getValue()} />
-                    <Text textTransform="uppercase">{info.getValue()}</Text>
+                    <Text textTransform="uppercase" as="span">{info.getValue()}</Text>
                   </Flex>
                 </Badge>
               );

@@ -166,7 +166,7 @@ export const ElectroCRUDTable = <TT extends Record<string, any>>(
           ),
           cell: (info) => (
             <TableCell textColor={textColor} {...col?.style}>
-              <Text fontWeight="normal">
+              <Text fontWeight="normal" as="div">
                 {customCell === undefined ? (
                   <>{info.getValue()}</>
                 ) : (

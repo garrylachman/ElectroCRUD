@@ -1,5 +1,6 @@
 import { TableInfoRow } from 'shared';
 import { O } from 'ts-toolbelt';
+import { StrictColumnRO } from '.';
 
 import { BaseRO } from './base.define';
 import { Categories } from './categories.define';
@@ -75,7 +76,7 @@ export type ViewRO = BaseRO & {
 export type StrictViewRO = O.Required<ViewRO, 'id' | 'creationDate'>;
 
 export type ColumnWithMetadataAndTags = O.Overwrite<
-  ColumnRO,
+  StrictColumnRO,
   { metadata: { tags: TagRO[] } }
 >;
 

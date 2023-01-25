@@ -8,13 +8,13 @@ import {
   useState,
 } from 'react';
 import { useSelector } from 'react-redux';
-import { StrictViewRO, StrictViewVO } from 'renderer/defenitions/record-object';
+import { StrictViewVO } from 'renderer/defenitions/record-object';
 import { useAppSelector } from 'renderer/store/hooks';
 import { ViewSelectors } from 'renderer/store/selectors';
 import { RootState } from 'renderer/store/store';
 
 export type ViewScopedContextType = {
-  viewState?: StrictViewRO;
+  viewState?: StrictViewVO;
   setView: (viewId: string) => void;
   hasPrimaryKey: boolean;
 };

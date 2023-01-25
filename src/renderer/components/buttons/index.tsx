@@ -6,3 +6,4 @@ export * from './edit-icon-button';
 export * from './cancel-button';
 export * from './add-button';
 export * from './delete-button';
+export * from './lock-button';

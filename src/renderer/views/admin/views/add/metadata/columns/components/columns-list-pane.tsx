@@ -11,12 +11,11 @@ import {
 import { motion } from 'framer-motion';
 import { FC, useContext, useEffect, useState } from 'react';
 import { HiViewColumns } from 'react-icons/hi2';
-import { PaneContext } from 'renderer/components/pane/pane-context';
+import { PaneContext } from 'renderer/containers/pane/pane-context';
 import { ScopeContext } from 'renderer/contexts/scope-context';
 import { ViewScopedContext } from 'renderer/contexts/view-scoped-context';
-import { O } from 'ts-toolbelt';
 
-export type ColumnsListPaneProperties = O.Merge<BoxProps, {}>;
+export type ColumnsListPaneProperties = BoxProps;
 
 export const ColumnsListPane: FC<ColumnsListPaneProperties> = ({
   ...properties

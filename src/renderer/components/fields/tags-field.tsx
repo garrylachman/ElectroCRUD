@@ -8,7 +8,7 @@ import {
   TagLabel,
 } from '@chakra-ui/react';
 import _ from 'lodash';
-import { FC, useEffect, useRef, useState } from 'react';
+import { FC, KeyboardEvent, useEffect, useRef, useState } from 'react';
 
 export type TagsFieldProperties = {
   label?: string;
@@ -17,7 +17,6 @@ export type TagsFieldProperties = {
   onChange?: (value: string[]) => void;
 };
 
-// Custom components
 export const TagsField: FC<TagsFieldProperties> = ({
   label,
   id,
@@ -37,11 +36,11 @@ export const TagsField: FC<TagsFieldProperties> = ({
     }
   }, [state]);
 
-  const keyPress = (e: any) => {
-    if (e.keyCode === 13) {
+  const keyPress = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (event.keyCode === 13) {
       setState((previous) => [
         ...previous,
-        { name: _.clone(e.target.value), id: previous.length },
+        { name: _.clone(event.target.value), id: previous.length },
       ]);
     }
   };
@@ -97,7 +96,7 @@ export const TagsField: FC<TagsFieldProperties> = ({
           bg="transparent"
           border="none"
           p="0px"
-          onKeyDown={(e) => keyPress(e)}
+          onKeyDown={keyPress}
           fontSize="sm"
           h="auto"
         />

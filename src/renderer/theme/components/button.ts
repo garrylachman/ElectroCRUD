@@ -19,84 +19,84 @@ export const buttonStyles = {
         outline: () => ({
           borderRadius: '0.5rem',
         }),
-        brand: (props: any) => ({
-          bg: mode('primary.500', 'primary.400')(props),
+        brand: (properties: any) => ({
+          bg: mode('primary.500', 'primary.400')(properties),
           color: 'white',
           _focus: {
-            bg: mode('primary.500', 'primary.400')(props),
+            bg: mode('primary.500', 'primary.400')(properties),
           },
           _active: {
-            bg: mode('primary.500', 'primary.400')(props),
+            bg: mode('primary.500', 'primary.400')(properties),
           },
           _hover: {
-            bg: mode('primary.600', 'primary.400')(props),
+            bg: mode('primary.600', 'primary.400')(properties),
           },
         }),
-        darkBrand: (props: any) => ({
-          bg: mode('primary.900', 'primary.400')(props),
+        darkBrand: (properties: any) => ({
+          bg: mode('primary.900', 'primary.400')(properties),
           color: 'white',
           _focus: {
-            bg: mode('primary.900', 'primary.400')(props),
+            bg: mode('primary.900', 'primary.400')(properties),
           },
           _active: {
-            bg: mode('primary.900', 'primary.400')(props),
+            bg: mode('primary.900', 'primary.400')(properties),
           },
           _hover: {
-            bg: mode('primary.800', 'primary.400')(props),
+            bg: mode('primary.800', 'primary.400')(properties),
           },
         }),
-        lightBrand: (props: any) => ({
-          bg: mode('#F2EFFF', 'whiteAlpha.100')(props),
-          color: mode('primary.500', 'white')(props),
+        lightBrand: (properties: any) => ({
+          bg: mode('#F2EFFF', 'whiteAlpha.100')(properties),
+          color: mode('primary.500', 'white')(properties),
           _focus: {
-            bg: mode('#F2EFFF', 'whiteAlpha.100')(props),
+            bg: mode('#F2EFFF', 'whiteAlpha.100')(properties),
           },
           _active: {
-            bg: mode('secondaryGray.300', 'whiteAlpha.100')(props),
+            bg: mode('secondaryGray.300', 'whiteAlpha.100')(properties),
           },
           _hover: {
-            bg: mode('secondaryGray.400', 'whiteAlpha.200')(props),
+            bg: mode('secondaryGray.400', 'whiteAlpha.200')(properties),
           },
         }),
-        light: (props: any) => ({
-          bg: mode('secondaryGray.300', 'whiteAlpha.100')(props),
-          color: mode('secondaryGray.900', 'white')(props),
+        light: (properties: any) => ({
+          bg: mode('secondaryGray.300', 'whiteAlpha.100')(properties),
+          color: mode('secondaryGray.900', 'white')(properties),
           _focus: {
-            bg: mode('secondaryGray.300', 'whiteAlpha.100')(props),
+            bg: mode('secondaryGray.300', 'whiteAlpha.100')(properties),
           },
           _active: {
-            bg: mode('secondaryGray.300', 'whiteAlpha.100')(props),
+            bg: mode('secondaryGray.300', 'whiteAlpha.100')(properties),
           },
           _hover: {
-            bg: mode('secondaryGray.400', 'whiteAlpha.200')(props),
+            bg: mode('secondaryGray.400', 'whiteAlpha.200')(properties),
           },
         }),
-        action: (props: any) => ({
+        action: (properties: any) => ({
           fontWeight: '500',
           borderRadius: '50px',
-          bg: mode('secondaryGray.300', 'primary.400')(props),
-          color: mode('primary.500', 'white')(props),
+          bg: mode('secondaryGray.300', 'primary.400')(properties),
+          color: mode('primary.500', 'white')(properties),
           _focus: {
-            bg: mode('secondaryGray.300', 'primary.400')(props),
+            bg: mode('secondaryGray.300', 'primary.400')(properties),
           },
-          _active: { bg: mode('secondaryGray.300', 'primary.400')(props) },
+          _active: { bg: mode('secondaryGray.300', 'primary.400')(properties) },
           _hover: {
-            bg: mode('secondaryGray.200', 'primary.400')(props),
+            bg: mode('secondaryGray.200', 'primary.400')(properties),
           },
         }),
-        setup: (props: any) => ({
+        setup: (properties: any) => ({
           fontWeight: '500',
           borderRadius: '50px',
-          bg: mode('transparent', 'primary.400')(props),
-          border: mode('1px solid', '0px solid')(props),
-          borderColor: mode('secondaryGray.400', 'transparent')(props),
-          color: mode('secondaryGray.900', 'white')(props),
+          bg: mode('transparent', 'primary.400')(properties),
+          border: mode('1px solid', '0px solid')(properties),
+          borderColor: mode('secondaryGray.400', 'transparent')(properties),
+          color: mode('secondaryGray.900', 'white')(properties),
           _focus: {
-            bg: mode('transparent', 'primary.400')(props),
+            bg: mode('transparent', 'primary.400')(properties),
           },
-          _active: { bg: mode('transparent', 'primary.400')(props) },
+          _active: { bg: mode('transparent', 'primary.400')(properties) },
           _hover: {
-            bg: mode('secondaryGray.100', 'primary.400')(props),
+            bg: mode('secondaryGray.100', 'primary.400')(properties),
           },
         }),
       },

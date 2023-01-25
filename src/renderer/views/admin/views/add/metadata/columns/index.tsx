@@ -1,16 +1,15 @@
 import { Box, BoxProps } from '@chakra-ui/react';
 import { FC } from 'react';
-import { Pane, usePaneHook } from 'renderer/components/pane';
-import { PaneContextProvider } from 'renderer/components/pane/pane-context';
+import { Pane, usePaneHook } from 'renderer/containers/pane';
+import { PaneContextProvider } from 'renderer/containers/pane/pane-context';
 import { ScopeContextProvider } from 'renderer/contexts/scope-context';
-import { O } from 'ts-toolbelt';
 
 import { ColumnsListPane } from './components/columns-list-pane';
 import { DetailsPane } from './components/details-pane';
 
-export type MetaColumnsProperties = O.Merge<BoxProps, {}>;
+export type MetaColumnsProperties = BoxProps;
 
-const MetaColumns: FC<MetaColumnsProperties> = ({ ...rest }) => {
+const MetaColumns: FC<MetaColumnsProperties> = () => {
   const paneHook = usePaneHook(
     {
       bg: 'gradient.white.600',

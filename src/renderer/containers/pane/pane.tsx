@@ -10,7 +10,7 @@ import {
 } from 'react';
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from 'react-icons/md';
 
-import { RippleButton } from '../buttons/ripple-button';
+import { RippleButton } from '../../components/buttons/ripple-button';
 import { PaneContext } from './pane-context';
 
 export type PaneOptions = {

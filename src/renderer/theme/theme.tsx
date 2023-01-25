@@ -1,13 +1,7 @@
-import {
-  CardProps,
-  extendTheme,
-  HTMLChakraProps,
-  ThemingProps,
-} from '@chakra-ui/react';
+import { extendTheme, HTMLChakraProps, ThemingProps } from '@chakra-ui/react';
 import { theme as hdsTheme } from '@highoutput/hds';
 import { theme as saasTheme } from '@saas-ui/react';
 
-import { CardComponent } from './additions/card/card';
 import { badgeStyles } from './components/badge';
 import { buttonStyles } from './components/button';
 import { Card } from './components/card';
@@ -35,12 +29,13 @@ export default extendTheme(
   textareaStyles, // textarea styles
   switchStyles, // switch styles
   menuStyles,
-  //CardComponent, // card component
   {
     components: {
       Card,
     },
-  },
+  }
 );
 
-export interface CustomCardProps extends HTMLChakraProps<'div'>, ThemingProps {}
+export interface CustomCardProperties
+  extends HTMLChakraProps<'div'>,
+    ThemingProps {}

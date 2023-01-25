@@ -11,10 +11,8 @@ import { Container as ModalContainer } from 'react-modal-promise';
 import { Provider } from 'react-redux';
 import { RouterProvider } from 'react-router-dom';
 import { PersistGate } from 'redux-persist/integration/react';
-
 import { ECSpinner } from './components/icons';
 import { NotificationsContainer } from './containers/notifications-container';
-import { FlipperContextProvider } from './contexts';
 import { router } from './router';
 import store, { persistor } from './store/store';
 import theme from './theme/theme';
@@ -26,7 +24,6 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <>
-    <FlipperContextProvider />
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <SaasProvider theme={theme}>

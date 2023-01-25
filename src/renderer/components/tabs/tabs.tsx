@@ -29,6 +29,7 @@ import { IconType } from 'react-icons';
 import { MdClose } from 'react-icons/md';
 import { ObjectID } from 'renderer/helpers';
 import { O } from 'ts-toolbelt';
+import _ from 'lodash';
 
 export type ElectroCRUDTabProperties = O.Either<
   {
@@ -181,8 +182,8 @@ export const ElectroCRUDTabs = forwardRef<
                             {tab?.closeable && (
                               <Box
                                 display="flex"
-                                onClick={(e) => {
-                                  e.stopPropagation();
+                                onClick={(event) => {
+                                  event.stopPropagation();
                                   setSelectedTab(
                                     tabsState[tabsState.length - 2]
                                   );

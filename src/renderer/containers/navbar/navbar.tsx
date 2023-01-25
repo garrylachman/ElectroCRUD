@@ -1,11 +1,10 @@
-import { Box, Button, Flex, Heading, Icon } from '@chakra-ui/react';
+import { Box, Flex, Heading } from '@chakra-ui/react';
 import { FC } from 'react';
 import AnimatedText from 'react-animated-text-content';
-import { BsShieldLockFill } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'renderer/store/hooks';
 import { SessionReducer } from 'renderer/store/reducers';
-import { Tooltip } from 'renderer/components/dataDisplay';
+import { LockButton } from 'renderer/components/buttons';
 
 export const Navbar: FC<{ brandText: string }> = ({ brandText }) => {
   const dispatch = useAppDispatch();
@@ -32,13 +31,7 @@ export const Navbar: FC<{ brandText: string }> = ({ brandText }) => {
             {brandText}
           </AnimatedText>
         </Heading>
-        {sessionState.isLoggedIn && (
-          <Tooltip label="Logout / Lock">
-            <Button onClick={logout}>
-              <Icon as={BsShieldLockFill} boxSize={18} />
-            </Button>
-          </Tooltip>
-        )}
+        {sessionState.isLoggedIn && <LockButton onClick={logout}></LockButton>}
       </Flex>
     </Box>
   );

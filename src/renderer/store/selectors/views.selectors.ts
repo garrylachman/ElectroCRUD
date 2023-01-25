@@ -5,12 +5,10 @@ import {
   ColumnRO,
   StrictViewVO,
   ViewRO,
-  ViewVO,
 } from 'renderer/defenitions/record-object';
 
 import { RootState } from '../store';
 import {
-  enrichColumns,
   enrichColumnsForView,
   getColumn,
   getColumns,
