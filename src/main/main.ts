@@ -9,16 +9,14 @@
 /* eslint global-require: off, no-console: off, promise/always-return: off */
 import 'reflect-metadata';
 
-import { app, BrowserWindow, ipcMain, session, shell } from 'electron';
-import log from 'electron-log';
-import { autoUpdater } from 'electron-updater';
+import { app, BrowserWindow, session, shell } from 'electron';
 import * as Splashscreen from '@trodi/electron-splashscreen';
+// eslint-disable-next-line unicorn/prefer-node-protocol
 import path from 'path';
 
 import MenuBuilder from './menu';
 import { initServices } from './services';
 import { resolveHtmlPath } from './util';
-
 
 /**
  * This module executes inside of electron's main process. You can start
@@ -28,28 +26,16 @@ import { resolveHtmlPath } from './util';
  * When running `npm run build` or `npm run build:main`, this file is compiled to
  * `./src/main.js` using webpack. This gives us some performance wins.
  */
-const reactDevToolsPath = path.resolve('./devtools/');
+const reactDevelopmentToolsPath = path.resolve('./devtools/');
 
-class AppUpdater {
-  constructor() {
-    log.transports.file.level = 'info';
-    autoUpdater.logger = log;
-    autoUpdater.checkForUpdatesAndNotify();
-  }
-}
-
+// eslint-disable-next-line import/no-mutable-exports, unicorn/no-null
 export let mainWindow: BrowserWindow | null = null;
 
-ipcMain.on('ipc-example', async (event, arg) => {
-  const msgTemplate = (pingPong: string) => `IPC test: ${pingPong}`;
-  console.log(msgTemplate(arg));
-  event.reply('ipc-example', msgTemplate('pong'));
-});
+// if (process.env.NODE_ENV === 'production') {
+const sourceMapSupport = require('source-map-support');
 
-//if (process.env.NODE_ENV === 'production') {
-  const sourceMapSupport = require('source-map-support');
-  sourceMapSupport.install();
-//}
+sourceMapSupport.install();
+// }
 
 const isDebug =
   process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true';
@@ -140,10 +126,6 @@ const createWindow = async () => {
     shell.openExternal(edata.url);
     return { action: 'deny' };
   });
-
-  // Remove this if your app does not use auto updates
-  // eslint-disable-next-line
-  new AppUpdater();
 };
 
 /**
@@ -162,20 +144,8 @@ app
   .whenReady()
   .then(async () => {
     await session.defaultSession.loadExtension(
-      path.join(reactDevToolsPath, 'react-devtools')
+      path.join(reactDevelopmentToolsPath, 'react-devtools')
     );
-    /*await session.defaultSession.loadExtension(
-      path.join(reactDevToolsPath, 'react-context-devtools')
-    );*/
-    await session.defaultSession.loadExtension(
-      path.join(reactDevToolsPath, 'redux-devtools')
-    );
-    /*await session.defaultSession.loadExtension(
-      path.join(reactDevToolsPath, 'node-devtools')
-    );
-    await session.defaultSession.loadExtension(
-      path.join(reactDevToolsPath, 'motion-devtools')
-    );*/
     createWindow();
     app.on('activate', () => {
       // On macOS it's common to re-create a window in the app when the
