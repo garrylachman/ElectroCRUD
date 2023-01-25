@@ -6468,6 +6468,11 @@
   resolved "https://registry.yarnpkg.com/@tootallnate/once/-/once-2.0.0.tgz#f544a148d3ab35801c1f633a7441fd87c2e484bf"
   integrity sha512-XCuKFP5PS55gnMVu3dty8KPatLqUoy/ZYzDzAGCQ8JNFCkLXzmI7vNHCR+XpbZaMWQK/vQubr7PkYq8g470J/A==
 
+"@trodi/electron-splashscreen@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.npmjs.org/@trodi/electron-splashscreen/-/electron-splashscreen-1.0.2.tgz#9996383cbe2adce89ad78545d2edbda756ecfe68"
+  integrity sha512-Lb36omHRFRAN4nkgPacmxXYgGKXDXxrNlDFXoZp6+ceAIC4kExOvoxj/WyCOtZXLd48MygR3QpjDvflpX67+4A==
+
 "@trysound/sax@0.2.0":
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/@trysound/sax/-/sax-0.2.0.tgz#cccaab758af56761eb7bf37af6f03f326dd798ad"

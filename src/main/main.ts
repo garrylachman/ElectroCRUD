@@ -12,6 +12,7 @@ import 'reflect-metadata';
 import { app, BrowserWindow, ipcMain, session, shell } from 'electron';
 import log from 'electron-log';
 import { autoUpdater } from 'electron-updater';
+import * as Splashscreen from '@trodi/electron-splashscreen';
 import path from 'path';
 
 import MenuBuilder from './menu';
@@ -83,7 +84,7 @@ const createWindow = async () => {
     return path.join(RESOURCES_PATH, ...paths);
   };
 
-  mainWindow = new BrowserWindow({
+  const mainOptions: Electron.BrowserWindowConstructorOptions = {
     show: false,
     width: 1024,
     height: 728,
@@ -94,7 +95,24 @@ const createWindow = async () => {
         ? path.join(__dirname, 'preload.js')
         : path.join(__dirname, '../../.erb/dll/preload.js'),
     },
-  });
+  };
+
+  const config: Splashscreen.Config = {
+    windowOpts: mainOptions,
+    templateUrl: `${RESOURCES_PATH}/splash.html`,
+    minVisible: 2000,
+    delay: 0,
+    splashScreenOpts: {
+      width: 720,
+      height: 405,
+      transparent: true,
+      resizable: false,
+      alwaysOnTop: true,
+      titleBarStyle: 'hidden',
+    },
+  };
+
+  mainWindow = Splashscreen.initSplashScreen(config);
 
   mainWindow.loadURL(resolveHtmlPath('/'));
 
