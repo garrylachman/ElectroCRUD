@@ -6,12 +6,12 @@ export const ConsoleButton: FC<ButtonProps> = ({ ...properties }) => {
   return (
     <Button
       {...properties}
-      bgColor="black"
+      bgColor="blackAlpha.800"
       color="white"
       position="fixed"
       _hover={{ bgColor: 'blackAlpha.700' }}
       right={0}
-      bottom="170px"
+      bottom="168px"
       borderRadius="2xl"
       borderBottomRightRadius={0}
       borderTopRightRadius={0}

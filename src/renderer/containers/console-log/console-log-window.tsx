@@ -9,25 +9,33 @@ import { statusToColor } from 'renderer/helpers';
 
 const motionVariations = {
   hidden: {
-    y: 500,
-    opacity: 0.5,
+    y: 200,
+    x: 1000,
+    opacity: 0.7,
+    scaleX: 0.1,
+    scaleY: 0.1,
     transition: {
-      duration: 0.5,
+      duration: 0.2,
     },
   },
   visible: {
     y: 0,
     x: 0,
     opacity: 1,
+    scaleX: 1,
+    scaleY: 1,
     transition: {
-      duration: 0.5,
+      duration: 0.2,
     },
   },
   exit: {
-    y: 500,
-    opacity: 0.5,
+    y: 200,
+    x: 1000,
+    opacity: 0.7,
+    scaleX: 0.1,
+    scaleY: 0.1,
     transition: {
-      duration: 0.3,
+      duration: 0.2,
     },
   },
 };
