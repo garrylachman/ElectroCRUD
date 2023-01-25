@@ -1,10 +1,4 @@
 import { Box, useColorModeValue } from '@chakra-ui/react';
-import { Scrollbars } from 'react-custom-scrollbars-2';
-import {
-  renderThumb,
-  renderTrack,
-  renderView,
-} from 'renderer/components/scrollbar/Scrollbar';
 import { Content } from 'renderer/components/sidebar/components/content';
 
 export function Sidebar() {

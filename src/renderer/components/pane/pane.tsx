@@ -1,11 +1,10 @@
-import { Box, Center, Icon, IconButton, Stack } from '@chakra-ui/react';
+import { Box, Center, Icon, Stack } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 import {
   FC,
   MouseEvent,
   ReactNode,
   useContext,
-  useEffect,
   useMemo,
   useState,
 } from 'react';
@@ -31,8 +30,6 @@ export const Pane: FC<PaneProperties> = ({ leftComponent, rightComponent }) => {
   const {
     leftPaneProperties,
     rightPaneProperties,
-    setLeftPaneProperties,
-    setRightPaneProperties,
     togglePane,
     isOpen,
     options,
@@ -40,7 +37,7 @@ export const Pane: FC<PaneProperties> = ({ leftComponent, rightComponent }) => {
   const [mouseState, setMouseState] =
     useState<MouseEvent<HTMLDivElement, globalThis.MouseEvent>>();
   const y = useMemo(() => {
-    if (!mouseState && !mouseState?.target) return 0;
+    if (!mouseState || !(mouseState as MouseEvent).target) return 0;
     const screenY = mouseState?.screenY || 0;
     const offsetParentTop = Number(
       (mouseState?.target as any).offsetParent.scrollTop
@@ -48,11 +45,7 @@ export const Pane: FC<PaneProperties> = ({ leftComponent, rightComponent }) => {
     const offsetParentHeight = Number(
       (mouseState?.target as any).offsetParent.clientHeight
     );
-    const offsetTop = Number((mouseState?.target as any).offsetTop);
-    return Math.max(
-      screenY + offsetParentTop - offsetParentHeight + 60,
-      0
-    );
+    return Math.max(screenY + offsetParentTop - offsetParentHeight + 60, 0);
   }, [mouseState]);
 
   const icon = useMemo(
@@ -90,7 +83,7 @@ export const Pane: FC<PaneProperties> = ({ leftComponent, rightComponent }) => {
           width="13px"
           height="100%"
           onMouseMove={(event_) => {
-            if (event_.target?.id === 'track')  {
+            if ((event_.target as any)?.id === 'track') {
               setMouseState(event_);
             }
           }}

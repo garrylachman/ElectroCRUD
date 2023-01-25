@@ -3,7 +3,7 @@
     "incremental": true,
     "target": "esnext",
     "skipLibCheck": true,
-    "module": "ESNext",
+    "module": "esnext",
     "lib": ["dom", "esnext", "esnext", "dom.iterable"],
     "jsx": "react-jsx",
     "strict": true,

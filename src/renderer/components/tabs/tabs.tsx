@@ -88,7 +88,7 @@ export const ElectroCRUDTabs = forwardRef<
     );
     const RenderComponent = useCallback(
       (properties: any) =>
-        tabsState[tabIndex].component ? (
+        tabsState[tabIndex] && tabsState[tabIndex].component ? (
           tabsState[tabIndex].component(properties)
         ) : (
           <></>
@@ -217,7 +217,9 @@ export const ElectroCRUDTabs = forwardRef<
                 tabIndex={tabsState.indexOf(tab)}
                 p={0}
                 borderWidth={isBoxed ? '1px' : 0}
-                borderTopWidth={isBoxed && variant !== undefined ? '1px' : '0px'}
+                borderTopWidth={
+                  isBoxed && variant !== undefined ? '1px' : '0px'
+                }
                 overflowX="hidden"
                 height="100%"
                 width="auto"

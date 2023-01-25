@@ -187,7 +187,7 @@ export const ElectroCRUDTable = <TT extends Record<string, any>>(
     const group = _.groupBy(tableColumns, 'meta');
     return _.reduce(
       group,
-      (result: any[], value, key) => {
+      (result: unknown[], value, key) => {
         result.push({ header: key, columns: value });
         return result;
       },

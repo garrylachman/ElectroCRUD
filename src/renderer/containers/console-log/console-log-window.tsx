@@ -74,30 +74,35 @@ export const ConsoleLogWindow: FC<ConsoleLogWindowProperties> = ({
       <CardBody bgColor="blackAlpha.800">
         {isOpen && (
           <UnorderedList
-          overflow="auto"
-          position="absolute"
-          width="-webkit-fill-available"
-          height="-webkit-fill-available"
-          marginInlineStart={0}
-          ref={logReference}
-        >
-          {(log as LogItem[]).map((logItem) => (
-            <ListItem key={logItem.body.id} color="white" my={2} fontSize="xs">
-              <Badge
-                variant="solid"
-                fontSize="2xs"
-                colorScheme={statusToColor(logItem.body.type)}
+            overflow="auto"
+            position="absolute"
+            width="-webkit-fill-available"
+            height="-webkit-fill-available"
+            marginInlineStart={0}
+            ref={logReference}
+          >
+            {(log as LogItem[]).map((logItem) => (
+              <ListItem
+                key={logItem.body.id}
+                color="white"
+                my={2}
+                fontSize="xs"
               >
-                {logItem.body.type}
-              </Badge>
-              <Badge mx={2} colorScheme="primary" fontSize="2xs">
-                <ReactTimeAgo date={logItem.body.ts} timeStyle="twitter" />
-              </Badge>
-              <Text as="span">
-                {logItem.body.method}: {logItem.body.message}
-              </Text>
-            </ListItem>
-          ))}
+                <Badge
+                  variant="solid"
+                  fontSize="2xs"
+                  colorScheme={statusToColor(logItem.body.type)}
+                >
+                  {logItem.body.type}
+                </Badge>
+                <Badge mx={2} colorScheme="primary" fontSize="2xs">
+                  <ReactTimeAgo date={logItem.body.ts} timeStyle="twitter" />
+                </Badge>
+                <Text as="span">
+                  {logItem.body.method}: {logItem.body.message}
+                </Text>
+              </ListItem>
+            ))}
           </UnorderedList>
         )}
       </CardBody>

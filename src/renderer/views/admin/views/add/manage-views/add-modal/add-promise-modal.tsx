@@ -24,10 +24,7 @@ const schema = Yup.object().shape({
   table: Yup.string().required(),
 });
 
-const AddModalContent: FC<AddModalContentProperties> = ({
-  formCtxRef,
-  formRef,
-}) => {
+const AddModalContent: FC<AddModalContentProperties> = ({ formCtxRef }) => {
   const { result, execute, isExecuted } = useIPCTablesList({
     channel: IPCChannelEnum.TABLES_LIST,
   });

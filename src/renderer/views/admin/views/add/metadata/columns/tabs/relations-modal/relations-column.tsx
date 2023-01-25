@@ -5,12 +5,11 @@ import { useFormContext } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { AutocompleteField } from 'renderer/components/fields';
 import { ColumnRO } from 'renderer/defenitions/record-object';
-import {
-  findType,
-} from 'renderer/defenitions/record-object/data-types/data-type-finder';
+import { findType } from 'renderer/defenitions/record-object/data-types/data-type-finder';
 import { ColumnSelectors } from 'renderer/store/selectors';
 import { RootState } from 'renderer/store/store';
 
+// eslint-disable-next-line @typescript-eslint/ban-types
 export type RelationsColumnProperties = {};
 
 export const RelationsColumn: FC<RelationsColumnProperties> = () => {

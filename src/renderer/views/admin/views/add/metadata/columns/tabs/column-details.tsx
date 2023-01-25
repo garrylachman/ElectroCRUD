@@ -1,5 +1,4 @@
 import {
-  Badge,
   Box,
   Center,
   Checkbox,
@@ -24,9 +23,7 @@ import { useSelector } from 'react-redux';
 import ReactTimeAgo from 'react-time-ago';
 import { SaveButton } from 'renderer/components/buttons/save-button';
 import { TagsAutocomplete } from 'renderer/components/fields/tags-autocomplete';
-import {
-  ConfirmPromiseSaveModal,
-} from 'renderer/components/modals/confirm-promise-save-modal';
+import { ConfirmPromiseSaveModal } from 'renderer/components/modals/confirm-promise-save-modal';
 import { ScopeContext } from 'renderer/contexts/scope-context';
 import { TagType } from 'renderer/defenitions/record-object/tags.define';
 import {
@@ -172,7 +169,7 @@ export const ColumnDetails = () => {
             id="metadata.tags"
             type={TagType.COLUMN}
             target={{ columnId: columnState.id }}
-            defaultValue={[...columnState.metadata?.tags || []]}
+            defaultValue={[...(columnState.metadata?.tags || [])]}
           />
 
           {JSON.stringify(exampleData) !== JSON.stringify(policy[0]) && (

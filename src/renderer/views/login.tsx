@@ -1,4 +1,10 @@
-import { Card, CardBody, Flex, HStack, PinInput, PinInputField, Text } from '@chakra-ui/react';
+import {
+  Flex,
+  HStack,
+  PinInput,
+  PinInputField,
+  Text,
+} from '@chakra-ui/react';
 import {
   EmptyStateBody,
   EmptyStateContainer,
@@ -18,7 +24,6 @@ export const Login = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const passwordState = useAppSelector((state) => state.settings.password);
-  const sessionState = useAppSelector((state) => state.session);
 
   const check = (value: string) => {
     const inputPass = CryptoJS.SHA256(value, passwordState.hash).toString();
@@ -29,13 +34,17 @@ export const Login = () => {
   };
 
   return (
-    <EmptyStateContainer colorScheme="primary" height="-webkit-fill-available"> 
+    <EmptyStateContainer colorScheme="primary" height="-webkit-fill-available">
       <EmptyStateBody display="flex" alignItems="center" flexDirection="column">
         <EmptyStateIcon
           as={IoLogIn}
           style={{ width: '150px', height: '150px' }}
         />
-        <EmptyStateTitle fontSize={30} lineHeight="auto" style={{marginTop: 15}}>
+        <EmptyStateTitle
+          fontSize={30}
+          lineHeight="auto"
+          style={{ marginTop: 15 }}
+        >
           <Typist
             startDelay={0}
             avgTypingDelay={100}
@@ -44,7 +53,9 @@ export const Login = () => {
             <Flex>
               <Text lineHeight="auto">P#$%&*@#</Text>
               <Typist.Backspace count={7} />
-              <Text mr={3} lineHeight="auto">assword</Text>
+              <Text mr={3} lineHeight="auto">
+                assword
+              </Text>
               <Text
                 bgColor="primary.500"
                 color="white"
@@ -60,10 +71,19 @@ export const Login = () => {
         </EmptyStateTitle>
         <EmptyStateDescription marginTop="30px">
           <HStack>
-            <PinInput mask autoFocus type="alphanumeric" size="lg" onComplete={check}>
-              {Array.from({ length: passwordState.passwordLenght }).map((v, index) => (
-                <PinInputField key={`pininput-${index}`} />
-              ))}
+            <PinInput
+              mask
+              autoFocus
+              type="alphanumeric"
+              size="lg"
+              onComplete={check}
+            >
+              {Array.from({ length: passwordState.passwordLenght }).map(
+                (v, index) => (
+                  // eslint-disable-next-line react/no-array-index-key
+                  <PinInputField key={`pininput-${index}`} />
+                )
+              )}
             </PinInput>
           </HStack>
         </EmptyStateDescription>

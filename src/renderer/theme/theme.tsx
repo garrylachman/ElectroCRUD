@@ -6,7 +6,6 @@ import {
 } from '@chakra-ui/react';
 import { theme as hdsTheme } from '@highoutput/hds';
 import { theme as saasTheme } from '@saas-ui/react';
-import { StepsStyleConfig as Steps } from 'chakra-ui-steps/chakra-ui-steps';
 
 import { CardComponent } from './additions/card/card';
 import { badgeStyles } from './components/badge';
@@ -39,7 +38,6 @@ export default extendTheme(
   //CardComponent, // card component
   {
     components: {
-      Steps,
       Card,
     },
   },

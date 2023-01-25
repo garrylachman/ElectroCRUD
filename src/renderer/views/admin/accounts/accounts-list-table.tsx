@@ -18,7 +18,7 @@ import {
   DataTableActionMenu,
   DataTableActionMenuItem,
 } from 'renderer/components/tables/data-table-action-menu';
-import { ElectroCRUDTable } from 'renderer/components/tables/Table';
+import { ElectroCRUDTable } from 'renderer/components/tables/electro-crud-table';
 import { AccountRO, StrictAccountRO } from 'renderer/defenitions/record-object';
 import { useAppDispatch, useAppSelector } from 'renderer/store/hooks';
 import { AccountsReducer, SessionReducer } from 'renderer/store/reducers';

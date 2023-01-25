@@ -111,7 +111,7 @@ export const FilterBuilderWheresGroup: FC<FilterBuilderGroupProperties> = ({
                     {childFilersState.map((item) => (
                       <FilterBuilderWheresGroup
                         key={item.id}
-                        filterId={item.id as string}
+                        filterId={item.id}
                         index={index + 1}
                       />
                     ))}

@@ -15,7 +15,7 @@ import { MdHdrAuto, MdOutline1XMobiledata, MdVpnKey } from 'react-icons/md';
 import { RxTextNone } from 'react-icons/rx';
 import { useSelector } from 'react-redux';
 import { TableIconCell } from 'renderer/components/tables/customCells';
-import { ElectroCRUDTable } from 'renderer/components/tables/Table';
+import { ElectroCRUDTable } from 'renderer/components/tables/electro-crud-table';
 import { ColumnRO } from 'renderer/defenitions/record-object';
 import { findType } from 'renderer/defenitions/record-object/data-types';
 import { useIPCTableInfo } from 'renderer/ipc';

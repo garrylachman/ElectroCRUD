@@ -1,50 +1,33 @@
 import {
-  Alert,
-  AlertDescription,
-  AlertTitle,
-  Badge,
   Box,
   Button,
-  ButtonGroup,
   Card,
   CardBody,
   CardFooter,
   CardHeader,
   Collapse,
   Divider,
-  Editable,
-  EditableInput,
-  EditablePreview,
   Flex,
   FormControl,
   FormLabel,
-  Grid,
-  GridItem,
   Heading,
   HStack,
   Icon,
   IconButton,
   Input,
-  SlideFade,
   Stat,
   StatLabel,
   StatNumber,
   Text,
-  Tooltip,
   useBoolean,
-  useColorModeValue,
-  useDisclosure,
-  useEditableControls,
   VStack,
 } from '@chakra-ui/react';
 import { sql } from '@codemirror/lang-sql';
-import { joiResolver } from '@hookform/resolvers/joi';
 import { vscodeDark } from '@uiw/codemirror-theme-vscode';
 import CodeMirror from '@uiw/react-codemirror';
-import { AnimatePresence, motion } from 'framer-motion';
-import * as Joi from 'joi';
+import { motion } from 'framer-motion';
 import _ from 'lodash';
-import { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { FC, useCallback, useEffect, useRef } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import {
   MdDelete,
@@ -54,16 +37,8 @@ import {
 } from 'react-icons/md';
 import ReactTimeAgo from 'react-time-ago';
 import { RippleButton } from 'renderer/components/buttons/ripple-button';
-import { CardHeaderBetter } from 'renderer/components/card/CardHeader';
-import { InlineEditField, InputField } from 'renderer/components/fields';
-import {
-  ConfirmPromiseDeleteModal,
-} from 'renderer/components/modals/confirm-promise-delete-modal';
-import { SubCard } from 'renderer/containers/cards';
-import { CodeExampleRO, ViewRO } from 'renderer/defenitions/record-object';
-import {
-  Categories,
-} from 'renderer/defenitions/record-object/categories.define';
+import { ConfirmPromiseDeleteModal } from 'renderer/components/modals/confirm-promise-delete-modal';
+import { CodeExampleRO } from 'renderer/defenitions/record-object';
 import { useAppDispatch } from 'renderer/store/hooks';
 import { CodeExamplesReducer } from 'renderer/store/reducers';
 

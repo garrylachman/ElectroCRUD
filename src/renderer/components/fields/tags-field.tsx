@@ -6,7 +6,6 @@ import {
   Tag,
   TagCloseButton,
   TagLabel,
-  useColorModeValue,
 } from '@chakra-ui/react';
 import _ from 'lodash';
 import { FC, useEffect, useRef, useState } from 'react';
@@ -77,7 +76,7 @@ export const TagsField: FC<TagsFieldProperties> = ({
               colorScheme="primary"
               variant="solid"
               mr={1}
-              key={index}
+              key={item.id}
             >
               <TagLabel>{item.name}</TagLabel>
               <TagCloseButton

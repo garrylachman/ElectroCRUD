@@ -1,9 +1,7 @@
 import {
   Box,
-  Button,
   Card,
   CardBody,
-  CardFooter,
   Center,
   Flex,
   Heading,
@@ -17,16 +15,14 @@ import {
 } from '@chakra-ui/react';
 import memoize from 'proxy-memoize';
 import { useCallback, useContext, useMemo } from 'react';
-import { MdAdd, MdArrowForward } from 'react-icons/md';
+import { MdArrowForward } from 'react-icons/md';
 import { useSelector } from 'react-redux';
 import {
   AddButton,
   DeleteIconButton,
   EditIconButton,
 } from 'renderer/components/buttons';
-import {
-  ConfirmPromiseDeleteModal,
-} from 'renderer/components/modals/confirm-promise-delete-modal';
+import { ConfirmPromiseDeleteModal } from 'renderer/components/modals/confirm-promise-delete-modal';
 import { ScopeContext } from 'renderer/contexts/scope-context';
 import { ViewScopedContext } from 'renderer/contexts/view-scoped-context';
 import {
@@ -127,7 +123,7 @@ export const ColumnReletions = () => {
   }
 
   return (
-    <Box px={4} key={`column-ref--${columnState.id}`}>
+    <Box px={4} key={`column-ref--${columnState?.id}`}>
       <Heading size="md">Reletions</Heading>
       <Flex pb={4} gap={4}>
         <Flex flexDirection="row">
@@ -143,7 +139,12 @@ export const ColumnReletions = () => {
         <List spacing={3}>
           {columnReferanceWithNamesState.map((row) => (
             <ListItem>
-              <Card variant="outline" boxShadow={0} rounded={10} _hover={{ boxShadow: 'lg' }}>
+              <Card
+                variant="outline"
+                boxShadow={0}
+                rounded={10}
+                _hover={{ boxShadow: 'lg' }}
+              >
                 <CardBody>
                   <Flex justifyContent="space-between">
                     <Flex flex={1}>
@@ -152,13 +153,20 @@ export const ColumnReletions = () => {
                           <Kbd fontSize="md" lineHeight="unset">
                             {row?.fromView?.name}.{row?.from?.name}
                           </Kbd>
-                          <Icon as={MdArrowForward} fontSize={20} mx={2} my={2} />
+                          <Icon
+                            as={MdArrowForward}
+                            fontSize={20}
+                            mx={2}
+                            my={2}
+                          />
                           <Kbd fontSize="md" lineHeight="unset">
                             {row?.toView?.name}.{row?.to?.name}
                           </Kbd>
                         </Flex>
                         <Flex w="100%">
-                          <Text fontSize="sm" as="span">{row.description || 'N/A'}</Text>
+                          <Text fontSize="sm" as="span">
+                            {row.description || 'N/A'}
+                          </Text>
                         </Flex>
                       </VStack>
                     </Flex>

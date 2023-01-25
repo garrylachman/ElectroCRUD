@@ -9,7 +9,6 @@ import {
   GridItem,
   Icon,
   IconButton,
-  SimpleGrid,
   Text,
   VStack,
 } from '@chakra-ui/react';

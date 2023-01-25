@@ -7,18 +7,22 @@ import { SectionHeader } from 'renderer/components/sections/section-header';
 import { ViewScopedContext } from 'renderer/contexts';
 import { CodeExampleRO } from 'renderer/defenitions/record-object';
 import { CodeExamplesSelectors } from 'renderer/store/selectors';
+import { RootState } from 'renderer/store/store';
 
 import { CodeExampleItem } from './components/code-example-item';
 
+// eslint-disable-next-line @typescript-eslint/ban-types
 type CodeExamplesProperties = {};
 
 export const CodeExamples: FC<CodeExamplesProperties> = () => {
   const { viewState } = useContext(ViewScopedContext);
-  const codeExamplesSelector = useSelector((state) =>
+  const codeExamplesSelector = useSelector((state: RootState) =>
     CodeExamplesSelectors.createCodeExamplesForViewSelector(state)
   );
 
-  const codeState: CodeExampleRO[] = codeExamplesSelector(viewState.id);
+  const codeState: CodeExampleRO[] = codeExamplesSelector(
+    viewState.id as string
+  );
 
   const [showAdd, { on, off }] = useBoolean();
 
@@ -41,7 +45,7 @@ export const CodeExamples: FC<CodeExamplesProperties> = () => {
             <CodeExampleItem
               index={-1}
               key={`ce-new-${codeState.length}`}
-              initialValue={{ viewId: viewState.id }}
+              initialValue={{ viewId: viewState?.id }}
               onSave={off}
             />
           )}
@@ -49,7 +53,7 @@ export const CodeExamples: FC<CodeExamplesProperties> = () => {
             <CodeExampleItem
               index={++index}
               key={`ce-${item?.id || 'new'}`}
-              initialValue={{ ...item, viewId: viewState.id }}
+              initialValue={{ ...item, viewId: viewState?.id }}
             />
           ))}
         </LayoutGroup>

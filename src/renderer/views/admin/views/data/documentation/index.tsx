@@ -1,9 +1,9 @@
-import { Card, CardBody } from "@chakra-ui/card"
-import { TableDocumentation } from "./table-documentation"
+import { Card, CardBody } from '@chakra-ui/card';
 import { useContext } from 'react';
-import { Divider } from '@chakra-ui/react'
+import { Divider } from '@chakra-ui/react';
 import { ViewScopedContext } from 'renderer/contexts';
-import { ColumnDocumentation } from "./column-documentation";
+import { TableDocumentation } from './table-documentation';
+import { ColumnDocumentation } from './column-documentation';
 
 export const Documentation = () => {
   const { viewState } = useContext(ViewScopedContext);
@@ -20,7 +20,7 @@ export const Documentation = () => {
     >
       <CardBody>
         <TableDocumentation />
-        {viewState.columns.map((row) => (
+        {viewState?.columns.map((row) => (
           <>
             <Divider my={5} />
             <ColumnDocumentation columnState={row} />

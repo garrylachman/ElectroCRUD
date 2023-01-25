@@ -1,7 +1,6 @@
-import { TypeColumn } from '@inovua/reactdatagrid-community/types';
 import _ from 'lodash';
 import memoize from 'proxy-memoize';
-import { useContext, useEffect, useMemo, useState } from 'react';
+import { useContext, useMemo } from 'react';
 import { ViewScopedContext } from 'renderer/contexts';
 import { ColumnWithMetadataAndTags } from 'renderer/defenitions/record-object';
 import { findType } from 'renderer/defenitions/record-object/data-types';

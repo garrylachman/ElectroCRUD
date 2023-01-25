@@ -12,7 +12,7 @@ import {
   useRef,
   useState,
 } from 'react';
-import { TbEdit, TbListDetails, TbTrash } from 'react-icons/tb';
+import { TbListDetails, TbTrash } from 'react-icons/tb';
 import { ElectroCRUDTabsAPI } from 'renderer/components/tabs';
 import { FilterBuilder } from 'renderer/containers/filter-builder';
 import { ViewScopedContext } from 'renderer/contexts';
@@ -199,7 +199,7 @@ export const DataTableCard: FC<DataTableCardProperties> = ({
   const onEditComplete = useCallback(
     ({ value, columnId, rowId, data }) => {
       const pk = _.get(primaryKeyColumn, 'name');
-      const row = dataItems.find((r) => r[pk] == rowId);
+      const row = dataItems.find((r) => r[pk] === rowId);
       const oldValue = _.get(row, columnId);
       if (_.isEqual(oldValue, value)) {
         return;

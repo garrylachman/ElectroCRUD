@@ -16,7 +16,7 @@ import { O } from 'ts-toolbelt';
 import { Tooltip } from '../dataDisplay';
 
 export type DataTableActionMenuItem = O.Merge<
-  { 
+  {
     menuIcon: IconType;
     label: string;
     onClick: (row: any) => any;

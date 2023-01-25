@@ -13,7 +13,7 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import moment from 'moment';
-import { FC, useContext } from 'react';
+import { useContext } from 'react';
 import { IconType } from 'react-icons/lib';
 import { MdAccessTime, MdAccessTimeFilled } from 'react-icons/md';
 import ReactTimeAgo from 'react-time-ago';

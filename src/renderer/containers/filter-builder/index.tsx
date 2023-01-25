@@ -9,33 +9,24 @@ import {
   CardBody,
   CardFooter,
   CardHeader,
-  Center,
-  Divider,
-  Flex,
   HStack,
   Input,
   Text,
   useOutsideClick,
   VStack,
 } from '@chakra-ui/react';
-import { EntityState } from '@reduxjs/toolkit';
-import { Select } from 'chakra-react-select';
 import memoize from 'proxy-memoize';
 import * as R from 'ramda';
-import React, {
+import {
   FC,
   useCallback,
   useContext,
   useEffect,
-  useMemo,
   useRef,
   useState,
 } from 'react';
 import { useSelector } from 'react-redux';
 import { ViewScopedContext } from 'renderer/contexts/view-scoped-context';
-import {
-  ViewFilterRO,
-} from 'renderer/defenitions/record-object/filters.define';
 import { useAppDispatch } from 'renderer/store/hooks';
 import {
   TemporaryFiltersReducer,
@@ -77,7 +68,6 @@ export const FilterBuilder: FC<FilterBuilderProperties> = ({
   );
 
   useEffect(() => {
-    console.log(filtersState);
     if (filtersState) {
       // console.log(filtersToKnex(filtersState));
       setFilter('Unsaved Filter', filtersState);

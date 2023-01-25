@@ -8,7 +8,7 @@ import {
   DataTableActionMenu,
   DataTableActionMenuItem,
 } from 'renderer/components/tables/data-table-action-menu';
-import { ElectroCRUDTable } from 'renderer/components/tables/Table';
+import { ElectroCRUDTable } from 'renderer/components/tables/electro-crud-table';
 import {
   PolicyRuleTemplates,
   StrictPolicyRuleRO,

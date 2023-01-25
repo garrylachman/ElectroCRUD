@@ -1,5 +1,5 @@
 import { Box, Flex, keyframes } from '@chakra-ui/react';
-import React, { FC } from 'react';
+import { FC } from 'react';
 import { Tooltip } from 'renderer/components/dataDisplay';
 
 type StatusIndicatorProperties = {

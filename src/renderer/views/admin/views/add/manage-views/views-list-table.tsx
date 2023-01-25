@@ -9,7 +9,7 @@ import {
   DataTableActionMenu,
   DataTableActionMenuItem,
 } from 'renderer/components/tables/data-table-action-menu';
-import { ElectroCRUDTable } from 'renderer/components/tables/Table';
+import { ElectroCRUDTable } from 'renderer/components/tables/electro-crud-table';
 import { StrictViewRO, ViewRO } from 'renderer/defenitions/record-object';
 import { useAppDispatch, useAppSelector } from 'renderer/store/hooks';
 import { ViewsReducer } from 'renderer/store/reducers';
@@ -67,6 +67,7 @@ export const ViewsListTable: FC<ViewsListTableProperties> = ({
               accountId: sessionState.account?.id,
               terminology: {
                 singular: data.name,
+                // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
                 plural: `${data.name}s`,
               },
               permissions: {

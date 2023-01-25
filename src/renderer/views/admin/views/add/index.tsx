@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  Card,
   Center,
   HStack,
   Icon,
@@ -15,11 +16,8 @@ import { useContext, useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { MdClear, MdSave } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
-import Card from 'renderer/components/card/Card';
 import { Alert } from 'renderer/components/dataDisplay';
-import {
-  ConfirmPromiseSaveModal,
-} from 'renderer/components/modals/confirm-promise-save-modal';
+import { ConfirmPromiseSaveModal } from 'renderer/components/modals/confirm-promise-save-modal';
 import {
   ViewScopedContext,
   ViewScopedContextProvider,
@@ -60,7 +58,6 @@ export const AddOrEditView = () => {
   const dispatch = useAppDispatch();
 
   const handleCreateOrUpdate = (data: ViewRO) => {
-
     ConfirmPromiseSaveModal({ entityName: data.name || data.table })
       .then((value) => {
         if (value && viewState?.id) {

@@ -7,7 +7,6 @@ import {
   HStack,
   Icon,
   Text,
-  useColorModeValue,
   VStack,
 } from '@chakra-ui/react';
 import { LayoutGroup, motion } from 'framer-motion';
@@ -58,21 +57,11 @@ const collapseArrow = {
     transform: 'rotate(0deg) scale(0.9)',
     color: '#cfd0d2',
     filter: undefined,
-    transition: {
-      duration: 2,
-      bounce: 0.7,
-      type: 'spring',
-    },
   },
   open: {
     transform: 'rotate(-90deg) scale(1.2)',
     color: 'white',
     filter: 'drop-shadow(0 0 0.45rem #E9E3FF)brightness(2)',
-    transition: {
-      duration: 1,
-      bounce: 0.7,
-      type: 'spring',
-    },
   },
 };
 

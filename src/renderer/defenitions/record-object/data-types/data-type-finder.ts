@@ -7,7 +7,13 @@ import {
   StringDataType,
 } from '.';
 
-export const findType = (type: string): DataType<number> | DataType<string> => {
+export const findType = (
+  type: string
+):
+  | DataType<number>
+  | DataType<string>
+  | DataType<Date>
+  | DataType<undefined> => {
   // eslint-disable-next-line no-restricted-syntax
   for (const dataType of [NumberDataType, StringDataType, DateTimeDataType]) {
     // eslint-disable-next-line @typescript-eslint/no-for-in-array

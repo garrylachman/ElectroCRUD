@@ -1,10 +1,10 @@
 import { Box, Divider, Flex, Heading, Text } from '@chakra-ui/react';
-import { FC, ReactElement } from 'react';
+import { FC } from 'react';
 
 export type SectionHeaderProperties = {
   title: string;
   subTitle?: string;
-  RightComponent?: ReactElement;
+  RightComponent?: FC;
 };
 
 export const SectionHeader: FC<SectionHeaderProperties> = ({

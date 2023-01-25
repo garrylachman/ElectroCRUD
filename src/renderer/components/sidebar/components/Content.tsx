@@ -17,4 +17,4 @@ export function Content() {
       </Stack>
     </Flex>
   );
-};
+}
