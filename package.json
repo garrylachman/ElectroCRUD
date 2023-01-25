@@ -166,7 +166,6 @@
     "html-loader": "^4.2.0",
     "javascript-time-ago": "^2.5.9",
     "joi": "^17.7.0",
-    "js-flipper": "^0.176.1",
     "knex-json-filter": "^0.1.2",
     "markdown-loader": "^8.0.0",
     "marked": "^4.2.5",

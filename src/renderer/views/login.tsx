@@ -1,10 +1,4 @@
-import {
-  Flex,
-  HStack,
-  PinInput,
-  PinInputField,
-  Text,
-} from '@chakra-ui/react';
+import { Flex, HStack, PinInput, PinInputField, Text } from '@chakra-ui/react';
 import {
   EmptyStateBody,
   EmptyStateContainer,
