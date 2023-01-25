@@ -1,4 +1,3 @@
-import { Card, CardBody } from '@chakra-ui/react';
 import { FC } from 'react';
 import { MdAccountTree, MdSettingsSuggest } from 'react-icons/md';
 import {

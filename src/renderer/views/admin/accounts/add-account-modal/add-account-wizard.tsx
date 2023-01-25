@@ -15,7 +15,7 @@ import { InstanceProps } from 'react-modal-promise';
 import { MotionBox } from 'renderer/components/motions';
 import { WithErrorComponent } from 'renderer/containers/error';
 import { AccountRO } from 'renderer/defenitions/record-object';
-import { ConnectionConfig, ServerTypeEnum } from 'shared';
+import { ConnectionConfig, FileConnectionConfig, ServerConnectionConfig, ServerTypeEnum } from 'shared';
 
 import {
   AccountsWizardDetails,
@@ -103,13 +103,13 @@ export const AddAccountWizard: FC<AddAccountWizardProperties> = ({
         <AccountsWizardFileConnection
           next={next}
           back={back}
-          initialValue={state?.connection}
+          initialValue={state?.connection as FileConnectionConfig}
         />
       ) : (
         <AccountsWizardServerConnection
           next={next}
           back={back}
-          initialValue={state?.connection}
+          initialValue={state?.connection as ServerConnectionConfig}
         />
       ),
     [state.client, next, back]

@@ -2,7 +2,7 @@ import { Box, Button, Icon } from '@chakra-ui/react';
 import { Field, Form, FormLayout, SelectField } from '@saas-ui/react';
 import _ from 'lodash';
 import { FC } from 'react';
-import { MdArrowBack, MdArrowForward, MdSave } from 'react-icons/md';
+import { MdArrowBack, MdArrowForward } from 'react-icons/md';
 import {
   AccountRO,
   ValidateAccountsWizardStep1,
@@ -32,7 +32,13 @@ export const AccountsWizardDetails: FC<
         reValidateMode="onChange"
       >
         <FormLayout columns={2} gap={5} px={5} py={3}>
-          <Field name="name" label="Name" isRequired variant="flushed" />
+          <Field
+            type="text"
+            name="name"
+            label="Name"
+            isRequired
+            variant="flushed"
+          />
           <SelectField
             name="client"
             label="Client"

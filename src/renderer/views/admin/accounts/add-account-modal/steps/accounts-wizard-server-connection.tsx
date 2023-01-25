@@ -1,7 +1,7 @@
 import { Box, Button, Icon } from '@chakra-ui/react';
 import { Field, Form, FormLayout } from '@saas-ui/react';
 import { FC } from 'react';
-import { MdArrowBack, MdArrowForward, MdSave } from 'react-icons/md';
+import { MdArrowBack, MdArrowForward } from 'react-icons/md';
 import { ValidateServerConnection } from 'renderer/defenitions/record-object';
 import { ServerConnectionConfig } from 'shared';
 

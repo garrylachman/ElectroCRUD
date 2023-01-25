@@ -10,17 +10,14 @@ import {
   Text,
 } from '@chakra-ui/react';
 import { FormLayout } from '@saas-ui/forms';
-import { FC, useMemo } from 'react';
+import { FC } from 'react';
 import { MdArrowBack, MdArrowForward } from 'react-icons/md';
 import SetUp from 'renderer/components/actions/SetUp';
 import { AccountRO } from 'renderer/defenitions/record-object';
 import { O } from 'ts-toolbelt';
 
 import { AddAccountWizardStepProperties } from '../add-account-wizard';
-import {
-  UseAccountsWizardReturn,
-  useConnectionTest,
-} from '../use-connection-test';
+import { UseAccountsWizardReturn } from '../use-connection-test';
 
 export type AccountsWizardTestProperties = O.Merge<
   AddAccountWizardStepProperties<AccountRO>,

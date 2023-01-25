@@ -7,7 +7,7 @@ import {
 } from '@saas-ui/react';
 import _ from 'lodash';
 import { FC, forwardRef } from 'react';
-import { MdArrowBack, MdArrowForward, MdSave } from 'react-icons/md';
+import { MdArrowBack, MdArrowForward } from 'react-icons/md';
 import { ValidateSqliteConnection } from 'renderer/defenitions/record-object';
 import { FileConnectionConfig } from 'shared';
 
@@ -18,6 +18,7 @@ type InputFileProperties = InputFieldProps;
 export const FileField = registerFieldType<InputFileProperties>(
   'file',
   forwardRef(
+    // eslint-disable-next-line react/prop-types
     ({ type = 'file', leftAddon, rightAddon, size, ...rest }, reference) => {
       const input = <Input type={type} size={size} {...rest} ref={reference} />;
       if (leftAddon || rightAddon) {
@@ -53,7 +54,6 @@ export const AccountsWizardFileConnection: FC<
       >
         <FormLayout gap={5} px={5} py={3}>
           <FileField
-            type="file"
             name="filename"
             label="SQLite file"
             isRequired
