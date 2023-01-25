@@ -30,15 +30,10 @@ import {
   ReadWidgetDataResult,
   ServerType,
   TableInfoRow,
-  TablesListRow,
   UpdateDataArgs as UpdateDataArguments,
 } from '../../shared/defenitions';
 import { QueryAggregateEnum, ServerTypeEnum } from '../../shared/enums';
-import {
-  heartBeatQueries,
-  primaryKeyQueries,
-  tablesListQueries,
-} from '../data/queries';
+import { heartBeatQueries, tablesListQueries } from '../data/queries';
 import { NoActiveClientError } from '../exceptions';
 import { LogService } from './log.service';
 
@@ -88,7 +83,6 @@ export class DatabaseService {
       this.typedConnection = new TypedKnex(this.connection);
       this.inspector = SchemaInspector(this.connection);
       this.connectHooks();
-      console.log("client", this.connection.client.constructor.name)
       const result = await this.heartbeat();
       this.logService?.success(`Connection Success`, getCurrentLine().method);
       return result;
@@ -105,19 +99,11 @@ export class DatabaseService {
     knexHooks(this.connection);
 
     this.connection?.addHook(
-      '*',
+      'before',
       '*',
       '*',
       (when, method, table, parameters) => {
-        this.logService?.info(
-          JSON.stringify({
-            when,
-            method,
-            table,
-            params: parameters.query.toString(),
-          }),
-          getCurrentLine().method
-        );
+        this.logService?.info(parameters.query.toString(), when);
       }
     );
   }
@@ -244,10 +230,8 @@ export class DatabaseService {
     this.getConnection();
     
     try {
-      console.log(this.inspector);
       const response = await this.inspector?.columnInfo(tableName) as TableInfoRow[];
       if (!response) {
-        console.error(response);
         throw new Error('Cannot inspect table');
       }
       return response;
@@ -329,12 +313,10 @@ export class DatabaseService {
           return wq;
         });
       }
-      console.log(filter);
       if (filter) {
         q?.where((wq) => {
           return wq.where(whereFilter(filter));
         });
-        console.log(q?.toQuery());
         this.logService?.success(
           sqlFormatter.format(q?.toQuery() || ''),
           getCurrentLine().method
@@ -489,7 +471,6 @@ export class DatabaseService {
           }
         return qw;
       });
-      console.log(q?.toQuery());
       await q?.delete();
       this.logService?.success(
         sqlFormatter.format(q?.toQuery() || '', formatterParameters),
@@ -509,7 +490,6 @@ export class DatabaseService {
     properties: DeleteDataArguments
   ): Promise<boolean | IPCError> {
     const { table, where } = properties;
-    console.log("deleteDataWithProps", table, where);
     return this.deleteData(table, where);
   }
 
