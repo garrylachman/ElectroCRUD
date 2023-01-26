@@ -1,5 +1,5 @@
-import ResponseFactory from '../helpers';
-import { DatabaseService } from '../services/database.service';
+import { ResponseFactoryType } from 'main/helpers';
+import DatabaseService from '../services/database.service';
 import {
   TableInfoRequest,
   ResponseType,
@@ -12,8 +12,8 @@ export const TableInfoIPC = async (
 ): Promise<ResponseType> => {
   try {
     const result = await db.tableInfo(request.body);
-    return ResponseFactory<TableInfoResponse>(request.channel, result);
+    return ResponseFactoryType<TableInfoResponse>(request.channel, result);
   } catch (e) {
-    return ResponseFactory(request.channel, e as Error);
+    return ResponseFactoryType(request.channel, e as Error);
   }
 };

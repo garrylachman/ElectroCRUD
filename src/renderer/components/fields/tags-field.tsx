@@ -7,7 +7,7 @@ import {
   TagCloseButton,
   TagLabel,
 } from '@chakra-ui/react';
-import { clone, set } from 'lodash';
+import { clone } from 'underscore';
 import { FC, KeyboardEvent, useEffect, useRef, useState } from 'react';
 
 export type TagsFieldProperties = {
@@ -30,7 +30,7 @@ export const TagsField: FC<TagsFieldProperties> = ({
 
   useEffect(() => {
     // @ts-ignore
-    set(reference.current, 'value', '');
+    reference.current.value = '';
     if (onChange) {
       onChange(state.map((t) => t.name));
     }

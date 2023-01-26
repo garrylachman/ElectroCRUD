@@ -6,7 +6,6 @@ import { MemoryStorage } from 'node-ts-cache-storage-memory';
 import * as hash from 'object-hash';
 import { delay, inject, injectable } from 'tsyringe';
 import { mainWindow } from '../main';
-
 import {
   ErrorResponse,
   ErrorType,
@@ -15,28 +14,28 @@ import {
   ResponseType,
 } from '../../shared/defenitions';
 import { IPCChannelEnum } from '../../shared/enums';
-import RequestFactory from '../ipc';
-import { DatabaseService } from './database.service';
+import { IRequestFactory } from '../ipc/base.ipc';
+import { IDatabaseService } from './interfaces/idatabase.service';
 
 const ipcCache = new CacheContainer(new MemoryStorage());
 
 @injectable()
-export default class IPCService {
+export default class IPCService implements IIPCService {
   constructor(
-    @inject(delay(() => DatabaseService))
-    private database: DatabaseService,
-    @inject(delay(() => RequestFactory))
-    private rFactory: RequestFactory
+    @inject('IDatabaseService') private database: IDatabaseService,
+    @inject('IRequestFactory') private rFactory: IRequestFactory
   ) {}
 
-  public listen() {
+  public listen(): void {
+    console.log("listen", this.database);
+    console.log("rFactory", this.rFactory);
     this.disconnect();
     Object.values(IPCChannelEnum).forEach((channel: IPCChannel) =>
       ipcMain.handle(channel, this.onRequest.bind(this))
     );
   }
 
-  public disconnect() {
+  public disconnect(): void {
     Object.values(IPCChannelEnum).forEach((channel: IPCChannel) =>
       ipcMain.removeAllListeners(channel)
     );
@@ -85,7 +84,7 @@ export default class IPCService {
     }
   }
 
-  send(response: ResponseType): void {
+  public send(response: ResponseType): void {
     // eslint-disable-next-line no-restricted-syntax
     mainWindow?.webContents.send(response.channel, response);
   }

@@ -1,5 +1,5 @@
-import ResponseFactory from '../helpers';
-import { DatabaseService } from '../services/database.service';
+import { ResponseFactoryType } from 'main/helpers';
+import DatabaseService from '../services/database.service';
 import {
   InsertRequest,
   ResponseType,
@@ -13,8 +13,8 @@ export const InsertDataIPC = async (
   try {
     const { table, data } = request.body;
     const result = await db.insertData(table, data);
-    return ResponseFactory<InsertResponse>(request.channel, result);
+    return ResponseFactoryType<InsertResponse>(request.channel, result);
   } catch (e) {
-    return ResponseFactory(request.channel, e as Error);
+    return ResponseFactoryType(request.channel, e as Error);
   }
 };

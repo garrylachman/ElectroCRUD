@@ -13,7 +13,7 @@ import {
   useEditableControls,
 } from '@chakra-ui/react';
 import { OptionsOrGroups, Select } from 'chakra-react-select';
-import { omit } from 'lodash';
+import { omit } from 'underscore';
 import react, { ChangeEvent, FC, forwardRef, PropsWithChildren } from 'react';
 import { Control, Controller, useFormContext } from 'react-hook-form';
 import { MdClose, MdEdit, MdOutlineCheck } from 'react-icons/md';

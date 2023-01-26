@@ -24,7 +24,7 @@ import { useAppDispatch } from 'renderer/store/hooks';
 import { useIPCDeleteData, useIPCUpdateData } from 'renderer/ipc';
 import { ColumnRO } from 'renderer/defenitions/record-object';
 import { ToastReducer } from 'renderer/store/reducers';
-import { delay, get, head, isArray, isEqual, omit } from 'lodash';
+import { delay, get, head, isArray, isEqual, omit } from 'underscore';
 import { useColumnsForTable } from '.';
 import {
   DataTableActionMenu,

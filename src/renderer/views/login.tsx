@@ -12,6 +12,7 @@ import Typist from 'react-typist';
 import CryptoJS from 'crypto-js';
 import { useAppDispatch, useAppSelector } from 'renderer/store/hooks';
 import { SessionReducer } from 'renderer/store/reducers';
+import { isEqual } from 'underscore';
 
 export const Login = () => {
   const navigate = useNavigate();
@@ -20,7 +21,7 @@ export const Login = () => {
 
   const check = (value: string) => {
     const inputPass = CryptoJS.SHA256(value, passwordState.hash).toString();
-    if (_.isEqual(inputPass, passwordState.password)) {
+    if (isEqual(inputPass, passwordState.password)) {
       dispatch(SessionReducer.actions.setLoggedIn(true));
       navigate('/');
     }

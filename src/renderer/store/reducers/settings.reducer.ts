@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { merge } from 'lodash';
+import { extend } from 'underscore';
 import { SettingsRO } from 'renderer/defenitions/record-object';
 import { v4 } from 'uuid';
 
@@ -18,7 +18,7 @@ const settingsSlice = createSlice({
   initialState,
   reducers: {
     update: (state, action: PayloadAction<Partial<SettingsRO>>) => {
-      state = merge(state, action.payload);
+      state = extend(state, action.payload);
       state.modificationDate = Date.now();
     },
   },

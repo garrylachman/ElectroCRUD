@@ -8,7 +8,7 @@ import * as Knex from 'knex';
 import knexHooks from 'knex-hooks';
 import { whereFilter } from 'knex-json-filter';
 import { SchemaInspector } from 'knex-schema-inspector';
-import { isArray, mapKeys, omit, size } from 'lodash';
+import { isArray, omit, size, mapKeys } from 'lodash';
 import { autoInjectable, delay, inject, singleton } from 'tsyringe';
 
 import {
@@ -34,7 +34,8 @@ import {
 import { QueryAggregateEnum, ServerTypeEnum } from '../../shared/enums';
 import { heartBeatQueries, tablesListQueries } from '../data/queries';
 import { NoActiveClientError } from '../exceptions';
-import { LogService } from './log.service';
+import LogService from './log.service';
+import { IDatabaseService } from './interfaces/idatabase.service';
 
 const formatterParameters: SQLFormatterConfig = {
   reservedWordCase: 'upper',
@@ -44,7 +45,7 @@ const formatterParameters: SQLFormatterConfig = {
 
 @singleton()
 @autoInjectable()
-export default class DatabaseService {
+export default class DatabaseService implements IDatabaseService {
   private config?: Knex.Knex.Config;
 
   private connection?: Knex.Knex;

@@ -4,7 +4,7 @@
 /* eslint-disable jest/no-conditional-expect */
 
 import { ipcRenderer } from 'electron';
-import { DatabaseService } from 'main/services/database.service';
+import DatabaseService from 'main/services/database.service';
 import { IPCService } from 'main/services/ipc.service';
 import 'reflect-metadata';
 import {

@@ -1,4 +1,4 @@
-import { throttle } from 'lodash';
+import { throttle } from 'underscore';
 import { useCallback, useEffect, useState } from 'react';
 import { useAppDispatch } from 'renderer/store/hooks';
 import { ToastReducer } from 'renderer/store/reducers';

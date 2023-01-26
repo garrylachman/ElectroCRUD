@@ -1,4 +1,4 @@
-import { DatabaseService } from '../services/database.service';
+import DatabaseService from '../services/database.service';
 import { ConnectRequest, ErrorType } from '../../shared/defenitions';
 import { ResponseFactoryType } from '../helpers';
 

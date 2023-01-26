@@ -11,7 +11,7 @@ import {
 } from '@chakra-ui/react';
 import { joiResolver } from '@hookform/resolvers/joi';
 import * as Joi from 'joi';
-import { omit } from 'lodash';
+import { omit } from 'underscore';
 import { useContext, useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { MdClear, MdSave } from 'react-icons/md';

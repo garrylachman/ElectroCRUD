@@ -1,5 +1,5 @@
-import ResponseFactory from '../helpers';
-import { DatabaseService } from '../services/database.service';
+import { ResponseFactoryType } from 'main/helpers';
+import DatabaseService from '../services/database.service';
 import {
   UpdateRequest,
   ResponseType,
@@ -13,8 +13,8 @@ export const UpdateDataIPC = async (
   try {
     const { table, where, update } = request.body;
     const result = await db.updateData(table, update, where);
-    return ResponseFactory<UpdateResponse>(request.channel, result);
+    return ResponseFactoryType<UpdateResponse>(request.channel, result);
   } catch (e) {
-    return ResponseFactory(request.channel, e as Error);
+    return ResponseFactoryType(request.channel, e as Error);
   }
 };

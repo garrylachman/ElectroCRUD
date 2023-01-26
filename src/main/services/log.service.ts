@@ -1,26 +1,19 @@
-import { uniqueId } from 'lodash';
 import 'reflect-metadata';
-
-import { autoInjectable, delay, inject, singleton } from 'tsyringe';
-
+import { uniqueId } from 'lodash';
+import { autoInjectable, inject, singleton } from 'tsyringe';
 import { LogItem, LogItemType } from '../../shared/defenitions';
 import {
   IPCChannelEnum,
   LogItemSourceEnum,
   LogItemTypeEnum,
 } from '../../shared/enums';
-import { IPCService } from './ipc.service';
-
-type ILogService = {
-  [key in LogItemType]: (message: string, method?: string) => void;
-};
+import { IIPCService } from './interfaces/iipc.service';
+import { ILogService } from './interfaces/ilog.service';
 
 @singleton()
 @autoInjectable()
 export default class LogService implements ILogService {
-  constructor(
-    @inject(delay(() => IPCService)) private ipcService?: IPCService
-  ) {}
+  constructor(@inject('IIPCService') private ipcService: IIPCService) {}
 
   [LogItemTypeEnum.ERROR](message: string, method?: string) {
     this.addItem(LogItemTypeEnum.ERROR, message, method);

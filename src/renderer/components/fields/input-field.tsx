@@ -24,7 +24,7 @@ import {
 } from '@chakra-ui/react';
 import chroma from 'chroma-js';
 import { isValidMotionProp, motion } from 'framer-motion';
-import { get } from 'lodash';
+import { get } from 'underscore';
 import {
   CSSProperties,
   FC,

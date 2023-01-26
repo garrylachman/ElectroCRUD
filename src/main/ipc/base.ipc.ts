@@ -1,5 +1,5 @@
-import { injectable, delay, inject, singleton } from 'tsyringe';
-import { DatabaseService } from '../services/database.service';
+import { injectable, inject, singleton } from 'tsyringe';
+import { IDatabaseService } from '../services/interfaces/idatabase.service';
 import {
   ErrorResponse,
   ErrorType,
@@ -29,7 +29,7 @@ export type ExtractMethods<T> = PickMatching<
   (...arguments_: any[]) => unknown
 >;
 export type DatabaseServiceMethods = Extract<
-  keyof ExtractMethods<DatabaseService>,
+  keyof ExtractMethods<IDatabaseService>,
   `${string}WithProps`
 >;
 
@@ -49,18 +49,24 @@ export type DeepOmit<T, K> = T extends Primitive
         : never;
     };
 
+export interface IRequestFactory {
+  public async createRequest<T extends RequestType>(
+    request: T,
+    invoke: DatabaseServiceMethods
+  ): Promise<ResponseTypeSuccess | ErrorResponse>;
+};
+
 @singleton()
 @injectable()
-export default class RequestFactory {
-  constructor(
-    @inject(delay(() => DatabaseService))
-    private database: DatabaseService
-  ) {}
+export default class RequestFactory implements IRequestFactory {
+  constructor(@inject('IDatabaseService') private database: IDatabaseService) {}
 
-  async createRequest<T extends RequestType>(
+  public async createRequest<T extends RequestType>(
     request: T,
     invoke: DatabaseServiceMethods
   ): Promise<ResponseTypeSuccess | ErrorResponse> {
+    console.log('createRequest', request);
+    console.log('this.database', this.database);
     const { channel, body } = request;
     try {
       // eslint-disable-next-line max-len

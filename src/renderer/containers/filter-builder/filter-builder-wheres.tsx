@@ -1,5 +1,5 @@
 import { HStack, Icon, IconButton, VStack } from '@chakra-ui/react';
-import { isEqual, size } from 'lodash';
+import { isEqual, size } from 'underscore';
 import { FC, useMemo } from 'react';
 import { HiOutlineTrash } from 'react-icons/hi';
 import { MdOutlineAdd } from 'react-icons/md';

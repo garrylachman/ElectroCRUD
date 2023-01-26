@@ -18,7 +18,7 @@ import {
   OptionsOrGroups,
   StylesConfig,
 } from 'chakra-react-select';
-import { get } from 'lodash';
+import { get } from 'underscore';
 import React, { useCallback, useMemo } from 'react';
 import {
   Controller,

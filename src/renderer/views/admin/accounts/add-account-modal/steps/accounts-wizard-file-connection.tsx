@@ -5,7 +5,7 @@ import {
   InputFieldProps,
   registerFieldType,
 } from '@saas-ui/react';
-import { get } from 'lodash';
+import { get } from 'underscore';
 import { FC, forwardRef } from 'react';
 import { MdArrowBack, MdArrowForward } from 'react-icons/md';
 import { ValidateSqliteConnection } from 'renderer/defenitions/record-object';

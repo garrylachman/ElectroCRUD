@@ -17,7 +17,7 @@ import { joiResolver } from '@hookform/resolvers/joi';
 import chroma from 'chroma-js';
 import { AnimatePresence, motion } from 'framer-motion';
 import Joi from 'joi';
-import { pick } from 'lodash';
+import { pick } from 'underscore';
 import { FC, useRef } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { create, InstanceProps } from 'react-modal-promise';
@@ -31,9 +31,7 @@ import {
   TagType,
 } from 'renderer/defenitions/record-object';
 import { useAppSelector } from 'renderer/store/hooks';
-import {
-  PoliciesReducer,
-} from 'renderer/store/reducers';
+import { PoliciesReducer } from 'renderer/store/reducers';
 
 import { PolicyFactory } from './policy-factory';
 

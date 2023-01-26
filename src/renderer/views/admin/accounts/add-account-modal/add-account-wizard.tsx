@@ -9,7 +9,7 @@ import { StepperStep } from '@saas-ui/react';
 import { Stepper } from '@saas-ui/stepper';
 import chroma from 'chroma-js';
 import { AnimatePresence, motion } from 'framer-motion';
-import { pick } from 'lodash';
+import { pick } from 'underscore';
 import { FC, useCallback, useState } from 'react';
 import { InstanceProps } from 'react-modal-promise';
 import { MotionBox } from 'renderer/components/motions';

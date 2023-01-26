@@ -1,10 +1,10 @@
+import { ResponseFactoryType } from 'main/helpers';
 import {
   ReadDataRequest,
   ReadDataResponse,
   ResponseType,
 } from '../../shared/defenitions';
-import ResponseFactory from '../helpers';
-import { DatabaseService } from '../services/database.service';
+import DatabaseService from '../services/database.service';
 
 export const ReadDataIPC = async (
   db: DatabaseService,
@@ -33,8 +33,8 @@ export const ReadDataIPC = async (
       join,
       filter
     );
-    return ResponseFactory<ReadDataResponse>(request.channel, result);
+    return ResponseFactoryType<ReadDataResponse>(request.channel, result);
   } catch (e) {
-    return ResponseFactory(request.channel, e as Error);
+    return ResponseFactoryType(request.channel, e as Error);
   }
 };

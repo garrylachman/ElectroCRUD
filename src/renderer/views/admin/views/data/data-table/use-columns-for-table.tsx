@@ -1,4 +1,4 @@
-import { mapValues } from 'lodash';
+import { mapObject } from 'underscore';
 import memoize from 'proxy-memoize';
 import { useContext, useMemo } from 'react';
 import { ViewScopedContext } from 'renderer/contexts';
@@ -15,12 +15,12 @@ export const useColumnsForTable = () => {
     () => ({
       ...data,
       rows: data.rows.map((item) =>
-        mapValues(item, (o) => {
-          if (o instanceof Date) {
-            return o.toISOString();
+        mapObject(item, (value) => {
+          if (value instanceof Date) {
+            return value.toISOString();
           }
           // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-          return o;
+          return value;
         })
       ),
     }),

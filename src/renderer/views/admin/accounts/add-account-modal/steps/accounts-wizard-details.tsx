@@ -1,6 +1,6 @@
 import { Box, Button, Icon } from '@chakra-ui/react';
 import { Field, Form, FormLayout, SelectField } from '@saas-ui/react';
-import { pick } from 'lodash';
+import { pick } from 'underscore';
 import { FC } from 'react';
 import { MdArrowBack, MdArrowForward } from 'react-icons/md';
 import {

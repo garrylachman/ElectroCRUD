@@ -9,7 +9,7 @@ import {
   Text,
   VStack,
 } from '@chakra-ui/react';
-import { filter, map } from 'lodash';
+import { filter, map } from 'underscore';
 import { FC, useEffect } from 'react';
 import { MdHdrAuto, MdOutline1XMobiledata, MdVpnKey } from 'react-icons/md';
 import { RxTextNone } from 'react-icons/rx';

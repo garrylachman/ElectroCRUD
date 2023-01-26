@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker';
-import { compact, fill } from 'lodash';
+import { compact } from 'underscore';
 import memoize from 'proxy-memoize';
 import * as R from 'ramda';
 import { useMemo } from 'react';
@@ -13,19 +13,34 @@ import { PoliciesReducer } from 'renderer/store/reducers';
 import { RootState } from 'renderer/store/store';
 import { O } from 'ts-toolbelt';
 
+const mask = (
+  value: string,
+  maskChar: string,
+  unmaskedLength: number,
+  maskFromStart = true
+) => {
+  const maskStart = maskFromStart ? 0 : Math.max(0, unmaskedLength);
+  const maskEnd = maskFromStart
+    ? Math.max(0, value.length - unmaskedLength)
+    : value.length;
+  return value.split('')
+      .map((char, index) => {
+        return index >= maskStart && index < maskEnd ? maskChar : char;
+      })
+      .join('');
+};
+
 const doMask = (
   value = '',
   count: number,
   maskWith = '#',
   direction: 'left' | 'right' = 'right'
 ) => {
-  const start = direction === 'right' ? count * -1 : 0;
-  const end = direction === 'right' ? undefined : count;
-  return fill(R.splitEvery(1, value), maskWith, start, end).join('');
+  return mask(value, maskWith, count, direction === 'left');
 };
 
 const doFullMask = (value = '', maskWith = '#') => {
-  return fill(R.splitEvery(1, value), maskWith).join('');
+  return mask(value, maskWith, value.length, true);
 };
 
 const doFake = (fake: string) => {

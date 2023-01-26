@@ -1,4 +1,4 @@
-import { get, throttle } from 'lodash';
+import { get, throttle } from 'underscore';
 import {
   createContext,
   FC,

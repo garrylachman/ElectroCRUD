@@ -3,7 +3,7 @@ import { joiResolver } from '@hookform/resolvers/joi';
 import { Form, FormLayout, SubmitButton } from '@saas-ui/forms';
 import CryptoJS from 'crypto-js';
 import Joi from 'joi';
-import { pick } from 'lodash';
+import { pick } from 'underscore';
 import { FC } from 'react';
 import {
   PasswordSettings,

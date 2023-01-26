@@ -1,5 +1,5 @@
-import ResponseFactory from '../helpers';
-import { DatabaseService } from '../services/database.service';
+import { ResponseFactoryType } from 'main/helpers';
+import DatabaseService from '../services/database.service';
 import {
   DeleteRequest,
   ResponseType,
@@ -13,8 +13,8 @@ export const DeleteDataIPC = async (
   try {
     const { table, where } = request.body;
     const result = await db.deleteData(table, where);
-    return ResponseFactory<DeleteResponse>(request.channel, result);
+    return ResponseFactoryType<DeleteResponse>(request.channel, result);
   } catch (e) {
-    return ResponseFactory(request.channel, e as Error);
+    return ResponseFactoryType(request.channel, e as Error);
   }
 };

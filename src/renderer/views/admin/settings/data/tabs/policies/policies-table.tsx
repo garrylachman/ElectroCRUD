@@ -1,6 +1,6 @@
 import { Badge, Box } from '@chakra-ui/react';
 import { EntityState } from '@reduxjs/toolkit';
-import { size } from 'lodash';
+import { size } from 'underscore';
 import { FC, useMemo } from 'react';
 import { TbEdit, TbTrash } from 'react-icons/tb';
 import ReactTimeAgo from 'react-time-ago';

@@ -24,7 +24,7 @@ import {
 } from '@tanstack/react-table';
 import CSS from 'csstype';
 import { motion } from 'framer-motion';
-import { groupBy, reduce, uniq } from 'lodash';
+import { groupBy, reduce, uniq } from 'underscore';
 import React, {
   FC,
   PropsWithChildren,

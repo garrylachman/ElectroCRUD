@@ -10,7 +10,7 @@ import {
   MenuList,
   Text,
 } from '@chakra-ui/react';
-import { omit } from 'lodash';
+import { omit } from 'underscore';
 import { FC, useMemo } from 'react';
 import { MdArrowDropDown } from 'react-icons/md';
 import { ObjectID } from 'renderer/helpers';

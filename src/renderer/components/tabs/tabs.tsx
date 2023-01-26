@@ -29,7 +29,7 @@ import { IconType } from 'react-icons';
 import { MdClose } from 'react-icons/md';
 import { ObjectID } from 'renderer/helpers';
 import { O } from 'ts-toolbelt';
-import { omit } from 'lodash';
+import { omit } from 'underscore';
 
 export type ElectroCRUDTabProperties = O.Either<
   {

@@ -7,7 +7,7 @@ import {
   Text,
   useBoolean,
 } from '@chakra-ui/react';
-import { isBoolean } from 'lodash';
+import { isBoolean } from 'underscore';
 import * as R from 'ramda';
 import { FC, Fragment } from 'react';
 import { MdCheck, MdClose } from 'react-icons/md';

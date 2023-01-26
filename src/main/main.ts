@@ -6,9 +6,10 @@ import * as Splashscreen from '@trodi/electron-splashscreen';
 import path from 'path';
 
 import MenuBuilder from './menu';
-import Services from './services';
+import { InitServices, ServiceRegistery } from './services';
 import { resolveHtmlPath } from './util';
 
+new ServiceRegistery();
 /**
  * This module executes inside of electron's main process. You can start
  * electron renderer process from here and communicate with the other processes
@@ -17,7 +18,6 @@ import { resolveHtmlPath } from './util';
  * When running `npm run build` or `npm run build:main`, this file is compiled to
  * `./src/main.js` using webpack. This gives us some performance wins.
  */
-
 
 // eslint-disable-next-line import/no-mutable-exports, unicorn/no-null
 export let mainWindow: BrowserWindow | null = null;
@@ -33,7 +33,7 @@ sourceMapSupport.install();
 */
 const isDebug = !app.isPackaged;
 
-if (!isDebug) {
+if (isDebug) {
   require('electron-debug')();
 }
 
@@ -93,13 +93,16 @@ const createWindow = async () => {
 
   mainWindow = Splashscreen.initSplashScreen(config);
 
-  mainWindow.loadFile(resolveHtmlPath('index.html'));
+  if (isDebug) {
+    mainWindow.loadURL(resolveHtmlPath('index.html'));
+  } else {
+    mainWindow.loadFile(resolveHtmlPath('index.html'));
+  }
 
   mainWindow.on('ready-to-show', () => {
     if (!mainWindow) {
       throw new Error('"mainWindow" is not defined');
     }
-    Services();
     if (process.env.START_MINIMIZED) {
       mainWindow.minimize();
     } else {
@@ -137,6 +140,7 @@ app
   .whenReady()
   .then(() => {
     createWindow();
+    InitServices();
     app.on('activate', () => {
       // On macOS it's common to re-create a window in the app when the
       // dock icon is clicked and there are no other windows open.

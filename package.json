@@ -201,6 +201,7 @@
     "ts-toolbelt": "^9.6.0",
     "tsyringe": "^4.7.0",
     "type-fest": "^3.4.0",
+    "underscore": "^1.13.6",
     "use-debounce": "^8.0.4",
     "usehooks-ts": "^2.9.1",
     "uuid": "^9.0.0",
@@ -233,6 +234,7 @@
     "@types/react-typist": "^2.0.3",
     "@types/redux-logger": "^3.0.9",
     "@types/terser-webpack-plugin": "^5.0.4",
+    "@types/underscore": "^1.11.4",
     "@types/uuid": "^8.3.4",
     "@types/webpack-bundle-analyzer": "^4.4.2",
     "@typescript-eslint/eslint-plugin": "^5.45.0",
@@ -305,8 +307,8 @@
     "@types/react-dom": "18.0.6"
   },
   "build": {
-    "productName": "ElectronReact",
-    "appId": "org.erb.ElectronReact",
+    "productName": "ElectroCRUD",
+    "appId": "co.garry.ElectroCRUD",
     "asar": false,
     "asarUnpack": "**\\*.{node,dll}",
     "files": [
