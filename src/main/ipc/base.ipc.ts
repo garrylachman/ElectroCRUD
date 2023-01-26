@@ -51,7 +51,7 @@ export type DeepOmit<T, K> = T extends Primitive
 
 @singleton()
 @injectable()
-export class RequestFactory {
+export default class RequestFactory {
   constructor(
     @inject(delay(() => DatabaseService))
     private database: DatabaseService

@@ -8,5 +8,6 @@ const foldersToRemove = [
 ];
 
 foldersToRemove.forEach((folder) => {
+  rimraf.sync(`${folder}/**`);
   rimraf.sync(folder);
 });

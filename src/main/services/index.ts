@@ -1,23 +1,24 @@
-import { BrowserWindow } from 'electron';
-
+import 'reflect-metadata';
 import { container } from 'tsyringe';
 
-import { DatabaseService } from './database.service';
-import { RequestFactory } from '../ipc';
-import { IPCService } from './ipc.service';
-import { LogService } from './log.service';
+import DatabaseService from './database.service';
+import RequestFactory from '../ipc/base.ipc';
+import IPCService from './ipc.service';
+import LogService from './log.service';
 
-export * from './database.service';
-export * from './ipc.service';
-export * from './log.service';
+//export * from './database.service';
+//export * from './ipc.service';
+//export * from './log.service';
 
-export const initServices = () => {
+export default function Services() {
+  console.log("container", LogService);
+
   container.resolve(LogService);
-  container.resolve(DatabaseService);
+  container.resolve(IPCService);
   container.resolve(RequestFactory);
-  container.afterResolution(
+  container.resolve(DatabaseService);
+  /*container.afterResolution(
     IPCService,
-    // Callback signature is (token: InjectionToken<T>, result: T | T[], resolutionType: ResolutionType)
     (_t, result) => {
       try {
         (result as IPCService).listen();
@@ -26,6 +27,6 @@ export const initServices = () => {
       }
     },
     { frequency: 'Once' }
-  );
-  container.resolve(IPCService);
-};
+  );*/
+  //container.resolve(IPCService);
+}

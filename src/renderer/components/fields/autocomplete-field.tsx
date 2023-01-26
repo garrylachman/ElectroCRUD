@@ -18,7 +18,7 @@ import {
   OptionsOrGroups,
   StylesConfig,
 } from 'chakra-react-select';
-import _ from 'lodash';
+import { get } from 'lodash';
 import React, { useCallback, useMemo } from 'react';
 import {
   Controller,
@@ -111,11 +111,11 @@ export const AutocompleteField = <T extends Option<unknown>['value']>({
   const { ...dirts } = dirtyFields;
 
   const error = useMemo(
-    () => _.get<InputErrors, string>(errs as InputErrors, id),
+    () => get<InputErrors, string>(errs as InputErrors, id),
     [errs]
   );
   const isError = useMemo(() => error !== undefined, [error]);
-  const isDirty = useMemo(() => _.get(dirts, id, false), [dirts]);
+  const isDirty = useMemo(() => get(dirts, id, false), [dirts]);
 
   const chakraStyles: ChakraStylesConfig = {
     menu: (provided, state) => ({

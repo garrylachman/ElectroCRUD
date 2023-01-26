@@ -1,6 +1,6 @@
 import { Badge, Box } from '@chakra-ui/react';
 import { EntityState } from '@reduxjs/toolkit';
-import _ from 'lodash';
+import { size } from 'lodash';
 import { FC, useMemo } from 'react';
 import { TbEdit, TbTrash } from 'react-icons/tb';
 import ReactTimeAgo from 'react-time-ago';
@@ -36,7 +36,7 @@ export const PoliciesTable: FC<PoliciesTableProperties> = ({
           type: PolicyRuleTemplates.find(
             (policyType) => policyType.type === item.type
           )?.name,
-          associated_tags: _.size(item.tags || []),
+          associated_tags: size(item.tags || []),
         })),
     [policyState, PolicyRuleTemplates]
   );

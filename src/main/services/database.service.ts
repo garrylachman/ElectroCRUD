@@ -1,5 +1,6 @@
 import 'reflect-metadata';
-
+import 'sqlite3';
+import 'better-sqlite3';
 import sqlFormatter from '@sqltools/formatter';
 import { Config as SQLFormatterConfig } from '@sqltools/formatter/lib/core/types';
 import getCurrentLine from 'get-current-line';
@@ -7,7 +8,7 @@ import * as Knex from 'knex';
 import knexHooks from 'knex-hooks';
 import { whereFilter } from 'knex-json-filter';
 import { SchemaInspector } from 'knex-schema-inspector';
-import _, { omit } from 'lodash';
+import { isArray, mapKeys, omit, size } from 'lodash';
 import { autoInjectable, delay, inject, singleton } from 'tsyringe';
 
 import {
@@ -43,7 +44,7 @@ const formatterParameters: SQLFormatterConfig = {
 
 @singleton()
 @autoInjectable()
-export class DatabaseService {
+export default class DatabaseService {
   private config?: Knex.Knex.Config;
 
   private connection?: Knex.Knex;
@@ -173,7 +174,7 @@ export class DatabaseService {
       if (result?.rows) {
         return result.rows;
       }
-      if (_.isArray(result) && _.size(result) === 2) {
+      if (isArray(result) && size(result) === 2) {
         return result[0];
       }
       return result;
@@ -417,7 +418,7 @@ export class DatabaseService {
         return qw;
       });
 
-      q?.update(_.mapKeys(update, (value, key) => `${table}.${key}`));
+      q?.update(mapKeys(update, (value, key) => `${table}.${key}`));
       await q;
 
       this.logService?.success(

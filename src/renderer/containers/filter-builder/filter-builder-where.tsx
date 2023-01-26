@@ -1,5 +1,4 @@
 import { Grid, GridItem, Input } from '@chakra-ui/react';
-import _ from 'lodash';
 import { FC, PropsWithChildren, useContext, useEffect, useState } from 'react';
 import { AutocompleteField } from 'renderer/components/fields';
 import TagsField from 'renderer/components/fields/tags-field';

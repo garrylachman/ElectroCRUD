@@ -1,8 +1,8 @@
+import { uniqueId } from 'lodash';
 import 'reflect-metadata';
 
 import { autoInjectable, delay, inject, singleton } from 'tsyringe';
 
-import _ from 'lodash';
 import { LogItem, LogItemType } from '../../shared/defenitions';
 import {
   IPCChannelEnum,
@@ -17,7 +17,7 @@ type ILogService = {
 
 @singleton()
 @autoInjectable()
-export class LogService implements ILogService {
+export default class LogService implements ILogService {
   constructor(
     @inject(delay(() => IPCService)) private ipcService?: IPCService
   ) {}
@@ -45,7 +45,7 @@ export class LogService implements ILogService {
       method,
       source: LogItemSourceEnum.Backend,
       ts: Date.now(),
-      id: _.uniqueId('logitem_'),
+      id: uniqueId('logitem_'),
     };
     this.ipcService?.send({ channel: IPCChannelEnum.LOG_CHANNEL, body: item });
   }

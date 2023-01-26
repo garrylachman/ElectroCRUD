@@ -1,5 +1,5 @@
 import { HStack, Icon, IconButton, VStack } from '@chakra-ui/react';
-import _ from 'lodash';
+import { isEqual, size } from 'lodash';
 import { FC, useMemo } from 'react';
 import { HiOutlineTrash } from 'react-icons/hi';
 import { MdOutlineAdd } from 'react-icons/md';
@@ -39,7 +39,7 @@ export const FilterBuilderWheres: FC<FilterBuilderWheresProperties> = ({
           initialState={item}
         >
           <HStack display="flex" justifyContent="flex-end">
-            {_.isEqual(index + 1, _.size(array)) && (
+            {isEqual(index + 1, size(array)) && (
               <IconButton
                 variant="solid"
                 colorScheme="primary"

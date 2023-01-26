@@ -1,6 +1,6 @@
 import { Box, Button, Icon } from '@chakra-ui/react';
 import { Field, Form, FormLayout, SelectField } from '@saas-ui/react';
-import _ from 'lodash';
+import { pick } from 'lodash';
 import { FC } from 'react';
 import { MdArrowBack, MdArrowForward } from 'react-icons/md';
 import {
@@ -20,7 +20,7 @@ export const AccountsWizardDetails: FC<
   back,
   initialValue = { name: '', client: ServerTypeEnum.SQLITE },
 }) => {
-  const onSubmit = (data: FormData) => next(_.pick(data, ['name', 'client']));
+  const onSubmit = (data: FormData) => next(pick(data, ['name', 'client']));
 
   return (
     <Box>

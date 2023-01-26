@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import { get, throttle } from 'lodash';
 import {
   createContext,
   FC,
@@ -46,7 +46,14 @@ export type DashboardContextType = {
 const initial: DashboardContextType = {
   setView: (viewId) => {},
   data: { columns: [], rows: [], meta: { totalCount: 0, limit: 10, page: 1 } },
-  control: [() => {}, (number) => {}, (number) => {}, (value) => {}, (value) => {}, (value) => {}],
+  control: [
+    () => {},
+    (number) => {},
+    (number) => {},
+    (value) => {},
+    (value) => {},
+    (value) => {},
+  ],
   status: [false, false],
 };
 
@@ -90,7 +97,7 @@ export const DashboardContextProvider: FC<
     () =>
       viewState.columns
         .filter((item) => item.enabled)
-        .map<string>((item) => _.get(item, 'name', item)),
+        .map<string>((item) => get(item, 'name', item)),
     [viewState.columns]
   );
 
@@ -98,7 +105,7 @@ export const DashboardContextProvider: FC<
     () =>
       viewState.columns
         .filter((item) => item.searchable && item.enabled)
-        .map<string>((item) => _.get(item, 'name', item)),
+        .map<string>((item) => get(item, 'name', item)),
     [viewState.columns]
   );
 
@@ -108,7 +115,7 @@ export const DashboardContextProvider: FC<
       table: viewState.table,
       columns,
       limit,
-      offset: limit * (page -1 ),
+      offset: limit * (page - 1),
       order: order || { column: 1, order: 'asc' },
       searchText: search,
       searchColumns,
@@ -116,7 +123,7 @@ export const DashboardContextProvider: FC<
     },
   });
 
-  const debouncedExecute = _.throttle(execute, 1000);
+  const debouncedExecute = throttle(execute, 1000);
 
   const control = [
     debouncedExecute,
@@ -148,7 +155,7 @@ export const DashboardContextProvider: FC<
   }, [limit]);
 
   useUpdateEffect(() => {
-   debouncedExecute();
+    debouncedExecute();
   }, [page]);
 
   useUpdateEffect(() => {

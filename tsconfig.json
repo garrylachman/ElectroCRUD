@@ -1,10 +1,10 @@
 {
   "compilerOptions": {
     "incremental": true,
-    "target": "esnext",
+    "target": "es2021",
     "skipLibCheck": true,
-    "module": "esnext",
-    "lib": ["dom", "esnext", "esnext", "dom.iterable"],
+    "module": "commonjs",
+    "lib": ["dom", "es2021", "dom.iterable"],
     "jsx": "react-jsx",
     "strict": true,
     "sourceMap": true,

@@ -7,7 +7,7 @@ import {
   TagCloseButton,
   TagLabel,
 } from '@chakra-ui/react';
-import _ from 'lodash';
+import { clone, set } from 'lodash';
 import { FC, KeyboardEvent, useEffect, useRef, useState } from 'react';
 
 export type TagsFieldProperties = {
@@ -30,7 +30,7 @@ export const TagsField: FC<TagsFieldProperties> = ({
 
   useEffect(() => {
     // @ts-ignore
-    _.set(reference.current, 'value', '');
+    set(reference.current, 'value', '');
     if (onChange) {
       onChange(state.map((t) => t.name));
     }
@@ -40,7 +40,7 @@ export const TagsField: FC<TagsFieldProperties> = ({
     if (event.keyCode === 13) {
       setState((previous) => [
         ...previous,
-        { name: _.clone(event.target.value), id: previous.length },
+        { name: clone(event.target.value), id: previous.length },
       ]);
     }
   };

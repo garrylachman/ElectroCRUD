@@ -11,7 +11,7 @@ import {
 } from '@chakra-ui/react';
 import { joiResolver } from '@hookform/resolvers/joi';
 import * as Joi from 'joi';
-import _ from 'lodash';
+import { omit } from 'lodash';
 import { useContext, useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { MdClear, MdSave } from 'react-icons/md';
@@ -81,7 +81,7 @@ export const AddOrEditView = () => {
     resolver: joiResolver(validationSchema),
     reValidateMode: 'onChange',
     mode: 'all',
-    defaultValues: _.omit(viewState, [
+    defaultValues: omit(viewState, [
       'id',
       'creationDate',
       'modificationDate',
@@ -98,7 +98,7 @@ export const AddOrEditView = () => {
 
   useEffect(() => {
     reset(
-      _.omit(viewState, [
+      omit(viewState, [
         'id',
         'creationDate',
         'modificationDate',

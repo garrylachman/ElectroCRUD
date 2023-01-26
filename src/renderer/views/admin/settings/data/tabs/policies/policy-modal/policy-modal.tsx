@@ -11,37 +11,29 @@ import {
   GridItem,
   Input,
   Select,
-  Textarea,
 } from '@chakra-ui/react';
 import { FocusableElement } from '@chakra-ui/utils';
 import { joiResolver } from '@hookform/resolvers/joi';
-import { EntityState } from '@reduxjs/toolkit';
 import chroma from 'chroma-js';
-import { AnimatePresence, LayoutGroup, motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import Joi from 'joi';
-import _ from 'lodash';
-import memoize from 'proxy-memoize';
-import * as R from 'ramda';
-import { FC, useEffect, useRef } from 'react';
+import { pick } from 'lodash';
+import { FC, useRef } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { create, InstanceProps } from 'react-modal-promise';
-import { useSelector } from 'react-redux';
 import { CancelButton } from 'renderer/components/buttons/cancel-button';
 import { SaveButton } from 'renderer/components/buttons/save-button';
 import { TagsAutocomplete } from 'renderer/components/fields';
 import { MotionBox } from 'renderer/components/motions/motion-box';
 import {
-  ColumnReferanceRO,
   PolicyRuleTemplates,
   PolicyType,
   TagType,
 } from 'renderer/defenitions/record-object';
 import { useAppSelector } from 'renderer/store/hooks';
 import {
-  ColumnsReferanceReducer,
   PoliciesReducer,
 } from 'renderer/store/reducers';
-import { RootState } from 'renderer/store/store';
 
 import { PolicyFactory } from './policy-factory';
 
@@ -105,7 +97,7 @@ const PolicyModalComponent: FC<PolicyModalProperties> = ({
     reValidateMode: 'onChange',
     mode: 'all',
     resolver: joiResolver(validationSchema),
-    defaultValues: _.pick(policyState, [
+    defaultValues: pick(policyState, [
       'name',
       'type',
       'tags',
@@ -140,7 +132,7 @@ const PolicyModalComponent: FC<PolicyModalProperties> = ({
       >
         <AlertDialogOverlay>
           <motion.div
-            onClick={(error_) => error_.stopPropagation()}
+            onClick={(event) => event.stopPropagation()}
             variants={flip}
             initial="hidden"
             animate="visible"

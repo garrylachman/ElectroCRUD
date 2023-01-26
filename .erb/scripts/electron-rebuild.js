@@ -1,9 +1,7 @@
 import { execSync } from 'child_process';
 import fs from 'fs';
+import { dependencies } from '../../release/app/package.json';
 import webpackPaths from '../configs/webpack.paths';
-import pkg from '../../release/app/package.json' assert { type: 'json' };
-
-const { dependencies } = pkg;
 
 if (
   Object.keys(dependencies || {}).length > 0 &&

@@ -8,8 +8,7 @@ import {
 } from '@chakra-ui/react';
 import chroma from 'chroma-js';
 import { AnimatePresence, motion } from 'framer-motion';
-import _ from 'lodash';
-import { FC, ReactNode, RefObject, useCallback, useMemo, useRef } from 'react';
+import { FC, ReactNode, RefObject, useCallback, useRef } from 'react';
 import { FieldValues, UseFormReturn } from 'react-hook-form';
 import { create, InstanceProps } from 'react-modal-promise';
 

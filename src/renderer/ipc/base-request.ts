@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import { throttle } from 'lodash';
 import { useCallback, useEffect, useState } from 'react';
 import { useAppDispatch } from 'renderer/store/hooks';
 import { ToastReducer } from 'renderer/store/reducers';
@@ -23,7 +23,7 @@ export const useBaseRequest = <T extends ResponseType>(
   const [isExecuted, setIsExecuted] = useState<boolean>(false);
 
   const execute = useCallback(
-    _.throttle(() => {
+    throttle(() => {
       // @ts-ignore
       setResult();
       setIsLoading(true);

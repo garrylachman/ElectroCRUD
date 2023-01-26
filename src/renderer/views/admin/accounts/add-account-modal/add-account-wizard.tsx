@@ -9,13 +9,18 @@ import { StepperStep } from '@saas-ui/react';
 import { Stepper } from '@saas-ui/stepper';
 import chroma from 'chroma-js';
 import { AnimatePresence, motion } from 'framer-motion';
-import _ from 'lodash';
+import { pick } from 'lodash';
 import { FC, useCallback, useState } from 'react';
 import { InstanceProps } from 'react-modal-promise';
 import { MotionBox } from 'renderer/components/motions';
 import { WithErrorComponent } from 'renderer/containers/error';
 import { AccountRO } from 'renderer/defenitions/record-object';
-import { ConnectionConfig, FileConnectionConfig, ServerConnectionConfig, ServerTypeEnum } from 'shared';
+import {
+  ConnectionConfig,
+  FileConnectionConfig,
+  ServerConnectionConfig,
+  ServerTypeEnum,
+} from 'shared';
 
 import {
   AccountsWizardDetails,
@@ -123,7 +128,7 @@ export const AddAccountWizard: FC<AddAccountWizardProperties> = ({
         <AccountsWizardDetails
           next={next}
           back={back}
-          initialValue={_.pick(state, ['name', 'client'])}
+          initialValue={pick(state, ['name', 'client'])}
         />
       ),
     },
@@ -158,7 +163,7 @@ export const AddAccountWizard: FC<AddAccountWizardProperties> = ({
       >
         <ModalOverlay>
           <motion.div
-            onClick={(error_) => error_.stopPropagation()}
+            onClick={(event) => event.stopPropagation()}
             className="modal  orange-gradient"
             variants={flip}
             initial="hidden"

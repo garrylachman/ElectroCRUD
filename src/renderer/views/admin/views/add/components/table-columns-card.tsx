@@ -9,7 +9,7 @@ import {
   Text,
   VStack,
 } from '@chakra-ui/react';
-import _ from 'lodash';
+import { filter, map } from 'lodash';
 import { FC, useEffect } from 'react';
 import { MdHdrAuto, MdOutline1XMobiledata, MdVpnKey } from 'react-icons/md';
 import { RxTextNone } from 'react-icons/rx';
@@ -49,8 +49,8 @@ export const TableColumnsCard: FC<TableColumnsCardProperties> = ({
 
   useEffect(() => {
     if (result) {
-      const names = new Set(_.map(viewState.columns, 'name'));
-      const missingColumns = _.filter(
+      const names = new Set(map(viewState.columns, 'name'));
+      const missingColumns = filter(
         result.body,
         (item) => !names.has(item.name)
       );

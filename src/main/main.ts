@@ -1,21 +1,12 @@
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-floating-promises */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-misused-promises */
-/* eslint-disable @typescript-eslint/no-var-requires */
-/* eslint global-require: off, no-console: off, promise/always-return: off */
 import 'reflect-metadata';
 
-import { app, BrowserWindow, session, shell } from 'electron';
+import { app, BrowserWindow, shell } from 'electron';
 import * as Splashscreen from '@trodi/electron-splashscreen';
 // eslint-disable-next-line unicorn/prefer-node-protocol
 import path from 'path';
 
 import MenuBuilder from './menu';
-import { initServices } from './services';
+import Services from './services';
 import { resolveHtmlPath } from './util';
 
 /**
@@ -26,7 +17,7 @@ import { resolveHtmlPath } from './util';
  * When running `npm run build` or `npm run build:main`, this file is compiled to
  * `./src/main.js` using webpack. This gives us some performance wins.
  */
-const reactDevelopmentToolsPath = path.resolve('./devtools/');
+
 
 // eslint-disable-next-line import/no-mutable-exports, unicorn/no-null
 export let mainWindow: BrowserWindow | null = null;
@@ -37,10 +28,12 @@ const sourceMapSupport = require('source-map-support');
 sourceMapSupport.install();
 // }
 
-const isDebug =
+/*const isDebug =
   process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true';
+*/
+const isDebug = !app.isPackaged;
 
-if (isDebug) {
+if (!isDebug) {
   require('electron-debug')();
 }
 
@@ -85,7 +78,7 @@ const createWindow = async () => {
 
   const config: Splashscreen.Config = {
     windowOpts: mainOptions,
-    templateUrl: `${RESOURCES_PATH}/splash.html`,
+    templateUrl: getAssetPath('splash.html'),
     minVisible: 2000,
     delay: 0,
     splashScreenOpts: {
@@ -100,13 +93,13 @@ const createWindow = async () => {
 
   mainWindow = Splashscreen.initSplashScreen(config);
 
-  mainWindow.loadURL(resolveHtmlPath('/'));
+  mainWindow.loadFile(resolveHtmlPath('index.html'));
 
   mainWindow.on('ready-to-show', () => {
     if (!mainWindow) {
       throw new Error('"mainWindow" is not defined');
     }
-    initServices();
+    Services();
     if (process.env.START_MINIMIZED) {
       mainWindow.minimize();
     } else {
@@ -142,10 +135,7 @@ app.on('window-all-closed', () => {
 
 app
   .whenReady()
-  .then(async () => {
-    await session.defaultSession.loadExtension(
-      path.join(reactDevelopmentToolsPath, 'react-devtools')
-    );
+  .then(() => {
     createWindow();
     app.on('activate', () => {
       // On macOS it's common to re-create a window in the app when the

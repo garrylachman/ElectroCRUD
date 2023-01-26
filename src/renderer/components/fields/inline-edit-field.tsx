@@ -13,7 +13,7 @@ import {
   useEditableControls,
 } from '@chakra-ui/react';
 import { OptionsOrGroups, Select } from 'chakra-react-select';
-import _ from 'lodash';
+import { omit } from 'lodash';
 import react, { ChangeEvent, FC, forwardRef, PropsWithChildren } from 'react';
 import { Control, Controller, useFormContext } from 'react-hook-form';
 import { MdClose, MdEdit, MdOutlineCheck } from 'react-icons/md';
@@ -159,7 +159,7 @@ export const RenderHTML: FC<PropsWithChildren> = ({ ...properties }) => (
         dangerouslySetInnerHTML={{
           __html: properties.children?.toString()?.split('\n').join('<br/>'),
         }}
-        {..._.omit(properties, ['children', 'ref'])}
+        {...omit(properties, ['children', 'ref'])}
       />
     )}
   </Box>

@@ -9,19 +9,14 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import { EntityState } from '@reduxjs/toolkit';
-import _ from 'lodash';
 import memoize from 'proxy-memoize';
 import { FC, useContext, useMemo } from 'react';
 import { MdSearch } from 'react-icons/md';
 import { TbFilter, TbFilterOff, TbPlaylistAdd, TbTrash } from 'react-icons/tb';
 import { useSelector } from 'react-redux';
-import {
-  ActionsDropdownMenu,
-} from 'renderer/components/buttons/actions-dropdown-menu';
+import { ActionsDropdownMenu } from 'renderer/components/buttons/actions-dropdown-menu';
 import { RippleButton } from 'renderer/components/buttons/ripple-button';
-import {
-  ConfirmPromiseDeleteModal,
-} from 'renderer/components/modals/confirm-promise-delete-modal';
+import { ConfirmPromiseDeleteModal } from 'renderer/components/modals/confirm-promise-delete-modal';
 import { ViewScopedContext } from 'renderer/contexts';
 import { ViewFilterRO } from 'renderer/defenitions/record-object';
 import { useAppDispatch } from 'renderer/store/hooks';

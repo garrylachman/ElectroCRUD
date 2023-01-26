@@ -11,7 +11,6 @@ import { useNavigate } from 'react-router-dom';
 import Typist from 'react-typist';
 import CryptoJS from 'crypto-js';
 import { useAppDispatch, useAppSelector } from 'renderer/store/hooks';
-import _ from 'lodash';
 import { SessionReducer } from 'renderer/store/reducers';
 
 export const Login = () => {

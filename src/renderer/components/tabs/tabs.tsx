@@ -29,7 +29,7 @@ import { IconType } from 'react-icons';
 import { MdClose } from 'react-icons/md';
 import { ObjectID } from 'renderer/helpers';
 import { O } from 'ts-toolbelt';
-import _ from 'lodash';
+import { omit } from 'lodash';
 
 export type ElectroCRUDTabProperties = O.Either<
   {
@@ -145,7 +145,7 @@ export const ElectroCRUDTabs = forwardRef<
                 {tabsState.map((tab) => (
                   <Reorder.Item
                     key={ObjectID.id(
-                      _.omit(tab, ['element', 'component', 'icon'])
+                      omit(tab, ['element', 'component', 'icon'])
                     )}
                     value={tab}
                     initial={{ opacity: 0, y: 30 }}

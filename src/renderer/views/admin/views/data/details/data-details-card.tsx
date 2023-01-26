@@ -1,5 +1,4 @@
 import { Box, CardBody } from '@chakra-ui/react';
-import _ from 'lodash';
 import { FC } from 'react';
 
 import { DesignerDetails } from '../../add/designer/tabs/details';

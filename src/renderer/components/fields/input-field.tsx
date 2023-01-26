@@ -24,7 +24,7 @@ import {
 } from '@chakra-ui/react';
 import chroma from 'chroma-js';
 import { isValidMotionProp, motion } from 'framer-motion';
-import _ from 'lodash';
+import { get } from 'lodash';
 import {
   CSSProperties,
   FC,
@@ -111,11 +111,11 @@ export const InputField: FC<PropsWithChildren<InputFieldProps>> = ({
   const { ...dirts } = dirtyFields;
 
   const error = useMemo(
-    () => _.get<InputErrors, string>(errs as InputErrors, id),
+    () => get<InputErrors, string>(errs as InputErrors, id),
     [errs]
   );
   const isError = useMemo(() => error !== undefined, [error]);
-  const isDirty = useMemo(() => _.get<boolean>(dirts, id, false), [dirts]);
+  const isDirty = useMemo(() => get<boolean>(dirts, id, false), [dirts]);
 
   const ChakraBox = chakra(motion.div, {
     shouldForwardProp: (property) =>

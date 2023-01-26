@@ -1,25 +1,16 @@
-import { Box, Center, Spinner, Text, useBoolean } from '@chakra-ui/react';
+import { Box, Center, Spinner, Text } from '@chakra-ui/react';
 import MarkdownEditor from '@uiw/react-markdown-editor';
-import _ from 'lodash';
-import memoize from 'proxy-memoize';
-import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import { useCallback, useContext, useMemo, useState } from 'react';
 import { MdEdit, MdPreview } from 'react-icons/md';
-import { useSelector } from 'react-redux';
 import { SaveButton } from 'renderer/components/buttons/save-button';
-import {
-  ConfirmPromiseSaveModal,
-} from 'renderer/components/modals/confirm-promise-save-modal';
+import { ConfirmPromiseSaveModal } from 'renderer/components/modals/confirm-promise-save-modal';
 import {
   ElectroCRUDTabProperties,
   ElectroCRUDTabs,
 } from 'renderer/components/tabs/tabs';
 import { ViewScopedContext } from 'renderer/contexts';
-import { ScopeContext } from 'renderer/contexts/scope-context';
-import { ColumnRO } from 'renderer/defenitions/record-object/view.define';
 import { useAppDispatch } from 'renderer/store/hooks';
-import { ColumnsReducer, ViewsReducer } from 'renderer/store/reducers';
-import { ColumnSelectors } from 'renderer/store/selectors';
-import { RootState } from 'renderer/store/store';
+import { ViewsReducer } from 'renderer/store/reducers';
 
 import tableDescription from './table-description.md';
 

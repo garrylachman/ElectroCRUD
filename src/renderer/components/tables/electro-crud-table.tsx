@@ -24,7 +24,7 @@ import {
 } from '@tanstack/react-table';
 import CSS from 'csstype';
 import { motion } from 'framer-motion';
-import _ from 'lodash';
+import { groupBy, reduce, uniq } from 'lodash';
 import React, {
   FC,
   PropsWithChildren,
@@ -181,11 +181,11 @@ export const ElectroCRUDTable = <TT extends Record<string, any>>(
   }, [onSelectedItems, columnHelper, columns, textColor, customCell]);
 
   const groupedTableColumns = useMemo(() => {
-    if (_.uniq(columns.map((col) => col.group)).length === 1) {
+    if (uniq(columns.map((col) => col.group)).length === 1) {
       return tableColumns;
     }
-    const group = _.groupBy(tableColumns, 'meta');
-    return _.reduce(
+    const group = groupBy(tableColumns, 'meta');
+    return reduce(
       group,
       (result: unknown[], value, key) => {
         result.push({ header: key, columns: value });

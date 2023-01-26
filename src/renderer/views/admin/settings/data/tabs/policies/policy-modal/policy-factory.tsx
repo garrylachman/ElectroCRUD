@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import { toPairs } from 'lodash';
 import React, { FC, useMemo } from 'react';
 import {
   PolicyRulePayload,
@@ -23,7 +23,7 @@ type PropertiesType = O.Merge<
 >;
 
 const toProperties = (item: PolicyRulePayload): PropertiesType => {
-  const [pair] = _.toPairs(item);
+  const [pair] = toPairs(item);
   const [name, properties] = pair;
   return {
     name,

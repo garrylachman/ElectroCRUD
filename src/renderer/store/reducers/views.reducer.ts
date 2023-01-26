@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/unbound-method */
 import { createEntityAdapter, createSlice, isAnyOf } from '@reduxjs/toolkit';
-import _ from 'lodash';
 import * as R from 'ramda';
 import { StrictViewRO, ViewRO } from 'renderer/defenitions/record-object';
 

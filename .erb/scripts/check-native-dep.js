@@ -50,5 +50,6 @@ ${chalk.bold(
     }
   } catch (e) {
     console.log('Native dependencies could not be checked');
+    console.log(e);
   }
 }

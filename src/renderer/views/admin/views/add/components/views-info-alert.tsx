@@ -6,7 +6,6 @@ import {
   useDisclosure,
   Flex,
 } from '@chakra-ui/react';
-import _ from 'lodash';
 
 export const ViewsInfoAlert = () => {
   const {

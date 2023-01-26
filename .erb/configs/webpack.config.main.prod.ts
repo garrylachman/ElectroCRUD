@@ -1,7 +1,3 @@
-/**
- * Webpack config for production electron main process
- */
-
 import path from 'path';
 import webpack from 'webpack';
 import { merge } from 'webpack-merge';
@@ -23,9 +19,11 @@ const configuration: webpack.Configuration = {
   target: 'electron-main',
 
   entry: {
-    main: path.join(webpackPaths.srcMainPath, 'main.ts'),
+    main: [
+      path.join(webpackPaths.srcMainPath, 'main.ts'),
+      path.join(webpackPaths.srcSharedPath, 'index.ts'),
+    ],
     preload: path.join(webpackPaths.srcMainPath, 'preload.ts'),
-    sharerd: path.join(webpackPaths.srcSharedPath, 'index.ts'),
   },
 
   output: {
@@ -66,7 +64,7 @@ const configuration: webpack.Configuration = {
     }),
 
     new webpack.DefinePlugin({
-      'process.type': '"main"',
+      'process.type': '"browser"',
     }),
   ],
 

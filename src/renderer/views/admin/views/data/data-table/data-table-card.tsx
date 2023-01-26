@@ -1,7 +1,6 @@
 import { Box, CardBody, CardHeader } from '@chakra-ui/react';
 import ReactDataGrid from '@inovua/reactdatagrid-community';
 import { TypeSortInfo } from '@inovua/reactdatagrid-community/types';
-import _ from 'lodash';
 import {
   FC,
   MutableRefObject,
@@ -25,6 +24,7 @@ import { useAppDispatch } from 'renderer/store/hooks';
 import { useIPCDeleteData, useIPCUpdateData } from 'renderer/ipc';
 import { ColumnRO } from 'renderer/defenitions/record-object';
 import { ToastReducer } from 'renderer/store/reducers';
+import { delay, get, head, isArray, isEqual, omit } from 'lodash';
 import { useColumnsForTable } from '.';
 import {
   DataTableActionMenu,
@@ -99,7 +99,7 @@ export const DataTableCard: FC<DataTableCardProperties> = ({
         table: viewState?.table as string,
         where: [
           {
-            column: _.get(primaryKeyColumn, 'name'),
+            column: get(primaryKeyColumn, 'name'),
             opr: '=',
             value: rowForDelete
               ? rowForDelete[primaryKeyColumn?.name]
@@ -112,14 +112,14 @@ export const DataTableCard: FC<DataTableCardProperties> = ({
 
   useUpdateEffect(() => {
     if (rowForDelete !== undefined) {
-      _.delay(executeDelete, 250);
+      delay(executeDelete, 250);
     }
   }, [rowForDelete]);
 
   useEffect(() => {
     if (isDeleteExecuted === true && rowForDelete !== undefined) {
       setRowForDelete();
-      _.delay(execute, 1000);
+      delay(execute, 1000);
       dispatch(
         ToastReducer.actions.setToast({
           status: 'success',
@@ -131,14 +131,14 @@ export const DataTableCard: FC<DataTableCardProperties> = ({
   }, [isDeleteExecuted]);
 
   const handleDelete = async (row: Record<string, any>) => {
-    const pk = _.get(primaryKeyColumn, 'name');
+    const pk = get(primaryKeyColumn, 'name');
     if (!pk) {
       return;
     }
     if (row) {
       try {
         const result = await ConfirmPromiseDeleteModal({
-          entityName: `Row ID: ${_.get(row.data, pk) as string | number}`,
+          entityName: `Row ID: ${get(row.data, pk) as string | number}`,
         });
         if (result) {
           setRowForDelete(row.data);
@@ -162,10 +162,10 @@ export const DataTableCard: FC<DataTableCardProperties> = ({
       channel: IPCChannelEnum.UPDATE_DATA,
       body: {
         table: viewState?.table as string,
-        update: _.omit(rowForUpdate, [_.get(primaryKeyColumn, 'name')]),
+        update: omit(rowForUpdate, [get(primaryKeyColumn, 'name')]),
         where: [
           {
-            column: _.get(primaryKeyColumn, 'name'),
+            column: get(primaryKeyColumn, 'name'),
             opr: '=',
             value: rowForUpdate
               ? rowForUpdate[primaryKeyColumn?.name]
@@ -177,8 +177,8 @@ export const DataTableCard: FC<DataTableCardProperties> = ({
     });
 
   useEffect(() => {
-    if (rowForUpdate !== undefined){
-      _.delay(executeUpdate, 250);
+    if (rowForUpdate !== undefined) {
+      delay(executeUpdate, 250);
     }
   }, [rowForUpdate]);
 
@@ -192,16 +192,16 @@ export const DataTableCard: FC<DataTableCardProperties> = ({
           description: `The column has been updated`,
         })
       );
-      _.delay(execute, 1000);
+      delay(execute, 1000);
     }
   }, [isUpdateExecuted]);
 
   const onEditComplete = useCallback(
     ({ value, columnId, rowId, data }) => {
-      const pk = _.get(primaryKeyColumn, 'name');
+      const pk = get(primaryKeyColumn, 'name');
       const row = dataItems.find((r) => r[pk] === rowId);
-      const oldValue = _.get(row, columnId);
-      if (_.isEqual(oldValue, value)) {
+      const oldValue = get(row, columnId);
+      if (isEqual(oldValue, value)) {
         return;
       }
       setRowForUpdate({
@@ -317,7 +317,7 @@ export const DataTableCard: FC<DataTableCardProperties> = ({
               zIndex: 0,
             }}
             onSortInfoChange={(sortInfo: TypeSortInfo) => {
-              const sort = _.isArray(sortInfo) ? _.head(sortInfo) : sortInfo;
+              const sort = isArray(sortInfo) ? head(sortInfo) : sortInfo;
               if (sortInfo) {
                 setOrder({
                   column: `${viewState?.table as string}.${sort?.name}`,

@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 
-import { BrowserWindow, ipcMain, IpcMainInvokeEvent, webContents } from 'electron';
+import { ipcMain, IpcMainInvokeEvent } from 'electron';
 import { Cache, CacheContainer } from 'node-ts-cache';
 import { MemoryStorage } from 'node-ts-cache-storage-memory';
 import * as hash from 'object-hash';
@@ -8,7 +8,6 @@ import { delay, inject, injectable } from 'tsyringe';
 import { mainWindow } from '../main';
 
 import {
-  ConnectRequest,
   ErrorResponse,
   ErrorType,
   IPCChannel,
@@ -16,13 +15,13 @@ import {
   ResponseType,
 } from '../../shared/defenitions';
 import { IPCChannelEnum } from '../../shared/enums';
-import { RequestFactory } from '../ipc';
+import RequestFactory from '../ipc';
 import { DatabaseService } from './database.service';
 
 const ipcCache = new CacheContainer(new MemoryStorage());
 
 @injectable()
-export class IPCService {
+export default class IPCService {
   constructor(
     @inject(delay(() => DatabaseService))
     private database: DatabaseService,
@@ -48,7 +47,7 @@ export class IPCService {
     event: IpcMainInvokeEvent,
     request: RequestType
   ): Promise<ResponseType> | ResponseType {
-    console.log("onRequest", request);
+    console.log('onRequest', request);
     switch (request.channel) {
       case IPCChannelEnum.CONNECT: {
         return this.rFactory.createRequest(request, 'connectWithProps');

@@ -1,6 +1,6 @@
 import { lazy } from 'react';
 import {
-  createBrowserRouter,
+  createHashRouter,
   createRoutesFromElements,
   Navigate,
   Route,
@@ -20,7 +20,7 @@ const ManageViews = lazy(
 );
 const Settings = lazy(() => import('renderer/views/admin/settings'));
 
-export const router = createBrowserRouter(
+export const router = createHashRouter(
   createRoutesFromElements(
     <>
       <Route path="/login" element={<Login />} />

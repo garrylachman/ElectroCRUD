@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker';
-import _ from 'lodash';
+import { compact, fill } from 'lodash';
 import memoize from 'proxy-memoize';
 import * as R from 'ramda';
 import { useMemo } from 'react';
@@ -21,11 +21,11 @@ const doMask = (
 ) => {
   const start = direction === 'right' ? count * -1 : 0;
   const end = direction === 'right' ? undefined : count;
-  return _.fill(R.splitEvery(1, value), maskWith, start, end).join('');
+  return fill(R.splitEvery(1, value), maskWith, start, end).join('');
 };
 
 const doFullMask = (value = '', maskWith = '#') => {
-  return _.fill(R.splitEvery(1, value), maskWith).join('');
+  return fill(R.splitEvery(1, value), maskWith).join('');
 };
 
 const doFake = (fake: string) => {
@@ -82,7 +82,7 @@ export const usePolicy = (columns: Partial<ColumnRO>[], data: any[]) => {
         }))
         .map((col) => ({
           ...col,
-          policy: _.compact(
+          policy: compact(
             col?.metadata?.tags?.map((tag) => R.prop(tag, policiesByTags))
           ).pop(),
         })),

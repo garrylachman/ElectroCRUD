@@ -3,7 +3,7 @@ import { joiResolver } from '@hookform/resolvers/joi';
 import { Form, FormLayout, SubmitButton } from '@saas-ui/forms';
 import CryptoJS from 'crypto-js';
 import Joi from 'joi';
-import _ from 'lodash';
+import { pick } from 'lodash';
 import { FC } from 'react';
 import {
   PasswordSettings,
@@ -53,7 +53,7 @@ export const SettingsGeneral: FC<any> = () => {
           mode="all"
           onSubmit={onSubmit}
           defaultValues={{
-            password: _.pick(settingsState.password, ['enabled', 'hash']),
+            password: pick(settingsState.password, ['enabled', 'hash']),
           }}
           resolver={joiResolver(validationSchema)}
         >

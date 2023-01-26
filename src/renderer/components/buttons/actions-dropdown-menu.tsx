@@ -10,7 +10,7 @@ import {
   MenuList,
   Text,
 } from '@chakra-ui/react';
-import _ from 'lodash';
+import { omit } from 'lodash';
 import { FC, useMemo } from 'react';
 import { MdArrowDropDown } from 'react-icons/md';
 import { ObjectID } from 'renderer/helpers';
@@ -30,7 +30,7 @@ export const ActionsDropdownMenu: FC<ActionsDropdownMenuProperties> = ({
         return {
           ...item,
           key: ObjectID.id(
-            _.omit({ ...item, itemIndex }, [
+            omit({ ...item, itemIndex }, [
               'props',
               'text.props',
               'text.type',

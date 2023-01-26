@@ -5,7 +5,7 @@ import {
   InputFieldProps,
   registerFieldType,
 } from '@saas-ui/react';
-import _ from 'lodash';
+import { get } from 'lodash';
 import { FC, forwardRef } from 'react';
 import { MdArrowBack, MdArrowForward } from 'react-icons/md';
 import { ValidateSqliteConnection } from 'renderer/defenitions/record-object';
@@ -41,7 +41,7 @@ export const AccountsWizardFileConnection: FC<
   AddAccountWizardStepProperties<FormData>
 > = ({ next, back, initialValue = { filename: '' } }) => {
   const onSubmit = (data: FormData) =>
-    next({ filename: _.get(data, 'filename[0].path', '') });
+    next({ filename: get(data, 'filename[0].path', '') });
 
   return (
     <Box>

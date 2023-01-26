@@ -1,8 +1,5 @@
-/**
- * Build config for electron renderer process
- */
-
-import path from 'path';
+/* eslint-disable unicorn/prevent-abbreviations */
+import path from 'node:path';
 import webpack from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
@@ -24,6 +21,17 @@ const configuration: webpack.Configuration = {
   mode: 'production',
 
   target: ['web', 'electron-renderer'],
+
+  resolve: {
+    fallback: {
+      fs: false,
+      path: require.resolve('path-browserify'),
+      buffer: require.resolve('buffer'),
+      crypto: require.resolve('crypto-browserify'),
+      stream: require.resolve('stream-browserify'),
+      __dirname: './',
+    },
+  },
 
   entry: [path.join(webpackPaths.srcRendererPath, 'index.tsx'), path.join(webpackPaths.srcSharedPath, 'index.ts')],
 
@@ -88,6 +96,15 @@ const configuration: webpack.Configuration = {
           'file-loader',
         ],
       },
+      // MarkDown
+      {
+        test: /\.md$/,
+        use: [
+          {
+            loader: 'raw-loader',
+          },
+        ],
+      },
     ],
   },
 
@@ -114,6 +131,9 @@ const configuration: webpack.Configuration = {
     new webpack.EnvironmentPlugin({
       NODE_ENV: 'production',
       DEBUG_PROD: false,
+    }),
+    new webpack.ProvidePlugin({
+      Buffer: ['buffer', 'Buffer'],
     }),
 
     new MiniCssExtractPlugin({
