@@ -1,8 +1,17 @@
+# ElectroCRUD v3 is coming
+![](https://i3.ytimg.com/vi/gJzlxg2jK9g/maxresdefault.jpg)
+
+https://www.youtube.com/watch?v=gJzlxg2jK9g&ab_channel=GarryLachman
+
+
+
+
 <img src="https://i.imgur.com/L5nX9pT.png" width="100%" />
 
 # ElectroCRUD 2 ![GitHub Release Date](https://img.shields.io/github/release-date/garrylachman/ElectroCRUD.svg?style=for-the-badge) [![Open Collective backers and sponsors](https://img.shields.io/opencollective/all/electrocrud.svg?style=for-the-badge)](https://opencollective.com/electrocrud)
 ### ElectroCRUD?
 ElectroCRUD is Open Source Database CRUD (Create, Read, Update, Delete) Software. No Code Needed — Just in a few clicks, you can create a Database Admin/Dashboard/Whatever. Its Open Source — It's Free.
+
 
 ### Why?
 After a failed search for a basic admin panel that does not involve writing code or installs web-based solutions, I came up with ElectroCRUD idea.
