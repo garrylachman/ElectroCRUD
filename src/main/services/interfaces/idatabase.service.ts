@@ -1,4 +1,4 @@
-import * as Knex from 'knex';
+import { Knex } from 'knex';
 import {
   ConnectArgs as ConnectArguments,
   DeleteDataArgs as DeleteDataArguments,
@@ -25,7 +25,7 @@ export interface IDatabaseService {
   ): Promise<boolean | IPCError>;
   connectWithProps(properties: ConnectArguments): Promise<boolean | IPCError>;
   disconnect(): Promise<void>;
-  get getConnection(): Knex.Knex | IPCError;
+  getConnection(): Knex;
   get activeClient(): ServerType;
   heartbeat(): Promise<boolean | IPCError>;
   heartbeatWithProps(): Promise<boolean | IPCError>;

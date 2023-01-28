@@ -4,12 +4,14 @@ import 'better-sqlite3';
 import sqlFormatter from '@sqltools/formatter';
 import { Config as SQLFormatterConfig } from '@sqltools/formatter/lib/core/types';
 import getCurrentLine from 'get-current-line';
-import * as Knex from 'knex';
+import { Knex } from 'knex';
 import knexHooks from 'knex-hooks';
 import { whereFilter } from 'knex-json-filter';
-import { SchemaInspector } from 'knex-schema-inspector';
-import { isArray, omit, size, mapKeys } from 'lodash';
+import SchemaInspector from 'knex-schema-inspector';
+import { SchemaInspector as ISchemaInspector } from 'knex-schema-inspector/lib/types/schema-inspector';
+import { isArray, omit, size, mapKeys, reduce } from 'lodash';
 import { autoInjectable, delay, inject, singleton } from 'tsyringe';
+import { connect, configurationNegotiation } from '../helpers/database';
 
 import {
   ConnectArgs as ConnectArguments,
@@ -32,8 +34,8 @@ import {
   UpdateDataArgs as UpdateDataArguments,
 } from '../../shared/defenitions';
 import { QueryAggregateEnum, ServerTypeEnum } from '../../shared/enums';
-import { heartBeatQueries, tablesListQueries } from '../data/queries';
-import { NoActiveClientError } from '../exceptions';
+import { heartBeatQueries } from '../data/queries';
+import { NoActiveClientError, NoConnectionError } from '../exceptions';
 import LogService from './log.service';
 import { IDatabaseService } from './interfaces/idatabase.service';
 
@@ -46,11 +48,11 @@ const formatterParameters: SQLFormatterConfig = {
 @singleton()
 @autoInjectable()
 export default class DatabaseService implements IDatabaseService {
-  private config?: Knex.Knex.Config;
+  private config?: Knex.Config;
 
-  private connection?: Knex.Knex;
+  private connection?: Knex;
 
-  private inspector?: SchemaInspector;
+  private inspector?: ISchemaInspector;
 
   constructor(
     @inject(delay(() => LogService)) private logService?: LogService
@@ -62,23 +64,14 @@ export default class DatabaseService implements IDatabaseService {
   ): Promise<boolean | IPCError> {
     await this.disconnect();
 
-    const connectionConfig =
-      client === ServerTypeEnum.MSSQL
-        ? {
-            ...connection,
-            server: (connection as ServerConnectionConfig).host,
-            port: Number((connection as ServerConnectionConfig).port),
-          }
-        : connection;
-
     this.config = {
       client,
-      connection: connectionConfig,
+      connection: configurationNegotiation(client, connection),
       useNullAsDefault: true,
     };
     this.logService?.info(
       `Connecting: ${JSON.stringify(
-        omit(this.config.connection as Knex.Knex.ConnectionConfigProvider, [
+        omit(this.config.connection as Knex.ConnectionConfigProvider, [
           'password',
           'user',
         ])
@@ -86,10 +79,10 @@ export default class DatabaseService implements IDatabaseService {
       getCurrentLine().method
     );
     try {
-      this.connection = Knex.knex(this.config);
+      this.connection = connect(this.config);
       this.inspector = SchemaInspector(this.connection);
       if (this.config.connection?.schema) {
-        this.inspector.withSchema(this.config.connection?.schema);
+        this.inspector?.withSchema(this.config.connection?.schema);
       }
       this.connectHooks();
       const result = await this.heartbeat();
@@ -130,12 +123,9 @@ export default class DatabaseService implements IDatabaseService {
     }
   }
 
-  public get getConnection(): Knex.Knex | IPCError {
+  public getConnection(): Knex {
     if (!this.connection) {
-      return {
-        type: ErrorType.NOT_CONNECTED,
-        message: 'Not Connected',
-      } as IPCError;
+      throw new NoConnectionError();
     }
     return this.connection;
   }
@@ -206,22 +196,10 @@ export default class DatabaseService implements IDatabaseService {
   }
 
   public async listTables(): Promise<string[] | IPCError> {
-    const listTablesQuery = tablesListQueries[this.activeClient];
-    let bindings: string[] = [this.connection?.client.database()];
-    if (this.activeClient === ServerTypeEnum.SQLITE) {
-      bindings = [];
-    }
-    this.logService?.info(
-      sqlFormatter.format(listTablesQuery, formatterParameters),
-      getCurrentLine().method
-    );
+    this.logService?.info('listTables', getCurrentLine().method);
     try {
-      this.logService?.success(
-        sqlFormatter.format(listTablesQuery, formatterParameters),
-        getCurrentLine().method
-      );
-      const tables = (await this.inspector?.tables()) as string[];
-      return tables;
+      this.logService?.success('listTables', getCurrentLine().method);
+      return (await this.inspector?.tables()) as string[];
     } catch (error: any) {
       this.logService?.error(error.message, getCurrentLine().method);
       throw {
@@ -266,8 +244,8 @@ export default class DatabaseService implements IDatabaseService {
   public async readData(
     table: string,
     columns: string[],
-    limit: number,
-    offset: number,
+    rows: number,
+    page: number,
     searchColumns?: string[],
     searchText?: string,
     where?: QueryWhere[],
@@ -280,12 +258,38 @@ export default class DatabaseService implements IDatabaseService {
         col.includes('.') ? `${col}` : `${table}.${col}`
       );
 
+      const dictionary = reduce(
+        columns,
+        (result: Record<string, string>, value: string) => ({
+          ...result,
+          [value]: `${table}.${value}`,
+          [`${table}.${value}`]: `${table}.${value}`,
+        }),
+        {}
+      );
+
       const q = this.getConnection()
-        .withSchema(
-          this.config.connection?.schema || ''
-        )
+        .withSchema(this.config.connection?.schema || '')
         .select(...selectColumns)
-        .from(table);
+        .from(table)
+        .modify((builder) => {
+          if (searchText) {
+            builder.metaFilter({
+              filterBy: searchColumns,
+              q: searchText,
+              dictionary,
+            });
+          }
+
+          if (order && order.column) {
+            builder.metaSort({
+              sort: order.order || 'asc',
+              sortBy: order.column,
+              dictionary: { ...dictionary, 1: 1 },
+            });
+          }
+
+        });
 
       if (join) {
         for (const index of join) {
@@ -298,24 +302,6 @@ export default class DatabaseService implements IDatabaseService {
         }
       }
 
-      if (searchColumns && searchText) {
-        q?.where((wq) => {
-          const lWhere: string[] = [];
-          const lWhereValues: string[] = [];
-          // eslint-disable-next-line no-restricted-syntax
-          for (const col of searchColumns) {
-            const columnName = col.includes('.') ? col : `${table}.${col}`;
-            if (this.activeClient === ServerTypeEnum.POSTGRES) {
-              lWhere.push(`CAST(${columnName} as TEXT) ilike ?`);
-            } else {
-              lWhere.push(`${columnName} like ?`);
-            }
-            lWhereValues.push(`%${searchText}%`);
-          }
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-          return wq.whereRaw(lWhere.join(' or '), lWhereValues);
-        });
-      }
       if (where) {
         q?.where((wq) => {
           for (const col of where) {
@@ -342,16 +328,10 @@ export default class DatabaseService implements IDatabaseService {
       const countResponse = await q
         ?.clone()
         .clearSelect()
+        .clearOrder()
         .count({ count: '*' });
 
-      q.modify((qb) => {
-        if (order && order.column) {
-          qb.orderBy(order.column, order.order);
-        }
-        return qb;
-      });
-
-      const response = await q?.limit(limit).offset(offset);
+      const response = await q.metaPage({ page, rows });
 
       this.logService?.success(
         sqlFormatter.format(q?.toQuery() || '', formatterParameters),
@@ -377,8 +357,8 @@ export default class DatabaseService implements IDatabaseService {
     const {
       table,
       columns,
-      limit,
-      offset,
+      rows,
+      page,
       searchColumns,
       searchText,
       where,
@@ -389,8 +369,8 @@ export default class DatabaseService implements IDatabaseService {
     return this.readData(
       table,
       columns,
-      limit,
-      offset,
+      rows,
+      page,
       searchColumns,
       searchText,
       where,

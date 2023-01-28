@@ -15,14 +15,15 @@ import { useIPCReadData } from 'renderer/ipc';
 import { useAppSelector } from 'renderer/store/hooks';
 import { ViewSelectors } from 'renderer/store/selectors';
 import { IPCChannelEnum, NestedPartial, QueryOrder } from 'shared';
+import { RootState } from 'renderer/store/store';
 
 export type DashboardContextControlType = [
   execute: () => void,
-  setLimit: (number) => void,
-  setPage: (number) => void,
-  setOrder: (QueryOrder) => void,
-  setSearch: (string) => void,
-  setFilter: (any) => void
+  setLimit: (argument0: number) => void,
+  setPage: (argument0: number) => void,
+  setOrder: (argument0: QueryOrder) => void,
+  setSearch: (argument0: string) => void,
+  setFilter: (argument0: any) => void
 ];
 
 export type DashboardContextDataMetaType = {
@@ -73,7 +74,7 @@ export const DashboardContextProvider: FC<
 
   useEffect(() => setCurrentViewId(viewId), [viewId]);
 
-  const viewsStateSelector = useSelector((state) =>
+  const viewsStateSelector = useSelector((state: RootState) =>
     ViewSelectors.createFullViewSelector(state)
   );
 
@@ -114,8 +115,8 @@ export const DashboardContextProvider: FC<
     body: {
       table: viewState.table,
       columns,
-      limit,
-      offset: limit * (page - 1),
+      rows: limit,
+      page,
       order: order || { column: 1, order: 'asc' },
       searchText: search,
       searchColumns,

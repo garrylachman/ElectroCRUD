@@ -99,8 +99,8 @@ export type ConnectionConfig = ServerConnectionConfig | FileConnectionConfig;
 export type ReadDataArgs = {
   table: string;
   columns: string[];
-  limit: number;
-  offset: number;
+  rows: number;
+  page: number;
   searchColumns?: string[];
   searchText?: string;
   where?: QueryWhere[];
