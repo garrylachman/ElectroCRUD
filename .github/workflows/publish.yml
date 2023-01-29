@@ -28,10 +28,11 @@ jobs:
           yarn install
           yarn run postinstall
           yarn run build
+          cd release/app && yarn
 
       - name: Publish releases
         env:
           # This is used for uploading release assets to github
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          npm exec electron-builder -- --publish always --win --mac --linux
+          yarn run ci-release
