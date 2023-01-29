@@ -25,8 +25,6 @@ jobs:
           node-version: 16.18.1
         run: |
           yarn set version 1.22.19
-          sleep 5
-          cd release/app && yarn set version 1.22.19
 
       - name: Install and build
         run: |
