@@ -122,7 +122,7 @@
     "@chakra-ui/theme-tools": "^2.0.17",
     "@chakra-ui/transition": "^2.0.0",
     "@chakra-ui/utils": "^2.0.0",
-    "@day1co/fastcase": "github:garrylachman/fastcase",
+    "@day1co/fastcase": "github:garrylachman/fastcase#main",
     "@emotion/cache": "^11.7.1",
     "@emotion/react": "^11",
     "@emotion/styled": "^11",
@@ -322,6 +322,7 @@
     ],
     "afterSign": ".erb/scripts/notarize.js",
     "mac": {
+      "category": "public.app-category.developer-tools",
       "target": {
         "target": "default",
         "arch": [
@@ -336,6 +337,7 @@
       "gatekeeperAssess": false
     },
     "dmg": {
+      "title": "${productName} ${version}",
       "contents": [
         {
           "x": 130,
@@ -371,8 +373,8 @@
     ],
     "publish": {
       "provider": "github",
-      "owner": "electron-react-boilerplate",
-      "repo": "electron-react-boilerplate"
+      "owner": "garrylachman",
+      "repo": "ElectroCRUD"
     }
   },
   "collective": {
@@ -390,5 +392,5 @@
     ],
     "logLevel": "quiet"
   },
-  "packageManager": "yarn@3.3.1"
+  "packageManager": "yarn@2.4.3"
 }
