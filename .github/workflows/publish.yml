@@ -21,14 +21,19 @@ jobs:
       - name: Install Node and YARn
         uses: actions/setup-node@v3
         with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
           node-version: 16.18.1
       - name: Setup .yarnrc.yml
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
         run: |
           yarn set version 1.22.19
           sleep 5
           cd release/app && yarn set version 1.22.19
 
       - name: Install and build
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
         run: |
           yarn install
           yarn run postinstall
@@ -36,6 +41,8 @@ jobs:
           cd release/app && yarn
 
       - name: Publish releases
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
         env:
           # This is used for uploading release assets to github
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
