@@ -1,11 +1,8 @@
 import {
   Box,
-  Button,
   Flex,
-  Grid,
   GridItem,
   Icon,
-  Input,
   Popover,
   PopoverAnchor,
   PopoverArrow,
@@ -13,10 +10,8 @@ import {
   PopoverCloseButton,
   PopoverContent,
   PopoverFooter,
-  PopoverHeader,
   PopoverTrigger,
   SimpleGrid,
-  Switch,
   Text,
   useBoolean,
 } from '@chakra-ui/react';
