@@ -1,6 +1,6 @@
 import { Box, Flex, Stack } from '@chakra-ui/react';
-import { Brand } from 'renderer/components/sidebar/components/brand';
-import { Links } from 'renderer/components/sidebar/components/links';
+import { Brand } from './brand';
+import { Links } from './links';
 
 export function Content() {
   return (

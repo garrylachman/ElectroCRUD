@@ -1,5 +1,5 @@
 import { Box, useColorModeValue } from '@chakra-ui/react';
-import { Content } from 'renderer/components/sidebar/components/content';
+import { Content } from './components/content';
 
 export function Sidebar() {
   const shadow = useColorModeValue(
