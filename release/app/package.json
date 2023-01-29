@@ -41,5 +41,6 @@
     "tsyringe": "^4.7.0",
     "tunnel-ssh": "5.0.5",
     "type-fest": "^3.4.0"
-  }
+  },
+  "packageManager": "yarn@3.3.1"
 }

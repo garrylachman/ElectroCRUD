@@ -30,3 +30,4 @@ npm-debug.log.*
 .editorconfig
 .DS_Store
 .vscode
+.yarn

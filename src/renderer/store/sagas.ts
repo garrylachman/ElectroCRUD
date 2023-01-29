@@ -17,6 +17,7 @@ import {
   TemporaryFilterRulesReducer,
   TemporaryFiltersReducer,
   ToastReducer,
+  ViewDetailsReducer,
   ViewsReducer,
 } from './reducers';
 
@@ -118,6 +119,10 @@ export function* watchForNotificationsAsync() {
   yield takeEvery(ViewsReducer.actions.updateOne, notifyEntityAddedOrEdited);
   yield takeEvery(TagsReducer.actions.upsertOne, notifyEntityAddedOrEdited);
   yield takeEvery(ColumnsReducer.actions.upsertOne, notifyEntityAddedOrEdited);
+  yield takeEvery(
+    ViewDetailsReducer.actions.upsertOne,
+    notifyEntityAddedOrEdited
+  );
   yield takeEvery(
     ColumnsReferanceReducer.actions.upsertOne,
     notifyEntityAddedOrEdited
