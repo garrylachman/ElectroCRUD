@@ -18,11 +18,13 @@ jobs:
       - name: Checkout git repo
         uses: actions/checkout@v3
 
-      - name: Install Node and YARn
+      - name: Install Node and Yarn
         uses: actions/setup-node@v3
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           node-version: 16.18.1
+
+      - name: Yarn version
         run: |
           yarn set version 1.22.19
 
