@@ -22,6 +22,10 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16.18.1
+      - name: Setup .yarnrc.yml
+        run: |
+          yarn set version 1.22.19
+          cd release/app && yarn set version 1.22.19
 
       - name: Install and build
         run: |
