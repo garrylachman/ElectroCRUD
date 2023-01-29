@@ -3,8 +3,6 @@
 import knex, { Knex } from 'knex';
 import * as knexMeta from '@jeash/knex-meta';
 
-//const toCamelCaseKeys = createCaseKeysConverter(toCamelCase);
-
 const extensions = [
   knexMeta.metaFilter,
   knexMeta.metaPage,
@@ -18,8 +16,6 @@ const extensions = [
 for (const extension of extensions) {
   knex.QueryBuilder.extend(extension.name, extension);
 }
-
-//const postProcessResponse = (result: string) => toCamelCaseKeys(result);
 
 const wrapIdentifier = (
   value: string,

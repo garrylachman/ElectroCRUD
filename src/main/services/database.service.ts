@@ -81,7 +81,7 @@ export default class DatabaseService implements IDatabaseService {
     try {
       this.connection = connect(this.config);
       this.inspector = SchemaInspector(this.connection);
-      if (this.config.connection?.schema) {
+      if (this.config.connection?.schema && this.inspector) {
         this.inspector?.withSchema(this.config.connection?.schema);
       }
       this.connectHooks();
@@ -280,7 +280,6 @@ export default class DatabaseService implements IDatabaseService {
               dictionary,
             });
           }
-
           if (order && order.column) {
             builder.metaSort({
               sort: order.order || 'asc',
@@ -288,7 +287,6 @@ export default class DatabaseService implements IDatabaseService {
               dictionary: { ...dictionary, 1: 1 },
             });
           }
-
         });
 
       if (join) {
@@ -399,8 +397,7 @@ export default class DatabaseService implements IDatabaseService {
         return qw;
       });
 
-      q?.update(mapKeys(update, (value, key) => `${table}.${key}`));
-      await q;
+      await q?.update(mapKeys(update, (_, key) => `${table}.${key}`));
 
       this.logService?.success(
         sqlFormatter.format(q?.toQuery() || '', formatterParameters),
