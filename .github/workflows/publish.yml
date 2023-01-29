@@ -24,10 +24,6 @@ jobs:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           node-version: 16.18.1
 
-      - name: Yarn version
-        run: |
-          yarn set version 1.22.19
-
       - name: Install and build
         run: |
           yarn install
