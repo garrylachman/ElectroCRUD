@@ -8,7 +8,7 @@ import { useAppSelector } from 'renderer/store/hooks';
 export const NotificationsContainer: FC<any> = () => {
   const toastState = useAppSelector((state) => state.toast);
   const toast = useToast({
-    render: ({description, status, id, ...rest}) => (
+    render: ({ description, status, id, ...rest }) => (
       <Notification
         type="primary"
         supportingDetail={<Text py={2}>{description}</Text>}

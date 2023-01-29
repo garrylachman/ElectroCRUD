@@ -16,6 +16,7 @@ import {
 import { IPCChannelEnum } from '../../shared/enums';
 import { IRequestFactory } from '../ipc/base.ipc';
 import { IDatabaseService } from './interfaces/idatabase.service';
+import { IIPCService } from './interfaces/iipc.service';
 
 const ipcCache = new CacheContainer(new MemoryStorage());
 

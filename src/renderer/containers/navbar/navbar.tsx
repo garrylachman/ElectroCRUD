@@ -31,7 +31,7 @@ export const Navbar: FC<{ brandText: string }> = ({ brandText }) => {
             {brandText}
           </AnimatedText>
         </Heading>
-        {sessionState.isLoggedIn && <LockButton onClick={logout}></LockButton>}
+        {sessionState.isLoggedIn && <LockButton onClick={logout} />}
       </Flex>
     </Box>
   );
