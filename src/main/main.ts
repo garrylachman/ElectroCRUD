@@ -28,10 +28,10 @@ const sourceMapSupport = require('source-map-support');
 sourceMapSupport.install();
 // }
 
-/*const isDebug =
+const isDebug =
   process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true';
-*/
-const isDebug = !app.isPackaged;
+
+//const isDebug = !app.isPackaged;
 
 if (isDebug) {
   require('electron-debug')();
@@ -55,12 +55,12 @@ const createWindow = async () => {
     await installExtensions();
   }
 
-  const RESOURCES_PATH = app.isPackaged
-    ? path.join(process.resourcesPath, 'assets')
-    : path.join(__dirname, '../../assets');
+  const RESOURCES_PATH = isDebug
+    ? path.join(__dirname, '../../assets')
+    : path.join(process.resourcesPath, 'assets');
 
-  const getAssetPath = (...paths: string[]): string => {
-    return path.join(RESOURCES_PATH, ...paths);
+  const getAssetPath = (paths: string): string => {
+    return path.join(RESOURCES_PATH, paths);
   };
 
   const mainOptions: Electron.BrowserWindowConstructorOptions = {
@@ -79,9 +79,10 @@ const createWindow = async () => {
   const config: Splashscreen.Config = {
     windowOpts: mainOptions,
     templateUrl: getAssetPath('splash.html'),
-    minVisible: 2000,
+    minVisible: 5000,
     delay: 0,
     splashScreenOpts: {
+      center: true,
       width: 720,
       height: 405,
       transparent: true,
@@ -117,11 +118,6 @@ const createWindow = async () => {
   const menuBuilder = new MenuBuilder(mainWindow);
   menuBuilder.buildMenu();
 
-  // Open urls in the user's browser
-  mainWindow.webContents.setWindowOpenHandler((edata) => {
-    shell.openExternal(edata.url);
-    return { action: 'deny' };
-  });
 };
 
 /**
