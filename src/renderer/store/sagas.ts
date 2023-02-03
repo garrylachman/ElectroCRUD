@@ -26,6 +26,7 @@ export function* setIsConnected(action: { payload: { account: AccountRO } }) {
     body: {
       client: action.payload.account.client,
       connection: action.payload.account.connection,
+      tunnel: action.payload.account.tunnel,
     },
     channel: IPCChannelEnum.CONNECT,
   };

@@ -28,6 +28,12 @@ module.exports = {
     "@typescript-eslint/no-unsafe-call": "off",
     "@typescript-eslint/no-unsafe-argument": "off",
     "@typescript-eslint/unbound-method": "off",
+    "@typescript-eslint/no-throw-literal": "off",
+    "import/extensions": "off",
+    "no-useless-constructor": "off",
+    "unicorn/no-array-for-each": "off",
+    "react/function-component-definition": "off",
+    "react/jsx-filename-extension": "off",
   },
   env: {
     "es2022": true,

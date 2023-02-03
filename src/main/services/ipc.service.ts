@@ -4,7 +4,8 @@ import { ipcMain, IpcMainInvokeEvent } from 'electron';
 import { Cache, CacheContainer } from 'node-ts-cache';
 import { MemoryStorage } from 'node-ts-cache-storage-memory';
 import * as hash from 'object-hash';
-import { delay, inject, injectable } from 'tsyringe';
+import { inject, injectable } from 'tsyringe';
+import CheckTunnelIPC from '../ipc/check-tunnel.ipc';
 import { mainWindow } from '../main';
 import {
   ErrorResponse,
@@ -24,12 +25,11 @@ const ipcCache = new CacheContainer(new MemoryStorage());
 export default class IPCService implements IIPCService {
   constructor(
     @inject('IDatabaseService') private database: IDatabaseService,
-    @inject('IRequestFactory') private rFactory: IRequestFactory
+    @inject('IRequestFactory') private rFactory: IRequestFactory,
+    @inject('CheckTunnelIPC') private checkTunnel: CheckTunnelIPC
   ) {}
 
   public listen(): void {
-    console.log("listen", this.database);
-    console.log("rFactory", this.rFactory);
     this.disconnect();
     Object.values(IPCChannelEnum).forEach((channel: IPCChannel) =>
       ipcMain.handle(channel, this.onRequest.bind(this))
@@ -49,6 +49,9 @@ export default class IPCService implements IIPCService {
   ): Promise<ResponseType> | ResponseType {
     console.log('onRequest', request);
     switch (request.channel) {
+      case IPCChannelEnum.CHECK_TUNNEL: {
+        return this.checkTunnel.createRequest(request);
+      }
       case IPCChannelEnum.CONNECT: {
         return this.rFactory.createRequest(request, 'connectWithProps');
       }

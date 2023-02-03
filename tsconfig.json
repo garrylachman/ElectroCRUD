@@ -25,7 +25,7 @@
   "exclude": ["test", "release/build", "release/app/dist", ".erb/dll"],
   "ts-node": {
     "compilerOptions": {
-      "module": "commonjs"
+      "module": "commonjs",
     }
-  }
+  },
 }

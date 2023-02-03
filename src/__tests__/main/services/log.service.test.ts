@@ -4,7 +4,7 @@
 /* eslint-disable jest/no-conditional-expect */
 
 import { ipcRenderer } from 'electron';
-import { LogService } from 'main/services/log.service';
+import LogService from 'main/services/log.service';
 import 'reflect-metadata';
 import { LogItem, LogResponse } from 'shared/defenitions';
 import { IPCChannelEnum, LogItemTypeEnum } from 'shared/enums';
@@ -19,19 +19,19 @@ describe('Log Service', () => {
     { type: LogItemTypeEnum.WARNING, message: 'warning m' },
     { type: LogItemTypeEnum.SUCCESS, message: 'success m' },
   ])('logging $type', async ({ type, message }) => {
-    const res: LogResponse = await new Promise((resolve) => {
+    const response: LogResponse = await new Promise((resolve) => {
       ipcRenderer.once(
         IPCChannelEnum.LOG_CHANNEL,
-        (event, response: LogResponse) => {
-          resolve(response);
+        (event, result: LogResponse) => {
+          resolve(result);
         }
       );
       log[type](message);
     });
-    expect(res.channel).toEqual(IPCChannelEnum.LOG_CHANNEL);
-    expect(res.body.type).toEqual(type);
-    expect(res.body.message).toEqual(message);
-    expect(res.body.method).toBeUndefined();
+    expect(response.channel).toEqual(IPCChannelEnum.LOG_CHANNEL);
+    expect(response.body.type).toEqual(type);
+    expect(response.body.message).toEqual(message);
+    expect(response.body.method).toBeUndefined();
   });
 
   test.each([
@@ -40,18 +40,18 @@ describe('Log Service', () => {
     { type: LogItemTypeEnum.WARNING, message: 'warning m', method: 'get' },
     { type: LogItemTypeEnum.SUCCESS, message: 'success m', method: 'set' },
   ])('logging $type with method $method', async ({ type, message, method }) => {
-    const res: LogResponse = await new Promise((resolve) => {
+    const response: LogResponse = await new Promise((resolve) => {
       ipcRenderer.once(
         IPCChannelEnum.LOG_CHANNEL,
-        (event, response: LogResponse) => {
-          resolve(response);
+        (event, result: LogResponse) => {
+          resolve(result);
         }
       );
       log[type](message, method);
     });
-    expect(res.channel).toEqual(IPCChannelEnum.LOG_CHANNEL);
-    expect(res.body.type).toEqual(type);
-    expect(res.body.message).toEqual(message);
-    expect(res.body.method).toEqual(method);
+    expect(response.channel).toEqual(IPCChannelEnum.LOG_CHANNEL);
+    expect(response.body.type).toEqual(type);
+    expect(response.body.message).toEqual(message);
+    expect(response.body.method).toEqual(method);
   });
 });

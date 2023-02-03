@@ -1,11 +1,11 @@
 import { Knex } from 'knex';
 import {
-  ConnectArgs as ConnectArguments,
-  DeleteDataArgs as DeleteDataArguments,
-  InsertDataArgs as InsertDataArguments,
-  ReadDataArgs as ReadDataArguments,
-  UpdateDataArgs as UpdateDataArguments,
-  ReadWidgetDataArgs as ReadWidgetDataArguments,
+  ConnectArguments,
+  DeleteDataArguments,
+  InsertDataArguments,
+  ReadDataArguments,
+  UpdateDataArguments,
+  ReadWidgetDataArguments,
   ConnectionConfig,
   IPCError,
   QueryAggregate,
@@ -16,7 +16,7 @@ import {
   ReadWidgetDataResult,
   ServerType,
   TableInfoRow,
-} from 'shared';
+} from '../../../shared';
 
 export interface IDatabaseService {
   connect(

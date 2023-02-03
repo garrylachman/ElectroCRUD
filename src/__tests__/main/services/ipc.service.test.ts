@@ -5,10 +5,10 @@
 
 import { ipcRenderer } from 'electron';
 import DatabaseService from 'main/services/database.service';
-import { IPCService } from 'main/services/ipc.service';
+import IPCService from 'main/services/ipc.service';
 import 'reflect-metadata';
 import {
-  ConnectArgs,
+  ConnectArguments,
   ConnectRequest,
   ConnectResponse,
   DeleteRequest,
@@ -33,18 +33,18 @@ import {
 import { container } from 'tsyringe';
 
 const ipc = container.resolve(IPCService);
-const db = container.resolve(DatabaseService);
+const database = container.resolve(DatabaseService);
 
 beforeAll(() => ipc.listen());
 
-afterAll(() => {
+afterAll(async () => {
   ipc.disconnect();
-  db.disconnect();
+  await database.disconnect();
 });
 
 describe('Main IPC Service', () => {
   test('connect', async () => {
-    const body: ConnectArgs = {
+    const body: ConnectArguments = {
       client: ServerTypeEnum.SQLITE,
       connection: {
         filename: 'src/__tests__/data/database.db',
@@ -178,7 +178,7 @@ describe('Main IPC Service', () => {
   );
 
   test('insert data', async () => {
-    await db.executeQuery('delete from albums');
+    await database.executeQuery('delete from albums');
     const response: InsertResponse = await ipcRenderer.invoke(
       IPCChannelEnum.INSERT_DATA,
       {

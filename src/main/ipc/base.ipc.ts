@@ -50,11 +50,11 @@ export type DeepOmit<T, K> = T extends Primitive
     };
 
 export interface IRequestFactory {
-  public async createRequest<T extends RequestType>(
+  createRequest<T extends RequestType>(
     request: T,
     invoke: DatabaseServiceMethods
   ): Promise<ResponseTypeSuccess | ErrorResponse>;
-};
+}
 
 @singleton()
 @injectable()
@@ -65,12 +65,11 @@ export default class RequestFactory implements IRequestFactory {
     request: T,
     invoke: DatabaseServiceMethods
   ): Promise<ResponseTypeSuccess | ErrorResponse> {
-    console.log('createRequest', request);
-    console.log('this.database', this.database);
     const { channel, body } = request;
     try {
       // eslint-disable-next-line max-len
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
+      // @ts-ignore
       const result = await this.database[invoke](body);
       return ResponseFactoryType(channel, result);
     } catch (error) {

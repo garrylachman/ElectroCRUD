@@ -20,9 +20,9 @@
     "@sqltools/formatter": "^1.2.5",
     "@types/object-hash": "^3.0.2",
     "@types/ramda": "^0.28.0",
-    "@types/tunnel-ssh": "^4.1.1",
     "better-sqlite3": "8.0.1",
     "get-current-line": "^6.6.0",
+    "get-port": "5.1.1",
     "knex": "2.4.0",
     "knex-hooks": "github:garrylachman/knex-hooks",
     "knex-json-filter": "^0.1.2",
@@ -36,10 +36,10 @@
     "pg": "8.8.0",
     "reflect-metadata": "^0.1.13",
     "sqlite3": "5.1.4",
+    "ssh-tunneling": "^1.1.17",
     "tedious": "^15.1.2",
-    "ts-toolbelt": "^9.6.0",
+    "ts-toolbelt": "9.6.0",
     "tsyringe": "^4.7.0",
-    "tunnel-ssh": "5.0.5",
     "type-fest": "^3.4.0"
   }
 }

@@ -1,6 +1,7 @@
+import 'better-sqlite3';
 import 'reflect-metadata';
 import 'sqlite3';
-import 'better-sqlite3';
+
 import sqlFormatter from '@sqltools/formatter';
 import { Config as SQLFormatterConfig } from '@sqltools/formatter/lib/core/types';
 import getCurrentLine from 'get-current-line';
@@ -9,35 +10,41 @@ import knexHooks from 'knex-hooks';
 import { whereFilter } from 'knex-json-filter';
 import SchemaInspector from 'knex-schema-inspector';
 import { SchemaInspector as ISchemaInspector } from 'knex-schema-inspector/lib/types/schema-inspector';
-import { isArray, omit, size, mapKeys, reduce } from 'lodash';
-import { autoInjectable, delay, inject, singleton } from 'tsyringe';
-import { connect, configurationNegotiation } from '../helpers/database';
+import _ from 'lodash';
+import { Overwrite } from 'ts-toolbelt/out/Object/Overwrite';
+import { autoInjectable, inject, singleton } from 'tsyringe';
 
 import {
-  ConnectArgs as ConnectArguments,
+  ConnectArguments,
   ConnectionConfig,
-  DeleteDataArgs as DeleteDataArguments,
+  DeleteDataArguments,
   ErrorType,
-  InsertDataArgs as InsertDataArguments,
+  InsertDataArguments,
   IPCError,
   QueryAggregate,
   QueryJoin,
   QueryOrder,
   QueryWhere,
-  ReadDataArgs as ReadDataArguments,
+  ReadDataArguments,
   ReadDataResult,
-  ReadWidgetDataArgs as ReadWidgetDataArguments,
+  ReadWidgetDataArguments,
   ReadWidgetDataResult,
   ServerConnectionConfig,
   ServerType,
+  SSHTunnelConfig,
   TableInfoRow,
-  UpdateDataArgs as UpdateDataArguments,
+  UpdateDataArguments,
 } from '../../shared/defenitions';
-import { QueryAggregateEnum, ServerTypeEnum } from '../../shared/enums';
+import { QueryAggregateEnum } from '../../shared/enums';
 import { heartBeatQueries } from '../data/queries';
 import { NoActiveClientError, NoConnectionError } from '../exceptions';
-import LogService from './log.service';
+import { configurationNegotiation, connect } from '../helpers/database';
 import { IDatabaseService } from './interfaces/idatabase.service';
+import { ILogService } from './interfaces/ilog.service';
+import {
+  ITunnelService,
+  TunnelProxyConfig,
+} from './interfaces/itunnel.service';
 
 const formatterParameters: SQLFormatterConfig = {
   reservedWordCase: 'upper',
@@ -45,51 +52,97 @@ const formatterParameters: SQLFormatterConfig = {
   language: 'sql',
 };
 
+type KnexConfigType = Overwrite<
+  Knex.Config,
+  {
+    connection: ConnectionConfig;
+  }
+>;
+
 @singleton()
 @autoInjectable()
 export default class DatabaseService implements IDatabaseService {
-  private config?: Knex.Config;
+  private config?: KnexConfigType;
 
   private connection?: Knex;
 
   private inspector?: ISchemaInspector;
 
+  // eslint-disable-next-line no-useless-constructor
   constructor(
-    @inject(delay(() => LogService)) private logService?: LogService
+    @inject('ILogService') private logService: ILogService,
+    @inject('ITunnelService') private tunnelService: ITunnelService
   ) {}
 
   public async connect(
     client: ServerType,
-    connection: ConnectionConfig
+    connection: ConnectionConfig,
+    tunnel?: SSHTunnelConfig
   ): Promise<boolean | IPCError> {
     await this.disconnect();
 
-    this.config = {
-      client,
-      connection: configurationNegotiation(client, connection),
-      useNullAsDefault: true,
-    };
-    this.logService?.info(
-      `Connecting: ${JSON.stringify(
-        omit(this.config.connection as Knex.ConnectionConfigProvider, [
-          'password',
-          'user',
-        ])
-      )}`,
-      getCurrentLine().method
-    );
+    let connectionOverride = {};
+
     try {
+      if (tunnel && tunnel.enabled) {
+        this.tunnelService.init(
+          tunnel.host,
+          tunnel.port,
+          tunnel.username,
+          tunnel.password
+        );
+
+        const tunnelLink: TunnelProxyConfig | undefined =
+          await this.tunnelService.start(
+            (connection as ServerConnectionConfig).host as string,
+            (connection as ServerConnectionConfig).port
+          );
+
+        if (tunnelLink && tunnelLink.localPort) {
+          this.logService.success(
+            `SSH Tunnel: ${JSON.stringify(tunnelLink)}`,
+            getCurrentLine().method
+          );
+          connectionOverride = {
+            port: tunnelLink.localPort,
+            host: tunnel.host,
+          };
+        }
+      }
+
+      this.config = {
+        client,
+        connection: configurationNegotiation(client, {
+          ...connection,
+          ...connectionOverride,
+        }),
+        useNullAsDefault: true,
+      };
+      this.logService.info(
+        `Connecting: ${JSON.stringify(
+          _.omit(this.config.connection, ['password', 'user'])
+        )}`,
+        getCurrentLine().method
+      );
+
       this.connection = connect(this.config);
       this.inspector = SchemaInspector(this.connection);
-      if (this.config.connection?.schema && this.inspector) {
-        this.inspector?.withSchema(this.config.connection?.schema);
+      if (
+        this.inspector &&
+        (this.config.connection as ServerConnectionConfig).schema
+      ) {
+        // @ts-ignore
+        this.inspector.withSchema(
+          (this.config.connection as ServerConnectionConfig).schema as string
+        );
       }
       this.connectHooks();
       const result = await this.heartbeat();
-      this.logService?.success(`Connection Success`, getCurrentLine().method);
+      this.logService.success(`Connection Success`, getCurrentLine().method);
       return result;
     } catch (error: any) {
-      this.logService?.error(error.message, getCurrentLine().method);
+      this.logService.error(error.message, getCurrentLine().method);
+      // eslint-disable-next-line no-throw-literal
       throw {
         type: ErrorType.NOT_CONNECTED,
         message: JSON.stringify(error),
@@ -98,14 +151,14 @@ export default class DatabaseService implements IDatabaseService {
   }
 
   private connectHooks() {
-    knexHooks(this.connection);
+    const x = knexHooks(this.connection);
 
-    this.connection?.addHook(
+    x.addHook(
       'before',
       '*',
       '*',
-      (when, method, table, parameters) => {
-        this.logService?.info(parameters.query.toString(), when);
+      (when: string, method: string, table: string, parameters: any) => {
+        this.logService.info(parameters.query.toString(), when);
       }
     );
   }
@@ -113,8 +166,8 @@ export default class DatabaseService implements IDatabaseService {
   public async connectWithProps(
     properties: ConnectArguments
   ): Promise<boolean | IPCError> {
-    const { client, connection } = properties;
-    return this.connect(client, connection);
+    const { client, connection, tunnel } = properties;
+    return this.connect(client, connection, tunnel);
   }
 
   public async disconnect(): Promise<void> {
@@ -135,7 +188,7 @@ export default class DatabaseService implements IDatabaseService {
       if (!this.config?.client) {
         throw new NoActiveClientError();
       }
-      return this.config.client;
+      return this.config.client as ServerType;
     } catch {
       throw new NoActiveClientError();
     }
@@ -147,8 +200,9 @@ export default class DatabaseService implements IDatabaseService {
     try {
       await this.connection?.raw(heartbeatQuery);
       return true;
-    } catch (error: unknown) {
-      this.logService?.error(error.message, getCurrentLine().method);
+    } catch (error: any) {
+      this.logService.error(error?.message, getCurrentLine().method);
+      // eslint-disable-next-line no-throw-literal
       throw {
         type: ErrorType.NOT_CONNECTED,
         message: JSON.stringify(error),
@@ -161,47 +215,38 @@ export default class DatabaseService implements IDatabaseService {
   }
 
   public async executeQuery(query: string): Promise<any | IPCError> {
-    const extractResult = (result: any): any => {
-      if (result?.rows) {
-        return result.rows;
-      }
-      if (isArray(result) && size(result) === 2) {
-        return result[0];
-      }
-      return result;
-    };
-
-    this.logService?.info(
+    this.logService.info(
       sqlFormatter.format(query, formatterParameters),
       getCurrentLine().method
     );
 
     try {
-      this.logService?.success(
-        sqlFormatter.format(query, formatterParameters),
-        getCurrentLine().method
-      );
-      const response = await this.connection
-        .withSchema(this.config.connection?.schema || '')
-        .raw(query);
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      return extractResult(response);
+      return await this.getConnection()
+        .withSchema(
+          (this.config?.connection as ServerConnectionConfig).schema as string
+        )
+        .where(this.getConnection().raw(query));
     } catch (error: any) {
-      this.logService?.error(error.message, getCurrentLine().method);
+      this.logService.error(error.message, getCurrentLine().method);
+      // eslint-disable-next-line no-throw-literal
       throw {
         type: ErrorType.NOT_CONNECTED,
         message: JSON.stringify(error),
       };
     }
+
+    return undefined;
   }
 
   public async listTables(): Promise<string[] | IPCError> {
-    this.logService?.info('listTables', getCurrentLine().method);
+    this.logService.info('listTables', getCurrentLine().method);
     try {
-      this.logService?.success('listTables', getCurrentLine().method);
+      this.logService.success('listTables', getCurrentLine().method);
       return (await this.inspector?.tables()) as string[];
     } catch (error: any) {
-      this.logService?.error(error.message, getCurrentLine().method);
+      this.logService.error(error.message, getCurrentLine().method);
+      // eslint-disable-next-line no-throw-literal
       throw {
         type: ErrorType.NOT_CONNECTED,
         message: JSON.stringify(error),
@@ -227,7 +272,8 @@ export default class DatabaseService implements IDatabaseService {
       }
       return response;
     } catch (error: any) {
-      this.logService?.error(error.message, getCurrentLine().method);
+      this.logService.error(error.message, getCurrentLine().method);
+      // eslint-disable-next-line no-throw-literal
       throw {
         type: ErrorType.NOT_CONNECTED,
         message: JSON.stringify(error),
@@ -258,7 +304,7 @@ export default class DatabaseService implements IDatabaseService {
         col.includes('.') ? `${col}` : `${table}.${col}`
       );
 
-      const dictionary = reduce(
+      const dictionary = _.reduce(
         columns,
         (result: Record<string, string>, value: string) => ({
           ...result,
@@ -269,11 +315,14 @@ export default class DatabaseService implements IDatabaseService {
       );
 
       const q = this.getConnection()
-        .withSchema(this.config.connection?.schema || '')
+        .withSchema(
+          (this.config?.connection as ServerConnectionConfig).schema as string
+        )
         .select(...selectColumns)
         .from(table)
         .modify((builder) => {
           if (searchText) {
+            // @ts-ignore
             builder.metaFilter({
               filterBy: searchColumns,
               q: searchText,
@@ -281,6 +330,7 @@ export default class DatabaseService implements IDatabaseService {
             });
           }
           if (order && order.column) {
+            // @ts-ignore
             builder.metaSort({
               sort: order.order || 'asc',
               sortBy: order.column,
@@ -289,7 +339,7 @@ export default class DatabaseService implements IDatabaseService {
           }
         });
 
-      if (join) {
+      /* if (join) {
         for (const index of join) {
           q?.leftJoin(
             index.table,
@@ -298,29 +348,28 @@ export default class DatabaseService implements IDatabaseService {
             `${index.table}.${index.on.target}`
           );
         }
-      }
-
+      } */
       if (where) {
-        q?.where((wq) => {
-          for (const col of where) {
-            const columnName = col.column.includes('.')
-              ? col.column
-              : `${table}.${col.column}`;
-
-            const whereFunction = col.or ? 'orWhere' : 'andWhere';
-            wq[whereFunction](col.column, col.opr, col.value);
-          }
-          return wq;
+        // eslint-disable-next-line @typescript-eslint/no-floating-promises
+        q?.where((builder) => {
+          _.each(where, (col) => {
+            const whereFunction = col.or ? builder.orWhere : builder.andWhere;
+            // eslint-disable-next-line @typescript-eslint/no-floating-promises
+            whereFunction(
+              this.getConnection().ref(col.column),
+              col.opr,
+              col.value
+            );
+          });
         });
       }
+
       if (filter) {
-        q?.where((wq) => {
-          return wq.where(whereFilter(filter));
+        // eslint-disable-next-line @typescript-eslint/no-floating-promises
+        q?.where((builder) => {
+          // eslint-disable-next-line @typescript-eslint/no-floating-promises
+          builder.where(whereFilter(filter));
         });
-        this.logService?.success(
-          sqlFormatter.format(q?.toQuery() || ''),
-          getCurrentLine().method
-        );
       }
 
       const countResponse = await q
@@ -329,9 +378,10 @@ export default class DatabaseService implements IDatabaseService {
         .clearOrder()
         .count({ count: '*' });
 
+      // @ts-ignore
       const response = await q.metaPage({ page, rows });
 
-      this.logService?.success(
+      this.logService.success(
         sqlFormatter.format(q?.toQuery() || '', formatterParameters),
         getCurrentLine().method
       );
@@ -341,7 +391,8 @@ export default class DatabaseService implements IDatabaseService {
         count: countResponse ? Number(countResponse[0].count) : 0,
       };
     } catch (error: any) {
-      this.logService?.error(error.message, getCurrentLine().method);
+      this.logService.error(error.message, getCurrentLine().method);
+      // eslint-disable-next-line no-throw-literal
       throw {
         type: ErrorType.NOT_CONNECTED,
         message: JSON.stringify(error),
@@ -385,27 +436,36 @@ export default class DatabaseService implements IDatabaseService {
   ): Promise<boolean | IPCError> {
     try {
       const q = this.getConnection()
-        .withSchema(this.config.connection?.schema || '')
+        .withSchema(
+          (this.config?.connection as ServerConnectionConfig).schema as string
+        )
         .table(table);
 
-      q?.where((qw) => {
-        if (where)
-          for (const col of where) {
-            const whereFunction = col.or ? 'orWhere' : 'andWhere';
-            qw[whereFunction](`${table}.${col.column}`, col.opr, col.value);
-          }
-        return qw;
-      });
+      if (where) {
+        // eslint-disable-next-line @typescript-eslint/no-floating-promises
+        q?.where((builder) => {
+          _.each(where, (col) => {
+            const whereFunction = col.or ? builder.orWhere : builder.andWhere;
+            // eslint-disable-next-line @typescript-eslint/no-floating-promises
+            whereFunction(
+              this.getConnection().ref(col.column),
+              col.opr,
+              col.value
+            );
+          });
+        });
+      }
 
-      await q?.update(mapKeys(update, (_, key) => `${table}.${key}`));
+      await q?.update(_.mapKeys(update, (_, key) => `${table}.${key}`));
 
-      this.logService?.success(
+      this.logService.success(
         sqlFormatter.format(q?.toQuery() || '', formatterParameters),
         getCurrentLine().method
       );
       return true;
     } catch (error: any) {
-      this.logService?.error(error.message, getCurrentLine().method);
+      this.logService.error(error.message, getCurrentLine().method);
+      // eslint-disable-next-line no-throw-literal
       throw {
         type: ErrorType.NOT_CONNECTED,
         message: JSON.stringify(error),
@@ -425,20 +485,22 @@ export default class DatabaseService implements IDatabaseService {
     data: Record<string, any> | Record<string, any>[]
   ): Promise<boolean | IPCError> {
     try {
-      const q = this.getConnection().withSchema(
-        this.config.connection?.schema || ''
-      ).table(table);
+      const q = this.getConnection()
+        .withSchema(
+          (this.config?.connection as ServerConnectionConfig).schema as string
+        )
+        .table(table);
 
-      q?.insert(data);
-      await q;
+      await q?.insert(data);
 
-      this.logService?.info(
+      this.logService.info(
         sqlFormatter.format(q?.toQuery() || '', formatterParameters),
         getCurrentLine().method
       );
       return true;
     } catch (error: any) {
-      this.logService?.error(error.message, getCurrentLine().method);
+      this.logService.error(error.message, getCurrentLine().method);
+      // eslint-disable-next-line no-throw-literal
       throw {
         type: ErrorType.NOT_CONNECTED,
         message: JSON.stringify(error),
@@ -458,26 +520,36 @@ export default class DatabaseService implements IDatabaseService {
     where?: QueryWhere[]
   ): Promise<boolean | IPCError> {
     try {
-      const q = this.getConnection().withSchema(
-        this.config.connection?.schema || ''
-      ).table(table);
+      const q = this.getConnection()
+        .withSchema(
+          (this.config?.connection as ServerConnectionConfig).schema as string
+        )
+        .table(table);
 
-      q?.where((qw) => {
-        if (where)
-          for (const col of where) {
-            const whereFunction = col.or ? 'orWhere' : 'andWhere';
-            qw[whereFunction](col.column, col.opr, col.value);
-          }
-        return qw;
-      });
+      if (where) {
+        // eslint-disable-next-line @typescript-eslint/no-floating-promises
+        q?.where((builder) => {
+          _.each(where, (col) => {
+            const whereFunction = col.or ? builder.orWhere : builder.andWhere;
+            // eslint-disable-next-line @typescript-eslint/no-floating-promises
+            whereFunction(
+              this.getConnection().ref(col.column),
+              col.opr,
+              col.value
+            );
+          });
+        });
+      }
+
       await q?.delete();
-      this.logService?.success(
+      this.logService.success(
         sqlFormatter.format(q?.toQuery() || '', formatterParameters),
         getCurrentLine().method
       );
       return true;
     } catch (error: any) {
-      this.logService?.error(error.message, getCurrentLine().method);
+      this.logService.error(error.message, getCurrentLine().method);
+      // eslint-disable-next-line no-throw-literal
       throw {
         type: ErrorType.NOT_CONNECTED,
         message: JSON.stringify(error),
@@ -495,49 +567,48 @@ export default class DatabaseService implements IDatabaseService {
   public async readWidgetData(
     table: string,
     column: string,
-    function_: QueryAggregate,
+    agg: QueryAggregate,
     where?: QueryWhere[]
-  ): Promise<ReadWidgetDataResult<number> | IPCError> {
+  ): Promise<ReadWidgetDataResult<any> | IPCError> {
     try {
-      const q = this.getConnection().withSchema(
-        this.config.connection?.schema || ''
-      ).table(table);
-      if (q) {
-        if (
-          function_ === QueryAggregateEnum.COUNT ||
-          function_ === QueryAggregateEnum.COUNT_DISTINCT
-        ) {
-          q[function_]({
-            a: column,
-          });
-        } else {
-          q[function_]({
-            a: column,
-          });
-        }
+      const q = this.getConnection()
+        .withSchema(
+          (this.config?.connection as ServerConnectionConfig).schema as string
+        )
+        .table(table);
+
+      if (
+        agg === QueryAggregateEnum.COUNT ||
+        agg === QueryAggregateEnum.COUNT_DISTINCT
+      ) {
+        // eslint-disable-next-line @typescript-eslint/no-floating-promises
+        q.modify((builder) => {
+          const aggFunction = builder[agg];
+          // eslint-disable-next-line @typescript-eslint/no-floating-promises
+          aggFunction({ a: column });
+        });
       }
 
-      q?.where((qw) => {
-        if (where)
-          for (const col of where) {
-            const whereFunction = col.or ? 'orWhere' : 'andWhere';
-            qw[whereFunction](col.column, col.opr, col.value);
-          }
-        return qw;
-      });
+      if (where) {
+        // eslint-disable-next-line @typescript-eslint/no-floating-promises
+        q?.where((builder) => {
+          _.each(where, (col) => {
+            const whereFunction = col.or ? builder.orWhere : builder.andWhere;
+            // eslint-disable-next-line @typescript-eslint/no-floating-promises
+            whereFunction(
+              this.getConnection().ref(col.column),
+              col.opr,
+              col.value
+            );
+          });
+        });
+      }
 
-      const res = await q;
-
-      this.logService?.success(
-        sqlFormatter.format(q?.toQuery() || '', formatterParameters),
-        getCurrentLine().method
-      );
-
-      return {
-        data: res ? res[0].a : 0,
-      };
+      // @ts-ignore
+      return await q;
     } catch (error: any) {
-      this.logService?.error(error.message, getCurrentLine().method);
+      this.logService.error(error.message, getCurrentLine().method);
+      // eslint-disable-next-line no-throw-literal
       throw {
         type: ErrorType.NOT_CONNECTED,
         message: JSON.stringify(error),

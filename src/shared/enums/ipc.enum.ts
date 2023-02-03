@@ -9,4 +9,5 @@ export enum IPCChannelEnum {
   READ_WIDGET_DATA = 'read-widget-data',
   HEARTBEAT = 'heartbeat',
   CONNECT = 'connect',
+  CHECK_TUNNEL = 'check-tunnel',
 }

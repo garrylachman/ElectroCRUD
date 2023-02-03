@@ -1,3 +1,6 @@
+/* eslint-disable unicorn/no-process-exit */
+/* eslint-disable unicorn/prefer-module */
+/* eslint-disable import/no-import-module-exports */
 /* eslint-disable unicorn/prevent-abbreviations */
 import 'webpack-dev-server';
 

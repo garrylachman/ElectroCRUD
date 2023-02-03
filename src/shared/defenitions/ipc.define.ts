@@ -10,4 +10,5 @@ export type IPCChannel =
   | IPCChannelEnum.INSERT_DATA
   | IPCChannelEnum.UPDATE_DATA
   | IPCChannelEnum.READ_WIDGET_DATA
-  | IPCChannelEnum.HEARTBEAT;
+  | IPCChannelEnum.HEARTBEAT
+  | IPCChannelEnum.CHECK_TUNNEL;

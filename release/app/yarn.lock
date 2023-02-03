@@ -267,11 +267,6 @@
   resolved "https://registry.npmjs.org/@types/lodash/-/lodash-4.14.191.tgz#09511e7f7cba275acd8b419ddac8da9a6a79e2fa"
   integrity sha512-BdZ5BCCvho3EIXw6wUCXHe7rS53AIDPLE+JzwgT+OsJk53oBfbSmZZ7CX4VaRoN78N+TJpFi9QPlfIVNmJYWxQ==
 
-"@types/node@*":
-  version "18.11.18"
-  resolved "https://registry.npmjs.org/@types/node/-/node-18.11.18.tgz#8dfb97f0da23c2293e554c5a50d61ef134d7697f"
-  integrity sha512-DHQpWGjyQKSHj3ebjFI/wRKcqQcdR+MoFBygntYOZytCqNfkd2ZC4ARDJ2DQqhjH5p85Nnd3jhUJIXrszFX/JA==
-
 "@types/object-hash@^3.0.2":
   version "3.0.2"
   resolved "https://registry.npmjs.org/@types/object-hash/-/object-hash-3.0.2.tgz#f3656433e6c6049571fc3fb3fb42f389af96c0eb"
@@ -283,13 +278,6 @@
   integrity sha512-DoIfh0sBxrL/aqADk+SGrfjJT9cB8modg+4NRlF7/Tfg4N2+KBEkAgpYYzrjiZxxR5YzWizjfVrTEdVDwYK7xQ==
   dependencies:
     ts-toolbelt "^6.15.1"
-
-"@types/tunnel-ssh@^4.1.1":
-  version "4.1.1"
-  resolved "https://registry.npmjs.org/@types/tunnel-ssh/-/tunnel-ssh-4.1.1.tgz#5b6a2b412337243dfcf4834636104c1bd86e94f9"
-  integrity sha512-wapC4QO5BBo8viAsHcvKsLBeJM7w9o0uWO9tUqixjD1tiv/iCNyFAKR0DAinyGfb/D76kO3zrq8II3/ehC9RNQ==
-  dependencies:
-    "@types/node" "*"
 
 abbrev@1:
   version "1.1.1"
@@ -1110,6 +1098,11 @@ get-package-type@^0.1.0:
   version "0.1.0"
   resolved "https://registry.npmjs.org/get-package-type/-/get-package-type-0.1.0.tgz#8de2d803cff44df3bc6c456e6668b36c3926e11a"
   integrity sha512-pjzuKtY64GYfWizNAJ0fr9VqttZkNiK2iS430LtIHzjBEr6bX8Am2zm4sW4Ro5wjWW5cAlRL1qAMTcXbjNAO2Q==
+
+get-port@5.1.1:
+  version "5.1.1"
+  resolved "https://registry.npmjs.org/get-port/-/get-port-5.1.1.tgz#0469ed07563479de6efb986baf053dcd7d4e3193"
+  integrity sha512-g/Q1aTSDOxFpchXC4i8ZWvxA1lnPqx/JHqcpIw0/LX9T8x/GBbi6YnlN5nhaKIFkT8oFsscUKgDJYxfwfS6QsQ==
 
 get-stream@^6.0.0:
   version "6.0.1"
@@ -2559,7 +2552,15 @@ sqlstring@^2.3.2:
   resolved "https://registry.npmjs.org/sqlstring/-/sqlstring-2.3.3.tgz#2ddc21f03bce2c387ed60680e739922c65751d0c"
   integrity sha512-qC9iz2FlN7DQl3+wjwn3802RTyjCx7sDvfQEXchwa6CWOx07/WVfh91gBmQ9fahw8snwGEWU3xGzOt4tFyHLxg==
 
-ssh2@^1.11.0:
+ssh-tunneling@^1.1.17:
+  version "1.1.17"
+  resolved "https://registry.npmjs.org/ssh-tunneling/-/ssh-tunneling-1.1.17.tgz#1fc1b2ba27fdcb180a0147b51e60bd651f9caa13"
+  integrity sha512-VHHufgN1f3rUzievIFvYXvt155NOgnKKW4bzr3B08wXufVAR0+SMFujrlZjagAL7HgslUiBESRpAaVENjr2iVQ==
+  dependencies:
+    socks "^2.6.2"
+    ssh2 "^1.10.0"
+
+ssh2@^1.10.0:
   version "1.11.0"
   resolved "https://registry.npmjs.org/ssh2/-/ssh2-1.11.0.tgz#ce60186216971e12f6deb553dcf82322498fe2e4"
   integrity sha512-nfg0wZWGSsfUe/IBJkXVll3PEZ//YH2guww+mP88gTpuSU4FtZN7zu9JoeTGOyCNx2dTDtT9fOpWwlzyj4uOOw==
@@ -2761,15 +2762,15 @@ ts-interface-checker@^0.1.9:
   resolved "https://registry.npmjs.org/ts-interface-checker/-/ts-interface-checker-0.1.13.tgz#784fd3d679722bc103b1b4b8030bcddb5db2a699"
   integrity sha512-Y/arvbn+rrz3JCKl9C4kVNfTfSm2/mEp5FSz5EsZSANGPSlQrpRI5M4PKF+mJnE52jOO90PnPSc3Ur3bTQw0gA==
 
+ts-toolbelt@9.6.0:
+  version "9.6.0"
+  resolved "https://registry.npmjs.org/ts-toolbelt/-/ts-toolbelt-9.6.0.tgz#50a25426cfed500d4a09bd1b3afb6f28879edfd5"
+  integrity sha512-nsZd8ZeNUzukXPlJmTBwUAuABDe/9qtVDelJeT/qW0ow3ZS3BsQJtNkan1802aM9Uf68/Y8ljw86Hu0h5IUW3w==
+
 ts-toolbelt@^6.15.1:
   version "6.15.5"
   resolved "https://registry.npmjs.org/ts-toolbelt/-/ts-toolbelt-6.15.5.tgz#cb3b43ed725cb63644782c64fbcad7d8f28c0a83"
   integrity sha512-FZIXf1ksVyLcfr7M317jbB67XFJhOO1YqdTcuGaq9q5jLUoTikukZ+98TPjKiP2jC5CgmYdWWYs0s2nLSU0/1A==
-
-ts-toolbelt@^9.6.0:
-  version "9.6.0"
-  resolved "https://registry.npmjs.org/ts-toolbelt/-/ts-toolbelt-9.6.0.tgz#50a25426cfed500d4a09bd1b3afb6f28879edfd5"
-  integrity sha512-nsZd8ZeNUzukXPlJmTBwUAuABDe/9qtVDelJeT/qW0ow3ZS3BsQJtNkan1802aM9Uf68/Y8ljw86Hu0h5IUW3w==
 
 tslib@^1.9.3:
   version "1.14.1"
@@ -2814,13 +2815,6 @@ tunnel-agent@^0.6.0:
   integrity sha512-McnNiV1l8RYeY8tBgEpuodCC1mLUdbSN+CYBL7kJsJNInOP8UjDDEwdk6Mw60vdLLrr5NHKZhMAOSrR2NZuQ+w==
   dependencies:
     safe-buffer "^5.0.1"
-
-tunnel-ssh@5.0.5:
-  version "5.0.5"
-  resolved "https://registry.npmjs.org/tunnel-ssh/-/tunnel-ssh-5.0.5.tgz#c643dab6057aed8f5261a45868ec8f43764b4fb4"
-  integrity sha512-3W6q2hj8S3c6lvdlknpE0ew2jMsIPou8DdSeRDHK/WrA+d9jZlryXOc45yvmHpBv7MyoWHHZvs2IKEtHJFazeg==
-  dependencies:
-    ssh2 "^1.11.0"
 
 tweetnacl@^0.14.3:
   version "0.14.5"

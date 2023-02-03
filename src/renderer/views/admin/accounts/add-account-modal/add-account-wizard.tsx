@@ -1,4 +1,5 @@
 import {
+  Icon,
   Modal,
   ModalBody,
   ModalContent,
@@ -10,7 +11,7 @@ import { Stepper } from '@saas-ui/stepper';
 import chroma from 'chroma-js';
 import { AnimatePresence, motion } from 'framer-motion';
 import { pick } from 'underscore';
-import { FC, useCallback, useState } from 'react';
+import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import { InstanceProps } from 'react-modal-promise';
 import { MotionBox } from 'renderer/components/motions';
 import { WithErrorComponent } from 'renderer/containers/error';
@@ -20,13 +21,18 @@ import {
   FileConnectionConfig,
   ServerConnectionConfig,
   ServerTypeEnum,
+  SSHTunnelConfig,
 } from 'shared';
 
+import { RiLockPasswordFill } from 'react-icons/ri';
+import { TbCloudDataConnection, TbDatabase } from 'react-icons/tb';
+import { CgDatabase } from 'react-icons/cg';
 import {
   AccountsWizardDetails,
   AccountsWizardFileConnection,
   AccountsWizardServerConnection,
   AccountsWizardTest,
+  AccountsWizardTunnel,
 } from './steps';
 import { useConnectionTest } from './use-connection-test';
 
@@ -76,22 +82,30 @@ export const AddAccountWizard: FC<AddAccountWizardProperties> = ({
 
   const back = () => setStep(step - 1);
   const next = (data?: Record<string, any>) => {
-    switch (step) {
-      case 0: {
+    // eslint-disable-next-line no-use-before-define
+    switch (currentStep.name) {
+      case 'account-details': {
         setState((previous) => ({
           ...previous,
           ...data,
         }));
         break;
       }
-      case 1: {
+      case 'tunnel': {
+        setState((previous) => ({
+          ...previous,
+          tunnel: data as SSHTunnelConfig,
+        }));
+        break;
+      }
+      case 'account-database': {
         setState((previous) => ({
           ...previous,
           connection: data as ConnectionConfig,
         }));
         break;
       }
-      case 2: {
+      case 'connectivity': {
         onResolve(state);
         break;
       }
@@ -124,6 +138,7 @@ export const AddAccountWizard: FC<AddAccountWizardProperties> = ({
     {
       name: 'account-details',
       title: 'Account Details',
+      enabled: true,
       children: (
         <AccountsWizardDetails
           next={next}
@@ -131,15 +146,32 @@ export const AddAccountWizard: FC<AddAccountWizardProperties> = ({
           initialValue={pick(state, ['name', 'client'])}
         />
       ),
+      icon: <Icon as={TbDatabase} />,
+    },
+    {
+      name: 'tunnel',
+      title: 'SSH Tunnel',
+      enabled: state.client !== ServerTypeEnum.SQLITE,
+      children: (
+        <AccountsWizardTunnel
+          initialValue={state.tunnel}
+          next={next}
+          back={back}
+        />
+      ),
+      icon: <Icon as={RiLockPasswordFill} />,
     },
     {
       name: 'account-database',
       title: 'Database',
+      enabled: true,
       children: <AccountsWizardConnection />,
+      icon: <Icon as={CgDatabase} />,
     },
     {
       name: 'connectivity',
       title: 'Connectivity',
+      enabled: true,
       children: (
         <AccountsWizardTest
           next={next}
@@ -147,8 +179,11 @@ export const AddAccountWizard: FC<AddAccountWizardProperties> = ({
           connctionTest={connctionTest}
         />
       ),
+      icon: <Icon as={TbCloudDataConnection} />,
     },
   ];
+
+  const currentStep = useMemo(() => steps[step], [step, steps]);
 
   return (
     <AnimatePresence mode="wait">
@@ -216,11 +251,18 @@ export const AddAccountWizard: FC<AddAccountWizardProperties> = ({
 
                 <ModalBody py={4}>
                   <Stepper step={step} mb="2" orientation="vertical">
-                    {steps.map(({ name, title, children }) => (
-                      <StepperStep key={name} name={name} title={title}>
-                        {children}
-                      </StepperStep>
-                    ))}
+                    {steps
+                      .filter((s) => s.enabled)
+                      .map(({ name, title, children, icon }) => (
+                        <StepperStep
+                          key={name}
+                          name={name}
+                          title={title}
+                          icon={icon}
+                        >
+                          {children}
+                        </StepperStep>
+                      ))}
                   </Stepper>
                 </ModalBody>
               </WithErrorComponent>

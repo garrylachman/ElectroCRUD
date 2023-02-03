@@ -9,7 +9,7 @@ import MenuBuilder from './menu';
 import { InitServices, ServiceRegistery } from './services';
 import { resolveHtmlPath } from './util';
 
-new ServiceRegistery();
+const srv = new ServiceRegistery();
 /**
  * This module executes inside of electron's main process. You can start
  * electron renderer process from here and communicate with the other processes

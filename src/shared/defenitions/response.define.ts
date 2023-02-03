@@ -1,12 +1,12 @@
 import { NestedPartial } from '.';
-import { IPCError } from './error.def';
-import { IPCChannel } from './ipc.def';
-import { LogItem } from './log.def';
+import { IPCError } from './error.define';
+import { IPCChannel } from './ipc.define';
+import { LogItem } from './log.define';
 import {
   ReadDataResult,
   ReadWidgetDataResult,
   TableInfoRow,
-} from './server.def';
+} from './server.define';
 
 export type BaseResponse = {
   channel: IPCChannel;
