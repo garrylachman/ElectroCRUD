@@ -1,4 +1,4 @@
-// eslint-disable-next-line unicorn/prevent-abbreviations
+import { StringChain } from 'lodash';
 import { O } from 'ts-toolbelt';
 import { QueryAggregateEnum, ServerTypeEnum } from '../enums';
 
@@ -77,6 +77,14 @@ export type QueryAggregate =
   | QueryAggregateEnum.SUM
   | QueryAggregateEnum.SUM_DISTINCT;
 
+export type SSHTunnelConfig = {
+  enabled: boolean;
+  host: string;
+  port: number;
+  username: string;
+  password?: string;
+};
+
 export type ServerConnectionConfig = O.Either<
   {
     host: string;
@@ -96,7 +104,7 @@ export type FileConnectionConfig = {
 
 export type ConnectionConfig = ServerConnectionConfig | FileConnectionConfig;
 
-export type ReadDataArgs = {
+export type ReadDataArguments = {
   table: string;
   columns: string[];
   rows: number;
@@ -109,43 +117,49 @@ export type ReadDataArgs = {
   filter?: any;
 };
 
-export type UpdateDataArgs = {
+export type UpdateDataArguments = {
   table: string;
   update: Record<string, any>;
   where?: QueryWhere[];
 };
 
-export type DeleteDataArgs = {
+export type DeleteDataArguments = {
   table: string;
   where?: QueryWhere[];
 };
 
-export type InsertDataArgs = {
+export type InsertDataArguments = {
   table: string;
   data: Record<string, any> | Record<string, any>[];
 };
 
-export type DeleteDataArgs = {
-  table: string;
-  where?: QueryWhere[];
-};
-
-export type ReadWidgetDataArgs = {
+export type ReadWidgetDataArguments = {
   table: string;
   column: string;
   func: QueryAggregate;
   where?: QueryWhere[];
 };
 
-export type ConnectArgs = {
+export type ConnectArguments = {
   client: ServerType;
   connection: ConnectionConfig;
+  tunnel?: SSHTunnelConfig;
 };
 
-export type ArgsType =
-  | ConnectArgs
-  | ReadWidgetDataArgs
-  | DeleteDataArgs
-  | InsertDataArgs
-  | UpdateDataArgs
-  | ReadDataArgs;
+export type TunnelArguments = {
+  host: string;
+  port: number;
+  username: string;
+  password?: string;
+  destinationHostname: string;
+  destinationPort: number;
+};
+
+export type ArgumentsType =
+  | ConnectArguments
+  | ReadWidgetDataArguments
+  | DeleteDataArguments
+  | InsertDataArguments
+  | UpdateDataArguments
+  | ReadDataArguments
+  | TunnelArguments;

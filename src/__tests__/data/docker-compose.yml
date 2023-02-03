@@ -1,0 +1,19 @@
+version: '3.3'
+services:
+  sshd:
+    image: mulinbc/sshd
+    ports:
+      - '222:22'
+    environment:
+      AUTHORIZED_KEYS: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFyMeBrD6kvXTdC77van0LQo1f2QgYX8hf0yB0EhJ8Y0
+      ROOT_PASSWORD: passwd
+  mariadb:
+    image: mariadb
+    ports: []
+    environment:
+      - MARIADB_USER=example
+      - MARIADB_PASSWORD=example
+      - MARIADB_ROOT_PASSWORD=root-passwd
+      - MARIADB_DATABASE=example
+    volumes:
+      - './mariadb-sample:/docker-entrypoint-initdb.d'

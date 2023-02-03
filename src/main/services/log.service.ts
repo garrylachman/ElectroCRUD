@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import { uniqueId } from 'lodash';
+import _ from 'lodash';
 import { autoInjectable, inject, singleton } from 'tsyringe';
 import { LogItem, LogItemType } from '../../shared/defenitions';
 import {
@@ -38,7 +38,7 @@ export default class LogService implements ILogService {
       method,
       source: LogItemSourceEnum.Backend,
       ts: Date.now(),
-      id: uniqueId('logitem_'),
+      id: _.uniqueId('logitem_'),
     };
     this.ipcService?.send({ channel: IPCChannelEnum.LOG_CHANNEL, body: item });
   }

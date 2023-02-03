@@ -1,5 +1,10 @@
 import * as Joi from 'joi';
-import { ConnectionConfig, ServerType, ServerTypeEnum } from 'shared';
+import {
+  ConnectionConfig,
+  ServerType,
+  ServerTypeEnum,
+  SSHTunnelConfig,
+} from 'shared';
 import { Object } from 'ts-toolbelt';
 
 import { BaseRO } from './base.define';
@@ -8,9 +13,20 @@ export type AccountRO = BaseRO & {
   name: string;
   client: ServerType;
   connection: ConnectionConfig;
+  tunnel?: SSHTunnelConfig;
 };
 
 export type StrictAccountRO = Object.Required<AccountRO, 'id' | 'creationDate'>;
+
+export const ValidateTunnel = Joi.object({
+  host: Joi.alternatives([Joi.string().hostname(), Joi.string().ip()])
+    .match('any')
+    .required()
+    .label('Hostname'),
+  port: Joi.number().port().required().label('Port'),
+  username: Joi.string().required().label('Username'),
+  password: Joi.optional().label('Password'),
+});
 
 export const ValidateServerConnection = Joi.object({
   host: Joi.alternatives([Joi.string().hostname(), Joi.string().ip()])

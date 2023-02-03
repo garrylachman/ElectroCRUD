@@ -1,9 +1,9 @@
-export * from './server.def';
-export * from './log.def';
-export * from './ipc.def';
-export * from './response.def';
-export * from './request.def';
-export * from './error.def';
+export * from './server.define';
+export * from './log.define';
+export * from './ipc.define';
+export * from './response.define';
+export * from './request.define';
+export * from './error.define';
 
 export type NestedPartial<T> = {
   [K in keyof T]?: T[K] extends Array<infer R>

@@ -11,8 +11,8 @@ export type SuccessOrError<T extends ResponseTypeSuccess['body'] | IPCError> =
 export function ResponseFactoryType<
   T extends ResponseTypeSuccess['body'] | IPCError
 >(channel: IPCChannel, body: T): SuccessOrError<T> {
-  if (body.message) {
-    return { channel, error: { ...body } } as ErrorResponse;
+  if ((body as IPCError).message) {
+    return { channel, error: body } as SuccessOrError<T>;
   }
   return { channel, body } as SuccessOrError<T>;
 }

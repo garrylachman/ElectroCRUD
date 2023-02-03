@@ -1,4 +1,4 @@
-import { ResponseType } from "shared";
+import { ResponseType } from '../../../shared';
 
 export interface IIPCService {
   listen(): void;

@@ -1,4 +1,6 @@
-import { has, set, transform } from 'lodash';
+import _ from 'lodash';
+import { has } from 'underscore';
+import { O } from 'ts-toolbelt';
 import {
   ConnectionConfig,
   ServerConnectionConfig,
@@ -6,21 +8,28 @@ import {
   ServerTypeEnum,
 } from '../../../shared';
 
+type ConnectionMixed = Partial<Record<O.Keys<ConnectionConfig>, any>>;
+
 export const configurationNegotiation = (
   client: ServerType,
   config: ConnectionConfig
-): ConnectionConfig => {
+) => {
   if (has(config, 'port')) {
-    set(config, 'port', Number(config.port));
+    _.set(config, 'port', Number((config as ServerConnectionConfig).port));
   }
   if (client === ServerTypeEnum.MSSQL) {
-    return transform<ServerConnectionConfig, ConnectionConfig>(
-      config as ServerConnectionConfig,
+    return _.transform(
+      config,
       (result, value, key) => {
-        return (result[key === 'host' ? 'server' : key] = value);
+        const configKey: O.Keys<ConnectionConfig> =
+          key === 'host' ? 'server' : key;
+        return {
+          ...result,
+          [configKey]: value,
+        };
       },
       {}
-    );
+    ) as ConnectionConfig;
   }
   return config;
 };

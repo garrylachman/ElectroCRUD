@@ -19,7 +19,7 @@ for (const extension of extensions) {
 
 const wrapIdentifier = (
   value: string,
-  dialectImpl: (value: string) => string
+  dialectImpl: (dialectValue: string) => string
 ) => dialectImpl(value);
 
 export const connect = (config: Knex.Config): Knex => {
