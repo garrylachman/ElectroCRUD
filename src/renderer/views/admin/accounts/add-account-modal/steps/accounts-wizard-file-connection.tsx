@@ -9,7 +9,7 @@ import { get } from 'underscore';
 import { FC, forwardRef } from 'react';
 import { MdArrowBack, MdArrowForward } from 'react-icons/md';
 import { ValidateSqliteConnection } from 'renderer/defenitions/record-object';
-import { FileConnectionConfig } from 'shared';
+import { FileConnectionConfig } from 'shared/index';
 
 import { AddAccountWizardStepProperties } from '../add-account-wizard';
 
@@ -40,8 +40,15 @@ type FormData = FileConnectionConfig;
 export const AccountsWizardFileConnection: FC<
   AddAccountWizardStepProperties<FormData>
 > = ({ next, back, initialValue = { filename: '' } }) => {
-  const onSubmit = (data: FormData) =>
-    next({ filename: get(data, 'filename[0].path', '') });
+  const onSubmit = (data: FormData) => {
+    if (
+      data.filename &&
+      data.filename[0] &&
+      (data.filename[0] as unknown as File).path
+    ) {
+      next({ filename: (data.filename[0] as unknown as File).path });
+    }
+  };
 
   return (
     <Box>

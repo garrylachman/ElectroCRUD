@@ -1,7 +1,12 @@
 import { useEffect, useMemo, useState } from 'react';
 import { AccountRO } from 'renderer/defenitions/record-object';
 import { useIPCConnect } from 'renderer/ipc';
-import { ConnectArgs, ErrorResponse, IPCChannelEnum, IPCError } from 'shared';
+import {
+  ConnectArguments,
+  ErrorResponse,
+  IPCChannelEnum,
+  IPCError,
+} from 'shared/index';
 
 export type UseAccountsWizardReturn = {
   execute: () => void;
@@ -16,7 +21,7 @@ export const useConnectionTest = (
     'NOT_TESTED' | 'TESTING' | 'SUCCESS' | 'FAILED'
   >('NOT_TESTED');
   const { result, isLoading, execute, isExecuted } = useIPCConnect({
-    body: account as ConnectArgs,
+    body: account as ConnectArguments,
     channel: IPCChannelEnum.CONNECT,
   });
 

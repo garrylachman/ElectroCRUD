@@ -82,6 +82,8 @@ export const AddAccountWizard: FC<AddAccountWizardProperties> = ({
 
   const back = () => setStep(step - 1);
   const next = (data?: Record<string, any>) => {
+    console.log('update step', currentStep.name);
+    console.log(data);
     // eslint-disable-next-line no-use-before-define
     switch (currentStep.name) {
       case 'account-details': {
@@ -183,7 +185,12 @@ export const AddAccountWizard: FC<AddAccountWizardProperties> = ({
     },
   ];
 
-  const currentStep = useMemo(() => steps[step], [step, steps]);
+  const finalSteps = useMemo(
+    () => steps.filter((s) => s.enabled),
+    [steps, state]
+  );
+
+  const currentStep = useMemo(() => finalSteps[step], [step, finalSteps]);
 
   return (
     <AnimatePresence mode="wait">
@@ -251,18 +258,16 @@ export const AddAccountWizard: FC<AddAccountWizardProperties> = ({
 
                 <ModalBody py={4}>
                   <Stepper step={step} mb="2" orientation="vertical">
-                    {steps
-                      .filter((s) => s.enabled)
-                      .map(({ name, title, children, icon }) => (
-                        <StepperStep
-                          key={name}
-                          name={name}
-                          title={title}
-                          icon={icon}
-                        >
-                          {children}
-                        </StepperStep>
-                      ))}
+                    {finalSteps.map(({ name, title, children, icon }) => (
+                      <StepperStep
+                        key={name}
+                        name={name}
+                        title={title}
+                        icon={icon}
+                      >
+                        {children}
+                      </StepperStep>
+                    ))}
                   </Stepper>
                 </ModalBody>
               </WithErrorComponent>
