@@ -7,4 +7,3 @@ export * from './read-widget-data.ipc';
 export * from './insert-data.ipc';
 export * from './delete-data.ipc';
 export * from './update-data.ipc';
-export * from './check-tunnel.ipc';

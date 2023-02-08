@@ -1,7 +1,6 @@
 import 'better-sqlite3';
 import 'reflect-metadata';
 import 'sqlite3';
-
 import sqlFormatter from '@sqltools/formatter';
 import { Config as SQLFormatterConfig } from '@sqltools/formatter/lib/core/types';
 import getCurrentLine from 'get-current-line';
@@ -12,8 +11,7 @@ import SchemaInspector from 'knex-schema-inspector';
 import { SchemaInspector as ISchemaInspector } from 'knex-schema-inspector/lib/types/schema-inspector';
 import _ from 'lodash';
 import { Overwrite } from 'ts-toolbelt/out/Object/Overwrite';
-import { autoInjectable, inject, singleton } from 'tsyringe';
-
+import { Inject, Service } from 'typedi';
 import {
   ConnectArguments,
   ConnectionConfig,
@@ -34,8 +32,8 @@ import {
   SSHTunnelConfig,
   TableInfoRow,
   UpdateDataArguments,
-} from '../../shared/defenitions';
-import { QueryAggregateEnum } from '../../shared/enums';
+  QueryAggregateEnum,
+} from 'shared/index';
 import { heartBeatQueries } from '../data/queries';
 import { NoActiveClientError, NoConnectionError } from '../exceptions';
 import { configurationNegotiation, connect } from '../helpers/database';
@@ -59,20 +57,19 @@ type KnexConfigType = Overwrite<
   }
 >;
 
-@singleton()
-@autoInjectable()
-export default class DatabaseService implements IDatabaseService {
+@Service({ global: true, id: 'service.database' })
+class DatabaseService implements IDatabaseService {
   private config?: KnexConfigType;
 
   private connection?: Knex;
 
   private inspector?: ISchemaInspector;
 
-  // eslint-disable-next-line no-useless-constructor
-  constructor(
-    @inject('ILogService') private logService: ILogService,
-    @inject('ITunnelService') private tunnelService: ITunnelService
-  ) {}
+  @Inject('service.log')
+  private logService: ILogService;
+
+  @Inject('service.tunnel')
+  private tunnelService: ITunnelService;
 
   public async connect(
     client: ServerType,
@@ -623,3 +620,5 @@ export default class DatabaseService implements IDatabaseService {
     return this.readWidgetData(table, column, func, where);
   }
 }
+
+export default DatabaseService;

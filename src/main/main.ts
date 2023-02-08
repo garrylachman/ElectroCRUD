@@ -1,37 +1,29 @@
 import 'reflect-metadata';
-
-import { app, BrowserWindow, shell } from 'electron';
+import { app, BrowserWindow } from 'electron';
 import * as Splashscreen from '@trodi/electron-splashscreen';
-// eslint-disable-next-line unicorn/prefer-node-protocol
-import path from 'path';
-
+import path from 'node:path';
 import MenuBuilder from './menu';
-import { InitServices, ServiceRegistery } from './services';
-import { resolveHtmlPath } from './util';
+import { RegisterServices, InitServices } from './services';
 
-const srv = new ServiceRegistery();
-/**
- * This module executes inside of electron's main process. You can start
- * electron renderer process from here and communicate with the other processes
- * through IPC.
- *
- * When running `npm run build` or `npm run build:main`, this file is compiled to
- * `./src/main.js` using webpack. This gives us some performance wins.
- */
+declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
+declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
+
+RegisterServices();
+
+if (require('electron-squirrel-startup')) {
+  app.quit();
+}
 
 // eslint-disable-next-line import/no-mutable-exports, unicorn/no-null
 export let mainWindow: BrowserWindow | null = null;
 
-// if (process.env.NODE_ENV === 'production') {
-const sourceMapSupport = require('source-map-support');
-
-sourceMapSupport.install();
-// }
+if (process.env.NODE_ENV === 'production') {
+  const sourceMapSupport = require('source-map-support');
+  sourceMapSupport.install();
+}
 
 const isDebug =
   process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true';
-
-//const isDebug = !app.isPackaged;
 
 if (isDebug) {
   require('electron-debug')();
@@ -70,9 +62,7 @@ const createWindow = async () => {
     icon: getAssetPath('icon.png'),
     webPreferences: {
       nodeIntegration: true,
-      preload: app.isPackaged
-        ? path.join(__dirname, 'preload.js')
-        : path.join(__dirname, '../../.erb/dll/preload.js'),
+      preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
     },
   };
 
@@ -93,54 +83,26 @@ const createWindow = async () => {
   };
 
   mainWindow = Splashscreen.initSplashScreen(config);
-
-  if (isDebug) {
-    mainWindow.loadURL(resolveHtmlPath('index.html'));
-  } else {
-    mainWindow.loadFile(resolveHtmlPath('index.html'));
-  }
+  mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
 
   mainWindow.on('ready-to-show', () => {
-    if (!mainWindow) {
-      throw new Error('"mainWindow" is not defined');
-    }
-    if (process.env.START_MINIMIZED) {
-      mainWindow.minimize();
-    } else {
-      mainWindow.show();
-    }
-  });
-
-  mainWindow.on('closed', () => {
-    mainWindow = null;
+    InitServices();
   });
 
   const menuBuilder = new MenuBuilder(mainWindow);
   menuBuilder.buildMenu();
-
 };
 
-/**
- * Add event listeners...
- */
-
 app.on('window-all-closed', () => {
-  // Respect the OSX convention of having the application in memory even
-  // after all windows have been closed
   if (process.platform !== 'darwin') {
     app.quit();
   }
 });
 
-app
-  .whenReady()
-  .then(() => {
-    createWindow();
-    InitServices();
-    app.on('activate', () => {
-      // On macOS it's common to re-create a window in the app when the
-      // dock icon is clicked and there are no other windows open.
-      if (mainWindow === null) createWindow();
-    });
-  })
-  .catch(console.log);
+app.on('activate', async () => {
+  if (BrowserWindow.getAllWindows().length === 0) {
+    await createWindow();
+  }
+});
+
+app.on('ready', createWindow);

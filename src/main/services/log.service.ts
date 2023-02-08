@@ -1,19 +1,20 @@
 import 'reflect-metadata';
 import _ from 'lodash';
-import { autoInjectable, inject, singleton } from 'tsyringe';
-import { LogItem, LogItemType } from '../../shared/defenitions';
+import { Inject, Service } from 'typedi';
 import {
   IPCChannelEnum,
   LogItemSourceEnum,
   LogItemTypeEnum,
-} from '../../shared/enums';
+  LogItem,
+  LogItemType,
+} from 'shared/index';
 import { IIPCService } from './interfaces/iipc.service';
 import { ILogService } from './interfaces/ilog.service';
 
-@singleton()
-@autoInjectable()
-export default class LogService implements ILogService {
-  constructor(@inject('IIPCService') private ipcService: IIPCService) {}
+@Service({ global: true, id: 'service.log' })
+class LogService implements ILogService {
+  @Inject('service.ipc')
+  private ipcService: IIPCService;
 
   [LogItemTypeEnum.ERROR](message: string, method?: string) {
     this.addItem(LogItemTypeEnum.ERROR, message, method);
@@ -43,3 +44,5 @@ export default class LogService implements ILogService {
     this.ipcService?.send({ channel: IPCChannelEnum.LOG_CHANNEL, body: item });
   }
 }
+
+export default LogService;

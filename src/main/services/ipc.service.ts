@@ -4,8 +4,7 @@ import { ipcMain, IpcMainInvokeEvent } from 'electron';
 import { Cache, CacheContainer } from 'node-ts-cache';
 import { MemoryStorage } from 'node-ts-cache-storage-memory';
 import * as hash from 'object-hash';
-import { inject, injectable } from 'tsyringe';
-import CheckTunnelIPC from '../ipc/check-tunnel.ipc';
+import Container, { Service } from 'typedi';
 import { mainWindow } from '../main';
 import {
   ErrorResponse,
@@ -16,29 +15,28 @@ import {
 } from '../../shared/defenitions';
 import { IPCChannelEnum } from '../../shared/enums';
 import { IRequestFactory } from '../ipc/base.ipc';
-import { IDatabaseService } from './interfaces/idatabase.service';
 import { IIPCService } from './interfaces/iipc.service';
 
 const ipcCache = new CacheContainer(new MemoryStorage());
 
-@injectable()
-export default class IPCService implements IIPCService {
-  constructor(
-    @inject('IDatabaseService') private database: IDatabaseService,
-    @inject('IRequestFactory') private rFactory: IRequestFactory,
-    @inject('CheckTunnelIPC') private checkTunnel: CheckTunnelIPC
-  ) {}
+@Service({ global: true, id: 'service.ipc' })
+class IPCService implements IIPCService {
+  private rFactory = Container.get<IRequestFactory>('request.factory');
 
   public listen(): void {
-    this.disconnect();
-    Object.values(IPCChannelEnum).forEach((channel: IPCChannel) =>
-      ipcMain.handle(channel, this.onRequest.bind(this))
-    );
+    Object.values(IPCChannelEnum).forEach((channel: IPCChannel) => {
+      ipcMain.removeHandler(channel);
+      try {
+        ipcMain.handle(channel, this.onRequest.bind(this));
+      } catch {
+        /* empty */
+      }
+    });
   }
 
   public disconnect(): void {
     Object.values(IPCChannelEnum).forEach((channel: IPCChannel) =>
-      ipcMain.removeAllListeners(channel)
+      ipcMain.removeHandler(channel)
     );
   }
 
@@ -47,11 +45,7 @@ export default class IPCService implements IIPCService {
     event: IpcMainInvokeEvent,
     request: RequestType
   ): Promise<ResponseType> | ResponseType {
-    console.log('onRequest', request);
     switch (request.channel) {
-      case IPCChannelEnum.CHECK_TUNNEL: {
-        return this.checkTunnel.createRequest(request);
-      }
       case IPCChannelEnum.CONNECT: {
         return this.rFactory.createRequest(request, 'connectWithProps');
       }
@@ -93,3 +87,5 @@ export default class IPCService implements IIPCService {
     mainWindow?.webContents.send(response.channel, response);
   }
 }
+
+export default IPCService;

@@ -1,6 +1,7 @@
 import '@fontsource/poppins';
+import '@fontsource/dm-sans';
 import '@inovua/reactdatagrid-community/index.css';
-import 'renderer/assets/css/App.css';
+import './assets/css/App.css';
 
 import { Loader, SaasProvider } from '@saas-ui/react';
 import TimeAgo from 'javascript-time-ago';

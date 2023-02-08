@@ -16,12 +16,14 @@ import {
   ReadWidgetDataResult,
   ServerType,
   TableInfoRow,
-} from '../../../shared';
+  SSHTunnelConfig,
+} from 'shared/index';
 
 export interface IDatabaseService {
   connect(
     client: ServerType,
-    connection: ConnectionConfig
+    connection: ConnectionConfig,
+    tunnel?: SSHTunnelConfig
   ): Promise<boolean | IPCError>;
   connectWithProps(properties: ConnectArguments): Promise<boolean | IPCError>;
   disconnect(): Promise<void>;

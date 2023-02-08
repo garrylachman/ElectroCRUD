@@ -1,5 +1,5 @@
 import { ipcRenderer } from 'electron';
-import { Channels } from '../main/preload';
+import { IPCChannel as Channels } from 'shared/defenitions';
 
 declare global {
   interface Window {
