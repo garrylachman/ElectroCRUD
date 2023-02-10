@@ -67,9 +67,6 @@ const createWindow = async () => {
     },
   };
 
-  console.log("SPLASH_SCREEN_WEBPACK_ENTRY", SPLASH_SCREEN_WEBPACK_ENTRY);
-  console.log("MAIN_WINDOW_WEBPACK_ENTRY", MAIN_WINDOW_WEBPACK_ENTRY);
-
   const config: Splashscreen.Config = {
     windowOpts: mainOptions,
     templateUrl: SPLASH_SCREEN_WEBPACK_ENTRY.replace("file://", ""),
