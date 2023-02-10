@@ -12,7 +12,7 @@ import {
 import { FormLayout } from '@saas-ui/forms';
 import { FC } from 'react';
 import { MdArrowBack, MdArrowForward } from 'react-icons/md';
-import SetUp from 'renderer/components/actions/SetUp';
+import SetUp from 'renderer/components/actions/set-up';
 import { AccountRO } from 'renderer/defenitions/record-object';
 import { O } from 'ts-toolbelt';
 

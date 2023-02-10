@@ -3,7 +3,7 @@ import { Field, Form, FormLayout } from '@saas-ui/react';
 import { FC, useState } from 'react';
 import { MdArrowBack, MdArrowForward } from 'react-icons/md';
 import { ValidateTunnel } from 'renderer/defenitions/record-object';
-import { SSHTunnelConfig } from 'shared';
+import { SSHTunnelConfig } from 'shared/index';
 
 import { AddAccountWizardStepProperties } from '../add-account-wizard';
 

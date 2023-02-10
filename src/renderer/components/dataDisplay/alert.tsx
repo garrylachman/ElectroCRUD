@@ -10,7 +10,8 @@ import { FC } from 'react';
 import { IconType } from 'react-icons';
 import { O } from 'ts-toolbelt';
 
-export type AlertProperties = O.Merge<{
+export type AlertProperties = O.Merge<
+  {
     icon?: IconType;
     title: string;
     description?: string;
@@ -27,7 +28,9 @@ export const Alert: FC<AlertProperties> = ({
   <OriginalAlert status={status} display="flex" flexDirection="column">
     {}
     {icon ? <Icon as={icon} boxSize={10} /> : <AlertIcon boxSize={10} />}
-    <AlertTitle display="flex" fontWeight="extrabold">{title}</AlertTitle>
+    <AlertTitle display="flex" fontWeight="extrabold">
+      {title}
+    </AlertTitle>
     {description && (
       <AlertDescription display="flex" fontWeight="light">
         {description}

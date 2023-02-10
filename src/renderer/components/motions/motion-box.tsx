@@ -1,3 +1,4 @@
+/* eslint-disable unicorn/prevent-abbreviations */
 import { Box, forwardRef } from '@chakra-ui/react';
 import { isValidMotionProp, motion } from 'framer-motion';
 

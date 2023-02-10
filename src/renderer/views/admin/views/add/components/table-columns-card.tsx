@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 import {
   Card,
   CardBody,
@@ -19,10 +20,11 @@ import { ElectroCRUDTable } from 'renderer/components/tables/electro-crud-table'
 import { ColumnRO } from 'renderer/defenitions/record-object';
 import { findType } from 'renderer/defenitions/record-object/data-types';
 import { useIPCTableInfo } from 'renderer/ipc';
-import { useAppDispatch, useAppSelector } from 'renderer/store/hooks';
+import { useAppDispatch } from 'renderer/store/hooks';
 import { ColumnsReducer } from 'renderer/store/reducers';
 import { ViewSelectors } from 'renderer/store/selectors';
-import { IPCChannelEnum } from 'shared';
+import { IPCChannelEnum } from 'shared/index';
+import { RootState } from 'renderer/store/store';
 
 type TableColumnsCardProperties = {
   viewId: string;
@@ -31,7 +33,7 @@ type TableColumnsCardProperties = {
 export const TableColumnsCard: FC<TableColumnsCardProperties> = ({
   viewId,
 }) => {
-  const viewState = useSelector((state) =>
+  const viewState = useSelector((state: RootState) =>
     ViewSelectors.createFullViewSelector(state)
   )(viewId);
   const dispatch = useAppDispatch();
@@ -57,6 +59,7 @@ export const TableColumnsCard: FC<TableColumnsCardProperties> = ({
       if (missingColumns.length > 0) {
         dispatch(
           ColumnsReducer.actions.upsertMany(
+            // @ts-ignore
             missingColumns.map((item) => ({
               ...item,
               enabled: true,
@@ -117,6 +120,7 @@ export const TableColumnsCard: FC<TableColumnsCardProperties> = ({
         <CardBody px={0}>
           <ElectroCRUDTable<ColumnRO>
             isLoaded={isExecuted}
+            // @ts-ignore
             data={viewState.columns}
             columns={tableColumns}
             customCell={(row) => {

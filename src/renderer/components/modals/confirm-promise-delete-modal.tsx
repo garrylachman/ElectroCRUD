@@ -1,5 +1,4 @@
 import { Icon, Text } from '@chakra-ui/react';
-import { FC } from 'react';
 import { FaQuoteLeft, FaQuoteRight } from 'react-icons/fa';
 import { v4 } from 'uuid';
 

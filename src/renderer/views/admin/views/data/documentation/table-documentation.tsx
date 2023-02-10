@@ -11,6 +11,7 @@ export const TableDocumentation = () => {
       {viewState?.metadata.md ? (
         <MarkdownEditor.Markdown
           source={viewState?.metadata.md}
+          // @ts-ignore
           pluginsFilter={(name, value) => {
             if (name === 'remark') {
               return value;

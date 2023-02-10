@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 import memoize from 'proxy-memoize';
 import { createContext, FC, PropsWithChildren, useState } from 'react';
 

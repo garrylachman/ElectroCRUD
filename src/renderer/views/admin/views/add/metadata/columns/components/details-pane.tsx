@@ -11,7 +11,7 @@ import { O } from 'ts-toolbelt';
 
 import { ColumnDetails, ColumnDocumentation, ColumnReletions } from '../tabs';
 
-export type DetailsPaneProperties = O.Merge<BoxProps, {}>;
+export type DetailsPaneProperties = BoxProps;
 
 export const DetailsPane: FC<DetailsPaneProperties> = ({ ...properties }) => {
   const { memState } = useContext(ScopeContext);
@@ -48,7 +48,7 @@ export const DetailsPane: FC<DetailsPaneProperties> = ({ ...properties }) => {
   );
 
   return (
-    <Box py={0} pl={3} {...properties} mt={0} overflowX="hidden">
+    <Box {...properties} py={0} pl={3} mt={0} overflowX="hidden">
       {memState.columnId && (
         <ElectroCRUDTabs
           tabsList={tabs}

@@ -2,6 +2,7 @@
  * @jest-environment node
  */
 /* eslint-disable jest/no-conditional-expect */
+// @ts-nocheck
 
 import { ipcRenderer } from 'electron';
 import LogService from 'main/services/log.service';

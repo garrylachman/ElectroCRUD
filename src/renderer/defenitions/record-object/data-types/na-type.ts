@@ -5,9 +5,9 @@ export const NADataType: DataType<undefined> = {
   name: 'N/A',
   icon: AiOutlineExclamationCircle,
   examples: {
-    short: '',
-    medium: '',
-    long: '',
+    short: undefined,
+    medium: undefined,
+    long: undefined,
   },
   variants: [],
   validationFuction: () => true,

@@ -1,5 +1,5 @@
 import { Card } from '@chakra-ui/react';
-import { FC, memo, useMemo, useRef } from 'react';
+import { memo, useMemo, useRef } from 'react';
 import { TbTable } from 'react-icons/tb';
 import {
   ElectroCRUDTabProperties,
@@ -39,6 +39,7 @@ export default memo(function DatasetCoordinator() {
         colorScheme="primary"
         fontSize="sm"
         hasScrollbar={false}
+        // @ts-ignore
         ref={tabsReference}
         tabPanelProps={{
           marginBottom: 0,

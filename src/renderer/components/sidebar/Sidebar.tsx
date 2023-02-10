@@ -1,5 +1,6 @@
+/* eslint-disable unicorn/filename-case */
 import { Box, useColorModeValue } from '@chakra-ui/react';
-import { Content } from './components/content';
+import { Content } from './components/Content';
 
 export function Sidebar() {
   const shadow = useColorModeValue(

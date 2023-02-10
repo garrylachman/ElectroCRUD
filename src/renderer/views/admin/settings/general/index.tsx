@@ -24,6 +24,7 @@ const validationSchema = Joi.object<FormData>({
     password: Joi.string()
       .max(5)
       .min(2)
+      // eslint-disable-next-line unicorn/better-regex
       .pattern(new RegExp(/^[a-zA-Z0-9]+$/))
       .optional(),
   }),
@@ -37,8 +38,7 @@ export const SettingsGeneral: FC<any> = () => {
     if (data.password.password) {
       data.password.passwordLenght = data.password.password.length;
       data.password.password = CryptoJS.SHA256(
-        data.password.password,
-        data.password.hash
+        `${data.password.password}${data.password.hash}`
       ).toString();
     }
     dispatch(SettingsReducer.actions.update(data));

@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unnecessary-type-assertion */
+/* eslint-disable @typescript-eslint/no-empty-function */
 import {
   Box,
   Center,
@@ -52,7 +54,7 @@ export const ColumnDetails = () => {
   );
 
   const exampleData = {
-    [columnState.name]: 'Example Text',
+    [(columnState as any).name]: 'Example Text',
   };
   const policy = usePolicy([columnState], [exampleData]);
 
@@ -66,9 +68,9 @@ export const ColumnDetails = () => {
 
   const { register, handleSubmit, reset, setValue } = formContext;
 
-  const onSubmit = (data: ColumnRO) => {
+  const onSubmit = (data) => {
     ConfirmPromiseSaveModal({
-      entityName: columnState.name,
+      entityName: (columnState as any).name,
     })
       .then(() => {
         dispatch(
@@ -87,10 +89,13 @@ export const ColumnDetails = () => {
 
   useEffect(() => {
     const data: ColumnRO = R.mergeRight<ColumnRO, ColumnRO>(
+      // @ts-ignore
       R.pickAll<ColumnRO, ColumnRO>(
         ['enabled', 'searchable', 'alias', 'metadata'],
+        // @ts-ignore
         columnState
       ),
+      // @ts-ignore
       { alias: R.propOr('', 'alias', columnState) }
     );
     reset(data);
@@ -106,23 +111,25 @@ export const ColumnDetails = () => {
   }
 
   return (
-    <Box px={4} key={`columndetails--${columnState.id}`}>
+    <Box px={4} key={`columndetails--${columnState.id as string}`}>
       <FormProvider {...formContext}>
         <Box>
-          <Heading size="md">{columnState.name}</Heading>
+          <Heading size="md">{(columnState as any).name}</Heading>
 
           <PropertyList display="flex" flex={1} gap={3}>
             <Property
               flexDirection="row"
               flex={1}
               label="Created at"
-              value={<ReactTimeAgo date={columnState.creationDate} />}
+              value={<ReactTimeAgo date={columnState.creationDate as number} />}
             />
             <Property
               flexDirection="row"
               flex={1}
               label="Updated at"
-              value={<ReactTimeAgo date={columnState.modificationDate} />}
+              value={
+                <ReactTimeAgo date={columnState.modificationDate as number} />
+              }
             />
           </PropertyList>
 
@@ -168,8 +175,8 @@ export const ColumnDetails = () => {
             size="md"
             id="metadata.tags"
             type={TagType.COLUMN}
-            target={{ columnId: columnState.id }}
-            defaultValue={[...(columnState.metadata?.tags || [])]}
+            target={{ columnId: columnState.id as string }}
+            defaultValue={[...((columnState.metadata as any)?.tags || [])]}
           />
 
           {JSON.stringify(exampleData) !== JSON.stringify(policy[0]) && (

@@ -1,12 +1,12 @@
-import { injectable, inject, singleton } from 'tsyringe';
-import { IDatabaseService } from '../services/interfaces/idatabase.service';
 import {
   ErrorResponse,
   ErrorType,
   IPCError,
   RequestType,
   ResponseTypeSuccess,
-} from '../../shared/defenitions';
+} from 'shared/index';
+import { Inject, Service } from 'typedi';
+import { IDatabaseService } from '../services/interfaces/idatabase.service';
 import { ResponseFactoryType } from '../helpers';
 
 type Function1 = (...arguments_: unknown[]) => unknown;
@@ -56,21 +56,22 @@ export interface IRequestFactory {
   ): Promise<ResponseTypeSuccess | ErrorResponse>;
 }
 
-@singleton()
-@injectable()
-export default class RequestFactory implements IRequestFactory {
-  constructor(@inject('IDatabaseService') private database: IDatabaseService) {}
+@Service({ global: true, id: 'request.factory' })
+class RequestFactory implements IRequestFactory {
+  @Inject('service.database')
+  private databaseService: IDatabaseService;
 
   public async createRequest<T extends RequestType>(
     request: T,
     invoke: DatabaseServiceMethods
   ): Promise<ResponseTypeSuccess | ErrorResponse> {
+    console.log(request)
     const { channel, body } = request;
     try {
       // eslint-disable-next-line max-len
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
       // @ts-ignore
-      const result = await this.database[invoke](body);
+      const result = await this.databaseService[invoke](body);
       return ResponseFactoryType(channel, result);
     } catch (error) {
       return ResponseFactoryType(channel, {
@@ -80,3 +81,5 @@ export default class RequestFactory implements IRequestFactory {
     }
   }
 }
+
+export default RequestFactory;

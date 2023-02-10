@@ -1,33 +1,25 @@
 import 'reflect-metadata';
-
-import { registry, delay, container } from 'tsyringe';
-
+import Container from 'typedi';
 import DatabaseService from './database.service';
 import RequestFactory from '../ipc/base.ipc';
 import IPCService from './ipc.service';
 import LogService from './log.service';
 import TunnelService from './tunnel.service';
-import CheckTunnelIPC from '../ipc/check-tunnel.ipc';
+import { IIPCService } from './interfaces/iipc.service';
 
-@registry([
-  { token: 'IDatabaseService', useToken: delay(() => DatabaseService) },
-  { token: 'IRequestFactory', useToken: delay(() => RequestFactory) },
-  { token: 'CheckTunnelIPC', useToken: delay(() => CheckTunnelIPC) },
-  { token: 'IIPCService', useToken: delay(() => IPCService) },
-  { token: 'ILogService', useToken: delay(() => LogService) },
-  { token: 'ITunnelService', useToken: delay(() => TunnelService) },
-])
-export class ServiceRegistery {}
+export const RegisterServices = () => {
+  Container.set([
+    { id: 'request.factory', value: new RequestFactory() },
+    { id: 'service.ipc', value: new IPCService() },
+    { id: 'service.log', value: new LogService() },
+    { id: 'service.database', value: new DatabaseService() },
+    { id: 'service.tunnel', value: new TunnelService() },
+  ]);
+};
 
 export const InitServices = () => {
-  container.afterResolution(
-    'IIPCService',
-    (_t, result: IPCService | IPCService[]) => {
-      console.log("afterResolution", result);
-      (result as IPCService).listen();
-    },
-    { frequency: 'Once' }
-  );
-
-  container.resolve('IIPCService');
+  if (Container.has('service.ipc')) {
+    const instance = Container.get<IIPCService>('service.ipc');
+    instance.listen();
+  }
 };

@@ -1,17 +1,17 @@
 import { ipcRenderer } from 'electron';
-import { Channels } from '../main/preload';
+import { IPCChannel as Channels } from 'shared/defenitions';
 
 declare global {
   interface Window {
     electron: {
       ipcRenderer: {
-        sendMessage(channel: Channels, args: unknown[]): void;
+        sendMessage(channel: Channels, arguments_: unknown[]): void;
         on(
           channel: Channels,
-          func: (...args: unknown[]) => void
+          function_: (...arguments_: unknown[]) => void
         ): (() => void) | undefined;
-        once(channel: Channels, func: (...args: unknown[]) => void): void;
-        invoke(channel: string, ...args: any[]): Promise<any>;
+        once(channel: Channels, function_: (...arguments_: unknown[]) => void): void;
+        invoke(channel: string, ...arguments_: any[]): Promise<any>;
       };
     };
   }

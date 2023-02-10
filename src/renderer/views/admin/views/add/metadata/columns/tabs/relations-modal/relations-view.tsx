@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Flex, Tag, TagLeftIcon } from '@chakra-ui/react';
 import { chakraComponents } from 'chakra-react-select';
 import { FC, ReactElement, useCallback, useMemo } from 'react';
@@ -24,7 +25,7 @@ export const RelationsView: FC<RelationsViewProperties> = ({
   );
   const viewSelector = useSelector<RootState>((state) =>
     ViewSelectors.getView(state)
-  );
+  ) as ViewRO;
 
   const selectedView = useMemo<ViewVO | undefined>(() => {
     if (selected) {

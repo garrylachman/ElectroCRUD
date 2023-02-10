@@ -1,12 +1,13 @@
 import { PayloadAction } from '@reduxjs/toolkit';
 import { put, takeEvery } from 'redux-saga/effects';
-import {
-  AccountRO,
-  CodeExampleRO,
-  ViewRO,
-} from 'renderer/defenitions/record-object';
+import { AccountRO } from 'renderer/defenitions/record-object';
 import { BaseRequest } from 'renderer/ipc/base-request';
-import { ConnectRequest, ConnectResponse, IPCChannelEnum } from 'shared';
+import {
+  ConnectRequest,
+  ConnectResponse,
+  ErrorResponse,
+  IPCChannelEnum,
+} from 'shared/index';
 
 import {
   CodeExamplesReducer,
@@ -34,7 +35,7 @@ export function* setIsConnected(action: { payload: { account: AccountRO } }) {
     request.channel,
     request
   ) as any;
-  yield result.error === undefined
+  yield result.body === true
     ? put(SessionReducer.actions.setActive({ isConnected: true }))
     : [
         yield put(SessionReducer.actions.setActive({ isConnected: false })),
@@ -42,7 +43,7 @@ export function* setIsConnected(action: { payload: { account: AccountRO } }) {
           ToastReducer.actions.setToast({
             status: 'error',
             title: `IPC Error on channel: ${result.channel}`,
-            description: result.error.message,
+            description: (result as unknown as ErrorResponse).error.message,
           })
         ),
       ];
@@ -102,7 +103,6 @@ function* notifyEntityDeleted(action: PayloadAction<string>) {
 
 function* onFilterCreated(action) {
   if (action.meta) {
-    console.log("action", action);
     yield put(
       TemporaryFilterRulesReducer.actions.upsertOne({
         filterId: action.payload.id,
@@ -132,6 +132,7 @@ export function* watchForNotificationsAsync() {
     CodeExamplesReducer.actions.upsertOne,
     notifyEntityAddedOrEdited
   );
+  // @ts-ignore
   yield takeEvery(CodeExamplesReducer.actions.removeOne, notifyEntityDeleted);
   yield takeEvery(TemporaryFiltersReducer.actions.upsertOne, onFilterCreated);
 }

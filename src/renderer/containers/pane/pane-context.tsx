@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 import { BoxProps } from '@chakra-ui/react';
 import {
   createContext,

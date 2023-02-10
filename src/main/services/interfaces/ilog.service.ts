@@ -1,4 +1,4 @@
-import { LogItemTypeEnum, LogItemType } from '../../../shared';
+import { LogItemTypeEnum, LogItemType } from 'shared/index';
 
 export interface ILogService {
   [LogItemTypeEnum.ERROR](message: string, method?: string): void;

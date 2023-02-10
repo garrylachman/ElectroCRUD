@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Flex, Tag, TagLabel } from '@chakra-ui/react';
 import { chakraComponents } from 'chakra-react-select';
 import { ReactElement } from 'react';

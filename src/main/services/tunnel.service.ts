@@ -1,22 +1,21 @@
 import 'reflect-metadata';
 import _ from 'lodash';
-import { autoInjectable, inject, singleton } from 'tsyringe';
 import { SshTunnel, SshConfig } from 'ssh-tunneling';
 import getPort from 'get-port';
 import getCurrentLine from 'get-current-line';
+import { Inject, Service } from 'typedi';
 import {
   ITunnelService,
   TunnelProxyConfig,
 } from './interfaces/itunnel.service';
 import { ILogService } from './interfaces/ilog.service';
 
-@singleton()
-@autoInjectable()
-export default class TunnelService implements ITunnelService {
+@Service({ global: true, id: 'service.tunnel' })
+class TunnelService implements ITunnelService {
   private client?: SshTunnel;
 
-  // eslint-disable-next-line no-useless-constructor
-  constructor(@inject('ILogService') private logService: ILogService) {}
+  @Inject('service.log')
+  private logService: ILogService;
 
   public init(
     host: string,
@@ -56,3 +55,5 @@ export default class TunnelService implements ITunnelService {
     await this.client?.close();
   }
 }
+
+export default TunnelService;

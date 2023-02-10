@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+// @ts-nocheck
 import { Flex, Tag, TagLabel, TagLeftIcon } from '@chakra-ui/react';
 import { chakraComponents } from 'chakra-react-select';
 import { FC, ReactElement, useCallback, useMemo } from 'react';
@@ -23,14 +25,16 @@ export const RelationsColumn: FC<RelationsColumnProperties> = () => {
 
   const columnSelector = useSelector<RootState>((state) =>
     ColumnSelectors.createColumnSelector(state)
-  );
+  ) as ColumnRO;
 
   const columns = useMemo<ColumnRO[]>(
+    // @ts-ignore
     () => (selectedViewId ? columnsByViewSelector(selectedViewId) : []),
     [selectedViewId]
   );
 
   const selectedColumn = useMemo(
+    // @ts-ignore
     () => (selected ? columnSelector(selected) : undefined),
     [selected]
   );
@@ -65,8 +69,8 @@ export const RelationsColumn: FC<RelationsColumnProperties> = () => {
     }));
   }, [columns]);
 
-  const TagByType = (props) => {
-    const dataType = findType(props.type);
+  const TagByType = (properties) => {
+    const dataType = findType(properties.type);
     if (dataType) {
       return <TagLeftIcon fontSize={15} as={dataType.icon} />;
     }

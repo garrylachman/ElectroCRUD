@@ -4,6 +4,7 @@ import { Divider } from '@chakra-ui/react';
 import { ViewScopedContext } from 'renderer/contexts';
 import { TableDocumentation } from './table-documentation';
 import { ColumnDocumentation } from './column-documentation';
+import { StrictColumnRO } from 'renderer/defenitions/record-object';
 
 export const Documentation = () => {
   const { viewState } = useContext(ViewScopedContext);
@@ -23,7 +24,9 @@ export const Documentation = () => {
         {viewState?.columns.map((row) => (
           <>
             <Divider my={5} />
-            <ColumnDocumentation columnState={row} />
+            <ColumnDocumentation
+              columnState={row as unknown as StrictColumnRO}
+            />
           </>
         ))}
       </CardBody>

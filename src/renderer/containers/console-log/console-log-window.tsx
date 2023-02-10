@@ -87,11 +87,12 @@ export const ConsoleLogWindow: FC<ConsoleLogWindowProperties> = ({
             width="-webkit-fill-available"
             height="-webkit-fill-available"
             marginInlineStart={0}
+            // @ts-ignore
             ref={logReference}
           >
-            {(log as LogItem[]).map((logItem) => (
+            {(log as unknown as LogItem[]).map((logItem) => (
               <ListItem
-                key={logItem.body.id}
+                key={logItem?.body?.id}
                 color="white"
                 my={2}
                 fontSize="xs"
@@ -99,15 +100,17 @@ export const ConsoleLogWindow: FC<ConsoleLogWindowProperties> = ({
                 <Badge
                   variant="solid"
                   fontSize="2xs"
-                  colorScheme={statusToColor(logItem.body.type)}
+                  colorScheme={statusToColor(logItem?.body?.type)}
                 >
-                  {logItem.body.type}
+                  {logItem?.body?.type}
                 </Badge>
                 <Badge mx={2} colorScheme="primary" fontSize="2xs">
-                  <ReactTimeAgo date={logItem.body.ts} timeStyle="twitter" />
+                  {logItem.body?.ts && (
+                    <ReactTimeAgo date={logItem.body?.ts} timeStyle="twitter" />
+                  )}
                 </Badge>
                 <Text as="span">
-                  {logItem.body.method}: {logItem.body.message}
+                  {logItem.body?.method}: {logItem.body?.message}
                 </Text>
               </ListItem>
             ))}

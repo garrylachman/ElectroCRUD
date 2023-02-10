@@ -1,3 +1,4 @@
+/* eslint-disable unicorn/filename-case */
 import { Badge, Text } from '@chakra-ui/react';
 import chroma from 'chroma-js';
 import { motion } from 'framer-motion';

@@ -6,7 +6,10 @@ export type BaseRO = {
   modificationDate?: number;
 };
 
-export type StrictBaseRO = O.Required<BaseRO, 'id' | 'creationDate'>;
+export type StrictBaseRO = O.Required<
+  BaseRO,
+  'id' | 'creationDate' | 'modificationDate'
+>;
 
 export const demote = <
   T extends O.Unionize<BaseRO, StrictBaseRO>,

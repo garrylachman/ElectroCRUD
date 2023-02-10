@@ -22,5 +22,6 @@ export const CancelActionButton: FC<ActionButtonProperties> = (properties) => {
     () => ActionButton({ ...properties, ...buttonProperties }),
     [properties]
   );
+  // @ts-ignore
   return <>{renderComponent(buttonContent)}</>;
 };

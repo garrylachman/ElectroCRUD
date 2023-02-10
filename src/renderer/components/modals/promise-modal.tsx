@@ -103,7 +103,7 @@ export const PromiseModalComponent: FC<PromiseModalProperties> = ({
       >
         <ModalOverlay>
           <motion.div
-            onClick={(e) => e.stopPropagation()}
+            onClick={(event) => event.stopPropagation()}
             className="modal  orange-gradient"
             variants={flip}
             initial="hidden"
@@ -155,7 +155,9 @@ export const PromiseModalComponent: FC<PromiseModalProperties> = ({
 
               <ModalBody py={4}>
                 <RenderContent
+                  // @ts-ignore
                   formRef={formReference}
+                  // @ts-ignore
                   formCtxRef={formContextReference}
                 />
               </ModalBody>

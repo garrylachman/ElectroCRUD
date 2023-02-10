@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
+// @ts-nocheck
 import { Box, Center, Spinner, Text } from '@chakra-ui/react';
 import MarkdownEditor from '@uiw/react-markdown-editor';
 import { useCallback, useContext, useMemo, useState } from 'react';
@@ -18,7 +20,7 @@ import tableDescription from './table-description.md';
 export const TabeDocumentation = () => {
   const dispatch = useAppDispatch();
   const { viewState } = useContext(ViewScopedContext);
-  const [markdownTemp, setMarkdown] = useState('');
+  const [markdownTemporary, setMarkdown] = useState('');
 
   const markdown = useMemo(
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
@@ -36,14 +38,14 @@ export const TabeDocumentation = () => {
             ...viewState,
             metadata: {
               ...viewState.metadata,
-              md: markdownTemp,
+              md: markdownTemporary,
             },
           })
         );
         return true;
       })
       .catch(() => {});
-  }, [markdownTemp, viewState]);
+  }, [markdownTemporary, viewState]);
 
   const RenderPreview = () => (
     <Box p={4}>
@@ -97,7 +99,9 @@ export const TabeDocumentation = () => {
       </Box>
       <ElectroCRUDTabs
         tabsList={tabs}
-        key={`ElectroCRUDTabs-${viewState.id || ''}-${viewState.modificationDate || ''}`}
+        key={`ElectroCRUDTabs-${viewState.id || ''}-${
+          viewState.modificationDate || ''
+        }`}
         tabIndex={0}
         iconSize={5}
         fontSize="md"

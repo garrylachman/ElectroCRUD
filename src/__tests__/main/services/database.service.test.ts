@@ -1,8 +1,5 @@
-/**
- * @jest-environment node
- */
-/* eslint-disable jest/no-conditional-expect */
-
+// @ts-nocheck
+/* eslint-disable unicorn/prevent-abbreviations */
 import 'reflect-metadata';
 import { container } from 'tsyringe';
 import DatabaseService from 'main/services/database.service';

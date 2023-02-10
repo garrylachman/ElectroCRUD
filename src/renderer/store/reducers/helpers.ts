@@ -4,12 +4,16 @@ import {
   EntityState,
 } from '@reduxjs/toolkit';
 import { BaseRO } from 'renderer/defenitions/record-object/base.define';
-import { Merge } from 'type-fest';
+import { O } from 'ts-toolbelt';
 import { v4 } from 'uuid';
 
-export type AnyActionWithPayload = Merge<
+export type AnyActionWithPayload = O.Merge<
+  {
+    payload: Record<string, any>;
+    type: string;
+  },
   AnyAction,
-  { payload: Record<string, any>; type: string }
+  'deep'
 >;
 
 export const prepareStateUpdate = <T extends BaseRO>(

@@ -11,13 +11,19 @@ import {
   Text,
 } from '@chakra-ui/react';
 import { omit } from 'underscore';
-import { FC, useMemo } from 'react';
+import { FC, ReactElement, useMemo } from 'react';
 import { MdArrowDropDown } from 'react-icons/md';
 import { ObjectID } from 'renderer/helpers';
 
+export type ActionsDropdownMenuItem = {
+  props?: MenuItemProps;
+  text?: string | ReactElement;
+  isDivider?: boolean;
+};
+
 export type ActionsDropdownMenuProperties = {
   menuName?: string;
-  items?: { props: MenuItemProps; text?: string; isDivider?: boolean }[];
+  items?: ActionsDropdownMenuItem[];
 };
 
 export const ActionsDropdownMenu: FC<ActionsDropdownMenuProperties> = ({

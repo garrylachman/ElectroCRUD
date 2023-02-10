@@ -83,7 +83,7 @@ const columnsSlice = createSlice({
     builder.addCase(tagsActions.upsertOne, (state, action) => {
       if (action.meta.columnId) {
         state.entities[action.meta.columnId]?.metadata?.tags.push(
-          action.payload.id as string
+          action.payload.id
         );
       }
     });

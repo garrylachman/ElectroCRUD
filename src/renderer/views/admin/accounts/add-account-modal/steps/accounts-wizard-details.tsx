@@ -7,7 +7,7 @@ import {
   AccountRO,
   ValidateAccountsWizardStep1,
 } from 'renderer/defenitions/record-object';
-import { ServerTypeEnum } from 'shared';
+import { ServerTypeEnum } from 'shared/index';
 
 import { AddAccountWizardStepProperties } from '../add-account-wizard';
 
@@ -50,6 +50,7 @@ export const AccountsWizardDetails: FC<
               { value: ServerTypeEnum.ORACEL, label: 'Oracel' },
               { value: ServerTypeEnum.POSTGRES, label: 'Postgres' },
               { value: ServerTypeEnum.SQLITE, label: 'SQLite' },
+              { value: ServerTypeEnum.BETTER_SQLITE, label: 'Better SQLite' },
             ]}
             strategy="fixed"
             colorScheme="primary"

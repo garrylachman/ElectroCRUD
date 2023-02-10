@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 import {
   Box,
   HStack,
@@ -14,11 +15,17 @@ import { FC, useContext, useMemo } from 'react';
 import { MdSearch } from 'react-icons/md';
 import { TbFilter, TbFilterOff, TbPlaylistAdd, TbTrash } from 'react-icons/tb';
 import { useSelector } from 'react-redux';
-import { ActionsDropdownMenu } from 'renderer/components/buttons/actions-dropdown-menu';
+import {
+  ActionsDropdownMenu,
+  ActionsDropdownMenuItem,
+} from 'renderer/components/buttons/actions-dropdown-menu';
 import { RippleButton } from 'renderer/components/buttons/ripple-button';
 import { ConfirmPromiseDeleteModal } from 'renderer/components/modals/confirm-promise-delete-modal';
 import { ViewScopedContext } from 'renderer/contexts';
-import { ViewFilterRO } from 'renderer/defenitions/record-object';
+import {
+  StrictViewFilterRO,
+  ViewFilterRO,
+} from 'renderer/defenitions/record-object';
 import { useAppDispatch } from 'renderer/store/hooks';
 import { ViewFiltersReducer } from 'renderer/store/reducers';
 import { RootState } from 'renderer/store/store';
@@ -37,10 +44,11 @@ export const DataTableHeader: FC<DataTableHeaderProperties> = ({
   const { viewState } = useContext(ViewScopedContext);
   const dispatch = useAppDispatch();
 
-  const viewFilterState = useSelector<RootState, ViewFilterRO[]>((state) =>
-    memoize((viewFiltersState: EntityState<ViewFilterRO>) =>
-      ViewFiltersReducer.getSelectors().selectAll(viewFiltersState)
-    )(state.viewsFilter)
+  const viewFilterState = useSelector<RootState, StrictViewFilterRO[]>(
+    (state) =>
+      memoize((viewFiltersState: EntityState<StrictViewFilterRO>) =>
+        ViewFiltersReducer.getSelectors().selectAll(viewFiltersState)
+      )(state.viewsFilter)
   );
 
   const thisViewFilters = useMemo(
@@ -48,7 +56,7 @@ export const DataTableHeader: FC<DataTableHeaderProperties> = ({
     [viewState?.id, viewFilterState]
   );
 
-  const actions = useMemo(
+  const actions = useMemo<ActionsDropdownMenuItem[]>(
     () => [
       {
         props: {
@@ -82,8 +90,8 @@ export const DataTableHeader: FC<DataTableHeaderProperties> = ({
             <RippleButton
               bgColorScheme="red"
               fontSize="sm"
-              onClick={(e) => {
-                e.stopPropagation();
+              onClick={(event) => {
+                event.stopPropagation();
                 ConfirmPromiseDeleteModal({ entityName: vFilter.name })
                   .then((value) => {
                     if (value && vFilter?.id) {
@@ -134,7 +142,7 @@ export const DataTableHeader: FC<DataTableHeaderProperties> = ({
               variant="flushed"
               size="md"
               width="300px"
-              onChange={(e) => setSearchValue(e.target.value)}
+              onChange={(event) => setSearchValue(event.target.value)}
             />
             <InputRightElement>
               <Icon as={MdSearch} />

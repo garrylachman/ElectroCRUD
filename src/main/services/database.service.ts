@@ -1,19 +1,16 @@
 import 'better-sqlite3';
 import 'reflect-metadata';
 import 'sqlite3';
-
 import sqlFormatter from '@sqltools/formatter';
 import { Config as SQLFormatterConfig } from '@sqltools/formatter/lib/core/types';
 import getCurrentLine from 'get-current-line';
 import { Knex } from 'knex';
-import knexHooks from 'knex-hooks';
 import { whereFilter } from 'knex-json-filter';
 import SchemaInspector from 'knex-schema-inspector';
 import { SchemaInspector as ISchemaInspector } from 'knex-schema-inspector/lib/types/schema-inspector';
 import _ from 'lodash';
 import { Overwrite } from 'ts-toolbelt/out/Object/Overwrite';
-import { autoInjectable, inject, singleton } from 'tsyringe';
-
+import { Inject, Service } from 'typedi';
 import {
   ConnectArguments,
   ConnectionConfig,
@@ -34,8 +31,9 @@ import {
   SSHTunnelConfig,
   TableInfoRow,
   UpdateDataArguments,
-} from '../../shared/defenitions';
-import { QueryAggregateEnum } from '../../shared/enums';
+  QueryAggregateEnum,
+  ServerTypeEnum,
+} from 'shared/index';
 import { heartBeatQueries } from '../data/queries';
 import { NoActiveClientError, NoConnectionError } from '../exceptions';
 import { configurationNegotiation, connect } from '../helpers/database';
@@ -59,23 +57,22 @@ type KnexConfigType = Overwrite<
   }
 >;
 
-@singleton()
-@autoInjectable()
-export default class DatabaseService implements IDatabaseService {
+@Service({ global: true, id: 'service.database' })
+class DatabaseService implements IDatabaseService {
   private config?: KnexConfigType;
 
   private connection?: Knex;
 
   private inspector?: ISchemaInspector;
 
-  // eslint-disable-next-line no-useless-constructor
-  constructor(
-    @inject('ILogService') private logService: ILogService,
-    @inject('ITunnelService') private tunnelService: ITunnelService
-  ) {}
+  @Inject('service.log')
+  private logService: ILogService;
+
+  @Inject('service.tunnel')
+  private tunnelService: ITunnelService;
 
   public async connect(
-    client: ServerType,
+    client: ServerTypeEnum,
     connection: ConnectionConfig,
     tunnel?: SSHTunnelConfig
   ): Promise<boolean | IPCError> {
@@ -119,13 +116,23 @@ export default class DatabaseService implements IDatabaseService {
         useNullAsDefault: true,
       };
       this.logService.info(
-        `Connecting: ${JSON.stringify(
+        `Connecting (${this.config.client}): ${JSON.stringify(
           _.omit(this.config.connection, ['password', 'user'])
         )}`,
         getCurrentLine().method
       );
 
-      this.connection = connect(this.config);
+      this.connection = connect(this.config, {
+        warn(message) {
+          this.logService.warning(message);
+        },
+        error(message) {
+          this.logService.error(message);
+        },
+        debug(message) {
+          this.logService.debug(message);
+        },
+      });
       this.inspector = SchemaInspector(this.connection);
       if (
         this.inspector &&
@@ -133,34 +140,22 @@ export default class DatabaseService implements IDatabaseService {
       ) {
         // @ts-ignore
         this.inspector.withSchema(
-          (this.config.connection as ServerConnectionConfig).schema as string
+          // @ts-ignore
+          (this.config.connection as ServerConnectionConfig).schema
         );
       }
-      this.connectHooks();
       const result = await this.heartbeat();
       this.logService.success(`Connection Success`, getCurrentLine().method);
       return result;
     } catch (error: any) {
       this.logService.error(error.message, getCurrentLine().method);
+      this.logService.error(JSON.stringify(error));
       // eslint-disable-next-line no-throw-literal
       throw {
         type: ErrorType.NOT_CONNECTED,
         message: JSON.stringify(error),
       };
     }
-  }
-
-  private connectHooks() {
-    const x = knexHooks(this.connection);
-
-    x.addHook(
-      'before',
-      '*',
-      '*',
-      (when: string, method: string, table: string, parameters: any) => {
-        this.logService.info(parameters.query.toString(), when);
-      }
-    );
   }
 
   public async connectWithProps(
@@ -223,9 +218,8 @@ export default class DatabaseService implements IDatabaseService {
     try {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       return await this.getConnection()
-        .withSchema(
-          (this.config?.connection as ServerConnectionConfig).schema as string
-        )
+        // @ts-ignore
+        .withSchema((this.config?.connection as ServerConnectionConfig).schema)
         .where(this.getConnection().raw(query));
     } catch (error: any) {
       this.logService.error(error.message, getCurrentLine().method);
@@ -243,7 +237,8 @@ export default class DatabaseService implements IDatabaseService {
     this.logService.info('listTables', getCurrentLine().method);
     try {
       this.logService.success('listTables', getCurrentLine().method);
-      return (await this.inspector?.tables()) as string[];
+      // @ts-ignore
+      return await this.inspector?.tables();
     } catch (error: any) {
       this.logService.error(error.message, getCurrentLine().method);
       // eslint-disable-next-line no-throw-literal
@@ -315,9 +310,8 @@ export default class DatabaseService implements IDatabaseService {
       );
 
       const q = this.getConnection()
-        .withSchema(
-          (this.config?.connection as ServerConnectionConfig).schema as string
-        )
+        // @ts-ignore
+        .withSchema((this.config?.connection as ServerConnectionConfig).schema)
         .select(...selectColumns)
         .from(table)
         .modify((builder) => {
@@ -436,9 +430,8 @@ export default class DatabaseService implements IDatabaseService {
   ): Promise<boolean | IPCError> {
     try {
       const q = this.getConnection()
-        .withSchema(
-          (this.config?.connection as ServerConnectionConfig).schema as string
-        )
+        // @ts-ignore
+        .withSchema((this.config?.connection as ServerConnectionConfig).schema)
         .table(table);
 
       if (where) {
@@ -486,9 +479,8 @@ export default class DatabaseService implements IDatabaseService {
   ): Promise<boolean | IPCError> {
     try {
       const q = this.getConnection()
-        .withSchema(
-          (this.config?.connection as ServerConnectionConfig).schema as string
-        )
+        // @ts-ignore
+        .withSchema((this.config?.connection as ServerConnectionConfig).schema)
         .table(table);
 
       await q?.insert(data);
@@ -521,9 +513,8 @@ export default class DatabaseService implements IDatabaseService {
   ): Promise<boolean | IPCError> {
     try {
       const q = this.getConnection()
-        .withSchema(
-          (this.config?.connection as ServerConnectionConfig).schema as string
-        )
+        // @ts-ignore
+        .withSchema((this.config?.connection as ServerConnectionConfig).schema)
         .table(table);
 
       if (where) {
@@ -572,9 +563,8 @@ export default class DatabaseService implements IDatabaseService {
   ): Promise<ReadWidgetDataResult<any> | IPCError> {
     try {
       const q = this.getConnection()
-        .withSchema(
-          (this.config?.connection as ServerConnectionConfig).schema as string
-        )
+        // @ts-ignore
+        .withSchema((this.config?.connection as ServerConnectionConfig).schema)
         .table(table);
 
       if (
@@ -623,3 +613,5 @@ export default class DatabaseService implements IDatabaseService {
     return this.readWidgetData(table, column, func, where);
   }
 }
+
+export default DatabaseService;

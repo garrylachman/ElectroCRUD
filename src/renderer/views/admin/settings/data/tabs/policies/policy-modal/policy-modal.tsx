@@ -1,3 +1,4 @@
+// @ts-nocheck
 import {
   AlertDialog,
   AlertDialogBody,
@@ -88,7 +89,10 @@ const PolicyModalComponent: FC<PolicyModalProperties> = ({
   const cancelReference = useRef<FocusableElement>(null);
 
   const policyState = useAppSelector((state) =>
-    PoliciesReducer.getSelectors().selectById(state.policies, policyId)
+    PoliciesReducer.getSelectors().selectById(
+      state.policies,
+      policyId as string
+    )
   );
 
   const formContext = useForm<FormData>({

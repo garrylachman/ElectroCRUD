@@ -2,12 +2,14 @@
  * @jest-environment node
  */
 /* eslint-disable jest/no-conditional-expect */
+// @ts-nocheck
+
 import 'reflect-metadata';
 import { describe, test, expect, jest } from '@jest/globals';
 import compose from 'docker-compose';
 import { registry, delay, container } from 'tsyringe';
 import path from 'node:path';
-import { ServerConnectionConfig, ServerTypeEnum } from 'shared';
+import { ServerConnectionConfig, ServerTypeEnum } from 'shared/index';
 import DatabaseService from 'main/services/database.service';
 import RequestFactory from 'main/ipc/base.ipc';
 import LogService from 'main/services/log.service';

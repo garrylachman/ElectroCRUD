@@ -1,4 +1,3 @@
-import { StringChain } from 'lodash';
 import { O } from 'ts-toolbelt';
 import { QueryAggregateEnum, ServerTypeEnum } from '../enums';
 
@@ -141,7 +140,7 @@ export type ReadWidgetDataArguments = {
 };
 
 export type ConnectArguments = {
-  client: ServerType;
+  client: ServerTypeEnum;
   connection: ConnectionConfig;
   tunnel?: SSHTunnelConfig;
 };
