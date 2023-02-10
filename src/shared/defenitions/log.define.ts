@@ -8,11 +8,14 @@ export type LogItemType =
   | LogItemTypeEnum.SUCCESS
   | LogItemTypeEnum.WARNING;
 
-export type LogItem = {
+type LogItemContent = {
   type: LogItemType;
   source: LogItemSource;
   message: string;
   method?: string;
   ts: number;
   id: string;
+  body?: LogItemContent;
 };
+
+export type LogItem = LogItemContent;

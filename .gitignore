@@ -31,3 +31,7 @@ npm-debug.log.*
 .DS_Store
 .vscode
 .yarn
+
+out/
+.webpack
+dist

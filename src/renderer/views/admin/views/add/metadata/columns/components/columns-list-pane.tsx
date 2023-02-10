@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unnecessary-type-assertion */
 import {
   Badge,
   Box,
@@ -27,7 +28,7 @@ export const ColumnsListPane: FC<ColumnsListPaneProperties> = ({
 
   useEffect(() => {
     if (viewState?.columns[selected]) {
-      setValue('columnId', viewState?.columns[selected].id);
+      setValue('columnId', viewState?.columns[selected].id as string);
     }
   }, [selected]);
 
@@ -61,7 +62,7 @@ export const ColumnsListPane: FC<ColumnsListPaneProperties> = ({
       <List spacing={0} overflowX="hidden">
         {viewState?.columns.map((column, index) => (
           <ListItem
-            key={`list-column-${column.id}`}
+            key={`list-column-${column.id as string}`}
             position="relative"
             whiteSpace="nowrap"
             overflowX="hidden"
@@ -100,7 +101,7 @@ export const ColumnsListPane: FC<ColumnsListPaneProperties> = ({
               fontSize={15}
               fontWeight={selected === index ? 900 : 500}
             >
-              {column.name}
+              {(column as any).name}
             </Text>
           </ListItem>
         ))}

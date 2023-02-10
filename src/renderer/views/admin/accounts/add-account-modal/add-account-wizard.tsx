@@ -22,7 +22,7 @@ import {
   ServerConnectionConfig,
   ServerTypeEnum,
   SSHTunnelConfig,
-} from 'shared';
+} from 'shared/index';
 
 import { RiLockPasswordFill } from 'react-icons/ri';
 import { TbCloudDataConnection, TbDatabase } from 'react-icons/tb';
@@ -120,7 +120,7 @@ export const AddAccountWizard: FC<AddAccountWizardProperties> = ({
 
   const AccountsWizardConnection = useCallback(
     () =>
-      state.client === ServerTypeEnum.SQLITE ? (
+      state.client === ServerTypeEnum.SQLITE || ServerTypeEnum.BETTER_SQLITE ? (
         <AccountsWizardFileConnection
           next={next}
           back={back}
@@ -145,6 +145,7 @@ export const AddAccountWizard: FC<AddAccountWizardProperties> = ({
         <AccountsWizardDetails
           next={next}
           back={back}
+          // @ts-ignore
           initialValue={pick(state, ['name', 'client'])}
         />
       ),
@@ -153,7 +154,7 @@ export const AddAccountWizard: FC<AddAccountWizardProperties> = ({
     {
       name: 'tunnel',
       title: 'SSH Tunnel',
-      enabled: state.client !== ServerTypeEnum.SQLITE,
+      enabled: state.client !== ServerTypeEnum.SQLITE && state.client !== ServerTypeEnum.BETTER_SQLITE,
       children: (
         <AccountsWizardTunnel
           initialValue={state.tunnel}

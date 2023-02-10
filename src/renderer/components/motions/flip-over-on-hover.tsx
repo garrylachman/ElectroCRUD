@@ -1,4 +1,4 @@
-import { Center, Flex } from '@chakra-ui/react';
+import { Center } from '@chakra-ui/react';
 import styled from '@emotion/styled';
 import { LayoutGroup, motion } from 'framer-motion';
 import { FC, ReactElement } from 'react';
@@ -64,12 +64,27 @@ export const FlipOverOnHover: FC<FlipOverOnHoverProperties> = ({
 }) => {
   return (
     <LayoutGroup>
-      <Container initial="rest" whileHover="hover" animate="rest" style={{ flex: 1}}>
+      <Container
+        initial="rest"
+        whileHover="hover"
+        animate="rest"
+        style={{ flex: 1 }}
+      >
         <Center position="relative" flexDirection="column">
-          <motion.div style={{ position: 'relative' }} variants={sideTwo} layout="size">
+          <motion.div
+            style={{ position: 'relative' }}
+            // @ts-ignore
+            variants={sideTwo}
+            layout="size"
+          >
             {SideTwo}
           </motion.div>
-          <motion.div style={{ position: 'absolute' }} variants={sideOne} layout="size">
+          <motion.div
+            style={{ position: 'absolute' }}
+            // @ts-ignore
+            variants={sideOne}
+            layout="size"
+          >
             {SideOne}
           </motion.div>
         </Center>

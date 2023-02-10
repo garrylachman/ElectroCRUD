@@ -1,11 +1,11 @@
 module.exports = {
   parser: "@typescript-eslint/parser",
-  extends: ["erb", "eslint:recommended", "plugin:@typescript-eslint/recommended", "plugin:prettier/recommended", "plugin:@typescript-eslint/recommended-requiring-type-checking", "prettier/prettier", "plugin:unicorn/recommended"],
+  extends: ["eslint:recommended", "plugin:@typescript-eslint/recommended", "plugin:prettier/recommended", "plugin:@typescript-eslint/recommended-requiring-type-checking", "prettier/prettier", "plugin:unicorn/recommended"],
   plugins: ["@typescript-eslint", "react-hooks", "unicorn"],
   rules: {
     // A temporary hack related to IDE not resolving correct package.json
     'import/no-extraneous-dependencies': 'off',
-    'import/no-unresolved': 'error',
+    // 'import/no-unresolved': 'error',
     // Since React 17 and typescript 4.1 you can safely disable the rule
     'react/react-in-jsx-scope': 'off',
     'import/prefer-default-export': 'off',
@@ -36,7 +36,9 @@ module.exports = {
     "react/jsx-filename-extension": "off",
   },
   env: {
-    "es2022": true,
+    "browser": true,
+    "es6": true,
+    "node": true
   },
   parserOptions: {
     ecmaVersion: 'latest',
@@ -44,18 +46,5 @@ module.exports = {
     project: './tsconfig.json',
     tsconfigRootDir: __dirname,
     createDefaultProgram: true,
-  },
-  settings: {
-    'import/resolver': {
-      // See https://github.com/benmosher/eslint-plugin-import/issues/1396#issuecomment-575727774 for line below
-      node: {},
-      webpack: {
-        config: require.resolve('./.erb/configs/webpack.config.eslint.ts'),
-      },
-      typescript: {},
-    },
-    'import/parsers': {
-      '@typescript-eslint/parser': ['.ts', '.tsx'],
-    },
   },
 };

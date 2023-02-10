@@ -1,19 +1,23 @@
-import { TableInfoRow } from 'shared';
+/* eslint-disable unicorn/prevent-abbreviations */
+import { TableInfoRow } from 'shared/index';
 import { O } from 'ts-toolbelt';
-import { StrictColumnRO } from '.';
 
-import { BaseRO } from './base.define';
-import { Categories } from './categories.define';
+import { BaseRO, StrictBaseRO } from './base.define';
 import { TagRO } from './tags.define';
 
-export type ColumnRO = O.Merge<BaseRO, TableInfoRow> & {
+type ColumnData = {
   alias?: string;
   searchable: boolean;
   enabled: boolean;
   metadata: MetadataColumnRO;
 };
 
-export type StrictColumnRO = O.Required<ColumnRO, 'id' | 'creationDate'>;
+export type ColumnRO = O.Assign<BaseRO, [ColumnData, TableInfoRow], 'deep'>;
+export type StrictColumnRO = O.MergeAll<
+  StrictBaseRO,
+  [ColumnData, TableInfoRow],
+  'deep'
+>;
 
 export type ColumnReferanceRO = BaseRO & {
   fromView: string;
@@ -25,7 +29,7 @@ export type ColumnReferanceRO = BaseRO & {
 
 export type StrictColumnReferanceRO = O.Required<
   ColumnReferanceRO,
-  'id' | 'creationDate'
+  'id' | 'creationDate' | 'modificationDate'
 >;
 
 export type StrictColumnReferanceWithViewsRO = O.Overwrite<
@@ -89,4 +93,3 @@ type ViewVOModfications = {
 
 export type ViewVO = Omit<ViewRO, 'columns'> & ViewVOModfications;
 export type StrictViewVO = Omit<StrictViewRO, 'columns'> & ViewVOModfications;
-

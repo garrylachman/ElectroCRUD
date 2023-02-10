@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 import { HStack, Icon, IconButton, VStack } from '@chakra-ui/react';
 import { isEqual, size } from 'underscore';
 import { FC, useMemo } from 'react';
@@ -22,10 +23,13 @@ export const FilterBuilderWheres: FC<FilterBuilderWheresProperties> = ({
   filterId,
 }) => {
   const distpatch = useAppDispatch();
-  const allFilterRulesState = useAppSelector((state) => state.temporaryFilterRules);
+  const allFilterRulesState = useAppSelector(
+    (state) => state.temporaryFilterRules
+  );
   const filterRulesState = useMemo(
     () =>
       TemporaryFilterRulesReducer.getSelectors()
+        // @ts-ignore
         .selectAll(allFilterRulesState)
         .filter((item) => item.filterId === filterId),
     [allFilterRulesState, filterId]

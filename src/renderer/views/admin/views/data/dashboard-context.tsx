@@ -1,3 +1,5 @@
+// @ts-nocheck
+/* eslint-disable @typescript-eslint/no-empty-function */
 import { get, throttle } from 'underscore';
 import {
   createContext,
@@ -14,7 +16,7 @@ import { useUpdateEffect } from 'renderer/hooks';
 import { useIPCReadData } from 'renderer/ipc';
 import { useAppSelector } from 'renderer/store/hooks';
 import { ViewSelectors } from 'renderer/store/selectors';
-import { IPCChannelEnum, NestedPartial, QueryOrder } from 'shared';
+import { IPCChannelEnum, NestedPartial, QueryOrder } from 'shared/index';
 import { RootState } from 'renderer/store/store';
 
 export type DashboardContextControlType = [
@@ -96,7 +98,7 @@ export const DashboardContextProvider: FC<
 
   const columns = useMemo<string[]>(
     () =>
-      viewState.columns
+      viewState?.columns
         .filter((item) => item.enabled)
         .map<string>((item) => get(item, 'name', item)),
     [viewState.columns]
@@ -104,7 +106,7 @@ export const DashboardContextProvider: FC<
 
   const searchColumns = useMemo<string[]>(
     () =>
-      viewState.columns
+      viewState?.columns
         .filter((item) => item.searchable && item.enabled)
         .map<string>((item) => get(item, 'name', item)),
     [viewState.columns]

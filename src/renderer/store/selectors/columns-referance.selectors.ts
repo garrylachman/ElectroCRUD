@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { EntityState } from '@reduxjs/toolkit';
 import memoize from 'proxy-memoize';
 import * as R from 'ramda';

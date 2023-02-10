@@ -5,7 +5,6 @@ import sqlFormatter from '@sqltools/formatter';
 import { Config as SQLFormatterConfig } from '@sqltools/formatter/lib/core/types';
 import getCurrentLine from 'get-current-line';
 import { Knex } from 'knex';
-import knexHooks from 'knex-hooks';
 import { whereFilter } from 'knex-json-filter';
 import SchemaInspector from 'knex-schema-inspector';
 import { SchemaInspector as ISchemaInspector } from 'knex-schema-inspector/lib/types/schema-inspector';
@@ -33,6 +32,7 @@ import {
   TableInfoRow,
   UpdateDataArguments,
   QueryAggregateEnum,
+  ServerTypeEnum,
 } from 'shared/index';
 import { heartBeatQueries } from '../data/queries';
 import { NoActiveClientError, NoConnectionError } from '../exceptions';
@@ -72,7 +72,7 @@ class DatabaseService implements IDatabaseService {
   private tunnelService: ITunnelService;
 
   public async connect(
-    client: ServerType,
+    client: ServerTypeEnum,
     connection: ConnectionConfig,
     tunnel?: SSHTunnelConfig
   ): Promise<boolean | IPCError> {
@@ -116,13 +116,23 @@ class DatabaseService implements IDatabaseService {
         useNullAsDefault: true,
       };
       this.logService.info(
-        `Connecting: ${JSON.stringify(
+        `Connecting (${this.config.client}): ${JSON.stringify(
           _.omit(this.config.connection, ['password', 'user'])
         )}`,
         getCurrentLine().method
       );
 
-      this.connection = connect(this.config);
+      this.connection = connect(this.config, {
+        warn(message) {
+          this.logService.warning(message);
+        },
+        error(message) {
+          this.logService.error(message);
+        },
+        debug(message) {
+          this.logService.debug(message);
+        },
+      });
       this.inspector = SchemaInspector(this.connection);
       if (
         this.inspector &&
@@ -130,34 +140,22 @@ class DatabaseService implements IDatabaseService {
       ) {
         // @ts-ignore
         this.inspector.withSchema(
-          (this.config.connection as ServerConnectionConfig).schema as string
+          // @ts-ignore
+          (this.config.connection as ServerConnectionConfig).schema
         );
       }
-      this.connectHooks();
       const result = await this.heartbeat();
       this.logService.success(`Connection Success`, getCurrentLine().method);
       return result;
     } catch (error: any) {
       this.logService.error(error.message, getCurrentLine().method);
+      this.logService.error(JSON.stringify(error));
       // eslint-disable-next-line no-throw-literal
       throw {
         type: ErrorType.NOT_CONNECTED,
         message: JSON.stringify(error),
       };
     }
-  }
-
-  private connectHooks() {
-    const x = knexHooks(this.connection);
-
-    x.addHook(
-      'before',
-      '*',
-      '*',
-      (when: string, method: string, table: string, parameters: any) => {
-        this.logService.info(parameters.query.toString(), when);
-      }
-    );
   }
 
   public async connectWithProps(
@@ -220,9 +218,8 @@ class DatabaseService implements IDatabaseService {
     try {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       return await this.getConnection()
-        .withSchema(
-          (this.config?.connection as ServerConnectionConfig).schema as string
-        )
+        // @ts-ignore
+        .withSchema((this.config?.connection as ServerConnectionConfig).schema)
         .where(this.getConnection().raw(query));
     } catch (error: any) {
       this.logService.error(error.message, getCurrentLine().method);
@@ -240,7 +237,8 @@ class DatabaseService implements IDatabaseService {
     this.logService.info('listTables', getCurrentLine().method);
     try {
       this.logService.success('listTables', getCurrentLine().method);
-      return (await this.inspector?.tables()) as string[];
+      // @ts-ignore
+      return await this.inspector?.tables();
     } catch (error: any) {
       this.logService.error(error.message, getCurrentLine().method);
       // eslint-disable-next-line no-throw-literal
@@ -312,9 +310,8 @@ class DatabaseService implements IDatabaseService {
       );
 
       const q = this.getConnection()
-        .withSchema(
-          (this.config?.connection as ServerConnectionConfig).schema as string
-        )
+        // @ts-ignore
+        .withSchema((this.config?.connection as ServerConnectionConfig).schema)
         .select(...selectColumns)
         .from(table)
         .modify((builder) => {
@@ -433,9 +430,8 @@ class DatabaseService implements IDatabaseService {
   ): Promise<boolean | IPCError> {
     try {
       const q = this.getConnection()
-        .withSchema(
-          (this.config?.connection as ServerConnectionConfig).schema as string
-        )
+        // @ts-ignore
+        .withSchema((this.config?.connection as ServerConnectionConfig).schema)
         .table(table);
 
       if (where) {
@@ -483,9 +479,8 @@ class DatabaseService implements IDatabaseService {
   ): Promise<boolean | IPCError> {
     try {
       const q = this.getConnection()
-        .withSchema(
-          (this.config?.connection as ServerConnectionConfig).schema as string
-        )
+        // @ts-ignore
+        .withSchema((this.config?.connection as ServerConnectionConfig).schema)
         .table(table);
 
       await q?.insert(data);
@@ -518,9 +513,8 @@ class DatabaseService implements IDatabaseService {
   ): Promise<boolean | IPCError> {
     try {
       const q = this.getConnection()
-        .withSchema(
-          (this.config?.connection as ServerConnectionConfig).schema as string
-        )
+        // @ts-ignore
+        .withSchema((this.config?.connection as ServerConnectionConfig).schema)
         .table(table);
 
       if (where) {
@@ -569,9 +563,8 @@ class DatabaseService implements IDatabaseService {
   ): Promise<ReadWidgetDataResult<any> | IPCError> {
     try {
       const q = this.getConnection()
-        .withSchema(
-          (this.config?.connection as ServerConnectionConfig).schema as string
-        )
+        // @ts-ignore
+        .withSchema((this.config?.connection as ServerConnectionConfig).schema)
         .table(table);
 
       if (

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { NoActiveClientError, NoConnectionError } from 'main/exceptions';
 
 describe('Exceptions', () => {

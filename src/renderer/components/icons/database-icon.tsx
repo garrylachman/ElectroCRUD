@@ -7,7 +7,7 @@ import {
   SiPostgresql,
   SiSqlite,
 } from 'react-icons/si';
-import { ServerType, ServerTypeEnum } from 'shared';
+import { ServerType, ServerTypeEnum } from 'shared/index';
 
 type DatabaseIconProperties = IconProps & {
   client: ServerType;
@@ -22,6 +22,9 @@ export const DatabaseIcon: FC<DatabaseIconProperties> = ({
       return <Icon {...rest} as={SiMysql} />;
     }
     case ServerTypeEnum.SQLITE: {
+      return <Icon {...rest} as={SiSqlite} />;
+    }
+    case ServerTypeEnum.BETTER_SQLITE: {
       return <Icon {...rest} as={SiSqlite} />;
     }
     case ServerTypeEnum.POSTGRES: {

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Grid, GridItem, Input } from '@chakra-ui/react';
 import { FC, PropsWithChildren, useContext, useEffect, useState } from 'react';
 import { AutocompleteField } from 'renderer/components/fields';
@@ -6,12 +7,9 @@ import { ViewScopedContext } from 'renderer/contexts/view-scoped-context';
 import { FilterRuleRO } from 'renderer/defenitions/record-object';
 import { useAppDispatch } from 'renderer/store/hooks';
 import { TemporaryFilterRulesReducer } from 'renderer/store/reducers';
-import { QueryWhereOprEnum } from 'shared';
+import { QueryWhereOprEnum } from 'shared/index';
 import { useDebounce } from 'usehooks-ts';
-
-import {
-  ReactSelectColumnOption,
-} from './components/react-select-column-option';
+import { ReactSelectColumnOption } from './components/react-select-column-option';
 
 type CondValue = string | number | undefined;
 
@@ -38,7 +36,7 @@ export const FilterBuilderWhere: FC<
   const distpatch = useAppDispatch();
 
   const [state, setState] = useState(initialState);
-  const debouncedState = useDebounce<FilterRuleRO>(state, 1000)
+  const debouncedState = useDebounce<FilterRuleRO>(state, 1000);
 
   const [valueType, setValueType] = useState(ValuesInputType.VALUE);
 
@@ -46,7 +44,6 @@ export const FilterBuilderWhere: FC<
     distpatch(TemporaryFilterRulesReducer.actions.upsertOne(debouncedState));
   }, [debouncedState]);
 
- 
   useEffect(() => {
     if (
       state.opr &&

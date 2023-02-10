@@ -20,7 +20,9 @@ export const Login = () => {
   const passwordState = useAppSelector((state) => state.settings.password);
 
   const check = (value: string) => {
-    const inputPass = CryptoJS.SHA256(value, passwordState.hash).toString();
+    const inputPass = CryptoJS.SHA256(
+      `${value}${passwordState.hash}`
+    ).toString();
     if (isEqual(inputPass, passwordState.password)) {
       dispatch(SessionReducer.actions.setLoggedIn(true));
       navigate('/');
@@ -72,12 +74,11 @@ export const Login = () => {
               size="lg"
               onComplete={check}
             >
-              {Array.from({ length: passwordState.passwordLenght }).map(
-                (v, index) => (
-                  // eslint-disable-next-line react/no-array-index-key
-                  <PinInputField key={`pininput-${index}`} />
-                )
-              )}
+              {Array.from({
+                length: passwordState.passwordLenght as number,
+              }).map((v, index) => (
+                <PinInputField key={`pininput-${index}`} />
+              ))}
             </PinInput>
           </HStack>
         </EmptyStateDescription>

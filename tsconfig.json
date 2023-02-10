@@ -1,13 +1,15 @@
 {
   "compilerOptions": {
     "incremental": true,
-    "target": "es6",
+    "target": "ES2021",
     "skipLibCheck": true,
+    "strictNullChecks": true,
     "module": "commonjs",
     "lib": ["dom", "es6", "dom.iterable"],
     "jsx": "react-jsx",
-    "strict": true,
+    "strict": false,
     "sourceMap": true,
+    "noImplicitAny": false,
     "baseUrl": "./src",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
@@ -17,9 +19,10 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "forceConsistentCasingInFileNames": true,
+    "suppressExcessPropertyErrors": true,
     "noFallthroughCasesInSwitch": true,
     "isolatedModules": false,
-    "moduleResolution": "nodenext",
+    "moduleResolution": "node",
     "paths": {
       "renderer": ["./src/renderer/*"],
       "main": ["./src/main/*"],
@@ -28,9 +31,4 @@
   },
   "include": ["./src/main/**/*", "./src/renderer/**/*", "./src/shared/**/*"],
   "exclude": ["test", "release/build", "release/app/dist", ".erb/dll"],
-  "ts-node": {
-    "compilerOptions": {
-      "module": "commonjs",
-    }
-  },
 }

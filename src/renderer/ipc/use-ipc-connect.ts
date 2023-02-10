@@ -1,4 +1,4 @@
-import { ConnectRequest, ConnectResponse, ErrorResponse } from 'shared';
+import { ConnectRequest, ConnectResponse, ErrorResponse } from 'shared/index';
 
 import { useBaseRequest } from './base-request';
 

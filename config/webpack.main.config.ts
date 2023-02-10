@@ -7,27 +7,27 @@ import { sourceMainPath, sourceSharedPath } from './webpack.paths';
 
 export const mainConfig: Configuration = {
   devtool: 'source-map',
+  target: 'electron-main',
   /**
    * This is the main entry point for your application, it's the first file
    * that runs in the main process.
    */
-  entry: {
-    main: [
-      path.join(sourceMainPath, 'main.ts'),
-      // path.join(sourceSharedPath, 'index.ts'),
-    ],
-    preload: path.join(sourceMainPath, 'preload.ts'),
-  },
-  externalsType: 'commonjs2',
-  output: {
-    filename: '[name].js',
+  entry: path.join(sourceMainPath, 'index.ts'),
+  externalsType: 'commonjs',
+  externals: {
+    'mock-aws-s3': 'mock-aws-s3',
+    'aws-sdk': 'aws-sdk',
+    nock: 'nock',
+    oracledb: 'oracledb',
+    'pg-native': 'pg-native',
   },
   // Put your normal webpack config below here
   module: {
+    exprContextCritical: false,
     rules,
   },
   resolve: {
-    extensions: ['.js', '.ts', '.jsx', '.tsx', '.css', '.json'],
+    extensions: ['.js', '.ts', '.jsx', '.tsx', '.css', '.json', '.mjs'],
     plugins: [new TsconfigPathsPlugins()],
   },
   plugins: [

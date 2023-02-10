@@ -1,4 +1,4 @@
-export const statusToColor = (status: string) => {
+export const statusToColor = (status: string = "DEFUALT") => {
   switch (status.toUpperCase()) {
     case 'INFO': {
       return 'blue';

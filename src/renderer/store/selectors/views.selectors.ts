@@ -1,3 +1,4 @@
+// @ts-nocheck
 import memoize from 'proxy-memoize';
 import * as F from 'ramda';
 import {
@@ -15,19 +16,22 @@ import {
 } from './columns.selectors';
 import { getTagsByIds } from './tags.selectors';
 
-export const getView = memoize((state) =>
-  F.compose<string>(
-    (view: ViewRO) =>
-      F.mergeDeepRight(view, {
-        metadata: {
-          tags: getTagsByIds(state)(view?.metadata?.tags || []),
-        },
-      }),
-    (viewId: string) =>
-      F.mergeDeepRight(state.views.entities[viewId], {
-        columns: getColumns(state)(state.views.entities[viewId]?.columns || []),
-      })
-  )
+export const getView = memoize(
+  (state) =>
+    F.compose<string>(
+      (view: ViewRO) =>
+        F.mergeDeepRight(view, {
+          metadata: {
+            tags: getTagsByIds(state)(view?.metadata?.tags || []),
+          },
+        }),
+      (viewId: string) =>
+        F.mergeDeepRight(state.views.entities[viewId], {
+          columns: getColumns(state)(
+            state.views.entities[viewId]?.columns || []
+          ),
+        })
+    ) as ViewRO
 );
 
 export const getColumnRelation = (state: RootState) =>

@@ -84,7 +84,7 @@ export const ConfirmPromiseModalComponent: FC<
       >
         <AlertDialogOverlay>
           <motion.div
-            onClick={(e) => e.stopPropagation()}
+            onClick={(event) => event.stopPropagation()}
             variants={flip}
             initial="hidden"
             animate="visible"

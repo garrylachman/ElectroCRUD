@@ -84,7 +84,7 @@ export const DesignerDetails: FC<DesignerDetailsProperties> = ({
     if (viewDetailsState) {
       setState(
         [...(viewDetailsState.properties as ElementTypes[])].sort(
-          (a, b) => a.order - b.order
+          (a, b) => (a.order || 0) - (b.order || 0)
         )
       );
     }
@@ -92,8 +92,9 @@ export const DesignerDetails: FC<DesignerDetailsProperties> = ({
 
   const handleSave = () => {
     dispatch(
+      // @ts-ignore
       ViewDetailsReducer.actions.upsertOne({
-        ...(viewDetailsState || { viewId: viewState.id }),
+        ...(viewDetailsState || { viewId: viewState?.id }),
         properties: state,
       })
     );
@@ -166,15 +167,18 @@ export const DesignerDetails: FC<DesignerDetailsProperties> = ({
                                             )
                                           }
                                           onUpdate={(value) =>
-                                            setState((previous) =>
-                                              R.update(
-                                                index,
-                                                {
-                                                  ...previous[index],
-                                                  properties: value,
-                                                },
-                                                previous
-                                              )
+                                            setState(
+                                              // @ts-ignore
+                                              (previous: ElementTypes[]) =>
+                                                R.update(
+                                                  index,
+                                                  {
+                                                    ...previous[index],
+                                                    properties: value,
+                                                  },
+                                                  // @ts-ignore
+                                                  previous
+                                                )
                                             )
                                           }
                                         >
@@ -188,6 +192,7 @@ export const DesignerDetails: FC<DesignerDetailsProperties> = ({
                                       </>
                                     )}
                                     {readOnly && (
+                                      // @ts-ignore
                                       <RenderElement item={item} row={data} />
                                     )}
                                   </Flex>

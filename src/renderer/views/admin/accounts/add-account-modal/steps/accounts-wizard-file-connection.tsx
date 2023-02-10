@@ -17,8 +17,8 @@ type InputFileProperties = InputFieldProps;
 export const FileField = registerFieldType<InputFileProperties>(
   'file',
   forwardRef(
-    // eslint-disable-next-line react/prop-types
     ({ type = 'file', leftAddon, rightAddon, size, ...rest }, reference) => {
+      // @ts-ignore
       const input = <Input type={type} size={size} {...rest} ref={reference} />;
       if (leftAddon || rightAddon) {
         return (

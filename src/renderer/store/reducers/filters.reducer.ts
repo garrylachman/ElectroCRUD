@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 import { AnyAction, createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 import { FilterRO, StrictFilterRO } from 'renderer/defenitions/record-object';
-import { Merge } from 'type-fest';
+import { O } from 'ts-toolbelt';
 
 import { createLastModificationMatcher, prepareStateUpdate } from './helpers';
 
@@ -31,7 +32,7 @@ export const filtersSlice = (name: string) =>
     extraReducers: (builder) => {
       createLastModificationMatcher<FilterRO>(
         builder,
-        (action: Merge<AnyAction, { type: string }>) =>
+        (action: O.Merge<AnyAction, { type: string }>) =>
           action.type.endsWith('temporaryFilters/upsertOne'),
         (action) => action.payload.id as string
       );

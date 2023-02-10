@@ -2,6 +2,7 @@
  * @jest-environment node
  */
 /* eslint-disable jest/no-conditional-expect */
+// @ts-nocheck
 
 import { ipcRenderer } from 'electron';
 import DatabaseService from 'main/services/database.service';

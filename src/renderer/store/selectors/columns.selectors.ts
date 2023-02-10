@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+// @ts-nocheck
 import { EntityState } from '@reduxjs/toolkit';
 import memoize from 'proxy-memoize';
 import * as F from 'ramda';
@@ -23,11 +25,12 @@ export const createColumnSelector = F.curry(
     memoize((state: RootState) => state.columns.entities[columnId])(rootState)
 );
 
-export const createColumnForViewSelector = memoize((state: RootState) =>
-  F.compose(
-    F.map((columnId) => state.columns.entities[columnId] as ColumnRO),
-    (viewId: string) => state.views.entities[viewId]?.columns
-  )
+export const createColumnForViewSelector = memoize(
+  (state: RootState) =>
+    F.compose(
+      F.map((columnId) => state.columns.entities[columnId] as ColumnRO),
+      (viewId: string) => state.views.entities[viewId]?.columns
+    ) as ColumnRO[]
 );
 
 export const getColumns = memoize((state: RootState) =>

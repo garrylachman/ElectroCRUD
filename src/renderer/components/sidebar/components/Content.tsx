@@ -1,6 +1,7 @@
+/* eslint-disable unicorn/filename-case */
 import { Box, Flex, Stack } from '@chakra-ui/react';
-import { Brand } from './brand';
-import { Links } from './links';
+import { Brand } from './Brand';
+import { Links } from './Links';
 
 export function Content() {
   return (

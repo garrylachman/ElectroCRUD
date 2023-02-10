@@ -14,7 +14,7 @@ import { FocusableElement } from '@chakra-ui/utils';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { EntityState } from '@reduxjs/toolkit';
 import chroma from 'chroma-js';
-import { AnimatePresence, LayoutGroup, motion } from 'framer-motion';
+import { AnimatePresence, LazyMotion, motion } from 'framer-motion';
 import Joi from 'joi';
 import memoize from 'proxy-memoize';
 import * as R from 'ramda';
@@ -110,6 +110,7 @@ export const RelationsModalComponent: FC<RelationsModalProperties> = ({
 
   useEffect(() => {
     const data = ColumnsReferanceReducer.getSelectors().selectById(
+      // @ts-ignore
       columnReferanceState,
       columnRelationId
     );
@@ -123,6 +124,7 @@ export const RelationsModalComponent: FC<RelationsModalProperties> = ({
     }
   }, [columnRelationId, columnReferanceState]);
 
+  // @ts-ignore
   const toView = formContext.watch('toView');
 
   return (
@@ -137,7 +139,7 @@ export const RelationsModalComponent: FC<RelationsModalProperties> = ({
       >
         <AlertDialogOverlay>
           <motion.div
-            onClick={(error_) => error_.stopPropagation()}
+            onClick={(event) => event.stopPropagation()}
             variants={flip}
             initial="hidden"
             animate="visible"
@@ -198,7 +200,10 @@ export const RelationsModalComponent: FC<RelationsModalProperties> = ({
                     </Grid>
                     <FormControl pt={4}>
                       <FormLabel>Description</FormLabel>
-                      <Textarea {...register('description')} variant="flushed" />
+                      <Textarea
+                        {...register('description')}
+                        variant="flushed"
+                      />
                     </FormControl>
                   </form>
                 </FormProvider>

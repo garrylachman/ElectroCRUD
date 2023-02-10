@@ -1,14 +1,16 @@
+/* eslint-disable unicorn/prefer-module */
 import {
   Configuration,
   EnvironmentPlugin,
   LoaderOptionsPlugin,
   ProvidePlugin,
 } from 'webpack';
+import CopyPlugin from 'copy-webpack-plugin';
 import path from 'node:path';
 import TsconfigPathsPlugins from 'tsconfig-paths-webpack-plugin';
 import { rules } from './webpack.rules';
 import { plugins } from './webpack.plugins';
-import { rootPath, webpackConfigPath } from './webpack.paths';
+import { assetsPath, rootPath, webpackConfigPath } from './webpack.paths';
 
 const rendererRules = [
   ...rules,
@@ -89,6 +91,11 @@ export const rendererConfig: Configuration = {
     new LoaderOptionsPlugin({
       debug: true,
     }),
+    new CopyPlugin(
+      {
+        patterns: [{ from: path.resolve(assetsPath, '*'), to: path.resolve(__dirname, '.webpack/assets/') }]
+      }
+    ),
   ],
   resolve: {
     extensions: ['.js', '.ts', '.jsx', '.tsx', '.css'],

@@ -1,10 +1,10 @@
 import MarkdownEditor from '@uiw/react-markdown-editor';
 import { FC } from 'react';
-import { Flex, Heading, Text   } from '@chakra-ui/react';
-import { ColumnRO } from 'renderer/defenitions/record-object';
+import { Flex, Heading, Text } from '@chakra-ui/react';
+import { StrictColumnRO } from 'renderer/defenitions/record-object';
 
 type ColumnDocumentationProperties = {
-  columnState: ColumnRO;
+  columnState: StrictColumnRO;
 };
 export const ColumnDocumentation: FC<ColumnDocumentationProperties> = ({
   columnState,
@@ -13,12 +13,12 @@ export const ColumnDocumentation: FC<ColumnDocumentationProperties> = ({
     <Flex direction="column">
       <Heading>Column: {columnState?.name}</Heading>
       <>
-        {
-          !columnState?.metadata.md ? 
-          (<Text>No table documentation found</Text>) : 
-          (<MarkdownEditor.Markdown source={columnState?.metadata.md} />)
-        }
+        {columnState?.metadata.md ? (
+          <MarkdownEditor.Markdown source={columnState?.metadata.md} />
+        ) : (
+          <Text>No table documentation found</Text>
+        )}
       </>
-    </Flex> 
-  )
+    </Flex>
+  );
 };

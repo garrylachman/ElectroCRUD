@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
 import { Box, Center, Spinner, Text } from '@chakra-ui/react';
 import MarkdownEditor from '@uiw/react-markdown-editor';
 import memoize from 'proxy-memoize';
@@ -5,9 +6,7 @@ import { useCallback, useContext, useMemo, useState } from 'react';
 import { MdEdit, MdPreview } from 'react-icons/md';
 import { useSelector } from 'react-redux';
 import { SaveButton } from 'renderer/components/buttons/save-button';
-import {
-  ConfirmPromiseSaveModal,
-} from 'renderer/components/modals/confirm-promise-save-modal';
+import { ConfirmPromiseSaveModal } from 'renderer/components/modals/confirm-promise-save-modal';
 import {
   ElectroCRUDTabProperties,
   ElectroCRUDTabs,
@@ -19,13 +18,14 @@ import { ColumnsReducer } from 'renderer/store/reducers';
 import { ColumnSelectors } from 'renderer/store/selectors';
 import { RootState } from 'renderer/store/store';
 
+// @ts-ignore
 import columnDescription from './column-description.md';
 
 // @ts-ignore
 export const ColumnDocumentation = () => {
   const dispatch = useAppDispatch();
   const { memState } = useContext(ScopeContext);
-  const [markdownTemp, setMarkdown] = useState('');
+  const [markdownTemporary, setMarkdown] = useState('');
 
   const columnState = useSelector<RootState, ColumnRO>(
     useCallback(
@@ -44,7 +44,7 @@ export const ColumnDocumentation = () => {
 
   const handleSave = useCallback(() => {
     ConfirmPromiseSaveModal({
-      entityName: columnState.name,
+      entityName: (columnState as any).name,
     })
       .then(() => {
         dispatch(
@@ -52,14 +52,15 @@ export const ColumnDocumentation = () => {
             ...columnState,
             metadata: {
               ...columnState.metadata,
-              md: markdownTemp,
+              md: markdownTemporary,
             },
           })
         );
         return true;
       })
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
       .catch(() => {});
-  }, [markdownTemp, columnState]);
+  }, [markdownTemporary, columnState]);
 
   const RenderPreview = () => (
     <Box p={4}>
@@ -113,7 +114,9 @@ export const ColumnDocumentation = () => {
       </Box>
       <ElectroCRUDTabs
         tabsList={tabs}
-        key={`ElectroCRUDTabs-${columnState.id || ''}-${columnState.modificationDate || ''}`}
+        key={`ElectroCRUDTabs-${columnState.id || ''}-${
+          columnState.modificationDate || ''
+        }`}
         tabIndex={0}
         iconSize={5}
         fontSize="md"

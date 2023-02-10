@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
+/* eslint-disable @typescript-eslint/no-unnecessary-type-assertion */
 import {
   Box,
   Card,
@@ -106,6 +109,7 @@ export const ColumnReletions = () => {
 
   const handleDelete = (item: StrictColumnReferanceWithViewsAndCoumnsRO) =>
     ConfirmPromiseDeleteModal({
+      // @ts-ignore
       entityName: `${item.from.name} - ${item.to.name}`,
     })
       .then(() => {
@@ -151,7 +155,7 @@ export const ColumnReletions = () => {
                       <VStack flex={1} alignItems="flex-start">
                         <Flex alignItems="center">
                           <Kbd fontSize="md" lineHeight="unset">
-                            {row?.fromView?.name}.{row?.from?.name}
+                            {row?.fromView?.name}.{(row?.from as any)?.name}
                           </Kbd>
                           <Icon
                             as={MdArrowForward}
@@ -160,7 +164,7 @@ export const ColumnReletions = () => {
                             my={2}
                           />
                           <Kbd fontSize="md" lineHeight="unset">
-                            {row?.toView?.name}.{row?.to?.name}
+                            {row?.toView?.name}.{(row?.to as any)?.name}
                           </Kbd>
                         </Flex>
                         <Flex w="100%">

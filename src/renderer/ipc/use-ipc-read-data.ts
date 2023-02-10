@@ -1,4 +1,4 @@
-import { ReadDataRequest, ReadDataResponse } from 'shared';
+import { ReadDataRequest, ReadDataResponse } from 'shared/index';
 import { useBaseRequest } from './base-request';
 
 export const useIPCReadData = (request: ReadDataRequest) => {

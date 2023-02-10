@@ -40,6 +40,7 @@ export const TagsField: FC<TagsFieldProperties> = ({
     if (event.keyCode === 13) {
       setState((previous) => [
         ...previous,
+        // @ts-ignore
         { name: clone(event.target.value), id: previous.length },
       ]);
     }
@@ -91,6 +92,7 @@ export const TagsField: FC<TagsFieldProperties> = ({
           );
         })}
         <Input
+          // @ts-ignore
           ref={reference}
           variant="unstyled"
           bg="transparent"

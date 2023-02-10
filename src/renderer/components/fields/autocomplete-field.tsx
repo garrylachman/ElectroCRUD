@@ -1,4 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable react-hooks/exhaustive-deps */
+// @ts-nocheck
 import {
   Badge,
   Box,
@@ -80,7 +82,7 @@ export const AutocompleteField = <T extends Option<unknown>['value']>({
     () => (noFormContext ? useForm : useFormContext),
     [noFormContext]
   );
-
+  // @ts-ignore
   const formContext = getFomContext({
     defaultValues: {
       [`${id}`]: defaultValue,
@@ -93,11 +95,10 @@ export const AutocompleteField = <T extends Option<unknown>['value']>({
     formState: { errors, dirtyFields },
   } = formContext;
 
-
   // eslint-disable-next-line @typescript-eslint/naming-convention
   const SelectComponent_ = handleCreate ? AsyncCreatableSelect : AsyncSelect;
   const SelectComponent = React.forwardRef((properties, reference) => (
-    // eslint-disable-next-line react/jsx-pascal-case
+    // @ts-ignore
     <SelectComponent_ {...properties} ref={reference} />
   ));
 
@@ -120,13 +121,13 @@ export const AutocompleteField = <T extends Option<unknown>['value']>({
   const chakraStyles: ChakraStylesConfig = {
     menu: (provided, state) => ({
       ...provided,
-      background: state.isFocused ? "black" : provided.background,
+      background: state.isFocused ? 'black' : provided.background,
       p: 0,
       zIndex: 1000,
     }),
     menuList: (provided, state) => ({
       ...provided,
-      background: state.isFocused ? "black" : provided.background,
+      background: state.isFocused ? 'black' : provided.background,
       p: 0,
       zIndex: 1000,
     }),

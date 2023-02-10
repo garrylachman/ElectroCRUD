@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 import {
   Box,
   Button,
@@ -74,6 +75,7 @@ export const CodeExampleItem: FC<CodeExampleItemProperties> = ({
   }, [initialValue]);
 
   const onSubmit = (data) => {
+    // @ts-ignore
     const code = reference.current?.view?.state?.sliceDoc();
     dispatcher(
       CodeExamplesReducer.actions.upsertOne({
@@ -94,7 +96,11 @@ export const CodeExampleItem: FC<CodeExampleItemProperties> = ({
           entityName: initialValue.title,
         })
           .then(() => {
-            dispatcher(CodeExamplesReducer.actions.removeOne(initialValue.id));
+            if (initialValue && initialValue.id) {
+              dispatcher(
+                CodeExamplesReducer.actions.removeOne(initialValue.id)
+              );
+            }
             return true;
           })
           .catch(() => {});
@@ -183,6 +189,7 @@ export const CodeExampleItem: FC<CodeExampleItemProperties> = ({
                   </FormControl>
 
                   <CodeMirror
+                    // @ts-ignore
                     ref={reference}
                     value={initialValue.code}
                     extensions={[sql()]}

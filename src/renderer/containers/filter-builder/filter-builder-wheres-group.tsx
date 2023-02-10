@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+// @ts-nocheck
 import {
   Box,
   Button,

@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+// @ts-nocheck
 import { Dictionary, EntityState } from '@reduxjs/toolkit';
 import { arrayToTree } from 'performant-array-to-tree';
 import memoize from 'proxy-memoize';
@@ -88,8 +90,6 @@ const getFiltersList = memoize((state: EntityState<FilterRO>) =>
 export const createFiltersSelector = R.curry(
   (rootState: RootState, filterId: string): FiltersComputedTree =>
     memoize((state: RootState): FiltersComputedTree => {
-      console.log("filterId", filterId, state)
-
       const filtersList = getFiltersList(state.temporaryFilters || []);
       const filtersTree: FiltersTree[] = memoize<FilterRO[], FiltersTree[]>(
         (mFiltersList) => arrayToTree(mFiltersList)

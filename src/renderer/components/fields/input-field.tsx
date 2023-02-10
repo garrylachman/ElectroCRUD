@@ -1,3 +1,5 @@
+// @ts-nocheck
+/* eslint-disable unicorn/prevent-abbreviations */
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
   Alert,

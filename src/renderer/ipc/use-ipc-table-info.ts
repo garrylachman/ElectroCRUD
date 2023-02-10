@@ -1,4 +1,4 @@
-import { TableInfoRequest, TableInfoResponse } from 'shared';
+import { TableInfoRequest, TableInfoResponse } from 'shared/index';
 import { useBaseRequest } from './base-request';
 
 export const useIPCTableInfo = (request: TableInfoRequest) => {

@@ -144,7 +144,14 @@ export const PolicyRuleTemplates: PolicyRuleRO[] = [
     type: PolicyType.FULL_MASKING,
     name: 'Full Masking',
     payload: [
-      { char: { type: 'input', length: 1, label: 'Mask with', defaultValue: '#' } },
+      {
+        char: {
+          type: 'input',
+          length: 1,
+          label: 'Mask with',
+          defaultValue: '#',
+        },
+      },
     ],
     tags: [],
   },
@@ -152,7 +159,14 @@ export const PolicyRuleTemplates: PolicyRuleRO[] = [
     type: PolicyType.PARTIAL_MASKING,
     name: 'Mask # of Char',
     payload: [
-      { char: { type: 'input', length: 1, label: 'Mask with', defaultValue: '#' } },
+      {
+        char: {
+          type: 'input',
+          length: 1,
+          label: 'Mask with',
+          defaultValue: '#',
+        },
+      },
       {
         numToMask: {
           type: 'input',

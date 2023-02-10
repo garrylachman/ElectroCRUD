@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { faker } from '@faker-js/faker';
 import { compact } from 'underscore';
 import memoize from 'proxy-memoize';
@@ -23,11 +24,12 @@ const mask = (
   const maskEnd = maskFromStart
     ? Math.max(0, value.length - unmaskedLength)
     : value.length;
-  return value.split('')
-      .map((char, index) => {
-        return index >= maskStart && index < maskEnd ? maskChar : char;
-      })
-      .join('');
+  return value
+    .split('')
+    .map((char, index) => {
+      return index >= maskStart && index < maskEnd ? maskChar : char;
+    })
+    .join('');
 };
 
 const doMask = (

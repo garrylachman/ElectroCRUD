@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
 import { Button, ButtonProps, keyframes, useToken } from '@chakra-ui/react';
 import chroma from 'chroma-js';
 import { motion } from 'framer-motion';
@@ -44,8 +45,11 @@ export const RippleButton: FC<RippleButtonProperties> = ({
   ...properties
 }) => {
   const [step1, step2, step3] = useToken('colors', [
+    // @ts-ignore
     bgColor.step1,
+    // @ts-ignore
     bgColor.step2,
+    // @ts-ignore
     bgColor.step3,
   ]);
 
@@ -106,6 +110,7 @@ export const RippleButton: FC<RippleButtonProperties> = ({
         },
       }}
       _active={{
+        // @ts-ignore
         bgColor: `${bgColor.step3}`,
         '&::before': {
           animation: `${pulse} 0.8s linear`,

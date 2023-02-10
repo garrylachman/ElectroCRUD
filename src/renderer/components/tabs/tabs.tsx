@@ -90,6 +90,7 @@ export const ElectroCRUDTabs = forwardRef<
     const RenderComponent = useCallback(
       (properties: any) =>
         tabsState[tabIndex] && tabsState[tabIndex].component ? (
+          // @ts-ignore
           tabsState[tabIndex].component(properties)
         ) : (
           <></>

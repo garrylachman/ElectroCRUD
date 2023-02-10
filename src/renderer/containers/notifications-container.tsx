@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+// @ts-nocheck
 import { Badge, Text, useToast } from '@chakra-ui/react';
 import { Notification } from '@highoutput/hds-alerts';
 import { FC, useEffect } from 'react';

@@ -2,8 +2,8 @@ import { throttle } from 'underscore';
 import { useCallback, useEffect, useState } from 'react';
 import { useAppDispatch } from 'renderer/store/hooks';
 import { ToastReducer } from 'renderer/store/reducers';
-import { IPCChannel } from 'shared';
-import { RequestType, ResponseType } from 'shared/defenitions';
+import { IPCChannel } from 'shared/index';
+import { ErrorResponse, RequestType, ResponseType } from 'shared/defenitions';
 
 const { ipcRenderer } = window.electron;
 
@@ -31,12 +31,13 @@ export const useBaseRequest = <T extends ResponseType>(
 
       BaseRequest<T>(request.channel, request)
         .then((value) => {
-          if (value.error) {
+          // @ts-ignore
+          if (value?.error) {
             dispatch(
               ToastReducer.actions.setToast({
                 status: 'error',
                 title: `IPC Error on channel: ${value.channel}`,
-                description: value.error.message,
+                description: (value as ErrorResponse).error.message,
               })
             );
           }

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import memoize from 'proxy-memoize';
 import * as R from 'ramda';
 

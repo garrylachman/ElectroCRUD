@@ -1,6 +1,6 @@
 import { useSearchParams } from 'react-router-dom';
 
-export function useSearchParametersState<T>(
+export function useSearchParametersState<T extends string>(
   searchParameterName: string,
   defaultValue: T
 ): readonly [

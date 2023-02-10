@@ -1,3 +1,4 @@
+/* eslint-disable unicorn/no-static-only-class */
 import ArcHash from 'arc-hash';
 import { stringify } from 'flatted';
 

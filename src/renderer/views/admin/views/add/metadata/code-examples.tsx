@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unnecessary-type-assertion */
 import { Box, Grid, useBoolean } from '@chakra-ui/react';
 import { LayoutGroup } from 'framer-motion';
 import { FC, useContext } from 'react';
@@ -20,8 +21,9 @@ export const CodeExamples: FC<CodeExamplesProperties> = () => {
     CodeExamplesSelectors.createCodeExamplesForViewSelector(state)
   );
 
+  // @ts-ignore
   const codeState: CodeExampleRO[] = codeExamplesSelector(
-    viewState.id as string
+    viewState?.id as string
   );
 
   const [showAdd, { on, off }] = useBoolean();

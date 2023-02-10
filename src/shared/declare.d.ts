@@ -12,4 +12,4 @@ declare module 'dockerode-compose' {
 
 declare module 'knex-hooks';
 declare module 'knex-json-filter';
-declare module '@jeash/knex-meta';
+//declare module '@jeash/knex-meta';

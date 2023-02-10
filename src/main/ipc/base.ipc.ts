@@ -65,8 +65,8 @@ class RequestFactory implements IRequestFactory {
     request: T,
     invoke: DatabaseServiceMethods
   ): Promise<ResponseTypeSuccess | ErrorResponse> {
+    console.log(request)
     const { channel, body } = request;
-    console.log("this.database", this.databaseService);
     try {
       // eslint-disable-next-line max-len
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call

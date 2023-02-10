@@ -6,9 +6,7 @@ import {
   ServerConnectionConfig,
   ServerType,
   ServerTypeEnum,
-} from '../../../shared';
-
-type ConnectionMixed = Partial<Record<O.Keys<ConnectionConfig>, any>>;
+} from 'shared/index';
 
 export const configurationNegotiation = (
   client: ServerType,
@@ -21,6 +19,7 @@ export const configurationNegotiation = (
     return _.transform(
       config,
       (result, value, key) => {
+        // @ts-ignore
         const configKey: O.Keys<ConnectionConfig> =
           key === 'host' ? 'server' : key;
         return {

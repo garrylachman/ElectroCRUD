@@ -1,10 +1,4 @@
-import {
-  Field,
-  Form,
-  FormLayout,
-  InputField,
-  SelectField,
-} from '@saas-ui/forms';
+import { Form, FormLayout, InputField, SelectField } from '@saas-ui/forms';
 import { yupResolver } from '@saas-ui/forms/yup';
 import { FC, useEffect } from 'react';
 import { ActionButtonType } from 'renderer/components/buttons/action-button';
@@ -13,7 +7,7 @@ import {
   PromiseModalContentProperties,
 } from 'renderer/components/modals/promise-modal';
 import { useIPCTablesList } from 'renderer/ipc';
-import { IPCChannelEnum } from 'shared';
+import { IPCChannelEnum } from 'shared/index';
 import { v4 } from 'uuid';
 import * as Yup from 'yup';
 
@@ -36,6 +30,7 @@ const AddModalContent: FC<AddModalContentProperties> = ({ formCtxRef }) => {
   }, []);
 
   return (
+    // @ts-ignore
     <Form ref={formCtxRef} resolver={yupResolver(schema)} mode="all">
       <FormLayout>
         <InputField name="name" label="Name" variant="flushed" />

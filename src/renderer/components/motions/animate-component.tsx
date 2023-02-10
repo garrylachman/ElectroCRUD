@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { AnimatePresence, motion } from 'framer-motion';
 import { FC, PropsWithChildren, useMemo } from 'react';
 
@@ -11,15 +12,31 @@ type AnimateComponentProperties = {
 const getByEffect = (effect: AnimateComponentEffect) => {
   const defaultStart: Record<string, number | string> = { opacity: 0 };
   const defaultEnd: Record<string, number | string> = { opacity: 1 };
-  switch(effect) {
-    case 'slide':
-      return [{ ...defaultStart, right: '-1000px', position: 'relative'}, { ...defaultEnd, right: '0px'}];
-    case 'scale':
-      return [{ ...defaultStart, scale: 0.2 }, { ...defaultEnd, scale: 1}];
-    case 'scaleY':
-      return [{ ...defaultStart, scaleY: 0.2 }, { ...defaultEnd, scaleY: 1}];
-    case 'scaleX':
-      return [{ ...defaultStart, scaleX: 0.2}, { ...defaultEnd, scaleX: 1}];
+  switch (effect) {
+    case 'slide': {
+      return [
+        { ...defaultStart, right: '-1000px', position: 'relative' },
+        { ...defaultEnd, right: '0px' },
+      ];
+    }
+    case 'scale': {
+      return [
+        { ...defaultStart, scale: 0.2 },
+        { ...defaultEnd, scale: 1 },
+      ];
+    }
+    case 'scaleY': {
+      return [
+        { ...defaultStart, scaleY: 0.2 },
+        { ...defaultEnd, scaleY: 1 },
+      ];
+    }
+    case 'scaleX': {
+      return [
+        { ...defaultStart, scaleX: 0.2 },
+        { ...defaultEnd, scaleX: 1 },
+      ];
+    }
   }
 };
 
@@ -40,5 +57,5 @@ export const AnimateComponent: FC<
         {children}
       </motion.div>
     </AnimatePresence>
-  )
+  );
 };

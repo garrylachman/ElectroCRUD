@@ -3,7 +3,7 @@ import {
   FilterRuleRO,
   StrictFilterRuleRO,
 } from 'renderer/defenitions/record-object';
-import { Merge } from 'type-fest';
+import { O } from 'ts-toolbelt';
 
 import { createLastModificationMatcher, prepareStateUpdate } from './helpers';
 
@@ -33,7 +33,7 @@ export const filterRulesSlice = (name: string) =>
     extraReducers: (builder) => {
       createLastModificationMatcher<FilterRuleRO>(
         builder,
-        (action: Merge<AnyAction, { type: string }>) =>
+        (action: O.Merge<{ type: string }, AnyAction>) =>
           action.type.endsWith('temporaryFilterRules/upsertOne'),
         (action) => action.payload.id as string
       );

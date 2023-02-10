@@ -10,7 +10,9 @@ import { rendererConfig } from './config/webpack.renderer.config';
 import { sourceMainPath, sourceRendererPath } from './config/webpack.paths';
 
 const config: ForgeConfig = {
-  packagerConfig: {},
+  packagerConfig: {
+    asar: false,
+  },
   rebuildConfig: {},
   makers: [
     new MakerSquirrel({}),
@@ -38,6 +40,11 @@ const config: ForgeConfig = {
             preload: {
               js: path.join(sourceMainPath, 'preload.ts'),
             },
+          },
+          {
+            html: path.join(sourceRendererPath, 'splash-screen/index.html'),
+            js: path.join(sourceRendererPath, 'splash-screen/index.tsx'),
+            name: 'splash_screen',
           },
         ],
       },

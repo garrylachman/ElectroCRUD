@@ -6,9 +6,9 @@ export const DateTimeDataType: DataType<Date> = {
   name: 'datetime',
   icon: AiOutlineFieldTime,
   examples: {
-    short: '00:00',
-    medium: '00:00:00',
-    long: '01/01/01 00:00:00',
+    short: new Date(),
+    medium: new Date(),
+    long: new Date(),
   },
   variants: [
     'DATE',

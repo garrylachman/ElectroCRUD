@@ -5,7 +5,6 @@ import { Cache, CacheContainer } from 'node-ts-cache';
 import { MemoryStorage } from 'node-ts-cache-storage-memory';
 import * as hash from 'object-hash';
 import Container, { Service } from 'typedi';
-import { mainWindow } from '../main';
 import {
   ErrorResponse,
   ErrorType,
@@ -13,9 +12,10 @@ import {
   RequestType,
   ResponseType,
 } from '../../shared/defenitions';
-import { IPCChannelEnum } from '../../shared/enums';
+import { IPCChannelEnum } from 'shared/index';
 import { IRequestFactory } from '../ipc/base.ipc';
 import { IIPCService } from './interfaces/iipc.service';
+import { mainWindow } from 'main/index';
 
 const ipcCache = new CacheContainer(new MemoryStorage());
 
