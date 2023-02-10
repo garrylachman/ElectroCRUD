@@ -4,6 +4,7 @@ import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import TsconfigPathsPlugins from 'tsconfig-paths-webpack-plugin';
 import { rules } from './webpack.rules';
 import { sourceMainPath, sourceSharedPath } from './webpack.paths';
+import TerserPlugin from 'terser-webpack-plugin';
 
 export const mainConfig: Configuration = {
   devtool: 'source-map',
@@ -29,6 +30,13 @@ export const mainConfig: Configuration = {
   resolve: {
     extensions: ['.js', '.ts', '.jsx', '.tsx', '.css', '.json', '.mjs'],
     plugins: [new TsconfigPathsPlugins()],
+  },
+  optimization: {
+    minimizer: [
+      new TerserPlugin({
+        parallel: true,
+      }),
+    ],
   },
   plugins: [
     new BundleAnalyzerPlugin({
