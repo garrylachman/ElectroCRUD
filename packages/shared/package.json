@@ -1,0 +1,33 @@
+{
+  "name": "@electrocrud/shared",
+  "version": "0.0.0",
+  "description": "Shared code beteen main & renderer",
+  "author": "Garry Lachman <garry@lachman.co>",
+  "homepage": "https://github.com/garrylachman/ElectroCRUD/tree/main/packages/shared#readme",
+  "license": "MIT",
+  "main": "lib/index.js",
+  "typings": "lib/index.d.ts",
+  "private": true,
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/garrylachman/ElectroCRUD.git"
+  },
+  "scripts": {
+    "build": "tsc --build tsconfig.build.json",
+    "tsc": "tsc",
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/garrylachman/ElectroCRUD/issues"
+  },
+  "dependencies": {
+    "ts-toolbelt": "^9.6.0"
+  }
+}

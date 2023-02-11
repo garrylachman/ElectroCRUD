@@ -23,7 +23,7 @@ import { useIPCTableInfo } from 'renderer/ipc';
 import { useAppDispatch } from 'renderer/store/hooks';
 import { ColumnsReducer } from 'renderer/store/reducers';
 import { ViewSelectors } from 'renderer/store/selectors';
-import { IPCChannelEnum } from 'shared/index';
+import { IPCChannelEnum } from '@electrocrud/shared';
 import { RootState } from 'renderer/store/store';
 
 type TableColumnsCardProperties = {

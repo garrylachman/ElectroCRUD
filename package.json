@@ -33,7 +33,6 @@
     "lint": "eslint --ext .ts,.tsx .",
     "package": "electron-forge package",
     "prepare": "husky install",
-    "rebuild": "electron-rebuild --parallel --types prod,dev,optional --module-dir release/app",
     "start": "cross-env NODE_ENV=development DEBUG=\"node-ts-cache,knex:*\" electron-forge start",
     "test": "NODE_OPTIONS=--experimental-vm-modules npx jest",
     "make": "electron-forge make"
@@ -209,7 +208,8 @@
     "underscore": "^1.13.6",
     "usehooks-ts": "^2.9.1",
     "uuid": "^9.0.0",
-    "yup": "^0.32.11"
+    "yup": "^0.32.11",
+    "@electrocrud/shared": "link:./packages/shared"
   },
   "peerDependencies": {
     "@chakra-ui/system": "2.4.0",
@@ -286,6 +286,7 @@
     "install": "^0.13.0",
     "jest": "^29.4.1",
     "jest-environment-jsdom": "^29.4.1",
+    "lerna": "^6.4.1",
     "lint-staged": "^13.0.3",
     "lodash": "^4.17.21",
     "node-loader": "^2.0.0",
@@ -329,5 +330,9 @@
       "src/shared/**"
     ],
     "logLevel": "quiet"
-  }
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "private": true
 }

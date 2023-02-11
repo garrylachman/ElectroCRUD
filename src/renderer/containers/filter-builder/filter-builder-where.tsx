@@ -7,7 +7,7 @@ import { ViewScopedContext } from 'renderer/contexts/view-scoped-context';
 import { FilterRuleRO } from 'renderer/defenitions/record-object';
 import { useAppDispatch } from 'renderer/store/hooks';
 import { TemporaryFilterRulesReducer } from 'renderer/store/reducers';
-import { QueryWhereOprEnum } from 'shared/index';
+import { QueryWhereOprEnum } from '@electrocrud/shared';
 import { useDebounce } from 'usehooks-ts';
 import { ReactSelectColumnOption } from './components/react-select-column-option';
 

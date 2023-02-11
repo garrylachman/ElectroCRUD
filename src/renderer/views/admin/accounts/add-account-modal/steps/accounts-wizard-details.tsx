@@ -7,7 +7,7 @@ import {
   AccountRO,
   ValidateAccountsWizardStep1,
 } from 'renderer/defenitions/record-object';
-import { ServerTypeEnum } from 'shared/index';
+import { ServerTypeEnum } from '@electrocrud/shared';
 
 import { AddAccountWizardStepProperties } from '../add-account-wizard';
 

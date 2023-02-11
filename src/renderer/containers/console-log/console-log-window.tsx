@@ -3,7 +3,7 @@ import { Card, CardBody } from '@chakra-ui/card';
 import { motion } from 'framer-motion';
 import { useIPCLogs } from 'renderer/ipc/use-ipc-log';
 import { ListItem, UnorderedList, Badge, Text } from '@chakra-ui/react';
-import { LogItem } from 'shared/defenitions';
+import { LogItem } from '@electrocrud/shared';
 import ReactTimeAgo from 'react-time-ago';
 import { statusToColor } from 'renderer/helpers';
 

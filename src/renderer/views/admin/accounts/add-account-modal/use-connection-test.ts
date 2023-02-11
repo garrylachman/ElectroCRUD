@@ -6,7 +6,7 @@ import {
   ErrorResponse,
   IPCChannelEnum,
   IPCError,
-} from 'shared/index';
+} from '@electrocrud/shared';
 
 export type UseAccountsWizardReturn = {
   execute: () => void;

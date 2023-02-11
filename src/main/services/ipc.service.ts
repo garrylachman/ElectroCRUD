@@ -11,8 +11,8 @@ import {
   IPCChannel,
   RequestType,
   ResponseType,
-} from '../../shared/defenitions';
-import { IPCChannelEnum } from 'shared/index';
+  IPCChannelEnum
+} from '@electrocrud/shared';
 import { IRequestFactory } from '../ipc/base.ipc';
 import { IIPCService } from './interfaces/iipc.service';
 import { mainWindow } from 'main/index';

@@ -1,4 +1,4 @@
-import { LogItemSourceEnum, LogItemTypeEnum } from 'shared/enums';
+import { LogItemSourceEnum, LogItemTypeEnum } from '../enums';
 
 export type LogItemSource = LogItemSourceEnum.Backend | LogItemSourceEnum.UI;
 

@@ -1,5 +1,4 @@
-import { ServerTypeEnum } from '../../../shared/enums';
-import { ServerType } from '../../../shared';
+import { ServerType, ServerTypeEnum } from '@electrocrud/shared';
 
 export const heartBeatQueries: Record<ServerType, string> = {
   [ServerTypeEnum.ORACEL]: 'select 1 from DUAL',

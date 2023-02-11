@@ -4,7 +4,7 @@ import {
   IPCError,
   RequestType,
   ResponseTypeSuccess,
-} from 'shared/index';
+} from '@electrocrud/shared';
 import { Inject, Service } from 'typedi';
 import { IDatabaseService } from '../services/interfaces/idatabase.service';
 import { ResponseFactoryType } from '../helpers';

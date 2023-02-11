@@ -1,4 +1,4 @@
-import { IPCChannelEnum } from 'shared/enums';
+import { IPCChannelEnum } from "../enums";
 
 export type IPCChannel =
   | IPCChannelEnum.CONNECT

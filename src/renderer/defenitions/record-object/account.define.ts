@@ -4,7 +4,7 @@ import {
   ServerType,
   ServerTypeEnum,
   SSHTunnelConfig,
-} from 'shared/index';
+} from '@electrocrud/shared';
 import { Object } from 'ts-toolbelt';
 
 import { BaseRO } from './base.define';

@@ -11,7 +11,7 @@ import {
 import { FC, useEffect } from 'react';
 import { InputField } from 'renderer/components/fields';
 import { useIPCTablesList } from 'renderer/ipc';
-import { IPCChannelEnum } from 'shared/index';
+import { IPCChannelEnum } from '@electrocrud/shared';
 
 type BasicDetailsCardProperties = {
   isEditMode?: boolean;

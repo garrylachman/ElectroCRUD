@@ -1,6 +1,6 @@
 // @ts-nocheck
 import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron';
-import { IPCChannel } from 'shared/defenitions';
+import { IPCChannel } from '@electrocrud/shared';
 
 export type Channels = IPCChannel;
 

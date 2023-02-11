@@ -7,7 +7,7 @@ import {
   SiPostgresql,
   SiSqlite,
 } from 'react-icons/si';
-import { ServerType, ServerTypeEnum } from 'shared/index';
+import { ServerType, ServerTypeEnum } from '@electrocrud/shared';
 
 type DatabaseIconProperties = IconProps & {
   client: ServerType;

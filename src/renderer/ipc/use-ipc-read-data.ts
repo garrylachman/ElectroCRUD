@@ -1,4 +1,4 @@
-import { ReadDataRequest, ReadDataResponse } from 'shared/index';
+import { ReadDataRequest, ReadDataResponse } from '@electrocrud/shared';
 import { useBaseRequest } from './base-request';
 
 export const useIPCReadData = (request: ReadDataRequest) => {

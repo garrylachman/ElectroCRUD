@@ -7,7 +7,7 @@ import {
   ConnectResponse,
   ErrorResponse,
   IPCChannelEnum,
-} from 'shared/index';
+} from '@electrocrud/shared';
 
 import {
   CodeExamplesReducer,

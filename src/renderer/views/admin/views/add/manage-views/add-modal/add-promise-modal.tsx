@@ -7,7 +7,7 @@ import {
   PromiseModalContentProperties,
 } from 'renderer/components/modals/promise-modal';
 import { useIPCTablesList } from 'renderer/ipc';
-import { IPCChannelEnum } from 'shared/index';
+import { IPCChannelEnum } from '@electrocrud/shared';
 import { v4 } from 'uuid';
 import * as Yup from 'yup';
 
