@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "incremental": true,
     "target": "ES2021",
     "declaration": true,
     "skipLibCheck": true,

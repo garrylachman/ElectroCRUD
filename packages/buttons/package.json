@@ -1,9 +1,9 @@
 {
-  "name": "@electrocrud/shared",
-  "version": "0.0.0",
-  "description": "Shared code beteen main & renderer",
+  "name": "@electrocrud/buttons",
+  "version": "3.0.0",
+  "description": "> TODO: description",
   "author": "Garry Lachman <garry@lachman.co>",
-  "homepage": "https://github.com/garrylachman/ElectroCRUD/tree/main/packages/shared#readme",
+  "homepage": "https://github.com/garrylachman/ElectroCRUD/tree/main/packages/buttons#readme",
   "license": "MIT",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
@@ -15,14 +15,17 @@
   "files": [
     "lib"
   ],
+  "scripts": {
+    "build": "tsup src --target esnext -d ./lib --dts --tsconfig tsconfig.build.json",
+    "tsc": "tsc",
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/garrylachman/ElectroCRUD.git"
-  },
-  "scripts": {
-    "build": "tsc --build tsconfig.build.json",
-    "tsc": "tsc",
-    "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "bugs": {
     "url": "https://github.com/garrylachman/ElectroCRUD/issues"
@@ -37,6 +40,7 @@
     "react": "^18.2.0",
     "react-icons": "^4.7.1",
     "ts-toolbelt": "^9.6.0",
-    "underscore": "^1.13.6"
+    "underscore": "^1.13.6",
+    "@electrocrud/utils": "link:./../utils"
   }
 }

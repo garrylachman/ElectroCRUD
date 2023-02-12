@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "incremental": true,
     "target": "es2021",
     "skipLibCheck": true,
     "module": "commonjs",

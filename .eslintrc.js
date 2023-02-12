@@ -34,6 +34,7 @@ module.exports = {
     "unicorn/no-array-for-each": "off",
     "react/function-component-definition": "off",
     "react/jsx-filename-extension": "off",
+    "@typescript-eslint/no-empty-function": "off",
   },
   env: {
     "browser": true,
