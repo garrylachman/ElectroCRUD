@@ -1,14 +1,29 @@
-# ElectroCRUD v3 is coming
+# v3 is coming
 ![](https://i3.ytimg.com/vi/gJzlxg2jK9g/maxresdefault.jpg)
 
-https://www.youtube.com/watch?v=gJzlxg2jK9g&ab_channel=GarryLachman
-
-
-
+[ElectroCRUD v3 - First Preview](https://www.youtube.com/watch?v=gJzlxg2jK9g&ab_channel=GarryLachman)
 
 <img src="https://i.imgur.com/L5nX9pT.png" width="100%" />
 
 # ElectroCRUD 2 ![GitHub Release Date](https://img.shields.io/github/release-date/garrylachman/ElectroCRUD.svg?style=for-the-badge) [![Open Collective backers and sponsors](https://img.shields.io/opencollective/all/electrocrud.svg?style=for-the-badge)](https://opencollective.com/electrocrud)
+
+
+
+## Table of Contents
+1. [ElectroCrud?](###ElectroCRUD?)
+2. [Why?](###Why?)
+3. [ElectroCRUD v1](###ElectroCRUDv1)
+4. [ElectroCRUD v2](###ElectroCRUDv2)
+5. [Functionality](###Functionality)
+6. [Databases](###Databases)
+7. [Download Binaries](###DownloadBinaries)
+8. [Install via Package Managers](##InstallviaPackageManagers)
+9. [Download Sources](###DownloadSources)
+10. [Videos](###Videos)
+11. [Build from source](###Buildfromsource)
+
+
+
 ### ElectroCRUD?
 ElectroCRUD is Open Source Database CRUD (Create, Read, Update, Delete) Software. No Code Needed — Just in a few clicks, you can create a Database Admin/Dashboard/Whatever. Its Open Source — It's Free.
 
@@ -73,7 +88,8 @@ From version 2.7.0 SQLite has been added, currently its very limited support but
 - [ ] MSSQL
 - [ ] Oracle
 
-## Download Binaries ![GitHub release](https://img.shields.io/github/release/garrylachman/ElectroCRUD.svg?style=for-the-badge)
+## Download Binaries 
+![GitHub release](https://img.shields.io/github/release/garrylachman/ElectroCRUD.svg?style=for-the-badge)
 
 * [Mac OSX](https://github.com/garrylachman/ElectroCRUD/releases/download/2.8.0/ElectroCRUD-2.8.0.dmg)
 * [Linux](https://github.com/garrylachman/ElectroCRUD/releases/download/2.8.0/ElectroCRUD-2.8.0.AppImage)
@@ -108,7 +124,6 @@ From version 2.7.0 SQLite has been added, currently its very limited support but
 
 ### Without codesign
 `CSC_IDENTITY_AUTO_DISCOVERY=false npm run electron:mac-win-linux`
-
 
 
 ![GitHub All Releases](https://img.shields.io/github/downloads/garrylachman/ElectroCRUD/total.svg?style=for-the-badge) 

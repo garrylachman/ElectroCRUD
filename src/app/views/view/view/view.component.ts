@@ -33,6 +33,9 @@ export class ViewViewComponent implements OnInit, OnDestroy {
   @ViewChild('subviewTableIconTmpl', { static: true }) subviewTableIconTmpl: TemplateRef<any>;
   @ViewChild(WidgetsComponent) widgets: WidgetsComponent;
 
+  /*
+    Class attributes
+  */
   view: IView;
   isLoading: boolean = false;
   title: string;
@@ -56,6 +59,9 @@ export class ViewViewComponent implements OnInit, OnDestroy {
 
 
   constructor(
+    /*
+      Inject services
+    */
     private route: ActivatedRoute,
     private router: Router,
     private sessionsService: SessionService,
@@ -73,6 +79,9 @@ export class ViewViewComponent implements OnInit, OnDestroy {
 
   }
 
+  /*
+    ngOnInit will return a Promise and the caller will ignore that promise
+  */
   async ngOnInit() {
     this.routeObserver = this.route.parent.params.subscribe((params) => {
       console.log("params", params);
@@ -95,6 +104,9 @@ export class ViewViewComponent implements OnInit, OnDestroy {
   }
 
 
+  /*
+    Destroys services when instance is destroyed
+  */
   ngOnDestroy() {
     this.menuServiceObserver.unsubscribe();
     this.routeObserver.unsubscribe();
@@ -108,6 +120,9 @@ export class ViewViewComponent implements OnInit, OnDestroy {
     this.selectLimit(this.limit);
   }
 
+  /*
+    Removes selected filter and reloads the data
+  */
   onFilterDeselected() {
     // remove any selected filter
     this.selectedFilter = null;
@@ -115,6 +130,9 @@ export class ViewViewComponent implements OnInit, OnDestroy {
     this.selectLimit(this.limit);
   }
 
+  /*
+    Deletes view on select in tooltip
+  */
   deleteView(): void {
     this.dialogService
       .open(ConfirmDeleteComponent, { hasBackdrop: true })
@@ -129,6 +147,9 @@ export class ViewViewComponent implements OnInit, OnDestroy {
       });
   }
 
+  /* 
+    Edits row in view
+  */
   editRow(row): void {
     let pk: string = this.primaryKeyColumn;
     if (!pk) {
@@ -139,6 +160,9 @@ export class ViewViewComponent implements OnInit, OnDestroy {
     this.router.navigate(['/views', this.view.id, 'view', 'edit', pk, pkValue])
   }
 
+  /* 
+    Deletes row in view
+  */
   deleteRow(row): void {
     let pk: string = this.primaryKeyColumn;
     if (!pk) {
@@ -177,6 +201,10 @@ export class ViewViewComponent implements OnInit, OnDestroy {
       });
   }
 
+
+  /*
+    Clears search on select in tooltip
+  */
   clearSearch(): void {
     // reset search box input
     this.searchInputModel = '' as any;
@@ -187,6 +215,9 @@ export class ViewViewComponent implements OnInit, OnDestroy {
     this.selectLimit(this.limit);
   }
 
+  /*
+    Select the limit of number of records per page
+  */
   selectLimit(value): void {
     this.limit = Number(value);
     this.offset = 0;
@@ -197,6 +228,9 @@ export class ViewViewComponent implements OnInit, OnDestroy {
     })
   }
 
+  /*
+    Gets the primary key of the column
+  */
   get primaryKeyColumn(): string {
     let pri: string = null;
     this.view.columns.forEach(col => {
@@ -207,6 +241,9 @@ export class ViewViewComponent implements OnInit, OnDestroy {
     return pri;
   }
 
+  /*
+    Loads view
+  */
   async loadView() {
     if (this.route.parent.snapshot.paramMap.has('id')) {
       // has id, we are in edit mode
@@ -232,6 +269,9 @@ export class ViewViewComponent implements OnInit, OnDestroy {
     await this.reload();
   }
 
+  /* 
+    Gets View Joints
+  */
   private getViewJoints(): IPCReadData.IIPCReadDataJoin[] {
     return this.view
       .columns
@@ -248,6 +288,9 @@ export class ViewViewComponent implements OnInit, OnDestroy {
       ));
   }
 
+  /*
+    Converts string and checks valid base 64
+  */
   checkValidBase64(str: string) {
     if (str === '') { return false; }
     try {
@@ -257,6 +300,9 @@ export class ViewViewComponent implements OnInit, OnDestroy {
     }
   }
 
+  /*
+    Reloads views and corresponding data
+  */
   async reload() {
     this.isLoading = true;
     let data = await this.viewsIPCService
@@ -302,6 +348,9 @@ export class ViewViewComponent implements OnInit, OnDestroy {
     this.widgets.reloadData();
   }
 
+  /*
+   Sets given page data
+  */
   async setPage(pageInfo) {
     this.isLoading = true;
     console.log("pageInfo:", pageInfo);
@@ -327,6 +376,10 @@ export class ViewViewComponent implements OnInit, OnDestroy {
     });
   }
 
+
+  /*
+    Search functionality
+  */
   doSearch(event): void {
     this.showSearchClear = String(this.searchInputModel).length > 1;
 
@@ -340,6 +393,9 @@ export class ViewViewComponent implements OnInit, OnDestroy {
     this.selectLimit(this.limit);
   }
 
+  /*
+    Sets table context items in view on select
+  */
   setContextItems(row): void {
     this.menuItems = [...this.menuItems].map(mItem => {
       mItem.data = row;
@@ -348,12 +404,19 @@ export class ViewViewComponent implements OnInit, OnDestroy {
     console.log(this.menuItems)
   }
 
+  /*
+    Sets table subview on select
+  */
   subviewTableAction(row): void {
     console.log("click", row);
     this.table.rowDetail.toggleExpandRow(row);
 
   }
 
+
+  /*
+    Toggle subview on select
+  */
   onSubviewToggle(event): void {
     console.log("onSubviewToggle", event);
   }
