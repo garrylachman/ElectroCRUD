@@ -12,7 +12,7 @@ import {
   Text,
   VStack,
 } from '@chakra-ui/react';
-import { Tooltip } from 'renderer/components/dataDisplay';
+import { Tooltip } from '@electrocrud/feedback';
 import memoize from 'proxy-memoize';
 import * as R from 'ramda';
 import { FC, useContext, useEffect, useMemo, useState } from 'react';

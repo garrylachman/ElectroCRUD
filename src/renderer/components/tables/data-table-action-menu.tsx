@@ -13,7 +13,7 @@ import { FC } from 'react';
 import { IconType } from 'react-icons';
 import { MdOutlineMoreVert } from 'react-icons/md';
 import { O } from 'ts-toolbelt';
-import { Tooltip } from '../dataDisplay';
+import { Tooltip } from '@electrocrud/feedback';
 
 export type DataTableActionMenuItem = O.Merge<
   {

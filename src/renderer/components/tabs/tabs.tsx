@@ -13,7 +13,7 @@ import {
   TabsProps,
   Text,
 } from '@chakra-ui/react';
-import { Tooltip } from 'renderer/components/dataDisplay';
+import { Tooltip } from '@electrocrud/feedback';
 import * as CSS from 'csstype';
 import { AnimatePresence, motion, Reorder } from 'framer-motion';
 import {

@@ -1,5 +1,5 @@
 import { Tag, TagLeftIcon } from '@chakra-ui/react';
-import { Tooltip } from 'renderer/components/dataDisplay';
+import { Tooltip } from '@electrocrud/feedback';
 import { FC } from 'react';
 import { IconType } from 'react-icons';
 

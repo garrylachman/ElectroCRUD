@@ -83,6 +83,7 @@
     "@electrocrud/shared": "link:./packages/shared",
     "@electrocrud/utils": "link:./packages/utils",
     "@electrocrud/buttons": "link:./packages/buttons",
+    "@electrocrud/feedback": "link:./packages/feedback",
     "@emotion/cache": "^11.7.1",
     "@emotion/react": "^11",
     "@emotion/styled": "^11",

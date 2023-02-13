@@ -50,7 +50,7 @@ module.exports = __toCommonJS(src_exports);
 var import_react = __toESM(require("react"));
 
 // src/index.tsx
-var React2 = __toESM(require("react"));
+var React = __toESM(require("react"));
 
 // src/save-button.tsx
 var import_react3 = require("@chakra-ui/react");

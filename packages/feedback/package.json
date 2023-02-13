@@ -1,11 +1,13 @@
 {
-  "name": "@electrocrud/utils",
+  "name": "@electrocrud/feedback",
   "version": "3.0.0",
   "description": "> TODO: description",
   "author": "Garry Lachman <garry@lachman.co>",
-  "homepage": "https://github.com/garrylachman/ElectroCRUD/tree/main/packages/utils#readme",
+  "homepage": "https://github.com/garrylachman/ElectroCRUD/tree/main/packages/feedback#readme",
+  "license": "MIT",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
+  "private": true,
   "directories": {
     "lib": "lib",
     "test": "__tests__"
@@ -21,7 +23,7 @@
     "url": "git+https://github.com/garrylachman/ElectroCRUD.git"
   },
   "scripts": {
-    "build": "tsup src --target esnext -d ./lib --dts --tsconfig tsconfig.build.json",
+    "build": "tsup src --target esnext -d ./lib --dts --tsconfig tsconfig.build.json --inject ./react-import.ts",
     "tsc": "tsc",
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
@@ -29,10 +31,9 @@
     "url": "https://github.com/garrylachman/ElectroCRUD/issues"
   },
   "dependencies": {
-    "@chakra-ui/react": "^2.5.0",
-    "arc-hash": "^3.0.0",
+    "@chakra-ui/react": "^2.4.9",
     "chroma-js": "^2.4.2",
-    "flatted": "^3.2.7",
+    "react": "^18.2.0",
     "react-icons": "^4.7.1",
     "ts-toolbelt": "^9.6.0"
   }

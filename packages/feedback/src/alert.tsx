@@ -8,16 +8,12 @@ import {
 } from '@chakra-ui/react';
 import { FC } from 'react';
 import { IconType } from 'react-icons';
-import { O } from 'ts-toolbelt';
 
-export type AlertProperties = O.Merge<
-  {
-    icon?: IconType;
-    title: string;
-    description?: string;
-  },
-  AlertProps
->;
+export type AlertProperties = AlertProps & {
+  icon?: IconType;
+  title: string;
+  description?: string;
+};
 
 export const Alert: FC<AlertProperties> = ({
   title,

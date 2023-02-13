@@ -17,7 +17,7 @@ import { useContext, useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { MdClear, MdSave } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
-import { Alert } from 'renderer/components/dataDisplay';
+import { Alert } from '@electrocrud/feedback';
 import { ConfirmPromiseSaveModal } from 'renderer/components/modals/confirm-promise-save-modal';
 import {
   ViewScopedContext,
