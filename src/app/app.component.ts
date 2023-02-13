@@ -23,8 +23,15 @@ import { ViewsService } from './services/store/views.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+  /*
+    Class attributes
+  */
   account:IAccount;
   versionFromPkg: string = version;
+
+  /*
+    Set defaults
+  */
   defaultItems: NbMenuItem[] = [
     {
       title: 'Views',
@@ -50,6 +57,9 @@ export class AppComponent {
   items:NbMenuItem[] = [...this.defaultItems];
 
   constructor(
+    /*
+      Inject services
+    */
     public electronService: ElectronService,
     private translate: TranslateService,
     private sidebarService: NbSidebarService,
@@ -83,10 +93,16 @@ export class AppComponent {
     this.viewsService.changes.subscribe(() => this.reload());
   }
 
+  /*
+    Changes the visual theme of the application
+  */
   changeTheme($event) {
     this.themeService.changeTheme($event);
   }
 
+  /*
+    Reloads parent view and its children
+  */
   reload() {
     let views:IView[] = this.viewsService.all();
     
