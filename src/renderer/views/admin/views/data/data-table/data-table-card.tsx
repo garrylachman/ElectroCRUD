@@ -32,7 +32,7 @@ import { useColumnsForTable } from '.';
 import {
   DataTableActionMenu,
   DataTableActionMenuItem,
-} from '../../../../../components/tables/data-table-action-menu';
+} from '@electrocrud/tables';
 import { DataDetailsCard } from '../details';
 import { DataTableHeader } from './data-table-header';
 

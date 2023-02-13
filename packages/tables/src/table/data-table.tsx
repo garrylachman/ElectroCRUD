@@ -1,8 +1,11 @@
-// @ts-nocheck
+/* eslint-disable @typescript-eslint/ban-types */
+/* eslint-disable unicorn/no-null */
+/* eslint-disable unicorn/prefer-spread */
 import {
   Checkbox,
   CheckboxProps,
   Flex,
+  ResponsiveValue,
   Table,
   Tbody,
   Td,
@@ -35,17 +38,19 @@ import React, {
   useState,
 } from 'react';
 
-type ElectroCRUDTableHeader = {
+type DataTableHeader = {
   key: string;
   label: string;
   group?: string;
+  style?: React.CSSProperties;
+  width?: any;
 };
 
 type CustomCellReturn = ReactElement;
 
-type ElectroCRUDTableProperties<T> = {
+type DataTableProperties<T> = {
   data: T[];
-  columns: ElectroCRUDTableHeader[];
+  columns: DataTableHeader[];
   customCell?: (
     info: CellContext<T, any>
   ) => CustomCellReturn | void | undefined;
@@ -56,7 +61,7 @@ type ElectroCRUDTableProperties<T> = {
 
 const hasScrollBodyProperties = {
   overflow: 'scroll',
-  position: 'absolute',
+  position: 'absolute' as ResponsiveValue<CSS.Property.Position>,
   height: '-webkit-fill-available',
   width: '-webkit-fill-available',
 };
@@ -98,8 +103,8 @@ const IndeterminateCheckbox: FC<CheckboxProps> = ({ ...rest }) => (
   </Flex>
 );
 
-export const ElectroCRUDTable = <TT extends Record<string, any>>(
-  properties: ElectroCRUDTableProperties<TT>
+export const DataTable = <TT extends Record<string, any>>(
+  properties: DataTableProperties<TT>
 ) => {
   const {
     data,
@@ -198,7 +203,7 @@ export const ElectroCRUDTable = <TT extends Record<string, any>>(
 
   const table = useReactTable({
     data,
-    columns: groupedTableColumns,
+    columns: groupedTableColumns as ColumnDef<any, any>[],
     state: {
       sorting,
       rowSelection,
@@ -274,10 +279,12 @@ export const ElectroCRUDTable = <TT extends Record<string, any>>(
               initial={{ opacity: 0, y: -1000 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 1 }}
-              transition={{
-                duration: 1,
-                type: 'spring',
-              }}
+              transition={
+                {
+                  duration: 1,
+                  type: 'spring',
+                } as any
+              }
             >
               {row.getVisibleCells().map((cell, cellIndex) => {
                 return (

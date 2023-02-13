@@ -14,7 +14,7 @@ import { FocusableElement } from '@chakra-ui/utils';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { EntityState } from '@reduxjs/toolkit';
 import chroma from 'chroma-js';
-import { AnimatePresence, LazyMotion, motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import Joi from 'joi';
 import memoize from 'proxy-memoize';
 import * as R from 'ramda';

@@ -1,9 +1,9 @@
 {
-  "name": "@electrocrud/feedback",
+  "name": "@electrocrud/tables",
   "version": "3.0.0",
   "description": "> TODO: description",
   "author": "Garry Lachman <garry@lachman.co>",
-  "homepage": "https://github.com/garrylachman/ElectroCRUD/tree/main/packages/feedback#readme",
+  "homepage": "https://github.com/garrylachman/ElectroCRUD/tree/main/packages/tables#readme",
   "license": "MIT",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
@@ -32,7 +32,6 @@
   },
   "dependencies": {
     "@chakra-ui/react": "^2.4.9",
-    "chroma-js": "^2.4.2",
     "framer-motion": "^9.0.2",
     "react": "^18.2.0",
     "react-icons": "^4.7.1",

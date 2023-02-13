@@ -7,9 +7,10 @@ import {
   MenuItemProps,
   MenuList,
   Portal,
+  Text,
 } from '@chakra-ui/react';
-import * as R from 'ramda';
-import { FC } from 'react';
+import { omit } from 'underscore';
+import { FC, ReactNode } from 'react';
 import { IconType } from 'react-icons';
 import { MdOutlineMoreVert } from 'react-icons/md';
 import { O } from 'ts-toolbelt';
@@ -24,6 +25,7 @@ export type DataTableActionMenuItem = O.Merge<
   },
   MenuItemProps
 >;
+
 export type DataTableActionMenuProperties = {
   items: DataTableActionMenuItem[];
   row?: any;
@@ -46,37 +48,38 @@ export const DataTableActionMenu: FC<DataTableActionMenuProperties> = ({
         bgColor="whiteAlpha.500"
         backdropFilter="blur(10px) contrast(100%) saturate(190%)"
       >
-        {items.map((item) => (
-          <Tooltip
-            label={item.tooltip}
-            placement="left"
-            key={`tooltip-${item.label}`}
-          >
-            <MenuItem
-              key={item.label}
-              {...R.omit<DataTableActionMenuItem, 'menuIcon' | 'label'>(
-                ['menuIcon', 'label'],
-                item
-              )}
-              onClick={() => {
-                if (item.onClick) {
-                  item.onClick(row);
-                }
-              }}
-              py={3}
-              alignItems="center"
-              fontSize="sm"
-              textTransform="uppercase"
-              gap={3}
-              iconSpacing={0}
-              _hover={{ fontWeight: 'bold', bgColor: 'blackAlpha.200' }}
-              icon={<Icon display="flex" as={item.menuIcon} boxSize={4} />}
-              bgColor="transparent"
+        {items.map((item) => {
+          return (
+            <Tooltip
+              // @ts-ignore
+              label={item.tooltip}
+              placement="left"
+              key={`tooltip-${item.label}`}
             >
-              {item.label}
-            </MenuItem>
-          </Tooltip>
-        ))}
+              <MenuItem
+                // @ts-ignore
+                key={`menuitem-${item.label}`}
+                {...omit(item, ['menuIcon', 'label'])}
+                onClick={() => {
+                  if (item.onClick) {
+                    item.onClick(row);
+                  }
+                }}
+                py={3}
+                alignItems="center"
+                fontSize="sm"
+                textTransform="uppercase"
+                gap={3}
+                iconSpacing={0}
+                _hover={{ fontWeight: 'bold', bgColor: 'blackAlpha.200' }}
+                icon={<Icon display="flex" as={item.menuIcon} boxSize={4} />}
+                bgColor="transparent"
+              >
+                {item.label}
+              </MenuItem>
+            </Tooltip>
+          );
+        })}
       </MenuList>
     </Portal>
   </Menu>
