@@ -1,4 +1,4 @@
-import { DeleteRequest, DeleteResponse } from 'shared/index';
+import { DeleteRequest, DeleteResponse } from '@electrocrud/shared';
 import { useBaseRequest } from './base-request';
 
 export const useIPCDeleteData = (request: DeleteRequest) => {

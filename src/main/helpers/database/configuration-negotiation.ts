@@ -6,7 +6,7 @@ import {
   ServerConnectionConfig,
   ServerType,
   ServerTypeEnum,
-} from 'shared/index';
+} from '@electrocrud/shared';
 
 export const configurationNegotiation = (
   client: ServerType,

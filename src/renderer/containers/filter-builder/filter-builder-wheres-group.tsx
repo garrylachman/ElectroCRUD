@@ -14,7 +14,7 @@ import {
 } from '@chakra-ui/react';
 import { FC, useContext, useMemo } from 'react';
 import { VscGroupByRefType, VscUngroupByRefType } from 'react-icons/vsc';
-import { RippleButton } from 'renderer/components/buttons/ripple-button';
+import { RippleButton } from '@electrocrud/buttons';
 import { ViewScopedContext } from 'renderer/contexts/view-scoped-context';
 import { useAppDispatch, useAppSelector } from 'renderer/store/hooks';
 import { TemporaryFiltersReducer } from 'renderer/store/reducers';

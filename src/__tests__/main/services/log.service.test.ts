@@ -7,7 +7,7 @@
 import { ipcRenderer } from 'electron';
 import LogService from 'main/services/log.service';
 import 'reflect-metadata';
-import { LogItem, LogResponse } from 'shared/defenitions';
+import { LogItem, LogResponse } from '@electrocrud/shared';
 import { IPCChannelEnum, LogItemTypeEnum } from 'shared/enums';
 import { container } from 'tsyringe';
 

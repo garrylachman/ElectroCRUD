@@ -7,7 +7,7 @@ import {
   LogItemTypeEnum,
   LogItem,
   LogItemType,
-} from 'shared/index';
+} from '@electrocrud/shared';
 import { IIPCService } from './interfaces/iipc.service';
 import { ILogService } from './interfaces/ilog.service';
 

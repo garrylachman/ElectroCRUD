@@ -22,7 +22,7 @@ import {
   ServerConnectionConfig,
   ServerTypeEnum,
   SSHTunnelConfig,
-} from 'shared/index';
+} from '@electrocrud/shared';
 
 import { RiLockPasswordFill } from 'react-icons/ri';
 import { TbCloudDataConnection, TbDatabase } from 'react-icons/tb';

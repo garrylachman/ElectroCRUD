@@ -10,15 +10,15 @@ import {
 import { FC, useMemo } from 'react';
 import { TbEdit, TbPlugConnected, TbTrash } from 'react-icons/tb';
 import ReactTimeAgo from 'react-time-ago';
-import { AddButton } from 'renderer/components/buttons';
+import { AddButton } from '@electrocrud/buttons';
 import { DatabaseIcon } from 'renderer/components/icons/database-icon';
 import { StatusIndicator } from 'renderer/components/icons/status-indicator';
 import { ConfirmPromiseDeleteModal } from 'renderer/components/modals';
 import {
+  DataTable,
   DataTableActionMenu,
   DataTableActionMenuItem,
-} from 'renderer/components/tables/data-table-action-menu';
-import { ElectroCRUDTable } from 'renderer/components/tables/electro-crud-table';
+} from '@electrocrud/tables';
 import { AccountRO, StrictAccountRO } from 'renderer/defenitions/record-object';
 import { useAppDispatch, useAppSelector } from 'renderer/store/hooks';
 import { AccountsReducer, SessionReducer } from 'renderer/store/reducers';
@@ -115,7 +115,7 @@ export const AccountsListTable: FC<AccountsListTableProperties> = ({
         </Flex>
       </CardHeader>
       <CardBody px={0}>
-        <ElectroCRUDTable<StrictAccountRO>
+        <DataTable<StrictAccountRO>
           data={accountsStateWithStatus}
           columns={columns}
           hasScroll

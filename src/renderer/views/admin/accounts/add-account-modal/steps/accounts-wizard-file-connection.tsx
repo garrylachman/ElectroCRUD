@@ -8,7 +8,7 @@ import {
 import { FC, forwardRef } from 'react';
 import { MdArrowBack, MdArrowForward } from 'react-icons/md';
 import { ValidateSqliteConnection } from 'renderer/defenitions/record-object';
-import { FileConnectionConfig } from 'shared/index';
+import { FileConnectionConfig } from '@electrocrud/shared';
 
 import { AddAccountWizardStepProperties } from '../add-account-wizard';
 

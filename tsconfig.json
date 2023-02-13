@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "incremental": true,
     "target": "ES2021",
+    "declaration": true,
     "skipLibCheck": true,
     "strictNullChecks": true,
     "module": "commonjs",
@@ -25,10 +25,9 @@
     "moduleResolution": "node",
     "paths": {
       "renderer": ["./src/renderer/*"],
-      "main": ["./src/main/*"],
-      "shared": ["./src/shared/*"]
+      "main": ["./src/main/*"]
     }
   },
-  "include": ["./src/main/**/*", "./src/renderer/**/*", "./src/shared/**/*"],
-  "exclude": ["test", "release/build", "release/app/dist", ".erb/dll"],
+  "include": ["./src/main/**/*", "./src/renderer/**/*", "./packages/**/*"],
+  "exclude": ["test", "**/*.spec.ts", "out", ".webpack"],
 }

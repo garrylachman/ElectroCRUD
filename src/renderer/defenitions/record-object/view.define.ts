@@ -1,5 +1,5 @@
 /* eslint-disable unicorn/prevent-abbreviations */
-import { TableInfoRow } from 'shared/index';
+import { TableInfoRow } from '@electrocrud/shared';
 import { O } from 'ts-toolbelt';
 
 import { BaseRO, StrictBaseRO } from './base.define';

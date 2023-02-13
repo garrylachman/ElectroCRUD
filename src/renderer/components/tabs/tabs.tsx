@@ -13,7 +13,7 @@ import {
   TabsProps,
   Text,
 } from '@chakra-ui/react';
-import { Tooltip } from 'renderer/components/dataDisplay';
+import { Tooltip } from '@electrocrud/feedback';
 import * as CSS from 'csstype';
 import { AnimatePresence, motion, Reorder } from 'framer-motion';
 import {
@@ -27,7 +27,7 @@ import {
 } from 'react';
 import { IconType } from 'react-icons';
 import { MdClose } from 'react-icons/md';
-import { ObjectID } from 'renderer/helpers';
+import { ObjectID } from '@electrocrud/utils';
 import { O } from 'ts-toolbelt';
 import { omit } from 'underscore';
 

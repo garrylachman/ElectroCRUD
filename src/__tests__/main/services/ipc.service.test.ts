@@ -25,7 +25,7 @@ import {
   TablesListResponse,
   UpdateRequest,
   UpdateResponse,
-} from 'shared/defenitions';
+} from '@electrocrud/shared';
 import {
   IPCChannelEnum,
   QueryAggregateEnum,

@@ -1,4 +1,4 @@
-import { ResponseType } from 'shared/index';
+import { ResponseType } from '@electrocrud/shared';
 
 export interface IIPCService {
   listen(): void;

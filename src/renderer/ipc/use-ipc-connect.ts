@@ -1,4 +1,4 @@
-import { ConnectRequest, ConnectResponse, ErrorResponse } from 'shared/index';
+import { ConnectRequest, ConnectResponse, ErrorResponse } from '@electrocrud/shared';
 
 import { useBaseRequest } from './base-request';
 

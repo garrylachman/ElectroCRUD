@@ -4,7 +4,7 @@ import AnimatedText from 'react-animated-text-content';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'renderer/store/hooks';
 import { SessionReducer } from 'renderer/store/reducers';
-import { LockButton } from 'renderer/components/buttons';
+import { LockButton } from '@electrocrud/buttons';
 
 export const Navbar: FC<{ brandText: string }> = ({ brandText }) => {
   const dispatch = useAppDispatch();

@@ -19,7 +19,7 @@ import { ElectroCRUDTabsAPI } from 'renderer/components/tabs';
 import { FilterBuilder } from 'renderer/containers/filter-builder';
 import { ViewScopedContext } from 'renderer/contexts';
 import { usePolicy, useUpdateEffect } from 'renderer/hooks';
-import { IPCChannelEnum, QueryOrder } from 'shared/index';
+import { IPCChannelEnum, QueryOrder } from '@electrocrud/shared';
 import { useDebounce } from 'usehooks-ts';
 
 import { ConfirmPromiseDeleteModal } from 'renderer/components/modals';
@@ -32,7 +32,7 @@ import { useColumnsForTable } from '.';
 import {
   DataTableActionMenu,
   DataTableActionMenuItem,
-} from '../../../../../components/tables/data-table-action-menu';
+} from '@electrocrud/tables';
 import { DataDetailsCard } from '../details';
 import { DataTableHeader } from './data-table-header';
 

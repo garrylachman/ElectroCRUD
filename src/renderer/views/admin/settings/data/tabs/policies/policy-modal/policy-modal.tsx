@@ -22,8 +22,7 @@ import { pick } from 'underscore';
 import { FC, useRef } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { create, InstanceProps } from 'react-modal-promise';
-import { CancelButton } from 'renderer/components/buttons/cancel-button';
-import { SaveButton } from 'renderer/components/buttons/save-button';
+import { CancelButton, SaveButton } from '@electrocrud/buttons';
 import { TagsAutocomplete } from 'renderer/components/fields';
 import { MotionBox } from 'renderer/components/motions/motion-box';
 import {

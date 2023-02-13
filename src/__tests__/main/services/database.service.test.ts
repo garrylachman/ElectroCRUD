@@ -4,7 +4,7 @@ import 'reflect-metadata';
 import { container } from 'tsyringe';
 import DatabaseService from 'main/services/database.service';
 import { QueryAggregateEnum, ServerTypeEnum } from 'shared/enums';
-import { ReadDataResult, ReadWidgetDataResult } from 'shared/defenitions';
+import { ReadDataResult, ReadWidgetDataResult } from '@electrocrud/shared';
 import { NoActiveClientError, NoConnectionError } from 'main/exceptions';
 
 const database = container.resolve(DatabaseService);

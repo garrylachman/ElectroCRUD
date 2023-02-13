@@ -2,8 +2,8 @@ import { throttle } from 'underscore';
 import { useCallback, useEffect, useState } from 'react';
 import { useAppDispatch } from 'renderer/store/hooks';
 import { ToastReducer } from 'renderer/store/reducers';
-import { IPCChannel } from 'shared/index';
-import { ErrorResponse, RequestType, ResponseType } from 'shared/defenitions';
+import { IPCChannel } from '@electrocrud/shared';
+import { ErrorResponse, RequestType, ResponseType } from '@electrocrud/shared';
 
 const { ipcRenderer } = window.electron;
 

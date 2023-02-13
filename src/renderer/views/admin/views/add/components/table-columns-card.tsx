@@ -15,15 +15,14 @@ import { FC, useEffect } from 'react';
 import { MdHdrAuto, MdOutline1XMobiledata, MdVpnKey } from 'react-icons/md';
 import { RxTextNone } from 'react-icons/rx';
 import { useSelector } from 'react-redux';
-import { TableIconCell } from 'renderer/components/tables/customCells';
-import { ElectroCRUDTable } from 'renderer/components/tables/electro-crud-table';
+import { DataTable, TableIconCell } from '@electrocrud/tables';
 import { ColumnRO } from 'renderer/defenitions/record-object';
 import { findType } from 'renderer/defenitions/record-object/data-types';
 import { useIPCTableInfo } from 'renderer/ipc';
 import { useAppDispatch } from 'renderer/store/hooks';
 import { ColumnsReducer } from 'renderer/store/reducers';
 import { ViewSelectors } from 'renderer/store/selectors';
-import { IPCChannelEnum } from 'shared/index';
+import { IPCChannelEnum } from '@electrocrud/shared';
 import { RootState } from 'renderer/store/store';
 
 type TableColumnsCardProperties = {
@@ -118,7 +117,7 @@ export const TableColumnsCard: FC<TableColumnsCardProperties> = ({
           </Text>
         </CardHeader>
         <CardBody px={0}>
-          <ElectroCRUDTable<ColumnRO>
+          <DataTable<ColumnRO>
             isLoaded={isExecuted}
             // @ts-ignore
             data={viewState.columns}

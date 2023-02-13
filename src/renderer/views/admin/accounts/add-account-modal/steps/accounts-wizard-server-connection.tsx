@@ -3,7 +3,7 @@ import { Field, Form, FormLayout } from '@saas-ui/react';
 import { FC } from 'react';
 import { MdArrowBack, MdArrowForward } from 'react-icons/md';
 import { ValidateServerConnection } from 'renderer/defenitions/record-object';
-import { ServerConnectionConfig } from 'shared/index';
+import { ServerConnectionConfig } from '@electrocrud/shared';
 
 import { AddAccountWizardStepProperties } from '../add-account-wizard';
 

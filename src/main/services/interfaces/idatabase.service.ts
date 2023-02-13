@@ -17,7 +17,7 @@ import {
   ServerType,
   TableInfoRow,
   SSHTunnelConfig,
-} from 'shared/index';
+} from '@electrocrud/shared';
 
 export interface IDatabaseService {
   connect(

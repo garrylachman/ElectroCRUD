@@ -24,7 +24,7 @@ import {
   AddButton,
   DeleteIconButton,
   EditIconButton,
-} from 'renderer/components/buttons';
+} from '@electrocrud/buttons';
 import { ConfirmPromiseDeleteModal } from 'renderer/components/modals/confirm-promise-delete-modal';
 import { ScopeContext } from 'renderer/contexts/scope-context';
 import { ViewScopedContext } from 'renderer/contexts/view-scoped-context';

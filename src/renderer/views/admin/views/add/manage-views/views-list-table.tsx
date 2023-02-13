@@ -3,13 +3,13 @@ import { FC } from 'react';
 import { TbEdit, TbLayout2, TbTrash } from 'react-icons/tb';
 import { useNavigate } from 'react-router-dom';
 import ReactTimeAgo from 'react-time-ago';
-import { AddButton } from 'renderer/components/buttons';
+import { AddButton } from '@electrocrud/buttons';
 import { ConfirmPromiseDeleteModal } from 'renderer/components/modals';
 import {
+  DataTable,
   DataTableActionMenu,
   DataTableActionMenuItem,
-} from 'renderer/components/tables/data-table-action-menu';
-import { ElectroCRUDTable } from 'renderer/components/tables/electro-crud-table';
+} from '@electrocrud/tables';
 import { StrictViewRO, ViewRO } from 'renderer/defenitions/record-object';
 import { useAppDispatch, useAppSelector } from 'renderer/store/hooks';
 import { ViewsReducer } from 'renderer/store/reducers';
@@ -113,7 +113,7 @@ export const ViewsListTable: FC<ViewsListTableProperties> = ({
         </Flex>
       </CardHeader>
       <CardBody px={0}>
-        <ElectroCRUDTable<ViewRO>
+        <DataTable<ViewRO>
           data={viewsState}
           columns={tableColumns}
           hasScroll

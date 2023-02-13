@@ -12,7 +12,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { FC, ReactNode, useRef } from 'react';
 import { create, InstanceProps } from 'react-modal-promise';
 
-import { RippleButton } from '../buttons/ripple-button';
+import { RippleButton } from '@electrocrud/buttons';
 import { MotionBox } from '../motions/motion-box';
 
 const flip = {

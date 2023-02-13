@@ -1,4 +1,4 @@
-import { QueryWhereOprEnum } from 'shared/index';
+import { QueryWhereOprEnum } from '@electrocrud/shared';
 import { Object } from 'ts-toolbelt';
 
 import { BaseRO } from './base.define';

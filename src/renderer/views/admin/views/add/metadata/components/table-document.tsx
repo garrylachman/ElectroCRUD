@@ -4,7 +4,7 @@ import { Box, Center, Spinner, Text } from '@chakra-ui/react';
 import MarkdownEditor from '@uiw/react-markdown-editor';
 import { useCallback, useContext, useMemo, useState } from 'react';
 import { MdEdit, MdPreview } from 'react-icons/md';
-import { SaveButton } from 'renderer/components/buttons/save-button';
+import { SaveButton } from '@electrocrud/buttons';
 import { ConfirmPromiseSaveModal } from 'renderer/components/modals/confirm-promise-save-modal';
 import {
   ElectroCRUDTabProperties,

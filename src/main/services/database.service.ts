@@ -33,7 +33,7 @@ import {
   UpdateDataArguments,
   QueryAggregateEnum,
   ServerTypeEnum,
-} from 'shared/index';
+} from '@electrocrud/shared';
 import { heartBeatQueries } from '../data/queries';
 import { NoActiveClientError, NoConnectionError } from '../exceptions';
 import { configurationNegotiation, connect } from '../helpers/database';

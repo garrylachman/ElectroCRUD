@@ -5,10 +5,10 @@ import { FC, useMemo } from 'react';
 import { TbEdit, TbTrash } from 'react-icons/tb';
 import ReactTimeAgo from 'react-time-ago';
 import {
+  DataTable,
   DataTableActionMenu,
   DataTableActionMenuItem,
-} from 'renderer/components/tables/data-table-action-menu';
-import { ElectroCRUDTable } from 'renderer/components/tables/electro-crud-table';
+} from '@electrocrud/tables';
 import {
   PolicyRuleTemplates,
   StrictPolicyRuleRO,
@@ -73,7 +73,7 @@ export const PoliciesTable: FC<PoliciesTableProperties> = ({
   ];
 
   return (
-    <ElectroCRUDTable
+    <DataTable
       data={data}
       columns={tableColumns}
       hasScroll

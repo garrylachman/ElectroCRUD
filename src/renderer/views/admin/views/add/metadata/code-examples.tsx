@@ -3,7 +3,7 @@ import { Box, Grid, useBoolean } from '@chakra-ui/react';
 import { LayoutGroup } from 'framer-motion';
 import { FC, useContext } from 'react';
 import { useSelector } from 'react-redux';
-import { RippleButton } from 'renderer/components/buttons/ripple-button';
+import { RippleButton } from '@electrocrud/buttons';
 import { SectionHeader } from 'renderer/components/sections/section-header';
 import { ViewScopedContext } from 'renderer/contexts';
 import { CodeExampleRO } from 'renderer/defenitions/record-object';

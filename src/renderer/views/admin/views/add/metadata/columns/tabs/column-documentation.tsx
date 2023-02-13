@@ -5,7 +5,7 @@ import memoize from 'proxy-memoize';
 import { useCallback, useContext, useMemo, useState } from 'react';
 import { MdEdit, MdPreview } from 'react-icons/md';
 import { useSelector } from 'react-redux';
-import { SaveButton } from 'renderer/components/buttons/save-button';
+import { SaveButton } from '@electrocrud/buttons';
 import { ConfirmPromiseSaveModal } from 'renderer/components/modals/confirm-promise-save-modal';
 import {
   ElectroCRUDTabProperties,

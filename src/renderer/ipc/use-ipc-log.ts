@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 import { uniq } from 'underscore';
 import { useState } from 'react';
-import { IPCChannelEnum } from 'shared/index';
-import { LogItem } from 'shared/defenitions';
+import { IPCChannelEnum, LogItem } from '@electrocrud/shared';
 
 const { ipcRenderer } = window.electron;
 export const useIPCLogs = () => {

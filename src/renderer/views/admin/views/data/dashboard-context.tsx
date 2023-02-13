@@ -16,7 +16,7 @@ import { useUpdateEffect } from 'renderer/hooks';
 import { useIPCReadData } from 'renderer/ipc';
 import { useAppSelector } from 'renderer/store/hooks';
 import { ViewSelectors } from 'renderer/store/selectors';
-import { IPCChannelEnum, NestedPartial, QueryOrder } from 'shared/index';
+import { IPCChannelEnum, NestedPartial, QueryOrder } from '@electrocrud/shared';
 import { RootState } from 'renderer/store/store';
 
 export type DashboardContextControlType = [

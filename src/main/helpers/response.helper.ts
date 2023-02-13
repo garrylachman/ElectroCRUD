@@ -3,7 +3,7 @@ import {
   ErrorResponse,
   IPCError,
   ResponseTypeSuccess,
-} from '../../shared/defenitions';
+} from '@electrocrud/shared';
 
 export type SuccessOrError<T extends ResponseTypeSuccess['body'] | IPCError> =
   T extends ResponseTypeSuccess['body'] ? ResponseTypeSuccess : ErrorResponse;

@@ -1,4 +1,4 @@
-import { TablesListRequest, TablesListResponse } from 'shared/index';
+import { TablesListRequest, TablesListResponse } from '@electrocrud/shared';
 import { useBaseRequest } from './base-request';
 
 export const useIPCTablesList = (request: TablesListRequest) => {
