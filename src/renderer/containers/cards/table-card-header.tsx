@@ -1,7 +1,7 @@
 import { HStack, MenuItemProps } from '@chakra-ui/react';
 import { FC } from 'react';
 
-import { ActionsDropdownMenu } from '../../components/buttons';
+import { ActionsDropdownMenu } from '@electrocrud/buttons';
 
 export type TableCardHeaderProperties = {
   actionItems?: { props: MenuItemProps; text: string }[];

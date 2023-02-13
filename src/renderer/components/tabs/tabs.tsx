@@ -27,7 +27,7 @@ import {
 } from 'react';
 import { IconType } from 'react-icons';
 import { MdClose } from 'react-icons/md';
-import { ObjectID } from 'renderer/helpers';
+import { ObjectID } from '@electrocrud/utils';
 import { O } from 'ts-toolbelt';
 import { omit } from 'underscore';
 

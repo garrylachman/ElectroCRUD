@@ -3,7 +3,8 @@
 
   "compilerOptions": {
     "outDir": "./lib",
-    "baseUrl": "./src"
+    "baseUrl": "./src",
+    "jsx": "react-jsx",
   },
 
   "include": [

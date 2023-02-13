@@ -23,7 +23,7 @@ import { useCallback, useContext, useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import ReactTimeAgo from 'react-time-ago';
-import { SaveButton } from 'renderer/components/buttons/save-button';
+import { SaveButton } from '@electrocrud/buttons';
 import { TagsAutocomplete } from 'renderer/components/fields/tags-autocomplete';
 import { ConfirmPromiseSaveModal } from 'renderer/components/modals/confirm-promise-save-modal';
 import { ScopeContext } from 'renderer/contexts/scope-context';

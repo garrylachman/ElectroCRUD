@@ -2346,15 +2346,17 @@
   resolved "https://registry.npmjs.org/@discoveryjs/json-ext/-/json-ext-0.5.7.tgz#1d572bfbbe14b7704e0ba0f39b74815b84870d70"
   integrity sha512-dBVuXR082gk3jsFp7Rd/JI4kytwGHecnCoTtXFb7DB6CNHp4rg5k1bhg0nWdLGLnOV71lmDzGQaLMy8iPLY0pw==
 
+"@electrocrud/buttons@link:./packages/buttons":
+  version "0.0.0"
+  uid ""
+
 "@electrocrud/shared@link:./packages/shared":
   version "0.0.0"
   uid ""
 
 "@electrocrud/utils@link:./packages/utils":
-  version "3.0.0"
-  dependencies:
-    arc-hash "^3.0.0"
-    flatted "^3.2.7"
+  version "0.0.0"
+  uid ""
 
 "@electron-forge/cli@^6.0.5":
   version "6.0.5"

@@ -1,7 +1,7 @@
 import { Form, FormLayout, InputField, SelectField } from '@saas-ui/forms';
 import { yupResolver } from '@saas-ui/forms/yup';
 import { FC, useEffect } from 'react';
-import { ActionButtonType } from 'renderer/components/buttons/action-button';
+import { ActionButtonType } from '@electrocrud/buttons';
 import {
   PromiseModal,
   PromiseModalContentProperties,

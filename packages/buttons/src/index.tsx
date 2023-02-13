@@ -1,3 +1,4 @@
+import * as React from 'react';
 export * from './save-button';
 export * from './ripple-button';
 export * from './actions-dropdown-menu';
@@ -7,3 +8,4 @@ export * from './cancel-button';
 export * from './add-button';
 export * from './delete-button';
 export * from './lock-button';
+export * from './action-button';

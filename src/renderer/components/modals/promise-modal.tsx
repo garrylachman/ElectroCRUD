@@ -12,10 +12,7 @@ import { FC, ReactNode, RefObject, useCallback, useRef } from 'react';
 import { FieldValues, UseFormReturn } from 'react-hook-form';
 import { create, InstanceProps } from 'react-modal-promise';
 
-import {
-  ActionButtonsFactory,
-  ActionButtonType,
-} from '../buttons/action-button';
+import { ActionButtonsFactory, ActionButtonType } from '@electrocrud/buttons';
 import { MotionBox } from '../motions/motion-box';
 
 const flip = {

@@ -36,7 +36,7 @@ import {
   MdSave,
 } from 'react-icons/md';
 import ReactTimeAgo from 'react-time-ago';
-import { RippleButton } from 'renderer/components/buttons/ripple-button';
+import { RippleButton } from '@electrocrud/buttons';
 import { ConfirmPromiseDeleteModal } from 'renderer/components/modals/confirm-promise-delete-modal';
 import { CodeExampleRO } from 'renderer/defenitions/record-object';
 import { useAppDispatch } from 'renderer/store/hooks';

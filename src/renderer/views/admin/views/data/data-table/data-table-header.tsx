@@ -18,8 +18,8 @@ import { useSelector } from 'react-redux';
 import {
   ActionsDropdownMenu,
   ActionsDropdownMenuItem,
-} from 'renderer/components/buttons/actions-dropdown-menu';
-import { RippleButton } from 'renderer/components/buttons/ripple-button';
+  RippleButton,
+} from '@electrocrud/buttons';
 import { ConfirmPromiseDeleteModal } from 'renderer/components/modals/confirm-promise-delete-modal';
 import { ViewScopedContext } from 'renderer/contexts';
 import {

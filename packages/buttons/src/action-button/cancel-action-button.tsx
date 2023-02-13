@@ -19,10 +19,11 @@ const ButtonContent: JSX.Element = (
 );
 
 export const CancelActionButton: FC<RippleButtonProperties> = (properties) => {
-  const RenderComponent = useCallback(
-    () => ActionButton({ ...properties, ...buttonProperties }),
+  const renderComponent = useCallback(
+    (children) =>
+      ActionButton({ ...properties, ...buttonProperties, children }),
     [properties]
   );
-  // @ts-ignore
-  return <RenderComponent>{ButtonContent}</RenderComponent>;
+
+  return <>{renderComponent(ButtonContent)}</>;
 };

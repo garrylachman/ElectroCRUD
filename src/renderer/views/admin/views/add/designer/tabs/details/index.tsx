@@ -24,8 +24,7 @@ import {
   MdTextFields,
 } from 'react-icons/md';
 import { useSelector } from 'react-redux';
-import { RippleButton } from 'renderer/components/buttons/ripple-button';
-import { SaveButton } from 'renderer/components/buttons/save-button';
+import { RippleButton, SaveButton } from '@electrocrud/buttons';
 import { ViewScopedContext } from 'renderer/contexts/view-scoped-context';
 import { useAppDispatch } from 'renderer/store/hooks';
 import { ViewDetailsReducer } from 'renderer/store/reducers';

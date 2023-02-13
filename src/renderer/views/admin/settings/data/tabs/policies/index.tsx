@@ -1,6 +1,6 @@
 import { Box, Flex, Spacer, Text } from '@chakra-ui/react';
 import memoize from 'proxy-memoize';
-import { AddButton } from 'renderer/components/buttons';
+import { AddButton } from '@electrocrud/buttons';
 import { ConfirmPromiseDeleteModal } from 'renderer/components/modals';
 import { StrictPolicyRuleRO } from 'renderer/defenitions/record-object';
 import { useAppDispatch, useAppSelector } from 'renderer/store/hooks';

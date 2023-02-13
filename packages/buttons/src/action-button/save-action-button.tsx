@@ -11,7 +11,7 @@ const buttonProperties = {
   variant: 'solid',
 };
 
-const ButtonContent: JSX.Element = (
+const ButtonContent = (
   <>
     <Icon as={MdSave} boxSize={5} />
     <Text>Save</Text>
@@ -19,10 +19,11 @@ const ButtonContent: JSX.Element = (
 );
 
 export const SaveActionButton: FC<RippleButtonProperties> = (properties) => {
-  const RenderComponent = useCallback(
-    () => ActionButton({ ...properties, ...buttonProperties }),
+  const renderComponent = useCallback(
+    (children) =>
+      ActionButton({ ...properties, ...buttonProperties, children }),
     [properties]
   );
-  // @ts-ignore
-  return <RenderComponent>{ButtonContent}</RenderComponent>;
+
+  return <>{renderComponent(ButtonContent)}</>;
 };

@@ -3,7 +3,7 @@ import { FC } from 'react';
 import { TbEdit, TbLayout2, TbTrash } from 'react-icons/tb';
 import { useNavigate } from 'react-router-dom';
 import ReactTimeAgo from 'react-time-ago';
-import { AddButton } from 'renderer/components/buttons';
+import { AddButton } from '@electrocrud/buttons';
 import { ConfirmPromiseDeleteModal } from 'renderer/components/modals';
 import {
   DataTableActionMenu,

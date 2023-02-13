@@ -10,7 +10,7 @@ import {
 import { FC, useMemo } from 'react';
 import { TbEdit, TbPlugConnected, TbTrash } from 'react-icons/tb';
 import ReactTimeAgo from 'react-time-ago';
-import { AddButton } from 'renderer/components/buttons';
+import { AddButton } from '@electrocrud/buttons';
 import { DatabaseIcon } from 'renderer/components/icons/database-icon';
 import { StatusIndicator } from 'renderer/components/icons/status-indicator';
 import { ConfirmPromiseDeleteModal } from 'renderer/components/modals';

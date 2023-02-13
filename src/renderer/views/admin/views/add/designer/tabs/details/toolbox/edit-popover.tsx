@@ -26,10 +26,12 @@ import {
   useState,
 } from 'react';
 import { MdModeEdit } from 'react-icons/md';
-import { DeleteButton } from 'renderer/components/buttons';
-import { CancelButton } from 'renderer/components/buttons/cancel-button';
-import { RippleButton } from 'renderer/components/buttons/ripple-button';
-import { SaveButton } from 'renderer/components/buttons/save-button';
+import {
+  DeleteButton,
+  CancelButton,
+  SaveButton,
+  RippleButton,
+} from '@electrocrud/buttons';
 import { ViewScopedContext } from 'renderer/contexts/view-scoped-context';
 
 import { ElementTypes } from '../elements';

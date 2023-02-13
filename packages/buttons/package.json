@@ -16,7 +16,7 @@
     "lib"
   ],
   "scripts": {
-    "build": "tsup src --target esnext -d ./lib --dts --tsconfig tsconfig.build.json",
+    "build": "tsup src --target esnext -d ./lib --dts --tsconfig tsconfig.build.json --inject ./react-import.ts",
     "tsc": "tsc",
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
