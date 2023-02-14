@@ -2,6 +2,7 @@ import '@fontsource/poppins';
 import '@fontsource/dm-sans';
 import '@inovua/reactdatagrid-community/index.css';
 import './assets/css/App.css';
+import '@electrocrud/tabs/lib/tabs.css';
 
 import { Loader, SaasProvider } from '@saas-ui/react';
 import TimeAgo from 'javascript-time-ago';

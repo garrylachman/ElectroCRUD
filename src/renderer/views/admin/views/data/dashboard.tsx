@@ -1,13 +1,10 @@
-import {
-  ElectroCRUDTabProperties,
-  ElectroCRUDTabs,
-} from 'renderer/components/tabs/tabs';
+import { TabProperties, Tabs } from '@electrocrud/tabs';
 import { MdNotes, MdOutlineCollections } from 'react-icons/md';
 
 import DatasetCoordinator from './dataset-coordinator';
 import { Documentation } from './documentation';
 
-const tabs: ElectroCRUDTabProperties[] = [
+const tabs: TabProperties[] = [
   {
     name: 'Dataset',
     element: <DatasetCoordinator />,
@@ -22,7 +19,7 @@ const tabs: ElectroCRUDTabProperties[] = [
 
 export const Dashboard = () => {
   return (
-    <ElectroCRUDTabs
+    <Tabs
       tabsList={tabs}
       tabIndex={0}
       iconSize="15px"

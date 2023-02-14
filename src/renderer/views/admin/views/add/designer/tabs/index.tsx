@@ -1,16 +1,13 @@
 import { FC } from 'react';
 import { MdNoteAlt } from 'react-icons/md';
-import {
-  ElectroCRUDTabProperties,
-  ElectroCRUDTabs,
-} from 'renderer/components/tabs/tabs';
+import { TabProperties, Tabs } from '@electrocrud/tabs';
 
 import { DesignerDetails } from './details';
 
-const tabs: ElectroCRUDTabProperties[] = [
+const tabs: TabProperties[] = [
   {
     name: 'Details',
-    component: () => <DesignerDetails />,
+    element: <DesignerDetails />,
     icon: MdNoteAlt,
   },
 ];
@@ -18,7 +15,7 @@ const tabs: ElectroCRUDTabProperties[] = [
 export const DesignTabs: FC<any> = () => {
   return (
     <>
-      <ElectroCRUDTabs
+      <Tabs
         tabsList={tabs}
         tabIndex={0}
         iconSize="15px"

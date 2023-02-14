@@ -1,18 +1,14 @@
 import { Card } from '@chakra-ui/react';
 import { memo, useMemo, useRef } from 'react';
 import { TbTable } from 'react-icons/tb';
-import {
-  ElectroCRUDTabProperties,
-  ElectroCRUDTabs,
-  ElectroCRUDTabsAPI,
-} from 'renderer/components/tabs';
+import { TabProperties, Tabs, TabsAPI } from '@electrocrud/tabs';
 
 import { DataTableCard } from './data-table';
 
 export default memo(function DatasetCoordinator() {
-  const tabsReference = useRef<ElectroCRUDTabsAPI>();
+  const tabsReference = useRef<TabsAPI>();
 
-  const tabs: ElectroCRUDTabProperties[] = useMemo(
+  const tabs: TabProperties[] = useMemo(
     () => [
       {
         name: 'Data Table',
@@ -32,7 +28,7 @@ export default memo(function DatasetCoordinator() {
       height="100%"
       overscrollBehavior="contain"
     >
-      <ElectroCRUDTabs
+      <Tabs
         tabsList={tabs}
         tabIndex={0}
         iconSize="15px"

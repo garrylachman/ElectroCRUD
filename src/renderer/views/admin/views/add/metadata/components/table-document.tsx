@@ -6,10 +6,7 @@ import { useCallback, useContext, useMemo, useState } from 'react';
 import { MdEdit, MdPreview } from 'react-icons/md';
 import { SaveButton } from '@electrocrud/buttons';
 import { ConfirmPromiseSaveModal } from 'renderer/components/modals/confirm-promise-save-modal';
-import {
-  ElectroCRUDTabProperties,
-  ElectroCRUDTabs,
-} from 'renderer/components/tabs/tabs';
+import { TabProperties, Tabs } from '@electrocrud/tabs';
 import { ViewScopedContext } from 'renderer/contexts';
 import { useAppDispatch } from 'renderer/store/hooks';
 import { ViewsReducer } from 'renderer/store/reducers';
@@ -64,7 +61,7 @@ export const TabeDocumentation = () => {
     </Box>
   );
 
-  const tabs: ElectroCRUDTabProperties[] = [
+  const tabs: TabProperties[] = [
     {
       name: 'Preview',
       element: <RenderPreview key={markdown} />,
@@ -97,11 +94,9 @@ export const TabeDocumentation = () => {
           syntax.
         </Text>
       </Box>
-      <ElectroCRUDTabs
+      <Tabs
         tabsList={tabs}
-        key={`ElectroCRUDTabs-${viewState.id || ''}-${
-          viewState.modificationDate || ''
-        }`}
+        key={`Tabs-${viewState.id || ''}-${viewState.modificationDate || ''}`}
         tabIndex={0}
         iconSize={5}
         fontSize="md"

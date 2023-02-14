@@ -2589,6 +2589,10 @@
   version "0.0.0"
   uid ""
 
+"@electrocrud/tabs@link:./packages/tabs":
+  version "0.0.0"
+  uid ""
+
 "@electrocrud/utils@link:./packages/utils":
   version "0.0.0"
   uid ""
@@ -8622,7 +8626,7 @@ cssstyle@^2.3.0:
   dependencies:
     cssom "~0.3.6"
 
-csstype@^3.0.11, csstype@^3.0.2:
+csstype@^3.0.11, csstype@^3.0.2, csstype@^3.1.1:
   version "3.1.1"
   resolved "https://registry.npmjs.org/csstype/-/csstype-3.1.1.tgz#841b532c45c758ee546a11d5bd7b7b473c8c30b9"
   integrity sha512-DJR/VvkAvSZW9bTouZue2sSxDwdTN92uHjqeKVm+0dAqdfNykRzQ95tay8aXMBAAPpUiq4Qcug2L7neoRh2Egw==

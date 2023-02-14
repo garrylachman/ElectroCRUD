@@ -1,4 +1,3 @@
-import * as React from 'react';
 export * from './save-button';
 export * from './ripple-button';
 export * from './actions-dropdown-menu';
