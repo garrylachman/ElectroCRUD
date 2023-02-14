@@ -24,9 +24,6 @@ export const DatabaseIcon: FC<DatabaseIconProperties> = ({
     case ServerTypeEnum.SQLITE: {
       return <Icon {...rest} as={SiSqlite} />;
     }
-    case ServerTypeEnum.BETTER_SQLITE: {
-      return <Icon {...rest} as={SiSqlite} />;
-    }
     case ServerTypeEnum.POSTGRES: {
       return <Icon {...rest} as={SiPostgresql} />;
     }

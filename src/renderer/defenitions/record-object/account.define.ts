@@ -53,12 +53,11 @@ export const ValidateConnection = Joi.object({
       ServerTypeEnum.MYSQL,
       ServerTypeEnum.ORACEL,
       ServerTypeEnum.POSTGRES,
-      ServerTypeEnum.SQLITE,
-      ServerTypeEnum.BETTER_SQLITE,
+      ServerTypeEnum.SQLITE
     )
     .required(),
   connection: Joi.when(Joi.ref('..client'), {
-    is: ServerTypeEnum.SQLITE || ServerTypeEnum.BETTER_SQLITE,
+    is: ServerTypeEnum.SQLITE,
     // eslint-disable-next-line unicorn/no-thenable
     then: ValidateSqliteConnection.required(),
     otherwise: ValidateServerConnection.required(),
@@ -76,8 +75,7 @@ export const ValidateAccountsWizardStep1 = Joi.object({
       ServerTypeEnum.MYSQL,
       ServerTypeEnum.ORACEL,
       ServerTypeEnum.POSTGRES,
-      ServerTypeEnum.SQLITE,
-      ServerTypeEnum.BETTER_SQLITE,
+      ServerTypeEnum.SQLITE
     )
     .required(),
   connection: Joi.optional(),

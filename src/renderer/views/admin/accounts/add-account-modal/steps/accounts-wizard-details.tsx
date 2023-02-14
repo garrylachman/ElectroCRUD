@@ -50,7 +50,6 @@ export const AccountsWizardDetails: FC<
               { value: ServerTypeEnum.ORACEL, label: 'Oracel' },
               { value: ServerTypeEnum.POSTGRES, label: 'Postgres' },
               { value: ServerTypeEnum.SQLITE, label: 'SQLite' },
-              { value: ServerTypeEnum.BETTER_SQLITE, label: 'Better SQLite' },
             ]}
             strategy="fixed"
             colorScheme="primary"

@@ -7,7 +7,6 @@ var ServerTypeEnum;
     ServerTypeEnum["MYSQL2"] = "mysql2";
     ServerTypeEnum["POSTGRES"] = "pg";
     ServerTypeEnum["SQLITE"] = "sqlite3";
-    ServerTypeEnum["BETTER_SQLITE"] = "better-sqlite3";
     ServerTypeEnum["MSSQL"] = "mssql";
     ServerTypeEnum["ORACEL"] = "oracledb";
 })(ServerTypeEnum = exports.ServerTypeEnum || (exports.ServerTypeEnum = {}));

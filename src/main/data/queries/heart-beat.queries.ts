@@ -7,5 +7,4 @@ export const heartBeatQueries: Record<ServerType, string> = {
   [ServerTypeEnum.POSTGRES]: 'SELECT 1',
   [ServerTypeEnum.MSSQL]: 'SELECT 1',
   [ServerTypeEnum.SQLITE]: 'SELECT 1',
-  [ServerTypeEnum.BETTER_SQLITE]: 'SELECT 1',
 };

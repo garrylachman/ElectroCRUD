@@ -21,6 +21,7 @@ export const mainConfig: Configuration = {
     nock: 'nock',
     oracledb: 'oracledb',
     'pg-native': 'pg-native',
+    'better-sqlite3': 'better-sqlite3',
   },
   // Put your normal webpack config below here
   module: {
