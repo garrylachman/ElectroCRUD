@@ -1,3 +1,4 @@
+import './tabs.scss';
 import {
   Box,
   Center,
