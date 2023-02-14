@@ -1,9 +1,9 @@
 {
-  "name": "@electrocrud/feedback",
+  "name": "@electrocrud/tabs",
   "version": "3.0.0",
   "description": "> TODO: description",
   "author": "Garry Lachman <garry@lachman.co>",
-  "homepage": "https://github.com/garrylachman/ElectroCRUD/tree/main/packages/feedback#readme",
+  "homepage": "https://github.com/garrylachman/ElectroCRUD/tree/main/packages/tabs#readme",
   "license": "MIT",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
@@ -23,7 +23,7 @@
     "url": "git+https://github.com/garrylachman/ElectroCRUD.git"
   },
   "scripts": {
-    "build": "tsup src --target esnext -d ./lib --dts --tsconfig tsconfig.build.json --inject ./react-import.ts",
+    "build": "tsup src --target esnext -d ./lib --dts --tsconfig tsconfig.build.json --inject ./react-import.ts --loader '.scss=css'",
     "tsc": "tsc",
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
@@ -32,7 +32,6 @@
   },
   "dependencies": {
     "@chakra-ui/react": "^2.4.9",
-    "chroma-js": "^2.4.2",
     "csstype": "^3.1.1",
     "framer-motion": "^9.0.2",
     "react": "^18.2.0",

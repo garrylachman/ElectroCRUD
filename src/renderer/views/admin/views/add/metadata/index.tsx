@@ -1,15 +1,12 @@
 import { Box, Card, CardBody } from '@chakra-ui/react';
 import { MdBook, MdCode, MdTag } from 'react-icons/md';
-import {
-  ElectroCRUDTabProperties,
-  ElectroCRUDTabs,
-} from 'renderer/components/tabs/tabs';
+import { TabProperties, Tabs } from '@electrocrud/tabs';
 
 import { CodeExamples } from './code-examples';
 import { MetaColumnsWithContext } from './columns';
 import { TablesMetadata } from './tables-metadata';
 
-const tabs: ElectroCRUDTabProperties[] = [
+const tabs: TabProperties[] = [
   {
     name: 'Table Documentation',
     element: <TablesMetadata />,
@@ -32,7 +29,7 @@ export const MetadataTabs = () => {
     <Box height="-webkit-fill-available">
       <Card height="100%" variant="elevated">
         <CardBody px={0} py={0}>
-          <ElectroCRUDTabs
+          <Tabs
             tabsList={tabs}
             tabIndex={0}
             iconSize="15px"

@@ -158,11 +158,6 @@ table thead tr th:last-child {
   background-color: #1f222b;
 }
 
-.chakra-tabs__tab[aria-selected=true] {
-  position: relative;
-  border-bottom: 0px;
-}
-
 ::-webkit-scrollbar-track {
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.16); 
   
@@ -172,17 +167,6 @@ table thead tr th:last-child {
 
 .NoTabScroller {
   overflow: hidden !important;
-}
-
-.chakra-tabs__tab[aria-selected=true]::after{
-  content: '';
-  position: absolute;
-  width: 0px;
-  height: 2px;
-  bottom: -2px;
-  background-color: var(--chakra-colors-primary-400);
-  animation: animateborder 0.5s ease-in-out 1 normal forwards;
-  animation-iteration-count: 1;
 }
 
 @keyframes animateborder {

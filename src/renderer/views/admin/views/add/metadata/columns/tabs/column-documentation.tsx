@@ -7,10 +7,7 @@ import { MdEdit, MdPreview } from 'react-icons/md';
 import { useSelector } from 'react-redux';
 import { SaveButton } from '@electrocrud/buttons';
 import { ConfirmPromiseSaveModal } from 'renderer/components/modals/confirm-promise-save-modal';
-import {
-  ElectroCRUDTabProperties,
-  ElectroCRUDTabs,
-} from 'renderer/components/tabs/tabs';
+import { TabProperties, Tabs } from '@electrocrud/tabs';
 import { ScopeContext } from 'renderer/contexts/scope-context';
 import { ColumnRO } from 'renderer/defenitions/record-object/view.define';
 import { useAppDispatch } from 'renderer/store/hooks';
@@ -79,7 +76,7 @@ export const ColumnDocumentation = () => {
     </Box>
   );
 
-  const tabs: ElectroCRUDTabProperties[] = [
+  const tabs: TabProperties[] = [
     {
       name: 'Preview',
       element: <RenderPreview key={markdown} />,
@@ -112,9 +109,9 @@ export const ColumnDocumentation = () => {
           syntax.
         </Text>
       </Box>
-      <ElectroCRUDTabs
+      <Tabs
         tabsList={tabs}
-        key={`ElectroCRUDTabs-${columnState.id || ''}-${
+        key={`Tabs-${columnState.id || ''}-${
           columnState.modificationDate || ''
         }`}
         tabIndex={0}

@@ -15,7 +15,7 @@ import {
   useState,
 } from 'react';
 import { TbListDetails, TbTrash } from 'react-icons/tb';
-import { ElectroCRUDTabsAPI } from 'renderer/components/tabs';
+import { TabsAPI } from '@electrocrud/tabs';
 import { FilterBuilder } from 'renderer/containers/filter-builder';
 import { ViewScopedContext } from 'renderer/contexts';
 import { usePolicy, useUpdateEffect } from 'renderer/hooks';
@@ -37,7 +37,7 @@ import { DataDetailsCard } from '../details';
 import { DataTableHeader } from './data-table-header';
 
 type DataTableCardProperties = {
-  tabsReference?: MutableRefObject<ElectroCRUDTabsAPI | undefined>;
+  tabsReference?: MutableRefObject<TabsAPI | undefined>;
 };
 
 export const DataTableCard: FC<DataTableCardProperties> = ({

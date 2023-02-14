@@ -31,6 +31,7 @@
     "@chakra-ui/react": "^2.4.9",
     "arc-hash": "^3.0.0",
     "chroma-js": "^2.4.2",
+    "csstype": "^3.1.1",
     "eslint-plugin-prettier": "^4.2.1",
     "flatted": "^3.2.7",
     "framer-motion": "^9.0.2",

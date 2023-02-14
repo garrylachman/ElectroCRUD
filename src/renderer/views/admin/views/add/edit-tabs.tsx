@@ -1,9 +1,6 @@
+import { TabProperties, Tabs } from '@electrocrud/tabs';
 import { MdFormatPaint, MdOutlineCollections } from 'react-icons/md';
 import { useParams } from 'react-router-dom';
-import {
-  ElectroCRUDTabProperties,
-  ElectroCRUDTabs,
-} from 'renderer/components/tabs/tabs';
 import { WithErrorComponent } from 'renderer/containers/error';
 import { ViewScopedContextProvider } from 'renderer/contexts';
 
@@ -11,7 +8,7 @@ import { AddOrEditView } from '.';
 import { Desinger } from './designer';
 import { MetadataTabs } from './metadata';
 
-const tabs: ElectroCRUDTabProperties[] = [
+const tabs: TabProperties[] = [
   {
     name: 'Dataset',
     element: <AddOrEditView />,
@@ -35,7 +32,7 @@ export const EditTabs = () => {
   return (
     <WithErrorComponent>
       <ViewScopedContextProvider viewId={viewId}>
-        <ElectroCRUDTabs
+        <Tabs
           tabsList={tabs}
           tabIndex={0}
           iconSize="15px"

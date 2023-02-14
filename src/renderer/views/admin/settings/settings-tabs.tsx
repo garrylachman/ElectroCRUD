@@ -1,29 +1,26 @@
 import { FC } from 'react';
 import { MdAccountTree, MdSettingsSuggest } from 'react-icons/md';
-import {
-  ElectroCRUDTabProperties,
-  ElectroCRUDTabs,
-} from 'renderer/components/tabs/tabs';
+import { TabProperties, Tabs } from '@electrocrud/tabs';
 
 import { SettingsDataTabs } from './data';
 import { SettingsGeneral } from './general';
 
-const tabs: ElectroCRUDTabProperties[] = [
+const tabs: TabProperties[] = [
   {
     name: 'General',
-    component: () => <SettingsGeneral />,
+    element: <SettingsGeneral />,
     icon: MdSettingsSuggest,
   },
   {
     name: 'Data',
-    component: () => <SettingsDataTabs />,
+    element: <SettingsDataTabs />,
     icon: MdAccountTree,
   },
 ];
 
 export const SettingsTabs: FC<any> = () => {
   return (
-    <ElectroCRUDTabs
+    <Tabs
       tabsList={tabs}
       tabIndex={0}
       iconSize={6}

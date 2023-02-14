@@ -1,17 +1,14 @@
 import { Card, CardBody, Text } from '@chakra-ui/react';
 import { FC } from 'react';
 import { MdSettingsSuggest } from 'react-icons/md';
-import {
-  ElectroCRUDTabProperties,
-  ElectroCRUDTabs,
-} from 'renderer/components/tabs/tabs';
+import { TabProperties, Tabs } from '@electrocrud/tabs';
 
 import { Policies } from './tabs/policies';
 
-const tabs: ElectroCRUDTabProperties[] = [
+const tabs: TabProperties[] = [
   {
     name: 'Policies',
-    component: () => <Policies />,
+    element: <Policies />,
     icon: MdSettingsSuggest,
   },
 ];
@@ -25,7 +22,7 @@ export const SettingsDataTabs: FC<any> = () => {
       variant="elevated"
     >
       <CardBody px={0} pb={0}>
-        <ElectroCRUDTabs
+        <Tabs
           tabsList={tabs}
           tabIndex={0}
           iconSize={6}
