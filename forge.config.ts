@@ -23,7 +23,7 @@ const config: ForgeConfig = {
   plugins: [
     new WebpackPlugin({
       devServer: {
-        hot: true,
+        liveReload: false,
         headers: { 'Access-Control-Allow-Origin': '*' },
         historyApiFallback: {
           verbose: true,
@@ -34,6 +34,7 @@ const config: ForgeConfig = {
         config: rendererConfig,
         entryPoints: [
           {
+            rhmr: 'react-hot-loader/patch',
             html: path.join(sourceRendererPath, 'index.html'),
             js: path.join(sourceRendererPath, 'index.tsx'),
             name: 'main_window',
