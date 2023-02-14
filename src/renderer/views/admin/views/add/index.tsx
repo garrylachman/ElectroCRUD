@@ -1,11 +1,8 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import {
   Box,
-  Button,
-  Card,
   Center,
   HStack,
-  Icon,
   SimpleGrid,
   Spacer,
   Spinner,
@@ -15,7 +12,6 @@ import * as Joi from 'joi';
 import { omit } from 'underscore';
 import { useContext, useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { MdClear, MdSave } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
 import { Alert } from '@electrocrud/feedback';
 import { ConfirmPromiseSaveModal } from 'renderer/components/modals/confirm-promise-save-modal';
@@ -32,6 +28,7 @@ import { PermissionsCard } from './components/permissions-card';
 import { TableColumnsCard } from './components/table-columns-card';
 import { TerminologyCard } from './components/terminology-card';
 import { ViewsInfoAlert } from './components/views-info-alert';
+import { SaveButton } from '@electrocrud/buttons';
 
 type FormData = Omit<ViewRO, 'id' | 'creationDate' | 'modificationDate'>;
 
@@ -154,30 +151,9 @@ export const AddOrEditView = () => {
               <Spacer p={3} />
             </>
 
-            <Card variant="outline">
-              <HStack justifyContent="space-between">
-                <Button
-                  type="submit"
-                  variant="solid"
-                  colorScheme="primary"
-                  size="lg"
-                  isDisabled={!isValid}
-                >
-                  <Icon mr={2} as={MdSave} />
-                  Save
-                </Button>
-                <Button
-                  variant="solid"
-                  colorScheme="red"
-                  size="lg"
-                  onClick={() => reset()}
-                  isDisabled={viewState?.id !== undefined}
-                >
-                  <Icon mr={2} as={MdClear} />
-                  Reset
-                </Button>
-              </HStack>
-            </Card>
+            <HStack justifyContent="space-between">
+              <SaveButton type="submit" isDisabled={!isValid} />
+            </HStack>
           </form>
         )}
       </FormProvider>
