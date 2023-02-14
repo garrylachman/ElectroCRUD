@@ -41,9 +41,9 @@ export const RippleButton: FC<RippleButtonProperties> = ({
   size = 'md',
   bgColorScheme = 'primary',
   bgColor = {
-    step1: `${bgColorScheme}.400`,
-    step2: `${bgColorScheme}.600`,
-    step3: `${bgColorScheme}.700`,
+    step1: `${bgColorScheme}.600`,
+    step2: `${bgColorScheme}.700`,
+    step3: `${bgColorScheme}.800`,
   },
   ...properties
 }) => {
@@ -114,7 +114,7 @@ export const RippleButton: FC<RippleButtonProperties> = ({
       }}
       _active={{
         // @ts-ignore
-        bgColor: `${bgColor.step3}`,
+        bgColor: `${step3}`,
         '&::before': {
           animation: `${pulse} 0.8s linear`,
         },

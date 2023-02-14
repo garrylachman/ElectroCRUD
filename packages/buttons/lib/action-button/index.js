@@ -77,9 +77,9 @@ var pulse = (0, import_react2.keyframes)({
   }
 });
 var RippleButton = /* @__PURE__ */ __name(({ children, size = "md", bgColorScheme = "primary", bgColor = {
-  step1: `${bgColorScheme}.400`,
-  step2: `${bgColorScheme}.600`,
-  step3: `${bgColorScheme}.700`
+  step1: `${bgColorScheme}.600`,
+  step2: `${bgColorScheme}.700`,
+  step3: `${bgColorScheme}.800`
 }, ...properties }) => {
   const [step1, step2, step3] = (0, import_react2.useToken)("colors", [
     // @ts-ignore
@@ -136,7 +136,7 @@ var RippleButton = /* @__PURE__ */ __name(({ children, size = "md", bgColorSchem
     },
     _active: {
       // @ts-ignore
-      bgColor: `${bgColor.step3}`,
+      bgColor: `${step3}`,
       "&::before": {
         animation: `${pulse} 0.8s linear`
       }
