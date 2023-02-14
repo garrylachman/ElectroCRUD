@@ -1,4 +1,3 @@
-import 'better-sqlite3';
 import 'reflect-metadata';
 import 'sqlite3';
 import sqlFormatter from '@sqltools/formatter';

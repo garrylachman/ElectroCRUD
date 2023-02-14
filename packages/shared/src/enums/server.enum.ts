@@ -3,7 +3,6 @@ export enum ServerTypeEnum {
   MYSQL2 = 'mysql2',
   POSTGRES = 'pg',
   SQLITE = 'sqlite3',
-  BETTER_SQLITE = 'better-sqlite3',
   MSSQL = 'mssql',
   ORACEL = 'oracledb',
 }

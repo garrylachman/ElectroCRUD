@@ -1,6 +1,6 @@
 import { O } from 'ts-toolbelt';
 import { QueryAggregateEnum, ServerTypeEnum } from '../enums';
-export type ServerType = ServerTypeEnum.MYSQL2 | ServerTypeEnum.MYSQL | ServerTypeEnum.MSSQL | ServerTypeEnum.ORACEL | ServerTypeEnum.POSTGRES | ServerTypeEnum.BETTER_SQLITE | ServerTypeEnum.SQLITE;
+export type ServerType = ServerTypeEnum.MYSQL2 | ServerTypeEnum.MYSQL | ServerTypeEnum.MSSQL | ServerTypeEnum.ORACEL | ServerTypeEnum.POSTGRES | ServerTypeEnum.SQLITE;
 export type TablesListRow = Record<string, any> & {
     table_name: string;
 };

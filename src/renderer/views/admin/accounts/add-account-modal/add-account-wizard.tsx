@@ -120,7 +120,7 @@ export const AddAccountWizard: FC<AddAccountWizardProperties> = ({
 
   const AccountsWizardConnection = useCallback(
     () =>
-      state.client === ServerTypeEnum.SQLITE || ServerTypeEnum.BETTER_SQLITE ? (
+      state.client === ServerTypeEnum.SQLITE ? (
         <AccountsWizardFileConnection
           next={next}
           back={back}
@@ -154,7 +154,7 @@ export const AddAccountWizard: FC<AddAccountWizardProperties> = ({
     {
       name: 'tunnel',
       title: 'SSH Tunnel',
-      enabled: state.client !== ServerTypeEnum.SQLITE && state.client !== ServerTypeEnum.BETTER_SQLITE,
+      enabled: state.client !== ServerTypeEnum.SQLITE,
       children: (
         <AccountsWizardTunnel
           initialValue={state.tunnel}

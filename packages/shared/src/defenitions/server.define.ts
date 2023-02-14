@@ -7,7 +7,6 @@ export type ServerType =
   | ServerTypeEnum.MSSQL
   | ServerTypeEnum.ORACEL
   | ServerTypeEnum.POSTGRES
-  | ServerTypeEnum.BETTER_SQLITE
   | ServerTypeEnum.SQLITE;
 
 export type TablesListRow = Record<string, any> & {
