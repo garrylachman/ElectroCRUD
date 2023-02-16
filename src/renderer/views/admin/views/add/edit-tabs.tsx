@@ -1,6 +1,12 @@
-import { TabProperties, Tabs } from '@electrocrud/tabs';
+import { CardBodyProps } from '@chakra-ui/card';
 import { MdFormatPaint, MdOutlineCollections } from 'react-icons/md';
 import { useParams } from 'react-router-dom';
+import {
+  TabLayout,
+  TabLayoutContentProperties,
+  LayoutContent,
+  LayoutCardContent,
+} from 'renderer/components/layouts';
 import { WithErrorComponent } from 'renderer/containers/error';
 import { ViewScopedContextProvider } from 'renderer/contexts';
 
@@ -8,20 +14,38 @@ import { AddOrEditView } from '.';
 import { Desinger } from './designer';
 import { MetadataTabs } from './metadata';
 
-const tabs: TabProperties[] = [
+const cardBodyStyle: CardBodyProps = {
+  p: 0,
+  px: 0,
+  py: 3,
+};
+
+const content: TabLayoutContentProperties[] = [
   {
-    name: 'Dataset',
-    element: <AddOrEditView />,
+    label: 'Dataset',
+    element: (
+      <LayoutContent name="dataset">
+        <AddOrEditView />
+      </LayoutContent>
+    ),
     icon: MdOutlineCollections,
   },
   {
-    name: 'Metadata',
-    element: <MetadataTabs />,
+    label: 'Metadata',
+    element: (
+      <LayoutCardContent name="metadata" cardBodyProperties={cardBodyStyle}>
+        <MetadataTabs />
+      </LayoutCardContent>
+    ),
     icon: MdOutlineCollections,
   },
   {
-    name: 'Desinger',
-    element: <Desinger />,
+    label: 'Desinger',
+    element: (
+      <LayoutCardContent name="desinger" cardBodyProperties={cardBodyStyle}>
+        <Desinger />
+      </LayoutCardContent>
+    ),
     icon: MdFormatPaint,
   },
 ];
@@ -32,17 +56,7 @@ export const EditTabs = () => {
   return (
     <WithErrorComponent>
       <ViewScopedContextProvider viewId={viewId}>
-        <Tabs
-          tabsList={tabs}
-          tabIndex={0}
-          iconSize="15px"
-          colorScheme="primary"
-          fontSize="md"
-          marginTop={5}
-          fillAvailable
-          isFitted={false}
-          mt={0}
-        />
+        <TabLayout content={content} isFitted={false} />
       </ViewScopedContextProvider>
     </WithErrorComponent>
   );

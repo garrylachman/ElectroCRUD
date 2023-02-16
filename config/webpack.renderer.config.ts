@@ -74,7 +74,7 @@ const rendererRules = [
 ];
 
 export const rendererConfig: Configuration = {
-  devtool: 'inline-source-map',
+  devtool: 'source-map',
   module: {
     rules: rendererRules,
   },

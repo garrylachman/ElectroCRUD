@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 // @ts-nocheck
-import { Box, Center, Spinner, Text } from '@chakra-ui/react';
+import { Box, Center, Spinner, Text, Flex } from '@chakra-ui/react';
 import MarkdownEditor from '@uiw/react-markdown-editor';
 import { useCallback, useContext, useMemo, useState } from 'react';
 import { MdEdit, MdPreview } from 'react-icons/md';
@@ -83,30 +83,32 @@ export const TabeDocumentation = () => {
   }
 
   return (
-    <Box>
-      <Box pb={4}>
-        <Text>
-          Simply data about data. It means it is a description and context of
-          the data. It helps to organize, find and understand data.
-        </Text>
-        <Text>
-          You can use our simple example or create your own. We use Markdown
-          syntax.
-        </Text>
-      </Box>
-      <Tabs
-        tabsList={tabs}
-        key={`Tabs-${viewState.id || ''}-${viewState.modificationDate || ''}`}
-        tabIndex={0}
-        iconSize={5}
-        fontSize="md"
-        colorScheme="primary"
-        isFitted={false}
-        isBoxed
-      />
-      <Box pt={4}>
+    <Flex flexDirection="column" justifyContent="space-between" width="100%">
+      <Flex flexDirection="column" flex={1}>
+        <Box pb={4}>
+          <Text>
+            Simply data about data. It means it is a description and context of
+            the data. It helps to organize, find and understand data.
+          </Text>
+          <Text>
+            You can use our simple example or create your own. We use Markdown
+            syntax.
+          </Text>
+        </Box>
+        <Tabs
+          tabsList={tabs}
+          key={`Tabs-${viewState.id || ''}-${viewState.modificationDate || ''}`}
+          tabIndex={0}
+          iconSize={5}
+          fontSize="md"
+          colorScheme="primary"
+          isFitted={false}
+          isBoxed
+        />
+      </Flex>
+      <Flex pt={4}>
         <SaveButton onClick={handleSave} />
-      </Box>
-    </Box>
+      </Flex>
+    </Flex>
   );
 };

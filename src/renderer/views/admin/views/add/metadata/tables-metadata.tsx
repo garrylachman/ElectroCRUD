@@ -1,12 +1,11 @@
-import { Box, Spacer } from '@chakra-ui/react';
+import { Flex, Spacer } from '@chakra-ui/react';
 
 import { TabeDocumentation } from './components/table-document';
 
 export const TablesMetadata = () => {
   return (
-    <Box px={5} pb={6}>
+    <Flex px={3} pb={0} height="100%" width="100%">
       <TabeDocumentation />
-      <Spacer p={3} />
-    </Box>
+    </Flex>
   );
 };

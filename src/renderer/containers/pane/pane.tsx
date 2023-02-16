@@ -37,15 +37,12 @@ export const Pane: FC<PaneProperties> = ({ leftComponent, rightComponent }) => {
   const [mouseState, setMouseState] =
     useState<MouseEvent<HTMLDivElement, globalThis.MouseEvent>>();
   const y = useMemo(() => {
-    if (!mouseState || !(mouseState as MouseEvent).target) return 0;
-    const screenY = mouseState?.screenY || 0;
-    const offsetParentTop = Number(
-      (mouseState?.target as any).offsetParent.scrollTop
+    if (!mouseState?.target || !(mouseState as MouseEvent).pageY) return 0;
+    return (
+      (mouseState as MouseEvent).pageY -
+      (mouseState?.target as any).offsetParent.getClientRects()[0].top -
+      60
     );
-    const offsetParentHeight = Number(
-      (mouseState?.target as any).offsetParent.clientHeight
-    );
-    return Math.max(screenY + offsetParentTop - offsetParentHeight + 60, 0);
   }, [mouseState]);
 
   const icon = useMemo(
@@ -92,7 +89,7 @@ export const Pane: FC<PaneProperties> = ({ leftComponent, rightComponent }) => {
         >
           <RippleButton
             bgColorScheme="primary"
-            size="md"
+            size="3xs"
             rounded={60}
             position="absolute"
             onClick={() => togglePane()}

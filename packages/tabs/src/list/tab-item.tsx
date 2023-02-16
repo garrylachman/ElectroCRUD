@@ -1,16 +1,8 @@
 import { motion, Reorder } from 'framer-motion';
 import { FC } from 'react';
 import { TabProperties, TabsProperties } from '../tabs';
-import {
-  Box,
-  Center,
-  Flex,
-  Icon,
-  Tab as OriginalTab,
-  Text,
-} from '@chakra-ui/react';
+import { Center, Flex, Icon, Tab as OriginalTab, Text } from '@chakra-ui/react';
 import { Tooltip } from '@electrocrud/feedback';
-import { MdClose } from 'react-icons/md';
 import { TabClose } from './tab-close';
 
 export type TabItemProperties = {

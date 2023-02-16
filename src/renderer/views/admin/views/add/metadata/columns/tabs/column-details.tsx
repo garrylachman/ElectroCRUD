@@ -111,7 +111,13 @@ export const ColumnDetails = () => {
   }
 
   return (
-    <Box px={4} key={`columndetails--${columnState.id as string}`}>
+    <Flex
+      px={4}
+      key={`columndetails--${columnState.id as string}`}
+      flex={1}
+      flexDirection="column"
+      justifyContent="space-between"
+    >
       <FormProvider {...formContext}>
         <Box>
           <Heading size="md">{(columnState as any).name}</Heading>
@@ -203,6 +209,6 @@ export const ColumnDetails = () => {
           <SaveButton onClick={handleSubmit(onSubmit)} />
         </Box>
       </FormProvider>
-    </Box>
+    </Flex>
   );
 };

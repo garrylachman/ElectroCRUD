@@ -4384,7 +4384,7 @@ function _extends() {
   return _extends.apply(this, arguments);
 }
 __name(_extends, "_extends");
-var PanelItem = /* @__PURE__ */ __name(({ tab, tabIndex, isBoxed, variant, marginTop, tabPanelProps, fillAvailable, hasScrollbar }) => /* @__PURE__ */ import_react.default.createElement(import_react4.TabPanel, _extends({
+var PanelItem = /* @__PURE__ */ __name(({ tab, tabIndex, isBoxed, variant, marginTop, marginBottom, tabPanelProps, fillAvailable, hasScrollbar }) => /* @__PURE__ */ import_react.default.createElement(import_react4.TabPanel, _extends({
   tabIndex,
   p: 0,
   borderWidth: isBoxed ? "1px" : 0,
@@ -4397,7 +4397,7 @@ var PanelItem = /* @__PURE__ */ __name(({ tab, tabIndex, isBoxed, variant, margi
   display: "flex",
   flexDirection: "column",
   marginTop,
-  marginBottom: 4
+  marginBottom
 }, tabPanelProps), /* @__PURE__ */ import_react.default.createElement(import_framer_motion2.motion.div, {
   key: tabIndex ? tab.name : "empty",
   animate: {
@@ -4423,7 +4423,7 @@ var PanelItem = /* @__PURE__ */ __name(({ tab, tabIndex, isBoxed, variant, margi
   },
   style: {
     height: fillAvailable ? "-webkit-fill-available" : "100%",
-    display: "block",
+    display: "flex",
     flexDirection: "column",
     width: "-webkit-fill-available",
     overflow: "scroll",
@@ -4449,12 +4449,27 @@ function _extends2() {
   return _extends2.apply(this, arguments);
 }
 __name(_extends2, "_extends");
-var Tabs = /* @__PURE__ */ (0, import_react6.forwardRef)(({ tabsList, iconSize = 4, iconGap = 3, isFitted = true, isBoxed = false, fontSize = "lg", fillAvailable = false, hasScrollbar = false, variant, marginTop = 0, tabPanelProps, ...rest }, reference) => {
+var Tabs = /* @__PURE__ */ (0, import_react6.forwardRef)(({ tabsList, iconSize = 4, iconGap = 3, isFitted = true, isBoxed = false, fontSize = "lg", fillAvailable = false, hasScrollbar = false, variant, marginTop = 0, marginBottom = 0, tabPanelProps, isSticky = false, height = "100%", ...rest }, reference) => {
   const [tabsState, setTabsState] = (0, import_react6.useState)(tabsList);
   const [selectedTab, setSelectedTab] = (0, import_react6.useState)(tabsState[0]);
   const tabIndex = (0, import_react6.useMemo)(() => tabsState.indexOf(selectedTab), [
     tabsState,
     selectedTab
+  ]);
+  const tabListSticky = (0, import_react6.useMemo)(() => {
+    if (isSticky) {
+      return {
+        position: "sticky",
+        top: "0px",
+        zIndex: 99,
+        background: "white",
+        borderTopRadius: "lg",
+        marginTop: "-12px"
+      };
+    }
+    return {};
+  }, [
+    isSticky
   ]);
   (0, import_react6.useImperativeHandle)(reference, () => {
     return {
@@ -4483,12 +4498,9 @@ var Tabs = /* @__PURE__ */ (0, import_react6.forwardRef)(({ tabsList, iconSize =
     flex: 1,
     display: "flex",
     flexDirection: "column",
-    height: "100%",
-    style: {
-      height: "100%"
-    },
+    height,
     position: "relative"
-  }), /* @__PURE__ */ import_react.default.createElement(import_react5.TabList, null, /* @__PURE__ */ import_react.default.createElement(import_framer_motion3.Reorder.Group, {
+  }), /* @__PURE__ */ import_react.default.createElement(import_react5.TabList, _extends2({}, tabListSticky), /* @__PURE__ */ import_react.default.createElement(import_framer_motion3.Reorder.Group, {
     as: "ul",
     axis: "x",
     onReorder: setTabsState,

@@ -28,7 +28,7 @@ const MetaColumns: FC<MetaColumnsProperties> = () => {
   );
 
   return (
-    <Box px={5}>
+    <Box px={3} pb={0}>
       <Pane
         leftComponent={<ColumnsListPane />}
         rightComponent={<DetailsPane />}

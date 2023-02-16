@@ -55,7 +55,7 @@ function _extends() {
   return _extends.apply(this, arguments);
 }
 __name(_extends, "_extends");
-var PanelItem = /* @__PURE__ */ __name(({ tab, tabIndex, isBoxed, variant, marginTop, tabPanelProps, fillAvailable, hasScrollbar }) => /* @__PURE__ */ import_react.default.createElement(import_react2.TabPanel, _extends({
+var PanelItem = /* @__PURE__ */ __name(({ tab, tabIndex, isBoxed, variant, marginTop, marginBottom, tabPanelProps, fillAvailable, hasScrollbar }) => /* @__PURE__ */ import_react.default.createElement(import_react2.TabPanel, _extends({
   tabIndex,
   p: 0,
   borderWidth: isBoxed ? "1px" : 0,
@@ -68,7 +68,7 @@ var PanelItem = /* @__PURE__ */ __name(({ tab, tabIndex, isBoxed, variant, margi
   display: "flex",
   flexDirection: "column",
   marginTop,
-  marginBottom: 4
+  marginBottom
 }, tabPanelProps), /* @__PURE__ */ import_react.default.createElement(import_framer_motion.motion.div, {
   key: tabIndex ? tab.name : "empty",
   animate: {
@@ -94,7 +94,7 @@ var PanelItem = /* @__PURE__ */ __name(({ tab, tabIndex, isBoxed, variant, margi
   },
   style: {
     height: fillAvailable ? "-webkit-fill-available" : "100%",
-    display: "block",
+    display: "flex",
     flexDirection: "column",
     width: "-webkit-fill-available",
     overflow: "scroll",

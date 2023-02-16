@@ -11,6 +11,7 @@ export type PanelItemProperties = {
   | 'isBoxed'
   | 'variant'
   | 'marginTop'
+  | 'marginBottom'
   | 'tabPanelProps'
   | 'fillAvailable'
   | 'hasScrollbar'
@@ -22,6 +23,7 @@ export const PanelItem: FC<PanelItemProperties> = ({
   isBoxed,
   variant,
   marginTop,
+  marginBottom,
   tabPanelProps,
   fillAvailable,
   hasScrollbar,
@@ -39,7 +41,7 @@ export const PanelItem: FC<PanelItemProperties> = ({
     display="flex"
     flexDirection="column"
     marginTop={marginTop}
-    marginBottom={4}
+    marginBottom={marginBottom}
     {...tabPanelProps}
   >
     <motion.div
@@ -56,7 +58,7 @@ export const PanelItem: FC<PanelItemProperties> = ({
       }}
       style={{
         height: fillAvailable ? '-webkit-fill-available' : '100%',
-        display: 'block',
+        display: 'flex',
         flexDirection: 'column',
         width: '-webkit-fill-available',
         overflow: 'scroll',
