@@ -44,7 +44,7 @@ export const DetailsPane: FC<DetailsPaneProperties> = ({ ...properties }) => {
   );
 
   return (
-    <Box {...properties} py={0} pl={3} mt={0} overflowX="hidden">
+    <Box {...properties} py={0} pl={3} mt={0} overflowX="hidden" h="100%">
       {memState.columnId && (
         <Tabs
           tabsList={tabs}
@@ -55,6 +55,7 @@ export const DetailsPane: FC<DetailsPaneProperties> = ({ ...properties }) => {
           tabPanelProps={{
             marginTop: 3,
           }}
+          height="inherit"
         />
       )}
       {!memState.columnId && (

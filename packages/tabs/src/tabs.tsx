@@ -1,6 +1,7 @@
 import './tabs.scss';
 import {
   Flex,
+  FlexProps,
   ResponsiveValue,
   TabList,
   TabPanelProps,
@@ -45,7 +46,10 @@ export type TabsProperties = Omit<TabsProps, 'children'> & {
   fillAvailable?: boolean;
   hasScrollbar?: boolean;
   marginTop?: ResponsiveValue<number>;
+  marginBottom?: ResponsiveValue<number>;
+  height?: FlexProps['height'];
   tabPanelProps?: TabPanelProps;
+  isSticky?: boolean;
 };
 
 export const Tabs = forwardRef<TabsAPI, TabsProperties>(
@@ -61,7 +65,10 @@ export const Tabs = forwardRef<TabsAPI, TabsProperties>(
       hasScrollbar = false,
       variant,
       marginTop = 0,
+      marginBottom = 0,
       tabPanelProps,
+      isSticky = false,
+      height = '100%',
       ...rest
     },
     reference
@@ -72,6 +79,20 @@ export const Tabs = forwardRef<TabsAPI, TabsProperties>(
       () => tabsState.indexOf(selectedTab),
       [tabsState, selectedTab]
     );
+
+    const tabListSticky = useMemo(() => {
+      if (isSticky) {
+        return {
+          position: 'sticky' as ResponsiveValue<CSS.Property.Position>,
+          top: '0px',
+          zIndex: 99,
+          background: 'white',
+          borderTopRadius: 'lg',
+          marginTop: '-12px',
+        };
+      }
+      return {};
+    }, [isSticky]);
 
     useImperativeHandle(
       reference,
@@ -101,13 +122,10 @@ export const Tabs = forwardRef<TabsAPI, TabsProperties>(
           flex={1}
           display="flex"
           flexDirection="column"
-          height="100%"
-          style={{
-            height: '100%',
-          }}
+          height={height}
           position="relative"
         >
-          <TabList>
+          <TabList {...tabListSticky}>
             <Reorder.Group
               as="ul"
               axis="x"

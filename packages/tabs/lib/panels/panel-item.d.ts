@@ -7,7 +7,7 @@ import 'react-icons';
 type PanelItemProperties = {
     tab: TabProperties;
     tabIndex: number;
-} & Pick<TabsProperties, 'isBoxed' | 'variant' | 'marginTop' | 'tabPanelProps' | 'fillAvailable' | 'hasScrollbar'>;
+} & Pick<TabsProperties, 'isBoxed' | 'variant' | 'marginTop' | 'marginBottom' | 'tabPanelProps' | 'fillAvailable' | 'hasScrollbar'>;
 declare const PanelItem: FC<PanelItemProperties>;
 
 export { PanelItem, PanelItemProperties };

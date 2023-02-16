@@ -39,7 +39,6 @@ export default function Dashboard() {
       </GridItem>
       <GridItem
         p={6}
-        px={9}
         area="main"
         height="auto"
         overflow="hidden"

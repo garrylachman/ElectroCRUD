@@ -115,7 +115,7 @@ export const AddOrEditView = () => {
   }
 
   return (
-    <Box overflow="scroll" paddingRight={2} height="-webkit-fill-available">
+    <Box height="-webkit-fill-available" width="100%">
       {viewState?.id === undefined && (
         <>
           <ViewsInfoAlert />
