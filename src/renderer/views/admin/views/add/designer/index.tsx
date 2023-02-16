@@ -1,13 +1,8 @@
-import { Box, Card, CardBody } from '@chakra-ui/react';
-
-import { DesignTabs } from './tabs';
+import { Flex } from '@chakra-ui/react';
+import { DesignerDetails } from './tabs/details';
 
 export const Desinger = () => (
-  <Box height="-webkit-fill-available">
-    <Card overflow="unset" variant="elevated" height="-webkit-fill-available">
-      <CardBody px={0} py={0}>
-        <DesignTabs />
-      </CardBody>
-    </Card>
-  </Box>
+  <Flex px={3} pb={0} flexDirection="column" flex={1} width="100%">
+    <DesignerDetails />
+  </Flex>
 );
