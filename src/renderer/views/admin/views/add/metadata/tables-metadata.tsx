@@ -4,7 +4,7 @@ import { TabeDocumentation } from './components/table-document';
 
 export const TablesMetadata = () => {
   return (
-    <Flex px={3} pb={0} height="100%" width="100%">
+    <Flex px={3} pb={0} flexDirectio="column" flex={1} width="100%">
       <TabeDocumentation />
     </Flex>
   );
