@@ -2560,6 +2560,10 @@
   version "0.0.0"
   uid ""
 
+"@electrocrud/layouts@link:./packages/layouts":
+  version "0.0.0"
+  uid ""
+
 "@electrocrud/shared@link:./packages/shared":
   version "0.0.0"
   uid ""
