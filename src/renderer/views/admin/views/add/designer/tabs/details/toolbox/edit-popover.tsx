@@ -31,6 +31,7 @@ import {
   CancelButton,
   SaveButton,
   RippleButton,
+  EditIconButton,
 } from '@electrocrud/buttons';
 import { ViewScopedContext } from 'renderer/contexts/view-scoped-context';
 
@@ -90,14 +91,10 @@ export const EditPopover: FC<PropsWithChildren<EditPopoverProperties>> = ({
       >
         <PopoverTrigger>
           <Box display="flex" gap={3} alignItems="center">
-            <RippleButton
-              size="sm"
-              p={0}
+            <EditIconButton
               bgColorScheme="secondaryGray"
               color="black"
-            >
-              <Icon as={MdModeEdit} boxSize={4} />
-            </RippleButton>
+            ></EditIconButton>
           </Box>
         </PopoverTrigger>
         <PopoverAnchor>{children}</PopoverAnchor>

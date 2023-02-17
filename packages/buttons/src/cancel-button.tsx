@@ -4,7 +4,7 @@ import { FC } from 'react';
 import { RippleButton } from './ripple-button';
 
 export const CancelButton: FC<ButtonProps> = (properties) => (
-  <RippleButton variant="solid" bgColorScheme="red" size="lg" {...properties}>
+  <RippleButton bgColorScheme="red" {...properties}>
     Cancel
   </RippleButton>
 );

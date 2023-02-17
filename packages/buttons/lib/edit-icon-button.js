@@ -45,6 +45,26 @@ var import_md = require("react-icons/md");
 var import_react2 = require("@chakra-ui/react");
 var import_chroma_js = __toESM(require("chroma-js"));
 var import_framer_motion = require("framer-motion");
+
+// defaults.ts
+var defaults = {
+  size: "md",
+  variant: "solid",
+  bgColorScheme: "primary",
+  gap: 2,
+  color: "white",
+  fontWeight: "medium",
+  rounded: "lg",
+  cursor: "pointer",
+  py: 3,
+  px: 4,
+  shadow: "none",
+  backgroundPosition: "center",
+  minWidth: "fit-content",
+  overflow: "hidden"
+};
+
+// src/ripple-button.tsx
 function _extends() {
   _extends = Object.assign || function(target) {
     for (var i = 1; i < arguments.length; i++) {
@@ -87,19 +107,9 @@ var RippleButton = /* @__PURE__ */ __name(({ children, size = "md", bgColorSchem
     // @ts-ignore
     bgColor.step3
   ]);
-  return /* @__PURE__ */ import_react.default.createElement(import_react2.Button, _extends({
-    variant: "solid",
+  return /* @__PURE__ */ import_react.default.createElement(import_react2.Button, _extends({}, defaults, {
     as: import_framer_motion.motion.button,
-    py: 3,
-    px: 4,
-    color: "white",
-    fontWeight: "medium",
-    rounded: "lg",
-    shadow: "none",
     size,
-    cursor: "pointer",
-    overflow: "hidden",
-    backgroundPosition: "center",
     style: {
       background: `linear-gradient(60deg, ${step1} 0%, ${(0, import_chroma_js.default)(step1).brighten(0.1).hex()} 100%)`
     },
@@ -161,8 +171,9 @@ __name(_extends2, "_extends");
 var EditIconButton = /* @__PURE__ */ __name((properties) => /* @__PURE__ */ import_react.default.createElement(RippleButton, _extends2({
   size: "sm"
 }, properties, {
-  bgColorScheme: "primary",
-  p: 2
+  p: 2,
+  borderRadius: 60,
+  rounded: 60
 }), /* @__PURE__ */ import_react.default.createElement(import_react3.Icon, {
   as: import_md.MdEdit,
   boxSize: 4
