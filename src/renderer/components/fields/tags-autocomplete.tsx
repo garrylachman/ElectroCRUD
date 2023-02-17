@@ -58,7 +58,8 @@ export const TagsAutocomplete: FC<TagsAutocompleteProperties> = ({
         target
       )
     );
-    setValue(id, [...(tags || []), result.payload.id]);
+    const newValue = [...(tags || []), result.payload.id];
+    setValue(id, newValue);
   };
 
   const handleChange = (values: string[]) => {

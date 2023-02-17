@@ -22,6 +22,16 @@ const { upsertOne, upsertMany, removeOne, removeMany, removeAll } =
   columnsAdapter;
 
 const mergeBeforeUpdate = (value: Partial<ColumnRO>): Partial<ColumnRO> => {
+  let newValue = { ...value };
+  if (!newValue.metadata) {
+    newValue = {
+      metadata: {
+        tags: [],
+      },
+      ...value,
+    };
+  }
+
   const result = R.compose(
     R.evolve({
       metadata: {
@@ -30,7 +40,7 @@ const mergeBeforeUpdate = (value: Partial<ColumnRO>): Partial<ColumnRO> => {
         ),
       },
     })
-  )(value);
+  )(newValue);
 
   return R.omit(['referances'], result) as Partial<ColumnRO>;
 };
@@ -82,9 +92,10 @@ const columnsSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(tagsActions.upsertOne, (state, action) => {
       if (action.meta.columnId) {
-        state.entities[action.meta.columnId]?.metadata?.tags.push(
-          action.payload.id
-        );
+        const updateColumn = state.entities[action.meta.columnId];
+        if (updateColumn) {
+          updateColumn.metadata.tags.push(action.payload.id);
+        }
       }
     });
 
