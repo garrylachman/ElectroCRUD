@@ -111631,7 +111631,7 @@ var TabLayout = /* @__PURE__ */ __name(({ content, sections = [], isFitted = tru
     fillAvailable: true,
     isFitted,
     mt: 0,
-    marginTop: 2
+    marginTop: 3
   })));
 }, "TabLayout");
 
@@ -111662,9 +111662,11 @@ var LayoutCardContent = /* @__PURE__ */ __name(({ children, cardProperties = {},
 }), /* @__PURE__ */ import_react.default.createElement(import_react7.Card, _extends({
   height: "initial",
   variant: "elevated",
-  overflow: "revert"
+  overflow: "revert",
+  borderRadius: "lg"
 }, cardProperties), /* @__PURE__ */ import_react.default.createElement(import_react7.CardBody, _extends({
-  bg: "inherit"
+  bg: "inherit",
+  borderRadius: "lg"
 }, cardBodyProperties), children))), "LayoutCardContent");
 
 // src/layout-content/layout-content.tsx

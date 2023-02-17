@@ -48,7 +48,7 @@ export const TabLayout: FC<TabLayoutProperties> = ({
           fillAvailable
           isFitted={isFitted}
           mt={0}
-          marginTop={2}
+          marginTop={3}
         />
       </>
     </Flex>

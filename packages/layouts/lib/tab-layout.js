@@ -111610,7 +111610,7 @@ var TabLayout = /* @__PURE__ */ __name(({ content, sections = [], isFitted = tru
     fillAvailable: true,
     isFitted,
     mt: 0,
-    marginTop: 2
+    marginTop: 3
   })));
 }, "TabLayout");
 // Annotate the CommonJS export names for ESM import in node:

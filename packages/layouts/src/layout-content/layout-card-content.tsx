@@ -28,9 +28,10 @@ export const LayoutCardContent: FC<
       height="initial"
       variant="elevated"
       overflow="revert"
+      borderRadius="lg"
       {...cardProperties}
     >
-      <CardBody bg="inherit" {...cardBodyProperties}>
+      <CardBody bg="inherit" borderRadius="lg" {...cardBodyProperties}>
         {children}
       </CardBody>
     </Card>
