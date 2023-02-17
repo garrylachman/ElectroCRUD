@@ -23,6 +23,7 @@ export const SettingsDataTabs: FC<any> = () => {
         colorScheme="primary"
         mt={0}
         marginTop={3}
+        isSticky
       />
     </Flex>
   );
