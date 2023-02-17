@@ -142,7 +142,7 @@ export const ColumnReletions = () => {
       <Box maxHeight="385px" overflowY="auto">
         <List spacing={3}>
           {columnReferanceWithNamesState.map((row) => (
-            <ListItem>
+            <ListItem key={row.id}>
               <Card
                 variant="outline"
                 boxShadow={0}

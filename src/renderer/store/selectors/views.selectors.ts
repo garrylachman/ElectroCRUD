@@ -97,7 +97,7 @@ export const getViewSummary = F.curry((state: RootState) =>
 export const getAllViewsSummary = F.curry((rootState: RootState) =>
   memoize((state: RootState) =>
     F.compose(
-      F.map((x) => F.mergeDeepRight(x, { columns: F.length(x.columns) })),
+      F.map((x) => F.mergeDeepRight(x, { columns: F.length(x.columns) || 0 })),
       F.map((x) => F.omit(['metadata', 'terminology', 'permissions'])(x)),
       F.map((x) => state.views.entities[x])
     )(state.views.ids)
