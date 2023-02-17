@@ -5029,6 +5029,17 @@
     "@saas-ui/hooks" "1.2.0"
     "@saas-ui/layout" "1.4.1"
 
+"@saas-ui/auth@1.7.4":
+  version "1.7.4"
+  resolved "https://registry.npmjs.org/@saas-ui/auth/-/auth-1.7.4.tgz#dbd001d4ccb74f5adce5e1c8b8b5b6dda9eb0d00"
+  integrity sha512-NvXF9/rZHVthCehGa7FpLxPDsES5+te167c/UNu2kUv10NwuMQp2sq/WdsWP8aKdRdIvvvbgHf5wcX5hPRcPwA==
+  dependencies:
+    "@chakra-ui/utils" "^2.0.14"
+    "@saas-ui/button" "1.4.0"
+    "@saas-ui/forms" "1.5.3"
+    "@saas-ui/hooks" "1.2.0"
+    "@saas-ui/layout" "1.4.1"
+
 "@saas-ui/banner@1.4.0":
   version "1.4.0"
   resolved "https://registry.npmjs.org/@saas-ui/banner/-/banner-1.4.0.tgz#89e068614926de7b00d90302bcdf75831ac4de9e"
@@ -5079,6 +5090,26 @@
   version "1.5.2"
   resolved "https://registry.npmjs.org/@saas-ui/forms/-/forms-1.5.2.tgz#9af3aa9d95b05ebeac850a5b6572c96716b3cedf"
   integrity sha512-bG8ld8O/vn8GHhCUR28i0uQwZlAUi8rxCayqXPgi4v6nZqMB5YsFDDHyfEzAn315lBAWrDIKAH/KWtbvnnIAmA==
+  dependencies:
+    "@chakra-ui/icons" "^2.0.16"
+    "@chakra-ui/react-utils" "^2.0.11"
+    "@chakra-ui/utils" "^2.0.14"
+    "@hookform/resolvers" "^2.9.10"
+    "@saas-ui/button" "1.4.0"
+    "@saas-ui/input-right-button" "1.4.0"
+    "@saas-ui/number-input" "1.4.0"
+    "@saas-ui/password-input" "1.4.0"
+    "@saas-ui/pin-input" "1.4.0"
+    "@saas-ui/radio" "1.4.1"
+    "@saas-ui/react-utils" "1.2.0"
+    "@saas-ui/select" "1.4.0"
+    "@saas-ui/stepper" "1.4.0"
+    react-hook-form "^7.42.1"
+
+"@saas-ui/forms@1.5.3":
+  version "1.5.3"
+  resolved "https://registry.npmjs.org/@saas-ui/forms/-/forms-1.5.3.tgz#579ce26b1ea36aeeff418298e67277917e9ca973"
+  integrity sha512-WQ9n/D9qcsrxQAwZyEKPmzo8M07LtQpBCw4Ec729ImScCVa0HownVr6+d8xeA3iItgQNmU1Whw0boY4ZteWmag==
   dependencies:
     "@chakra-ui/icons" "^2.0.16"
     "@chakra-ui/react-utils" "^2.0.11"
@@ -5152,6 +5183,16 @@
     "@chakra-ui/utils" "^2.0.14"
     "@saas-ui/button" "1.4.0"
     "@saas-ui/forms" "1.5.2"
+    "@saas-ui/menu" "1.4.1"
+
+"@saas-ui/modals@1.5.5":
+  version "1.5.5"
+  resolved "https://registry.npmjs.org/@saas-ui/modals/-/modals-1.5.5.tgz#01c2b58b9c4a11802d96196659f4a96a9dab55cb"
+  integrity sha512-wfJAWQ06y8WqjXeTOnmFIql9DzNGo2nOMkq0/Fkc9lf/13VFVmRRK32DPEyNfTXVvvE4hjhwtbzVMypW7RPVvQ==
+  dependencies:
+    "@chakra-ui/utils" "^2.0.14"
+    "@saas-ui/button" "1.4.0"
+    "@saas-ui/forms" "1.5.3"
     "@saas-ui/menu" "1.4.1"
 
 "@saas-ui/nprogress@1.4.0":
@@ -5247,6 +5288,42 @@
     "@saas-ui/list" "1.4.0"
     "@saas-ui/menu" "1.4.1"
     "@saas-ui/modals" "1.5.4"
+    "@saas-ui/nprogress" "1.4.0"
+    "@saas-ui/number-input" "1.4.0"
+    "@saas-ui/palette" "1.3.0"
+    "@saas-ui/password-input" "1.4.0"
+    "@saas-ui/persona" "1.4.0"
+    "@saas-ui/pin-input" "1.4.0"
+    "@saas-ui/property" "1.4.0"
+    "@saas-ui/provider" "1.2.1"
+    "@saas-ui/radio" "1.4.1"
+    "@saas-ui/search-input" "1.4.0"
+    "@saas-ui/select" "1.4.0"
+    "@saas-ui/snackbar" "1.2.0"
+    "@saas-ui/stepper" "1.4.0"
+    "@saas-ui/theme" "1.8.0"
+
+"@saas-ui/react@^1.9.1":
+  version "1.9.1"
+  resolved "https://registry.npmjs.org/@saas-ui/react/-/react-1.9.1.tgz#8300b25b11c77fb2a2f0c71f9c0b0528136f7737"
+  integrity sha512-7ClFANgSi/JNFTEH6FHWeRoVdnIWMLFqN2xkAaQVjhEpFQ/XVQojqmJfhHuaCmU5MxkJEwES8e7z7ujnEeYpjQ==
+  dependencies:
+    "@chakra-ui/system" "^2.3.8"
+    "@saas-ui/app-shell" "1.1.0"
+    "@saas-ui/auth" "1.7.4"
+    "@saas-ui/banner" "1.4.0"
+    "@saas-ui/button" "1.4.0"
+    "@saas-ui/card" "1.5.0"
+    "@saas-ui/collapse" "1.4.0"
+    "@saas-ui/data-table" "1.4.1"
+    "@saas-ui/forms" "1.5.3"
+    "@saas-ui/hooks" "1.2.0"
+    "@saas-ui/hotkeys" "1.4.0"
+    "@saas-ui/input-right-button" "1.4.0"
+    "@saas-ui/layout" "1.4.1"
+    "@saas-ui/list" "1.4.0"
+    "@saas-ui/menu" "1.4.1"
+    "@saas-ui/modals" "1.5.5"
     "@saas-ui/nprogress" "1.4.0"
     "@saas-ui/number-input" "1.4.0"
     "@saas-ui/palette" "1.3.0"

@@ -31,6 +31,7 @@ var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: tru
 var src_exports = {};
 __export(src_exports, {
   Alert: () => Alert,
+  Banner: () => Banner,
   Tooltip: () => Tooltip
 });
 module.exports = __toCommonJS(src_exports);
@@ -86,8 +87,38 @@ var Tooltip = /* @__PURE__ */ __name(({ children, ...rest }) => /* @__PURE__ */ 
   bgColor: `linear-gradient(135deg, #7434db 0%, ${(0, import_chroma_js.default)("#7434db").brighten(1).hex()} 100%)`,
   borderColor: "primary.400"
 }), children), "Tooltip");
+
+// src/banner.tsx
+var import_react4 = require("@saas-ui/react");
+function _extends2() {
+  _extends2 = Object.assign || function(target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+    return target;
+  };
+  return _extends2.apply(this, arguments);
+}
+__name(_extends2, "_extends");
+var Banner = /* @__PURE__ */ __name(({ bannerProperties = {}, title, body }) => /* @__PURE__ */ import_react.default.createElement(import_react4.Banner, _extends2({
+  status: "info",
+  mb: 5,
+  variant: "subtle",
+  motionPreset: "scale",
+  borderRadius: "lg"
+}, bannerProperties), /* @__PURE__ */ import_react.default.createElement(import_react4.BannerIcon, null), /* @__PURE__ */ import_react.default.createElement(import_react4.BannerContent, null, /* @__PURE__ */ import_react.default.createElement(import_react4.BannerTitle, {
+  fontWeight: "bold"
+}, title), /* @__PURE__ */ import_react.default.createElement(import_react4.BannerDescription, {
+  fontWeight: "normal"
+}, body))), "Banner");
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   Alert,
+  Banner,
   Tooltip
 });
