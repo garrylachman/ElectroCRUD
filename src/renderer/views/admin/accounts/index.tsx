@@ -1,11 +1,9 @@
-import { Box } from '@chakra-ui/react';
+import { Banner } from '@electrocrud/feedback';
 import {
-  Banner,
-  BannerContent,
-  BannerDescription,
-  BannerIcon,
-  BannerTitle,
-} from '@saas-ui/react';
+  Layout,
+  LayoutSection,
+  LayoutWidgetsSection,
+} from '@electrocrud/layouts';
 import memoize from 'proxy-memoize';
 import { useSelector } from 'react-redux';
 import { WithErrorComponent } from 'renderer/containers/error';
@@ -23,21 +21,27 @@ export const ManageAccounts = () => {
   );
 
   return (
-    <Box display="flex" flexDirection="column" flex={1}>
-      <WithErrorComponent>
-        <Banner status="info" mb={5} variant="subtle" motionPreset="scale">
-          <BannerIcon />
-          <BannerContent>
-            <BannerTitle fontWeight="bold">How to use account</BannerTitle>
-            <BannerDescription fontWeight="normal">
-              After adding the account, please use the account action dropdown
-              menu and click on use.
-            </BannerDescription>
-          </BannerContent>
-        </Banner>
-        <AccountsListTable accountsState={accountsState} />
-      </WithErrorComponent>
-    </Box>
+    <WithErrorComponent>
+      <Layout
+        sections={[
+          <LayoutWidgetsSection name="stats">
+            <Banner
+              bannerProperties={{
+                status: 'info',
+                mb: 5,
+                variant: 'subtle',
+                motionPreset: 'scale',
+              }}
+              title="How to use account"
+              body="After adding the account, please use the account action dropdown menu and click on use."
+            />
+          </LayoutWidgetsSection>,
+          <LayoutSection name="views">
+            <AccountsListTable accountsState={accountsState} />
+          </LayoutSection>,
+        ]}
+      />
+    </WithErrorComponent>
   );
 };
 

@@ -48,8 +48,4 @@ export const ManageViews = () => {
   );
 };
 
-/*
-<Box display="flex" flexDirection="column" flex={1}></Box>
-*/
-
 export default ManageViews;
