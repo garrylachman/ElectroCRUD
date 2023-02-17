@@ -10895,11 +10895,11 @@ var init_iconsManifest = __esm({
 });
 
 // ../../node_modules/react-icons/lib/esm/iconContext.js
-var import_react2, DefaultContext, IconContext;
+var import_react3, DefaultContext, IconContext;
 var init_iconContext = __esm({
   "../../node_modules/react-icons/lib/esm/iconContext.js"() {
     init_react_import();
-    import_react2 = __toESM(require("react"));
+    import_react3 = __toESM(require("react"));
     DefaultContext = {
       color: void 0,
       size: void 0,
@@ -10907,21 +10907,21 @@ var init_iconContext = __esm({
       style: void 0,
       attr: void 0
     };
-    IconContext = import_react2.default.createContext && import_react2.default.createContext(DefaultContext);
+    IconContext = import_react3.default.createContext && import_react3.default.createContext(DefaultContext);
   }
 });
 
 // ../../node_modules/react-icons/lib/esm/iconBase.js
 function Tree2Element(tree) {
   return tree && tree.map(function(node, i) {
-    return import_react3.default.createElement(node.tag, __assign({
+    return import_react4.default.createElement(node.tag, __assign({
       key: i
     }, node.attr), Tree2Element(node.child));
   });
 }
 function GenIcon(data2) {
   return function(props) {
-    return import_react3.default.createElement(IconBase, __assign({
+    return import_react4.default.createElement(IconBase, __assign({
       attr: __assign({}, data2.attr)
     }, props), Tree2Element(data2.child));
   };
@@ -10939,7 +10939,7 @@ function IconBase(props) {
       className = conf.className;
     if (props.className)
       className = (className ? className + " " : "") + props.className;
-    return import_react3.default.createElement("svg", __assign({
+    return import_react4.default.createElement("svg", __assign({
       stroke: "currentColor",
       fill: "currentColor",
       strokeWidth: "0"
@@ -10951,17 +10951,17 @@ function IconBase(props) {
       height: computedSize,
       width: computedSize,
       xmlns: "http://www.w3.org/2000/svg"
-    }), title && import_react3.default.createElement("title", null, title), props.children);
+    }), title && import_react4.default.createElement("title", null, title), props.children);
   }, "elem");
-  return IconContext !== void 0 ? import_react3.default.createElement(IconContext.Consumer, null, function(conf) {
+  return IconContext !== void 0 ? import_react4.default.createElement(IconContext.Consumer, null, function(conf) {
     return elem(conf);
   }) : elem(DefaultContext);
 }
-var import_react3, __assign, __rest2;
+var import_react4, __assign, __rest2;
 var init_iconBase = __esm({
   "../../node_modules/react-icons/lib/esm/iconBase.js"() {
     init_react_import();
-    import_react3 = __toESM(require("react"));
+    import_react4 = __toESM(require("react"));
     init_iconContext();
     __assign = function() {
       __assign = Object.assign || function(t) {
@@ -107069,10 +107069,10 @@ var require_lib = __commonJS({
     var __toCommonJS2 = /* @__PURE__ */ __name((mod) => __copyProps2(__defProp2({}, "__esModule", {
       value: true
     }), mod), "__toCommonJS");
-    var import_react8;
+    var import_react12;
     var init_react_import2 = __esm2({
       "react-import.ts"() {
-        import_react8 = __toESM2(require("react"));
+        import_react12 = __toESM2(require("react"));
       }
     });
     var nativeTable;
@@ -111270,8 +111270,8 @@ var require_lib = __commonJS({
         }, description)), "Alert");
         var import_react322 = require("@chakra-ui/react");
         var import_chroma_js = __toESM22(require_chroma());
-        function _extends3() {
-          _extends3 = Object.assign || function(target) {
+        function _extends32() {
+          _extends32 = Object.assign || function(target) {
             for (var i = 1; i < arguments.length; i++) {
               var source = arguments[i];
               for (var key in source) {
@@ -111282,12 +111282,12 @@ var require_lib = __commonJS({
             }
             return target;
           };
-          return _extends3.apply(this, arguments);
+          return _extends32.apply(this, arguments);
         }
-        __name(_extends3, "_extends3");
-        __name2(_extends3, "_extends");
-        __name22(_extends3, "_extends");
-        var Tooltip2 = /* @__PURE__ */ __name22(({ children, ...rest }) => /* @__PURE__ */ import_react72.default.createElement(import_react322.Tooltip, _extends3({
+        __name(_extends32, "_extends3");
+        __name2(_extends32, "_extends");
+        __name22(_extends32, "_extends");
+        var Tooltip2 = /* @__PURE__ */ __name22(({ children, ...rest }) => /* @__PURE__ */ import_react72.default.createElement(import_react322.Tooltip, _extends32({
           hasArrow: true,
           color: "white",
           borderRadius: "xl",
@@ -111320,7 +111320,7 @@ var require_lib = __commonJS({
     init_react_import2();
     var import_react22 = require("@chakra-ui/react");
     var import_md = (init_index_esm(), __toCommonJS(index_esm_exports));
-    var TabClose = /* @__PURE__ */ __name2(({ onClose }) => /* @__PURE__ */ import_react8.default.createElement(import_react22.Box, {
+    var TabClose = /* @__PURE__ */ __name2(({ onClose }) => /* @__PURE__ */ import_react12.default.createElement(import_react22.Box, {
       "data-testid": "tab-close",
       display: "flex",
       onClick: (event) => {
@@ -111328,11 +111328,11 @@ var require_lib = __commonJS({
         onClose();
       },
       color: "red.500"
-    }, /* @__PURE__ */ import_react8.default.createElement(import_react22.Icon, {
+    }, /* @__PURE__ */ import_react12.default.createElement(import_react22.Icon, {
       as: import_md.MdClose,
       boxSize: 4
     })), "TabClose");
-    var TabItem = /* @__PURE__ */ __name2(({ tab, isFitted, iconGap, isSelected, onSelected, onClose, fontSize }) => /* @__PURE__ */ import_react8.default.createElement(import_framer_motion.Reorder.Item, {
+    var TabItem = /* @__PURE__ */ __name2(({ tab, isFitted, iconGap, isSelected, onSelected, onClose, fontSize }) => /* @__PURE__ */ import_react12.default.createElement(import_framer_motion.Reorder.Item, {
       value: tab,
       initial: {
         opacity: 0,
@@ -111358,37 +111358,37 @@ var require_lib = __commonJS({
       whileDrag: {
         backgroundColor: "#e3e3e3"
       }
-    }, /* @__PURE__ */ import_react8.default.createElement(import_react32.Tab, {
+    }, /* @__PURE__ */ import_react12.default.createElement(import_react32.Tab, {
       isSelected,
       width: isFitted ? "100%" : "auto",
       minWidth: "150px"
-    }, /* @__PURE__ */ import_react8.default.createElement(import_framer_motion.motion.span, {
+    }, /* @__PURE__ */ import_react12.default.createElement(import_framer_motion.motion.span, {
       layout: "position"
-    }, /* @__PURE__ */ import_react8.default.createElement(import_feedback.Tooltip, {
+    }, /* @__PURE__ */ import_react12.default.createElement(import_feedback.Tooltip, {
       label: "Drag to change tabs order",
       openDelay: 500
-    }, /* @__PURE__ */ import_react8.default.createElement(import_react32.Center, {
+    }, /* @__PURE__ */ import_react12.default.createElement(import_react32.Center, {
       gap: iconGap,
       justifyContent: "space-between"
-    }, /* @__PURE__ */ import_react8.default.createElement(import_react32.Flex, {
+    }, /* @__PURE__ */ import_react12.default.createElement(import_react32.Flex, {
       gap: 2,
       alignItems: "center",
       onPointerDown: onSelected
-    }, /* @__PURE__ */ import_react8.default.createElement(import_react32.Icon, {
+    }, /* @__PURE__ */ import_react12.default.createElement(import_react32.Icon, {
       as: tab.icon,
       boxSize: 4
-    }), /* @__PURE__ */ import_react8.default.createElement(import_react32.Text, {
+    }), /* @__PURE__ */ import_react12.default.createElement(import_react32.Text, {
       fontSize,
       fontWeight: "500"
-    }, tab.name)), tab?.closeable && /* @__PURE__ */ import_react8.default.createElement(TabClose, {
+    }, tab.name)), tab?.closeable && /* @__PURE__ */ import_react12.default.createElement(TabClose, {
       onClose
     })))))), "TabItem");
     init_react_import2();
     init_react_import2();
     var import_framer_motion2 = require_cjs();
     var import_react42 = require("@chakra-ui/react");
-    function _extends2() {
-      _extends2 = Object.assign || function(target) {
+    function _extends5() {
+      _extends5 = Object.assign || function(target) {
         for (var i = 1; i < arguments.length; i++) {
           var source = arguments[i];
           for (var key in source) {
@@ -111399,11 +111399,11 @@ var require_lib = __commonJS({
         }
         return target;
       };
-      return _extends2.apply(this, arguments);
+      return _extends5.apply(this, arguments);
     }
-    __name(_extends2, "_extends");
-    __name2(_extends2, "_extends");
-    var PanelItem = /* @__PURE__ */ __name2(({ tab, tabIndex, isBoxed, variant, marginTop, marginBottom, tabPanelProps, fillAvailable, hasScrollbar }) => /* @__PURE__ */ import_react8.default.createElement(import_react42.TabPanel, _extends2({
+    __name(_extends5, "_extends");
+    __name2(_extends5, "_extends");
+    var PanelItem = /* @__PURE__ */ __name2(({ tab, tabIndex, isBoxed, variant, marginTop, marginBottom, tabPanelProps, fillAvailable, hasScrollbar }) => /* @__PURE__ */ import_react12.default.createElement(import_react42.TabPanel, _extends5({
       tabIndex,
       p: 0,
       borderWidth: isBoxed ? "1px" : 0,
@@ -111417,7 +111417,7 @@ var require_lib = __commonJS({
       flexDirection: "column",
       marginTop,
       marginBottom
-    }, tabPanelProps), /* @__PURE__ */ import_react8.default.createElement(import_framer_motion2.motion.div, {
+    }, tabPanelProps), /* @__PURE__ */ import_react12.default.createElement(import_framer_motion2.motion.div, {
       key: tabIndex ? tab.name : "empty",
       animate: {
         opacity: 1,
@@ -111450,7 +111450,7 @@ var require_lib = __commonJS({
         position: fillAvailable ? "absolute" : "static"
       },
       className: hasScrollbar ? "tabScroller" : "NoTabScroller"
-    }, tab.element ?? /* @__PURE__ */ import_react8.default.createElement(import_react8.default.Fragment, null))), "PanelItem");
+    }, tab.element ?? /* @__PURE__ */ import_react12.default.createElement(import_react12.default.Fragment, null))), "PanelItem");
     function _extends22() {
       _extends22 = Object.assign || function(target) {
         for (var i = 1; i < arguments.length; i++) {
@@ -111503,7 +111503,7 @@ var require_lib = __commonJS({
         setTabsState,
         tabsState
       ]);
-      return /* @__PURE__ */ import_react8.default.createElement(import_react8.default.Fragment, null, /* @__PURE__ */ import_react8.default.createElement(import_react52.Tabs, _extends22({
+      return /* @__PURE__ */ import_react12.default.createElement(import_react12.default.Fragment, null, /* @__PURE__ */ import_react12.default.createElement(import_react52.Tabs, _extends22({
         as: import_react52.Flex,
         isFitted,
         isLazy: true,
@@ -111518,7 +111518,7 @@ var require_lib = __commonJS({
         flexDirection: "column",
         height,
         position: "relative"
-      }), /* @__PURE__ */ import_react8.default.createElement(import_react52.TabList, _extends22({}, tabListSticky), /* @__PURE__ */ import_react8.default.createElement(import_framer_motion3.Reorder.Group, {
+      }), /* @__PURE__ */ import_react12.default.createElement(import_react52.TabList, _extends22({}, tabListSticky), /* @__PURE__ */ import_react12.default.createElement(import_framer_motion3.Reorder.Group, {
         as: "ul",
         axis: "x",
         onReorder: setTabsState,
@@ -111529,9 +111529,9 @@ var require_lib = __commonJS({
           listStyle: "none",
           flex: 1
         }
-      }, /* @__PURE__ */ import_react8.default.createElement(import_framer_motion3.AnimatePresence, {
+      }, /* @__PURE__ */ import_react12.default.createElement(import_framer_motion3.AnimatePresence, {
         initial: false
-      }, tabsState.map((tab) => /* @__PURE__ */ import_react8.default.createElement(TabItem, {
+      }, tabsState.map((tab) => /* @__PURE__ */ import_react12.default.createElement(TabItem, {
         key: import_utils29.ObjectID.id((0, import_underscore.omit)(tab, [
           "element",
           "component",
@@ -111549,13 +111549,13 @@ var require_lib = __commonJS({
           setSelectedTab(tabsState[tabsState.length - 2]);
           setTabsState((previous) => previous.filter((value) => value !== tab));
         }
-      }))))), /* @__PURE__ */ import_react8.default.createElement(import_react52.TabPanels, {
+      }))))), /* @__PURE__ */ import_react12.default.createElement(import_react52.TabPanels, {
         flex: 1,
         display: "flex",
         flexDirection: "column",
         overflow: "hidden",
         height: "100%"
-      }, tabsState.map((tab, index2) => /* @__PURE__ */ import_react8.default.createElement(PanelItem, {
+      }, tabsState.map((tab, index2) => /* @__PURE__ */ import_react12.default.createElement(PanelItem, {
         key: import_utils29.ObjectID.id((0, import_underscore.omit)(tab, [
           "name",
           "element",
@@ -111578,20 +111578,36 @@ var require_lib = __commonJS({
 // src/index.tsx
 var src_exports = {};
 __export(src_exports, {
+  Layout: () => Layout,
   LayoutCardContent: () => LayoutCardContent,
+  LayoutCardSection: () => LayoutCardSection,
   LayoutContent: () => LayoutContent,
+  LayoutSection: () => LayoutSection,
+  LayoutWidgetsSection: () => LayoutWidgetsSection,
   TabLayout: () => TabLayout
 });
 module.exports = __toCommonJS(src_exports);
 init_react_import();
 
+// src/layout.tsx
+init_react_import();
+var import_react2 = require("@chakra-ui/react");
+var Layout = /* @__PURE__ */ __name(({ sections = [] }) => {
+  return /* @__PURE__ */ import_react.default.createElement(import_react2.Flex, {
+    w: "100%",
+    borderRadius: "lg",
+    overflow: "hidden",
+    flexDirection: "column"
+  }, /* @__PURE__ */ import_react.default.createElement(import_react.default.Fragment, null, sections.map((item) => /* @__PURE__ */ import_react.default.createElement(import_react.default.Fragment, null, item))));
+}, "Layout");
+
 // src/tab-layout.tsx
 init_react_import();
-var import_react4 = require("@chakra-ui/react");
+var import_react5 = require("@chakra-ui/react");
 var import_tabs = __toESM(require_lib());
-var import_react5 = require("react");
-var TabLayout = /* @__PURE__ */ __name(({ content, isFitted = true, hasScrollbar = true }) => {
-  const tabs = (0, import_react5.useMemo)(() => content.map((item) => ({
+var import_react6 = require("react");
+var TabLayout = /* @__PURE__ */ __name(({ content, sections = [], isFitted = true, hasScrollbar = true }) => {
+  const tabs = (0, import_react6.useMemo)(() => content.map((item) => ({
     name: item.label,
     element: item.element,
     icon: item.icon,
@@ -111599,11 +111615,13 @@ var TabLayout = /* @__PURE__ */ __name(({ content, isFitted = true, hasScrollbar
   })), [
     content
   ]);
-  return /* @__PURE__ */ import_react.default.createElement(import_react4.Flex, {
+  return /* @__PURE__ */ import_react.default.createElement(import_react5.Flex, {
     w: "100%",
     borderRadius: "lg",
     overflow: "hidden"
-  }, /* @__PURE__ */ import_react.default.createElement(import_tabs.Tabs, {
+  }, /* @__PURE__ */ import_react.default.createElement(import_react.default.Fragment, null, sections.map((item) => ({
+    item
+  })), /* @__PURE__ */ import_react.default.createElement(import_tabs.Tabs, {
     tabsList: tabs,
     tabIndex: 0,
     iconSize: "18px",
@@ -111614,7 +111632,7 @@ var TabLayout = /* @__PURE__ */ __name(({ content, isFitted = true, hasScrollbar
     isFitted,
     mt: 0,
     marginTop: 2
-  }));
+  })));
 }, "TabLayout");
 
 // src/layout-content/index.tsx
@@ -111622,7 +111640,7 @@ init_react_import();
 
 // src/layout-content/layout-card-content.tsx
 init_react_import();
-var import_react6 = require("@chakra-ui/react");
+var import_react7 = require("@chakra-ui/react");
 function _extends() {
   _extends = Object.assign || function(target) {
     for (var i = 1; i < arguments.length; i++) {
@@ -111638,30 +111656,109 @@ function _extends() {
   return _extends.apply(this, arguments);
 }
 __name(_extends, "_extends");
-var LayoutCardContent = /* @__PURE__ */ __name(({ children, cardProperties = {}, cardBodyProperties = {}, containerProperties = {} }) => /* @__PURE__ */ import_react.default.createElement(import_react6.Flex, _extends({}, containerProperties, {
+var LayoutCardContent = /* @__PURE__ */ __name(({ children, cardProperties = {}, cardBodyProperties = {}, containerProperties = {} }) => /* @__PURE__ */ import_react.default.createElement(import_react7.Flex, _extends({}, containerProperties, {
   height: "100%",
   pr: 2
-}), /* @__PURE__ */ import_react.default.createElement(import_react6.Card, _extends({
+}), /* @__PURE__ */ import_react.default.createElement(import_react7.Card, _extends({
   height: "initial",
   variant: "elevated",
   overflow: "revert"
-}, cardProperties), /* @__PURE__ */ import_react.default.createElement(import_react6.CardBody, _extends({
+}, cardProperties), /* @__PURE__ */ import_react.default.createElement(import_react7.CardBody, _extends({
   bg: "inherit"
 }, cardBodyProperties), children))), "LayoutCardContent");
 
 // src/layout-content/layout-content.tsx
 init_react_import();
-var import_react7 = require("@chakra-ui/react");
+var import_react8 = require("@chakra-ui/react");
 var LayoutContent = /* @__PURE__ */ __name(({ children }) => {
-  return /* @__PURE__ */ import_react.default.createElement(import_react7.Flex, {
+  return /* @__PURE__ */ import_react.default.createElement(import_react8.Flex, {
     height: "-webkit-fill-available",
     pr: 2
   }, children);
 }, "LayoutContent");
+
+// src/layout-section/index.tsx
+init_react_import();
+
+// src/layout-section/layout-widgets-section.tsx
+init_react_import();
+var import_react9 = require("@chakra-ui/react");
+function _extends2() {
+  _extends2 = Object.assign || function(target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+    return target;
+  };
+  return _extends2.apply(this, arguments);
+}
+__name(_extends2, "_extends");
+var LayoutWidgetsSection = /* @__PURE__ */ __name(({ children, sectionProperties = {} }) => {
+  return /* @__PURE__ */ import_react.default.createElement(import_react9.Flex, _extends2({
+    width: "100%"
+  }, sectionProperties), children);
+}, "LayoutWidgetsSection");
+
+// src/layout-section/layout-section.tsx
+init_react_import();
+var import_react10 = require("@chakra-ui/react");
+function _extends3() {
+  _extends3 = Object.assign || function(target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+    return target;
+  };
+  return _extends3.apply(this, arguments);
+}
+__name(_extends3, "_extends");
+var LayoutSection = /* @__PURE__ */ __name(({ children, sectionProperties = {} }) => {
+  return /* @__PURE__ */ import_react.default.createElement(import_react10.Flex, _extends3({
+    flex: 1
+  }, sectionProperties), children);
+}, "LayoutSection");
+
+// src/layout-section/layout-card-section.tsx
+init_react_import();
+var import_react11 = require("@chakra-ui/react");
+function _extends4() {
+  _extends4 = Object.assign || function(target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+    return target;
+  };
+  return _extends4.apply(this, arguments);
+}
+__name(_extends4, "_extends");
+var LayoutCardSection = /* @__PURE__ */ __name(({ children, sectionProperties = {}, cardProperties = {}, cardBodyProperties = {} }) => {
+  return /* @__PURE__ */ import_react.default.createElement(import_react11.Flex, _extends4({
+    width: "100%"
+  }, sectionProperties), /* @__PURE__ */ import_react.default.createElement(import_react11.Card, _extends4({}, cardProperties), /* @__PURE__ */ import_react.default.createElement(import_react11.CardBody, _extends4({}, cardBodyProperties), children)));
+}, "LayoutCardSection");
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
+  Layout,
   LayoutCardContent,
+  LayoutCardSection,
   LayoutContent,
+  LayoutSection,
+  LayoutWidgetsSection,
   TabLayout
 });
 /*! Bundled license information:

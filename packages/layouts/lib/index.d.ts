@@ -1,6 +1,10 @@
+export { Layout, LayoutProperties } from './layout.js';
 export { TabLayout, TabLayoutContentProperties, TabLayoutProperties } from './tab-layout.js';
 export { LayoutCardContent, LayoutCardContentProperties } from './layout-content/layout-card-content.js';
 export { LayoutContent, LayoutContentProperties } from './layout-content/layout-content.js';
+export { LayoutWidgetsSection, LayoutWidgetsSectionProperties } from './layout-section/layout-widgets-section.js';
+export { LayoutSection, LayoutSectionProperties } from './layout-section/layout-section.js';
+export { LayoutCardSection, LayoutCardSectionProperties } from './layout-section/layout-card-section.js';
 import 'react';
 import 'react-icons';
 import '@chakra-ui/react';

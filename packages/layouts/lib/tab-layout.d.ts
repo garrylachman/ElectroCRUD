@@ -9,6 +9,7 @@ type TabLayoutContentProperties = {
 };
 type TabLayoutProperties = {
     content: TabLayoutContentProperties[];
+    sections?: ReactElement[];
     isFitted?: boolean;
     hasScrollbar?: boolean;
 };

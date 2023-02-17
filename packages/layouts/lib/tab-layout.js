@@ -111585,7 +111585,7 @@ init_react_import();
 var import_react4 = require("@chakra-ui/react");
 var import_tabs = __toESM(require_lib());
 var import_react5 = require("react");
-var TabLayout = /* @__PURE__ */ __name(({ content, isFitted = true, hasScrollbar = true }) => {
+var TabLayout = /* @__PURE__ */ __name(({ content, sections = [], isFitted = true, hasScrollbar = true }) => {
   const tabs = (0, import_react5.useMemo)(() => content.map((item) => ({
     name: item.label,
     element: item.element,
@@ -111598,7 +111598,9 @@ var TabLayout = /* @__PURE__ */ __name(({ content, isFitted = true, hasScrollbar
     w: "100%",
     borderRadius: "lg",
     overflow: "hidden"
-  }, /* @__PURE__ */ import_react.default.createElement(import_tabs.Tabs, {
+  }, /* @__PURE__ */ import_react.default.createElement(import_react.default.Fragment, null, sections.map((item) => ({
+    item
+  })), /* @__PURE__ */ import_react.default.createElement(import_tabs.Tabs, {
     tabsList: tabs,
     tabIndex: 0,
     iconSize: "18px",
@@ -111609,7 +111611,7 @@ var TabLayout = /* @__PURE__ */ __name(({ content, isFitted = true, hasScrollbar
     isFitted,
     mt: 0,
     marginTop: 2
-  }));
+  })));
 }, "TabLayout");
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
