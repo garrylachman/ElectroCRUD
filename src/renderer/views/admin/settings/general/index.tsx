@@ -1,4 +1,11 @@
-import { Card, CardBody, CardFooter, CardHeader } from '@chakra-ui/react';
+import {
+  Card,
+  CardBody,
+  CardFooter,
+  CardHeader,
+  Flex,
+  Heading,
+} from '@chakra-ui/react';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { Form, FormLayout, SubmitButton } from '@saas-ui/forms';
 import CryptoJS from 'crypto-js';
@@ -14,6 +21,7 @@ import { SettingsReducer } from 'renderer/store/reducers';
 import { O } from 'ts-toolbelt';
 
 import { PasswordSection } from './components/password-section';
+import { SaveButton } from '@electrocrud/buttons';
 
 type FormData = O.Omit<SettingsRO, 'id' | 'creationDate' | 'modificationDate'>;
 
@@ -45,28 +53,29 @@ export const SettingsGeneral: FC<any> = () => {
   };
 
   return (
-    <>
-      <Card variant="elevated">
-        <CardHeader>General Settings</CardHeader>
-        <Form<FormData>
-          reValidateMode="onChange"
-          mode="all"
-          onSubmit={onSubmit}
-          defaultValues={{
-            password: pick(settingsState.password, ['enabled', 'hash']),
-          }}
-          resolver={joiResolver(validationSchema)}
-        >
-          <CardBody>
-            <FormLayout>
-              <PasswordSection />
-            </FormLayout>
-          </CardBody>
-          <CardFooter>
-            <SubmitButton disableIfInvalid />
-          </CardFooter>
-        </Form>
-      </Card>
-    </>
+    <Flex justifyContent="space-between" flexDirection="column" height="100%">
+      <Form<FormData>
+        reValidateMode="onChange"
+        mode="all"
+        onSubmit={onSubmit}
+        defaultValues={{
+          password: pick(settingsState.password, ['enabled', 'hash']),
+        }}
+        resolver={joiResolver(validationSchema)}
+        height="100%"
+        display="flex"
+        flexDirection="column"
+      >
+        <Flex flex={1} flexDirection="column">
+          <Heading pb={3}>General Settings</Heading>
+          <FormLayout>
+            <PasswordSection />
+          </FormLayout>
+        </Flex>
+        <Flex mt={3}>
+          <SaveButton type="submit" />
+        </Flex>
+      </Form>
+    </Flex>
   );
 };

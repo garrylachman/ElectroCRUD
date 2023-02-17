@@ -29,17 +29,12 @@ export const Policies = () => {
       .catch(() => {});
 
   return (
-    <Flex
-      flexDirection="column"
-      flex={1}
-      height="-webkit-fill-available"
-      width="-webkit-fill-available"
-      position="absolute"
-    >
-      <Flex justifyContent="space-between" px={4}>
-        <Text>
-          Policies rules applied by column tags. You can created masking rules that
-          applyed on the data by column tags.
+    <Flex flexDirection="column" flex={1} height="100%" width="100%">
+      <Flex justifyContent="space-between">
+        <Text pr={3}>
+          We use tags to apply a policy on the data based on column. The policy
+          can be attached to tag/s and then the tag is attched to the column you
+          want the policy will be applied.
         </Text>
         <AddButton onClick={() => handleAddEdit()} />
       </Flex>

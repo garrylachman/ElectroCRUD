@@ -1,37 +1,42 @@
 import { FC } from 'react';
 import { MdAccountTree, MdSettingsSuggest } from 'react-icons/md';
-import { TabProperties, Tabs } from '@electrocrud/tabs';
-
 import { SettingsDataTabs } from './data';
 import { SettingsGeneral } from './general';
+import {
+  LayoutCardContent,
+  TabLayout,
+  TabLayoutContentProperties,
+} from '@electrocrud/layouts';
+import { CardBodyProps } from '@chakra-ui/card';
 
-const tabs: TabProperties[] = [
+const cardBodyStyle: CardBodyProps = {
+  p: 0,
+  px: 3,
+  py: 3,
+  borderRadius: 'lg',
+};
+
+const content: TabLayoutContentProperties[] = [
   {
-    name: 'General',
-    element: <SettingsGeneral />,
+    label: 'General',
+    element: (
+      <LayoutCardContent name="metadata" cardBodyProperties={cardBodyStyle}>
+        <SettingsGeneral />
+      </LayoutCardContent>
+    ),
     icon: MdSettingsSuggest,
   },
   {
-    name: 'Data',
-    element: <SettingsDataTabs />,
+    label: 'Data',
+    element: (
+      <LayoutCardContent name="metadata" cardBodyProperties={cardBodyStyle}>
+        <SettingsDataTabs />
+      </LayoutCardContent>
+    ),
     icon: MdAccountTree,
   },
 ];
 
 export const SettingsTabs: FC<any> = () => {
-  return (
-    <Tabs
-      tabsList={tabs}
-      tabIndex={0}
-      iconSize={6}
-      colorScheme="primary"
-      isFitted={false}
-      fillAvailable
-      tabPanelProps={{
-        marginBottom: 5,
-      }}
-      marginTop={5}
-      mt={0}
-    />
-  );
+  return <TabLayout content={content} isFitted={false} />;
 };
