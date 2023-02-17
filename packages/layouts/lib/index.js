@@ -111590,7 +111590,7 @@ init_react_import();
 var import_react4 = require("@chakra-ui/react");
 var import_tabs = __toESM(require_lib());
 var import_react5 = require("react");
-var TabLayout = /* @__PURE__ */ __name(({ content, isFitted = true }) => {
+var TabLayout = /* @__PURE__ */ __name(({ content, isFitted = true, hasScrollbar = true }) => {
   const tabs = (0, import_react5.useMemo)(() => content.map((item) => ({
     name: item.label,
     element: item.element,
@@ -111609,7 +111609,7 @@ var TabLayout = /* @__PURE__ */ __name(({ content, isFitted = true }) => {
     iconSize: "18px",
     colorScheme: "primary",
     fontSize: "lg",
-    hasScrollbar: true,
+    hasScrollbar,
     fillAvailable: true,
     isFitted,
     mt: 0,
@@ -111638,10 +111638,10 @@ function _extends() {
   return _extends.apply(this, arguments);
 }
 __name(_extends, "_extends");
-var LayoutCardContent = /* @__PURE__ */ __name(({ children, cardProperties = {}, cardBodyProperties = {} }) => /* @__PURE__ */ import_react.default.createElement(import_react6.Flex, {
+var LayoutCardContent = /* @__PURE__ */ __name(({ children, cardProperties = {}, cardBodyProperties = {}, containerProperties = {} }) => /* @__PURE__ */ import_react.default.createElement(import_react6.Flex, _extends({}, containerProperties, {
   height: "100%",
   pr: 2
-}, /* @__PURE__ */ import_react.default.createElement(import_react6.Card, _extends({
+}), /* @__PURE__ */ import_react.default.createElement(import_react6.Card, _extends({
   height: "initial",
   variant: "elevated",
   overflow: "revert"

@@ -13,11 +13,13 @@ export type TabLayoutContentProperties = {
 export type TabLayoutProperties = {
   content: TabLayoutContentProperties[];
   isFitted?: boolean;
+  hasScrollbar?: boolean;
 };
 
 export const TabLayout: FC<TabLayoutProperties> = ({
   content,
   isFitted = true,
+  hasScrollbar = true,
 }) => {
   const tabs = useMemo<TabProperties[]>(
     () =>
@@ -38,7 +40,7 @@ export const TabLayout: FC<TabLayoutProperties> = ({
         iconSize="18px"
         colorScheme="primary"
         fontSize="lg"
-        hasScrollbar
+        hasScrollbar={hasScrollbar}
         fillAvailable
         isFitted={isFitted}
         mt={0}

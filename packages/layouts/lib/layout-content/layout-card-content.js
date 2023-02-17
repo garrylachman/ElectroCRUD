@@ -54,10 +54,10 @@ function _extends() {
   return _extends.apply(this, arguments);
 }
 __name(_extends, "_extends");
-var LayoutCardContent = /* @__PURE__ */ __name(({ children, cardProperties = {}, cardBodyProperties = {} }) => /* @__PURE__ */ import_react.default.createElement(import_react2.Flex, {
+var LayoutCardContent = /* @__PURE__ */ __name(({ children, cardProperties = {}, cardBodyProperties = {}, containerProperties = {} }) => /* @__PURE__ */ import_react.default.createElement(import_react2.Flex, _extends({}, containerProperties, {
   height: "100%",
   pr: 2
-}, /* @__PURE__ */ import_react.default.createElement(import_react2.Card, _extends({
+}), /* @__PURE__ */ import_react.default.createElement(import_react2.Card, _extends({
   height: "initial",
   variant: "elevated",
   overflow: "revert"

@@ -10,6 +10,7 @@ type TabLayoutContentProperties = {
 type TabLayoutProperties = {
     content: TabLayoutContentProperties[];
     isFitted?: boolean;
+    hasScrollbar?: boolean;
 };
 declare const TabLayout: FC<TabLayoutProperties>;
 
