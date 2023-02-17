@@ -77,7 +77,7 @@ export const ColumnDetails = () => {
           ColumnsReducer.actions.upsertOne({
             ...R.pickAll(['id', 'name'], columnState),
             ...R.pickAll<ColumnRO, ColumnRO>(
-              ['enabled', 'searchable', 'alias'],
+              ['enabled', 'searchable', 'alias', 'metadata'],
               data
             ),
           })

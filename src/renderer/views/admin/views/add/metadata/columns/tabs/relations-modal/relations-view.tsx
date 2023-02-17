@@ -1,12 +1,13 @@
 // @ts-nocheck
 import { Flex, Tag, TagLeftIcon } from '@chakra-ui/react';
 import { chakraComponents } from 'chakra-react-select';
-import { FC, ReactElement, useCallback, useMemo } from 'react';
+import { FC, ReactElement, useCallback, useEffect, useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { BiColumns, BiTable } from 'react-icons/bi';
 import { useSelector } from 'react-redux';
 import { AutocompleteField } from 'renderer/components/fields';
 import { ViewRO, ViewVO } from 'renderer/defenitions/record-object';
+import { useAppSelector } from 'renderer/store/hooks';
 import { ViewSelectors } from 'renderer/store/selectors';
 import { RootState } from 'renderer/store/store';
 
@@ -17,6 +18,7 @@ export type RelationsViewProperties = {
 export const RelationsView: FC<RelationsViewProperties> = ({
   excludeViewId = '-',
 }) => {
+  const session = useAppSelector((state: RootState) => state.session);
   const { watch } = useFormContext();
   const selected = watch('toView');
 
@@ -34,7 +36,9 @@ export const RelationsView: FC<RelationsViewProperties> = ({
   }, [selected]);
 
   const notExludedViews = useMemo(
-    () => allViews.filter((value) => value.id !== excludeViewId),
+    () => allViews
+      .filter((value) => value.accountId === session.account?.id)
+      .filter((value) => value.id !== excludeViewId),
     [allViews]
   );
 
@@ -84,7 +88,7 @@ export const RelationsView: FC<RelationsViewProperties> = ({
       <chakraComponents.Option {...properties}>
         <Flex justifyContent="space-between" w="100%">
           {children}
-          {properties.data && properties.data.stats && (
+          {properties.data && (
             <Flex>
               <Tag variant="subtle" colorScheme="primary" mr={2} size="sm">
                 <TagLeftIcon as={BiTable} />
