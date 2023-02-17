@@ -6,7 +6,7 @@ import {
   TabLayoutContentProperties,
   LayoutContent,
   LayoutCardContent,
-} from 'renderer/components/layouts';
+} from '@electrocrud/layouts';
 import { WithErrorComponent } from 'renderer/containers/error';
 import { ViewScopedContextProvider } from 'renderer/contexts';
 

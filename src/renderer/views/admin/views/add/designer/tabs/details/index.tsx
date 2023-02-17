@@ -1,12 +1,10 @@
 import {
   Box,
-  Card,
-  CardBody,
-  CardHeader,
   Divider,
   Flex,
   Grid,
   GridItem,
+  Heading,
   Icon,
   IconButton,
   Text,
@@ -111,132 +109,128 @@ export const DesignerDetails: FC<DesignerDetailsProperties> = ({
 
   return (
     <>
-      <Card variant="outline" height="-webkit-fill-available">
-        {!readOnly && <CardHeader>Details Page Desinger</CardHeader>}
-        <CardBody>
-          <Grid templateColumns="repeat(5, 1fr)" gap={10}>
-            <GridItem colSpan={readOnly ? 5 : 4}>
-              <DragDropContext onDragEnd={onDragEnd}>
-                <Droppable
-                  droppableId="droppable"
-                  disableInteractiveElementBlocking={false}
-                >
-                  {(provided, snapshot) => (
-                    <div {...provided.droppableProps} ref={provided.innerRef}>
-                      <Grid templateColumns="repeat(2, 1fr)" gap={4}>
-                        {state.map((item, index) => (
-                          <GridItem
-                            colSpan={item.properties?.grid?.colSpan}
-                            borderBottomWidth={
-                              item.properties?.grid?.borderBottomWidth
-                            }
-                            borderBottomStyle={
-                              item.properties?.grid?.borderBottomStyle
-                            }
-                          >
-                            <Draggable
-                              key={item.id}
-                              draggableId={item.id}
-                              index={index}
+      {!readOnly && <Heading>Details Page Desinger</Heading>}
+      <Grid templateColumns="repeat(5, 1fr)" gap={10}>
+        <GridItem colSpan={readOnly ? 5 : 4}>
+          <DragDropContext onDragEnd={onDragEnd}>
+            <Droppable
+              droppableId="droppable"
+              disableInteractiveElementBlocking={false}
+            >
+              {(provided, snapshot) => (
+                <div {...provided.droppableProps} ref={provided.innerRef}>
+                  <Grid templateColumns="repeat(2, 1fr)" gap={4}>
+                    {state.map((item, index) => (
+                      <GridItem
+                        colSpan={item.properties?.grid?.colSpan}
+                        borderBottomWidth={
+                          item.properties?.grid?.borderBottomWidth
+                        }
+                        borderBottomStyle={
+                          item.properties?.grid?.borderBottomStyle
+                        }
+                      >
+                        <Draggable
+                          key={item.id}
+                          draggableId={item.id}
+                          index={index}
+                        >
+                          {(provided, snapshot) => (
+                            <div
+                              ref={provided.innerRef}
+                              {...provided.draggableProps}
                             >
-                              {(provided, snapshot) => (
-                                <div
-                                  ref={provided.innerRef}
-                                  {...provided.draggableProps}
-                                >
-                                  <Flex gap={2} alignItems="center">
-                                    {!readOnly && (
-                                      <>
-                                        <Tooltip label="Drag to re-order">
-                                          <IconButton
-                                            size="sm"
-                                            icon={<Icon as={MdDragIndicator} />}
-                                            variant="ghost"
-                                            {...provided.dragHandleProps}
-                                          />
-                                        </Tooltip>
-                                        <EditPopover
-                                          key={`ep-${item.id}`}
-                                          item={item}
-                                          onDelete={() =>
-                                            setState((previous) =>
-                                              previous.filter(
-                                                (value) => value.id !== item.id
-                                              )
-                                            )
-                                          }
-                                          onUpdate={(value) =>
-                                            setState(
+                              <Flex gap={2} alignItems="center">
+                                {!readOnly && (
+                                  <>
+                                    <Tooltip label="Drag to re-order">
+                                      <IconButton
+                                        size="sm"
+                                        icon={<Icon as={MdDragIndicator} />}
+                                        variant="ghost"
+                                        {...provided.dragHandleProps}
+                                      />
+                                    </Tooltip>
+                                    <EditPopover
+                                      key={`ep-${item.id}`}
+                                      item={item}
+                                      onDelete={() =>
+                                        setState((previous) =>
+                                          previous.filter(
+                                            (value) => value.id !== item.id
+                                          )
+                                        )
+                                      }
+                                      onUpdate={(value) =>
+                                        setState(
+                                          // @ts-ignore
+                                          (previous: ElementTypes[]) =>
+                                            R.update(
+                                              index,
+                                              {
+                                                ...previous[index],
+                                                properties: value,
+                                              },
                                               // @ts-ignore
-                                              (previous: ElementTypes[]) =>
-                                                R.update(
-                                                  index,
-                                                  {
-                                                    ...previous[index],
-                                                    properties: value,
-                                                  },
-                                                  // @ts-ignore
-                                                  previous
-                                                )
+                                              previous
                                             )
-                                          }
-                                        >
-                                          <RenderElement
-                                            item={item}
-                                            row={{
-                                              Name: 'https://bit.ly/dan-abramov',
-                                            }}
-                                          />
-                                        </EditPopover>
-                                      </>
-                                    )}
-                                    {readOnly && (
-                                      // @ts-ignore
-                                      <RenderElement item={item} row={data} />
-                                    )}
-                                  </Flex>
-                                </div>
-                              )}
-                            </Draggable>
-                          </GridItem>
-                        ))}
-                      </Grid>
-                    </div>
-                  )}
-                </Droppable>
-              </DragDropContext>
-            </GridItem>
-            {!readOnly && (
-              <GridItem>
-                <VStack
-                  alignItems="end"
-                  boxShadow="lg"
-                  borderWidth={1}
-                  rounded={15}
-                  p={5}
+                                        )
+                                      }
+                                    >
+                                      <RenderElement
+                                        item={item}
+                                        row={{
+                                          Name: 'https://bit.ly/dan-abramov',
+                                        }}
+                                      />
+                                    </EditPopover>
+                                  </>
+                                )}
+                                {readOnly && (
+                                  // @ts-ignore
+                                  <RenderElement item={item} row={data} />
+                                )}
+                              </Flex>
+                            </div>
+                          )}
+                        </Draggable>
+                      </GridItem>
+                    ))}
+                  </Grid>
+                </div>
+              )}
+            </Droppable>
+          </DragDropContext>
+        </GridItem>
+        {!readOnly && (
+          <GridItem>
+            <VStack
+              alignItems="end"
+              boxShadow="lg"
+              borderWidth={1}
+              rounded={15}
+              p={5}
+            >
+              <SaveButton size="lg" width="100%" onClick={handleSave} />
+              <Box width="100%" py={3}>
+                <Divider />
+              </Box>
+              {menu.map((item) => (
+                <RippleButton
+                  gap={2}
+                  w="100%"
+                  onClick={() =>
+                    setState((previous) => [...previous, item.getNew()])
+                  }
                 >
-                  <SaveButton size="lg" width="100%" onClick={handleSave} />
-                  <Box width="100%" py={3}>
-                    <Divider />
-                  </Box>
-                  {menu.map((item) => (
-                    <RippleButton
-                      gap={2}
-                      w="100%"
-                      onClick={() =>
-                        setState((previous) => [...previous, item.getNew()])
-                      }
-                    >
-                      <Icon as={item.icon} boxSize={4} />
-                      <Text>{item.label}</Text>
-                    </RippleButton>
-                  ))}
-                </VStack>
-              </GridItem>
-            )}
-          </Grid>
-        </CardBody>
-      </Card>
+                  <Icon as={item.icon} boxSize={4} />
+                  <Text>{item.label}</Text>
+                </RippleButton>
+              ))}
+            </VStack>
+          </GridItem>
+        )}
+      </Grid>
     </>
   );
 };

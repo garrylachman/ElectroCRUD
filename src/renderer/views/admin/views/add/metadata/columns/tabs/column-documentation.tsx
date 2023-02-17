@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
-import { Box, Center, Spinner, Text } from '@chakra-ui/react';
+import { Box, Center, Spinner, Text, Flex } from '@chakra-ui/react';
 import MarkdownEditor from '@uiw/react-markdown-editor';
 import memoize from 'proxy-memoize';
 import { useCallback, useContext, useMemo, useState } from 'react';
@@ -98,7 +98,7 @@ export const ColumnDocumentation = () => {
   }
 
   return (
-    <Box px={4}>
+    <Flex px={4} flexDirection="column" flex={1}>
       <Box pb={4}>
         <Text>
           Simply data about data. It means it is a description and context of
@@ -120,10 +120,11 @@ export const ColumnDocumentation = () => {
         colorScheme="primary"
         isFitted={false}
         isBoxed
+        height="inherit"
       />
       <Box pt={4}>
         <SaveButton onClick={handleSave} />
       </Box>
-    </Box>
+    </Flex>
   );
 };

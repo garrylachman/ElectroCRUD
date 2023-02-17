@@ -76,7 +76,7 @@ export const PoliciesTable: FC<PoliciesTableProperties> = ({
     <DataTable
       data={data}
       columns={tableColumns}
-      hasScroll
+      hasScroll={false}
       customCell={(row) => {
         if (row.column.id === 'associated_tags') {
           return (

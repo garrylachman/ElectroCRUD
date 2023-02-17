@@ -1,4 +1,4 @@
-import { Card, CardBody, Text } from '@chakra-ui/react';
+import { Card, CardBody, Flex, Text } from '@chakra-ui/react';
 import { FC } from 'react';
 import { MdSettingsSuggest } from 'react-icons/md';
 import { TabProperties, Tabs } from '@electrocrud/tabs';
@@ -15,24 +15,16 @@ const tabs: TabProperties[] = [
 
 export const SettingsDataTabs: FC<any> = () => {
   return (
-    <Card
-      flex={1}
-      display="flex"
-      height="-webkit-fill-available"
-      variant="elevated"
-    >
-      <CardBody px={0} pb={0}>
-        <Tabs
-          tabsList={tabs}
-          tabIndex={0}
-          iconSize={6}
-          colorScheme="primary"
-          mt={0}
-          tabPanelProps={{
-            marginTop: 5,
-          }}
-        />
-      </CardBody>
-    </Card>
+    <Flex flex={1} flexDirection="column">
+      <Tabs
+        tabsList={tabs}
+        tabIndex={0}
+        iconSize={6}
+        colorScheme="primary"
+        mt={0}
+        marginTop={3}
+        isSticky
+      />
+    </Flex>
   );
 };

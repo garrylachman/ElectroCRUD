@@ -1,4 +1,10 @@
 import { Box } from '@chakra-ui/react';
+import {
+  Layout,
+  LayoutCardSection,
+  LayoutSection,
+  LayoutWidgetsSection,
+} from '@electrocrud/layouts';
 import { EntityState } from '@reduxjs/toolkit';
 import memoize from 'proxy-memoize';
 import { useCallback } from 'react';
@@ -28,10 +34,16 @@ export const ManageViews = () => {
 
   return (
     <WithErrorComponent>
-      <Box display="flex" flexDirection="column" flex={1}>
-        <ViewsListStats viewsState={viewsState} />
-        <ViewsListTable viewsState={viewsState} />
-      </Box>
+      <Layout
+        sections={[
+          <LayoutWidgetsSection name="stats">
+            <ViewsListStats viewsState={viewsState} />
+          </LayoutWidgetsSection>,
+          <LayoutSection name="views">
+            <ViewsListTable viewsState={viewsState} />
+          </LayoutSection>,
+        ]}
+      />
     </WithErrorComponent>
   );
 };

@@ -5,7 +5,7 @@ import chroma from 'chroma-js';
 import { motion } from 'framer-motion';
 import { FC } from 'react';
 import { O } from 'ts-toolbelt';
-
+import { defaults } from '../defaults';
 export type RippleButtonProperties = O.Omit<
   O.Merge<
     ButtonProps,
@@ -58,18 +58,9 @@ export const RippleButton: FC<RippleButtonProperties> = ({
 
   return (
     <Button
-      variant="solid"
+      {...defaults}
       as={motion.button}
-      py={3}
-      px={4}
-      color="white"
-      fontWeight="medium"
-      rounded="lg"
-      shadow="none"
       size={size}
-      cursor="pointer"
-      overflow="hidden"
-      backgroundPosition="center"
       style={{
         background: `linear-gradient(60deg, ${step1} 0%, ${chroma(step1)
           .brighten(0.1)

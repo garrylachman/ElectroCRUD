@@ -1,4 +1,4 @@
-import { Card } from '@chakra-ui/react';
+import { Flex } from '@chakra-ui/react';
 import { memo, useMemo, useRef } from 'react';
 import { TbTable } from 'react-icons/tb';
 import { TabProperties, Tabs, TabsAPI } from '@electrocrud/tabs';
@@ -20,14 +20,7 @@ export default memo(function DatasetCoordinator() {
   );
 
   return (
-    <Card
-      variant="elevated"
-      flex={1}
-      display="flex"
-      flexDirection="column"
-      height="100%"
-      overscrollBehavior="contain"
-    >
+    <Flex py={0} height="100%">
       <Tabs
         tabsList={tabs}
         tabIndex={0}
@@ -40,7 +33,8 @@ export default memo(function DatasetCoordinator() {
         tabPanelProps={{
           marginBottom: 0,
         }}
+        mt={0}
       />
-    </Card>
+    </Flex>
   );
 });

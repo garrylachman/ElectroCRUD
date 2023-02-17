@@ -78,7 +78,7 @@ export const ViewsListStats: FC<ViewsListStatsProperties> = ({
   );
 
   return (
-    <VStack pb={5}>
+    <VStack pb={5} width="100%">
       <SimpleGrid columns={3} spacing={5} w="100%">
         <DateCard
           title="# of view"

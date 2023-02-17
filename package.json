@@ -85,6 +85,7 @@
     "@electrocrud/shared": "link:./packages/shared",
     "@electrocrud/tables": "link:./packages/tables",
     "@electrocrud/tabs": "link:./packages/tabs",
+    "@electrocrud/layouts": "link:./packages/layouts",
     "@electrocrud/utils": "link:./packages/utils",
     "@emotion/cache": "^11.7.1",
     "@emotion/react": "^11",
