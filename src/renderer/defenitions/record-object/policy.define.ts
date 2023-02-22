@@ -4,6 +4,7 @@ import { Object } from 'ts-toolbelt';
 import { BaseRO } from './base.define';
 
 export enum PolicyType {
+  NONE,
   FULL_MASKING,
   PARTIAL_MASKING,
   FAKE_DATA,

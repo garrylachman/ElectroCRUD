@@ -42,7 +42,7 @@ const doMask = (
 };
 
 const doFullMask = (value = '', maskWith = '#') => {
-  return mask(value, maskWith, value.length, true);
+  return mask(value, maskWith, 0, true);
 };
 
 const doFake = (fake: string) => {
