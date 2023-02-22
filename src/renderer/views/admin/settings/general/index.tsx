@@ -1,13 +1,6 @@
-import {
-  Card,
-  CardBody,
-  CardFooter,
-  CardHeader,
-  Flex,
-  Heading,
-} from '@chakra-ui/react';
+import { Flex, Heading } from '@chakra-ui/react';
 import { joiResolver } from '@hookform/resolvers/joi';
-import { Form, FormLayout, SubmitButton } from '@saas-ui/forms';
+import { Form, FormLayout } from '@saas-ui/forms';
 import CryptoJS from 'crypto-js';
 import Joi from 'joi';
 import { pick } from 'underscore';
@@ -22,6 +15,7 @@ import { O } from 'ts-toolbelt';
 
 import { PasswordSection } from './components/password-section';
 import { SaveButton } from '@electrocrud/buttons';
+import { ConfirmPromiseSaveModal } from 'renderer/components/modals';
 
 type FormData = O.Omit<SettingsRO, 'id' | 'creationDate' | 'modificationDate'>;
 
@@ -49,7 +43,14 @@ export const SettingsGeneral: FC<any> = () => {
         `${data.password.password}${data.password.hash}`
       ).toString();
     }
-    dispatch(SettingsReducer.actions.update(data));
+    ConfirmPromiseSaveModal({ entityName: 'Settings' })
+      .then((value) => {
+        if (value && data) {
+          dispatch(SettingsReducer.actions.update(data));
+        }
+        return true;
+      })
+      .catch(() => {});
   };
 
   return (

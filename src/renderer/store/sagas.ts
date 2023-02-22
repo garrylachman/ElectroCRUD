@@ -14,6 +14,7 @@ import {
   ColumnsReducer,
   ColumnsReferanceReducer,
   SessionReducer,
+  SettingsReducer,
   TagsReducer,
   TemporaryFilterRulesReducer,
   TemporaryFiltersReducer,
@@ -77,7 +78,8 @@ function* notifyEntityAddedOrEdited(
     action.payload.name ||
     action.payload.title ||
     action.payload.label ||
-    action.payload.id
+    action.payload.id ||
+    'Entity'
   }' has been saved.`;
 
   yield put(
@@ -135,4 +137,6 @@ export function* watchForNotificationsAsync() {
   // @ts-ignore
   yield takeEvery(CodeExamplesReducer.actions.removeOne, notifyEntityDeleted);
   yield takeEvery(TemporaryFiltersReducer.actions.upsertOne, onFilterCreated);
+  // @ts-ignore
+  yield takeEvery(SettingsReducer.actions.update, notifyEntityAddedOrEdited);
 }
