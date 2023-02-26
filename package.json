@@ -87,6 +87,7 @@
     "@electrocrud/tabs": "link:./packages/tabs",
     "@electrocrud/layouts": "link:./packages/layouts",
     "@electrocrud/utils": "link:./packages/utils",
+    "@electrocrud/pane": "link:./packages/pane",
     "@emotion/cache": "^11.7.1",
     "@emotion/react": "^11",
     "@emotion/styled": "^11",

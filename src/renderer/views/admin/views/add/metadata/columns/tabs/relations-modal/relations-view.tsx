@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { Flex, Tag, TagLeftIcon } from '@chakra-ui/react';
 import { chakraComponents } from 'chakra-react-select';
-import { FC, ReactElement, useCallback, useEffect, useMemo } from 'react';
+import { FC, ReactElement, useCallback, useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { BiColumns, BiTable } from 'react-icons/bi';
 import { useSelector } from 'react-redux';
@@ -36,9 +36,10 @@ export const RelationsView: FC<RelationsViewProperties> = ({
   }, [selected]);
 
   const notExludedViews = useMemo(
-    () => allViews
-      .filter((value) => value.accountId === session.account?.id)
-      .filter((value) => value.id !== excludeViewId),
+    () =>
+      allViews
+        .filter((value) => value.accountId === session.account?.id)
+        .filter((value) => value.id !== excludeViewId),
     [allViews]
   );
 

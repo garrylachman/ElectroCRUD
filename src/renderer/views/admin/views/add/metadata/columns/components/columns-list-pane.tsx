@@ -12,7 +12,7 @@ import {
 import { motion } from 'framer-motion';
 import { FC, useContext, useEffect, useState } from 'react';
 import { HiViewColumns } from 'react-icons/hi2';
-import { PaneContext } from 'renderer/containers/pane/pane-context';
+import { PaneContext } from '@electrocrud/pane';
 import { ScopeContext } from 'renderer/contexts/scope-context';
 import { ViewScopedContext } from 'renderer/contexts/view-scoped-context';
 

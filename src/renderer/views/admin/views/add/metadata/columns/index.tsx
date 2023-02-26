@@ -1,7 +1,6 @@
 import { Box, BoxProps } from '@chakra-ui/react';
 import { FC } from 'react';
-import { Pane, usePaneHook } from 'renderer/containers/pane';
-import { PaneContextProvider } from 'renderer/containers/pane/pane-context';
+import { Pane, usePaneHook, PaneContextProvider } from '@electrocrud/pane';
 import { ScopeContextProvider } from 'renderer/contexts/scope-context';
 
 import { ColumnsListPane } from './components/columns-list-pane';
