@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
 import { BoxProps } from '@chakra-ui/react';
 import {
   createContext,
@@ -6,7 +5,6 @@ import {
   PropsWithChildren,
   SetStateAction,
   useCallback,
-  useEffect,
   useState,
 } from 'react';
 import { O } from 'ts-toolbelt';
