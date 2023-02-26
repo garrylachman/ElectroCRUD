@@ -61,7 +61,13 @@ export const ColumnDocumentation = () => {
 
   const RenderPreview = () => (
     <Box p={4}>
-      <MarkdownEditor.Markdown source={markdown} />
+      <MarkdownEditor.Markdown
+        style={{
+          pointerEvents: 'none',
+          cursor: 'default',
+        }}
+        source={markdown}
+      />
     </Box>
   );
 

@@ -14,7 +14,13 @@ export const ColumnDocumentation: FC<ColumnDocumentationProperties> = ({
       <Heading>Column: {columnState?.name}</Heading>
       <>
         {columnState?.metadata.md ? (
-          <MarkdownEditor.Markdown source={columnState?.metadata.md} />
+          <MarkdownEditor.Markdown
+            style={{
+              pointerEvents: 'none',
+              cursor: 'default',
+            }}
+            source={columnState?.metadata.md}
+          />
         ) : (
           <Text>No table documentation found</Text>
         )}
