@@ -10,6 +10,10 @@ export const TableDocumentation = () => {
       <Heading>Table: {viewState?.name}</Heading>
       {viewState?.metadata.md ? (
         <MarkdownEditor.Markdown
+          style={{
+            pointerEvents: 'none',
+            cursor: 'default',
+          }}
           source={viewState?.metadata.md}
           // @ts-ignore
           pluginsFilter={(name, value) => {
