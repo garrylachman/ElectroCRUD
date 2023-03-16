@@ -1,13 +1,15 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 import { HStack, Icon, IconButton, VStack } from '@chakra-ui/react';
 import { isEqual, size } from 'underscore';
-import { FC, useMemo } from 'react';
+import { FC, useCallback } from 'react';
 import { HiOutlineTrash } from 'react-icons/hi';
 import { MdOutlineAdd } from 'react-icons/md';
 import { useAppDispatch, useAppSelector } from 'renderer/store/hooks';
 import { TemporaryFilterRulesReducer } from 'renderer/store/reducers';
 
 import { FilterBuilderWhere } from './filter-builder-where';
+import memoize from 'proxy-memoize';
+import { RootState } from 'renderer/store/store';
 
 export type FilterBuilderWheresProperties = {
   filterId: string;
@@ -23,16 +25,15 @@ export const FilterBuilderWheres: FC<FilterBuilderWheresProperties> = ({
   filterId,
 }) => {
   const distpatch = useAppDispatch();
-  const allFilterRulesState = useAppSelector(
-    (state) => state.temporaryFilterRules
-  );
-  const filterRulesState = useMemo(
-    () =>
-      TemporaryFilterRulesReducer.getSelectors()
-        // @ts-ignore
-        .selectAll(allFilterRulesState)
-        .filter((item) => item.filterId === filterId),
-    [allFilterRulesState, filterId]
+  const filterRulesState = useAppSelector(
+    useCallback(
+      memoize((state: RootState) =>
+        TemporaryFilterRulesReducer.getSelectors()
+          .selectAll(state.temporaryFilterRules)
+          .filter((item) => item.filterId === filterId)
+      ),
+      [filterId]
+    )
   );
 
   return (
@@ -50,14 +51,14 @@ export const FilterBuilderWheres: FC<FilterBuilderWheresProperties> = ({
                 size="sm"
                 icon={<Icon as={MdOutlineAdd} />}
                 aria-label=""
-                onClick={() =>
+                onClick={() => {
                   distpatch(
                     TemporaryFilterRulesReducer.actions.upsertOne({
                       filterId,
                       ...getNewItem(),
                     })
-                  )
-                }
+                  );
+                }}
               />
             )}
             <IconButton

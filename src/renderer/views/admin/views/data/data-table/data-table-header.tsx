@@ -22,10 +22,7 @@ import {
 } from '@electrocrud/buttons';
 import { ConfirmPromiseDeleteModal } from 'renderer/components/modals/confirm-promise-delete-modal';
 import { ViewScopedContext } from 'renderer/contexts';
-import {
-  StrictViewFilterRO,
-  ViewFilterRO,
-} from 'renderer/defenitions/record-object';
+import { StrictViewFilterRO } from 'renderer/defenitions/record-object';
 import { useAppDispatch } from 'renderer/store/hooks';
 import { ViewFiltersReducer } from 'renderer/store/reducers';
 import { RootState } from 'renderer/store/store';
@@ -33,13 +30,13 @@ import { RootState } from 'renderer/store/store';
 type DataTableHeaderProperties = {
   setInternalFilter: (any: any) => void;
   setSearchValue: React.Dispatch<React.SetStateAction<string>>;
-  setAddFilterBox: React.Dispatch<React.SetStateAction<boolean>>;
+  openFiltersModal: () => void;
 };
 
 export const DataTableHeader: FC<DataTableHeaderProperties> = ({
   setInternalFilter,
   setSearchValue,
-  setAddFilterBox,
+  openFiltersModal,
 }) => {
   const { viewState } = useContext(ViewScopedContext);
   const dispatch = useAppDispatch();
@@ -60,7 +57,7 @@ export const DataTableHeader: FC<DataTableHeaderProperties> = ({
     () => [
       {
         props: {
-          onClick: () => setAddFilterBox(true),
+          onClick: () => openFiltersModal(),
           fontSize: 'sm',
           icon: <Icon as={TbPlaylistAdd} boxSize={4} display="flex" />,
         },
@@ -73,7 +70,7 @@ export const DataTableHeader: FC<DataTableHeaderProperties> = ({
           fontSize: 'sm',
           icon: <Icon as={TbFilterOff} boxSize={4} display="flex" />,
         },
-        text: 'Clear Selected',
+        text: 'Clear Filters',
       },
       {
         isDivider: true,
@@ -86,10 +83,11 @@ export const DataTableHeader: FC<DataTableHeaderProperties> = ({
         },
         text: (
           <HStack justifyContent="space-between" pointerEvents="all">
-            <Text fontSize="sm">{vFilter.name}</Text>
+            <Text fontSize="sm" isTruncated width="130px">
+              {vFilter.name}
+            </Text>
             <RippleButton
               bgColorScheme="red"
-              fontSize="sm"
               onClick={(event) => {
                 event.stopPropagation();
                 ConfirmPromiseDeleteModal({ entityName: vFilter.name })
@@ -106,11 +104,9 @@ export const DataTableHeader: FC<DataTableHeaderProperties> = ({
                   .catch(() => {});
               }}
               size="xs"
-              rounded={50}
-              boxSize={8}
-              style={{ scale: 0.9 }}
+              p={2}
             >
-              <Icon as={TbTrash} boxSize={4} />
+              <Icon as={TbTrash} boxSize={3} />
             </RippleButton>
           </HStack>
         ),

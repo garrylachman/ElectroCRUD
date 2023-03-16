@@ -10,6 +10,8 @@ export { LockButton, LockButtonProperties } from './lock-button.js';
 export { ActionButton } from './action-button/action-button.js';
 export { SaveActionButton } from './action-button/save-action-button.js';
 export { ActionButtonFactoryProperties, ActionButtonType, ActionButtonsFactory } from './action-button/action-factory.js';
+export { ApplyFilterActionButton } from './action-button/apply-filter-action-button.js';
+export { SaveAndApplyFilterActionButton } from './action-button/save-and-apply-filter-action-button.js';
 import '@chakra-ui/react';
 import 'react';
 import 'ts-toolbelt';

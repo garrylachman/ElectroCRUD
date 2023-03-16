@@ -50,6 +50,7 @@ export type PromiseModalProperties = {
   size?: string;
   children: FC<PromiseModalContentProperties>;
   actionButtons?: ActionButtonType[];
+  getValue?: () => any;
 } & InstanceProps<unknown>;
 
 export const PromiseModalComponent: FC<PromiseModalProperties> = ({
@@ -61,6 +62,7 @@ export const PromiseModalComponent: FC<PromiseModalProperties> = ({
   size = 'md',
   children,
   actionButtons = [],
+  getValue,
 }) => {
   const formReference: RefObject<HTMLFormElement | undefined> =
     useRef<HTMLFormElement>();
@@ -78,6 +80,18 @@ export const PromiseModalComponent: FC<PromiseModalProperties> = ({
         const result = await current?.trigger();
         if (result) {
           onResolve(current?.getValues());
+        }
+        break;
+      }
+      case ActionButtonType.APPLY_FILTER: {
+        if (getValue) {
+          onResolve({ action: 'apply', value: getValue() });
+        }
+        break;
+      }
+      case ActionButtonType.SAVE_AND_APPLY_FILTER: {
+        if (getValue) {
+          onResolve({ action: 'save-and-apply', value: getValue() });
         }
         break;
       }
