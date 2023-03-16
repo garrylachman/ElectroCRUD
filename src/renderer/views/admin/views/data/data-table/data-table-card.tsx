@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/require-await */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 // @ts-nocheck
-import { Box, CardBody, CardHeader } from '@chakra-ui/react';
+import { Box, CardBody, CardHeader, Center, Flex } from '@chakra-ui/react';
 import ReactDataGrid from '@inovua/reactdatagrid-community';
 import { TypeSortInfo } from '@inovua/reactdatagrid-community/types';
 import {
@@ -35,6 +35,8 @@ import {
 import { DataDetailsCard } from '../details';
 import { DataTableHeader } from './data-table-header';
 import { ConfirmPromiseFiltersModal } from 'renderer/components/modals';
+import { InlineSpinner } from 'renderer/components/icons';
+import { C } from 'ts-toolbelt';
 
 type DataTableCardProperties = {
   tabsReference?: MutableRefObject<TabsAPI | undefined>;
@@ -52,15 +54,21 @@ export const DataTableCard: FC<DataTableCardProperties> = ({
     rawColumns,
   } = useColumnsForTable();
   const { rows: dataItems, meta } = data;
-  const [isLoading] = status;
+  const [isLoading, isExecuted] = status;
 
-  const [execute, setLimit, setPage, setOrder, setSearch, setInternalFilter] =
-    control;
+  const [
+    execute,
+    setLimit,
+    setPage,
+    setOrder,
+    setSearch,
+    setInternalFilter,
+    setInited,
+  ] = control;
   const { viewState } = useContext(ViewScopedContext);
   const dispatch = useAppDispatch();
 
   const [selectedRows, setSelectedRows] = useState([]);
-  /// const [gridRef, setGridRef] = useState(null);
   const gridReference = useRef();
 
   const [searchValue, setSearchValue] = useState<string>('');
@@ -288,6 +296,12 @@ export const DataTableCard: FC<DataTableCardProperties> = ({
       .catch(() => {});
   };
 
+  useEffect(() => {
+    setTimeout(() => {
+      setInited(true);
+    }, 1500);
+  }, []);
+
   return (
     <Box p={0} m={0} flex={1} display="flex" flexDirection="column" h="100%">
       <CardHeader py={0}>
@@ -299,7 +313,12 @@ export const DataTableCard: FC<DataTableCardProperties> = ({
       </CardHeader>
 
       <CardBody px={0} pb={0}>
-        {dataItems && (
+        {!isExecuted && (
+          <Flex flexDirection="column" h="100%" justifyContent="space-around">
+            <InlineSpinner />
+          </Flex>
+        )}
+        {isExecuted && dataItems && (
           <ReactDataGrid
             idProperty={primaryKeyColumn?.name}
             useNativeFlex

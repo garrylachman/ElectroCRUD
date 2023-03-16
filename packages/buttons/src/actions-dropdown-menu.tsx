@@ -10,10 +10,9 @@ import {
   MenuList,
   Text,
 } from '@chakra-ui/react';
-import { omit } from 'underscore';
+import { uniqueId } from 'underscore';
 import { FC, ReactElement, useMemo } from 'react';
 import { MdArrowDropDown } from 'react-icons/md';
-import { ObjectID } from '@electrocrud/utils';
 
 export type ActionsDropdownMenuItem = {
   props?: MenuItemProps;
@@ -35,14 +34,7 @@ export const ActionsDropdownMenu: FC<ActionsDropdownMenuProperties> = ({
       items.map((item, itemIndex) => {
         return {
           ...item,
-          key: ObjectID.id(
-            omit({ ...item, itemIndex }, [
-              'props',
-              'text.props',
-              'text.type',
-              'text._owner',
-            ])
-          ),
+          key: uniqueId('Actions-Menu-Item-'),
         };
       }),
     [items]
@@ -50,7 +42,7 @@ export const ActionsDropdownMenu: FC<ActionsDropdownMenuProperties> = ({
 
   return (
     <Box position="relative" right={0}>
-      <Menu offset={[0, 0]} strategy="fixed" placement="bottom-end">
+      <Menu offset={[0, 0]} strategy="fixed" placement="bottom-end" isLazy>
         {({ isOpen }) => (
           <Box>
             <MenuButton

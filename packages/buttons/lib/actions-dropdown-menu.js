@@ -42,7 +42,6 @@ var import_react2 = require("@chakra-ui/react");
 var import_underscore = require("underscore");
 var import_react3 = require("react");
 var import_md = require("react-icons/md");
-var import_utils = require("@electrocrud/utils");
 function _extends() {
   _extends = Object.assign || function(target) {
     for (var i = 1; i < arguments.length; i++) {
@@ -62,15 +61,7 @@ var ActionsDropdownMenu = /* @__PURE__ */ __name(({ menuName = "Actions", items 
   const cachedItems = (0, import_react3.useMemo)(() => items.map((item, itemIndex) => {
     return {
       ...item,
-      key: import_utils.ObjectID.id((0, import_underscore.omit)({
-        ...item,
-        itemIndex
-      }, [
-        "props",
-        "text.props",
-        "text.type",
-        "text._owner"
-      ]))
+      key: (0, import_underscore.uniqueId)("Actions-Menu-Item-")
     };
   }), [
     items
@@ -84,7 +75,8 @@ var ActionsDropdownMenu = /* @__PURE__ */ __name(({ menuName = "Actions", items 
       0
     ],
     strategy: "fixed",
-    placement: "bottom-end"
+    placement: "bottom-end",
+    isLazy: true
   }, ({ isOpen }) => /* @__PURE__ */ import_react.default.createElement(import_react2.Box, null, /* @__PURE__ */ import_react.default.createElement(import_react2.MenuButton, {
     isActive: isOpen,
     borderBottomRightRadius: isOpen ? 0 : 10,

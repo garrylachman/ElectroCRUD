@@ -50,7 +50,7 @@ export const DataTableHeader: FC<DataTableHeaderProperties> = ({
 
   const thisViewFilters = useMemo(
     () => viewFilterState.filter((f) => f.viewId === viewState?.id),
-    [viewState?.id, viewFilterState]
+    [viewFilterState]
   );
 
   const actions = useMemo<ActionsDropdownMenuItem[]>(
