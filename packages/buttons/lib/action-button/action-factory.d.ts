@@ -2,7 +2,9 @@ import { FC } from 'react';
 
 declare enum ActionButtonType {
     SAVE = "SaveActionButton",
-    CANCEL = "CancelActionButton"
+    CANCEL = "CancelActionButton",
+    APPLY_FILTER = "ApplyFilterActionButton",
+    SAVE_AND_APPLY_FILTER = "SaveAndApplyFilterActionButton"
 }
 type ActionButtonFactoryProperties = {
     actionType: ActionButtonType;

@@ -9,6 +9,7 @@ import { useAppDispatch } from 'renderer/store/hooks';
 import { TemporaryFilterRulesReducer } from 'renderer/store/reducers';
 import { QueryWhereOprEnum } from '@electrocrud/shared';
 import { useDebounce } from 'usehooks-ts';
+import CryptoJS from 'crypto-js';
 import { ReactSelectColumnOption } from './components/react-select-column-option';
 
 type CondValue = string | number | undefined;
@@ -37,11 +38,20 @@ export const FilterBuilderWhere: FC<
 
   const [state, setState] = useState(initialState);
   const debouncedState = useDebounce<FilterRuleRO>(state, 1000);
+  const [savedHash, setSavedHash] = useState(
+    CryptoJS.SHA256(JSON.stringify(state)).toString()
+  );
 
   const [valueType, setValueType] = useState(ValuesInputType.VALUE);
 
   useEffect(() => {
-    distpatch(TemporaryFilterRulesReducer.actions.upsertOne(debouncedState));
+    const currentHash = CryptoJS.SHA256(
+      JSON.stringify(debouncedState)
+    ).toString();
+    if (currentHash !== savedHash) {
+      distpatch(TemporaryFilterRulesReducer.actions.upsertOne(debouncedState));
+      setSavedHash(currentHash);
+    }
   }, [debouncedState]);
 
   useEffect(() => {

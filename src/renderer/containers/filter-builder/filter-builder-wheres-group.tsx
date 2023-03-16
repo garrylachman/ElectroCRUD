@@ -12,14 +12,18 @@ import {
   Icon,
   VStack,
 } from '@chakra-ui/react';
-import { FC, useContext, useMemo } from 'react';
+import { FC, useCallback, useContext, useEffect, useState } from 'react';
 import { VscGroupByRefType, VscUngroupByRefType } from 'react-icons/vsc';
 import { RippleButton } from '@electrocrud/buttons';
 import { ViewScopedContext } from 'renderer/contexts/view-scoped-context';
-import { useAppDispatch, useAppSelector } from 'renderer/store/hooks';
+import { useAppDispatch } from 'renderer/store/hooks';
 import { TemporaryFiltersReducer } from 'renderer/store/reducers';
 
 import { FilterBuilderWheres } from './filter-builder-wheres';
+import { StrictFilterRO } from 'renderer/defenitions/record-object';
+import memoize from 'proxy-memoize';
+import { useSelector } from 'react-redux';
+import { InlineSpinner } from 'renderer/components/icons';
 
 type FilterBuilderGroupProperties = {
   index?: number;
@@ -31,23 +35,33 @@ export const FilterBuilderWheresGroup: FC<FilterBuilderGroupProperties> = ({
   filterId,
 }) => {
   const { viewState } = useContext(ViewScopedContext);
+  const [isLoading, setIsLoading] = useState(true);
   const distpatch = useAppDispatch();
-  const allFiltersState = useAppSelector((state) => state.temporaryFilters);
-  const filterState = useMemo(
-    () =>
-      TemporaryFiltersReducer.getSelectors().selectById(
-        allFiltersState,
-        filterId
+  const filterState = useSelector<RootState, StrictFilterRO>(
+    useCallback(
+      memoize((state: RootState) =>
+        TemporaryFiltersReducer.getSelectors().selectById(
+          state.temporaryFilters,
+          filterId
+        )
       ),
-    [allFiltersState, filterId]
+      [filterId]
+    )
   );
-  const childFilersState = useMemo(
-    () =>
-      TemporaryFiltersReducer.getSelectors()
-        .selectAll(allFiltersState)
-        .filter((item) => item.parentId === filterId),
-    [allFiltersState, filterId]
+  const childFilersState = useSelector<RootState, StrictFilterRO>(
+    useCallback(
+      memoize((state: RootState) =>
+        TemporaryFiltersReducer.getSelectors()
+          .selectAll(state.temporaryFilters)
+          .filter((item) => item.parentId === filterId)
+      ),
+      [filterId]
+    )
   );
+
+  useEffect(() => {
+    setTimeout(() => setIsLoading(false), 3000);
+  }, [filterState, childFilersState]);
 
   return (
     <>
@@ -95,15 +109,16 @@ export const FilterBuilderWheresGroup: FC<FilterBuilderGroupProperties> = ({
                       _hover={{
                         transform: 'scale(1.3)',
                       }}
-                      onClick={() =>
+                      onClick={() => {
+                        setIsLoading(true);
                         distpatch(
                           TemporaryFiltersReducer.actions.upsertOne({
                             id: filterState.id,
                             and: !filterState.and,
                             viewId: viewState?.id,
                           })
-                        )
-                      }
+                        );
+                      }}
                     >
                       {filterState.and ? 'AND' : 'OR'}
                     </Button>
@@ -117,6 +132,7 @@ export const FilterBuilderWheresGroup: FC<FilterBuilderGroupProperties> = ({
                         index={index + 1}
                       />
                     ))}
+                    {isLoading && <InlineSpinner />}
                   </Box>
                 </Box>
               </Box>
@@ -129,6 +145,7 @@ export const FilterBuilderWheresGroup: FC<FilterBuilderGroupProperties> = ({
                   size="sm"
                   leftIcon={<Icon as={VscGroupByRefType} fontSize="lg" />}
                   onClick={() => {
+                    setIsLoading(true);
                     distpatch(
                       TemporaryFiltersReducer.actions.upsertOne(
                         {
@@ -154,6 +171,7 @@ export const FilterBuilderWheresGroup: FC<FilterBuilderGroupProperties> = ({
                   }}
                   onClick={() => {
                     if (filterState?.id) {
+                      setIsLoading(true);
                       distpatch(
                         TemporaryFiltersReducer.actions.removeOne(
                           filterState.id

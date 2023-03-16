@@ -16,7 +16,6 @@ import {
 } from 'react';
 import { TbListDetails, TbTrash } from 'react-icons/tb';
 import { TabsAPI } from '@electrocrud/tabs';
-import { FilterBuilder } from 'renderer/containers/filter-builder';
 import { ViewScopedContext } from 'renderer/contexts';
 import { usePolicy, useUpdateEffect } from 'renderer/hooks';
 import { IPCChannelEnum, QueryOrder } from '@electrocrud/shared';
@@ -26,7 +25,7 @@ import { ConfirmPromiseDeleteModal } from 'renderer/components/modals';
 import { useAppDispatch } from 'renderer/store/hooks';
 import { useIPCDeleteData, useIPCUpdateData } from 'renderer/ipc';
 import { ColumnRO } from 'renderer/defenitions/record-object';
-import { ToastReducer } from 'renderer/store/reducers';
+import { ToastReducer, ViewFiltersReducer } from 'renderer/store/reducers';
 import { delay, get, head, isArray, isEqual, omit } from 'underscore';
 import { useColumnsForTable } from '.';
 import {
@@ -35,6 +34,7 @@ import {
 } from '@electrocrud/tables';
 import { DataDetailsCard } from '../details';
 import { DataTableHeader } from './data-table-header';
+import { ConfirmPromiseFiltersModal } from 'renderer/components/modals';
 
 type DataTableCardProperties = {
   tabsReference?: MutableRefObject<TabsAPI | undefined>;
@@ -58,7 +58,6 @@ export const DataTableCard: FC<DataTableCardProperties> = ({
     control;
   const { viewState } = useContext(ViewScopedContext);
   const dispatch = useAppDispatch();
-  const [addFilterBox, setAddFilterBox] = useState<boolean>(false);
 
   const [selectedRows, setSelectedRows] = useState([]);
   /// const [gridRef, setGridRef] = useState(null);
@@ -69,9 +68,6 @@ export const DataTableCard: FC<DataTableCardProperties> = ({
 
   const setFilter = (name: string, value: string, close = false) => {
     setInternalFilter(value);
-    if (close) {
-      setAddFilterBox(false);
-    }
   };
 
   useEffect(() => {
@@ -262,22 +258,47 @@ export const DataTableCard: FC<DataTableCardProperties> = ({
 
   const dataSource = useCallback(loadData, [maskedData]);
 
+  const filtersModal = () => {
+    ConfirmPromiseFiltersModal(viewState)
+      .then((v: { action: string; value: Record<string, string> }) => {
+        switch (v.action) {
+          case 'apply': {
+            setFilter(v.value.name, JSON.parse(v.value.value));
+            return;
+          }
+          case 'save-and-apply': {
+            const newFilter = dispatch(
+              ViewFiltersReducer.actions.upsertOne({
+                name: v.value.name,
+                viewId: viewState?.id,
+                knexFilter: v.value.value,
+              })
+            );
+            console.log(newFilter);
+            if (newFilter && newFilter.payload.knexFilter) {
+              setFilter(
+                newFilter.payload.name,
+                JSON.parse(newFilter.payload.knexFilter)
+              );
+            }
+            return;
+          }
+        }
+      })
+      .catch(() => {});
+  };
+
   return (
     <Box p={0} m={0} flex={1} display="flex" flexDirection="column" h="100%">
       <CardHeader py={0}>
         <DataTableHeader
           setInternalFilter={setInternalFilter}
           setSearchValue={setSearchValue}
-          setAddFilterBox={setAddFilterBox}
+          openFiltersModal={filtersModal}
         />
       </CardHeader>
 
       <CardBody px={0} pb={0}>
-        {addFilterBox && (
-          <Box px={5} pb={5}>
-            <FilterBuilder setFilter={setFilter} />
-          </Box>
-        )}
         {dataItems && (
           <ReactDataGrid
             idProperty={primaryKeyColumn?.name}

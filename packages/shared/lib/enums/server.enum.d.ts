@@ -25,6 +25,6 @@ export declare enum QueryWhereOprEnum {
     LTE = "<=",
     IN = "in",
     NOT_IN = "not in",
-    LIKE = "LIKE"
+    LIKE = "like"
 }
 //# sourceMappingURL=server.enum.d.ts.map

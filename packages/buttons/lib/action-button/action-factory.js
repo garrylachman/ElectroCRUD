@@ -39,7 +39,7 @@ module.exports = __toCommonJS(action_factory_exports);
 var import_react = __toESM(require("react"));
 
 // src/action-button/action-factory.tsx
-var import_react7 = require("react");
+var import_react11 = require("react");
 
 // src/action-button/cancel-action-button.tsx
 var import_react3 = require("@chakra-ui/react");
@@ -230,6 +230,54 @@ var SaveActionButton = /* @__PURE__ */ __name((properties) => {
   return /* @__PURE__ */ import_react.default.createElement(import_react.default.Fragment, null, renderComponent(ButtonContent2));
 }, "SaveActionButton");
 
+// src/action-button/save-and-apply-filter-action-button.tsx
+var import_react7 = require("@chakra-ui/react");
+var import_react8 = require("react");
+var import_md3 = require("react-icons/md");
+var buttonProperties3 = {
+  bgColorScheme: "primary",
+  gap: 2,
+  variant: "solid"
+};
+var ButtonContent3 = /* @__PURE__ */ import_react.default.createElement(import_react.default.Fragment, null, /* @__PURE__ */ import_react.default.createElement(import_react7.Icon, {
+  as: import_md3.MdSave,
+  boxSize: 5
+}), /* @__PURE__ */ import_react.default.createElement(import_react7.Text, null, "Save & Apply Filter"));
+var SaveAndApplyFilterActionButton = /* @__PURE__ */ __name((properties) => {
+  const renderComponent = (0, import_react8.useCallback)((children) => ActionButton({
+    ...properties,
+    ...buttonProperties3,
+    children
+  }), [
+    properties
+  ]);
+  return /* @__PURE__ */ import_react.default.createElement(import_react.default.Fragment, null, renderComponent(ButtonContent3));
+}, "SaveAndApplyFilterActionButton");
+
+// src/action-button/apply-filter-action-button.tsx
+var import_react9 = require("@chakra-ui/react");
+var import_react10 = require("react");
+var import_md4 = require("react-icons/md");
+var buttonProperties4 = {
+  bgColorScheme: "primary",
+  gap: 2,
+  variant: "solid"
+};
+var ButtonContent4 = /* @__PURE__ */ import_react.default.createElement(import_react.default.Fragment, null, /* @__PURE__ */ import_react.default.createElement(import_react9.Icon, {
+  as: import_md4.MdSave,
+  boxSize: 5
+}), /* @__PURE__ */ import_react.default.createElement(import_react9.Text, null, "Apply Filter"));
+var ApplyFilterActionButton = /* @__PURE__ */ __name((properties) => {
+  const renderComponent = (0, import_react10.useCallback)((children) => ActionButton({
+    ...properties,
+    ...buttonProperties4,
+    children
+  }), [
+    properties
+  ]);
+  return /* @__PURE__ */ import_react.default.createElement(import_react.default.Fragment, null, renderComponent(ButtonContent4));
+}, "ApplyFilterActionButton");
+
 // src/action-button/action-factory.tsx
 function _extends3() {
   _extends3 = Object.assign || function(target) {
@@ -250,13 +298,17 @@ var ActionButtonType;
 (function(ActionButtonType2) {
   ActionButtonType2["SAVE"] = "SaveActionButton";
   ActionButtonType2["CANCEL"] = "CancelActionButton";
+  ActionButtonType2["APPLY_FILTER"] = "ApplyFilterActionButton";
+  ActionButtonType2["SAVE_AND_APPLY_FILTER"] = "SaveAndApplyFilterActionButton";
 })(ActionButtonType || (ActionButtonType = {}));
 var actionButtonMapping = {
   [ActionButtonType.SAVE]: SaveActionButton,
-  [ActionButtonType.CANCEL]: CancelActionButton
+  [ActionButtonType.CANCEL]: CancelActionButton,
+  [ActionButtonType.APPLY_FILTER]: ApplyFilterActionButton,
+  [ActionButtonType.SAVE_AND_APPLY_FILTER]: SaveAndApplyFilterActionButton
 };
 var ActionButtonsFactory = /* @__PURE__ */ __name(({ actionType, ...rest }) => {
-  const TargetComponent = (0, import_react7.useMemo)(() => actionButtonMapping[actionType], [
+  const TargetComponent = (0, import_react11.useMemo)(() => actionButtonMapping[actionType], [
     actionType
   ]);
   return /* @__PURE__ */ import_react.default.createElement(TargetComponent, _extends3({}, rest));

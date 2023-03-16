@@ -27,5 +27,5 @@ export enum QueryWhereOprEnum {
   LTE = '<=',
   IN = 'in',
   NOT_IN = 'not in',
-  LIKE = 'LIKE',
+  LIKE = 'like',
 }

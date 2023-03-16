@@ -31,6 +31,6 @@ var QueryWhereOprEnum;
     QueryWhereOprEnum["LTE"] = "<=";
     QueryWhereOprEnum["IN"] = "in";
     QueryWhereOprEnum["NOT_IN"] = "not in";
-    QueryWhereOprEnum["LIKE"] = "LIKE";
+    QueryWhereOprEnum["LIKE"] = "like";
 })(QueryWhereOprEnum = exports.QueryWhereOprEnum || (exports.QueryWhereOprEnum = {}));
 //# sourceMappingURL=server.enum.js.map

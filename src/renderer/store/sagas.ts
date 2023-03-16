@@ -104,7 +104,8 @@ function* notifyEntityDeleted(action: PayloadAction<string>) {
 }
 
 function* onFilterCreated(action) {
-  if (action.meta) {
+  console.log("onFilterCreated", action);
+  if (action.meta && action.meta.new) {
     yield put(
       TemporaryFilterRulesReducer.actions.upsertOne({
         filterId: action.payload.id,

@@ -29,6 +29,7 @@ const config: ForgeConfig = {
           verbose: true,
         },
       },
+      devContentSecurityPolicy: `default-src 'self' 'unsafe-inline' data: ws:; script-src 'self' 'unsafe-eval' 'unsafe-inline' data: http: ws:`,
       mainConfig,
       renderer: {
         config: rendererConfig,
