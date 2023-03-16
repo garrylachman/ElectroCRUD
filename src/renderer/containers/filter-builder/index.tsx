@@ -59,7 +59,7 @@ export const FilterBuilder: FC<FilterBuilderProperties> = ({
   }, []);
 
   if (filterId == undefined) {
-    return <InlineSpinner />;
+    return <InlineSpinner text="Initializing" />;
   }
 
   return (

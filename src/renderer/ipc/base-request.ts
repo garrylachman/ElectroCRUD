@@ -59,7 +59,9 @@ export const useBaseRequest = <T extends ResponseType>(
 
   useEffect(() => {
     setIsLoading(false);
-    setIsExecuted(true);
+    if (result?.body) {
+      setIsExecuted(true);
+    }
   }, [result]);
 
   return {

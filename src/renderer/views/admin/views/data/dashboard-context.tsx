@@ -25,7 +25,8 @@ export type DashboardContextControlType = [
   setPage: (argument0: number) => void,
   setOrder: (argument0: QueryOrder) => void,
   setSearch: (argument0: string) => void,
-  setFilter: (argument0: any) => void
+  setFilter: (argument0: any) => void,
+  setInited: (argument0: any) => void
 ];
 
 export type DashboardContextDataMetaType = {
@@ -56,6 +57,7 @@ const initial: DashboardContextType = {
     (value) => {},
     (value) => {},
     (value) => {},
+    (value) => {},
   ],
   status: [false, false],
 };
@@ -69,6 +71,7 @@ export const DashboardContext = createContext<DashboardContextType>(initial);
 export const DashboardContextProvider: FC<
   PropsWithChildren<DashboardContextProviderProperties>
 > = ({ viewId, children }) => {
+  const [inited, setInited] = useState(false);
   const sessionState = useAppSelector((state) => state.session);
   const [currentViewId, setCurrentViewId] = useState<string | undefined>(
     viewId
@@ -126,7 +129,7 @@ export const DashboardContextProvider: FC<
     },
   });
 
-  const debouncedExecute = throttle(execute, 1000);
+  const debouncedExecute = inited ? throttle(execute, 1000) : () => {};
 
   const control = [
     debouncedExecute,
@@ -135,6 +138,7 @@ export const DashboardContextProvider: FC<
     setOrder,
     setSearch,
     setFilter,
+    setInited,
   ];
   const status = [isLoading, isExecuted];
   const data = useMemo(
@@ -151,7 +155,9 @@ export const DashboardContextProvider: FC<
     [isExecuted, result?.body]
   );
 
-  useEffect(() => debouncedExecute, []);
+  useEffect(() => {
+    debouncedExecute();
+  }, [inited]);
 
   useUpdateEffect(() => {
     debouncedExecute();

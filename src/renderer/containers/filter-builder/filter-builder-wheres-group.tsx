@@ -132,7 +132,7 @@ export const FilterBuilderWheresGroup: FC<FilterBuilderGroupProperties> = ({
                         index={index + 1}
                       />
                     ))}
-                    {isLoading && <InlineSpinner />}
+                    {isLoading && <InlineSpinner text="Working..." />}
                   </Box>
                 </Box>
               </Box>
