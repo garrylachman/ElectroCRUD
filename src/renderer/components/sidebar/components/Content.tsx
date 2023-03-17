@@ -1,9 +1,8 @@
-/* eslint-disable unicorn/filename-case */
 import { Box, Flex, Stack } from '@chakra-ui/react';
-import { Brand } from './Brand';
-import { Links } from './Links';
+import { Brand } from './brand';
+import { Links } from './links';
 
-export function Content() {
+export const Content = () => {
   return (
     <Flex direction="column" height="100%">
       <Stack direction="column" m={0} p={0}>
@@ -18,4 +17,4 @@ export function Content() {
       </Stack>
     </Flex>
   );
-}
+};

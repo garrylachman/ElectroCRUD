@@ -3,10 +3,10 @@ import { Loader } from '@saas-ui/react';
 import { Suspense, useEffect, useState } from 'react';
 import { Outlet, useMatches } from 'react-router-dom';
 import { ECSpinner } from 'renderer/components/icons';
+import { Sidebar } from 'renderer/components/sidebar';
 
 import { ConsoleLog } from 'renderer/containers/console-log';
 import { Navbar } from '../../containers/navbar/navbar';
-import { Sidebar } from '../../components/sidebar/Sidebar';
 
 export default function Dashboard() {
   const [title, setTitle] = useState<string>();
