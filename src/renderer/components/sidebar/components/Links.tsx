@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/restrict-template-expressions */
 import {
   Box,
   Button,
@@ -11,15 +10,28 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import { LayoutGroup, motion } from 'framer-motion';
-import React, { useMemo } from 'react';
+import React, { CSSProperties, useMemo } from 'react';
+import { IconType } from 'react-icons';
 import { MdHome, MdSettings, MdViewList } from 'react-icons/md';
 import { TbArrowRight, TbEdit, TbSquarePlus, TbTable } from 'react-icons/tb';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { MotionBox } from 'renderer/components/motions/motion-box';
 import { useAppSelector } from 'renderer/store/hooks';
 import { ViewsReducer } from 'renderer/store/reducers';
+import { O } from 'ts-toolbelt';
 
-const iconhMotion = {
+type LinkItemType = {
+  to: string;
+  text: string;
+  icon: IconType;
+  hr?: boolean;
+  hide?: boolean;
+  style?: CSSProperties;
+};
+
+type TopLevelItemType = O.Merge<LinkItemType, { subLinks: LinkItemType[] }>;
+
+const iconMotion = {
   rest: {
     filter: 'drop-shadow(0 0 0rem #E9E3FF)brightness(1)',
     transition: {
@@ -38,16 +50,16 @@ const iconhMotion = {
 
 const menuItemMotion = {
   rest: {
-    backgroundColor: 'transparent',
+    backgroundColor: 'rgba(0, 0, 0, 0.0)',
     transition: {
-      duration: 2,
+      duration: 0.2,
       type: 'spring',
     },
   },
   hover: {
     backgroundColor: '#2b2e36',
     transition: {
-      duration: 1,
+      duration: 0.2,
       type: 'spring',
     },
   },
@@ -87,7 +99,7 @@ export function Links() {
     return location.pathname.includes(routeName);
   };
 
-  const viewsLinks = [
+  const viewsLinks: LinkItemType[] = [
     { to: 'add', text: 'Manage Views', icon: TbSquarePlus },
     ...sessionViews.map((view) => ({
       to: view.id,
@@ -96,7 +108,7 @@ export function Links() {
     })),
   ];
 
-  const links = [
+  const links: TopLevelItemType[] = [
     {
       to: 'settings',
       text: 'Settings',
@@ -117,30 +129,22 @@ export function Links() {
   ];
 
   return (
-    <Flex
-      align="left"
-      justifyContent="space-between"
-      w="100%"
-      flexDirection="column"
-      height="-webkit-fill-available"
-      as={MotionBox}
-      overflow="hidden"
-    >
+    <Flex w="100%" flexDirection="column" as={MotionBox} overflow="hidden">
       {links
         .filter((link) => !link.hide)
         .map((link) => (
           <React.Fragment key={link.to}>
             {link.hr && (
               <Divider
-                borderColor="#42454c"
+                borderColor="whiteAlpha.400"
                 my={3}
                 w="85%"
                 alignSelf="center"
               />
             )}
-            <HStack sx={link?.style} display="block" zIndex={1} w="95%">
+            <HStack sx={link?.style} display="block" zIndex={1}>
               <>
-                <NavLink to={link.to} style={{ width: '100%' }}>
+                <NavLink to={link.to}>
                   <Flex
                     as={motion.div}
                     w="100%"
@@ -166,14 +170,14 @@ export function Links() {
                       me="12px"
                       display="inline-flex"
                       as={motion.div}
-                      variants={iconhMotion}
+                      variants={iconMotion}
                       style={{
                         transition: '1s',
                         transitionTimingFunction: 'ease-in-out',
                       }}
                       filter={
                         activeRoute(link.to)
-                          ? iconhMotion.hover.filter
+                          ? iconMotion.hover.filter
                           : undefined
                       }
                     >
@@ -212,7 +216,7 @@ export function Links() {
                 <Box
                   as={Collapse}
                   in={activeRoute(link.to)}
-                  style={{ margin: '0px' }}
+                  marginInlineStart="0px !important"
                 >
                   <Flex
                     bgColor={
@@ -238,7 +242,7 @@ export function Links() {
                   >
                     {activeRoute(link.to) && link.subLinks.length > 0 ? (
                       <LayoutGroup>
-                        <VStack color="secondaryGray.600" fontWeight="100">
+                        <VStack color="secondaryGray.600">
                           {link.subLinks.map((subLink, subLinksIndex) => (
                             <motion.div
                               key={subLink.to}
@@ -307,14 +311,14 @@ export function Links() {
                                       display="inline-flex"
                                       alignItems="center"
                                       as={motion.div}
-                                      variants={iconhMotion}
+                                      variants={iconMotion}
                                       style={{
                                         transition: '1s',
                                         transitionTimingFunction: 'ease-in-out',
                                       }}
                                       filter={
                                         activeRoute(`${link.to}/${subLink.to}`)
-                                          ? iconhMotion.hover.filter
+                                          ? iconMotion.hover.filter
                                           : undefined
                                       }
                                     >
@@ -358,7 +362,6 @@ export function Links() {
                                       as={TbEdit}
                                       width="18px"
                                       height="18px"
-                                      display="block"
                                     />
                                   </Button>
                                 )}
