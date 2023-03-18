@@ -3,6 +3,7 @@ import { MakerSquirrel } from '@electron-forge/maker-squirrel';
 import { MakerZIP } from '@electron-forge/maker-zip';
 import { MakerDeb } from '@electron-forge/maker-deb';
 import { MakerRpm } from '@electron-forge/maker-rpm';
+import { PublisherGithub } from '@electron-forge/publisher-github';
 import { MakerFlatpak } from '@electron-forge/maker-flatpak';
 import { WebpackPlugin } from '@electron-forge/plugin-webpack';
 import path from 'node:path';
@@ -37,6 +38,15 @@ const config: ForgeConfig = {
         categories: ['Utility'],
         files: [],
       },
+    }),
+  ],
+  publishers: [
+    new PublisherGithub({
+      repository: {
+        owner: 'garrylachman',
+        name: 'electrocrud',
+      },
+      prerelease: true,
     }),
   ],
   plugins: [
