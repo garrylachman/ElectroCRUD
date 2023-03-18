@@ -67,6 +67,7 @@ export const FilterBuilderWhere: FC<
     }
   }, [state.opr]);
 
+  // eslint-disable-next-line @typescript-eslint/require-await
   const loadColumns = async (inputValue = '') =>
     viewState?.columns
       .filter((item) =>
@@ -96,6 +97,7 @@ export const FilterBuilderWhere: FC<
     [QueryWhereOprEnum.NOT_IN, 'Not in'],
   ].map((item) => ({ label: item[1], value: item[0] }));
 
+  // eslint-disable-next-line @typescript-eslint/require-await
   const loadOprs = async (inputValue = '') =>
     oprsList.filter((item) =>
       item.label.toLowerCase().includes(inputValue.toLowerCase())
@@ -156,8 +158,11 @@ export const FilterBuilderWhere: FC<
             variant="flushed"
             h="36px"
             value={state.value}
-            onChange={(e) =>
-              setState((previous) => ({ ...previous, value: e.target.value }))
+            onChange={(event) =>
+              setState((previous) => ({
+                ...previous,
+                value: event.target.value,
+              }))
             }
             placeholder="Value"
           />
