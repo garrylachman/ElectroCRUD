@@ -35,6 +35,7 @@
     "framer-motion": "^9.0.2",
     "react": "^18.2.0",
     "react-icons": "^4.7.1",
-    "ts-toolbelt": "^9.6.0"
+    "ts-toolbelt": "^9.6.0",
+    "@electrocrud/buttons": "link:../buttons"
   }
 }
