@@ -29,6 +29,7 @@ jobs:
       - name: Install and build
         run: |
           yarn install
+          yarn run build
 
   publish:
     runs-on: ${{ matrix.os }}

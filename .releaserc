@@ -1,4 +1,19 @@
 {
   "branches": ["+([0-9])?(.{+([0-9]),x}).x", "master", { "name": "develop", "prerelease": true }, { "name": "151-fix-make-package", "prerelease": true }],
-  "plugins": ["@semantic-release/commit-analyzer", "@semantic-release/release-notes-generator", "@semantic-release/github"]
+  "plugins": [
+    "@semantic-release/commit-analyzer",
+    "@semantic-release/release-notes-generator",
+    ["@semantic-release/npm", {
+      "npmPublish": false
+    }],
+    ["@semantic-release/exec", {
+      "prepareCmd": "yarn run make"
+    }],
+    ["@semantic-release/github", {
+      "assets": [
+        { "path": "out/make/zip/darwin/**/ElectroCRUD*.zip", "name": "ElectroCRUD-mac-${nextRelease.gitTag}.zip",  "label": "ElectroCRUD MacOS (${nextRelease.gitTag})" },
+        { "path": "out/make/zip/win32/**/ElectroCRUD*.zip", "name": "ElectroCRUD-windows-${nextRelease.gitTag}.zip", "label": "ElectroCRUD Windows (${nextRelease.gitTag})" },
+        { "path": "out/make/zip/linbux/**/ElectroCRUD*.zip", "name": "ElectroCRUD-linux-${nextRelease.gitTag}.zip", "label": "ElectroCRUD Linux (${nextRelease.gitTag})" }
+    ]}]
+  ]
 }
