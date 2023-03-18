@@ -3,6 +3,7 @@ import { MakerSquirrel } from '@electron-forge/maker-squirrel';
 import { MakerZIP } from '@electron-forge/maker-zip';
 import { MakerDeb } from '@electron-forge/maker-deb';
 import { MakerRpm } from '@electron-forge/maker-rpm';
+import { MakerFlatpak } from '@electron-forge/maker-flatpak';
 import { WebpackPlugin } from '@electron-forge/plugin-webpack';
 import path from 'node:path';
 import { mainConfig } from './config/webpack.main.config';
@@ -15,26 +16,44 @@ const config: ForgeConfig = {
   },
   rebuildConfig: {},
   makers: [
-    new MakerSquirrel({}),
-    new MakerZIP({}, ['darwin']),
-    new MakerRpm({}),
-    new MakerDeb({}),
+    new MakerSquirrel({
+      authors: 'Garry Lachman',
+    }),
+    new MakerZIP({}, ['darwin', 'win32', 'linux']),
+    new MakerRpm({
+      options: {
+        homepage: 'https://github.com/garrylachman/ElectroCRUD',
+      },
+    }),
+    new MakerDeb({
+      options: {
+        categories: ['Utility'],
+        maintainer: 'Garry Lachman',
+        homepage: 'https://github.com/garrylachman/ElectroCRUD',
+      },
+    }),
+    new MakerFlatpak({
+      options: {
+        categories: ['Utility'],
+        files: [],
+      },
+    }),
   ],
   plugins: [
     new WebpackPlugin({
       devServer: {
         liveReload: false,
         headers: { 'Access-Control-Allow-Origin': '*' },
-        historyApiFallback: {
-          verbose: true,
-        },
+        historyApiFallback: { verbose: true },
       },
+      // @ts-ignore
       devContentSecurityPolicy: `default-src 'self' 'unsafe-inline' data: ws:; script-src 'self' 'unsafe-eval' 'unsafe-inline' data: http: ws:`,
       mainConfig,
       renderer: {
         config: rendererConfig,
         entryPoints: [
           {
+            // @ts-ignore
             rhmr: 'react-hot-loader/patch',
             html: path.join(sourceRendererPath, 'index.html'),
             js: path.join(sourceRendererPath, 'index.tsx'),

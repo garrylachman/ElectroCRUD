@@ -7322,305 +7322,8 @@ var init_index_all = __esm({
   }
 });
 
-// ../../node_modules/arc-is/index.js
-var nativeTable, arc_is_default;
-var init_arc_is = __esm({
-  "../../node_modules/arc-is/index.js"() {
-    init_react_import();
-    nativeTable = {
-      "[object Array]": "Array",
-      "[object ArrayBuffer]": "ArrayBuffer",
-      "[object Boolean]": "Boolean",
-      "[object DataView]": "DataView",
-      "[object Date]": "Date",
-      "[object Error]": "Error",
-      "[object EvalError]": "EvalError",
-      "[object Float32Array]": "Float32Array",
-      "[object Float64Array]": "Float64Array",
-      "[object Function]": "Function",
-      "[object AsyncFunction]": "AsyncFunction",
-      "[object Int8Array]": "Int8Array",
-      "[object Int16Array]": "Int16Array",
-      "[object Int32Array]": "Int32Array",
-      "[object Map]": "Map",
-      "[object Number]": "Number",
-      "[object Object]": "Object",
-      "[object Proxy]": "Proxy",
-      "[object Promise]": "Promise",
-      "[object RangeError]": "RangeError",
-      "[object ReferenceError]": "ReferenceError",
-      "[object RegExp]": "RegExp",
-      "[object Set]": "Set",
-      "[object String]": "String",
-      "[object Symbol]": "Symbol",
-      "[object SyntaxError]": "SyntaxError",
-      "[object TypeError]": "TypeError",
-      "[object Uint8Array]": "Uint8Array",
-      "[object Uint8ClampedArray]": "Uint8ClampedArray",
-      "[object Uint16Array]": "Uint16Array",
-      "[object Uint32Array]": "Uint32Array",
-      "[object URIError]": "URIError",
-      "[object WeakMap]": "WeakMap",
-      "[object WeakSet]": "WeakSet"
-    };
-    arc_is_default = /* @__PURE__ */ __name((_val, _objType) => {
-      let $return, toString2;
-      if (_val === void 0) {
-        return _objType ? "Undefined" : "undefined";
-      }
-      if (_val === null) {
-        return _objType ? "Null" : "null";
-      }
-      $return = nativeTable[Object.prototype.toString.call(_val)];
-      if ($return === "Number") {
-        if (isNaN(_val)) {
-          return !_objType ? "nan" : "NaN";
-        }
-        if (!isFinite(_val)) {
-          return !_objType ? "infinity" : "Infinity";
-        }
-      }
-      if (!_objType && $return) {
-        return $return.toLowerCase() || "object";
-      }
-      if (_val.toString) {
-        toString2 = _val.toString().match(/\[object ([^\]]*)\]/);
-      }
-      if (!toString2) {
-        toString2 = Object.prototype.toString.call(_val).match(/\[object ([^\]]*)\]/);
-      }
-      if (!toString2) {
-        return $return;
-      }
-      return !_objType ? toString2[1].toLowerCase() : toString2[1];
-    }, "default");
-  }
-});
-
-// ../../node_modules/arc-hash/index.js
-var arc_hash_exports = {};
-__export(arc_hash_exports, {
-  default: () => arc_hash_default
-});
-var import_crypto, ArcHash, arc_hash_default;
-var init_arc_hash = __esm({
-  "../../node_modules/arc-hash/index.js"() {
-    init_react_import();
-    import_crypto = __toESM(require("crypto"), 1);
-    init_arc_is();
-    ArcHash = /* @__PURE__ */ __name(class ArcHash2 {
-      static md5(_unknown, _secret = "") {
-        switch (arc_is_default(_unknown)) {
-          case "object":
-            return ArcHash2.object(_unknown, "md5", _secret);
-          case "array":
-            return ArcHash2.array(_unknown, "md5", _secret);
-          default:
-            const hmac = _secret ? import_crypto.default.createHmac("md5", _secret) : import_crypto.default.createHash("md5");
-            hmac.update(_unknown);
-            return hmac.digest("hex");
-        }
-      }
-      static sha256(_unknown, _secret = "") {
-        switch (arc_is_default(_unknown)) {
-          case "object":
-            return ArcHash2.object(_unknown, "sha256", _secret);
-          case "array":
-            return ArcHash2.array(_unknown, "sha256", _secret);
-          default:
-            const hmac = _secret ? import_crypto.default.createHmac("sha256", _secret) : import_crypto.default.createHash("sha256");
-            hmac.update(_unknown);
-            return hmac.digest("hex");
-        }
-      }
-      static object(_object, _algorithm, _secret = "") {
-        const joinedStr = Object.keys(_object).sort().reduce((_join, _key) => {
-          switch (arc_is_default(_object[_key])) {
-            case "object":
-              return _join + _key + ArcHash2.object(_object[_key], _algorithm, _secret);
-            case "array":
-              return _join + _key + ArcHash2.array(_object[_key], _algorithm, _secret);
-            default:
-              return _join + _key + String(_object[_key]);
-          }
-        }, "");
-        return _algorithm === "sha256" ? ArcHash2.sha256(joinedStr, _secret) : ArcHash2.md5(joinedStr, _secret);
-      }
-      static array(_array, _algorithm, _secret = "") {
-        const joinedStr = _array.reduce((_join, _val) => {
-          switch (arc_is_default(_val)) {
-            case "object":
-              return _join + ArcHash2.object(_val, _algorithm, _secret);
-            case "array":
-              return _join + ArcHash2.array(_val, _algorithm, _secret);
-            default:
-              return _join + String(_val);
-          }
-        }, "");
-        return _algorithm === "sha256" ? ArcHash2.sha256(joinedStr, _secret) : ArcHash2.md5(joinedStr, _secret);
-      }
-    }, "ArcHash");
-    arc_hash_default = ArcHash;
-  }
-});
-
-// ../../node_modules/flatted/cjs/index.js
-var require_cjs = __commonJS({
-  "../../node_modules/flatted/cjs/index.js"(exports) {
-    "use strict";
-    init_react_import();
-    var { parse: $parse, stringify: $stringify } = JSON;
-    var { keys: keys2 } = Object;
-    var Primitive = String;
-    var primitive = "string";
-    var ignore = {};
-    var object2 = "object";
-    var noop2 = /* @__PURE__ */ __name((_3, value) => value, "noop");
-    var primitives = /* @__PURE__ */ __name((value) => value instanceof Primitive ? Primitive(value) : value, "primitives");
-    var Primitives = /* @__PURE__ */ __name((_3, value) => typeof value === primitive ? new Primitive(value) : value, "Primitives");
-    var revive = /* @__PURE__ */ __name((input, parsed, output, $) => {
-      const lazy = [];
-      for (let ke = keys2(output), { length } = ke, y = 0; y < length; y++) {
-        const k = ke[y];
-        const value = output[k];
-        if (value instanceof Primitive) {
-          const tmp = input[value];
-          if (typeof tmp === object2 && !parsed.has(tmp)) {
-            parsed.add(tmp);
-            output[k] = ignore;
-            lazy.push({
-              k,
-              a: [
-                input,
-                parsed,
-                tmp,
-                $
-              ]
-            });
-          } else
-            output[k] = $.call(output, k, tmp);
-        } else if (output[k] !== ignore)
-          output[k] = $.call(output, k, value);
-      }
-      for (let { length } = lazy, i = 0; i < length; i++) {
-        const { k, a } = lazy[i];
-        output[k] = $.call(output, k, revive.apply(null, a));
-      }
-      return output;
-    }, "revive");
-    var set = /* @__PURE__ */ __name((known, input, value) => {
-      const index = Primitive(input.push(value) - 1);
-      known.set(value, index);
-      return index;
-    }, "set");
-    var parse = /* @__PURE__ */ __name((text, reviver) => {
-      const input = $parse(text, Primitives).map(primitives);
-      const value = input[0];
-      const $ = reviver || noop2;
-      const tmp = typeof value === object2 && value ? revive(input, /* @__PURE__ */ new Set(), value, $) : value;
-      return $.call({
-        "": tmp
-      }, "", tmp);
-    }, "parse");
-    exports.parse = parse;
-    var stringify = /* @__PURE__ */ __name((value, replacer, space) => {
-      const $ = replacer && typeof replacer === object2 ? (k, v) => k === "" || -1 < replacer.indexOf(k) ? v : void 0 : replacer || noop2;
-      const known = /* @__PURE__ */ new Map();
-      const input = [];
-      const output = [];
-      let i = +set(known, input, $.call({
-        "": value
-      }, "", value));
-      let firstRun = !i;
-      while (i < input.length) {
-        firstRun = true;
-        output[i] = $stringify(input[i++], replace, space);
-      }
-      return "[" + output.join(",") + "]";
-      function replace(key, value2) {
-        if (firstRun) {
-          firstRun = !firstRun;
-          return value2;
-        }
-        const after2 = $.call(this, key, value2);
-        switch (typeof after2) {
-          case object2:
-            if (after2 === null)
-              return after2;
-          case primitive:
-            return known.get(after2) || set(known, input, after2);
-        }
-        return after2;
-      }
-      __name(replace, "replace");
-    }, "stringify");
-    exports.stringify = stringify;
-    var toJSON = /* @__PURE__ */ __name((any) => $parse(stringify(any)), "toJSON");
-    exports.toJSON = toJSON;
-    var fromJSON = /* @__PURE__ */ __name((any) => parse($stringify(any)), "fromJSON");
-    exports.fromJSON = fromJSON;
-  }
-});
-
-// ../utils/lib/index.js
-var require_lib = __commonJS({
-  "../utils/lib/index.js"(exports, module2) {
-    init_react_import();
-    var __create2 = Object.create;
-    var __defProp2 = Object.defineProperty;
-    var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
-    var __getOwnPropNames2 = Object.getOwnPropertyNames;
-    var __getProtoOf2 = Object.getPrototypeOf;
-    var __hasOwnProp2 = Object.prototype.hasOwnProperty;
-    var __export2 = /* @__PURE__ */ __name((target, all) => {
-      for (var name in all)
-        __defProp2(target, name, {
-          get: all[name],
-          enumerable: true
-        });
-    }, "__export");
-    var __copyProps2 = /* @__PURE__ */ __name((to, from, except, desc) => {
-      if (from && typeof from === "object" || typeof from === "function") {
-        for (let key of __getOwnPropNames2(from))
-          if (!__hasOwnProp2.call(to, key) && key !== except)
-            __defProp2(to, key, {
-              get: () => from[key],
-              enumerable: !(desc = __getOwnPropDesc2(from, key)) || desc.enumerable
-            });
-      }
-      return to;
-    }, "__copyProps");
-    var __toESM2 = /* @__PURE__ */ __name((mod, isNodeMode, target) => (target = mod != null ? __create2(__getProtoOf2(mod)) : {}, __copyProps2(
-      // If the importer is in node compatibility mode or this is not an ESM
-      // file that has been converted to a CommonJS file using a Babel-
-      // compatible transform (i.e. "__esModule" has not been set), then set
-      // "default" to the CommonJS "module.exports" for node compatibility.
-      isNodeMode || !mod || !mod.__esModule ? __defProp2(target, "default", {
-        value: mod,
-        enumerable: true
-      }) : target,
-      mod
-    )), "__toESM");
-    var __toCommonJS2 = /* @__PURE__ */ __name((mod) => __copyProps2(__defProp2({}, "__esModule", {
-      value: true
-    }), mod), "__toCommonJS");
-    var src_exports = {};
-    __export2(src_exports, {
-      ObjectID: () => ObjectID
-    });
-    module2.exports = __toCommonJS2(src_exports);
-    var import_arc_hash = __toESM2((init_arc_hash(), __toCommonJS(arc_hash_exports)));
-    var import_flatted = require_cjs();
-    var ObjectID = /* @__PURE__ */ __name(class {
-      static id(input) {
-        return import_arc_hash.default.md5((0, import_flatted.stringify)(input));
-      }
-    }, "ObjectID");
-  }
-});
-
 // ../buttons/lib/index.js
-var require_lib2 = __commonJS({
+var require_lib = __commonJS({
   "../buttons/lib/index.js"(exports, module2) {
     init_react_import();
     var __create2 = Object.create;
@@ -7672,6 +7375,7 @@ var require_lib2 = __commonJS({
       ActionButtonsFactory: () => ActionButtonsFactory,
       ActionsDropdownMenu: () => ActionsDropdownMenu,
       AddButton: () => AddButton,
+      ApplyFilterActionButton: () => ApplyFilterActionButton,
       CancelButton: () => CancelButton,
       DeleteButton: () => DeleteButton,
       DeleteIconButton: () => DeleteIconButton,
@@ -7679,6 +7383,7 @@ var require_lib2 = __commonJS({
       LockButton: () => LockButton,
       RippleButton: () => RippleButton2,
       SaveActionButton: () => SaveActionButton,
+      SaveAndApplyFilterActionButton: () => SaveAndApplyFilterActionButton,
       SaveButton: () => SaveButton
     });
     module2.exports = __toCommonJS2(src_exports);
@@ -7815,7 +7520,6 @@ var require_lib2 = __commonJS({
     var import_underscore14 = (init_index_all(), __toCommonJS(index_all_exports));
     var import_react52 = require("react");
     var import_md22 = require("react-icons/md");
-    var import_utils = require_lib();
     function _extends3() {
       _extends3 = Object.assign || function(target) {
         for (var i = 1; i < arguments.length; i++) {
@@ -7836,15 +7540,7 @@ var require_lib2 = __commonJS({
       const cachedItems = (0, import_react52.useMemo)(() => items.map((item, itemIndex) => {
         return {
           ...item,
-          key: import_utils.ObjectID.id((0, import_underscore14.omit)({
-            ...item,
-            itemIndex
-          }, [
-            "props",
-            "text.props",
-            "text.type",
-            "text._owner"
-          ]))
+          key: (0, import_underscore14.uniqueId)("Actions-Menu-Item-")
         };
       }), [
         items
@@ -7858,7 +7554,8 @@ var require_lib2 = __commonJS({
           0
         ],
         strategy: "fixed",
-        placement: "bottom-end"
+        placement: "bottom-end",
+        isLazy: true
       }, ({ isOpen }) => /* @__PURE__ */ import_react5.default.createElement(import_react42.Box, null, /* @__PURE__ */ import_react5.default.createElement(import_react42.MenuButton, {
         isActive: isOpen,
         borderBottomRightRadius: isOpen ? 0 : 10,
@@ -8076,7 +7773,7 @@ var require_lib2 = __commonJS({
       ]);
       return /* @__PURE__ */ import_react5.default.createElement(import_react5.default.Fragment, null, renderComponent(ButtonContent));
     }, "SaveActionButton");
-    var import_react13 = require("react");
+    var import_react17 = require("react");
     var import_react11 = require("@chakra-ui/react");
     var import_react12 = require("react");
     var import_md5 = require("react-icons/md");
@@ -8099,6 +7796,50 @@ var require_lib2 = __commonJS({
       ]);
       return /* @__PURE__ */ import_react5.default.createElement(import_react5.default.Fragment, null, renderComponent(ButtonContent2));
     }, "CancelActionButton");
+    var import_react13 = require("@chakra-ui/react");
+    var import_react14 = require("react");
+    var import_md6 = require("react-icons/md");
+    var buttonProperties3 = {
+      bgColorScheme: "primary",
+      gap: 2,
+      variant: "solid"
+    };
+    var ButtonContent3 = /* @__PURE__ */ import_react5.default.createElement(import_react5.default.Fragment, null, /* @__PURE__ */ import_react5.default.createElement(import_react13.Icon, {
+      as: import_md6.MdSave,
+      boxSize: 5
+    }), /* @__PURE__ */ import_react5.default.createElement(import_react13.Text, null, "Save & Apply Filter"));
+    var SaveAndApplyFilterActionButton = /* @__PURE__ */ __name2((properties) => {
+      const renderComponent = (0, import_react14.useCallback)((children) => ActionButton({
+        ...properties,
+        ...buttonProperties3,
+        children
+      }), [
+        properties
+      ]);
+      return /* @__PURE__ */ import_react5.default.createElement(import_react5.default.Fragment, null, renderComponent(ButtonContent3));
+    }, "SaveAndApplyFilterActionButton");
+    var import_react15 = require("@chakra-ui/react");
+    var import_react16 = require("react");
+    var import_md7 = require("react-icons/md");
+    var buttonProperties4 = {
+      bgColorScheme: "primary",
+      gap: 2,
+      variant: "solid"
+    };
+    var ButtonContent4 = /* @__PURE__ */ import_react5.default.createElement(import_react5.default.Fragment, null, /* @__PURE__ */ import_react5.default.createElement(import_react15.Icon, {
+      as: import_md7.MdSave,
+      boxSize: 5
+    }), /* @__PURE__ */ import_react5.default.createElement(import_react15.Text, null, "Apply Filter"));
+    var ApplyFilterActionButton = /* @__PURE__ */ __name2((properties) => {
+      const renderComponent = (0, import_react16.useCallback)((children) => ActionButton({
+        ...properties,
+        ...buttonProperties4,
+        children
+      }), [
+        properties
+      ]);
+      return /* @__PURE__ */ import_react5.default.createElement(import_react5.default.Fragment, null, renderComponent(ButtonContent4));
+    }, "ApplyFilterActionButton");
     function _extends10() {
       _extends10 = Object.assign || function(target) {
         for (var i = 1; i < arguments.length; i++) {
@@ -8119,13 +7860,17 @@ var require_lib2 = __commonJS({
     (function(ActionButtonType2) {
       ActionButtonType2["SAVE"] = "SaveActionButton";
       ActionButtonType2["CANCEL"] = "CancelActionButton";
+      ActionButtonType2["APPLY_FILTER"] = "ApplyFilterActionButton";
+      ActionButtonType2["SAVE_AND_APPLY_FILTER"] = "SaveAndApplyFilterActionButton";
     })(ActionButtonType || (ActionButtonType = {}));
     var actionButtonMapping = {
       [ActionButtonType.SAVE]: SaveActionButton,
-      [ActionButtonType.CANCEL]: CancelActionButton
+      [ActionButtonType.CANCEL]: CancelActionButton,
+      [ActionButtonType.APPLY_FILTER]: ApplyFilterActionButton,
+      [ActionButtonType.SAVE_AND_APPLY_FILTER]: SaveAndApplyFilterActionButton
     };
     var ActionButtonsFactory = /* @__PURE__ */ __name2(({ actionType, ...rest2 }) => {
-      const TargetComponent = (0, import_react13.useMemo)(() => actionButtonMapping[actionType], [
+      const TargetComponent = (0, import_react17.useMemo)(() => actionButtonMapping[actionType], [
         actionType
       ]);
       return /* @__PURE__ */ import_react5.default.createElement(TargetComponent, _extends10({}, rest2));
@@ -8144,7 +7889,7 @@ var import_react3 = require("@chakra-ui/react");
 var import_framer_motion = require("framer-motion");
 var import_react4 = require("react");
 var import_md = require("react-icons/md");
-var import_buttons = __toESM(require_lib2());
+var import_buttons = __toESM(require_lib());
 
 // src/pane-context.tsx
 init_react_import();
@@ -8318,7 +8063,4 @@ chroma-js/chroma.js:
    *
    * @preserve
    *)
-
-flatted/cjs/index.js:
-  (*! (c) 2020 Andrea Giammarchi *)
 */

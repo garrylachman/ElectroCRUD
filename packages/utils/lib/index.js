@@ -4,6 +4,7 @@ var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
 var __getOwnPropNames = Object.getOwnPropertyNames;
 var __getProtoOf = Object.getPrototypeOf;
 var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __name = (target, value) => __defProp(target, "name", { value, configurable: true });
 var __export = (target, all) => {
   for (var name in all)
     __defProp(target, name, { get: all[name], enumerable: true });
@@ -35,13 +36,64 @@ module.exports = __toCommonJS(src_exports);
 
 // src/helpers/object-id.ts
 var import_arc_hash = __toESM(require("arc-hash"));
-var import_flatted = require("flatted");
+
+// ../../node_modules/flatted/esm/index.js
+var { parse: $parse, stringify: $stringify } = JSON;
+var { keys } = Object;
+var Primitive = String;
+var primitive = "string";
+var object = "object";
+var noop = /* @__PURE__ */ __name((_, value) => value, "noop");
+var set = /* @__PURE__ */ __name((known, input, value) => {
+  const index = Primitive(input.push(value) - 1);
+  known.set(value, index);
+  return index;
+}, "set");
+var stringify = /* @__PURE__ */ __name((value, replacer, space) => {
+  const $ = replacer && typeof replacer === object ? (k, v) => k === "" || -1 < replacer.indexOf(k) ? v : void 0 : replacer || noop;
+  const known = /* @__PURE__ */ new Map();
+  const input = [];
+  const output = [];
+  let i = +set(known, input, $.call({
+    "": value
+  }, "", value));
+  let firstRun = !i;
+  while (i < input.length) {
+    firstRun = true;
+    output[i] = $stringify(input[i++], replace, space);
+  }
+  return "[" + output.join(",") + "]";
+  function replace(key, value2) {
+    if (firstRun) {
+      firstRun = !firstRun;
+      return value2;
+    }
+    const after = $.call(this, key, value2);
+    switch (typeof after) {
+      case object:
+        if (after === null)
+          return after;
+      case primitive:
+        return known.get(after) || set(known, input, after);
+    }
+    return after;
+  }
+  __name(replace, "replace");
+}, "stringify");
+
+// src/helpers/object-id.ts
 var ObjectID = class {
   static id(input) {
-    return import_arc_hash.default.md5((0, import_flatted.stringify)(input));
+    return import_arc_hash.default.md5(stringify(input));
   }
 };
+__name(ObjectID, "ObjectID");
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   ObjectID
 });
+/*! Bundled license information:
+
+flatted/esm/index.js:
+  (*! (c) 2020 Andrea Giammarchi *)
+*/
