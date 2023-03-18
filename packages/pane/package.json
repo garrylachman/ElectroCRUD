@@ -23,7 +23,7 @@
     "url": "git+https://github.com/garrylachman/ElectroCRUD.git"
   },
   "scripts": {
-    "build": "tsup src --target esnext -d ./lib --dts --tsconfig tsconfig.build.json --inject ./react-import.ts --loader '.scss=css'",
+    "build": "tsup src --target esnext -d ./lib --dts --tsconfig tsconfig.build.json --inject ./react-import.ts",
     "tsc": "tsc",
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
