@@ -1,4 +1,4 @@
-import './tabs.scss';
+import './tabs.css';
 import {
   Flex,
   FlexProps,

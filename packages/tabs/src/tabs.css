@@ -1,9 +1,9 @@
-.chakra-tabs__tab[aria-selected=true] {
+.chakra-tabs__tab[aria-selected='true'] {
   position: relative;
   border-bottom: 0px;
 }
 
-.chakra-tabs__tab[aria-selected=true]::after{
+.chakra-tabs__tab[aria-selected='true']::after {
   content: '';
   position: absolute;
   width: 0px;
