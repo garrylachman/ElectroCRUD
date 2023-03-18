@@ -1,8 +1,9 @@
 {
+  "productName": "ElectroCRUD",
   "name": "electrocrud",
   "displayName": "ElectroCRUD",
-  "version": "3.0.0",
-  "description": "",
+  "version": "0.0.0-development",
+  "description": "ElectroCRUD is Open Source Database CRUD (Create, Read, Update, Delete) Software.",
   "keywords": [
     "electron",
     "boilerplate",
@@ -20,7 +21,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/garrylachman/ElectroCRUD.git"
+    "url": "https://github.com/garrylachman/ElectroCRUD.git"
   },
   "license": "MIT",
   "author": {
@@ -35,7 +36,10 @@
     "prepare": "husky install",
     "start": "cross-env NODE_ENV=development DEBUG=\"node-ts-cache,knex:*\" electron-forge start",
     "test": "NODE_OPTIONS=--experimental-vm-modules npx jest packages",
-    "make": "electron-forge make"
+    "make": "electron-forge make",
+    "publish": "electron-forge publish",
+    "build": "yarn exec lerna run build",
+    "semantic-release": "semantic-release"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
@@ -82,12 +86,12 @@
     "@day1co/fastcase": "github:garrylachman/fastcase#main",
     "@electrocrud/buttons": "link:./packages/buttons",
     "@electrocrud/feedback": "link:./packages/feedback",
+    "@electrocrud/layouts": "link:./packages/layouts",
+    "@electrocrud/pane": "link:./packages/pane",
     "@electrocrud/shared": "link:./packages/shared",
     "@electrocrud/tables": "link:./packages/tables",
     "@electrocrud/tabs": "link:./packages/tabs",
-    "@electrocrud/layouts": "link:./packages/layouts",
     "@electrocrud/utils": "link:./packages/utils",
-    "@electrocrud/pane": "link:./packages/pane",
     "@emotion/cache": "^11.7.1",
     "@emotion/react": "^11",
     "@emotion/styled": "^11",
@@ -172,14 +176,22 @@
     "react-dom": "^18.0.0"
   },
   "devDependencies": {
+    "@commitlint/cli": "^17.4.4",
+    "@commitlint/config-conventional": "^17.4.4",
     "@electron-forge/cli": "^6.0.5",
     "@electron-forge/maker-deb": "^6.0.5",
+    "@electron-forge/maker-flatpak": "^6.0.5",
     "@electron-forge/maker-rpm": "^6.0.5",
     "@electron-forge/maker-squirrel": "^6.0.5",
     "@electron-forge/maker-zip": "^6.0.5",
     "@electron-forge/plugin-webpack": "^6.0.5",
+    "@electron-forge/publisher-github": "^6.0.5",
     "@jest/globals": "^29.4.1",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.7",
+    "@semantic-release/commit-analyzer": "^9.0.2",
+    "@semantic-release/github": "^8.0.7",
+    "@semantic-release/npm": "^9.0.2",
+    "@semantic-release/release-notes-generator": "^10.0.3",
     "@sqltools/formatter": "^1.2.5",
     "@svgr/webpack": "^6.3.1",
     "@swc-node/jest": "^1.6.1",
@@ -218,6 +230,7 @@
     "dockerode": "^3.3.4",
     "dockerode-compose": "^1.3.2",
     "electron": "^22.0.0",
+    "electron-builder": "^23.6.0",
     "electron-devtools-installer": "^3.2.0",
     "electron-mock-ipc": "^0.3.12",
     "eslint": "^8.28.0",
@@ -257,6 +270,7 @@
     "react-test-renderer": "^18.2.0",
     "sass": "^1.54.4",
     "sass-loader": "^13.0.2",
+    "semantic-release": "^20.1.3",
     "style-loader": "^3.3.1",
     "terser-webpack-plugin": "^5.3.5",
     "ts-jest": "^29.0.5",
@@ -280,7 +294,7 @@
     "@chakra-ui/system": "2.4.0"
   },
   "devEngines": {
-    "node": ">=14.x",
+    "node": ">=18.x",
     "yarn": ">=1.22.x"
   },
   "electronmon": {

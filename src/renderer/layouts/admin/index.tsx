@@ -14,6 +14,7 @@ export default function Dashboard() {
   useEffect(() => {
     const t = matches
       .filter((match) => Boolean((match.handle as any)?.title))
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       .map((match) => (match.handle as any)?.title)
       .pop();
     setTitle(t);

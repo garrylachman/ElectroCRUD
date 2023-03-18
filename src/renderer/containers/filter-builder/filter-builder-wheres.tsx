@@ -29,6 +29,7 @@ export const FilterBuilderWheres: FC<FilterBuilderWheresProperties> = ({
     useCallback(
       memoize((state: RootState) =>
         TemporaryFilterRulesReducer.getSelectors()
+          // @ts-ignore
           .selectAll(state.temporaryFilterRules)
           .filter((item) => item.filterId === filterId)
       ),

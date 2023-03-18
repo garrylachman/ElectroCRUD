@@ -13,16 +13,15 @@ interface DarwinMenuItemConstructorOptions extends MenuItemConstructorOptions {
 
 export default class MenuBuilder {
   mainWindow: BrowserWindow;
+  isDevelopment: boolean;
 
-  constructor(mainWindow: BrowserWindow) {
+  constructor(mainWindow: BrowserWindow, isDevelopment = false) {
     this.mainWindow = mainWindow;
+    this.isDevelopment = isDevelopment;
   }
 
   buildMenu(): Menu {
-    if (
-      process.env.NODE_ENV === 'production' ||
-      process.env.DEBUG_PROD === 'true'
-    ) {
+    if (this.isDevelopment) {
       this.setupDevelopmentEnvironment();
     }
 
@@ -38,8 +37,8 @@ export default class MenuBuilder {
   }
 
   setupDevelopmentEnvironment(): void {
-    this.mainWindow.webContents.on('context-menu', (_, props) => {
-      const { x, y } = props;
+    this.mainWindow.webContents.on('context-menu', (_, properties) => {
+      const { x, y } = properties;
 
       Menu.buildFromTemplate([
         {
@@ -54,17 +53,15 @@ export default class MenuBuilder {
 
   buildDarwinTemplate(): MenuItemConstructorOptions[] {
     const subMenuAbout: DarwinMenuItemConstructorOptions = {
-      label: 'Electron',
+      label: 'ElectroCRUD',
       submenu: [
         {
-          label: 'About ElectronReact',
+          label: 'About ElectroCRUD',
           selector: 'orderFrontStandardAboutPanel:',
         },
         { type: 'separator' },
-        { label: 'Services', submenu: [] },
-        { type: 'separator' },
         {
-          label: 'Hide ElectronReact',
+          label: 'Hide ElectroCRUD',
           accelerator: 'Command+H',
           selector: 'hide:',
         },
@@ -100,7 +97,7 @@ export default class MenuBuilder {
         },
       ],
     };
-    const subMenuViewDev: MenuItemConstructorOptions = {
+    const subMenuViewDevelopment: MenuItemConstructorOptions = {
       label: 'View',
       submenu: [
         {
@@ -126,7 +123,7 @@ export default class MenuBuilder {
         },
       ],
     };
-    const subMenuViewProd: MenuItemConstructorOptions = {
+    const subMenuViewProduction: MenuItemConstructorOptions = {
       label: 'View',
       submenu: [
         {
@@ -157,37 +154,17 @@ export default class MenuBuilder {
         {
           label: 'Learn More',
           click() {
-            shell.openExternal('https://electronjs.org');
-          },
-        },
-        {
-          label: 'Documentation',
-          click() {
-            shell.openExternal(
-              'https://github.com/electron/electron/tree/main/docs#readme'
+            void shell.openExternal(
+              'https://github.com/garrylachman/ElectroCRUD'
             );
-          },
-        },
-        {
-          label: 'Community Discussions',
-          click() {
-            shell.openExternal('https://www.electronjs.org/community');
-          },
-        },
-        {
-          label: 'Search Issues',
-          click() {
-            shell.openExternal('https://github.com/electron/electron/issues');
           },
         },
       ],
     };
 
-    const subMenuView =
-      process.env.NODE_ENV === 'production' ||
-      process.env.DEBUG_PROD === 'true'
-        ? subMenuViewDev
-        : subMenuViewProd;
+    const subMenuView = this.isDevelopment
+      ? subMenuViewDevelopment
+      : subMenuViewProduction;
 
     return [subMenuAbout, subMenuEdit, subMenuView, subMenuWindow, subMenuHelp];
   }
@@ -197,10 +174,6 @@ export default class MenuBuilder {
       {
         label: '&File',
         submenu: [
-          {
-            label: '&Open',
-            accelerator: 'Ctrl+O',
-          },
           {
             label: '&Close',
             accelerator: 'Ctrl+W',
@@ -212,45 +185,43 @@ export default class MenuBuilder {
       },
       {
         label: '&View',
-        submenu:
-          process.env.NODE_ENV === 'production' ||
-          process.env.DEBUG_PROD === 'true'
-            ? [
-                {
-                  label: '&Reload',
-                  accelerator: 'Ctrl+R',
-                  click: () => {
-                    this.mainWindow.webContents.reload();
-                  },
+        submenu: this.isDevelopment
+          ? [
+              {
+                label: '&Reload',
+                accelerator: 'Ctrl+R',
+                click: () => {
+                  this.mainWindow.webContents.reload();
                 },
-                {
-                  label: 'Toggle &Full Screen',
-                  accelerator: 'F11',
-                  click: () => {
-                    this.mainWindow.setFullScreen(
-                      !this.mainWindow.isFullScreen()
-                    );
-                  },
+              },
+              {
+                label: 'Toggle &Full Screen',
+                accelerator: 'F11',
+                click: () => {
+                  this.mainWindow.setFullScreen(
+                    !this.mainWindow.isFullScreen()
+                  );
                 },
-                {
-                  label: 'Toggle &Developer Tools',
-                  accelerator: 'Alt+Ctrl+I',
-                  click: () => {
-                    this.mainWindow.webContents.toggleDevTools();
-                  },
+              },
+              {
+                label: 'Toggle &Developer Tools',
+                accelerator: 'Alt+Ctrl+I',
+                click: () => {
+                  this.mainWindow.webContents.toggleDevTools();
                 },
-              ]
-            : [
-                {
-                  label: 'Toggle &Full Screen',
-                  accelerator: 'F11',
-                  click: () => {
-                    this.mainWindow.setFullScreen(
-                      !this.mainWindow.isFullScreen()
-                    );
-                  },
+              },
+            ]
+          : [
+              {
+                label: 'Toggle &Full Screen',
+                accelerator: 'F11',
+                click: () => {
+                  this.mainWindow.setFullScreen(
+                    !this.mainWindow.isFullScreen()
+                  );
                 },
-              ],
+              },
+            ],
       },
       {
         label: 'Help',
@@ -258,27 +229,9 @@ export default class MenuBuilder {
           {
             label: 'Learn More',
             click() {
-              shell.openExternal('https://electronjs.org');
-            },
-          },
-          {
-            label: 'Documentation',
-            click() {
-              shell.openExternal(
-                'https://github.com/electron/electron/tree/main/docs#readme'
+              void shell.openExternal(
+                'https://github.com/garrylachman/ElectroCRUD'
               );
-            },
-          },
-          {
-            label: 'Community Discussions',
-            click() {
-              shell.openExternal('https://www.electronjs.org/community');
-            },
-          },
-          {
-            label: 'Search Issues',
-            click() {
-              shell.openExternal('https://github.com/electron/electron/issues');
             },
           },
         ],

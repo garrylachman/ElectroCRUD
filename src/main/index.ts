@@ -11,14 +11,15 @@ declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
 
 RegisterServices();
 
+// eslint-disable-next-line unicorn/prefer-module
 if (require('electron-squirrel-startup')) {
   app.quit();
 }
 
-// eslint-disable-next-line import/no-mutable-exports, unicorn/no-null
-export let mainWindow: BrowserWindow | null = null;
+export let mainWindow: BrowserWindow | null;
 
 if (process.env.NODE_ENV === 'production') {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires, unicorn/prefer-module
   const sourceMapSupport = require('source-map-support');
   sourceMapSupport.install();
 }
@@ -27,16 +28,21 @@ const isDebug =
   process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true';
 
 if (isDebug) {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires, unicorn/prefer-module
   require('electron-debug')();
 }
 
+// eslint-disable-next-line @typescript-eslint/require-await
 const installExtensions = async () => {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires, unicorn/prefer-module
   const installer = require('electron-devtools-installer');
   const forceDownload = !!process.env.UPGRADE_EXTENSIONS;
   const extensions = ['REACT_DEVELOPER_TOOLS'];
 
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   return installer
     .default(
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       extensions.map((name) => installer[name]),
       forceDownload
     )
@@ -49,7 +55,8 @@ const createWindow = async () => {
   }
 
   const RESOURCES_PATH = isDebug
-    ? path.join(__dirname, '../../assets')
+    ? // eslint-disable-next-line unicorn/prefer-module
+      path.join(__dirname, '../../assets')
     : path.join(process.resourcesPath, 'assets');
 
   const getAssetPath = (paths: string): string => {
@@ -69,7 +76,7 @@ const createWindow = async () => {
 
   const config: Splashscreen.Config = {
     windowOpts: mainOptions,
-    templateUrl: SPLASH_SCREEN_WEBPACK_ENTRY.replace("file://", ""),
+    templateUrl: SPLASH_SCREEN_WEBPACK_ENTRY.replace('file://', ''),
     minVisible: 5000,
     delay: 0,
     splashScreenOpts: {
@@ -84,13 +91,13 @@ const createWindow = async () => {
   };
 
   mainWindow = Splashscreen.initSplashScreen(config);
-  mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
+  void mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
 
   mainWindow.on('ready-to-show', () => {
     InitServices();
   });
 
-  const menuBuilder = new MenuBuilder(mainWindow);
+  const menuBuilder = new MenuBuilder(mainWindow, isDebug);
   menuBuilder.buildMenu();
 };
 

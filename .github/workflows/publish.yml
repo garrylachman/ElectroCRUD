@@ -1,39 +1,55 @@
 name: Publish
 
-#on: push
- on:
+on:
   push:
     branches:
-      - main
+      - develop
 
 jobs:
-  publish:
+  build:
     runs-on: ${{ matrix.os }}
 
     strategy:
       matrix:
-        os: [macos-latest]
+        os: [macos-latest, ubuntu-latest, windows-latest]
 
     steps:
       - name: Checkout git repo
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          persist-credentials: false
 
       - name: Install Node and Yarn
         uses: actions/setup-node@v3
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
-          node-version: 16.18.1
+          node-version: 18.11.0
 
       - name: Install and build
         run: |
           yarn install
-          yarn run postinstall
-          yarn run build
-          cd release/app && yarn
 
-      - name: Publish releases
+  publish:
+    runs-on: ${{ matrix.os }}
+    needs: build
+    steps:
+      - name: Release
         env:
-          # This is used for uploading release assets to github
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          yarn run ci-release
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npx semantic-release
+
+      #- name: Build/release Electron app
+      #  uses: samuelmeuli/action-electron-builder@v1
+      #  with:
+      #    # GitHub token, automatically provided to the action
+      #    # (No need to define this secret in the repo settings)
+      #    github_token: ${{ secrets.GITHUB_TOKEN }}
+      #
+      #    # If the commit is tagged with a version (e.g. "v1.0.0"),
+      #    # release the app after building
+      #    release: ${{ startsWith(github.ref, 'refs/tags/v') }}
+
+      #- name: 'Electro Forge Publish'
+      #  run: yarn run publish
