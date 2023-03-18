@@ -26,13 +26,22 @@ jobs:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           node-version: 18.11.0
 
-      - name: Install and build
-        run: |
-          yarn install
-          yarn run build
+      - name: Install deps
+        run: yarn install
+
+      - name: Install global lerna
+        run: yarn global add lerna
+
+      - name: Build packages
+        run: yarn run build
 
   publish:
     runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest, windows-latest]
+
     needs: build
     steps:
       - name: Release

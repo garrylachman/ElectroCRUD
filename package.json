@@ -38,7 +38,7 @@
     "test": "NODE_OPTIONS=--experimental-vm-modules npx jest packages",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
-    "build": "yarn exec lerna run build",
+    "build": "yarn lerna run build",
     "semantic-release": "semantic-release"
   },
   "lint-staged": {
