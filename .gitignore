@@ -36,4 +36,4 @@ out/
 .webpack
 dist
 
-packages/*/lib
+packages/**/lib
