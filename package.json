@@ -32,12 +32,12 @@
   "main": ".webpack/main",
   "scripts": {
     "lint": "eslint --ext .ts,.tsx .",
-    "package": "electron-forge package",
+    "package": "electron-forge --max_old_space_size=8192 package",
     "prepare": "husky install",
     "start": "cross-env NODE_ENV=development DEBUG=\"node-ts-cache,knex:*\" electron-forge start",
     "test": "NODE_OPTIONS=--experimental-vm-modules npx jest packages",
-    "make": "electron-forge make",
-    "publish": "electron-forge publish",
+    "make": "electron-forge --max_old_space_size=8192 make",
+    "publish": "electron-forge --max_old_space_size=8192 publish",
     "build": "yarn lerna run build",
     "semantic-release": "semantic-release"
   },
@@ -308,6 +308,6 @@
   },
   "workspaces": [
     "packages/*"
-  ],
+  ], 
   "private": true
 }
