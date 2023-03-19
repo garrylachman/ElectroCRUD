@@ -20,6 +20,10 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
 
+      - name: apt-get install
+        if: matrix.os == 'ubuntu-latest'
+        run: sudo apt-get install -y flatpak flatpak-builder elfutils rpm
+
       - name: Install Node and Yarn
         uses: actions/setup-node@v3
         with:
