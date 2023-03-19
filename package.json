@@ -21,7 +21,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/garrylachman/ElectroCRUD.git"
+    "url": "github:garrylachman/ElectroCRUD"
   },
   "license": "MIT",
   "author": {
