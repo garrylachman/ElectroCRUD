@@ -20,8 +20,8 @@ const config: ForgeConfig = {
     new MakerSquirrel({
       authors: 'Garry Lachman',
     }),
-    new MakerZIP({}, ['darwin', 'win32', 'linux']),
-    new MakerRpm({
+    new MakerZIP({}, ['darwin']),
+    /*   new MakerRpm({
       options: {
         homepage: 'https://github.com/garrylachman/ElectroCRUD',
       },
@@ -33,6 +33,7 @@ const config: ForgeConfig = {
         homepage: 'https://github.com/garrylachman/ElectroCRUD',
       },
     }),
+    */
     new MakerFlatpak({
       options: {
         categories: ['Utility'],
