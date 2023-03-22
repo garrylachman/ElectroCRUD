@@ -2508,9 +2508,38 @@
   version "0.0.0"
   uid ""
 
+"@electrocrud/buttons@link:packages/buttons":
+  version "3.0.0"
+  dependencies:
+    "@chakra-ui/react" "^2.4.9"
+    "@electrocrud/utils" "link:./packages/utils"
+    arc-hash "^3.0.0"
+    chroma-js "^2.4.2"
+    csstype "^3.1.1"
+    eslint-plugin-prettier "^4.2.1"
+    flatted "^3.2.7"
+    framer-motion "^9.0.2"
+    react "^18.2.0"
+    react-icons "^4.7.1"
+    ts-toolbelt "^9.6.0"
+    underscore "^1.13.6"
+
 "@electrocrud/feedback@link:./packages/feedback":
   version "0.0.0"
   uid ""
+
+"@electrocrud/feedback@link:packages/feedback":
+  version "3.0.0"
+  dependencies:
+    "@chakra-ui/react" "^2.4.9"
+    "@saas-ui/react" "^1.9.1"
+    chroma-js "^2.4.2"
+    csstype "^3.1.1"
+    framer-motion "^9.0.2"
+    react "^18.2.0"
+    react-icons "^4.7.1"
+    ts-toolbelt "^9.6.0"
+    underscore "^1.13.6"
 
 "@electrocrud/layouts@link:./packages/layouts":
   version "0.0.0"
@@ -2529,6 +2558,18 @@
   uid ""
 
 "@electrocrud/tabs@link:./packages/tabs":
+  version "3.0.0"
+  dependencies:
+    "@chakra-ui/react" "^2.4.9"
+    "@electrocrud/feedback" "link:packages/feedback"
+    csstype "^3.1.1"
+    framer-motion "^9.0.2"
+    react "^18.2.0"
+    react-icons "^4.7.1"
+    ts-toolbelt "^9.6.0"
+    underscore "^1.13.6"
+
+"@electrocrud/tabs@link:packages/tabs":
   version "0.0.0"
   uid ""
 
