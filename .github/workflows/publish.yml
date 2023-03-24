@@ -22,7 +22,7 @@ jobs:
 
       - name: apt-get install
         if: matrix.os == 'ubuntu-latest'
-        run: sudo apt update -y && sudo apt-get install -y snapd rpm
+        run: sudo apt update -y && sudo apt-get install -y snapd rpm snapcraft
 
       - name: Install Node and Yarn
         uses: actions/setup-node@v3
