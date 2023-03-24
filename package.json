@@ -182,6 +182,7 @@
     "@electron-forge/maker-deb": "^6.0.5",
     "@electron-forge/maker-flatpak": "^6.0.5",
     "@electron-forge/maker-rpm": "^6.0.5",
+    "@electron-forge/maker-snap": "^6.0.5",
     "@electron-forge/maker-squirrel": "^6.0.5",
     "@electron-forge/maker-zip": "^6.0.5",
     "@electron-forge/plugin-webpack": "^6.0.5",

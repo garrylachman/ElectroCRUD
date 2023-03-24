@@ -2686,6 +2686,16 @@
   optionalDependencies:
     electron-installer-redhat "^3.2.0"
 
+"@electron-forge/maker-snap@^6.0.5":
+  version "6.0.5"
+  resolved "https://registry.npmjs.org/@electron-forge/maker-snap/-/maker-snap-6.0.5.tgz#0ece4e92bcf6d174e7eb68157abdb995109ffd78"
+  integrity sha512-caduuUTViLOcbFU9T5OsmdtuujNMQ6VvGD6iYL8CBrnnRZZKi5sQVHfQZRQNlssvx73j9QS0OGynN1Nzlz0uAQ==
+  dependencies:
+    "@electron-forge/maker-base" "6.0.5"
+    "@electron-forge/shared-types" "6.0.5"
+  optionalDependencies:
+    electron-installer-snap "^5.1.0"
+
 "@electron-forge/maker-squirrel@^6.0.5":
   version "6.0.5"
   resolved "https://registry.npmjs.org/@electron-forge/maker-squirrel/-/maker-squirrel-6.0.5.tgz#5db8d31af2feea66e4f37ef10ef1ddb5cf4e0a90"
@@ -9833,6 +9843,22 @@ electron-installer-redhat@^3.2.0:
     fs-extra "^9.0.0"
     lodash "^4.17.15"
     word-wrap "^1.2.3"
+    yargs "^16.0.2"
+
+electron-installer-snap@^5.1.0:
+  version "5.2.0"
+  resolved "https://registry.npmjs.org/electron-installer-snap/-/electron-installer-snap-5.2.0.tgz#8dd637dc94d4279d790d728b7bdb23fe9415377d"
+  integrity sha512-SRm7pCpNHMXV545JjScV8fLC9NhFli5r8L8Ju4EHdXwRh76+mwrJoUEDLItixBudZ5Mcgz1SJcDPJfWpEQWX7Q==
+  dependencies:
+    "@malept/cross-spawn-promise" "^1.0.0"
+    debug "^4.3.4"
+    electron-installer-common "^0.10.2"
+    fs-extra "^9.0.0"
+    js-yaml "^3.10.0"
+    lodash "^4.17.15"
+    semver "^7.1.1"
+    tmp-promise "^3.0.2"
+    which "^2.0.1"
     yargs "^16.0.2"
 
 electron-is-accelerator@^0.1.0:

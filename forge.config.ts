@@ -3,6 +3,7 @@ import { MakerSquirrel } from '@electron-forge/maker-squirrel';
 import { MakerZIP } from '@electron-forge/maker-zip';
 import { MakerDeb } from '@electron-forge/maker-deb';
 import { MakerRpm } from '@electron-forge/maker-rpm';
+import { MakerSnap } from '@electron-forge/maker-snap';
 import { PublisherGithub } from '@electron-forge/publisher-github';
 import { MakerFlatpak } from '@electron-forge/maker-flatpak';
 import { WebpackPlugin } from '@electron-forge/plugin-webpack';
@@ -34,10 +35,14 @@ const config: ForgeConfig = {
       },
     }),
     */
-    new MakerFlatpak({
+    new MakerSnap({
       options: {
-        categories: ['Utility'],
-        files: [],
+        features: {
+          audio: true,
+          mpris: 'org.electrocrud',
+          webgl: true,
+        },
+        summary: 'ElectroCRUD v3',
       },
     }),
   ],
