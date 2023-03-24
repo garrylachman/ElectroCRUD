@@ -15,6 +15,7 @@ import { sourceMainPath, sourceRendererPath } from './config/webpack.paths';
 const config: ForgeConfig = {
   packagerConfig: {
     asar: false,
+    executableName: 'electrocrud',
   },
   rebuildConfig: {},
   makers: [
@@ -38,6 +39,7 @@ const config: ForgeConfig = {
     new MakerAppImage({
       options: {
         categories: ['Utility'],
+        bin: 'electrocrud',
       },
     }),
   ],
