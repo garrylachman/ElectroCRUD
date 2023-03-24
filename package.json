@@ -3,7 +3,7 @@
   "name": "electrocrud",
   "displayName": "ElectroCRUD",
   "version": "0.0.0-development",
-  "description": "ElectroCRUD is Open Source Database CRUD (Create, Read, Update, Delete) Software.",
+  "description": "Free CRUD software with source code available for modification and distribution",
   "keywords": [
     "electron",
     "boilerplate",
