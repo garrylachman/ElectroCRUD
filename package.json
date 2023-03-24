@@ -32,12 +32,10 @@
   "main": ".webpack/main",
   "scripts": {
     "lint": "eslint --ext .ts,.tsx .",
-    "package": "electron-forge package",
     "prepare": "husky install",
     "start": "cross-env NODE_ENV=development DEBUG=\"node-ts-cache,knex:*\" electron-forge start",
     "test": "NODE_OPTIONS=--experimental-vm-modules npx jest packages",
     "make": "cross-env NODE_OPTIONS='--max-old-space-size=8192' DEBUG=* electron-forge make",
-    "publish": "electron-forge publish",
     "build": "yarn lerna run build",
     "semantic-release": "semantic-release"
   },
@@ -189,6 +187,7 @@
     "@electron-forge/publisher-github": "^6.0.5",
     "@jest/globals": "^29.4.1",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.7",
+    "@reforged/maker-appimage": "^3.1.8",
     "@semantic-release/commit-analyzer": "^9.0.2",
     "@semantic-release/exec": "^6.0.3",
     "@semantic-release/github": "^8.0.7",

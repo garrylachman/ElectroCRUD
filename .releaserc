@@ -4,11 +4,14 @@
     "@semantic-release/commit-analyzer",
     "@semantic-release/release-notes-generator",
     ["@semantic-release/npm"],
+    ["@semantic-release/exec", {
+      "prepareCmd": "yarn run make"
+    }],
     ["@semantic-release/github", {
       "assets": [
         { "path": "out/make/zip/darwin/**/ElectroCRUD*.zip", "name": "ElectroCRUD-mac-${nextRelease.gitTag}.zip",  "label": "ElectroCRUD MacOS (${nextRelease.gitTag})" },
-        { "path": "out/make/zip/win32/**/ElectroCRUD*.zip", "name": "ElectroCRUD-windows-${nextRelease.gitTag}.zip", "label": "ElectroCRUD Windows (${nextRelease.gitTag})" },
-        { "path": "out/make/zip/linux/**/ElectroCRUD*.zip", "name": "ElectroCRUD-linux-${nextRelease.gitTag}.zip", "label": "ElectroCRUD Linux (${nextRelease.gitTag})" }
+        { "path": "out/make/zip/**/ElectroCRUD*.exe", "name": "ElectroCRUD-windows-${nextRelease.gitTag}.exe", "label": "ElectroCRUD Windows (${nextRelease.gitTag})" },
+        { "path": "out/make/AppImage/**/ElectroCRUD*.AppImage", "name": "ElectroCRUD-linux-${nextRelease.gitTag}.AppImage", "label": "ElectroCRUD Linux (${nextRelease.gitTag})" }
     ]}]
   ]
 }

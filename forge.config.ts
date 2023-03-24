@@ -5,7 +5,7 @@ import { MakerDeb } from '@electron-forge/maker-deb';
 import { MakerRpm } from '@electron-forge/maker-rpm';
 import { MakerSnap } from '@electron-forge/maker-snap';
 import { PublisherGithub } from '@electron-forge/publisher-github';
-import { MakerFlatpak } from '@electron-forge/maker-flatpak';
+import { MakerAppImage } from '@reforged/maker-appimage';
 import { WebpackPlugin } from '@electron-forge/plugin-webpack';
 import path from 'node:path';
 import { mainConfig } from './config/webpack.main.config';
@@ -35,11 +35,9 @@ const config: ForgeConfig = {
       },
     }),
     */
-    new MakerSnap({
-      features: {
-        audio: true,
-        mpris: 'org.electrocrud',
-        webgl: true,
+    new MakerAppImage({
+      options: {
+        categories: ['Utility'],
       },
     }),
   ],
