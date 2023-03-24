@@ -36,13 +36,10 @@ const config: ForgeConfig = {
     }),
     */
     new MakerSnap({
-      options: {
-        features: {
-          audio: true,
-          mpris: 'org.electrocrud',
-          webgl: true,
-        },
-        summary: 'ElectroCRUD v3',
+      features: {
+        audio: true,
+        mpris: 'org.electrocrud',
+        webgl: true,
       },
     }),
   ],
