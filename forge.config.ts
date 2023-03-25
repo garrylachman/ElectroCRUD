@@ -40,6 +40,7 @@ const config: ForgeConfig = {
       options: {
         categories: ['Utility'],
         bin: 'electrocrud',
+        icon: 'assets/icon.png',
       },
     }),
   ],
