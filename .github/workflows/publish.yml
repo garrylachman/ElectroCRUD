@@ -1,9 +1,16 @@
 name: Publish
 
 on:
+  workflow_dispatch:
   push:
-    branches:
-      - develop
+    tags:
+      - '*'
+
+concurrency:
+  # The concurrency group contains the workflow name and the branch name for
+  # pull requests or the commit hash for any other events.
+  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.head_ref || github.sha }}
+  cancel-in-progress: true
 
 jobs:
   build-and-publish:
@@ -22,16 +29,17 @@ jobs:
 
       - name: apt-get install
         if: matrix.os == 'ubuntu-latest'
-        run: sudo apt update -y && sudo apt-get install -y snapd rpm snapcraft
+        run: sudo apt update -y && sudo apt-get install -y snapd rpm snapcraft fakeroot dpkg
 
       - name: Install Node and Yarn
         uses: actions/setup-node@v3
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           node-version: 18.11.0
+          cache: 'yarn'
 
       - name: Install deps
-        run: yarn --frozen-lockfile install
+        run: yarn install
 
       - name: Install global lerna
         run: yarn global add lerna
@@ -39,11 +47,25 @@ jobs:
       - name: Build packages
         run: yarn run build
 
-      - name: Release
+      - name: Build/release Electron app
+        uses: kl13nt/action-electron-forge@master
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: yarn semantic-release
+          REFORGED_APPIMAGEKIT_CUSTOM_FILENAME: ElectroCRUD-linux
+
+        with:
+          # GitHub token, automatically provided to the action
+          # (No need to define this secret in the repo settings)
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+          # If the commit is tagged with a version (e.g. "v1.0.0"),
+          # release the app after building
+          release: ${{ startsWith(github.ref, 'refs/tags/v') }}
+
+      #- name: Release
+      #  env:
+      #    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #    NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      #  run: yarn semantic-release
 
       #- name: Build/release Electron app
       #  uses: samuelmeuli/action-electron-builder@v1
