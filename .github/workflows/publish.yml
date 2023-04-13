@@ -48,10 +48,9 @@ jobs:
         run: yarn run build
 
       - name: Build/release Electron app
-        uses: kl13nt/action-electron-forge@master
+        uses: samuelmeuli/action-electron-builder@v1
         env:
           REFORGED_APPIMAGEKIT_CUSTOM_FILENAME: ElectroCRUD-linux
-
         with:
           # GitHub token, automatically provided to the action
           # (No need to define this secret in the repo settings)
