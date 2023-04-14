@@ -48,7 +48,7 @@ jobs:
         run: yarn run build
 
       - name: Build Electron app
-        yarn: yarn run make
+        run: yarn run make
         env:
           # GitHub token, automatically provided to the action
           # (No need to define this secret in the repo settings)
