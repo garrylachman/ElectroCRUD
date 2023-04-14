@@ -47,14 +47,12 @@ jobs:
       - name: Build packages
         run: yarn run build
 
-      - name: Build/release Electron app
-        uses: samuelmeuli/action-electron-builder@v1
+      - name: Build Electron app
+        yarn: yarn run make
         env:
-          REFORGED_APPIMAGEKIT_CUSTOM_FILENAME: ElectroCRUD-linux
-        with:
           # GitHub token, automatically provided to the action
           # (No need to define this secret in the repo settings)
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
           # If the commit is tagged with a version (e.g. "v1.0.0"),
           # release the app after building
