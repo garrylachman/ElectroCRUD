@@ -22,6 +22,7 @@ export const mainConfig: Configuration = {
     oracledb: 'oracledb',
     'pg-native': 'pg-native',
     'better-sqlite3': 'better-sqlite3',
+    'cpu-features': 'cpu-features',
   },
   // Put your normal webpack config below here
   module: {
