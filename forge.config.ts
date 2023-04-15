@@ -23,7 +23,7 @@ const config: ForgeConfig = {
       authors: 'Garry Lachman',
     }),
     new MakerZIP({}, ['darwin']),
-    /*   new MakerRpm({
+    new MakerRpm({
       options: {
         homepage: 'https://github.com/garrylachman/ElectroCRUD',
       },
@@ -35,7 +35,7 @@ const config: ForgeConfig = {
         homepage: 'https://github.com/garrylachman/ElectroCRUD',
       },
     }),
-    */
+    /*
     new MakerAppImage({
       options: {
         categories: ['Utility'],
@@ -43,6 +43,7 @@ const config: ForgeConfig = {
         icon: 'assets/icon.png',
       },
     }),
+    */
   ],
   publishers: [
     new PublisherGithub({
