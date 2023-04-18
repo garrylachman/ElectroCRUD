@@ -3,8 +3,8 @@ name: Publish
 on:
   workflow_dispatch:
   push:
-    tags:
-      - '*'
+    branches:
+      - develop
 
 jobs:
   build-and-publish:
@@ -41,22 +41,22 @@ jobs:
       - name: Build packages
         run: yarn run build
 
-      - name: Build Electron app
-        run: yarn run make
-        env:
-          # GitHub token, automatically provided to the action
-          # (No need to define this secret in the repo settings)
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-          # If the commit is tagged with a version (e.g. "v1.0.0"),
-          # release the app after building
-          release: ${{ startsWith(github.ref, 'refs/tags/v') }}
-
-      #- name: Release
+      #- name: Build Electron app
+      #  run: yarn run make
       #  env:
+      #    # GitHub token, automatically provided to the action
+      #    # (No need to define this secret in the repo settings)
       #    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #    NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-      #  run: yarn semantic-release
+
+      #    # If the commit is tagged with a version (e.g. "v1.0.0"),
+      #    # release the app after building
+      #    release: ${{ startsWith(github.ref, 'refs/tags/v') }}
+
+      - name: Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: yarn semantic-release
 
       #- name: Build/release Electron app
       #  uses: samuelmeuli/action-electron-builder@v1
