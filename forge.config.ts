@@ -46,13 +46,13 @@ const config: ForgeConfig = {
     */
   ],
   publishers: [
-    new PublisherGithub({
+    /*  new PublisherGithub({
       repository: {
         owner: 'garrylachman',
         name: 'electrocrud',
       },
       prerelease: true,
-    }),
+    }),*/
   ],
   plugins: [
     new WebpackPlugin({
