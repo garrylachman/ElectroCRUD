@@ -10,7 +10,6 @@ concurrency: ci-${{ github.workflow }}
 
 jobs:
   build-and-publish:
-    concurrency: ci-build
     runs-on: ${{ matrix.os }}
 
     strategy:
@@ -23,6 +22,12 @@ jobs:
         with:
           fetch-depth: 0
           token: ${{ secrets.GH_TOKEN_SEMANTIC_RELEASE }}
+
+      - name: Set up mutex
+        uses: ben-z/gh-action-mutex@v1.0-alpha-7
+      - run: |
+          echo "Mutex: protect multiple job"
+          sleep 30
 
       - name: apt-get install
         if: matrix.os == 'ubuntu-latest'
