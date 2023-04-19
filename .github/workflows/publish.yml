@@ -6,6 +6,8 @@ on:
     branches:
       - develop
 
+concurrency: ci-${{ github.workflow }}
+
 jobs:
   build-and-publish:
     runs-on: ${{ matrix.os }}
