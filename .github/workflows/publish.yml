@@ -23,11 +23,9 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.GH_TOKEN_SEMANTIC_RELEASE }}
 
-      - name: Set up mutex
-        uses: ben-z/gh-action-mutex@v1.0-alpha-7
-      - run: |
-          echo "Mutex: protect multiple job"
-          sleep 30
+      - uses: shogo82148/actions-mutex@v1
+        with:
+          key: build-mutex
 
       - name: apt-get install
         if: matrix.os == 'ubuntu-latest'
