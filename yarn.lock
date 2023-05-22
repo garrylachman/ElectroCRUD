@@ -8716,7 +8716,7 @@ cosmiconfig@^7.0.0, cosmiconfig@^7.0.1:
     path-type "^4.0.0"
     yaml "^1.10.0"
 
-cosmiconfig@^8.0.0:
+cosmiconfig@^8.0.0, cosmiconfig@^8.1.0:
   version "8.1.3"
   resolved "https://registry.npmjs.org/cosmiconfig/-/cosmiconfig-8.1.3.tgz#0e614a118fcc2d9e5afc2f87d53cd09931015689"
   integrity sha512-/UkO2JKI18b5jVMJUp0lvKFMpa/Gye+ZgZjKD+DGEN9y7NRcf/nK1A0sp67ONmKtnDCNMS44E6jrk0Yc3bDuUw==
@@ -18262,6 +18262,22 @@ selfsigned@^2.1.1:
   integrity sha512-GSL3aowiF7wa/WtSFwnUrludWFoNhftq8bUkH9pkzjpN2XSPOAYEgg6e0sS9s0rZwgJzJiQRPU18A6clnoW5wQ==
   dependencies:
     node-forge "^1"
+
+semantic-release-yarn@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.npmjs.org/semantic-release-yarn/-/semantic-release-yarn-1.0.0.tgz#59a5bf3c787af6fc10c1c6d72bb27c9849433976"
+  integrity sha512-Wk5hjlisSoKZojx+3ihbPv/6KrL0NHy2NN3lcmS+lXXV5DWPEE2fwm8lQ6Ax4YhU+K+jdd1ucvGGjPmepIz0mg==
+  dependencies:
+    "@semantic-release/error" "^3.0.0"
+    aggregate-error "^4.0.1"
+    cosmiconfig "^8.1.0"
+    execa "^7.0.0"
+    fs-extra "^11.1.0"
+    js-yaml "^4.1.0"
+    lodash "^4.17.21"
+    nerf-dart "^1.0.0"
+    read-pkg "^7.1.0"
+    semver "^7.3.8"
 
 semantic-release@^21.0.2:
   version "21.0.2"

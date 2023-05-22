@@ -274,6 +274,7 @@
     "sass": "^1.54.4",
     "sass-loader": "^13.0.2",
     "semantic-release": "^21.0.2",
+    "semantic-release-yarn": "^1.0.0",
     "style-loader": "^3.3.1",
     "terser-webpack-plugin": "^5.3.5",
     "ts-jest": "^29.0.5",

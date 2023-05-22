@@ -24,10 +24,6 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
 
-      - name: apt-get install
-        if: matrix.os == 'ubuntu-latest'
-        run: sudo apt update -y && sudo apt-get install -y snapd rpm snapcraft fakeroot dpkg
-
       - name: Install Node and Yarn
         uses: actions/setup-node@v3
         with:
