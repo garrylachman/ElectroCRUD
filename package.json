@@ -2,7 +2,7 @@
   "productName": "ElectroCRUD",
   "name": "electrocrud",
   "displayName": "ElectroCRUD",
-  "version": "3.0.9",
+  "version": "2.0.0",
   "description": "Free CRUD app with source code available for modification and distribution",
   "keywords": [
     "electron",
@@ -288,7 +288,7 @@
     "webpack-cli": "^4.10.0",
     "webpack-dev-server": "^4.10.0",
     "webpack-merge": "^5.8.0",
-    "yarn": "^1.22.19"
+    "yarn": "^2.x"
   },
   "resolutions": {
     "react-error-overlay": "6.0.9",
@@ -300,7 +300,7 @@
   },
   "devEngines": {
     "node": ">=18.x",
-    "yarn": ">=1.22.x"
+    "yarn": ">=2.x"
   },
   "electronmon": {
     "patterns": [
