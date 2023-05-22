@@ -54,9 +54,6 @@ jobs:
       - name: Install Dependecies
         run: yarn install
 
-      - name: Install global lerna
-        run: yarn global add lerna
-
       - name: Building Packages
         run: yarn run build
 
