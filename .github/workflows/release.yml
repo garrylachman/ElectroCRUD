@@ -1,6 +1,8 @@
 name: Build/release
 
-on: release
+on:
+  release:
+    types: [released]
 
 # concurrency: ci-release-${{ github.workflow }}
 
@@ -30,10 +32,6 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           node-version: 18.11.0
           cache: 'yarn'
-
-      - uses: shogo82148/actions-mutex@v1
-        with:
-          key: build-mutex
 
       - name: Install Dependecies
         run: yarn install

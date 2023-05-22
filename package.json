@@ -220,7 +220,7 @@
     "@types/testing-library__jest-dom": "^5.14.5",
     "@types/underscore": "^1.11.4",
     "@types/uuid": "^8.3.4",
-    "@types/webpack-bundle-analyzer": "^4.4.2",
+    "@types/webpack-bundle-analyzer": "^4.6.0",
     "@typescript-eslint/eslint-plugin": "^5.50.0",
     "@typescript-eslint/parser": "^5.50.0",
     "@vercel/webpack-asset-relocator-loader": "^1.7.3",
@@ -282,8 +282,8 @@
     "tsconfig-paths-webpack-plugin": "^4.0.0",
     "typescript": "^4.9.3",
     "url-loader": "^4.1.1",
-    "webpack": "^5.75.0",
-    "webpack-bundle-analyzer": "^4.5.0",
+    "webpack": "^5.83.1",
+    "webpack-bundle-analyzer": "^4.6.0",
     "webpack-cli": "^4.10.0",
     "webpack-dev-server": "^4.10.0",
     "webpack-merge": "^5.8.0",
@@ -294,7 +294,8 @@
     "@types/react": "18.0.17",
     "@types/react-dom": "18.0.6",
     "ts-toolbelt": "9.6.0",
-    "@chakra-ui/system": "2.4.0"
+    "@chakra-ui/system": "2.4.0",
+    "webpack": "5.83.1"
   },
   "devEngines": {
     "node": ">=18.x",
