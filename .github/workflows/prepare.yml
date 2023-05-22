@@ -9,7 +9,7 @@ on:
 concurrency: ci-${{ github.workflow }}
 
 jobs:
-  build-and-publish:
+  build-prepare:
     runs-on: ${{ matrix.os }}
 
     strategy:
@@ -34,13 +34,16 @@ jobs:
           node-version: 18.11.0
           cache: 'yarn'
 
-      - name: Install deps
+      - name: Install Dependecies
         run: yarn install
 
       - name: Install global lerna
         run: yarn global add lerna
 
-      - name: Test
+      - name: Building Packages
+        run: yarn run build
+
+      - name: Testing
         run: yarn run test
 
       - name: Semantic Release
