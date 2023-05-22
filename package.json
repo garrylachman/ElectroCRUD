@@ -2,7 +2,7 @@
   "productName": "ElectroCRUD",
   "name": "electrocrud",
   "displayName": "ElectroCRUD",
-  "version": "0.0.0-development",
+  "version": "3.0.6-develop.5",
   "description": "Free CRUD app with source code available for modification and distribution",
   "keywords": [
     "electron",
