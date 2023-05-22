@@ -24,12 +24,23 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
 
-      - name: Install Node and Yarn
+      - name: Install Node
         uses: actions/setup-node@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           node-version: 18.11.0
-          cache: 'yarn'
+
+      - name: Install Yarn
+        run: corepack enable |
+          corepack prepare yarn@2.4.3 --activate
+
+      - name: Extract cached dependencies
+        uses: actions/setup-node@v3
+        with:
+          cache: yarn
+
+      - name: Update dependencies
+        run: corepack yarn --immutable
 
       - name: Install Dependecies
         run: yarn install
