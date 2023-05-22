@@ -2,9 +2,9 @@ name: Build/release
 
 on:
   release:
-    types: [published]
+    types: [published, edited]
 
-concurrency: ci-release-${{ github.workflow }}
+# concurrency: ci-release-${{ github.workflow }}
 
 jobs:
   build-release:
