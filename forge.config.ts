@@ -72,8 +72,6 @@ const config: ForgeConfig = {
         owner: 'garrylachman',
         name: 'electrocrud',
       },
-      prerelease: true,
-      draft: true,
     }),
   ],
   plugins: [
