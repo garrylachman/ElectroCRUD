@@ -3,18 +3,6 @@
   "plugins": [
     "@semantic-release/commit-analyzer",
     "@semantic-release/release-notes-generator",
-    ["@semantic-release/npm"],
-    ["@semantic-release/exec", {
-      "prepareCmd": "yarn run make"
-    }],
-    ["@semantic-release/github", {
-      "assets": [
-        { "path": "out/make/**/electrocrud*.zip", "name": "ElectroCRUD-mac-${nextRelease.gitTag}.zip",  "label": "ElectroCRUD MacOS (${nextRelease.gitTag})" },
-        { "path": "out/make/**/electrocrud*.exe", "name": "ElectroCRUD-windows-${nextRelease.gitTag}.exe", "label": "ElectroCRUD Windows (${nextRelease.gitTag})" },
-        { "path": "out/make/**/electrocrud*.AppImage", "name": "ElectroCRUD-linux-${nextRelease.gitTag}.AppImage", "label": "ElectroCRUD Linux (${nextRelease.gitTag})" },
-        { "path": "out/make/**/electrocrud*.deb", "name": "ElectroCRUD-linux-${nextRelease.gitTag}.deb", "label": "ElectroCRUD Linux (deb) (${nextRelease.gitTag})" },
-        { "path": "out/make/**/electrocrud*.rpm", "name": "ElectroCRUD-linux-${nextRelease.gitTag}.rpm", "label": "ElectroCRUD Linux (rpm) (${nextRelease.gitTag})" },
-        { "path": "out/make/**/electrocrud*.snap", "name": "ElectroCRUD-linux-${nextRelease.gitTag}.snap", "label": "ElectroCRUD Linux (snap) (${nextRelease.gitTag})" }
-    ]}]
+    ["@semantic-release/npm"]
   ]
 }

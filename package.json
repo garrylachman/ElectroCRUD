@@ -37,7 +37,7 @@
     "test": "NODE_OPTIONS=--experimental-vm-modules npx jest packages",
     "make": "cross-env NODE_OPTIONS='--max-old-space-size=8192' DEBUG=* REFORGED_APPIMAGEKIT_CUSTOM_FILENAME='ElectroCRUD-linux' electron-forge make",
     "build": "yarn lerna run build",
-    "semantic-release": "semantic-release"
+    "semantic-release": "semantic-release --debug"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
@@ -309,5 +309,11 @@
   "workspaces": [
     "packages/*"
   ],
-  "private": true
+  "private": true,
+  "build": {
+    "appId": "com.garrylachman.electrocrud",
+    "productName": "ElectroCRUD",
+    "copyright": "Copyright © 2023 Garry Lachman",
+    "asar": false
+  }
 }
