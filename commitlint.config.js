@@ -3,10 +3,10 @@ module.exports = {
   parserPreset: 'conventional-changelog-conventionalcommits',
   rules: {
     'body-leading-blank': [1, 'always'],
-    'body-max-line-length': [2, 'always', 100],
+    'body-max-line-length': [2, 'always', Number.POSITIVE_INFINITY],
     'footer-leading-blank': [1, 'always'],
-    'footer-max-line-length': [2, 'always', 100],
-    'header-max-length': [2, 'always', 100],
+    'footer-max-line-length': [2, 'always', Number.POSITIVE_INFINITY],
+    'header-max-length': [2, 'always', Number.POSITIVE_INFINITY],
     'subject-case': [
       2,
       'never',
