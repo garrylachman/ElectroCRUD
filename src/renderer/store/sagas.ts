@@ -104,7 +104,6 @@ function* notifyEntityDeleted(action: PayloadAction<string>) {
 }
 
 function* onFilterCreated(action) {
-  console.log("onFilterCreated", action);
   if (action.meta && action.meta.new) {
     yield put(
       TemporaryFilterRulesReducer.actions.upsertOne({
@@ -122,6 +121,7 @@ export function* watchForNotificationsAsync() {
   yield takeEvery(ViewsReducer.actions.addOne, notifyEntityAddedOrEdited);
   yield takeEvery(ViewsReducer.actions.updateOne, notifyEntityAddedOrEdited);
   yield takeEvery(TagsReducer.actions.upsertOne, notifyEntityAddedOrEdited);
+  // @ts-ignore
   yield takeEvery(ColumnsReducer.actions.upsertOne, notifyEntityAddedOrEdited);
   yield takeEvery(
     ViewDetailsReducer.actions.upsertOne,

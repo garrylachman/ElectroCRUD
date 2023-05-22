@@ -85,8 +85,10 @@ const config: ForgeConfig = {
       },
       // @ts-ignore
       devContentSecurityPolicy: `default-src 'self' 'unsafe-inline' data: ws:; script-src 'self' 'unsafe-eval' 'unsafe-inline' data: http: ws:`,
+      // @ts-ignore
       mainConfig,
       renderer: {
+        // @ts-ignore
         config: rendererConfig,
         entryPoints: [
           {
