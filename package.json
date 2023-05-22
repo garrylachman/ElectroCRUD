@@ -2,7 +2,7 @@
   "productName": "ElectroCRUD",
   "name": "electrocrud",
   "displayName": "ElectroCRUD",
-  "version": "2.0.0",
+  "version": "3.0.9",
   "description": "Free CRUD app with source code available for modification and distribution",
   "keywords": [
     "electron",
@@ -288,7 +288,7 @@
     "webpack-cli": "^4.10.0",
     "webpack-dev-server": "^4.10.0",
     "webpack-merge": "^5.8.0",
-    "yarn": "^2.x"
+    "yarn": "2.4.3"
   },
   "resolutions": {
     "react-error-overlay": "6.0.9",
@@ -296,11 +296,11 @@
     "@types/react-dom": "18.0.6",
     "ts-toolbelt": "9.6.0",
     "@chakra-ui/system": "2.4.0",
-    "webpack": "5.83.1"
+    "webpack": "5.83.1",
+    "yarn": "2.4.3"
   },
   "devEngines": {
-    "node": ">=18.x",
-    "yarn": ">=2.x"
+    "node": ">=18.x"
   },
   "electronmon": {
     "patterns": [
@@ -319,5 +319,6 @@
     "productName": "ElectroCRUD",
     "copyright": "Copyright © 2023 Garry Lachman",
     "asar": false
-  }
+  },
+  "packageManager": "yarn@2.4.3"
 }
