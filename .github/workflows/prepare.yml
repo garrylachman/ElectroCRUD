@@ -6,7 +6,7 @@ on:
     branches:
       - develop
 
-concurrency: ci-${{ github.workflow }}
+concurrency: ci-prepare-${{ github.workflow }}
 
 jobs:
   build-prepare:
@@ -31,7 +31,7 @@ jobs:
       - name: Install Node and Yarn
         uses: actions/setup-node@v3
         with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           node-version: 18.11.0
           cache: 'yarn'
 
