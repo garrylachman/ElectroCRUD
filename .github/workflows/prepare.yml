@@ -10,6 +10,7 @@ concurrency: ci-${{ github.workflow }}
 
 jobs:
   build-prepare:
+    name: Build/prepare
     runs-on: ${{ matrix.os }}
 
     strategy:
@@ -21,7 +22,7 @@ jobs:
         uses: actions/checkout@v3.0.0
         with:
           fetch-depth: 0
-          token: ${{ secrets.GH_TOKEN_SEMANTIC_RELEASE }}
+          persist-credentials: false
 
       - name: apt-get install
         if: matrix.os == 'ubuntu-latest'
@@ -51,4 +52,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: yarn semantic-release
+        run: yarn run semantic-release

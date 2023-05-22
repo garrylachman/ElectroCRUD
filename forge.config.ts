@@ -10,31 +10,52 @@ import { WebpackPlugin } from '@electron-forge/plugin-webpack';
 import path from 'node:path';
 import { mainConfig } from './config/webpack.main.config';
 import { rendererConfig } from './config/webpack.renderer.config';
-import { sourceMainPath, sourceRendererPath } from './config/webpack.paths';
+import {
+  sourceMainPath,
+  sourceRendererPath,
+  assetsPath,
+} from './config/webpack.paths';
 
 const config: ForgeConfig = {
   packagerConfig: {
     asar: false,
     executableName: 'electrocrud',
+    name: 'Electro CRUD',
+    appBundleId: 'com.garrylachman.electrocrud',
+    icon: path.resolve(assetsPath, 'icon'),
+    appCategoryType: 'public.app-category.developer-tools',
+    win32metadata: {
+      CompanyName: 'Electro CRUD',
+      OriginalFilename: 'Electro CRUD',
+    },
   },
   rebuildConfig: {},
   makers: [
-    new MakerSquirrel({
-      authors: 'Garry Lachman',
-    }),
+    new MakerSquirrel(
+      {
+        authors: 'Garry Lachman',
+      },
+      ['win32']
+    ),
     new MakerZIP({}, ['darwin']),
-    new MakerRpm({
-      options: {
-        homepage: 'https://github.com/garrylachman/ElectroCRUD',
+    new MakerRpm(
+      {
+        options: {
+          homepage: 'https://github.com/garrylachman/ElectroCRUD',
+        },
       },
-    }),
-    new MakerDeb({
-      options: {
-        categories: ['Utility'],
-        maintainer: 'Garry Lachman',
-        homepage: 'https://github.com/garrylachman/ElectroCRUD',
+      ['linux']
+    ),
+    new MakerDeb(
+      {
+        options: {
+          categories: ['Utility'],
+          maintainer: 'Garry Lachman',
+          homepage: 'https://github.com/garrylachman/ElectroCRUD',
+        },
       },
-    }),
+      ['linux']
+    ),
     /*
     new MakerAppImage({
       options: {
@@ -46,13 +67,14 @@ const config: ForgeConfig = {
     */
   ],
   publishers: [
-    /*  new PublisherGithub({
+    new PublisherGithub({
       repository: {
         owner: 'garrylachman',
         name: 'electrocrud',
       },
       prerelease: true,
-    }),*/
+      draft: true,
+    }),
   ],
   plugins: [
     new WebpackPlugin({

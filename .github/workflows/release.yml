@@ -9,6 +9,7 @@ concurrency: ci-${{ github.workflow }}
 
 jobs:
   build-release:
+    name: Build/release
     runs-on: ${{ matrix.os }}
 
     strategy:
@@ -46,16 +47,5 @@ jobs:
       - name: Building Packages
         run: yarn run build
 
-      - name: Build/release Electron app
-        uses: samuelmeuli/action-electron-builder@v1
-        with:
-          # GitHub token, automatically provided to the action
-          # (No need to define this secret in the repo settings)
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-
-          # If the commit is tagged with a version (e.g. "v1.0.0"),
-          # release the app after building
-          release: ${{ startsWith(github.ref, 'refs/tags/v') }}
-
-      #- name: 'Electro Forge Publish'
-      #  run: yarn run publish
+      - name: Publish
+        run: yarn run publish
