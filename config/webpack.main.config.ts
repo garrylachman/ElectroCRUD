@@ -4,7 +4,7 @@ import TsconfigPathsPlugins from 'tsconfig-paths-webpack-plugin';
 import { rules } from './webpack.rules';
 import { sourceMainPath } from './webpack.paths';
 import TerserPlugin from 'terser-webpack-plugin';
-import { Configuration, IgnorePlugin } from 'webpack/types';
+import { Configuration, IgnorePlugin } from 'webpack/lib';
 
 export const mainConfig: Configuration = {
   devtool: 'source-map',
