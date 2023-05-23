@@ -320,5 +320,5 @@
     "copyright": "Copyright © 2023 Garry Lachman",
     "asar": false
   },
-  "packageManager": "yarn@2.4.3"
+  "packageManager": "yarn@3.5.1"
 }
