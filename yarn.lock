@@ -12767,7 +12767,6 @@ __metadata:
     webpack-cli: ^4.10.0
     webpack-dev-server: ^4.10.0
     webpack-merge: ^5.8.0
-    yarn: 2.4.3
     yup: ^0.32.11
   peerDependencies:
     "@chakra-ui/system": 2.4.0
@@ -27477,16 +27476,6 @@ __metadata:
     yarn-or-npm: bin/index.js
     yon: bin/index.js
   checksum: 94421b4315520075b4db6c09b6284064c047058d8bbe2663cdd4269491e5f7ea5d2e68eeaa0182a760a8757479cef665b7040a8c9ddb48a3da52587a8b712b27
-  languageName: node
-  linkType: hard
-
-"yarn@npm:2.4.3":
-  version: 2.4.3
-  resolution: "yarn@npm:2.4.3"
-  bin:
-    yarn: ./bin/yarn.js
-    yarnpkg: ./bin/yarn.js
-  checksum: 183a37d86d660fd4c2fc6649ae7c400a0236a667b85661306ed763a8fa658e8ef8f7009f9d1dd431e28733e79657b09cf74f0a63e49146d67e465fded28356fe
   languageName: node
   linkType: hard
 
