@@ -30,10 +30,16 @@ npm-debug.log.*
 .editorconfig
 .DS_Store
 .vscode
-.yarn
 
 out/
 .webpack
 dist
 
 packages/**/lib
+
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
