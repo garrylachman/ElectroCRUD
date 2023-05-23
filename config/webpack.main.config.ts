@@ -1,5 +1,4 @@
 import path from 'node:path';
-import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import TsconfigPathsPlugins from 'tsconfig-paths-webpack-plugin';
 import { rules } from './webpack.rules';
 import { sourceMainPath } from './webpack.paths';
@@ -38,10 +37,6 @@ export const mainConfig: Configuration = {
   plugins: [
     new IgnorePlugin({
       resourceRegExp: /^cloudflare:sockets$/,
-    }),
-    new BundleAnalyzerPlugin({
-      analyzerMode: process.env.ANALYZE === 'true' ? 'server' : 'disabled',
-      analyzerPort: 8888,
     }),
   ],
 };
