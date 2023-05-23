@@ -35,14 +35,14 @@
     "prepare": "husky install",
     "start": "cross-env NODE_ENV=development DEBUG=\"node-ts-cache,knex:*\" electron-forge start",
     "test": "NODE_OPTIONS=--experimental-vm-modules npx jest packages",
-    "make": "cross-env NODE_OPTIONS='--max-old-space-size=8192' DEBUG=* REFORGED_APPIMAGEKIT_CUSTOM_FILENAME='ElectroCRUD-linux' electron-forge make",
-    "publish": "cross-env NODE_OPTIONS='--max-old-space-size=8192' DEBUG=* REFORGED_APPIMAGEKIT_CUSTOM_FILENAME='ElectroCRUD-linux' electron-forge publish",
+    "make": "cross-env NODE_OPTIONS='--max-old-space-size=8192' REFORGED_APPIMAGEKIT_CUSTOM_FILENAME='ElectroCRUD-linux' electron-forge make",
+    "publish": "cross-env NODE_OPTIONS='--max-old-space-size=8192' REFORGED_APPIMAGEKIT_CUSTOM_FILENAME='ElectroCRUD-linux' electron-forge publish",
     "build": "yarn lerna run build",
     "semantic-release": "semantic-release"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
-      "cross-env NODE_ENV=development eslint --cache"
+      "cross-env NODE_ENV=development eslint --cache --debug"
     ],
     "*.json,.{eslintrc,prettierrc}": [
       "prettier --ignore-path .eslintignore --parser json --write"
@@ -177,15 +177,15 @@
   "devDependencies": {
     "@commitlint/cli": "^17.4.4",
     "@commitlint/config-conventional": "^17.4.4",
-    "@electron-forge/cli": "^6.0.5",
-    "@electron-forge/maker-deb": "^6.0.5",
-    "@electron-forge/maker-flatpak": "^6.0.5",
-    "@electron-forge/maker-rpm": "^6.0.5",
-    "@electron-forge/maker-snap": "^6.0.5",
-    "@electron-forge/maker-squirrel": "^6.0.5",
-    "@electron-forge/maker-zip": "^6.0.5",
-    "@electron-forge/plugin-webpack": "^6.0.5",
-    "@electron-forge/publisher-github": "^6.0.5",
+    "@electron-forge/cli": "^6.1.1",
+    "@electron-forge/maker-deb": "^6.1.1",
+    "@electron-forge/maker-flatpak": "^6.1.1",
+    "@electron-forge/maker-rpm": "^6.1.1",
+    "@electron-forge/maker-snap": "^6.1.1",
+    "@electron-forge/maker-squirrel": "^6.1.1",
+    "@electron-forge/maker-zip": "^6.1.1",
+    "@electron-forge/plugin-webpack": "^6.1.1",
+    "@electron-forge/publisher-github": "^6.1.1",
     "@jest/globals": "^29.4.1",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.7",
     "@reforged/maker-appimage": "^3.1.8",
@@ -251,9 +251,9 @@
     "eslint-plugin-react": "^7.31.11",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-testing-library": "^5.10.1",
-    "eslint-plugin-unicorn": "^45.0.1",
+    "eslint-plugin-unicorn": "^47.0.0",
     "file-loader": "^6.2.0",
-    "fork-ts-checker-webpack-plugin": "^7.3.0",
+    "fork-ts-checker-webpack-plugin": "^8.0.0",
     "html-loader": "^4.2.0",
     "html-webpack-plugin": "^5.5.0",
     "husky": "^8.0.1",

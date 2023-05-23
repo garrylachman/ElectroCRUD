@@ -1,21 +1,16 @@
-name: Build/release
+name: Release
 
 on:
   workflow_dispatch:
-  workflow_call:
   workflow_run:
-    workflows: [Build/prepare]
-    types:
-      - completed
-  release:
-    types: [released]
-
-concurrency: ci-release-${{ github.workflow }}
+    workflows: [Prepare]
+    types: [completed]
+    branches: [develop]
 
 jobs:
   build-release:
     if: ${{ github.event.workflow_run.conclusion != 'failure' }}
-    name: Build/release
+    name: Release
     runs-on: ${{ matrix.os }}
 
     strategy:
@@ -63,4 +58,4 @@ jobs:
       - name: Publish
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: yarn run publish
+        run: yarn electron-forge publish

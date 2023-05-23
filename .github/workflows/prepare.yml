@@ -1,4 +1,4 @@
-name: Build/prepare
+name: Prepare
 
 on:
   workflow_dispatch:
@@ -6,11 +6,9 @@ on:
     branches:
       - develop
 
-concurrency: ci-prepare-${{ github.workflow }}
-
 jobs:
   build-prepare:
-    name: Build/prepare
+    name: Prepare
     runs-on: ${{ matrix.os }}
 
     strategy:

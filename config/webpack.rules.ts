@@ -1,4 +1,4 @@
-import type { ModuleOptions } from 'webpack';
+import { ModuleOptions } from 'webpack/types';
 
 export const rules: Required<ModuleOptions>['rules'] = [
   // Add support for native node modules

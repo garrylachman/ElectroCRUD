@@ -3700,7 +3700,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@electron-forge/cli@npm:^6.0.5":
+"@electron-forge/cli@npm:^6.1.1":
   version: 6.1.1
   resolution: "@electron-forge/cli@npm:6.1.1"
   dependencies:
@@ -3791,7 +3791,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@electron-forge/maker-deb@npm:^6.0.5":
+"@electron-forge/maker-deb@npm:^6.1.1":
   version: 6.1.1
   resolution: "@electron-forge/maker-deb@npm:6.1.1"
   dependencies:
@@ -3805,7 +3805,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@electron-forge/maker-flatpak@npm:^6.0.5":
+"@electron-forge/maker-flatpak@npm:^6.1.1":
   version: 6.1.1
   resolution: "@electron-forge/maker-flatpak@npm:6.1.1"
   dependencies:
@@ -3820,7 +3820,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@electron-forge/maker-rpm@npm:^6.0.5":
+"@electron-forge/maker-rpm@npm:^6.1.1":
   version: 6.1.1
   resolution: "@electron-forge/maker-rpm@npm:6.1.1"
   dependencies:
@@ -3834,7 +3834,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@electron-forge/maker-snap@npm:^6.0.5":
+"@electron-forge/maker-snap@npm:^6.1.1":
   version: 6.1.1
   resolution: "@electron-forge/maker-snap@npm:6.1.1"
   dependencies:
@@ -3848,7 +3848,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@electron-forge/maker-squirrel@npm:^6.0.5":
+"@electron-forge/maker-squirrel@npm:^6.1.1":
   version: 6.1.1
   resolution: "@electron-forge/maker-squirrel@npm:6.1.1"
   dependencies:
@@ -3863,7 +3863,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@electron-forge/maker-zip@npm:^6.0.5":
+"@electron-forge/maker-zip@npm:^6.1.1":
   version: 6.1.1
   resolution: "@electron-forge/maker-zip@npm:6.1.1"
   dependencies:
@@ -3885,7 +3885,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@electron-forge/plugin-webpack@npm:^6.0.5":
+"@electron-forge/plugin-webpack@npm:^6.1.1":
   version: 6.1.1
   resolution: "@electron-forge/plugin-webpack@npm:6.1.1"
   dependencies:
@@ -3913,7 +3913,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@electron-forge/publisher-github@npm:^6.0.5":
+"@electron-forge/publisher-github@npm:^6.1.1":
   version: 6.1.1
   resolution: "@electron-forge/publisher-github@npm:6.1.1"
   dependencies:
@@ -4443,7 +4443,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@eslint-community/eslint-utils@npm:^4.1.2, @eslint-community/eslint-utils@npm:^4.2.0":
+"@eslint-community/eslint-utils@npm:^4.2.0, @eslint-community/eslint-utils@npm:^4.4.0":
   version: 4.4.0
   resolution: "@eslint-community/eslint-utils@npm:4.4.0"
   dependencies:
@@ -12580,15 +12580,15 @@ __metadata:
     "@electrocrud/tables": "link:./packages/tables"
     "@electrocrud/tabs": "link:./packages/tabs"
     "@electrocrud/utils": "link:./packages/utils"
-    "@electron-forge/cli": ^6.0.5
-    "@electron-forge/maker-deb": ^6.0.5
-    "@electron-forge/maker-flatpak": ^6.0.5
-    "@electron-forge/maker-rpm": ^6.0.5
-    "@electron-forge/maker-snap": ^6.0.5
-    "@electron-forge/maker-squirrel": ^6.0.5
-    "@electron-forge/maker-zip": ^6.0.5
-    "@electron-forge/plugin-webpack": ^6.0.5
-    "@electron-forge/publisher-github": ^6.0.5
+    "@electron-forge/cli": ^6.1.1
+    "@electron-forge/maker-deb": ^6.1.1
+    "@electron-forge/maker-flatpak": ^6.1.1
+    "@electron-forge/maker-rpm": ^6.1.1
+    "@electron-forge/maker-snap": ^6.1.1
+    "@electron-forge/maker-squirrel": ^6.1.1
+    "@electron-forge/maker-zip": ^6.1.1
+    "@electron-forge/plugin-webpack": ^6.1.1
+    "@electron-forge/publisher-github": ^6.1.1
     "@emotion/cache": ^11.7.1
     "@emotion/react": ^11
     "@emotion/styled": ^11
@@ -12682,10 +12682,10 @@ __metadata:
     eslint-plugin-react: ^7.31.11
     eslint-plugin-react-hooks: ^4.6.0
     eslint-plugin-testing-library: ^5.10.1
-    eslint-plugin-unicorn: ^45.0.1
+    eslint-plugin-unicorn: ^47.0.0
     file-loader: ^6.2.0
     flatted: ^3.2.7
-    fork-ts-checker-webpack-plugin: ^7.3.0
+    fork-ts-checker-webpack-plugin: ^8.0.0
     framer-motion: ^9.0.2
     get-current-line: ^6.6.0
     get-port: 5.1.1
@@ -13737,29 +13737,29 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-unicorn@npm:^45.0.1":
-  version: 45.0.2
-  resolution: "eslint-plugin-unicorn@npm:45.0.2"
+"eslint-plugin-unicorn@npm:^47.0.0":
+  version: 47.0.0
+  resolution: "eslint-plugin-unicorn@npm:47.0.0"
   dependencies:
     "@babel/helper-validator-identifier": ^7.19.1
-    "@eslint-community/eslint-utils": ^4.1.2
-    ci-info: ^3.6.1
+    "@eslint-community/eslint-utils": ^4.4.0
+    ci-info: ^3.8.0
     clean-regexp: ^1.0.0
-    esquery: ^1.4.0
+    esquery: ^1.5.0
     indent-string: ^4.0.0
-    is-builtin-module: ^3.2.0
+    is-builtin-module: ^3.2.1
     jsesc: ^3.0.2
     lodash: ^4.17.21
     pluralize: ^8.0.0
     read-pkg-up: ^7.0.1
     regexp-tree: ^0.1.24
-    regjsparser: ^0.9.1
+    regjsparser: ^0.10.0
     safe-regex: ^2.1.1
     semver: ^7.3.8
     strip-indent: ^3.0.0
   peerDependencies:
-    eslint: ">=8.28.0"
-  checksum: c6ef0a0694f147b58bcb389090d0da87892b469de176c26cf062758a670d288753336d98613f5519d7997d272248eadbc45a4d5127c0cbd39804c61dd0975962
+    eslint: ">=8.38.0"
+  checksum: 8d93bd76d54fb44e134c6576e3bda72dbf4c9cb5bae90451ace6acf1c48e6d7329f1e36db1d19266a5da499afeff6bf0c647875d69adc92d546bcc2d8b765cca
   languageName: node
   linkType: hard
 
@@ -13867,7 +13867,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"esquery@npm:^1.4.0, esquery@npm:^1.4.2":
+"esquery@npm:^1.4.2, esquery@npm:^1.5.0":
   version: 1.5.0
   resolution: "esquery@npm:1.5.0"
   dependencies:
@@ -14475,9 +14475,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fork-ts-checker-webpack-plugin@npm:^7.3.0":
-  version: 7.3.0
-  resolution: "fork-ts-checker-webpack-plugin@npm:7.3.0"
+"fork-ts-checker-webpack-plugin@npm:^8.0.0":
+  version: 8.0.0
+  resolution: "fork-ts-checker-webpack-plugin@npm:8.0.0"
   dependencies:
     "@babel/code-frame": ^7.16.7
     chalk: ^4.1.2
@@ -14493,12 +14493,8 @@ __metadata:
     tapable: ^2.2.1
   peerDependencies:
     typescript: ">3.6.0"
-    vue-template-compiler: "*"
     webpack: ^5.11.0
-  peerDependenciesMeta:
-    vue-template-compiler:
-      optional: true
-  checksum: 49c2af801e264349a3fdf0afe4ad33065960c43bd7e56c8351a5e0d32c8c54146cc89d6a0b70b1e0f810de96787bd0c7fd275cc8727a9aea1a077c53de99659a
+  checksum: aad4cbc5b802e6281a2700a379837697c93ad95288468f9595219d91d9c26674736d37852bb4c4341e9122f26181e9e05fc1a362e8d029fdd88e99de7816037b
   languageName: node
   linkType: hard
 
@@ -16393,7 +16389,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"is-builtin-module@npm:^3.2.0":
+"is-builtin-module@npm:^3.2.1":
   version: 3.2.1
   resolution: "is-builtin-module@npm:3.2.1"
   dependencies:
@@ -23330,6 +23326,17 @@ __metadata:
   dependencies:
     "@pnpm/npm-conf": ^2.1.0
   checksum: 0d7683b71ee418993e7872b389024b13645c4295eb7bb850d10728eaf46065db24ea4d47dc6cbb71a60d1aa4bef077b0d8b7363c9ac9d355fdba47bebdfb01dd
+  languageName: node
+  linkType: hard
+
+"regjsparser@npm:^0.10.0":
+  version: 0.10.0
+  resolution: "regjsparser@npm:0.10.0"
+  dependencies:
+    jsesc: ~0.5.0
+  bin:
+    regjsparser: bin/parser
+  checksum: 17550661f43ba792f8365fb95b3dbdb64e25f14e31ef7c2c11876c240a60e87b7bfc28c98589f4e76b7cf49307e45fb24d030f57d68dd0cc41c56b4d378e9254
   languageName: node
   linkType: hard
 

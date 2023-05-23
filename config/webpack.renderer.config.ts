@@ -4,7 +4,7 @@ import {
   EnvironmentPlugin,
   LoaderOptionsPlugin,
   ProvidePlugin,
-} from 'webpack';
+} from 'webpack/lib';
 import TsconfigPathsPlugins from 'tsconfig-paths-webpack-plugin';
 import { rules } from './webpack.rules';
 import { plugins } from './webpack.plugins';

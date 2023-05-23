@@ -36,3 +36,4 @@ npm-debug.log.*
 !.erb
 
 .eslintrc.js
+node_modules
