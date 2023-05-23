@@ -40,14 +40,16 @@ jobs:
       - name: Update dependencies
         run: corepack yarn --immutable
 
-      - name: Yarn Workspace Tools
-        run: yarn plugin import @yarnpkg/plugin-workspace-tools
+      - name: Yarn Plugins
+        run: yarn plugin import plugin-workspace-tools &&
+          yarn plugin import plugin-typescript &&
+          yarn plugin import https://yarn.build/latest
 
       - name: Install Dependecies
         run: yarn install
 
       - name: Building Packages
-        run: yarn run build
+        run: yarn build
 
       - name: Testing
         run: yarn run test

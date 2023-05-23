@@ -29,7 +29,11 @@
     "url": "https://github.com/garrylachman/ElectroCRUD/issues"
   },
   "dependencies": {
-    "arc-hash": "^3.0.0",
-    "ts-toolbelt": "^9.6.0"
+    "arc-hash": "^3.0.0"
+  },
+  "devDependencies": {
+    "csstype": "^3.1.1",
+    "ts-toolbelt": "^9.6.0",
+    "tsup": "^6.7.0"
   }
 }

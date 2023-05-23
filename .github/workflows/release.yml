@@ -1,11 +1,15 @@
 name: Release
 
 on:
-  release:
-    types: [published]
+  workflow_dispatch:
+  workflow_run:
+    workflows: [Prepare]
+    types: [completed]
+    branches: [develop]
 
 jobs:
   build-release:
+    if: ${{ github.event.workflow_run.conclusion != 'failure' }}
     name: Release
     runs-on: ${{ matrix.os }}
 
@@ -42,14 +46,16 @@ jobs:
       - name: Update dependencies
         run: corepack yarn --immutable
 
-      - name: Yarn Workspace Tools
-        run: yarn plugin import @yarnpkg/plugin-workspace-tools
+      - name: Yarn Plugins
+        run: yarn plugin import plugin-workspace-tools &&
+          yarn plugin import plugin-typescript &&
+          yarn plugin import https://yarn.build/latest
 
       - name: Install Dependecies
         run: yarn install
 
       - name: Building Packages
-        run: yarn run build
+        run: yarn build
 
       - name: Publish
         env:

@@ -32,11 +32,14 @@
   },
   "dependencies": {
     "@chakra-ui/react": "^2.4.9",
-    "csstype": "^3.1.1",
     "framer-motion": "^9.0.2",
     "react": "^18.2.0",
     "react-icons": "^4.7.1",
-    "ts-toolbelt": "^9.6.0",
     "underscore": "^1.13.6"
+  },
+  "devDependencies": {
+    "csstype": "^3.1.1",
+    "ts-toolbelt": "^9.6.0",
+    "tsup": "^6.7.0"
   }
 }
