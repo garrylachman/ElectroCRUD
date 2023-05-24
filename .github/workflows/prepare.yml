@@ -30,7 +30,8 @@ jobs:
 
       - name: Install Yarn
         run: corepack enable |
-          corepack prepare yarn@3.5.1 --activate
+          corepack prepare yarn@3.5.1 --activate |
+          corepack yarn config set enableImmutableInstalls false
 
       - name: Extract cached dependencies
         uses: actions/setup-node@v3
@@ -80,7 +81,8 @@ jobs:
 
       - name: Install Yarn
         run: corepack enable |
-          corepack prepare yarn@3.5.1 --activate
+          corepack prepare yarn@3.5.1 --activate |
+          corepack yarn config set enableImmutableInstalls false
 
       - name: Extract cached dependencies
         uses: actions/setup-node@v3
