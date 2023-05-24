@@ -38,7 +38,7 @@
     "make": "cross-env NODE_OPTIONS='--max-old-space-size=8192' REFORGED_APPIMAGEKIT_CUSTOM_FILENAME='ElectroCRUD-linux' electron-forge make",
     "publish": "cross-env NODE_OPTIONS='--max-old-space-size=8192' REFORGED_APPIMAGEKIT_CUSTOM_FILENAME='ElectroCRUD-linux' electron-forge publish",
     "build": "yarn lerna run build --parallel --stream",
-    "lerna:version": "yarn lerna version --conventional-commits -m \"chore(lerna:version): lerna version & changelog [skip ci]\" --yes",
+    "lerna:version": "yarn lerna version --conventional-commits --no-git-tag-version -m \"chore(lerna:version): lerna version & changelog [skip ci]\" --yes",
     "semantic-release": "semantic-release"
   },
   "lint-staged": {
@@ -263,6 +263,7 @@
     "jest-environment-jsdom": "^29.4.2",
     "jest-watch-typeahead": "^2.2.2",
     "lerna": "^6.6.2",
+    "lerna-changelog": "^2.2.0",
     "lint-staged": "^13.0.3",
     "lodash": "^4.17.21",
     "node-loader": "^2.0.0",

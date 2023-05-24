@@ -3557,7 +3557,7 @@ __metadata:
 
 "@electrocrud/feedback@file:../feedback::locator=%40electrocrud%2Ftables%40workspace%3Apackages%2Ftables":
   version: 1.0.2
-  resolution: "@electrocrud/feedback@file:../feedback#../feedback::hash=0ec717&locator=%40electrocrud%2Ftables%40workspace%3Apackages%2Ftables"
+  resolution: "@electrocrud/feedback@file:../feedback#../feedback::hash=a6724a&locator=%40electrocrud%2Ftables%40workspace%3Apackages%2Ftables"
   dependencies:
     "@chakra-ui/react": ^2.4.9
     "@saas-ui/react": ^1.9.1
@@ -3566,13 +3566,13 @@ __metadata:
     react: ^18.2.0
     react-icons: ^4.7.1
     underscore: ^1.13.6
-  checksum: 4a272f25df957f3b1e23839b77913412c8e3783583bc4f0058769e073b170730b5ec3cdd59a9c81a7b972314b19c1f5f40bf4e89b5eb2a17644bb2a823bcfa5f
+  checksum: 725b37af7bf9e35d499e9947b0e93e70014ba7c996ef0ba411594fa3604401bd5869fc81d3a5532232687b462f45b478ea5bdb8f697a35f94222462ed5ce382d
   languageName: node
   linkType: hard
 
-"@electrocrud/feedback@file:../feedback::locator=%40electrocrud%2Ftabs%40file%3A..%2Ftabs%23..%2Ftabs%3A%3Ahash%3Db483b1%26locator%3D%2540electrocrud%252Flayouts%2540workspace%253Apackages%252Flayouts":
+"@electrocrud/feedback@file:../feedback::locator=%40electrocrud%2Ftabs%40file%3A..%2Ftabs%23..%2Ftabs%3A%3Ahash%3Dc077a3%26locator%3D%2540electrocrud%252Flayouts%2540workspace%253Apackages%252Flayouts":
   version: 1.0.2
-  resolution: "@electrocrud/feedback@file:../feedback#../feedback::hash=0ec717&locator=%40electrocrud%2Ftabs%40file%3A..%2Ftabs%23..%2Ftabs%3A%3Ahash%3Db483b1%26locator%3D%2540electrocrud%252Flayouts%2540workspace%253Apackages%252Flayouts"
+  resolution: "@electrocrud/feedback@file:../feedback#../feedback::hash=a6724a&locator=%40electrocrud%2Ftabs%40file%3A..%2Ftabs%23..%2Ftabs%3A%3Ahash%3Dc077a3%26locator%3D%2540electrocrud%252Flayouts%2540workspace%253Apackages%252Flayouts"
   dependencies:
     "@chakra-ui/react": ^2.4.9
     "@saas-ui/react": ^1.9.1
@@ -3581,13 +3581,13 @@ __metadata:
     react: ^18.2.0
     react-icons: ^4.7.1
     underscore: ^1.13.6
-  checksum: 4a272f25df957f3b1e23839b77913412c8e3783583bc4f0058769e073b170730b5ec3cdd59a9c81a7b972314b19c1f5f40bf4e89b5eb2a17644bb2a823bcfa5f
+  checksum: 725b37af7bf9e35d499e9947b0e93e70014ba7c996ef0ba411594fa3604401bd5869fc81d3a5532232687b462f45b478ea5bdb8f697a35f94222462ed5ce382d
   languageName: node
   linkType: hard
 
 "@electrocrud/feedback@file:../feedback::locator=%40electrocrud%2Ftabs%40workspace%3Apackages%2Ftabs":
   version: 1.0.2
-  resolution: "@electrocrud/feedback@file:../feedback#../feedback::hash=0ec717&locator=%40electrocrud%2Ftabs%40workspace%3Apackages%2Ftabs"
+  resolution: "@electrocrud/feedback@file:../feedback#../feedback::hash=a6724a&locator=%40electrocrud%2Ftabs%40workspace%3Apackages%2Ftabs"
   dependencies:
     "@chakra-ui/react": ^2.4.9
     "@saas-ui/react": ^1.9.1
@@ -3596,7 +3596,7 @@ __metadata:
     react: ^18.2.0
     react-icons: ^4.7.1
     underscore: ^1.13.6
-  checksum: 4a272f25df957f3b1e23839b77913412c8e3783583bc4f0058769e073b170730b5ec3cdd59a9c81a7b972314b19c1f5f40bf4e89b5eb2a17644bb2a823bcfa5f
+  checksum: 725b37af7bf9e35d499e9947b0e93e70014ba7c996ef0ba411594fa3604401bd5869fc81d3a5532232687b462f45b478ea5bdb8f697a35f94222462ed5ce382d
   languageName: node
   linkType: hard
 
@@ -3707,7 +3707,7 @@ __metadata:
 
 "@electrocrud/tabs@file:../tabs::locator=%40electrocrud%2Flayouts%40workspace%3Apackages%2Flayouts":
   version: 1.0.2
-  resolution: "@electrocrud/tabs@file:../tabs#../tabs::hash=b483b1&locator=%40electrocrud%2Flayouts%40workspace%3Apackages%2Flayouts"
+  resolution: "@electrocrud/tabs@file:../tabs#../tabs::hash=c077a3&locator=%40electrocrud%2Flayouts%40workspace%3Apackages%2Flayouts"
   dependencies:
     "@chakra-ui/react": ^2.4.9
     "@electrocrud/feedback": "file:../feedback"
@@ -3715,7 +3715,7 @@ __metadata:
     react: ^18.2.0
     react-icons: ^4.7.1
     underscore: ^1.13.6
-  checksum: d45f7e7da242a9cc8cbe4bcbf21ab07d3be811605030bed8e9e442fd6059da5785f45842629d1c2f4eb9c584a681916d0b169ac0268c0182483a716b29666094
+  checksum: ef82802f6a978180cbcd047da6efd2600b3d94443c128a7e02f45fb9e703079bf6a52a237da2f43a8ff6660f206d88d6ded336bf7f413425e82d306182fa5ec5
   languageName: node
   linkType: hard
 
@@ -10902,6 +10902,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"cli-highlight@npm:^2.1.11":
+  version: 2.1.11
+  resolution: "cli-highlight@npm:2.1.11"
+  dependencies:
+    chalk: ^4.0.0
+    highlight.js: ^10.7.1
+    mz: ^2.4.0
+    parse5: ^5.1.1
+    parse5-htmlparser2-tree-adapter: ^6.0.0
+    yargs: ^16.0.0
+  bin:
+    highlight: bin/highlight
+  checksum: 0a60e60545e39efea78c1732a25b91692017ec40fb6e9497208dc0eeeae69991d3923a8d6e4edd0543db3c395ed14529a33dd4d0353f1679c5b6dded792a8496
+  languageName: node
+  linkType: hard
+
 "cli-spinners@npm:2.6.1":
   version: 2.6.1
   resolution: "cli-spinners@npm:2.6.1"
@@ -12779,6 +12795,7 @@ __metadata:
     knex-json-filter: ^0.1.2
     knex-schema-inspector: "github:garrylachman/knex-schema-inspector"
     lerna: ^6.6.2
+    lerna-changelog: ^2.2.0
     lint-staged: ^13.0.3
     lodash: ^4.17.21
     markdown-loader: ^8.0.0
@@ -15672,6 +15689,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"highlight.js@npm:^10.7.1":
+  version: 10.7.3
+  resolution: "highlight.js@npm:10.7.3"
+  checksum: defeafcd546b535d710d8efb8e650af9e3b369ef53e28c3dc7893eacfe263200bba4c5fcf43524ae66d5c0c296b1af0870523ceae3e3104d24b7abf6374a4fea
+  languageName: node
+  linkType: hard
+
 "hmac-drbg@npm:^1.0.1":
   version: 1.0.1
   resolution: "hmac-drbg@npm:1.0.1"
@@ -18003,6 +18027,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lerna-changelog@npm:^2.2.0":
+  version: 2.2.0
+  resolution: "lerna-changelog@npm:2.2.0"
+  dependencies:
+    chalk: ^4.0.0
+    cli-highlight: ^2.1.11
+    execa: ^5.0.0
+    hosted-git-info: ^4.0.0
+    make-fetch-happen: ^9.0.0
+    p-map: ^3.0.0
+    progress: ^2.0.0
+    yargs: ^17.1.0
+  bin:
+    lerna-changelog: bin/cli.js
+  checksum: 34c0afdf6ffb41a8f81aea846875607fd0e9337012e5a78857670fb42be5443ff68b0d7db46c35150d184264ec30c9ecbaccdb648d50c55571ba4a9596aee68c
+  languageName: node
+  linkType: hard
+
 "lerna@npm:^6.6.2":
   version: 6.6.2
   resolution: "lerna@npm:6.6.2"
@@ -18880,7 +18922,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"make-fetch-happen@npm:^9.1.0":
+"make-fetch-happen@npm:^9.0.0, make-fetch-happen@npm:^9.1.0":
   version: 9.1.0
   resolution: "make-fetch-happen@npm:9.1.0"
   dependencies:
@@ -20075,7 +20117,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mz@npm:^2.7.0":
+"mz@npm:^2.4.0, mz@npm:^2.7.0":
   version: 2.7.0
   resolution: "mz@npm:2.7.0"
   dependencies:
@@ -21298,6 +21340,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"p-map@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "p-map@npm:3.0.0"
+  dependencies:
+    aggregate-error: ^3.0.0
+  checksum: 49b0fcbc66b1ef9cd379de1b4da07fa7a9f84b41509ea3f461c31903623aaba8a529d22f835e0d77c7cb9fcc16e4fae71e308fd40179aea514ba68f27032b5d5
+  languageName: node
+  linkType: hard
+
 "p-pipe@npm:3.1.0":
   version: 3.1.0
   resolution: "p-pipe@npm:3.1.0"
@@ -21585,7 +21636,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"parse5@npm:^6.0.0":
+"parse5-htmlparser2-tree-adapter@npm:^6.0.0":
+  version: 6.0.1
+  resolution: "parse5-htmlparser2-tree-adapter@npm:6.0.1"
+  dependencies:
+    parse5: ^6.0.1
+  checksum: 1848378b355d027915645c13f13f982e60502d201f53bc2067a508bf2dba4aac08219fc781dcd160167f5f50f0c73f58d20fa4fb3d90ee46762c20234fa90a6d
+  languageName: node
+  linkType: hard
+
+"parse5@npm:^5.1.1":
+  version: 5.1.1
+  resolution: "parse5@npm:5.1.1"
+  checksum: 613a714af4c1101d1cb9f7cece2558e35b9ae8a0c03518223a4a1e35494624d9a9ad5fad4c13eab66a0e0adccd9aa3d522fc8f5f9cc19789e0579f3fa0bdfc65
+  languageName: node
+  linkType: hard
+
+"parse5@npm:^6.0.0, parse5@npm:^6.0.1":
   version: 6.0.1
   resolution: "parse5@npm:6.0.1"
   checksum: 7d569a176c5460897f7c8f3377eff640d54132b9be51ae8a8fa4979af940830b2b0c296ce75e5bd8f4041520aadde13170dbdec44889975f906098ea0002f4bd
@@ -22184,7 +22251,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"progress@npm:^2.0.3":
+"progress@npm:^2.0.0, progress@npm:^2.0.3":
   version: 2.0.3
   resolution: "progress@npm:2.0.3"
   checksum: f67403fe7b34912148d9252cb7481266a354bd99ce82c835f79070643bb3c6583d10dbcfda4d41e04bbc1d8437e9af0fb1e1f2135727878f5308682a579429b7
@@ -27509,7 +27576,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"yargs@npm:^17.0.0, yargs@npm:^17.0.1, yargs@npm:^17.3.1, yargs@npm:^17.5.1, yargs@npm:^17.6.2":
+"yargs@npm:^17.0.0, yargs@npm:^17.0.1, yargs@npm:^17.1.0, yargs@npm:^17.3.1, yargs@npm:^17.5.1, yargs@npm:^17.6.2":
   version: 17.7.2
   resolution: "yargs@npm:17.7.2"
   dependencies:
