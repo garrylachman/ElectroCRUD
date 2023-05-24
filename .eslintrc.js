@@ -35,6 +35,7 @@ module.exports = {
     "react/function-component-definition": "off",
     "react/jsx-filename-extension": "off",
     "@typescript-eslint/no-empty-function": "off",
+    "unicorn/no-empty-file": "off",
   },
   env: {
     "browser": true,

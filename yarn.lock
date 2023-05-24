@@ -3372,7 +3372,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@commitlint/load@npm:^17.5.0":
+"@commitlint/load@npm:>6.1.1, @commitlint/load@npm:^17.5.0":
   version: 17.5.0
   resolution: "@commitlint/load@npm:17.5.0"
   dependencies:
@@ -3519,7 +3519,7 @@ __metadata:
 
 "@electrocrud/buttons@file:../buttons::locator=%40electrocrud%2Fpane%40workspace%3Apackages%2Fpane":
   version: 1.0.4
-  resolution: "@electrocrud/buttons@file:../buttons#../buttons::hash=617311&locator=%40electrocrud%2Fpane%40workspace%3Apackages%2Fpane"
+  resolution: "@electrocrud/buttons@file:../buttons#../buttons::hash=6e0016&locator=%40electrocrud%2Fpane%40workspace%3Apackages%2Fpane"
   dependencies:
     "@chakra-ui/react": ^2.4.9
     "@electrocrud/utils": "file:../utils"
@@ -3528,7 +3528,7 @@ __metadata:
     react: ^18.2.0
     react-icons: ^4.7.1
     underscore: ^1.13.6
-  checksum: 7fa9108e3d8e21678c6d7dec378a4a4b3543a9f81ba13e5df1730a754dfbaf6abe5f1ec3591d8d094635e501ba59d571def1d31de04a98ca6926e9aa4099487e
+  checksum: ee0f63b5f5a1ace5db4f3a3fa4dfe2e9ba9575e23e441fba4f7ecedef1085aa7c6bea97a2ea53c022837f691036236957568317965c402fb52ede1dd7ff3cb7a
   languageName: node
   linkType: hard
 
@@ -3557,7 +3557,7 @@ __metadata:
 
 "@electrocrud/feedback@file:../feedback::locator=%40electrocrud%2Ftables%40workspace%3Apackages%2Ftables":
   version: 1.0.4
-  resolution: "@electrocrud/feedback@file:../feedback#../feedback::hash=8c1d82&locator=%40electrocrud%2Ftables%40workspace%3Apackages%2Ftables"
+  resolution: "@electrocrud/feedback@file:../feedback#../feedback::hash=bfca32&locator=%40electrocrud%2Ftables%40workspace%3Apackages%2Ftables"
   dependencies:
     "@chakra-ui/react": ^2.4.9
     "@saas-ui/react": ^1.9.1
@@ -3566,13 +3566,13 @@ __metadata:
     react: ^18.2.0
     react-icons: ^4.7.1
     underscore: ^1.13.6
-  checksum: 2adabf9f6b953bf68a81f2cc307b5dc00c9a2bd12ada7d40b8d9e1d0a02cb790db572b96272edc9b3d8c736368e59b270d1d7da6eba58c914b4c869c5a09e74b
+  checksum: c50d06291acd024c7d6bf5e4e453e2a6dcec3a2b629a0bbd5b69ef439d390d96b7d9444f69cfcb115f53c682a67345674c7f9e4616154ae90b63c1122beeeedf
   languageName: node
   linkType: hard
 
-"@electrocrud/feedback@file:../feedback::locator=%40electrocrud%2Ftabs%40file%3A..%2Ftabs%23..%2Ftabs%3A%3Ahash%3D2b712e%26locator%3D%2540electrocrud%252Flayouts%2540workspace%253Apackages%252Flayouts":
+"@electrocrud/feedback@file:../feedback::locator=%40electrocrud%2Ftabs%40file%3A..%2Ftabs%23..%2Ftabs%3A%3Ahash%3Dd4ae24%26locator%3D%2540electrocrud%252Flayouts%2540workspace%253Apackages%252Flayouts":
   version: 1.0.4
-  resolution: "@electrocrud/feedback@file:../feedback#../feedback::hash=8c1d82&locator=%40electrocrud%2Ftabs%40file%3A..%2Ftabs%23..%2Ftabs%3A%3Ahash%3D2b712e%26locator%3D%2540electrocrud%252Flayouts%2540workspace%253Apackages%252Flayouts"
+  resolution: "@electrocrud/feedback@file:../feedback#../feedback::hash=bfca32&locator=%40electrocrud%2Ftabs%40file%3A..%2Ftabs%23..%2Ftabs%3A%3Ahash%3Dd4ae24%26locator%3D%2540electrocrud%252Flayouts%2540workspace%253Apackages%252Flayouts"
   dependencies:
     "@chakra-ui/react": ^2.4.9
     "@saas-ui/react": ^1.9.1
@@ -3581,13 +3581,13 @@ __metadata:
     react: ^18.2.0
     react-icons: ^4.7.1
     underscore: ^1.13.6
-  checksum: 2adabf9f6b953bf68a81f2cc307b5dc00c9a2bd12ada7d40b8d9e1d0a02cb790db572b96272edc9b3d8c736368e59b270d1d7da6eba58c914b4c869c5a09e74b
+  checksum: c50d06291acd024c7d6bf5e4e453e2a6dcec3a2b629a0bbd5b69ef439d390d96b7d9444f69cfcb115f53c682a67345674c7f9e4616154ae90b63c1122beeeedf
   languageName: node
   linkType: hard
 
 "@electrocrud/feedback@file:../feedback::locator=%40electrocrud%2Ftabs%40workspace%3Apackages%2Ftabs":
   version: 1.0.4
-  resolution: "@electrocrud/feedback@file:../feedback#../feedback::hash=8c1d82&locator=%40electrocrud%2Ftabs%40workspace%3Apackages%2Ftabs"
+  resolution: "@electrocrud/feedback@file:../feedback#../feedback::hash=bfca32&locator=%40electrocrud%2Ftabs%40workspace%3Apackages%2Ftabs"
   dependencies:
     "@chakra-ui/react": ^2.4.9
     "@saas-ui/react": ^1.9.1
@@ -3596,7 +3596,7 @@ __metadata:
     react: ^18.2.0
     react-icons: ^4.7.1
     underscore: ^1.13.6
-  checksum: 2adabf9f6b953bf68a81f2cc307b5dc00c9a2bd12ada7d40b8d9e1d0a02cb790db572b96272edc9b3d8c736368e59b270d1d7da6eba58c914b4c869c5a09e74b
+  checksum: c50d06291acd024c7d6bf5e4e453e2a6dcec3a2b629a0bbd5b69ef439d390d96b7d9444f69cfcb115f53c682a67345674c7f9e4616154ae90b63c1122beeeedf
   languageName: node
   linkType: hard
 
@@ -3707,7 +3707,7 @@ __metadata:
 
 "@electrocrud/tabs@file:../tabs::locator=%40electrocrud%2Flayouts%40workspace%3Apackages%2Flayouts":
   version: 1.0.4
-  resolution: "@electrocrud/tabs@file:../tabs#../tabs::hash=2b712e&locator=%40electrocrud%2Flayouts%40workspace%3Apackages%2Flayouts"
+  resolution: "@electrocrud/tabs@file:../tabs#../tabs::hash=d4ae24&locator=%40electrocrud%2Flayouts%40workspace%3Apackages%2Flayouts"
   dependencies:
     "@chakra-ui/react": ^2.4.9
     "@electrocrud/feedback": "file:../feedback"
@@ -3715,7 +3715,7 @@ __metadata:
     react: ^18.2.0
     react-icons: ^4.7.1
     underscore: ^1.13.6
-  checksum: ab803fd47516e623de7a08d129147035852672b5e66fa1cc63f1d89e8b1eac6eea4fc61178a6badaa15a2c3b997d0a92d06894c663484e438bc10fe999737ce6
+  checksum: d983d411587f0773cc001b462f313a3ff213b4ec01add9720481ebe8444e958da807979ab0c4e556925d3ed9f9dc9bca3e54967f4cb204e2f6bb936212e821df
   languageName: node
   linkType: hard
 
@@ -3741,21 +3741,21 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@electrocrud/utils@file:../utils::locator=%40electrocrud%2Fbuttons%40file%3A..%2Fbuttons%23..%2Fbuttons%3A%3Ahash%3D617311%26locator%3D%2540electrocrud%252Fpane%2540workspace%253Apackages%252Fpane":
+"@electrocrud/utils@file:../utils::locator=%40electrocrud%2Fbuttons%40file%3A..%2Fbuttons%23..%2Fbuttons%3A%3Ahash%3D6e0016%26locator%3D%2540electrocrud%252Fpane%2540workspace%253Apackages%252Fpane":
   version: 1.0.4
-  resolution: "@electrocrud/utils@file:../utils#../utils::hash=e80a65&locator=%40electrocrud%2Fbuttons%40file%3A..%2Fbuttons%23..%2Fbuttons%3A%3Ahash%3D617311%26locator%3D%2540electrocrud%252Fpane%2540workspace%253Apackages%252Fpane"
+  resolution: "@electrocrud/utils@file:../utils#../utils::hash=e64c2c&locator=%40electrocrud%2Fbuttons%40file%3A..%2Fbuttons%23..%2Fbuttons%3A%3Ahash%3D6e0016%26locator%3D%2540electrocrud%252Fpane%2540workspace%253Apackages%252Fpane"
   dependencies:
     arc-hash: ^3.0.0
-  checksum: caefd872e02883375fa2bb7d1528b454cff9385dd100f537333f479099f9695ee0438257339bfee7ba403023d909e8f0f69afb7151e9e149d445501f32e83a7c
+  checksum: c268887711346dd749184922368fe430840a49b600a99b3d5d3289dfb77a78a821ff0d0d2f5c5c705ea12a9af071735d8d4a0ab0d549c108bb22393c5cb8a022
   languageName: node
   linkType: hard
 
 "@electrocrud/utils@file:../utils::locator=%40electrocrud%2Fbuttons%40workspace%3Apackages%2Fbuttons":
   version: 1.0.4
-  resolution: "@electrocrud/utils@file:../utils#../utils::hash=e80a65&locator=%40electrocrud%2Fbuttons%40workspace%3Apackages%2Fbuttons"
+  resolution: "@electrocrud/utils@file:../utils#../utils::hash=e64c2c&locator=%40electrocrud%2Fbuttons%40workspace%3Apackages%2Fbuttons"
   dependencies:
     arc-hash: ^3.0.0
-  checksum: caefd872e02883375fa2bb7d1528b454cff9385dd100f537333f479099f9695ee0438257339bfee7ba403023d909e8f0f69afb7151e9e149d445501f32e83a7c
+  checksum: c268887711346dd749184922368fe430840a49b600a99b3d5d3289dfb77a78a821ff0d0d2f5c5c705ea12a9af071735d8d4a0ab0d549c108bb22393c5cb8a022
   languageName: node
   linkType: hard
 
@@ -10560,6 +10560,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"cachedir@npm:2.3.0":
+  version: 2.3.0
+  resolution: "cachedir@npm:2.3.0"
+  checksum: ec90cb0f2e6336e266aa748dbadf3da9e0b20e843e43f1591acab7a3f1451337dc2f26cb9dd833ae8cfefeffeeb43ef5b5ff62782a685f4e3c2305dd98482fcb
+  languageName: node
+  linkType: hard
+
 "call-bind@npm:^1.0.0, call-bind@npm:^1.0.2":
   version: 1.0.2
   resolution: "call-bind@npm:1.0.2"
@@ -10682,7 +10689,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chalk@npm:^2.0.0, chalk@npm:^2.3.2":
+"chalk@npm:^2.0.0, chalk@npm:^2.3.2, chalk@npm:^2.4.1":
   version: 2.4.2
   resolution: "chalk@npm:2.4.2"
   dependencies:
@@ -11230,6 +11237,32 @@ __metadata:
   languageName: node
   linkType: hard
 
+"commitizen@npm:^4.0.3, commitizen@npm:^4.3.0":
+  version: 4.3.0
+  resolution: "commitizen@npm:4.3.0"
+  dependencies:
+    cachedir: 2.3.0
+    cz-conventional-changelog: 3.3.0
+    dedent: 0.7.0
+    detect-indent: 6.1.0
+    find-node-modules: ^2.1.2
+    find-root: 1.1.0
+    fs-extra: 9.1.0
+    glob: 7.2.3
+    inquirer: 8.2.5
+    is-utf8: ^0.2.1
+    lodash: 4.17.21
+    minimist: 1.2.7
+    strip-bom: 4.0.0
+    strip-json-comments: 3.1.1
+  bin:
+    commitizen: bin/commitizen
+    cz: bin/git-cz
+    git-cz: bin/git-cz
+  checksum: 5a54f81ab7f24b74dd7791ae408796b0ac9ae6675cbe85db71047cee131e627ed5bfb9365de8b5777bedfbcdee1bccf15e5da5dae8b09b3fce93b551baa2cb63
+  languageName: node
+  linkType: hard
+
 "common-ancestor-path@npm:^1.0.1":
   version: 1.0.1
   resolution: "common-ancestor-path@npm:1.0.1"
@@ -11444,6 +11477,13 @@ __metadata:
   bin:
     conventional-changelog-writer: cli.js
   checksum: 5c0129db44577f14b1f8de225b62a392a9927ba7fe3422cb21ad71a771b8472bd03badb7c87cb47419913abc3f2ce3759b69f59550cdc6f7a7b0459015b3b44c
+  languageName: node
+  linkType: hard
+
+"conventional-commit-types@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "conventional-commit-types@npm:3.0.0"
+  checksum: b9552de6a310c91a271ee57a890ed70d2d94340e710fc33856aaca5b24928fb2162f04dda5484d155b68c1fbaa042d904014d7fad0b6751a6d68052a0616015d
   languageName: node
   linkType: hard
 
@@ -11919,6 +11959,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"cz-conventional-changelog@npm:3.3.0, cz-conventional-changelog@npm:^3.3.0":
+  version: 3.3.0
+  resolution: "cz-conventional-changelog@npm:3.3.0"
+  dependencies:
+    "@commitlint/load": ">6.1.1"
+    chalk: ^2.4.1
+    commitizen: ^4.0.3
+    conventional-commit-types: ^3.0.0
+    lodash.map: ^4.5.1
+    longest: ^2.0.1
+    word-wrap: ^1.0.3
+  dependenciesMeta:
+    "@commitlint/load":
+      optional: true
+  checksum: 8b766712092142ecec86c5c8a2a7206d0b2da46ae16e137303c6d75b42c048acd831c734fd542b9c3cbeb0fd8e7d1f5391494ed629dfba4459fee2d6f5d2c0ca
+  languageName: node
+  linkType: hard
+
 "damerau-levenshtein@npm:^1.0.8":
   version: 1.0.8
   resolution: "damerau-levenshtein@npm:1.0.8"
@@ -12248,6 +12306,20 @@ __metadata:
   version: 1.2.0
   resolution: "destroy@npm:1.2.0"
   checksum: 0acb300b7478a08b92d810ab229d5afe0d2f4399272045ab22affa0d99dbaf12637659411530a6fcd597a9bdac718fc94373a61a95b4651bbc7b83684a565e38
+  languageName: node
+  linkType: hard
+
+"detect-file@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "detect-file@npm:1.0.0"
+  checksum: 1861e4146128622e847abe0e1ed80fef01e78532665858a792267adf89032b7a9c698436137707fcc6f02956c2a6a0052d6a0cef5be3d4b76b1ff0da88e2158a
+  languageName: node
+  linkType: hard
+
+"detect-indent@npm:6.1.0":
+  version: 6.1.0
+  resolution: "detect-indent@npm:6.1.0"
+  checksum: ab953a73c72dbd4e8fc68e4ed4bfd92c97eb6c43734af3900add963fd3a9316f3bc0578b018b24198d4c31a358571eff5f0656e81a1f3b9ad5c547d58b2d093d
   languageName: node
   linkType: hard
 
@@ -12744,11 +12816,13 @@ __metadata:
     chakra-react-select: ^4.4.0
     chalk: ^4.1.2
     chroma-js: ^2.4.2
+    commitizen: ^4.3.0
     core-js: ^3.24.1
     cross-env: ^7.0.3
     crypto-browserify: ^3.12.0
     crypto-js: ^4.1.1
     css-loader: ^6.7.3
+    cz-conventional-changelog: ^3.3.0
     docker-compose: ^0.24.1
     dockerode: ^3.3.4
     dockerode-compose: ^1.3.2
@@ -14439,7 +14513,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"find-root@npm:^1.1.0":
+"find-node-modules@npm:^2.1.2":
+  version: 2.1.3
+  resolution: "find-node-modules@npm:2.1.3"
+  dependencies:
+    findup-sync: ^4.0.0
+    merge: ^2.1.1
+  checksum: 4b8a194ffd56ccf1a1033de35e2ee8209869b05cce68ff7c4ab0dbf04e63fd7196283383eee4c84596c7b311755b2836815209d558234cadc330a87881e5a3f4
+  languageName: node
+  linkType: hard
+
+"find-root@npm:1.1.0, find-root@npm:^1.1.0":
   version: 1.1.0
   resolution: "find-root@npm:1.1.0"
   checksum: b2a59fe4b6c932eef36c45a048ae8f93c85640212ebe8363164814990ee20f154197505965f3f4f102efc33bfb1cbc26fd17c4a2fc739ebc51b886b137cbefaf
@@ -14491,6 +14575,18 @@ __metadata:
   dependencies:
     semver-regex: ^4.0.5
   checksum: 680bdb0081f631f7bfb6f0f8edcfa0b74ab8cabc82097a4527a37b0d042aabc56685bf459ff27991eab0baddc04eb8e3bba8a2869f5004ecf7cdd2779b6e51de
+  languageName: node
+  linkType: hard
+
+"findup-sync@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "findup-sync@npm:4.0.0"
+  dependencies:
+    detect-file: ^1.0.0
+    is-glob: ^4.0.0
+    micromatch: ^4.0.2
+    resolve-dir: ^1.0.1
+  checksum: 94131e1107ad63790ed00c4c39ca131a93ea602607bd97afeffd92b69a9a63cf2c6f57d6db88cb753fe748ac7fde79e1e76768ff784247026b7c5ebf23ede3a0
   languageName: node
   linkType: hard
 
@@ -15191,6 +15287,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"glob@npm:7.2.3, glob@npm:^7.1.3, glob@npm:^7.1.4, glob@npm:^7.1.6":
+  version: 7.2.3
+  resolution: "glob@npm:7.2.3"
+  dependencies:
+    fs.realpath: ^1.0.0
+    inflight: ^1.0.4
+    inherits: 2
+    minimatch: ^3.1.1
+    once: ^1.3.0
+    path-is-absolute: ^1.0.0
+  checksum: 29452e97b38fa704dabb1d1045350fb2467cf0277e155aa9ff7077e90ad81d1ea9d53d3ee63bd37c05b09a065e90f16aec4a65f5b8de401d1dac40bc5605d133
+  languageName: node
+  linkType: hard
+
 "glob@npm:^10.2.2, glob@npm:^10.2.4":
   version: 10.2.6
   resolution: "glob@npm:10.2.6"
@@ -15203,20 +15313,6 @@ __metadata:
   bin:
     glob: dist/cjs/src/bin.js
   checksum: 94c5964bfa9df95207a69a3bd9b07b99ea7b5ba1f36dd73a8914378cee9436a205b9b5bdff58872abc238684ea7f4b4936e932155b8885250818bcc8d5321ddf
-  languageName: node
-  linkType: hard
-
-"glob@npm:^7.1.3, glob@npm:^7.1.4, glob@npm:^7.1.6":
-  version: 7.2.3
-  resolution: "glob@npm:7.2.3"
-  dependencies:
-    fs.realpath: ^1.0.0
-    inflight: ^1.0.4
-    inherits: 2
-    minimatch: ^3.1.1
-    once: ^1.3.0
-    path-is-absolute: ^1.0.0
-  checksum: 29452e97b38fa704dabb1d1045350fb2467cf0277e155aa9ff7077e90ad81d1ea9d53d3ee63bd37c05b09a065e90f16aec4a65f5b8de401d1dac40bc5605d133
   languageName: node
   linkType: hard
 
@@ -16284,7 +16380,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"inquirer@npm:^8.2.4":
+"inquirer@npm:8.2.5, inquirer@npm:^8.2.4":
   version: 8.2.5
   resolution: "inquirer@npm:8.2.5"
   dependencies:
@@ -16848,6 +16944,13 @@ __metadata:
   version: 1.3.0
   resolution: "is-unicode-supported@npm:1.3.0"
   checksum: 20a1fc161afafaf49243551a5ac33b6c4cf0bbcce369fcd8f2951fbdd000c30698ce320de3ee6830497310a8f41880f8066d440aa3eb0a853e2aa4836dd89abc
+  languageName: node
+  linkType: hard
+
+"is-utf8@npm:^0.2.1":
+  version: 0.2.1
+  resolution: "is-utf8@npm:0.2.1"
+  checksum: 167ccd2be869fc228cc62c1a28df4b78c6b5485d15a29027d3b5dceb09b383e86a3522008b56dcac14b592b22f0a224388718c2505027a994fd8471465de54b3
   languageName: node
   linkType: hard
 
@@ -18635,6 +18738,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lodash.map@npm:^4.5.1":
+  version: 4.6.0
+  resolution: "lodash.map@npm:4.6.0"
+  checksum: 7369a41d7d24d15ce3bbd02a7faa3a90f6266c38184e64932571b9b21b758bd10c04ffd117d1859be1a44156f29b94df5045eff172bf8a97fddf68bf1002d12f
+  languageName: node
+  linkType: hard
+
 "lodash.memoize@npm:4.1.2, lodash.memoize@npm:4.x":
   version: 4.1.2
   resolution: "lodash.memoize@npm:4.1.2"
@@ -18724,17 +18834,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lodash@npm:4.17.21, lodash@npm:^4.17.15, lodash@npm:^4.17.20, lodash@npm:^4.17.21, lodash@npm:^4.17.4":
+  version: 4.17.21
+  resolution: "lodash@npm:4.17.21"
+  checksum: eb835a2e51d381e561e508ce932ea50a8e5a68f4ebdd771ea240d3048244a8d13658acbd502cd4829768c56f2e16bdd4340b9ea141297d472517b83868e677f7
+  languageName: node
+  linkType: hard
+
 "lodash@npm:^3.10.0":
   version: 3.10.1
   resolution: "lodash@npm:3.10.1"
   checksum: 53065d3712a2fd90b55690c5af19f9625a5bbb2b7876ff76d782ee1dc22618fd4dff191d44a8e165a17b5b81a851c3e884d3b5b25e314422fbe24bb299542685
-  languageName: node
-  linkType: hard
-
-"lodash@npm:^4.17.15, lodash@npm:^4.17.20, lodash@npm:^4.17.21, lodash@npm:^4.17.4":
-  version: 4.17.21
-  resolution: "lodash@npm:4.17.21"
-  checksum: eb835a2e51d381e561e508ce932ea50a8e5a68f4ebdd771ea240d3048244a8d13658acbd502cd4829768c56f2e16bdd4340b9ea141297d472517b83868e677f7
   languageName: node
   linkType: hard
 
@@ -18771,6 +18881,13 @@ __metadata:
   version: 3.1.0
   resolution: "longest-streak@npm:3.1.0"
   checksum: d7f952ed004cbdb5c8bcfc4f7f5c3d65449e6c5a9e9be4505a656e3df5a57ee125f284286b4bf8ecea0c21a7b3bf2b8f9001ad506c319b9815ad6a63a47d0fd0
+  languageName: node
+  linkType: hard
+
+"longest@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "longest@npm:2.0.1"
+  checksum: 9587c153919a883ecbcc33e9439bc2592aa6fdbbd2d343f8ab17d8d3e0373c4e4350e3b428566fd689d704800a23f2b4d145cbdcca4ef3fd35742e5927f919a9
   languageName: node
   linkType: hard
 
@@ -19300,6 +19417,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"merge@npm:^2.1.1":
+  version: 2.1.1
+  resolution: "merge@npm:2.1.1"
+  checksum: 9c36b0e25aa53b3f7305d7cf0f330397f1142cf311802b681e5619f12e986a790019b8246c1c0df21701c8652449f9046b0129551030097ef563d1958c823249
+  languageName: node
+  linkType: hard
+
 "methods@npm:~1.1.2":
   version: 1.1.2
   resolution: "methods@npm:1.1.2"
@@ -19822,6 +19946,13 @@ __metadata:
     is-plain-obj: ^1.1.0
     kind-of: ^6.0.3
   checksum: 8c040b3068811e79de1140ca2b708d3e203c8003eb9a414c1ab3cd467fc5f17c9ca02a5aef23bedc51a7f8bfbe77f87e9a7e31ec81fba304cda675b019496f4e
+  languageName: node
+  linkType: hard
+
+"minimist@npm:1.2.7":
+  version: 1.2.7
+  resolution: "minimist@npm:1.2.7"
+  checksum: 7346574a1038ca23c32e02252f603801f09384dd1d78b69a943a4e8c2c28730b80e96193882d3d3b22a063445f460e48316b29b8a25addca2d7e5e8f75478bec
   languageName: node
   linkType: hard
 
@@ -23697,7 +23828,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"resolve-dir@npm:^1.0.0":
+"resolve-dir@npm:^1.0.0, resolve-dir@npm:^1.0.1":
   version: 1.0.1
   resolution: "resolve-dir@npm:1.0.1"
   dependencies:
@@ -25102,17 +25233,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"strip-bom@npm:4.0.0, strip-bom@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "strip-bom@npm:4.0.0"
+  checksum: 9dbcfbaf503c57c06af15fe2c8176fb1bf3af5ff65003851a102749f875a6dbe0ab3b30115eccf6e805e9d756830d3e40ec508b62b3f1ddf3761a20ebe29d3f3
+  languageName: node
+  linkType: hard
+
 "strip-bom@npm:^3.0.0":
   version: 3.0.0
   resolution: "strip-bom@npm:3.0.0"
   checksum: 8d50ff27b7ebe5ecc78f1fe1e00fcdff7af014e73cf724b46fb81ef889eeb1015fc5184b64e81a2efe002180f3ba431bdd77e300da5c6685d702780fbf0c8d5b
-  languageName: node
-  linkType: hard
-
-"strip-bom@npm:^4.0.0":
-  version: 4.0.0
-  resolution: "strip-bom@npm:4.0.0"
-  checksum: 9dbcfbaf503c57c06af15fe2c8176fb1bf3af5ff65003851a102749f875a6dbe0ab3b30115eccf6e805e9d756830d3e40ec508b62b3f1ddf3761a20ebe29d3f3
   languageName: node
   linkType: hard
 
@@ -25146,7 +25277,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"strip-json-comments@npm:^3.1.0, strip-json-comments@npm:^3.1.1":
+"strip-json-comments@npm:3.1.1, strip-json-comments@npm:^3.1.0, strip-json-comments@npm:^3.1.1":
   version: 3.1.1
   resolution: "strip-json-comments@npm:3.1.1"
   checksum: 492f73e27268f9b1c122733f28ecb0e7e8d8a531a6662efbd08e22cccb3f9475e90a1b82cab06a392f6afae6d2de636f977e231296400d0ec5304ba70f166443
@@ -27259,7 +27390,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"word-wrap@npm:^1.2.3, word-wrap@npm:~1.2.3":
+"word-wrap@npm:^1.0.3, word-wrap@npm:^1.2.3, word-wrap@npm:~1.2.3":
   version: 1.2.3
   resolution: "word-wrap@npm:1.2.3"
   checksum: 30b48f91fcf12106ed3186ae4fa86a6a1842416df425be7b60485de14bec665a54a68e4b5156647dec3a70f25e84d270ca8bc8cd23182ed095f5c7206a938c1f
