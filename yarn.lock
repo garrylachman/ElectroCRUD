@@ -3517,11 +3517,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@electrocrud/buttons@link:../buttons::locator=%40electrocrud%2Fpane%40workspace%3Apackages%2Fpane":
-  version: 0.0.0-use.local
-  resolution: "@electrocrud/buttons@link:../buttons::locator=%40electrocrud%2Fpane%40workspace%3Apackages%2Fpane"
+"@electrocrud/buttons@file:../buttons::locator=%40electrocrud%2Fpane%40workspace%3Apackages%2Fpane":
+  version: 1.0.0
+  resolution: "@electrocrud/buttons@file:../buttons#../buttons::hash=26d0c8&locator=%40electrocrud%2Fpane%40workspace%3Apackages%2Fpane"
+  dependencies:
+    "@chakra-ui/react": ^2.4.9
+    "@electrocrud/utils": "file:../utils"
+    chroma-js: ^2.4.2
+    framer-motion: ^9.0.2
+    react: ^18.2.0
+    react-icons: ^4.7.1
+    underscore: ^1.13.6
+  checksum: bde7efffdb5c19e290d645b154d66fbbd57e3702ec8bb992efc05b3f9959f02d3fbe93e563d9ed06944cb2255f45605a77da367e7eb7de4db8870a490b8ef0aa
   languageName: node
-  linkType: soft
+  linkType: hard
 
 "@electrocrud/buttons@link:./packages/buttons::locator=electrocrud%40workspace%3A.":
   version: 0.0.0-use.local
@@ -3534,7 +3543,7 @@ __metadata:
   resolution: "@electrocrud/buttons@workspace:packages/buttons"
   dependencies:
     "@chakra-ui/react": ^2.4.9
-    "@electrocrud/utils": "link:./../utils"
+    "@electrocrud/utils": "file:../utils"
     chroma-js: ^2.4.2
     csstype: ^3.1.1
     framer-motion: ^9.0.2
@@ -3546,11 +3555,50 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@electrocrud/feedback@link:../feedback::locator=%40electrocrud%2Ftabs%40workspace%3Apackages%2Ftabs":
-  version: 0.0.0-use.local
-  resolution: "@electrocrud/feedback@link:../feedback::locator=%40electrocrud%2Ftabs%40workspace%3Apackages%2Ftabs"
+"@electrocrud/feedback@file:../feedback::locator=%40electrocrud%2Ftables%40workspace%3Apackages%2Ftables":
+  version: 1.0.0
+  resolution: "@electrocrud/feedback@file:../feedback#../feedback::hash=93b82e&locator=%40electrocrud%2Ftables%40workspace%3Apackages%2Ftables"
+  dependencies:
+    "@chakra-ui/react": ^2.4.9
+    "@saas-ui/react": ^1.9.1
+    chroma-js: ^2.4.2
+    framer-motion: ^9.0.2
+    react: ^18.2.0
+    react-icons: ^4.7.1
+    underscore: ^1.13.6
+  checksum: 8ffdfbb28e95d5fa0b6e099f5b789c12d990e276904114b472f55d080c844305366521a51468fe88c7e658ec97ddf8fb3030c657cac8f9eabd14f14140b466aa
   languageName: node
-  linkType: soft
+  linkType: hard
+
+"@electrocrud/feedback@file:../feedback::locator=%40electrocrud%2Ftabs%40file%3A..%2Ftabs%23..%2Ftabs%3A%3Ahash%3D4d3e73%26locator%3D%2540electrocrud%252Flayouts%2540workspace%253Apackages%252Flayouts":
+  version: 1.0.0
+  resolution: "@electrocrud/feedback@file:../feedback#../feedback::hash=93b82e&locator=%40electrocrud%2Ftabs%40file%3A..%2Ftabs%23..%2Ftabs%3A%3Ahash%3D4d3e73%26locator%3D%2540electrocrud%252Flayouts%2540workspace%253Apackages%252Flayouts"
+  dependencies:
+    "@chakra-ui/react": ^2.4.9
+    "@saas-ui/react": ^1.9.1
+    chroma-js: ^2.4.2
+    framer-motion: ^9.0.2
+    react: ^18.2.0
+    react-icons: ^4.7.1
+    underscore: ^1.13.6
+  checksum: 8ffdfbb28e95d5fa0b6e099f5b789c12d990e276904114b472f55d080c844305366521a51468fe88c7e658ec97ddf8fb3030c657cac8f9eabd14f14140b466aa
+  languageName: node
+  linkType: hard
+
+"@electrocrud/feedback@file:../feedback::locator=%40electrocrud%2Ftabs%40workspace%3Apackages%2Ftabs":
+  version: 1.0.0
+  resolution: "@electrocrud/feedback@file:../feedback#../feedback::hash=93b82e&locator=%40electrocrud%2Ftabs%40workspace%3Apackages%2Ftabs"
+  dependencies:
+    "@chakra-ui/react": ^2.4.9
+    "@saas-ui/react": ^1.9.1
+    chroma-js: ^2.4.2
+    framer-motion: ^9.0.2
+    react: ^18.2.0
+    react-icons: ^4.7.1
+    underscore: ^1.13.6
+  checksum: 8ffdfbb28e95d5fa0b6e099f5b789c12d990e276904114b472f55d080c844305366521a51468fe88c7e658ec97ddf8fb3030c657cac8f9eabd14f14140b466aa
+  languageName: node
+  linkType: hard
 
 "@electrocrud/feedback@link:./packages/feedback::locator=electrocrud%40workspace%3A.":
   version: 0.0.0-use.local
@@ -3586,7 +3634,7 @@ __metadata:
   resolution: "@electrocrud/layouts@workspace:packages/layouts"
   dependencies:
     "@chakra-ui/react": ^2.4.9
-    "@electrocrud/tabs": "link:../tabs"
+    "@electrocrud/tabs": "file:../tabs"
     "@saas-ui/react": ^1.9.1
     csstype: ^3.1.1
     react: ^18.2.0
@@ -3607,7 +3655,7 @@ __metadata:
   resolution: "@electrocrud/pane@workspace:packages/pane"
   dependencies:
     "@chakra-ui/react": ^2.4.9
-    "@electrocrud/buttons": "link:../buttons"
+    "@electrocrud/buttons": "file:../buttons"
     csstype: ^3.1.1
     framer-motion: ^9.0.2
     react: ^18.2.0
@@ -3646,6 +3694,7 @@ __metadata:
   resolution: "@electrocrud/tables@workspace:packages/tables"
   dependencies:
     "@chakra-ui/react": ^2.4.9
+    "@electrocrud/feedback": "file:../feedback"
     csstype: ^3.1.1
     framer-motion: ^9.0.2
     react: ^18.2.0
@@ -3656,11 +3705,19 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@electrocrud/tabs@link:../tabs::locator=%40electrocrud%2Flayouts%40workspace%3Apackages%2Flayouts":
-  version: 0.0.0-use.local
-  resolution: "@electrocrud/tabs@link:../tabs::locator=%40electrocrud%2Flayouts%40workspace%3Apackages%2Flayouts"
+"@electrocrud/tabs@file:../tabs::locator=%40electrocrud%2Flayouts%40workspace%3Apackages%2Flayouts":
+  version: 1.0.0
+  resolution: "@electrocrud/tabs@file:../tabs#../tabs::hash=4d3e73&locator=%40electrocrud%2Flayouts%40workspace%3Apackages%2Flayouts"
+  dependencies:
+    "@chakra-ui/react": ^2.4.9
+    "@electrocrud/feedback": "file:../feedback"
+    framer-motion: ^9.0.2
+    react: ^18.2.0
+    react-icons: ^4.7.1
+    underscore: ^1.13.6
+  checksum: 219c8acd51ecabc63b7a3fbfca06debaf6d440c7304475b07daa51f9a08d578117e3c5199f2695d639f77f3a34fed9dcfcf32f18e2490bd257cb9fd4c1bf5f7c
   languageName: node
-  linkType: soft
+  linkType: hard
 
 "@electrocrud/tabs@link:./packages/tabs::locator=electrocrud%40workspace%3A.":
   version: 0.0.0-use.local
@@ -3673,7 +3730,7 @@ __metadata:
   resolution: "@electrocrud/tabs@workspace:packages/tabs"
   dependencies:
     "@chakra-ui/react": ^2.4.9
-    "@electrocrud/feedback": "link:../feedback"
+    "@electrocrud/feedback": "file:../feedback"
     csstype: ^3.1.1
     framer-motion: ^9.0.2
     react: ^18.2.0
@@ -3684,11 +3741,23 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@electrocrud/utils@link:./../utils::locator=%40electrocrud%2Fbuttons%40workspace%3Apackages%2Fbuttons":
-  version: 0.0.0-use.local
-  resolution: "@electrocrud/utils@link:./../utils::locator=%40electrocrud%2Fbuttons%40workspace%3Apackages%2Fbuttons"
+"@electrocrud/utils@file:../utils::locator=%40electrocrud%2Fbuttons%40file%3A..%2Fbuttons%23..%2Fbuttons%3A%3Ahash%3D26d0c8%26locator%3D%2540electrocrud%252Fpane%2540workspace%253Apackages%252Fpane":
+  version: 1.0.0
+  resolution: "@electrocrud/utils@file:../utils#../utils::hash=66f6d0&locator=%40electrocrud%2Fbuttons%40file%3A..%2Fbuttons%23..%2Fbuttons%3A%3Ahash%3D26d0c8%26locator%3D%2540electrocrud%252Fpane%2540workspace%253Apackages%252Fpane"
+  dependencies:
+    arc-hash: ^3.0.0
+  checksum: 6317795db3a8030f8d0a7c8883d0e77887486a369420c50604f23bc1f4e26752f9f8805673ea9019e20db715bb9903f31cfdc4e51465331cf502795942237db6
   languageName: node
-  linkType: soft
+  linkType: hard
+
+"@electrocrud/utils@file:../utils::locator=%40electrocrud%2Fbuttons%40workspace%3Apackages%2Fbuttons":
+  version: 1.0.0
+  resolution: "@electrocrud/utils@file:../utils#../utils::hash=66f6d0&locator=%40electrocrud%2Fbuttons%40workspace%3Apackages%2Fbuttons"
+  dependencies:
+    arc-hash: ^3.0.0
+  checksum: 6317795db3a8030f8d0a7c8883d0e77887486a369420c50604f23bc1f4e26752f9f8805673ea9019e20db715bb9903f31cfdc4e51465331cf502795942237db6
+  languageName: node
+  linkType: hard
 
 "@electrocrud/utils@link:./packages/utils::locator=electrocrud%40workspace%3A.":
   version: 0.0.0-use.local

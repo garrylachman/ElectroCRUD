@@ -1,6 +1,6 @@
 {
   "name": "@electrocrud/tables",
-  "version": "3.0.0",
+  "version": "1.0.0",
   "description": "> TODO: description",
   "author": "Garry Lachman <garry@lachman.co>",
   "homepage": "https://github.com/garrylachman/ElectroCRUD/tree/main/packages/tables#readme",
@@ -32,11 +32,11 @@
   },
   "dependencies": {
     "@chakra-ui/react": "^2.4.9",
+    "@electrocrud/feedback": "file:../feedback",
     "framer-motion": "^9.0.2",
     "react": "^18.2.0",
     "react-icons": "^4.7.1",
-    "underscore": "^1.13.6",
-    "@electrocrud/feedback": "link:../feedback"
+    "underscore": "^1.13.6"
   },
   "devDependencies": {
     "csstype": "^3.1.1",

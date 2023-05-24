@@ -1,6 +1,6 @@
 {
   "name": "@electrocrud/layouts",
-  "version": "3.0.0",
+  "version": "1.0.0",
   "description": "> TODO: description",
   "author": "Garry Lachman <garry@lachman.co>",
   "homepage": "https://github.com/garrylachman/ElectroCRUD/tree/main/packages/layouts#readme",
@@ -32,7 +32,7 @@
   },
   "dependencies": {
     "@chakra-ui/react": "^2.4.9",
-    "@electrocrud/tabs": "link:../tabs",
+    "@electrocrud/tabs": "file:../tabs",
     "@saas-ui/react": "^1.9.1",
     "react": "^18.2.0",
     "underscore": "^1.13.6"
