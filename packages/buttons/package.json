@@ -32,7 +32,7 @@
   },
   "dependencies": {
     "@chakra-ui/react": "^2.4.9",
-    "@electrocrud/utils": "workspaces:*",
+    "@electrocrud/utils": "link:./../utils",
     "chroma-js": "^2.4.2",
     "framer-motion": "^9.0.2",
     "react": "^18.2.0",

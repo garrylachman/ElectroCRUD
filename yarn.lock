@@ -3510,12 +3510,24 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@electrocrud/buttons@workspace:packages/buttons, @electrocrud/buttons@workspaces:*":
+"@electrocrud/buttons@link:../buttons::locator=%40electrocrud%2Fpane%40workspace%3Apackages%2Fpane":
+  version: 0.0.0-use.local
+  resolution: "@electrocrud/buttons@link:../buttons::locator=%40electrocrud%2Fpane%40workspace%3Apackages%2Fpane"
+  languageName: node
+  linkType: soft
+
+"@electrocrud/buttons@link:./packages/buttons::locator=electrocrud%40workspace%3A.":
+  version: 0.0.0-use.local
+  resolution: "@electrocrud/buttons@link:./packages/buttons::locator=electrocrud%40workspace%3A."
+  languageName: node
+  linkType: soft
+
+"@electrocrud/buttons@workspace:packages/buttons":
   version: 0.0.0-use.local
   resolution: "@electrocrud/buttons@workspace:packages/buttons"
   dependencies:
     "@chakra-ui/react": ^2.4.9
-    "@electrocrud/utils": "workspaces:*"
+    "@electrocrud/utils": "link:./../utils"
     chroma-js: ^2.4.2
     csstype: ^3.1.1
     framer-motion: ^9.0.2
@@ -3527,7 +3539,19 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@electrocrud/feedback@workspace:packages/feedback, @electrocrud/feedback@workspaces:*":
+"@electrocrud/feedback@link:../feedback::locator=%40electrocrud%2Ftabs%40workspace%3Apackages%2Ftabs":
+  version: 0.0.0-use.local
+  resolution: "@electrocrud/feedback@link:../feedback::locator=%40electrocrud%2Ftabs%40workspace%3Apackages%2Ftabs"
+  languageName: node
+  linkType: soft
+
+"@electrocrud/feedback@link:./packages/feedback::locator=electrocrud%40workspace%3A.":
+  version: 0.0.0-use.local
+  resolution: "@electrocrud/feedback@link:./packages/feedback::locator=electrocrud%40workspace%3A."
+  languageName: node
+  linkType: soft
+
+"@electrocrud/feedback@workspace:packages/feedback":
   version: 0.0.0-use.local
   resolution: "@electrocrud/feedback@workspace:packages/feedback"
   dependencies:
@@ -3544,12 +3568,18 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@electrocrud/layouts@workspace:packages/layouts, @electrocrud/layouts@workspaces:*":
+"@electrocrud/layouts@link:./packages/layouts::locator=electrocrud%40workspace%3A.":
+  version: 0.0.0-use.local
+  resolution: "@electrocrud/layouts@link:./packages/layouts::locator=electrocrud%40workspace%3A."
+  languageName: node
+  linkType: soft
+
+"@electrocrud/layouts@workspace:packages/layouts":
   version: 0.0.0-use.local
   resolution: "@electrocrud/layouts@workspace:packages/layouts"
   dependencies:
     "@chakra-ui/react": ^2.4.9
-    "@electrocrud/tabs": "workspaces:*"
+    "@electrocrud/tabs": "link:../tabs"
     "@saas-ui/react": ^1.9.1
     csstype: ^3.1.1
     react: ^18.2.0
@@ -3559,12 +3589,18 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@electrocrud/pane@workspace:packages/pane, @electrocrud/pane@workspaces:*":
+"@electrocrud/pane@link:./packages/pane::locator=electrocrud%40workspace%3A.":
+  version: 0.0.0-use.local
+  resolution: "@electrocrud/pane@link:./packages/pane::locator=electrocrud%40workspace%3A."
+  languageName: node
+  linkType: soft
+
+"@electrocrud/pane@workspace:packages/pane":
   version: 0.0.0-use.local
   resolution: "@electrocrud/pane@workspace:packages/pane"
   dependencies:
     "@chakra-ui/react": ^2.4.9
-    "@electrocrud/buttons": "workspaces:*"
+    "@electrocrud/buttons": "link:../buttons"
     csstype: ^3.1.1
     framer-motion: ^9.0.2
     react: ^18.2.0
@@ -3574,7 +3610,13 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@electrocrud/shared@workspace:packages/shared, @electrocrud/shared@workspaces:*":
+"@electrocrud/shared@link:./packages/shared::locator=electrocrud%40workspace%3A.":
+  version: 0.0.0-use.local
+  resolution: "@electrocrud/shared@link:./packages/shared::locator=electrocrud%40workspace%3A."
+  languageName: node
+  linkType: soft
+
+"@electrocrud/shared@workspace:packages/shared":
   version: 0.0.0-use.local
   resolution: "@electrocrud/shared@workspace:packages/shared"
   dependencies:
@@ -3586,7 +3628,13 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@electrocrud/tables@workspace:packages/tables, @electrocrud/tables@workspaces:*":
+"@electrocrud/tables@link:./packages/tables::locator=electrocrud%40workspace%3A.":
+  version: 0.0.0-use.local
+  resolution: "@electrocrud/tables@link:./packages/tables::locator=electrocrud%40workspace%3A."
+  languageName: node
+  linkType: soft
+
+"@electrocrud/tables@workspace:packages/tables":
   version: 0.0.0-use.local
   resolution: "@electrocrud/tables@workspace:packages/tables"
   dependencies:
@@ -3601,12 +3649,24 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@electrocrud/tabs@workspace:packages/tabs, @electrocrud/tabs@workspaces:*":
+"@electrocrud/tabs@link:../tabs::locator=%40electrocrud%2Flayouts%40workspace%3Apackages%2Flayouts":
+  version: 0.0.0-use.local
+  resolution: "@electrocrud/tabs@link:../tabs::locator=%40electrocrud%2Flayouts%40workspace%3Apackages%2Flayouts"
+  languageName: node
+  linkType: soft
+
+"@electrocrud/tabs@link:./packages/tabs::locator=electrocrud%40workspace%3A.":
+  version: 0.0.0-use.local
+  resolution: "@electrocrud/tabs@link:./packages/tabs::locator=electrocrud%40workspace%3A."
+  languageName: node
+  linkType: soft
+
+"@electrocrud/tabs@workspace:packages/tabs":
   version: 0.0.0-use.local
   resolution: "@electrocrud/tabs@workspace:packages/tabs"
   dependencies:
     "@chakra-ui/react": ^2.4.9
-    "@electrocrud/feedback": "workspaces:*"
+    "@electrocrud/feedback": "link:../feedback"
     csstype: ^3.1.1
     framer-motion: ^9.0.2
     react: ^18.2.0
@@ -3617,7 +3677,19 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@electrocrud/utils@workspace:packages/utils, @electrocrud/utils@workspaces:*":
+"@electrocrud/utils@link:./../utils::locator=%40electrocrud%2Fbuttons%40workspace%3Apackages%2Fbuttons":
+  version: 0.0.0-use.local
+  resolution: "@electrocrud/utils@link:./../utils::locator=%40electrocrud%2Fbuttons%40workspace%3Apackages%2Fbuttons"
+  languageName: node
+  linkType: soft
+
+"@electrocrud/utils@link:./packages/utils::locator=electrocrud%40workspace%3A.":
+  version: 0.0.0-use.local
+  resolution: "@electrocrud/utils@link:./packages/utils::locator=electrocrud%40workspace%3A."
+  languageName: node
+  linkType: soft
+
+"@electrocrud/utils@workspace:packages/utils":
   version: 0.0.0-use.local
   resolution: "@electrocrud/utils@workspace:packages/utils"
   dependencies:
@@ -12350,14 +12422,14 @@ __metadata:
     "@commitlint/cli": ^17.4.4
     "@commitlint/config-conventional": ^17.4.4
     "@day1co/fastcase": "github:garrylachman/fastcase#main"
-    "@electrocrud/buttons": "workspaces:*"
-    "@electrocrud/feedback": "workspaces:*"
-    "@electrocrud/layouts": "workspaces:*"
-    "@electrocrud/pane": "workspaces:*"
-    "@electrocrud/shared": "workspaces:*"
-    "@electrocrud/tables": "workspaces:*"
-    "@electrocrud/tabs": "workspaces:*"
-    "@electrocrud/utils": "workspaces:*"
+    "@electrocrud/buttons": "link:./packages/buttons"
+    "@electrocrud/feedback": "link:./packages/feedback"
+    "@electrocrud/layouts": "link:./packages/layouts"
+    "@electrocrud/pane": "link:./packages/pane"
+    "@electrocrud/shared": "link:./packages/shared"
+    "@electrocrud/tables": "link:./packages/tables"
+    "@electrocrud/tabs": "link:./packages/tabs"
+    "@electrocrud/utils": "link:./packages/utils"
     "@electron-forge/cli": ^6.1.1
     "@electron-forge/maker-deb": ^6.1.1
     "@electron-forge/maker-flatpak": ^6.1.1
