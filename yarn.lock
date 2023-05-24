@@ -3518,8 +3518,8 @@ __metadata:
   linkType: hard
 
 "@electrocrud/buttons@file:../buttons::locator=%40electrocrud%2Fpane%40workspace%3Apackages%2Fpane":
-  version: 3.0.19-develop.1
-  resolution: "@electrocrud/buttons@file:../buttons#../buttons::hash=1600c6&locator=%40electrocrud%2Fpane%40workspace%3Apackages%2Fpane"
+  version: 1.0.4
+  resolution: "@electrocrud/buttons@file:../buttons#../buttons::hash=6e0016&locator=%40electrocrud%2Fpane%40workspace%3Apackages%2Fpane"
   dependencies:
     "@chakra-ui/react": ^2.4.9
     "@electrocrud/utils": "file:../utils"
@@ -3528,7 +3528,7 @@ __metadata:
     react: ^18.2.0
     react-icons: ^4.7.1
     underscore: ^1.13.6
-  checksum: 38ee5ea5b55e51a141739ee62c3b8e3e8c2dfd0d730bc0b9fae6b9b1b03ce7893113f446951459a7da3da793eff49617ac5f9d908aa62a18709d71cb27a077fe
+  checksum: ee0f63b5f5a1ace5db4f3a3fa4dfe2e9ba9575e23e441fba4f7ecedef1085aa7c6bea97a2ea53c022837f691036236957568317965c402fb52ede1dd7ff3cb7a
   languageName: node
   linkType: hard
 
@@ -3556,8 +3556,8 @@ __metadata:
   linkType: soft
 
 "@electrocrud/feedback@file:../feedback::locator=%40electrocrud%2Ftables%40workspace%3Apackages%2Ftables":
-  version: 3.0.19-develop.1
-  resolution: "@electrocrud/feedback@file:../feedback#../feedback::hash=000db8&locator=%40electrocrud%2Ftables%40workspace%3Apackages%2Ftables"
+  version: 1.0.4
+  resolution: "@electrocrud/feedback@file:../feedback#../feedback::hash=bfca32&locator=%40electrocrud%2Ftables%40workspace%3Apackages%2Ftables"
   dependencies:
     "@chakra-ui/react": ^2.4.9
     "@saas-ui/react": ^1.9.1
@@ -3566,13 +3566,13 @@ __metadata:
     react: ^18.2.0
     react-icons: ^4.7.1
     underscore: ^1.13.6
-  checksum: b9eb6a304694a5304658bb20f45205aebd80f4b605767a752d68647da93c3d593de0520a6ad7d011d5bb3ec2167d5bcfd0b50e05f53380a352fe2bb45ee4469f
+  checksum: c50d06291acd024c7d6bf5e4e453e2a6dcec3a2b629a0bbd5b69ef439d390d96b7d9444f69cfcb115f53c682a67345674c7f9e4616154ae90b63c1122beeeedf
   languageName: node
   linkType: hard
 
-"@electrocrud/feedback@file:../feedback::locator=%40electrocrud%2Ftabs%40file%3A..%2Ftabs%23..%2Ftabs%3A%3Ahash%3Dc534cd%26locator%3D%2540electrocrud%252Flayouts%2540workspace%253Apackages%252Flayouts":
-  version: 3.0.19-develop.1
-  resolution: "@electrocrud/feedback@file:../feedback#../feedback::hash=000db8&locator=%40electrocrud%2Ftabs%40file%3A..%2Ftabs%23..%2Ftabs%3A%3Ahash%3Dc534cd%26locator%3D%2540electrocrud%252Flayouts%2540workspace%253Apackages%252Flayouts"
+"@electrocrud/feedback@file:../feedback::locator=%40electrocrud%2Ftabs%40file%3A..%2Ftabs%23..%2Ftabs%3A%3Ahash%3D9e6484%26locator%3D%2540electrocrud%252Flayouts%2540workspace%253Apackages%252Flayouts":
+  version: 1.0.4
+  resolution: "@electrocrud/feedback@file:../feedback#../feedback::hash=bfca32&locator=%40electrocrud%2Ftabs%40file%3A..%2Ftabs%23..%2Ftabs%3A%3Ahash%3D9e6484%26locator%3D%2540electrocrud%252Flayouts%2540workspace%253Apackages%252Flayouts"
   dependencies:
     "@chakra-ui/react": ^2.4.9
     "@saas-ui/react": ^1.9.1
@@ -3581,13 +3581,13 @@ __metadata:
     react: ^18.2.0
     react-icons: ^4.7.1
     underscore: ^1.13.6
-  checksum: b9eb6a304694a5304658bb20f45205aebd80f4b605767a752d68647da93c3d593de0520a6ad7d011d5bb3ec2167d5bcfd0b50e05f53380a352fe2bb45ee4469f
+  checksum: c50d06291acd024c7d6bf5e4e453e2a6dcec3a2b629a0bbd5b69ef439d390d96b7d9444f69cfcb115f53c682a67345674c7f9e4616154ae90b63c1122beeeedf
   languageName: node
   linkType: hard
 
 "@electrocrud/feedback@file:../feedback::locator=%40electrocrud%2Ftabs%40workspace%3Apackages%2Ftabs":
-  version: 3.0.19-develop.1
-  resolution: "@electrocrud/feedback@file:../feedback#../feedback::hash=000db8&locator=%40electrocrud%2Ftabs%40workspace%3Apackages%2Ftabs"
+  version: 1.0.4
+  resolution: "@electrocrud/feedback@file:../feedback#../feedback::hash=bfca32&locator=%40electrocrud%2Ftabs%40workspace%3Apackages%2Ftabs"
   dependencies:
     "@chakra-ui/react": ^2.4.9
     "@saas-ui/react": ^1.9.1
@@ -3596,7 +3596,7 @@ __metadata:
     react: ^18.2.0
     react-icons: ^4.7.1
     underscore: ^1.13.6
-  checksum: b9eb6a304694a5304658bb20f45205aebd80f4b605767a752d68647da93c3d593de0520a6ad7d011d5bb3ec2167d5bcfd0b50e05f53380a352fe2bb45ee4469f
+  checksum: c50d06291acd024c7d6bf5e4e453e2a6dcec3a2b629a0bbd5b69ef439d390d96b7d9444f69cfcb115f53c682a67345674c7f9e4616154ae90b63c1122beeeedf
   languageName: node
   linkType: hard
 
@@ -3706,8 +3706,8 @@ __metadata:
   linkType: soft
 
 "@electrocrud/tabs@file:../tabs::locator=%40electrocrud%2Flayouts%40workspace%3Apackages%2Flayouts":
-  version: 3.0.19-develop.1
-  resolution: "@electrocrud/tabs@file:../tabs#../tabs::hash=c534cd&locator=%40electrocrud%2Flayouts%40workspace%3Apackages%2Flayouts"
+  version: 1.0.4
+  resolution: "@electrocrud/tabs@file:../tabs#../tabs::hash=9e6484&locator=%40electrocrud%2Flayouts%40workspace%3Apackages%2Flayouts"
   dependencies:
     "@chakra-ui/react": ^2.4.9
     "@electrocrud/feedback": "file:../feedback"
@@ -3716,7 +3716,7 @@ __metadata:
     react: ^18.2.0
     react-icons: ^4.7.1
     underscore: ^1.13.6
-  checksum: e6cb1bb9c594bdb2817261f5ec94cc9e332c417750c7a4f57f643a0ae565fbb3596125692ad9ceb05e289afebeff2a4f612ef206e81a9fc1e03e12862a358baf
+  checksum: f2b5d9dc40a137c7f503cf6d6e84d7fda1a9b9f17758df07b76a954df42a9b2d196fbb3ffb018b51be4708bec5cd79b196a21f43d8829fda91e2006ef6fe74a6
   languageName: node
   linkType: hard
 
@@ -3743,39 +3743,39 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@electrocrud/utils@file:../utils::locator=%40electrocrud%2Fbuttons%40file%3A..%2Fbuttons%23..%2Fbuttons%3A%3Ahash%3D1600c6%26locator%3D%2540electrocrud%252Fpane%2540workspace%253Apackages%252Fpane":
-  version: 3.0.19-develop.1
-  resolution: "@electrocrud/utils@file:../utils#../utils::hash=35f3a0&locator=%40electrocrud%2Fbuttons%40file%3A..%2Fbuttons%23..%2Fbuttons%3A%3Ahash%3D1600c6%26locator%3D%2540electrocrud%252Fpane%2540workspace%253Apackages%252Fpane"
+"@electrocrud/utils@file:../utils::locator=%40electrocrud%2Fbuttons%40file%3A..%2Fbuttons%23..%2Fbuttons%3A%3Ahash%3D6e0016%26locator%3D%2540electrocrud%252Fpane%2540workspace%253Apackages%252Fpane":
+  version: 1.0.4
+  resolution: "@electrocrud/utils@file:../utils#../utils::hash=e64c2c&locator=%40electrocrud%2Fbuttons%40file%3A..%2Fbuttons%23..%2Fbuttons%3A%3Ahash%3D6e0016%26locator%3D%2540electrocrud%252Fpane%2540workspace%253Apackages%252Fpane"
   dependencies:
     arc-hash: ^3.0.0
-  checksum: bfb5d7e2fb776d479b5b2fcf205b854d2a08430e9d0fd17272f24ccdcf83cebe7cd94af31da7c087e14e4e0655d9b182d7ece6866fd919d5fd89b0500c27b361
+  checksum: c268887711346dd749184922368fe430840a49b600a99b3d5d3289dfb77a78a821ff0d0d2f5c5c705ea12a9af071735d8d4a0ab0d549c108bb22393c5cb8a022
   languageName: node
   linkType: hard
 
 "@electrocrud/utils@file:../utils::locator=%40electrocrud%2Fbuttons%40workspace%3Apackages%2Fbuttons":
-  version: 3.0.19-develop.1
-  resolution: "@electrocrud/utils@file:../utils#../utils::hash=35f3a0&locator=%40electrocrud%2Fbuttons%40workspace%3Apackages%2Fbuttons"
+  version: 1.0.4
+  resolution: "@electrocrud/utils@file:../utils#../utils::hash=e64c2c&locator=%40electrocrud%2Fbuttons%40workspace%3Apackages%2Fbuttons"
   dependencies:
     arc-hash: ^3.0.0
-  checksum: bfb5d7e2fb776d479b5b2fcf205b854d2a08430e9d0fd17272f24ccdcf83cebe7cd94af31da7c087e14e4e0655d9b182d7ece6866fd919d5fd89b0500c27b361
+  checksum: c268887711346dd749184922368fe430840a49b600a99b3d5d3289dfb77a78a821ff0d0d2f5c5c705ea12a9af071735d8d4a0ab0d549c108bb22393c5cb8a022
   languageName: node
   linkType: hard
 
-"@electrocrud/utils@file:../utils::locator=%40electrocrud%2Ftabs%40file%3A..%2Ftabs%23..%2Ftabs%3A%3Ahash%3Dc534cd%26locator%3D%2540electrocrud%252Flayouts%2540workspace%253Apackages%252Flayouts":
-  version: 3.0.19-develop.1
-  resolution: "@electrocrud/utils@file:../utils#../utils::hash=35f3a0&locator=%40electrocrud%2Ftabs%40file%3A..%2Ftabs%23..%2Ftabs%3A%3Ahash%3Dc534cd%26locator%3D%2540electrocrud%252Flayouts%2540workspace%253Apackages%252Flayouts"
+"@electrocrud/utils@file:../utils::locator=%40electrocrud%2Ftabs%40file%3A..%2Ftabs%23..%2Ftabs%3A%3Ahash%3D9e6484%26locator%3D%2540electrocrud%252Flayouts%2540workspace%253Apackages%252Flayouts":
+  version: 1.0.4
+  resolution: "@electrocrud/utils@file:../utils#../utils::hash=e64c2c&locator=%40electrocrud%2Ftabs%40file%3A..%2Ftabs%23..%2Ftabs%3A%3Ahash%3D9e6484%26locator%3D%2540electrocrud%252Flayouts%2540workspace%253Apackages%252Flayouts"
   dependencies:
     arc-hash: ^3.0.0
-  checksum: bfb5d7e2fb776d479b5b2fcf205b854d2a08430e9d0fd17272f24ccdcf83cebe7cd94af31da7c087e14e4e0655d9b182d7ece6866fd919d5fd89b0500c27b361
+  checksum: c268887711346dd749184922368fe430840a49b600a99b3d5d3289dfb77a78a821ff0d0d2f5c5c705ea12a9af071735d8d4a0ab0d549c108bb22393c5cb8a022
   languageName: node
   linkType: hard
 
 "@electrocrud/utils@file:../utils::locator=%40electrocrud%2Ftabs%40workspace%3Apackages%2Ftabs":
-  version: 3.0.19-develop.1
-  resolution: "@electrocrud/utils@file:../utils#../utils::hash=35f3a0&locator=%40electrocrud%2Ftabs%40workspace%3Apackages%2Ftabs"
+  version: 1.0.4
+  resolution: "@electrocrud/utils@file:../utils#../utils::hash=e64c2c&locator=%40electrocrud%2Ftabs%40workspace%3Apackages%2Ftabs"
   dependencies:
     arc-hash: ^3.0.0
-  checksum: bfb5d7e2fb776d479b5b2fcf205b854d2a08430e9d0fd17272f24ccdcf83cebe7cd94af31da7c087e14e4e0655d9b182d7ece6866fd919d5fd89b0500c27b361
+  checksum: c268887711346dd749184922368fe430840a49b600a99b3d5d3289dfb77a78a821ff0d0d2f5c5c705ea12a9af071735d8d4a0ab0d549c108bb22393c5cb8a022
   languageName: node
   linkType: hard
 
