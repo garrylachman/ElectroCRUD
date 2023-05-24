@@ -9,7 +9,7 @@
     }],
     "@semantic-release/github",
     ["@semantic-release/exec", {
-      "prepareCmd": "yarn lerna version ${nextRelease.version} --tag-version-prefix=\"packages-v\" -m \"chore(packages): packages version ${nextRelease.version} [skip ci]\" --force-publish --no-push --yes"
+      "prepareCmd": "yarn lerna version ${nextRelease.version} --tag-version-prefix=\"packages-v\" -m \"chore(lerna): packages version ${nextRelease.version} [skip ci]\" --force-publish --no-push --yes"
     }],
     ["@semantic-release/git", {
       "assets": ["package.json", "CHANGELOG.md", "packages/**/package.json", "packages/**/CHANGELOG.md"],
