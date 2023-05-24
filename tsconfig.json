@@ -28,6 +28,7 @@
       "main": ["./src/main/*"]
     }
   },
+
   "include": ["./src/main/**/*", "./src/renderer/**/*", "./packages/**/*"],
   "exclude": ["test", "**/*.spec.ts", "out", ".webpack", "dist"]
 }
