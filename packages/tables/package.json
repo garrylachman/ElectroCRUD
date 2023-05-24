@@ -35,7 +35,8 @@
     "framer-motion": "^9.0.2",
     "react": "^18.2.0",
     "react-icons": "^4.7.1",
-    "underscore": "^1.13.6"
+    "underscore": "^1.13.6",
+    "@electrocrud/feedback": "link:../feedback"
   },
   "devDependencies": {
     "csstype": "^3.1.1",
