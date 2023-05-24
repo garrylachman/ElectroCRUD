@@ -2,7 +2,13 @@
   "branches": ["master", { "name": "develop", "prerelease": true }],
   "debug": true,
   "plugins": [
-    "@semantic-release/commit-analyzer",
+    ["@semantic-release/commit-analyzer", {
+      "preset": "angular",
+      "releaseRules": [
+        {"type": "docs", "release": "patch"},
+        {"type": "refactor", "release": "minor"}
+      ]
+    }],
     "@semantic-release/release-notes-generator",
     ["semantic-release-yarn", {
       "npmPublish": false
@@ -12,8 +18,11 @@
       "prepareCmd": "yarn lerna version ${nextRelease.version} --tag-version-prefix=\"packages-v\" -m \"chore(lerna): packages version ${nextRelease.version} [skip ci]\" --force-publish --no-push --yes"
     }],
     ["@semantic-release/git", {
-      "assets": ["package.json", "CHANGELOG.md", "packages/**/package.json", "packages/**/CHANGELOG.md"],
+      "assets": ["package.json", "CHANGELOG.md"],
       "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
+    }],
+    ["@semantic-release/exec", {
+      "prepareCmd": "cat package.json"
     }]
   ]
 }
