@@ -24,11 +24,10 @@
     "isolatedModules": false,
     "moduleResolution": "node",
     "paths": {
-      "renderer": ["./src/renderer/*"],
-      "main": ["./src/main/*"]
+      "main": ["./src/main/*"],
+      "renderer": ["./src/renderer/*"]
     }
   },
-
   "include": ["./src/main/**/*", "./src/renderer/**/*", "./packages/**/*"],
   "exclude": ["test", "**/*.spec.ts", "out", ".webpack", "dist"]
 }

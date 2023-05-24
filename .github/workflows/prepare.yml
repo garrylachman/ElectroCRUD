@@ -38,28 +38,20 @@ jobs:
           cache: yarn
 
       - name: Update dependencies
-        run: corepack yarn --immutable
-
-      - name: Yarn Plugins
-        run: yarn plugin import plugin-workspace-tools &&
-          yarn plugin import plugin-typescript &&
-          yarn plugin import https://yarn.build/latest
-
-      - name: Install Dependecies
-        run: yarn install
+        run: corepack yarn install
 
       - name: Building Packages
-        run: yarn build
+        run: corepack yarn build
 
       - name: Testing
-        run: yarn run test
+        run: corepack yarn run test
 
       - name: Semantic Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: yarn run semantic-release
+        run: corepack yarn run semantic-release
   build-release:
     needs: build-prepare
     name: Release
@@ -96,18 +88,12 @@ jobs:
           cache: yarn
 
       - name: Update dependencies
-        run: corepack yarn --immutable
-
-      - name: Yarn Workspace Tools
-        run: yarn plugin import @yarnpkg/plugin-workspace-tools
-
-      - name: Install Dependecies
-        run: yarn install
+        run: corepack yarn install
 
       - name: Building Packages
-        run: yarn run build
+        run: corepack yarn run build
 
       - name: Publish
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: yarn electron-forge publish
+        run: corepack yarn electron-forge publish
