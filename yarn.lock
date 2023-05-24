@@ -3556,8 +3556,8 @@ __metadata:
   linkType: soft
 
 "@electrocrud/feedback@file:../feedback::locator=%40electrocrud%2Ftables%40workspace%3Apackages%2Ftables":
-  version: 1.0.0
-  resolution: "@electrocrud/feedback@file:../feedback#../feedback::hash=93b82e&locator=%40electrocrud%2Ftables%40workspace%3Apackages%2Ftables"
+  version: 1.0.1
+  resolution: "@electrocrud/feedback@file:../feedback#../feedback::hash=7ece77&locator=%40electrocrud%2Ftables%40workspace%3Apackages%2Ftables"
   dependencies:
     "@chakra-ui/react": ^2.4.9
     "@saas-ui/react": ^1.9.1
@@ -3566,13 +3566,13 @@ __metadata:
     react: ^18.2.0
     react-icons: ^4.7.1
     underscore: ^1.13.6
-  checksum: 8ffdfbb28e95d5fa0b6e099f5b789c12d990e276904114b472f55d080c844305366521a51468fe88c7e658ec97ddf8fb3030c657cac8f9eabd14f14140b466aa
+  checksum: 0c681461d8d5f9456d21e5bd6388e057176456f882898c617f47db8bc1e8c14056f5d90c4cb2d27069559ee9bbdc2b2370086d200dd9e115224b6d42a0ace411
   languageName: node
   linkType: hard
 
-"@electrocrud/feedback@file:../feedback::locator=%40electrocrud%2Ftabs%40file%3A..%2Ftabs%23..%2Ftabs%3A%3Ahash%3D4d3e73%26locator%3D%2540electrocrud%252Flayouts%2540workspace%253Apackages%252Flayouts":
-  version: 1.0.0
-  resolution: "@electrocrud/feedback@file:../feedback#../feedback::hash=93b82e&locator=%40electrocrud%2Ftabs%40file%3A..%2Ftabs%23..%2Ftabs%3A%3Ahash%3D4d3e73%26locator%3D%2540electrocrud%252Flayouts%2540workspace%253Apackages%252Flayouts"
+"@electrocrud/feedback@file:../feedback::locator=%40electrocrud%2Ftabs%40file%3A..%2Ftabs%23..%2Ftabs%3A%3Ahash%3D7b8128%26locator%3D%2540electrocrud%252Flayouts%2540workspace%253Apackages%252Flayouts":
+  version: 1.0.1
+  resolution: "@electrocrud/feedback@file:../feedback#../feedback::hash=7ece77&locator=%40electrocrud%2Ftabs%40file%3A..%2Ftabs%23..%2Ftabs%3A%3Ahash%3D7b8128%26locator%3D%2540electrocrud%252Flayouts%2540workspace%253Apackages%252Flayouts"
   dependencies:
     "@chakra-ui/react": ^2.4.9
     "@saas-ui/react": ^1.9.1
@@ -3581,13 +3581,13 @@ __metadata:
     react: ^18.2.0
     react-icons: ^4.7.1
     underscore: ^1.13.6
-  checksum: 8ffdfbb28e95d5fa0b6e099f5b789c12d990e276904114b472f55d080c844305366521a51468fe88c7e658ec97ddf8fb3030c657cac8f9eabd14f14140b466aa
+  checksum: 0c681461d8d5f9456d21e5bd6388e057176456f882898c617f47db8bc1e8c14056f5d90c4cb2d27069559ee9bbdc2b2370086d200dd9e115224b6d42a0ace411
   languageName: node
   linkType: hard
 
 "@electrocrud/feedback@file:../feedback::locator=%40electrocrud%2Ftabs%40workspace%3Apackages%2Ftabs":
-  version: 1.0.0
-  resolution: "@electrocrud/feedback@file:../feedback#../feedback::hash=93b82e&locator=%40electrocrud%2Ftabs%40workspace%3Apackages%2Ftabs"
+  version: 1.0.1
+  resolution: "@electrocrud/feedback@file:../feedback#../feedback::hash=7ece77&locator=%40electrocrud%2Ftabs%40workspace%3Apackages%2Ftabs"
   dependencies:
     "@chakra-ui/react": ^2.4.9
     "@saas-ui/react": ^1.9.1
@@ -3596,7 +3596,7 @@ __metadata:
     react: ^18.2.0
     react-icons: ^4.7.1
     underscore: ^1.13.6
-  checksum: 8ffdfbb28e95d5fa0b6e099f5b789c12d990e276904114b472f55d080c844305366521a51468fe88c7e658ec97ddf8fb3030c657cac8f9eabd14f14140b466aa
+  checksum: 0c681461d8d5f9456d21e5bd6388e057176456f882898c617f47db8bc1e8c14056f5d90c4cb2d27069559ee9bbdc2b2370086d200dd9e115224b6d42a0ace411
   languageName: node
   linkType: hard
 
@@ -3706,8 +3706,8 @@ __metadata:
   linkType: soft
 
 "@electrocrud/tabs@file:../tabs::locator=%40electrocrud%2Flayouts%40workspace%3Apackages%2Flayouts":
-  version: 1.0.0
-  resolution: "@electrocrud/tabs@file:../tabs#../tabs::hash=4d3e73&locator=%40electrocrud%2Flayouts%40workspace%3Apackages%2Flayouts"
+  version: 1.0.1
+  resolution: "@electrocrud/tabs@file:../tabs#../tabs::hash=7b8128&locator=%40electrocrud%2Flayouts%40workspace%3Apackages%2Flayouts"
   dependencies:
     "@chakra-ui/react": ^2.4.9
     "@electrocrud/feedback": "file:../feedback"
@@ -3715,7 +3715,7 @@ __metadata:
     react: ^18.2.0
     react-icons: ^4.7.1
     underscore: ^1.13.6
-  checksum: 219c8acd51ecabc63b7a3fbfca06debaf6d440c7304475b07daa51f9a08d578117e3c5199f2695d639f77f3a34fed9dcfcf32f18e2490bd257cb9fd4c1bf5f7c
+  checksum: a2a6a6f82b4a2660fb24fa6ae8c65b80a3061f520ce42d922c0f5fd91f81a8c1423432165461b607a25523a40e6ca250c32c48a31f616858b5faa5613dbeef85
   languageName: node
   linkType: hard
 

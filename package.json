@@ -37,7 +37,8 @@
     "test": "NODE_OPTIONS=--experimental-vm-modules yarn jest packages",
     "make": "cross-env NODE_OPTIONS='--max-old-space-size=8192' REFORGED_APPIMAGEKIT_CUSTOM_FILENAME='ElectroCRUD-linux' electron-forge make",
     "publish": "cross-env NODE_OPTIONS='--max-old-space-size=8192' REFORGED_APPIMAGEKIT_CUSTOM_FILENAME='ElectroCRUD-linux' electron-forge publish",
-    "build": "yarn lerna run build",
+    "build": "yarn lerna run build --parallel --stream",
+    "lerna:version": "yarn lerna version --conventional-commits -m \"chore(lerna:version): lerna version & changelog [skip ci]\" --yes",
     "semantic-release": "semantic-release"
   },
   "lint-staged": {
