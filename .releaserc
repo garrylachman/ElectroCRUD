@@ -13,7 +13,6 @@
     ["semantic-release-yarn", {
       "npmPublish": false
     }],
-    "@semantic-release/github",
     ["@semantic-release/exec", {
       "prepareCmd": "yarn lerna version ${nextRelease.version} --tag-version-prefix=\"packages-v\" -m \"chore(lerna): packages version ${nextRelease.version} [skip ci]\" --force-publish --no-push --yes"
     }],
@@ -23,6 +22,7 @@
     }],
     ["@semantic-release/exec", {
       "prepareCmd": "cat package.json"
-    }]
+    }],
+    "@semantic-release/github"
   ]
 }
