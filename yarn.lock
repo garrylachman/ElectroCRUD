@@ -3570,9 +3570,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@electrocrud/feedback@file:../feedback::locator=%40electrocrud%2Ftabs%40file%3A..%2Ftabs%23..%2Ftabs%3A%3Ahash%3Dd4ae24%26locator%3D%2540electrocrud%252Flayouts%2540workspace%253Apackages%252Flayouts":
+"@electrocrud/feedback@file:../feedback::locator=%40electrocrud%2Ftabs%40file%3A..%2Ftabs%23..%2Ftabs%3A%3Ahash%3D9e6484%26locator%3D%2540electrocrud%252Flayouts%2540workspace%253Apackages%252Flayouts":
   version: 1.0.4
-  resolution: "@electrocrud/feedback@file:../feedback#../feedback::hash=bfca32&locator=%40electrocrud%2Ftabs%40file%3A..%2Ftabs%23..%2Ftabs%3A%3Ahash%3Dd4ae24%26locator%3D%2540electrocrud%252Flayouts%2540workspace%253Apackages%252Flayouts"
+  resolution: "@electrocrud/feedback@file:../feedback#../feedback::hash=bfca32&locator=%40electrocrud%2Ftabs%40file%3A..%2Ftabs%23..%2Ftabs%3A%3Ahash%3D9e6484%26locator%3D%2540electrocrud%252Flayouts%2540workspace%253Apackages%252Flayouts"
   dependencies:
     "@chakra-ui/react": ^2.4.9
     "@saas-ui/react": ^1.9.1
@@ -3707,15 +3707,16 @@ __metadata:
 
 "@electrocrud/tabs@file:../tabs::locator=%40electrocrud%2Flayouts%40workspace%3Apackages%2Flayouts":
   version: 1.0.4
-  resolution: "@electrocrud/tabs@file:../tabs#../tabs::hash=d4ae24&locator=%40electrocrud%2Flayouts%40workspace%3Apackages%2Flayouts"
+  resolution: "@electrocrud/tabs@file:../tabs#../tabs::hash=9e6484&locator=%40electrocrud%2Flayouts%40workspace%3Apackages%2Flayouts"
   dependencies:
     "@chakra-ui/react": ^2.4.9
     "@electrocrud/feedback": "file:../feedback"
+    "@electrocrud/utils": "file:../utils"
     framer-motion: ^9.0.2
     react: ^18.2.0
     react-icons: ^4.7.1
     underscore: ^1.13.6
-  checksum: d983d411587f0773cc001b462f313a3ff213b4ec01add9720481ebe8444e958da807979ab0c4e556925d3ed9f9dc9bca3e54967f4cb204e2f6bb936212e821df
+  checksum: f2b5d9dc40a137c7f503cf6d6e84d7fda1a9b9f17758df07b76a954df42a9b2d196fbb3ffb018b51be4708bec5cd79b196a21f43d8829fda91e2006ef6fe74a6
   languageName: node
   linkType: hard
 
@@ -3731,6 +3732,7 @@ __metadata:
   dependencies:
     "@chakra-ui/react": ^2.4.9
     "@electrocrud/feedback": "file:../feedback"
+    "@electrocrud/utils": "file:../utils"
     csstype: ^3.1.1
     framer-motion: ^9.0.2
     react: ^18.2.0
@@ -3753,6 +3755,24 @@ __metadata:
 "@electrocrud/utils@file:../utils::locator=%40electrocrud%2Fbuttons%40workspace%3Apackages%2Fbuttons":
   version: 1.0.4
   resolution: "@electrocrud/utils@file:../utils#../utils::hash=e64c2c&locator=%40electrocrud%2Fbuttons%40workspace%3Apackages%2Fbuttons"
+  dependencies:
+    arc-hash: ^3.0.0
+  checksum: c268887711346dd749184922368fe430840a49b600a99b3d5d3289dfb77a78a821ff0d0d2f5c5c705ea12a9af071735d8d4a0ab0d549c108bb22393c5cb8a022
+  languageName: node
+  linkType: hard
+
+"@electrocrud/utils@file:../utils::locator=%40electrocrud%2Ftabs%40file%3A..%2Ftabs%23..%2Ftabs%3A%3Ahash%3D9e6484%26locator%3D%2540electrocrud%252Flayouts%2540workspace%253Apackages%252Flayouts":
+  version: 1.0.4
+  resolution: "@electrocrud/utils@file:../utils#../utils::hash=e64c2c&locator=%40electrocrud%2Ftabs%40file%3A..%2Ftabs%23..%2Ftabs%3A%3Ahash%3D9e6484%26locator%3D%2540electrocrud%252Flayouts%2540workspace%253Apackages%252Flayouts"
+  dependencies:
+    arc-hash: ^3.0.0
+  checksum: c268887711346dd749184922368fe430840a49b600a99b3d5d3289dfb77a78a821ff0d0d2f5c5c705ea12a9af071735d8d4a0ab0d549c108bb22393c5cb8a022
+  languageName: node
+  linkType: hard
+
+"@electrocrud/utils@file:../utils::locator=%40electrocrud%2Ftabs%40workspace%3Apackages%2Ftabs":
+  version: 1.0.4
+  resolution: "@electrocrud/utils@file:../utils#../utils::hash=e64c2c&locator=%40electrocrud%2Ftabs%40workspace%3Apackages%2Ftabs"
   dependencies:
     arc-hash: ^3.0.0
   checksum: c268887711346dd749184922368fe430840a49b600a99b3d5d3289dfb77a78a821ff0d0d2f5c5c705ea12a9af071735d8d4a0ab0d549c108bb22393c5cb8a022
@@ -12876,6 +12896,7 @@ __metadata:
     marked: ^4.2.5
     moment: ^2.29.4
     mysql2: ^3.1.2
+    node-gyp: ^9.3.1
     node-loader: ^2.0.0
     node-ts-cache: ^4.4.0
     node-ts-cache-storage-memory: ^4.4.0

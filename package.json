@@ -269,6 +269,7 @@
     "lerna-changelog": "^2.2.0",
     "lint-staged": "^13.0.3",
     "lodash": "^4.17.21",
+    "node-gyp": "^9.3.1",
     "node-loader": "^2.0.0",
     "path-browserify": "^1.0.1",
     "prettier": "^2.7.1",
