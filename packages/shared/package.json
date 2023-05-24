@@ -1,6 +1,6 @@
 {
   "name": "@electrocrud/shared",
-  "version": "1.0.4",
+  "version": "3.0.19-develop.2",
   "description": "Shared code beteen main & renderer",
   "author": "Garry Lachman <garry@lachman.co>",
   "homepage": "https://github.com/garrylachman/ElectroCRUD/tree/main/packages/shared#readme",
