@@ -8,12 +8,12 @@
       "npmPublish": false
     }],
     "@semantic-release/github",
+    ["@semantic-release/exec", {
+      "successCmd": "yarn lerna version ${nextRelease.version} --tag-version-prefix=\"packages-v\" -m \"chore(packages): packages version ${nextRelease.version} [skip ci]\" --force-publish --exact --no-push --yes"
+    }],
     ["@semantic-release/git", {
       "assets": ["package.json"],
       "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
-    }],
-    ["@semantic-release/exec", {
-      "successCmd": "yarn lerna version ${nextRelease.version} --tag-version-prefix=\"packages-v\" -m \"chore(packages): packages version ${nextRelease.version} [skip ci]\" --force-publish --exact --yes"
     }]
   ]
 }
