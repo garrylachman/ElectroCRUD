@@ -59,6 +59,9 @@ jobs:
         os: [macos-latest, ubuntu-latest, windows-2019]
 
     steps:
+      - name: Sleep for 30 seconds
+        run: sleep 30s
+        shell: bash
       - name: Checkout git repo
         uses: actions/checkout@v3.0.0
         with:
@@ -78,7 +81,8 @@ jobs:
       - name: Install Yarn
         run: corepack enable |
           corepack prepare yarn@3.5.1 --activate |
-          corepack yarn config set enableImmutableInstalls false
+          corepack yarn config set enableImmutableInstalls false |
+          corepack yarn cache clean
 
       - name: Install dependencies
         run: corepack yarn install

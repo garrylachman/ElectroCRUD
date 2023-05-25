@@ -3,6 +3,7 @@ import { MakerSquirrel } from '@electron-forge/maker-squirrel';
 import { MakerZIP } from '@electron-forge/maker-zip';
 import { MakerDeb } from '@electron-forge/maker-deb';
 import { MakerRpm } from '@electron-forge/maker-rpm';
+import { MakerDMG } from '@electron-forge/maker-dmg';
 import { MakerSnap } from '@electron-forge/maker-snap';
 import { PublisherGithub } from '@electron-forge/publisher-github';
 import { MakerAppImage } from '@reforged/maker-appimage';
@@ -22,6 +23,7 @@ const config: ForgeConfig = {
     asar: false,
     executableName: 'electrocrud',
     name: 'ElectroCRUD',
+    appVersion: version,
     appBundleId: 'com.garrylachman.electrocrud',
     icon: path.resolve(assetsPath, 'icon'),
     appCategoryType: 'public.app-category.developer-tools',
@@ -43,6 +45,7 @@ const config: ForgeConfig = {
       ['win32']
     ),
     new MakerZIP({}, ['darwin']),
+    new MakerDMG({}, ['darwin']),
     new MakerRpm(
       {
         options: {
