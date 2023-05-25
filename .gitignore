@@ -39,3 +39,4 @@ dist
 packages/*/lib
 packages/*/node_modules
 packages/*/.swc
+.DS_Store

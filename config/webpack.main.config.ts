@@ -29,9 +29,11 @@ export const mainConfig: Configuration = {
     plugins: [new TsconfigPathsPlugins()],
   },
   optimization: {
+    minimize: true,
+    moduleIds: 'named',
     minimizer: [
       new TerserPlugin({
-        parallel: true,
+        minify: TerserPlugin.swcMinify,
       }),
     ],
   },

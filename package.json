@@ -180,6 +180,7 @@
     "@commitlint/config-conventional": "^17.4.4",
     "@electron-forge/cli": "^6.1.1",
     "@electron-forge/maker-deb": "^6.1.1",
+    "@electron-forge/maker-dmg": "^6.1.1",
     "@electron-forge/maker-flatpak": "^6.1.1",
     "@electron-forge/maker-rpm": "^6.1.1",
     "@electron-forge/maker-snap": "^6.1.1",

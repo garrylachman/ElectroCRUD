@@ -15,18 +15,19 @@ import {
   sourceRendererPath,
   assetsPath,
 } from './config/webpack.paths';
+import { version } from './package.json';
 
 const config: ForgeConfig = {
   packagerConfig: {
     asar: false,
     executableName: 'electrocrud',
-    name: 'Electro CRUD',
+    name: 'ElectroCRUD',
     appBundleId: 'com.garrylachman.electrocrud',
     icon: path.resolve(assetsPath, 'icon'),
     appCategoryType: 'public.app-category.developer-tools',
     win32metadata: {
-      CompanyName: 'Electro CRUD',
-      OriginalFilename: 'Electro CRUD',
+      CompanyName: 'ElectroCRUD',
+      OriginalFilename: 'ElectroCRUD',
     },
   },
   rebuildConfig: {},
@@ -34,6 +35,10 @@ const config: ForgeConfig = {
     new MakerSquirrel(
       {
         authors: 'Garry Lachman',
+        name: 'electrocrud',
+        exe: 'electrocrud.exe',
+        noMsi: true,
+        setupExe: `electrocrud-${version}-win32-setup.exe`,
       },
       ['win32']
     ),
