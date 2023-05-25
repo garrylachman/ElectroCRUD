@@ -1,3 +1,10 @@
+## [3.0.19-develop.6](https://github.com/garrylachman/ElectroCRUD/compare/v3.0.19-develop.5...v3.0.19-develop.6) (2023-05-25)
+
+
+### Bug Fixes
+
+* 🐛 pass version from prepare to build job ([bbbb1dc](https://github.com/garrylachman/ElectroCRUD/commit/bbbb1dcd945775d5541e559e9c8bfa8134768d71))
+
 ## [3.0.19-develop.5](https://github.com/garrylachman/ElectroCRUD/compare/v3.0.19-develop.4...v3.0.19-develop.5) (2023-05-25)
 
 
