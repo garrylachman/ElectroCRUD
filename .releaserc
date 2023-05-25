@@ -19,7 +19,7 @@
     "@semantic-release/github",
     ["@semantic-release/exec", {
       "prepareCmd": "yarn lerna version ${nextRelease.version} --no-git-tag-version --force-publish --no-push --yes",
-      "successCmd": "echo \"next_version=$BUILD_ID\" >> $GITHUB_OUTPUT"
+      "successCmd": "echo \"next_version=${nextRelease.version}\" >> $GITHUB_OUTPUT"
     }],
     ["@semantic-release/npm", {
       "npmPublish": false
