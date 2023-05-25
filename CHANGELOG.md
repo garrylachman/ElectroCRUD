@@ -1,3 +1,10 @@
+## [3.0.19-develop.7](https://github.com/garrylachman/ElectroCRUD/compare/v3.0.19-develop.6...v3.0.19-develop.7) (2023-05-25)
+
+
+### Bug Fixes
+
+* the successCmd for @semantic-release/exec has been fixed to properly substitute the new version number. This commit simplifies the success message that is outputted after a successful release ([a6bae6d](https://github.com/garrylachman/ElectroCRUD/commit/a6bae6ddd63d962db7e4cf7d64633425fa23c933))
+
 ## [3.0.19-develop.6](https://github.com/garrylachman/ElectroCRUD/compare/v3.0.19-develop.5...v3.0.19-develop.6) (2023-05-25)
 
 
