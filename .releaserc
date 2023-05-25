@@ -10,19 +10,19 @@
       ]
     }],
     "@semantic-release/release-notes-generator",
-    ["semantic-release-yarn", {
+    "@semantic-release/github",
+    ["@semantic-release/exec", {
+      "prepareCmd": "yarn lerna version ${nextRelease.version} --no-git-tag-version --force-publish --no-push --yes"
+    }],
+    ["@semantic-release/npm", {
       "npmPublish": false
     }],
-    ["@semantic-release/exec", {
-      "prepareCmd": "yarn lerna version ${nextRelease.version} --tag-version-prefix=\"packages-v\" -m \"chore(lerna): packages version ${nextRelease.version} [skip ci]\" --force-publish --no-push --yes"
-    }],
     ["@semantic-release/git", {
-      "assets": ["package.json", "CHANGELOG.md"],
+      "assets": ["package.json", "packages/*/package.json", "packages/*/CHANGELOG.md"],
       "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
     }],
     ["@semantic-release/exec", {
       "prepareCmd": "cat package.json"
-    }],
-    "@semantic-release/github"
+    }]
   ]
 }
