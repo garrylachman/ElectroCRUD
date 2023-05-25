@@ -1,3 +1,10 @@
+## [3.0.19-develop.3](https://github.com/garrylachman/ElectroCRUD/compare/v3.0.19-develop.2...v3.0.19-develop.3) (2023-05-25)
+
+
+### Bug Fixes
+
+* 🐛 DMG Maker, forge debug, webpack optimization & minify ([8c3ce7f](https://github.com/garrylachman/ElectroCRUD/commit/8c3ce7f0cd832d79e822a5c867a597fc73c8cf32))
+
 ## [3.0.19-develop.2](https://github.com/garrylachman/ElectroCRUD/compare/v3.0.19-develop.1...v3.0.19-develop.2) (2023-05-25)
 
 
