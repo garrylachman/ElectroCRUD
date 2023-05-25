@@ -1,3 +1,10 @@
+## [3.0.19-develop.4](https://github.com/garrylachman/ElectroCRUD/compare/v3.0.19-develop.3...v3.0.19-develop.4) (2023-05-25)
+
+
+### Bug Fixes
+
+* 🐛 remove cache from yarn & change to windows 2019 ([8aa4a00](https://github.com/garrylachman/ElectroCRUD/commit/8aa4a0099aa98709ef647f8a3766b5a166ad3d0d))
+
 ## [3.0.19-develop.3](https://github.com/garrylachman/ElectroCRUD/compare/v3.0.19-develop.2...v3.0.19-develop.3) (2023-05-25)
 
 
