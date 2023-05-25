@@ -10,6 +10,12 @@
       ]
     }],
     "@semantic-release/release-notes-generator",
+    [
+      "@semantic-release/changelog",
+      {
+        "changelogFile": "CHANGELOG.md"
+      }
+    ],
     "@semantic-release/github",
     ["@semantic-release/exec", {
       "prepareCmd": "yarn lerna version ${nextRelease.version} --no-git-tag-version --force-publish --no-push --yes"
@@ -18,11 +24,8 @@
       "npmPublish": false
     }],
     ["@semantic-release/git", {
-      "assets": ["package.json", "packages/*/package.json", "packages/*/CHANGELOG.md"],
+      "assets": ["package.json", "packages/*/package.json", "packages/*/CHANGELOG.md", "CHANGELOG.md"],
       "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
-    }],
-    ["@semantic-release/exec", {
-      "prepareCmd": "cat package.json"
     }]
   ]
 }
