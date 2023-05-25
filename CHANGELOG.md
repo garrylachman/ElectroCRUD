@@ -1,3 +1,10 @@
+## [3.0.19-develop.5](https://github.com/garrylachman/ElectroCRUD/compare/v3.0.19-develop.4...v3.0.19-develop.5) (2023-05-25)
+
+
+### Bug Fixes
+
+* 🐛 DMG & Wait 30s before build job ([cdc87c4](https://github.com/garrylachman/ElectroCRUD/commit/cdc87c4595a846bd64fa628829c62c8a4d640e5f))
+
 ## [3.0.19-develop.4](https://github.com/garrylachman/ElectroCRUD/compare/v3.0.19-develop.3...v3.0.19-develop.4) (2023-05-25)
 
 
