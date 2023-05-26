@@ -99,7 +99,8 @@ jobs:
           DEBUG: '*'
         run: corepack yarn electron-forge publish
   post:
-    needs: [prepeare, release]
+    runs-on: ubuntu-latest
+    needs: [prepare, release]
     name: Post
 
     steps:
