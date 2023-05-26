@@ -1,3 +1,11 @@
+## [3.0.19-develop.9](https://github.com/garrylachman/ElectroCRUD/compare/v3.0.19-develop.8...v3.0.19-develop.9) (2023-05-26)
+
+
+### Bug Fixes
+
+* delete GPT Commit Summarizer workflow and update release to remove the `--force` form yarn ([b98bb1b](https://github.com/garrylachman/ElectroCRUD/commit/b98bb1ba1d315fecb88790970e40229035b302bd))
+* force yarn install and update release config ([9633370](https://github.com/garrylachman/ElectroCRUD/commit/9633370a67b91aefa85479eb69605bcd49669d7e))
+
 ## [3.0.19-develop.8](https://github.com/garrylachman/ElectroCRUD/compare/v3.0.19-develop.7...v3.0.19-develop.8) (2023-05-26)
 
 
