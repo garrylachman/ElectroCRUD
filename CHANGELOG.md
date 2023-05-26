@@ -1,3 +1,10 @@
+## [3.0.19-develop.8](https://github.com/garrylachman/ElectroCRUD/compare/v3.0.19-develop.7...v3.0.19-develop.8) (2023-05-26)
+
+
+### Bug Fixes
+
+* add post-release script for asset normalization ([8f04587](https://github.com/garrylachman/ElectroCRUD/commit/8f0458780feb6298a0d80380df1c53de3777bee9))
+
 ## [3.0.19-develop.7](https://github.com/garrylachman/ElectroCRUD/compare/v3.0.19-develop.6...v3.0.19-develop.7) (2023-05-25)
 
 
