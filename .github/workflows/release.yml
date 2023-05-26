@@ -98,3 +98,34 @@ jobs:
           NODE_OPTIONS: --max-old-space-size=8192
           DEBUG: '*'
         run: corepack yarn electron-forge publish
+  post:
+    needs: [prepeare, release]
+    name: Post
+
+    steps:
+      - name: Checkout git repo
+        uses: actions/checkout@v3.0.0
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GH_TOKEN_SEMANTIC_RELEASE }}
+          ref: v${{ needs.prepare.outputs.next_version }}
+
+      - name: Install Node
+        uses: actions/setup-node@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          node-version: 18.11.0
+
+      - name: Install Yarn
+        run: corepack enable |
+          corepack prepare yarn@3.5.1 --activate |
+          corepack yarn config set enableImmutableInstalls false
+
+      - name: Install dependencies
+        run: corepack yarn install
+
+      - name: Normalize Assets
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: v${{ needs.prepare.outputs.next_version }}
+        run: corepack yarn dlx ts-node --skipProject scripts/normalize-release-assets.mjs
