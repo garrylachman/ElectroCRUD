@@ -1,3 +1,5 @@
+## [3.0.19-develop.10](https://github.com/garrylachman/ElectroCRUD/compare/v3.0.19-develop.9...v3.0.19-develop.10) (2023-05-27)
+
 ## [3.0.19-develop.9](https://github.com/garrylachman/ElectroCRUD/compare/v3.0.19-develop.8...v3.0.19-develop.9) (2023-05-26)
 
 
