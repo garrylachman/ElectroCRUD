@@ -1,0 +1,132 @@
+name: Release
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - develop
+
+jobs:
+  prepare:
+    name: Prepare
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+
+    outputs:
+      next_version: ${{ steps.semantic_step.outputs.next_version }}
+
+    steps:
+      - name: Checkout git repo
+        uses: actions/checkout@v3.0.0
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Install Node
+        uses: actions/setup-node@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          node-version: 18.11.0
+
+      - name: Install Yarn
+        run: corepack enable |
+          corepack prepare yarn@3.5.1 --activate |
+          corepack yarn config set enableImmutableInstalls false
+
+      - name: Install dependencies
+        run: corepack yarn install
+
+      - name: Building Packages
+        run: corepack yarn build
+
+      - name: Testing
+        run: corepack yarn run test
+
+      - name: Semantic Release
+        id: semantic_step
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: corepack yarn run semantic-release
+  release:
+    needs: prepare
+    name: Release v${{ needs.prepare.outputs.next_version }}
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-latest, ubuntu-latest, windows-2019]
+
+    steps:
+      - name: Checkout git repo
+        uses: actions/checkout@v3.0.0
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GH_TOKEN_SEMANTIC_RELEASE }}
+          ref: v${{ needs.prepare.outputs.next_version }}
+
+      - name: apt-get install
+        if: matrix.os == 'ubuntu-latest'
+        run: sudo apt update -y && sudo apt-get install -y snapd rpm snapcraft fakeroot dpkg
+
+      - name: Install Node
+        uses: actions/setup-node@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          node-version: 18.11.0
+
+      - name: Install Yarn
+        run: corepack enable |
+          corepack prepare yarn@3.5.1 --activate |
+          corepack yarn config set enableImmutableInstalls false |
+          corepack yarn cache clean
+
+      - name: Install dependencies
+        run: corepack yarn install
+
+      - name: Building Packages
+        run: corepack yarn run build
+
+      - name: Publish
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_OPTIONS: --max-old-space-size=8192
+          DEBUG: '*'
+        run: corepack yarn electron-forge publish
+  post:
+    runs-on: ubuntu-latest
+    needs: [prepare, release]
+    name: Post
+
+    steps:
+      - name: Checkout git repo
+        uses: actions/checkout@v3.0.0
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GH_TOKEN_SEMANTIC_RELEASE }}
+          ref: v${{ needs.prepare.outputs.next_version }}
+
+      - name: Install Node
+        uses: actions/setup-node@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          node-version: 18.11.0
+
+      - name: Install Yarn
+        run: corepack enable |
+          corepack prepare yarn@3.5.1 --activate |
+          corepack yarn config set enableImmutableInstalls false
+
+      - name: Install dependencies
+        run: corepack yarn install
+
+      - name: Normalize Assets
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: v${{ needs.prepare.outputs.next_version }}
+        run: corepack yarn dlx ts-node --skipProject scripts/normalize-release-assets.mjs

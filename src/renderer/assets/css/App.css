@@ -1,0 +1,196 @@
+body {
+  font-family: "Poppins" !important;
+}
+
+body * {
+  font-family: "Poppins" !important;
+}
+
+option {
+  color: black;
+}
+
+table thead tr th:last-child {
+  border-right-width: 0;
+}
+
+.chakra-react-select__menu-NO {
+  position: relative !important;
+}
+
+.chakra-react-select__menu-lis-NO {
+  position: absolute !important;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  33% {
+    transform: scale(5);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(30);
+    opacity: 0;
+  }
+}
+
+.InovuaReactDataGrid .inovua-react-pagination-toolbar {
+  position: unset;
+}
+
+.inovua-react-scroll-container__wrapper .inovua-react-scroll-container__scroller {
+  overflow: hidden;
+  margin-bottom: auto !important;
+}
+
+.inovua-react-scroll-container__wrapper .inovua-react-scroll-container__scroller .inovua-react-scroll-container__view > div {
+  padding-bottom: inherit !important;
+  overflow: hidden !important;
+}
+
+.chakra-input, .chakra-textarea, .chakra-react-select__control {
+  border: 0; border-bottom: 1px solid #ccc; transition: 1s;
+}
+.chakra-input, .chakra-textare, .chakra-react-select__control{background-color: #422AFB; transition: 1s;}
+.chakra-input:focus, .chakra-textarea:focus, .chakra-react-select__control:focus { transition: 1s;}
+.chakra-react-select__control[data-focus-visible] {
+  transition: 1s;
+}
+
+.custom-scroll::-webkit-scrollbar {
+  width: 13px;
+  height: 0px;
+  background-color: #1f222b;
+  transition: 1s;
+  cursor: grab;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 0px;
+  background-color: var(--chakra-colors-gray-200);
+  transition: 1s;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  cursor: grab;
+}
+
+::-webkit-scrollbar-button {
+  background-color: var(--chakra-colors-gray-200);
+  display: block;
+  background-size: 10px;
+  background-repeat: no-repeat;
+}
+
+::-webkit-scrollbar-button:vertical:increment {
+  border-bottom-left-radius: 5px;
+  cursor: pointer;
+  background-position: center center;;
+  background-image: url("data:image/svg+xml,%3Csvg stroke='rgb(66, 42, 251)' fill='none' stroke-width='2.5' viewBox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' height='1em' width='1em' xmlns='http://www.w3.org/2000/svg'%3E%3Cdesc%3E%3C/desc%3E%3Cpath stroke='none' d='M0 0h24v24H0z' fill='none'%3E%3C/path%3E%3Cpath d='M15 4v8h3.586a1 1 0 0 1 .707 1.707l-6.586 6.586a1 1 0 0 1 -1.414 0l-6.586 -6.586a1 1 0 0 1 .707 -1.707h3.586v-8a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1z'%3E%3C/path%3E%3C/svg%3E");
+}
+
+::-webkit-scrollbar-button:vertical:decrement:hover {
+  background-color: var(--chakra-colors-primary-500);
+  background-image: url("data:image/svg+xml,%3Csvg stroke='rgb(233, 227, 255)' fill='rgb(233, 227, 255)' stroke-width='1' viewBox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' height='1em' width='1em' xmlns='http://www.w3.org/2000/svg'%3E%3Cdesc%3E%3C/desc%3E%3Cpath stroke='none' d='M0 0h24v24H0z' fill='none'%3E%3C/path%3E%3Cpath d='M9 20v-8h-3.586a1 1 0 0 1 -.707 -1.707l6.586 -6.586a1 1 0 0 1 1.414 0l6.586 6.586a1 1 0 0 1 -.707 1.707h-3.586v8a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z'%3E%3C/path%3E%3C/svg%3E");
+}
+
+::-webkit-scrollbar-button:vertical:decrement:active {
+  background-color: var(--chakra-colors-primary-500);
+  background-size: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg stroke='white' fill='white' stroke-width='1' viewBox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' height='1em' width='1em' xmlns='http://www.w3.org/2000/svg'%3E%3Cdesc%3E%3C/desc%3E%3Cpath stroke='none' d='M0 0h24v24H0z' fill='none'%3E%3C/path%3E%3Cpath d='M9 20v-8h-3.586a1 1 0 0 1 -.707 -1.707l6.586 -6.586a1 1 0 0 1 1.414 0l6.586 6.586a1 1 0 0 1 -.707 1.707h-3.586v8a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z'%3E%3C/path%3E%3C/svg%3E");
+}
+
+::-webkit-scrollbar-button:vertical:decrement {
+  border-bottom: 1px solid var(--chakra-colors-primary-200);
+  border-top-left-radius: 5px;
+  background-position: center center;
+  background-image: url("data:image/svg+xml,%3Csvg stroke='rgb(66, 42, 251)' fill='none' stroke-width='2.5' viewBox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' height='1em' width='1em' xmlns='http://www.w3.org/2000/svg'%3E%3Cdesc%3E%3C/desc%3E%3Cpath stroke='none' d='M0 0h24v24H0z' fill='none'%3E%3C/path%3E%3Cpath d='M9 20v-8h-3.586a1 1 0 0 1 -.707 -1.707l6.586 -6.586a1 1 0 0 1 1.414 0l6.586 6.586a1 1 0 0 1 -.707 1.707h-3.586v8a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z'%3E%3C/path%3E%3C/svg%3E");
+}
+
+::-webkit-scrollbar-button:vertical:increment:hover {
+  background-color: var(--chakra-colors-primary-400);
+  background-image: url("data:image/svg+xml,%3Csvg stroke='rgb(233, 227, 255)' fill='rgb(233, 227, 255)' stroke-width='1' viewBox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' height='1em' width='1em' xmlns='http://www.w3.org/2000/svg'%3E%3Cdesc%3E%3C/desc%3E%3Cpath stroke='none' d='M0 0h24v24H0z' fill='none'%3E%3C/path%3E%3Cpath d='M15 4v8h3.586a1 1 0 0 1 .707 1.707l-6.586 6.586a1 1 0 0 1 -1.414 0l-6.586 -6.586a1 1 0 0 1 .707 -1.707h3.586v-8a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1z'%3E%3C/path%3E%3C/svg%3E");
+}
+
+::-webkit-scrollbar-button:vertical:increment:active {
+  background-color: var(--chakra-colors-primary-500);
+  background-position: center center;
+  background-size: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg stroke='white' fill='white' stroke-width='1' viewBox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' height='1em' width='1em' xmlns='http://www.w3.org/2000/svg'%3E%3Cdesc%3E%3C/desc%3E%3Cpath stroke='none' d='M0 0h24v24H0z' fill='none'%3E%3C/path%3E%3Cpath d='M15 4v8h3.586a1 1 0 0 1 .707 1.707l-6.586 6.586a1 1 0 0 1 -1.414 0l-6.586 -6.586a1 1 0 0 1 .707 -1.707h3.586v-8a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1z'%3E%3C/path%3E%3C/svg%3E");
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--chakra-colors-primary-500);
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  transition: 1s;
+  cursor: grab;
+  background-image: url("data:image/svg+xml,%3Csvg stroke='white' fill='white' stroke-width='1' viewBox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' height='1em' width='1em' xmlns='http://www.w3.org/2000/svg'%3E%3Cdesc%3E%3C/desc%3E%3Cpath stroke='none' d='M0 0h24v24H0z' fill='none'%3E%3C/path%3E%3Cpolyline points='8 7 12 3 16 7'%3E%3C/polyline%3E%3Cpolyline points='8 17 12 21 16 17'%3E%3C/polyline%3E%3Cline x1='12' y1='3' x2='12' y2='21'%3E%3C/line%3E%3C/svg%3E");
+  background-position: center center;
+  background-size: 200%;
+  background-repeat: no-repeat;
+  background: linear-gradient(60deg, #8952E0 0%, #6023C0 100%);
+}
+
+::-webkit-scrollbar-thumb {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--chakra-colors-primary-400);
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  transition: 1s;
+  cursor: grab;
+  background-image: url("data:image/svg+xml,%3Csvg stroke='white' fill='white' stroke-width='2' viewBox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' height='1em' width='1em' xmlns='http://www.w3.org/2000/svg'%3E%3Cdesc%3E%3C/desc%3E%3Cpath stroke='none' d='M0 0h24v24H0z' fill='none'%3E%3C/path%3E%3Cpolyline points='8 7 12 3 16 7'%3E%3C/polyline%3E%3Cpolyline points='8 17 12 21 16 17'%3E%3C/polyline%3E%3Cline x1='12' y1='3' x2='12' y2='21'%3E%3C/line%3E%3C/svg%3E");
+  background-position: center center;
+  background-size: 250%;
+  background-repeat: no-repeat;
+  background: linear-gradient(60deg, #8952E0 50%, #6023C0 100%);
+}
+
+::-webkit-scrollbar-corner {
+  background-color: #1f222b;
+}
+
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.16); 
+  
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+.NoTabScroller {
+  overflow: hidden !important;
+}
+
+@keyframes animateborder {
+  from {
+    width: 0%;
+    background-color: var(--chakra-colors-primary-100);
+  }
+
+  50% {
+    width: 30%;
+  }
+
+  to {
+    width: 100%;
+    background-color: var(--chakra-colors-primary-400);
+  }
+}
+
+@keyframes animatescrollbar {
+  from {
+    background-color: #1f222b;
+  }
+
+  to {
+    background-color: #ccc;
+  }
+}

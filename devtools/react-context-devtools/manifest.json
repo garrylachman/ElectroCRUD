@@ -1,0 +1,41 @@
+{
+   "background": {
+      "persistent": false,
+      "scripts": [ "background.js" ]
+   },
+   "browser_action": {
+      "default_icon": {
+         "128": "assets/icons/icon128-disabled.png",
+         "16": "assets/icons/icon16-disabled.png",
+         "32": "assets/icons/icon32-disabled.png",
+         "48": "assets/icons/icon48-disabled.png"
+      },
+      "default_popup": "popup/disabled.html"
+   },
+   "content_scripts": [ {
+      "all_frames": true,
+      "js": [ "injectGlobalHook.js" ],
+      "matches": [ "\u003Call_urls>" ],
+      "run_at": "document_start"
+   } ],
+   "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'; style-src * 'unsafe-inline'; img-src 'self' data:;",
+   "description": "Devtool for React Context and useReducer",
+   "devtools_page": "devtool/devtool.html",
+   "icons": {
+      "128": "assets/icons/icon128.png",
+      "16": "assets/icons/icon16.png",
+      "32": "assets/icons/icon32.png",
+      "48": "assets/icons/icon48.png"
+   },
+   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAg23N9xmTUM41Y4FGTJzlKMTWQDyHqiJhY+oyJzlYWvVGC7uI84lga9jI/DhA6NF+FzhektZAgFnDEpsOVBzKYUg6LhPlEhH/ZONzxc9rqwZovPLHhMUCf1WpoA4g9APQ48NQsAY8nj6N+vOmrnUtTF1PF3NHyHLt2pinydDTQfV5REAaBLih30SjhA+nsxie+amfpP43INPyif9JX49sOhLgS68rIAdWchS6ijRPLgwHDF6PEe0Y+87fFYxceitwyEu3Or8MVPN9iKbWoxgiGwY53DLo1IITwnKyWTcIvS9LIIn84055SgSEynGC6sFgAtswCvIAjy9Fj/2rKzFxdQIDAQAB",
+   "manifest_version": 2,
+   "name": "React Context DevTool",
+   "options_ui": {
+      "open_in_tab": false,
+      "page": "options/options.html"
+   },
+   "permissions": [ "storage", "file:///*", "http://*/*", "https://*/*" ],
+   "update_url": "https://clients2.google.com/service/update2/crx",
+   "version": "3.5",
+   "web_accessible_resources": [ "react-context-devtool-helper.js" ]
+}

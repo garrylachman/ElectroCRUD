@@ -1,0 +1,33 @@
+{
+  "compilerOptions": {
+    "target": "ES2021",
+    "declaration": true,
+    "skipLibCheck": true,
+    "strictNullChecks": true,
+    "module": "commonjs",
+    "lib": ["dom", "es6", "dom.iterable"],
+    "jsx": "react-jsx",
+    "strict": false,
+    "sourceMap": true,
+    "noImplicitAny": false,
+    "baseUrl": "./src",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+    "allowJs": true,
+    "outDir": "dist",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "forceConsistentCasingInFileNames": true,
+    "suppressExcessPropertyErrors": true,
+    "noFallthroughCasesInSwitch": true,
+    "isolatedModules": false,
+    "moduleResolution": "node",
+    "paths": {
+      "main": ["./src/main/*"],
+      "renderer": ["./src/renderer/*"]
+    }
+  },
+  "include": ["./src/main/**/*", "./src/renderer/**/*", "./packages/**/*"],
+  "exclude": ["test", "**/*.spec.ts", "out", ".webpack", "dist"]
+}

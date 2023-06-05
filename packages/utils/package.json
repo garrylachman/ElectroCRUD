@@ -1,0 +1,40 @@
+{
+  "name": "@electrocrud/utils",
+  "version": "3.0.19-develop.11",
+  "description": "> TODO: description",
+  "author": "Garry Lachman <garry@lachman.co>",
+  "homepage": "https://github.com/garrylachman/ElectroCRUD/tree/main/packages/utils#readme",
+  "private": true,
+  "main": "lib/index.js",
+  "typings": "lib/index.d.ts",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/garrylachman/ElectroCRUD.git"
+  },
+  "scripts": {
+    "build": "tsup src --target esnext -d ./lib --dts --tsconfig tsconfig.build.json",
+    "tsc": "tsc",
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/garrylachman/ElectroCRUD/issues"
+  },
+  "dependencies": {
+    "arc-hash": "^3.0.0"
+  },
+  "devDependencies": {
+    "csstype": "^3.1.1",
+    "ts-toolbelt": "^9.6.0",
+    "tsup": "^6.7.0"
+  }
+}
