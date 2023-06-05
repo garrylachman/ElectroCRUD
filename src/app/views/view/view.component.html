@@ -1,9 +1,0 @@
-<nb-card>
-    <nb-card-header>
-        <a *ngFor="let item of bc; let last=last;" [routerLink]="item.url" >
-            <h1 class="page-header h4" [ngClass]="{'not-last': !last}">{{item.name}}</h1>
-        </a>
-    </nb-card-header>
-</nb-card>
-
-<router-outlet></router-outlet>
