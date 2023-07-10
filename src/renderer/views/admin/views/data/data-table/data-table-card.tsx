@@ -304,7 +304,7 @@ export const DataTableCard: FC<DataTableCardProperties> = ({
 
   return (
     <Box p={0} m={0} flex={1} display="flex" flexDirection="column" h="100%">
-      <CardHeader py={0}>
+      <CardHeader py={0} px={0}>
         <DataTableHeader
           setInternalFilter={setInternalFilter}
           setSearchValue={setSearchValue}
