@@ -11,13 +11,14 @@ import {
 } from '@chakra-ui/react';
 import { EntityState } from '@reduxjs/toolkit';
 import memoize from 'proxy-memoize';
-import { FC, useContext, useMemo } from 'react';
+import { FC, useContext, useMemo, useState } from 'react';
 import { MdSearch } from 'react-icons/md';
 import { TbFilter, TbFilterOff, TbPlaylistAdd, TbTrash } from 'react-icons/tb';
 import { useSelector } from 'react-redux';
 import {
   ActionsDropdownMenu,
   ActionsDropdownMenuItem,
+  AddButton,
   RippleButton,
 } from '@electrocrud/buttons';
 import { ConfirmPromiseDeleteModal } from 'renderer/components/modals/confirm-promise-delete-modal';
@@ -26,6 +27,10 @@ import { StrictViewFilterRO } from 'renderer/defenitions/record-object';
 import { useAppDispatch } from 'renderer/store/hooks';
 import { ViewFiltersReducer } from 'renderer/store/reducers';
 import { RootState } from 'renderer/store/store';
+import { PromiseNewRecordModal } from 'renderer/components/modals';
+import { useIPCInsertData } from 'renderer/ipc';
+import { IPCChannelEnum } from '@electrocrud/shared';
+import { useUpdateEffect } from 'usehooks-ts';
 
 type DataTableHeaderProperties = {
   setInternalFilter: (any: any) => void;
@@ -115,6 +120,41 @@ export const DataTableHeader: FC<DataTableHeaderProperties> = ({
     [thisViewFilters]
   );
 
+  const [newRecordState, setNewRecordState] = useState();
+
+  const newRecordHandler = async () => {
+    try {
+      if (viewState?.columns) {
+        const result = await PromiseNewRecordModal(viewState?.columns);
+        if (result) {
+          setNewRecordState(result);
+        }
+      }
+    } catch {
+      /* empty */
+    }
+  };
+
+  const { execute: executeInsert, isExecuted: isInsertExecuted } =
+    useIPCInsertData({
+      channel: IPCChannelEnum.INSERT_DATA,
+      body: {
+        table: viewState?.table as string,
+        data: newRecordState || {},
+      },
+    });
+
+  useUpdateEffect(() => {
+    if (newRecordState) {
+      executeInsert();
+    }
+  }, [newRecordState]);
+
+  useUpdateEffect(() => {
+    // @ts-ignore
+    setNewRecordState();
+  }, [isInsertExecuted]);
+
   return (
     <VStack pt={3}>
       <HStack justifyContent="space-between" width="100%">
@@ -145,6 +185,7 @@ export const DataTableHeader: FC<DataTableHeaderProperties> = ({
             </InputRightElement>
           </InputGroup>
           <ActionsDropdownMenu menuName="Filters" items={actions} />
+          <AddButton size="sm" onClick={newRecordHandler} />
         </HStack>
       </HStack>
     </VStack>
