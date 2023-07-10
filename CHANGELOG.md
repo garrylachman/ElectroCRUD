@@ -1,3 +1,10 @@
+## [3.1.0-develop.1](https://github.com/garrylachman/ElectroCRUD/compare/v3.0.19...v3.1.0-develop.1) (2023-07-10)
+
+
+### Features
+
+* add new record dialog ([c57e9ec](https://github.com/garrylachman/ElectroCRUD/commit/c57e9ec12ed12a06e20eec022e2bdd1e3915956a))
+
 ## [3.0.19](https://github.com/garrylachman/ElectroCRUD/compare/v3.0.18...v3.0.19) (2023-06-05)
 
 
